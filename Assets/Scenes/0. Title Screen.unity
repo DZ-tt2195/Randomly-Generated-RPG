@@ -483,6 +483,52 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 523365124}
   m_CullTransparentMesh: 1
+--- !u!1 &672243570
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 672243572}
+  - component: {fileID: 672243571}
+  m_Layer: 0
+  m_Name: Title Screen Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &672243571
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 672243570}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ada7914f8f7841ec9d23d0c92cf572a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fileToLoad: RGPG - Character Data
+  characterPrefab: {fileID: 5176885033076154760, guid: 46bb879b521804252a11d3d5a08fde38, type: 3}
+--- !u!4 &672243572
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 672243570}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &893654744
 GameObject:
   m_ObjectHideFlags: 0
@@ -744,7 +790,7 @@ MonoBehaviour:
   openPrefabs: 0
   prefabs: []
   idRef:
-    _Keys: 21023f07403b561d285df7ac779d63427d88a6d5612d2f3a44a5d6c0d72bda12975ae773c4436136c3885fff88198c243d9e3abedccdc00cefeeb467ab8fb973d3044ce51116f403e323702580abc72983e5141db6ef7d3f1622ed2632cf4d5ece047dc70fe3ca359ada45c99046485462f3841d6e6950276ba37d92d155244dad8f2aee732f540320fba7b9df99da5ead55e8f366d20c6651b67d24564b503026674471ae457223d63518f4747cea010a0a09d027da5715ae69fd302ab7cb560019e4c5a1aa1167772b1d0dfaaf91609716e387d249a36cefb9768594d7c213b42720b921b4f30cc80b1c31ba17f233a17e253d678b8f7b56dd08c528faf6725ac240e3e9ea1474847073cdd87d4c16abd882ed3ecc0c5987044a271fd99f6c00ac66d7af8fa4754583ca1c680a476288b8a4dec08d5f6c764b1d611b5d5b263266a41b5f12aa542ff933d4e98b993a
+    _Keys: 21023f07403b561d285df7ac779d63427d88a6d5612d2f3a44a5d6c0d72bda12975ae773c4436136c3885fff88198c243d9e3abedccdc00cefeeb467ab8fb973d3044ce51116f403e323702580abc72983e5141db6ef7d3f1622ed2632cf4d5ece047dc70fe3ca359ada45c99046485462f3841d6e6950276ba37d92d155244dad8f2aee732f540320fba7b9df99da5ead55e8f366d20c6651b67d24564b503026674471ae4572230a0a09d027da5715ae69fd302ab7cb560019e4c5a1aa1167772b1d0dfaaf91609716e387d249a36cefb9768594d7c213b42720b921b4f30cc80b1c31ba17f233a17e253d678b8f7b56dd08c528faf6725ac240e3e9ea1474847073cdd87d4c16abd882ed3ecc0c5987044a271fd99f6c00ac66d7af8fa4754583ca1c680a476288b8a4dec08d5f6c764b1d611b5d5b263266a41b5f12aa542ff933d4e98b993ae13be006917a316d6d4b7410e9b6d6573cf691d0e55ddf5f2649d601b97d350ca37f1eb85ccf4b11f17a80ddca24e30b8bb12fd6a6447815
     _Values:
     - {fileID: 519420028}
     - {fileID: 519420032}
@@ -767,7 +813,6 @@ MonoBehaviour:
     - {fileID: 1333215793}
     - {fileID: 1333215797}
     - {fileID: 1333215796}
-    - {fileID: 0}
     - {fileID: 10904, guid: 0000000000000000f000000000000000, type: 0}
     - {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
     - {fileID: 1333215795}
@@ -788,6 +833,13 @@ MonoBehaviour:
     - {fileID: 281755384}
     - {fileID: 281755386}
     - {fileID: 281755385}
+    - {fileID: 672243570}
+    - {fileID: 672243572}
+    - {fileID: 672243571}
+    - {fileID: 11500000, guid: 7ada7914f8f7841ec9d23d0c92cf572a, type: 3}
+    - {fileID: 11500000, guid: 6656224da36004ec0ae3dbc9d774a6c7, type: 3}
+    - {fileID: 5176885033076154760, guid: 46bb879b521804252a11d3d5a08fde38, type: 3}
+    - {fileID: 0}
 --- !u!4 &977123779
 Transform:
   m_ObjectHideFlags: 0
@@ -1014,3 +1066,4 @@ SceneRoots:
   - {fileID: 1782831199}
   - {fileID: 977123779}
   - {fileID: 946072379}
+  - {fileID: 672243572}

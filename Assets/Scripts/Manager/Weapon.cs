@@ -1,11 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
-using MyBox;
-using TMPro;
 
-public class TurnManager : MonoBehaviour
+public class Weapon : MonoBehaviour
 {
     // Start is called before the first frame update
     void Start()

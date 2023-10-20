@@ -1,0 +1,5 @@
+Name	Base Health	Base Energy	Base Attack	Base Defense	Base Speed	Base Luck	Base Accuracy	Position
+Warrior	100	30	100	30	20	0.1	0.9	Grounded
+Wizard	75	50	70	20	50	0.1	0.9	Grounded
+Angel	50	50	0	10	0	0	1	Airborne
+Archer	50	100	40	10	100	0.2	1	Grounded
