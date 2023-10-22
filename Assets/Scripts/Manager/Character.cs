@@ -7,41 +7,28 @@ using TMPro;
 
 public class Character : MonoBehaviour
 {
-    int baseHealth;
-    int baseEnergy;
-    int currentHealth;
-    int currentEnergy;
+    protected int baseHealth;
+    protected int baseEnergy;
+    protected int currentHealth;
+    protected int currentEnergy;
 
-    float baseAttack;
-    float baseDefense;
-    float baseSpeed;
-    float baseLuck;
-    float baseAccuracy;
+    protected float baseAttack;
+    protected float baseDefense;
+    protected float baseSpeed;
+    protected float baseLuck;
+    protected float baseAccuracy;
 
-    float modifyAttack = 1f;
-    float modifyDefense = 1f;
-    float modifySpeed = 1f;
-    float modifyLuck = 1f;
-    float modifyAccuracy = 1f;
+    protected float modifyAttack = 1f;
+    protected float modifyDefense = 1f;
+    protected float modifySpeed = 1f;
+    protected float modifyLuck = 1f;
+    protected float modifyAccuracy = 1f;
 
     public enum Position { Grounded, Airborne};
-    Position currentPosition;
+    protected Position currentPosition;
 
     public enum Emotion { Neutral, Happy, Ecstatic, Angry, Enraged, Sad, Depressed};
-    Emotion currentEmotion = Emotion.Neutral;
+    protected Emotion currentEmotion = Emotion.Neutral;
 
-    List<Ability> listOfAbilities = new List<Ability>();
-
-    public virtual void SetupCharacter(CharacterData data)
-    {
-        this.name = data.name;
-        baseHealth = data.baseHealth; currentHealth = baseHealth;
-        baseEnergy = data.baseEnergy; currentEnergy = baseEnergy;
-        baseAttack = data.baseAttack;
-        baseDefense = data.baseDefense;
-        baseSpeed = data.baseSpeed;
-        baseLuck = data.baseLuck;
-        baseAccuracy = data.baseAccuracy;
-        currentPosition = data.startingPosition;
-    }
+    protected List<Ability> listOfAbilities = new List<Ability>();
 }

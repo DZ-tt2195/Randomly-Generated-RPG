@@ -4,8 +4,18 @@ using UnityEngine;
 
 public class EnemyCharacter : Character
 {
-    public override void SetupCharacter(CharacterData data)
+    protected string abilityInString;
+
+    public void SetupCharacter(EnemyData data)
     {
-        base.SetupCharacter(data);
+        this.name = data.name;
+        baseHealth = data.baseHealth; currentHealth = baseHealth;
+        baseAttack = data.baseAttack;
+        baseDefense = data.baseDefense;
+        baseSpeed = data.baseSpeed;
+        baseLuck = data.baseLuck;
+        baseAccuracy = data.baseAccuracy;
+        currentPosition = data.startingPosition;
+        abilityInString = data.listOfAbilities;
     }
 }
