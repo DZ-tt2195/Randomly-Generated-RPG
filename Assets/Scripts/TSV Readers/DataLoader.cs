@@ -13,6 +13,7 @@ public class PlayerData
     public float baseLuck;
     public float baseAccuracy;
     public Character.Position startingPosition;
+    public Character.Emotion startingEmotion;
 }
 
 public class EnemyData
@@ -25,6 +26,7 @@ public class EnemyData
     public float baseLuck;
     public float baseAccuracy;
     public Character.Position startingPosition;
+    public Character.Emotion startingEmotion;
     public string listOfAbilities;
 }
 

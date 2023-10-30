@@ -1,0 +1,5 @@
+Player Name	Base Health	Base Energy	Base Attack	Base Defense	Base Speed	Base Luck	Base Accuracy	Start Position	Start Emotion	Skills
+Ranger	50	100	40	10	100	0.2	1	Grounded	Neutral	2,3,
+Angel	50	50	0	10	75	0	1	Airborne	Neutral	0,1,
+Knight	100	30	100	30	50	0.1	0.9	Grounded	Neutral	4,
+Wizard	75	50	70	20	25	0.1	0.9	Grounded	Neutral	5,

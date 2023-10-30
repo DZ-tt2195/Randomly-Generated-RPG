@@ -4,6 +4,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using MyBox;
 using TMPro;
+using static UnityEngine.GraphicsBuffer;
+using static UnityEngine.UIElements.UxmlAttributeDescription;
 
 public class StringAndMethod
 {
@@ -50,5 +52,169 @@ public class Ability : MonoBehaviour
         newPosition = data.positionChange;
         teamTarget = data.teamTarget;
         positionTarget = data.positionTarget;
+    }
+
+    bool RollAccuracy(float value)
+    {
+        float roll = (Random.Range(0f, 1f));
+        bool result = roll <= value;
+        return result;
+    }
+
+    int RollCritical(float value)
+    {
+        float roll = (Random.Range(0f, 1f));
+        bool result = roll <= value;
+        if (result)
+        {
+            return 2;
+        }
+        else
+            return 1;
+    }
+
+    float Effectiveness(Character user, Character target)
+    {
+        float answer = 1;
+        if (user.currentEmotion == Character.Emotion.Happy)
+        {
+            switch (target.currentEmotion)
+            {
+                case (Character.Emotion.Angry):
+                    answer = 1.25f;
+                    break;
+                case (Character.Emotion.Enraged):
+                    answer = 1.25f;
+                    break;
+                case (Character.Emotion.Sad):
+                    answer = 0.75f;
+                    break;
+                case (Character.Emotion.Depressed):
+                    answer = 0.75f;
+                    break;
+                default:
+                    answer = 1.0f;
+                    break;
+            }
+        }
+        else if (user.currentEmotion == Character.Emotion.Ecstatic)
+        {
+            switch (target.currentEmotion)
+            {
+                case (Character.Emotion.Angry):
+                    answer = 1.5f;
+                    break;
+                case (Character.Emotion.Enraged):
+                    answer = 1.5f;
+                    break;
+                case (Character.Emotion.Sad):
+                    answer = 0.5f;
+                    break;
+                case (Character.Emotion.Depressed):
+                    answer = 0.5f;
+                    break;
+                default:
+                    answer = 1.0f;
+                    break;
+            }
+        }
+        else if (user.currentEmotion == Character.Emotion.Angry)
+        {
+            switch (target.currentEmotion)
+            {
+                case (Character.Emotion.Sad):
+                    answer = 1.25f;
+                    break;
+                case (Character.Emotion.Depressed):
+                    answer = 1.25f;
+                    break;
+                case (Character.Emotion.Happy):
+                    answer = 0.75f;
+                    break;
+                case (Character.Emotion.Ecstatic):
+                    answer = 0.75f;
+                    break;
+                default:
+                    answer = 1.0f;
+                    break;
+            }
+        }
+        else if (user.currentEmotion == Character.Emotion.Enraged)
+        {
+            switch (target.currentEmotion)
+            {
+                case (Character.Emotion.Sad):
+                    answer = 1.5f;
+                    break;
+                case (Character.Emotion.Depressed):
+                    answer = 1.5f;
+                    break;
+                case (Character.Emotion.Happy):
+                    answer = 0.5f;
+                    break;
+                case (Character.Emotion.Ecstatic):
+                    answer = 0.5f;
+                    break;
+                default:
+                    answer = 1.0f;
+                    break;
+            }
+        }
+        else if (user.currentEmotion == Character.Emotion.Sad)
+        {
+            switch (target.currentEmotion)
+            {
+                case (Character.Emotion.Happy):
+                    answer = 1.25f;
+                    break;
+                case (Character.Emotion.Ecstatic):
+                    answer = 1.25f;
+                    break;
+                case (Character.Emotion.Angry):
+                    answer = 0.75f;
+                    break;
+                case (Character.Emotion.Enraged):
+                    answer = 0.75f;
+                    break;
+                default:
+                    answer = 1.0f;
+                    break;
+            }
+        }
+        else if (user.currentEmotion == Character.Emotion.Depressed)
+        {
+            switch (target.currentEmotion)
+            {
+                case (Character.Emotion.Happy):
+                    answer = 1.5f;
+                    break;
+                case (Character.Emotion.Ecstatic):
+                    answer = 1.5f;
+                    break;
+                case (Character.Emotion.Angry):
+                    answer = 0.5f;
+                    break;
+                case (Character.Emotion.Enraged):
+                    answer = 0.5f;
+                    break;
+                default:
+                    answer = 1.0f;
+                    break;
+            }
+        }
+
+        return answer;
+    }
+
+    int CalculateDamage(Character user, Character target)
+    {
+        if (RollAccuracy(user.CalculateAccuracy()))
+        {
+            return (int)(Random.Range(0.75f, 1.25f) * RollCritical(user.CalculateLuck()) * Effectiveness(user, target) * healthChange * user.CalculateAttack() - target.CalculateDefense());
+        }
+        else
+        {
+            return 0;
+        }
     }
 }
