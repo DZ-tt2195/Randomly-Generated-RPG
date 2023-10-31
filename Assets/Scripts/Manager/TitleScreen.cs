@@ -18,7 +18,7 @@ public class TitleScreen : MonoBehaviour
     [ReadOnly] public List<EnemyData> enemies;
     [ReadOnly] public List<AbilityData> abilities;
 
-    [Tooltip("0 = Ranger, 1 = Angel, 2 = Knight, 3 = Wizard")] [SerializeField] List<Sprite> playerSprites;
+    [Tooltip("0 = Knight, 1 = Angel, 2 = Wizard")] [SerializeField] List<Sprite> playerSprites;
 
     void Start()
     {

@@ -33,6 +33,8 @@ public class EnemyData
 public class AbilityData
 {
     public string name;
+    public string description;
+    public string instructions;
     public string playCondition;
     public int healthChange;
     public int energyCost;
@@ -102,33 +104,23 @@ public class DataLoader
             AbilityData newAbility = new AbilityData();
             nextData.Add(newAbility);
 
-            newAbility.name = line[0];
-            newAbility.playCondition = line[1];
-            newAbility.healthChange = StringToInt(line[2]);
-            newAbility.energyCost = StringToInt(line[3]);
-            newAbility.modifyAttack = StringToFloat(line[4]);
-            newAbility.modifyDefense = StringToFloat(line[5]);
-            newAbility.modifySpeed = StringToFloat(line[6]);
-            newAbility.modifyLuck = StringToFloat(line[7]);
-            newAbility.modifyAccuracy = StringToFloat(line[8]);
-            newAbility.newEmotion = (line[9] == "") ? null : StringToEmotion(line[9]);
-            newAbility.positionChange = (line[10] == "") ? null : StringToPosition(line[10]);
-            newAbility.teamTarget = StringToTeamTarget(line[11]);
-            newAbility.positionTarget = StringToPositionTarget(line[12]);
+            newAbility.name = line[1];
+            newAbility.description = line[2];
+            newAbility.instructions = line[3];
+            newAbility.playCondition = line[4];
+            newAbility.healthChange = StringToInt(line[5]);
+            newAbility.energyCost = StringToInt(line[6]);
+            newAbility.modifyAttack = StringToFloat(line[7]);
+            newAbility.modifyDefense = StringToFloat(line[8]);
+            newAbility.modifySpeed = StringToFloat(line[9]);
+            newAbility.modifyLuck = StringToFloat(line[10]);
+            newAbility.modifyAccuracy = StringToFloat(line[11]);
+            newAbility.newEmotion = (line[9] == "NONE") ? null : StringToEmotion(line[12]);
+            newAbility.positionChange = (line[10] == "NONE") ? null : StringToPosition(line[13]);
+            newAbility.teamTarget = StringToTeamTarget(line[14]);
+            newAbility.positionTarget = StringToPositionTarget(line[15]);
         }
         return nextData;
-    }
-
-    static Ability.PositionTarget StringToPositionTarget(string line)
-    {
-        line = line.ToUpper();
-        return line switch
-        {
-            "ALL" => Ability.PositionTarget.All,
-            "GROUNDED" => Ability.PositionTarget.OnlyGrounded,
-            "AIRBORNE" => Ability.PositionTarget.OnlyAirborne,
-            _ => Ability.PositionTarget.None,
-        };
     }
 
     static Ability.TeamTarget StringToTeamTarget(string line)
@@ -142,6 +134,7 @@ public class DataLoader
             "ONE ENEMY" => Ability.TeamTarget.OneEnemy,
             "ALL ENEMIES" => Ability.TeamTarget.AllEnemies,
             "ALL PLAYERS" => Ability.TeamTarget.AllPlayers,
+            "NONE" => Ability.TeamTarget.None,
             _ => Ability.TeamTarget.None,
         };
     }
@@ -158,6 +151,7 @@ public class DataLoader
             "ENRAGED" => Character.Emotion.Enraged,
             "SAD" => Character.Emotion.Sad,
             "DEPRESSED" => Character.Emotion.Depressed,
+            "NONE" => Character.Emotion.Neutral,
             _ => Character.Emotion.Neutral,
         };
     }
@@ -170,6 +164,19 @@ public class DataLoader
             "AIRBORNE" => Character.Position.Airborne,
             "GROUNDED" => Character.Position.Grounded,
             _ => Character.Position.Grounded,
+        };
+    }
+
+    static Ability.PositionTarget StringToPositionTarget(string line)
+    {
+        line = line.ToUpper();
+        return line switch
+        {
+            "ALL" => Ability.PositionTarget.All,
+            "GROUNDED" => Ability.PositionTarget.OnlyGrounded,
+            "AIRBORNE" => Ability.PositionTarget.OnlyAirborne,
+            "NONE" => Ability.PositionTarget.None,
+            _ => Ability.PositionTarget.None,
         };
     }
 

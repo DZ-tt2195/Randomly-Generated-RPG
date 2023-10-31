@@ -4,8 +4,6 @@ using UnityEngine;
 using UnityEngine.UI;
 using MyBox;
 using TMPro;
-using static UnityEngine.GraphicsBuffer;
-using static UnityEngine.UIElements.UxmlAttributeDescription;
 
 public class StringAndMethod
 {
@@ -19,7 +17,9 @@ public class StringAndMethod
 
 public class Ability : MonoBehaviour
 {
+    public string instructions;
     public string playCondition;
+    public string description;
     public int healthChange;
     public int energyCost;
 
@@ -40,6 +40,8 @@ public class Ability : MonoBehaviour
     public void SetupAbility(AbilityData data)
     {
         this.name = data.name;
+        instructions = data.instructions;
+        description = data.description;
         playCondition = data.playCondition;
         healthChange = data.healthChange;
         energyCost = data.energyCost;
