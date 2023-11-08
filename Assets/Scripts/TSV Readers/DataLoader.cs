@@ -6,7 +6,6 @@ public class PlayerData
 {
     public string name;
     public int baseHealth;
-    public int baseEnergy;
     public float baseAttack;
     public float baseDefense;
     public float baseSpeed;
@@ -37,7 +36,7 @@ public class AbilityData
     public string instructions;
     public string playCondition;
     public int healthChange;
-    public int energyCost;
+    public int cooldown;
     public float modifyAttack;
     public float modifyDefense;
     public float modifySpeed;
@@ -47,6 +46,7 @@ public class AbilityData
     public Character.Position? positionChange = null;
     public Ability.TeamTarget teamTarget;
     public Ability.PositionTarget positionTarget;
+    public string helperName;
 }
 
 public class DataLoader
@@ -62,13 +62,12 @@ public class DataLoader
 
             newCharacter.name = line[0];
             newCharacter.baseHealth = StringToInt(line[1]);
-            newCharacter.baseEnergy = StringToInt(line[2]);
-            newCharacter.baseAttack = StringToFloat(line[3]);
-            newCharacter.baseDefense = StringToFloat(line[4]);
-            newCharacter.baseSpeed = StringToFloat(line[5]);
-            newCharacter.baseLuck = StringToFloat(line[6]);
-            newCharacter.baseAccuracy = StringToFloat(line[7]);
-            newCharacter.startingPosition = (line[8] == "Grounded") ? Character.Position.Grounded : Character.Position.Airborne;
+            newCharacter.baseAttack = StringToFloat(line[2]);
+            newCharacter.baseDefense = StringToFloat(line[3]);
+            newCharacter.baseSpeed = StringToFloat(line[4]);
+            newCharacter.baseLuck = StringToFloat(line[5]);
+            newCharacter.baseAccuracy = StringToFloat(line[6]);
+            newCharacter.startingPosition = (line[7] == "Grounded") ? Character.Position.Grounded : Character.Position.Airborne;
         }
         return nextData;
     }
@@ -109,7 +108,7 @@ public class DataLoader
             newAbility.instructions = line[3];
             newAbility.playCondition = line[4];
             newAbility.healthChange = StringToInt(line[5]);
-            newAbility.energyCost = StringToInt(line[6]);
+            newAbility.cooldown = StringToInt(line[6]);
             newAbility.modifyAttack = StringToFloat(line[7]);
             newAbility.modifyDefense = StringToFloat(line[8]);
             newAbility.modifySpeed = StringToFloat(line[9]);
@@ -119,6 +118,7 @@ public class DataLoader
             newAbility.positionChange = (line[10] == "NONE") ? null : StringToPosition(line[13]);
             newAbility.teamTarget = StringToTeamTarget(line[14]);
             newAbility.positionTarget = StringToPositionTarget(line[15]);
+            newAbility.helperName = line[16];
         }
         return nextData;
     }

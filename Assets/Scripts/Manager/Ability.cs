@@ -21,7 +21,7 @@ public class Ability : MonoBehaviour
     public string playCondition;
     public string description;
     public int healthChange;
-    public int energyCost;
+    public int countdown;
 
     public float modifyAttack;
     public float modifyDefense;
@@ -37,6 +37,8 @@ public class Ability : MonoBehaviour
     public enum PositionTarget { None, All, OnlyGrounded, OnlyAirborne };
     public PositionTarget positionTarget;
 
+    public string summonHelper;
+
     public void SetupAbility(AbilityData data)
     {
         this.name = data.name;
@@ -44,7 +46,7 @@ public class Ability : MonoBehaviour
         description = data.description;
         playCondition = data.playCondition;
         healthChange = data.healthChange;
-        energyCost = data.energyCost;
+        countdown = data.cooldown;
         modifyAttack = data.modifyAttack;
         modifyDefense = data.modifyDefense;
         modifySpeed = data.modifySpeed;
@@ -54,6 +56,7 @@ public class Ability : MonoBehaviour
         newPosition = data.positionChange;
         teamTarget = data.teamTarget;
         positionTarget = data.positionTarget;
+        summonHelper = data.helperName;
     }
 
     bool RollAccuracy(float value)

@@ -5,12 +5,11 @@ using UnityEngine.UI;
 using MyBox;
 using TMPro;
 
+[RequireComponent(typeof(Button))] [RequireComponent(typeof(Image))]
 public class Character : MonoBehaviour
 {
     protected int baseHealth;
-    protected int baseEnergy;
     protected int currentHealth;
-    protected int currentEnergy;
 
     protected float baseAttack;
     protected float baseDefense;
@@ -34,11 +33,13 @@ public class Character : MonoBehaviour
 
     protected List<Ability> listOfAbilities = new List<Ability>();
 
-    public Image image;
+    [HideInInspector] public Image image;
+    [HideInInspector] public Button button;
 
     private void Awake()
     {
         image = GetComponent<Image>();
+        button = GetComponent<Button>();
     }
 
     public float CalculateAttack()

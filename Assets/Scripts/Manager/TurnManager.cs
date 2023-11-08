@@ -11,13 +11,6 @@ public class TurnManager : MonoBehaviour
     [ReadOnly] public List<Character> friends = new List<Character>();
     [ReadOnly] public List<Character> foes = new List<Character>();
 
-    IEnumerator PlayRound()
-    {
-        yield return ChooseSkills();
-
-        yield return ResolveRound();
-    }
-
     IEnumerator ChooseSkills()
     {
         yield return null;
@@ -25,6 +18,7 @@ public class TurnManager : MonoBehaviour
 
     IEnumerator ResolveRound()
     {
+        StopCoroutine(ChooseSkills());
         List<Character> speedQueue = CharactersBySpeed();
         yield return null;
 

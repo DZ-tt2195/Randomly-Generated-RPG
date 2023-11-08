@@ -10,7 +10,6 @@ public class PlayerCharacter : Character
     {
         this.name = data.name;
         baseHealth = data.baseHealth; currentHealth = baseHealth;
-        baseEnergy = data.baseEnergy; currentEnergy = baseEnergy;
         baseAttack = data.baseAttack;
         baseDefense = data.baseDefense;
         baseSpeed = data.baseSpeed;
