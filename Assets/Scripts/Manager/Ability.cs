@@ -32,10 +32,8 @@ public class Ability : MonoBehaviour
     public Character.Emotion? newEmotion;
     public Character.Position? newPosition;
 
-    public enum TeamTarget { None, Self, All, OnePlayer, OneEnemy, AllPlayers, AllEnemies};
+    public enum TeamTarget { None, Self, AnyOne, All, OnePlayer, OtherPlayer, OneEnemy, OtherEnemy, AllPlayers, AllEnemies};
     public TeamTarget teamTarget;
-    public enum PositionTarget { None, All, OnlyGrounded, OnlyAirborne };
-    public PositionTarget positionTarget;
 
     public string summonHelper;
 
@@ -52,10 +50,7 @@ public class Ability : MonoBehaviour
         modifySpeed = data.modifySpeed;
         modifyLuck = data.modifyLuck;
         modifyAccuracy = data.modifyAccuracy;
-        newEmotion = data.newEmotion;
-        newPosition = data.positionChange;
         teamTarget = data.teamTarget;
-        positionTarget = data.positionTarget;
         summonHelper = data.helperName;
     }
 

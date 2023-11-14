@@ -42,6 +42,20 @@ public class Character : MonoBehaviour
         button = GetComponent<Button>();
     }
 
+    public void SetupCharacter(CharacterData data)
+    {
+        this.name = data.name;
+        baseHealth = data.baseHealth; currentHealth = baseHealth;
+        baseAttack = data.baseAttack;
+        baseDefense = data.baseDefense;
+        baseSpeed = data.baseSpeed;
+        baseLuck = data.baseLuck;
+        baseAccuracy = data.baseAccuracy;
+        currentPosition = data.startingPosition;
+        startingEmotion = data.startingEmotion; currentEmotion = startingEmotion;
+        //abilityInString = data.skillNumbers;
+    }
+
     public float CalculateAttack()
     {
         return baseAttack * modifyAttack;

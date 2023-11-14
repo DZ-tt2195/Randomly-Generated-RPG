@@ -8,8 +8,14 @@ using System.Linq;
 
 public class TurnManager : MonoBehaviour
 {
+    public static TurnManager instance;
     [ReadOnly] public List<Character> friends = new List<Character>();
     [ReadOnly] public List<Character> foes = new List<Character>();
+
+    private void Awake()
+    {
+        instance = this;
+    }
 
     IEnumerator ChooseSkills()
     {

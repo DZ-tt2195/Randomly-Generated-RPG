@@ -19,7 +19,7 @@ public class AbilityBox : MonoBehaviour
         textName.text = ability.name;
         textDescription.text = ability.description;
         textCountdown.text = $"{ability.countdown}";
-        groundedOff.gameObject.SetActive(ability.positionTarget == Ability.PositionTarget.All || ability.positionTarget == Ability.PositionTarget.OnlyAirborne);
-        airborneOff.gameObject.SetActive(ability.positionTarget == Ability.PositionTarget.All || ability.positionTarget == Ability.PositionTarget.OnlyGrounded);
+        //groundedOff.gameObject.SetActive(ability.positionTarget == Ability.PositionTarget.All || ability.positionTarget == Ability.PositionTarget.OnlyAirborne);
+        //airborneOff.gameObject.SetActive(ability.positionTarget == Ability.PositionTarget.All || ability.positionTarget == Ability.PositionTarget.OnlyGrounded);
     }
 }

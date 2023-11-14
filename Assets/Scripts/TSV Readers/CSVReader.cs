@@ -18,21 +18,20 @@ public class TSVReader
 	/// <param name="file">The path of the file to load</param>
 	/// <param name="headerLines">The number of lines at the top to skip over as headers</param>
 	/// <returns></returns>
-	public static string[][] ReadFile(string file, int headerLines)
+	public static string[][] ReadFile(string file)
 	{
-		TextAsset data = Resources.Load(file) as TextAsset;
+        TextAsset data = Resources.Load(file) as TextAsset;
 
-		var lines = Regex.Split(data.text, LINE_SPLIT_RE);
-		if (lines.Length - headerLines <= 0)
-			return new string[0][];
+        string editData = data.text;
+        editData = editData.Replace("],", "").Replace("{", "").Replace("}", "");
 
-		var list = new string[lines.Length - headerLines][];
+        string[] numCards = editData.Split("[");
+        string[][] list = new string[numCards.Length][];
 
-		for (var i = headerLines; i < lines.Length; i++) {
-
-			var values = Regex.Split(lines[i], SPLIT_RE);
-			list[i - headerLines] = values;
-		}
-		return list;
-	}
+        for (int i = 0; i < numCards.Length; i++)
+        {
+            list[i] = numCards[i].Split("\",");
+        }
+        return list;
+    }
 }
