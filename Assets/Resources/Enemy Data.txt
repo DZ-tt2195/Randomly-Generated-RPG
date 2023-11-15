@@ -1,0 +1,51 @@
+{
+    [
+      "Enemy Name",
+      "Base Health",
+      "Base Attack",
+      "Base Defense",
+      "Base Speed",
+      "Base Luck",
+      "Base Accuracy",
+      "Start Position",
+      "Start Emotion",
+      "Skills"
+    ],
+    [
+      "lol",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "GROUNDED",
+      "NEUTRAL",
+      "100"
+    ],
+    [
+      "lol",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "GROUNDED",
+      "NEUTRAL",
+      "100"
+    ],
+    [
+      "lol",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "GROUNDED",
+      "NEUTRAL",
+      "100"
+    ]
+  ]
+}

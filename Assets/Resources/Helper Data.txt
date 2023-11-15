@@ -1,0 +1,51 @@
+{
+    [
+      "Helper Name",
+      "Base Health",
+      "Base Attack",
+      "Base Defense",
+      "Base Speed",
+      "Base Luck",
+      "Base Accuracy",
+      "Start Position",
+      "Start Emotion",
+      "Skills"
+    ],
+    [
+      "Student",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "GROUNDED",
+      "NEUTRAL",
+      "0,13,14,15,"
+    ],
+    [
+      "Revival Spirit",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "AIRBORNE",
+      "NEUTRAL",
+      "0,17,"
+    ],
+    [
+      "Golem",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "GROUNDED",
+      "NEUTRAL",
+      "0,16,"
+    ]
+  ]
+}

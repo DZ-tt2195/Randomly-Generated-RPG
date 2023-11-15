@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class CharacterData
 {
@@ -40,10 +41,18 @@ public class DataLoader
     {
         List<CharacterData> nextData = new List<CharacterData>();
         var data = TSVReader.ReadFile(fileToLoad);
-        foreach (string[] line in data)
+
+        for (int i = 2; i < data.Length; i++)
         {
+            string[] line = data[i];
             CharacterData newCharacter = new CharacterData();
             nextData.Add(newCharacter);
+
+            for (int j = 0; j < line.Length; j++)
+            {
+                line[j] = line[j].Trim().Replace("\"", "").Replace("\\", "").Replace("]","");
+                //Debug.Log(line[j]);
+            }
 
             newCharacter.name = line[0];
             newCharacter.baseHealth = StringToInt(line[1]);
@@ -52,7 +61,7 @@ public class DataLoader
             newCharacter.baseSpeed = StringToFloat(line[4]);
             newCharacter.baseLuck = StringToFloat(line[5]);
             newCharacter.baseAccuracy = StringToFloat(line[6]);
-            newCharacter.startingPosition = (line[7] == "Grounded") ? Character.Position.Grounded : Character.Position.Airborne;
+            newCharacter.startingPosition = (line[7] == "GROUNDED") ? Character.Position.Grounded : Character.Position.Airborne;
             newCharacter.startingEmotion = StringToEmotion(line[8]);
             newCharacter.skillNumbers = line[9];
         }
@@ -63,26 +72,32 @@ public class DataLoader
     {
         List<AbilityData> nextData = new List<AbilityData>();
         var data = TSVReader.ReadFile(fileToLoad);
-        foreach (string[] line in data)
+        for (int i = 2; i < data.Length; i++)
         {
+            string[] line = data[i];
             AbilityData newAbility = new AbilityData();
             nextData.Add(newAbility);
+
+            for (int j = 0; j < line.Length; j++)
+            {
+                line[j] = line[j].Trim().Replace("\"", "").Replace("\\", "").Replace("]", "");
+                //Debug.Log(line[j]);
+            }
 
             newAbility.name = line[1];
             newAbility.description = line[2];
             newAbility.instructions = line[3];
             newAbility.nextInstructions = line[4];
             newAbility.playCondition = line[5];
-            newAbility.healthChange = StringToInt(line[5]);
-            newAbility.cooldown = StringToInt(line[6]);
-            newAbility.cooldown = StringToInt(line[6]);
-            newAbility.modifyAttack = StringToFloat(line[7]);
-            newAbility.modifyDefense = StringToFloat(line[8]);
-            newAbility.modifySpeed = StringToFloat(line[9]);
-            newAbility.modifyLuck = StringToFloat(line[10]);
-            newAbility.modifyAccuracy = StringToFloat(line[11]);
-            newAbility.helperName = line[12];
-            newAbility.teamTarget = StringToTeamTarget(line[13]);
+            newAbility.healthChange = StringToInt(line[6]);
+            newAbility.cooldown = StringToInt(line[7]);
+            newAbility.modifyAttack = StringToFloat(line[8]);
+            newAbility.modifyDefense = StringToFloat(line[9]);
+            newAbility.modifySpeed = StringToFloat(line[10]);
+            newAbility.modifyLuck = StringToFloat(line[11]);
+            newAbility.modifyAccuracy = StringToFloat(line[12]);
+            newAbility.helperName = line[13];
+            newAbility.teamTarget = StringToTeamTarget(line[14]);
         }
         return nextData;
     }
@@ -130,6 +145,14 @@ public class DataLoader
 
     static int StringToInt(string line)
     {
-        return (line == "") ? 0 : int.Parse(line);
+        try
+        {
+            return (line == "") ? 0 : int.Parse(line);
+        }
+        catch (FormatException)
+        {
+            Debug.Log(line);
+            return -1;
+        }
     }
 }

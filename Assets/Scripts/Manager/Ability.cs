@@ -17,6 +17,7 @@ public class StringAndMethod
 
 public class Ability : MonoBehaviour
 {
+    public string myName;
     public string instructions;
     public string playCondition;
     public string description;
@@ -39,7 +40,7 @@ public class Ability : MonoBehaviour
 
     public void SetupAbility(AbilityData data)
     {
-        this.name = data.name;
+        myName = data.name;
         instructions = data.instructions;
         description = data.description;
         playCondition = data.playCondition;

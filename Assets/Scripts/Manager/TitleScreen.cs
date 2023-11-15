@@ -12,12 +12,29 @@ using UnityEngine.EventSystems;
 
 public class TitleScreen : MonoBehaviour
 {
+    public static TitleScreen instance;
     private string ID = "1x5vKp4X4HPKyRix3w0n9aldY6Dh3B0eBegUM0WtfXFY";
     private string apiKey = "AIzaSyCl_GqHd1-WROqf7i2YddE3zH6vSv3sNTA";
     private string baseUrl = "https://sheets.googleapis.com/v4/spreadsheets/";
 
     [SerializeField] PlayerCharacter playerPrefab;
     [Tooltip("0 = Knight, 1 = Angel, 2 = Wizard")] [SerializeField] List<Sprite> playerSprites;
+    [Tooltip("store all abilities")] [ReadOnly] public List<AbilityData> listOfAbilities;
+    [Tooltip("store all enemies")][ReadOnly] public List<CharacterData> listOfEnemies;
+    [Tooltip("store all helpers")][ReadOnly] public List<CharacterData> listOfHelpers;
+
+    private void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+            DontDestroyOnLoad(this.gameObject);
+        }
+        else
+        {
+            Destroy(this.gameObject);
+        }
+    }
 
     void Start()
     {
@@ -26,7 +43,6 @@ public class TitleScreen : MonoBehaviour
 
     IEnumerator DownloadFile(string range)
     {
-        Debug.Log("trying to download");
         string url = $"{baseUrl}{ID}/values/{range}?key={apiKey}";
         using UnityWebRequest www = UnityWebRequest.Get(url);
         yield return www.SendWebRequest();
@@ -52,12 +68,15 @@ public class TitleScreen : MonoBehaviour
     {
         #if UNITY_EDITOR
             yield return DownloadFile("Player Data");
+            yield return DownloadFile("Ability Data");
+            yield return DownloadFile("Helper Data");
+            yield return DownloadFile("Enemy Data");
         #endif
 
-        /*
         List<CharacterData> players = DataLoader.ReadCharacterData("Player Data");
-        //enemies = DataLoader.ReadEnemyData(enemyFile);
-        //abilities = DataLoader.ReadAbilityData(abilityFile);
+        listOfHelpers = DataLoader.ReadCharacterData("Helper Data");
+        listOfEnemies = DataLoader.ReadCharacterData("Enemy Data");
+        listOfAbilities = DataLoader.ReadAbilityData("Ability Data");
 
         for (int i = 0; i < players.Count; i++)
         {
@@ -65,6 +84,6 @@ public class TitleScreen : MonoBehaviour
             nextCharacter.SetupCharacter(players[i]);
             nextCharacter.image.sprite = playerSprites[i];
         }
-        */
+        
     }
 }

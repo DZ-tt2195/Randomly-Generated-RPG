@@ -53,7 +53,17 @@ public class Character : MonoBehaviour
         baseAccuracy = data.baseAccuracy;
         currentPosition = data.startingPosition;
         startingEmotion = data.startingEmotion; currentEmotion = startingEmotion;
-        //abilityInString = data.skillNumbers;
+
+        string[] divideIntoNumbers = data.skillNumbers.Split(',');
+        foreach (string x in divideIntoNumbers)
+        {
+            if (x.Trim() != "")
+            {
+                Ability nextAbility = this.gameObject.AddComponent<Ability>();
+                listOfAbilities.Add(nextAbility);
+                nextAbility.SetupAbility(TitleScreen.instance.listOfAbilities[int.Parse(x)]);
+            }
+        }
     }
 
     public float CalculateAttack()
