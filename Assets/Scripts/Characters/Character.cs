@@ -1,12 +1,15 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using MyBox;
 using TMPro;
+using MyBox;
+using UnityEngine.EventSystems;
 
 [RequireComponent(typeof(Button))] [RequireComponent(typeof(Image))]
-public class Character : MonoBehaviour
+
+public class Character : MonoBehaviour, IPointerClickHandler
 {
     protected int baseHealth;
     protected int currentHealth;
@@ -31,7 +34,7 @@ public class Character : MonoBehaviour
     protected Emotion startingEmotion;
     public Emotion currentEmotion;
 
-    protected List<Ability> listOfAbilities = new List<Ability>();
+    [ReadOnly] public List<Ability> listOfAbilities = new List<Ability>();
 
     [HideInInspector] public Image image;
     [HideInInspector] public Button button;
@@ -40,6 +43,14 @@ public class Character : MonoBehaviour
     {
         image = GetComponent<Image>();
         button = GetComponent<Button>();
+    }
+
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        if (eventData.button == PointerEventData.InputButton.Right)
+        {
+            RightClick.instance.DisplayInfo(this);
+        }
     }
 
     public void SetupCharacter(CharacterData data)

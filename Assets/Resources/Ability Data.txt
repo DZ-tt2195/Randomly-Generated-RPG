@@ -321,6 +321,23 @@
       "",
       "",
       "ONE TEAMMATE"
+    ],
+    [
+      "EnemyName",
+      "Basic Attack",
+      "Deal damage to a Teammate.",
+      "",
+      "",
+      "",
+      "20",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "ONE TEAMMATE"
     ]
   ]
 }

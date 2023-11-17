@@ -16,7 +16,7 @@ public class AbilityBox : MonoBehaviour
 
     public void ReceiveAbility(Ability ability)
     {
-        textName.text = ability.name;
+        textName.text = ability.myName;
         textDescription.text = ability.description;
         textCountdown.text = $"{ability.countdown}";
         //groundedOff.gameObject.SetActive(ability.positionTarget == Ability.PositionTarget.All || ability.positionTarget == Ability.PositionTarget.OnlyAirborne);

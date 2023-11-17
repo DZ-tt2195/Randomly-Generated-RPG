@@ -13,12 +13,15 @@ using UnityEngine.EventSystems;
 public class TitleScreen : MonoBehaviour
 {
     public static TitleScreen instance;
+    Transform canvas;
     private string ID = "1x5vKp4X4HPKyRix3w0n9aldY6Dh3B0eBegUM0WtfXFY";
     private string apiKey = "AIzaSyCl_GqHd1-WROqf7i2YddE3zH6vSv3sNTA";
     private string baseUrl = "https://sheets.googleapis.com/v4/spreadsheets/";
 
     [SerializeField] PlayerCharacter playerPrefab;
     [Tooltip("0 = Knight, 1 = Angel, 2 = Wizard")] [SerializeField] List<Sprite> playerSprites;
+
+    [ReadOnly] public List<Character> listOfCharacters = new List<Character>();
     [Tooltip("store all abilities")] [ReadOnly] public List<AbilityData> listOfAbilities;
     [Tooltip("store all enemies")][ReadOnly] public List<CharacterData> listOfEnemies;
     [Tooltip("store all helpers")][ReadOnly] public List<CharacterData> listOfHelpers;
@@ -38,6 +41,7 @@ public class TitleScreen : MonoBehaviour
 
     void Start()
     {
+        canvas = GameObject.Find("Canvas").transform;
         StartCoroutine(GenerateStuff());
     }
 
@@ -83,7 +87,12 @@ public class TitleScreen : MonoBehaviour
             PlayerCharacter nextCharacter = Instantiate(playerPrefab);
             nextCharacter.SetupCharacter(players[i]);
             nextCharacter.image.sprite = playerSprites[i];
+
+            listOfCharacters.Add(nextCharacter);
+            nextCharacter.transform.SetParent(canvas);
+            nextCharacter.transform.localPosition = new Vector3(-750 + (750 * i), 0, 0);
+            nextCharacter.transform.SetAsFirstSibling();
         }
-        
+
     }
 }

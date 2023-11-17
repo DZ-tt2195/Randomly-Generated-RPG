@@ -167,6 +167,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentPosition: 0
   currentEmotion: 0
+  listOfAbilities: []
   image: {fileID: 0}
   button: {fileID: 0}
 --- !u!114 &8473924720776808444
