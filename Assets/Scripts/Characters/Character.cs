@@ -26,31 +26,28 @@ public class Character : MonoBehaviour, IPointerClickHandler
     protected float modifyLuck = 1f;
     protected float modifyAccuracy = 1f;
 
-    public enum Position { Grounded, Airborne};
+    public enum Position { Grounded, Airborne, Dead};
     protected Position startingPosition;
     public Position currentPosition;
 
-    public enum Emotion { Neutral, Happy, Ecstatic, Angry, Enraged, Sad, Depressed};
+    public enum Emotion { Dead, Neutral, Happy, Ecstatic, Angry, Enraged, Sad, Depressed};
     protected Emotion startingEmotion;
     public Emotion currentEmotion;
 
     [ReadOnly] public List<Ability> listOfAbilities = new List<Ability>();
 
-    [HideInInspector] public Image image;
-    [HideInInspector] public Button button;
+    [ReadOnly] public Image image;
+    [ReadOnly] public Image border;
+    public static float borderColor;
+    [ReadOnly] public Button button;
+
+    #region Setup
 
     private void Awake()
     {
+        border = this.transform.GetChild(0).GetComponent<Image>();
         image = GetComponent<Image>();
         button = GetComponent<Button>();
-    }
-
-    public void OnPointerClick(PointerEventData eventData)
-    {
-        if (eventData.button == PointerEventData.InputButton.Right)
-        {
-            RightClick.instance.DisplayInfo(this);
-        }
     }
 
     public void SetupCharacter(CharacterData data)
@@ -77,6 +74,44 @@ public class Character : MonoBehaviour, IPointerClickHandler
         }
     }
 
+    #endregion
+
+    #region UI
+
+    private void FixedUpdate()
+    {
+        Color newColor = this.border.color;
+        newColor.a = (button.interactable) ? borderColor : 0;
+        this.border.color = newColor;
+    }
+
+    private void Update()
+    {
+        if (currentPosition == Position.Airborne)
+        {
+            Vector3 newPosition = transform.localPosition;
+            newPosition.y = -425 + 50 * Mathf.Cos(Time.time * 2.5f);
+            transform.localPosition = newPosition;
+        }
+    }
+
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        if (eventData.button == PointerEventData.InputButton.Right)
+        {
+            RightClick.instance.DisplayInfo(this);
+        }
+    }
+
+    #endregion
+
+    #region Stats
+
+    public int GetHealth()
+    {
+        return currentHealth;
+    }
+
     public float CalculateAttack()
     {
         return baseAttack * modifyAttack;
@@ -101,4 +136,23 @@ public class Character : MonoBehaviour, IPointerClickHandler
     {
         return baseAccuracy * modifyAccuracy;
     }
+
+    #endregion
+
+    #region
+
+    public virtual IEnumerator ChooseAbility()
+    {
+        yield return null;
+        for (int i = 0; i < TurnManager.instance.listOfBoxes.Count; i++)
+        {
+            try
+            {
+                TurnManager.instance.listOfBoxes[i].ReceiveAbility(listOfAbilities[i]);
+                TurnManager.instance.listOfBoxes[i].gameObject.SetActive(true);
+            }
+            catch (ArgumentOutOfRangeException) { TurnManager.instance.listOfBoxes[i].gameObject.SetActive(false); }
+        }
+    }
+    #endregion
 }

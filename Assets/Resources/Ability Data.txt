@@ -17,6 +17,23 @@
       "Target"
     ],
     [
+      "Everyone",
+      "Skip Turn",
+      "This does nothing.",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "NONE"
+    ],
+    [
       "Any Helper",
       "Retreat",
       "This leaves combat.",
@@ -98,7 +115,7 @@
       "",
       "",
       "",
-      "Golem",
+      "2",
       "NONE"
     ],
     [
@@ -166,7 +183,7 @@
       "",
       "",
       "",
-      "Revival Spirit",
+      "1",
       "NONE"
     ],
     [
@@ -234,7 +251,7 @@
       "",
       "",
       "",
-      "Student",
+      "0",
       "NONE"
     ],
     [

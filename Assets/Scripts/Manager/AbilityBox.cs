@@ -16,6 +16,7 @@ public class AbilityBox : MonoBehaviour
 
     public void ReceiveAbility(Ability ability)
     {
+        button.interactable = true;
         textName.text = ability.myName;
         textDescription.text = ability.description;
         textCountdown.text = $"{ability.countdown}";

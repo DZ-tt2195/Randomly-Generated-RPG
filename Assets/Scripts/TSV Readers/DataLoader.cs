@@ -31,7 +31,7 @@ public class AbilityData
     public float modifySpeed;
     public float modifyLuck;
     public float modifyAccuracy;
-    public string helperName;
+    public int helperID;
     public Ability.TeamTarget teamTarget;
 }
 
@@ -96,7 +96,7 @@ public class DataLoader
             newAbility.modifySpeed = StringToFloat(line[10]);
             newAbility.modifyLuck = StringToFloat(line[11]);
             newAbility.modifyAccuracy = StringToFloat(line[12]);
-            newAbility.helperName = line[13];
+            newAbility.helperID = StringToInt(line[13]);
             newAbility.teamTarget = StringToTeamTarget(line[14]);
         }
         return nextData;

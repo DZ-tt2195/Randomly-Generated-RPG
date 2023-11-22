@@ -9,22 +9,35 @@ using System.Linq;
 public class TurnManager : MonoBehaviour
 {
     public static TurnManager instance;
+    public List<AbilityBox> listOfBoxes = new List<AbilityBox>();
     [ReadOnly] public List<Character> friends = new List<Character>();
     [ReadOnly] public List<Character> foes = new List<Character>();
+    bool decrease = true;
 
     private void Awake()
     {
         instance = this;
     }
 
-    IEnumerator ChooseSkills()
+    private void Start()
     {
-        yield return null;
+        Transform grouping = GameObject.Find("Group of Players").transform;
+        for (int i = 0; i < TitleScreen.instance.listOfPlayers.Count; i++)
+        {
+            TitleScreen.instance.listOfPlayers[i].transform.SetParent(grouping);
+            TitleScreen.instance.listOfPlayers[i].transform.localPosition = new Vector3(-850 + (600 * i), -550, 0);
+        }
+    }
+
+    void FixedUpdate()
+    {
+        Character.borderColor += (decrease) ? -0.05f : 0.05f;
+        if (Character.borderColor < 0 || Character.borderColor > 1)
+            decrease = !decrease;
     }
 
     IEnumerator ResolveRound()
     {
-        StopCoroutine(ChooseSkills());
         List<Character> speedQueue = CharactersBySpeed();
         yield return null;
 
@@ -32,6 +45,7 @@ public class TurnManager : MonoBehaviour
         {
             Character nextInLine = speedQueue[0];
             speedQueue.RemoveAt(0);
+            yield return nextInLine.ChooseAbility();
         }
     }
 

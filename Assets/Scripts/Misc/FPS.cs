@@ -13,16 +13,9 @@ public class FPS : MonoBehaviour
 
     private void Awake()
     {
-        if (instance == null)
-        {
-            instance = this;
-            fpsText = this.transform.GetChild(0).GetComponent<TMP_Text>();
-            Application.targetFrameRate = 60;
-        }
-        else
-        {
-            Destroy(this.gameObject);
-        }
+        instance = this;
+        fpsText = this.transform.GetChild(0).GetComponent<TMP_Text>();
+        Application.targetFrameRate = 60;
     }
 
     private void Update()

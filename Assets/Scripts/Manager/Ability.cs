@@ -5,20 +5,13 @@ using UnityEngine.UI;
 using MyBox;
 using TMPro;
 
-public class StringAndMethod
-{
-    [ReadOnly] public Dictionary<string, IEnumerator> dictionary = new Dictionary<string, IEnumerator>();
-
-    public StringAndMethod(Ability ability)
-    {
-        //dictionary["DRAWCARDS"] = ability.DrawCards();
-    }
-}
-
 public class Ability : MonoBehaviour
 {
+    public Character character;
+
     public string myName;
     public string instructions;
+    public string nextInstructions;
     public string playCondition;
     public string description;
     public int healthChange;
@@ -33,15 +26,18 @@ public class Ability : MonoBehaviour
     public Character.Emotion? newEmotion;
     public Character.Position? newPosition;
 
-    public enum TeamTarget { None, Self, AnyOne, All, OnePlayer, OtherPlayer, OneEnemy, OtherEnemy, AllPlayers, AllEnemies};
+    public enum TeamTarget { None, Self, AnyOne, All, OnePlayer, OtherPlayer, OneEnemy, OtherEnemy, AllPlayers, AllEnemies };
     public TeamTarget teamTarget;
 
-    public string summonHelper;
+    public int summonHelper;
+
+    List<Character> listOfTargets;
 
     public void SetupAbility(AbilityData data)
     {
         myName = data.name;
         instructions = data.instructions;
+        nextInstructions = data.nextInstructions;
         description = data.description;
         playCondition = data.playCondition;
         healthChange = data.healthChange;
@@ -52,8 +48,11 @@ public class Ability : MonoBehaviour
         modifyLuck = data.modifyLuck;
         modifyAccuracy = data.modifyAccuracy;
         teamTarget = data.teamTarget;
-        summonHelper = data.helperName;
+        summonHelper = data.helperID;
+        character = GetComponent<Character>();
     }
+
+#region Stats
 
     bool RollAccuracy(float value)
     {
@@ -218,4 +217,111 @@ public class Ability : MonoBehaviour
             return 0;
         }
     }
+
+    #endregion
+
+#region Play Condition
+
+    public bool CanPlay()
+    {
+        if (countdown == 0)
+        {
+            listOfTargets = GetCharacters();
+
+            string divide = playCondition.Replace(" ", "");
+            divide = divide.ToUpper();
+            string[] methodsInStrings = divide.Split('/');
+
+            foreach (string nextMethod in methodsInStrings)
+            {
+                switch (nextMethod)
+                {
+                    case "GROUNDEDONLY":
+                        for (int i = listOfTargets.Count - 1; i >= 0; i--)
+                            if (listOfTargets[i].currentPosition != Character.Position.Grounded) listOfTargets.RemoveAt(i);
+                        break;
+                    case "AIRBORNEONLY":
+                        for (int i = listOfTargets.Count - 1; i >= 0; i--)
+                            if (listOfTargets[i].currentPosition != Character.Position.Airborne) listOfTargets.RemoveAt(i);
+                        break;
+                    case "NOHELPER":
+                        if (TurnManager.instance.friends.Count == 4) return false;
+                        break;
+                    case "NOTNEUTRAL":
+                        for (int i = listOfTargets.Count - 1; i >= 0; i--)
+                            if (listOfTargets[i].currentEmotion != Character.Emotion.Neutral) listOfTargets.RemoveAt(i);
+                        break;
+                    case "ISDEAD":
+                        for (int i = listOfTargets.Count - 1; i >= 0; i--)
+                            if (listOfTargets[i].GetHealth() > 0) listOfTargets.RemoveAt(i);
+                        break;
+                }
+            }
+
+            if (teamTarget == TeamTarget.None)
+                return true;
+            else
+                return listOfTargets.Count > 0;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    List<Character> GetCharacters()
+    {
+        List<Character> listOfCharacters = new List<Character>();
+
+        switch (teamTarget)
+        {
+            case TeamTarget.None:
+                break;
+            case TeamTarget.Self:
+                listOfCharacters.Add(this.character);
+                break;
+            case TeamTarget.All:
+                foreach (Character foe in TurnManager.instance.foes) { listOfCharacters.Add(foe); }
+                foreach (Character friend in TurnManager.instance.friends) { listOfCharacters.Add(friend); }
+                break;
+            case TeamTarget.AnyOne:
+                foreach (Character foe in TurnManager.instance.foes) { listOfCharacters.Add(foe); }
+                foreach (Character friend in TurnManager.instance.friends) { listOfCharacters.Add(friend); }
+                break;
+            case TeamTarget.OnePlayer:
+                listOfCharacters = TurnManager.instance.friends;
+                break;
+            case TeamTarget.OtherPlayer:
+                listOfCharacters = TurnManager.instance.friends;
+                listOfCharacters.Remove(this.character);
+                break;
+            case TeamTarget.AllPlayers:
+                listOfCharacters = TurnManager.instance.friends;
+                break;
+            case TeamTarget.OneEnemy:
+                listOfCharacters = TurnManager.instance.foes;
+                break;
+            case TeamTarget.OtherEnemy:
+                listOfCharacters = TurnManager.instance.foes;
+                listOfCharacters.Remove(this.character);
+                break;
+            case TeamTarget.AllEnemies:
+                listOfCharacters = TurnManager.instance.foes;
+                break;
+        }
+
+        return listOfCharacters;
+    }
+
+    public IEnumerator ChooseTarget()
+    {
+        var validTeamTargets = new HashSet<TeamTarget>{TeamTarget.AnyOne, TeamTarget.OnePlayer, TeamTarget.OtherPlayer, TeamTarget.OneEnemy,TeamTarget.OtherEnemy};
+
+        if (validTeamTargets.Contains(teamTarget))
+        {
+            yield return null;
+        }
+    }
+
+    #endregion
 }

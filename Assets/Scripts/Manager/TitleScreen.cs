@@ -9,6 +9,8 @@ using System.Linq;
 using UnityEngine.Networking;
 using System.IO;
 using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
+using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class TitleScreen : MonoBehaviour
 {
@@ -18,10 +20,11 @@ public class TitleScreen : MonoBehaviour
     private string apiKey = "AIzaSyCl_GqHd1-WROqf7i2YddE3zH6vSv3sNTA";
     private string baseUrl = "https://sheets.googleapis.com/v4/spreadsheets/";
 
+
     [SerializeField] PlayerCharacter playerPrefab;
     [Tooltip("0 = Knight, 1 = Angel, 2 = Wizard")] [SerializeField] List<Sprite> playerSprites;
 
-    [ReadOnly] public List<Character> listOfCharacters = new List<Character>();
+    [Tooltip("store all players")][ReadOnly] public List<Character> listOfPlayers = new List<Character>();
     [Tooltip("store all abilities")] [ReadOnly] public List<AbilityData> listOfAbilities;
     [Tooltip("store all enemies")][ReadOnly] public List<CharacterData> listOfEnemies;
     [Tooltip("store all helpers")][ReadOnly] public List<CharacterData> listOfHelpers;
@@ -41,7 +44,6 @@ public class TitleScreen : MonoBehaviour
 
     void Start()
     {
-        canvas = GameObject.Find("Canvas").transform;
         StartCoroutine(GenerateStuff());
     }
 
@@ -88,11 +90,53 @@ public class TitleScreen : MonoBehaviour
             nextCharacter.SetupCharacter(players[i]);
             nextCharacter.image.sprite = playerSprites[i];
 
-            listOfCharacters.Add(nextCharacter);
+            listOfPlayers.Add(nextCharacter);
             nextCharacter.transform.SetParent(canvas);
             nextCharacter.transform.localPosition = new Vector3(-750 + (750 * i), 0, 0);
             nextCharacter.transform.SetAsFirstSibling();
         }
 
+    }
+
+    private void OnEnable()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    private void OnDisable()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        canvas = GameObject.Find("Canvas").transform;
+        StartCoroutine(BringBackObjects());
+    }
+
+    IEnumerator BringBackObjects()
+    { 
+        yield return new WaitForSeconds(0.5f);
+
+        RightClick.instance.transform.SetParent(canvas);
+        RightClick.instance.transform.localPosition = new Vector3(0, 0);
+
+        FPS.instance.transform.SetParent(canvas);
+        FPS.instance.transform.localPosition = new Vector3(-1200, 666);
+
+    }
+
+    public void UnloadObjects()
+    {
+        Preserve(FPS.instance.gameObject);
+        Preserve(RightClick.instance.gameObject);
+        foreach (Character player in listOfPlayers)
+            Preserve(player.gameObject);
+    }
+
+    void Preserve(GameObject next)
+    {
+        next.transform.SetParent(null);
+        DontDestroyOnLoad(next);
     }
 }

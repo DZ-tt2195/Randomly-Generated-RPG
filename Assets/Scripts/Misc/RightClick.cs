@@ -16,15 +16,8 @@ public class RightClick : MonoBehaviour
 
     private void Awake()
     {
-        if (instance == null)
-        {
-            instance = this;
-            background.SetActive(false);
-        }
-        else
-        {
-            Destroy(this.gameObject);
-        }
+        instance = this;
+        background.SetActive(false);
     }
 
     private void Update()
