@@ -4,10 +4,12 @@ using UnityEngine;
 using UnityEngine.UI;
 using MyBox;
 using TMPro;
+using UnityEngine.UIElements;
 
 public class Ability : MonoBehaviour
 {
-    public Character character;
+#region Setup
+    public Character self;
 
     public string myName;
     public string instructions;
@@ -15,7 +17,7 @@ public class Ability : MonoBehaviour
     public string playCondition;
     public string description;
     public int healthChange;
-    public int countdown;
+    public int cooldown;
 
     public float modifyAttack;
     public float modifyDefense;
@@ -26,12 +28,12 @@ public class Ability : MonoBehaviour
     public Character.Emotion? newEmotion;
     public Character.Position? newPosition;
 
-    public enum TeamTarget { None, Self, AnyOne, All, OnePlayer, OtherPlayer, OneEnemy, OtherEnemy, AllPlayers, AllEnemies };
+    public enum TeamTarget { None, Self, AnyOne, All, OneTeammate, OtherTeammate, OneEnemy, OtherEnemy, AllTeammates, AllEnemies };
     public TeamTarget teamTarget;
 
     public int summonHelper;
 
-    List<Character> listOfTargets;
+    public List<Character> listOfTargets;
 
     public void SetupAbility(AbilityData data)
     {
@@ -41,7 +43,7 @@ public class Ability : MonoBehaviour
         description = data.description;
         playCondition = data.playCondition;
         healthChange = data.healthChange;
-        countdown = data.cooldown;
+        cooldown = data.cooldown;
         modifyAttack = data.modifyAttack;
         modifyDefense = data.modifyDefense;
         modifySpeed = data.modifySpeed;
@@ -49,8 +51,10 @@ public class Ability : MonoBehaviour
         modifyAccuracy = data.modifyAccuracy;
         teamTarget = data.teamTarget;
         summonHelper = data.helperID;
-        character = GetComponent<Character>();
+        self = GetComponent<Character>();
     }
+
+    #endregion
 
 #region Stats
 
@@ -224,13 +228,21 @@ public class Ability : MonoBehaviour
 
     public bool CanPlay()
     {
-        if (countdown == 0)
+        if (cooldown == 0)
         {
-            listOfTargets = GetCharacters();
+            listOfTargets = GetTargets();
 
             string divide = playCondition.Replace(" ", "");
             divide = divide.ToUpper();
             string[] methodsInStrings = divide.Split('/');
+
+            for (int i = listOfTargets.Count - 1; i >= 0; i--)
+            {
+                if (methodsInStrings[0] == "ISDEAD" && listOfTargets[i].GetHealth() > 0)
+                    listOfTargets.RemoveAt(i);
+                else if (listOfTargets[i].GetHealth() < 0)
+                    listOfTargets.RemoveAt(i);
+            }
 
             foreach (string nextMethod in methodsInStrings)
             {
@@ -251,10 +263,6 @@ public class Ability : MonoBehaviour
                         for (int i = listOfTargets.Count - 1; i >= 0; i--)
                             if (listOfTargets[i].currentEmotion != Character.Emotion.Neutral) listOfTargets.RemoveAt(i);
                         break;
-                    case "ISDEAD":
-                        for (int i = listOfTargets.Count - 1; i >= 0; i--)
-                            if (listOfTargets[i].GetHealth() > 0) listOfTargets.RemoveAt(i);
-                        break;
                 }
             }
 
@@ -269,58 +277,46 @@ public class Ability : MonoBehaviour
         }
     }
 
-    List<Character> GetCharacters()
+    List<Character> GetTargets()
     {
-        List<Character> listOfCharacters = new List<Character>();
+        List<Character> listOfTargets = new List<Character>();
 
         switch (teamTarget)
         {
             case TeamTarget.None:
                 break;
             case TeamTarget.Self:
-                listOfCharacters.Add(this.character);
+                listOfTargets.Add(this.self);
                 break;
             case TeamTarget.All:
-                foreach (Character foe in TurnManager.instance.foes) { listOfCharacters.Add(foe); }
-                foreach (Character friend in TurnManager.instance.friends) { listOfCharacters.Add(friend); }
+                foreach (Character foe in TurnManager.instance.foes) { listOfTargets.Add(foe); }
+                foreach (Character friend in TurnManager.instance.friends) { listOfTargets.Add(friend); }
                 break;
             case TeamTarget.AnyOne:
-                foreach (Character foe in TurnManager.instance.foes) { listOfCharacters.Add(foe); }
-                foreach (Character friend in TurnManager.instance.friends) { listOfCharacters.Add(friend); }
+                foreach (Character foe in TurnManager.instance.foes) { listOfTargets.Add(foe); }
+                foreach (Character friend in TurnManager.instance.friends) { listOfTargets.Add(friend); }
                 break;
-            case TeamTarget.OnePlayer:
-                listOfCharacters = TurnManager.instance.friends;
+            case TeamTarget.OneTeammate:
+                foreach (Character friend in TurnManager.instance.friends) { listOfTargets.Add(friend); }
                 break;
-            case TeamTarget.OtherPlayer:
-                listOfCharacters = TurnManager.instance.friends;
-                listOfCharacters.Remove(this.character);
+            case TeamTarget.OtherTeammate:
+                foreach (Character friend in TurnManager.instance.friends) { if (friend != this.self) listOfTargets.Add(friend); }
                 break;
-            case TeamTarget.AllPlayers:
-                listOfCharacters = TurnManager.instance.friends;
+            case TeamTarget.AllTeammates:
+                foreach (Character friend in TurnManager.instance.friends) { listOfTargets.Add(friend); }
                 break;
             case TeamTarget.OneEnemy:
-                listOfCharacters = TurnManager.instance.foes;
+                foreach (Character foe in TurnManager.instance.foes) { listOfTargets.Add(foe); }
                 break;
             case TeamTarget.OtherEnemy:
-                listOfCharacters = TurnManager.instance.foes;
-                listOfCharacters.Remove(this.character);
+                foreach (Character foe in TurnManager.instance.foes) { if (foe != this.self) listOfTargets.Add(foe); }
+                listOfTargets.Remove(this.self);
                 break;
             case TeamTarget.AllEnemies:
-                listOfCharacters = TurnManager.instance.foes;
+                foreach (Character foe in TurnManager.instance.foes) { listOfTargets.Add(foe); }
                 break;
         }
-
-        return listOfCharacters;
-    }
-
-    public IEnumerator ChooseTarget()
-    {
-        var validTeamTargets = new HashSet<TeamTarget>{TeamTarget.AnyOne, TeamTarget.OnePlayer, TeamTarget.OtherPlayer, TeamTarget.OneEnemy,TeamTarget.OtherEnemy};
-
-        if (validTeamTargets.Contains(teamTarget))
-        {
-            yield return null;
-        }
+        return listOfTargets;
     }
 
     #endregion

@@ -81,12 +81,9 @@ public class Character : MonoBehaviour, IPointerClickHandler
     private void FixedUpdate()
     {
         Color newColor = this.border.color;
-        newColor.a = (button.interactable) ? borderColor : 0;
+        newColor.a = borderColor;
         this.border.color = newColor;
-    }
 
-    private void Update()
-    {
         if (currentPosition == Position.Airborne)
         {
             Vector3 newPosition = transform.localPosition;
@@ -139,20 +136,16 @@ public class Character : MonoBehaviour, IPointerClickHandler
 
     #endregion
 
-    #region
+    #region Abilities
 
-    public virtual IEnumerator ChooseAbility()
+    public virtual IEnumerator MyTurn()
     {
         yield return null;
-        for (int i = 0; i < TurnManager.instance.listOfBoxes.Count; i++)
-        {
-            try
-            {
-                TurnManager.instance.listOfBoxes[i].ReceiveAbility(listOfAbilities[i]);
-                TurnManager.instance.listOfBoxes[i].gameObject.SetActive(true);
-            }
-            catch (ArgumentOutOfRangeException) { TurnManager.instance.listOfBoxes[i].gameObject.SetActive(false); }
-        }
+    }
+
+    protected virtual IEnumerator ChooseTarget(Ability ability)
+    {
+        yield return null;
     }
     #endregion
 }

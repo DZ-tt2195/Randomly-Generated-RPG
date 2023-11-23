@@ -12,6 +12,7 @@ public class TurnManager : MonoBehaviour
     public List<AbilityBox> listOfBoxes = new List<AbilityBox>();
     [ReadOnly] public List<Character> friends = new List<Character>();
     [ReadOnly] public List<Character> foes = new List<Character>();
+    [ReadOnly] public List<Character> speedQueue = new List<Character>();
     bool decrease = true;
 
     private void Awake()
@@ -24,9 +25,14 @@ public class TurnManager : MonoBehaviour
         Transform grouping = GameObject.Find("Group of Players").transform;
         for (int i = 0; i < TitleScreen.instance.listOfPlayers.Count; i++)
         {
-            TitleScreen.instance.listOfPlayers[i].transform.SetParent(grouping);
-            TitleScreen.instance.listOfPlayers[i].transform.localPosition = new Vector3(-850 + (600 * i), -550, 0);
+            Character nextFriend = TitleScreen.instance.listOfPlayers[i];
+            friends.Add(nextFriend);
+            nextFriend.transform.SetParent(grouping);
+            nextFriend.transform.localPosition = new Vector3(-850 + (600 * i), -550, 0);
         }
+        //foes.Add(friends[2]);
+
+        StartCoroutine(ResolveRound());
     }
 
     void FixedUpdate()
@@ -36,29 +42,72 @@ public class TurnManager : MonoBehaviour
             decrease = !decrease;
     }
 
+    public void ListAllFriends()
+    {
+        string allFriends = "";
+        foreach (Character character in friends)
+            allFriends += character.name + ",";
+        Debug.Log(allFriends);
+    }
+
     IEnumerator ResolveRound()
     {
-        List<Character> speedQueue = CharactersBySpeed();
-        yield return null;
+        speedQueue = AllCharacters();
 
-        while (speedQueue.Count > 0 && friends.Count > 0 && foes.Count > 0)
+        while (speedQueue.Count > 0)
+        //while (speedQueue.Count > 0 && friends.Count > 0 && foes.Count > 0)
         {
+            DisableCharacterButtons();
+            speedQueue = speedQueue.OrderByDescending(o => o.CalculateSpeed()).ToList();
+            TurnManager.instance.listOfBoxes[0].transform.parent.gameObject.SetActive(false);
+
             Character nextInLine = speedQueue[0];
             speedQueue.RemoveAt(0);
-            yield return nextInLine.ChooseAbility();
+
+            nextInLine.border.gameObject.SetActive(true);
+            yield return nextInLine.MyTurn();
+        }
+
+        foreach (Character character in friends)
+        {
+            foreach (Ability ability in character.listOfAbilities)
+            {
+                if (ability.cooldown > 0)
+                    ability.cooldown--;
+            }
+        }
+
+        foreach(Character character in foes)
+        {
+            foreach (Ability ability in character.listOfAbilities)
+            {
+                if (ability.cooldown > 0)
+                    ability.cooldown--;
+            }
+        }
+
+        StartCoroutine(ResolveRound());
+    }
+
+    public void DisableCharacterButtons()
+    {
+        foreach (Character character in friends)
+        {
+            character.button.interactable = false;
+            character.border.gameObject.SetActive(false);
+        }
+        foreach (Character character in foes)
+        {
+            character.button.interactable = false;
+            character.border.gameObject.SetActive(false);
         }
     }
 
-    List<Character> CharactersBySpeed()
+    public List<Character> AllCharacters()
     {
         List<Character> allTargets = new List<Character>();
-
-        for (int i = 0; i < friends.Count; i++)
-            allTargets.Add(friends[i]);
-        for (int i = 0; i < foes.Count; i++)
-            allTargets.Add(foes[i]);
-
-        allTargets = allTargets.OrderByDescending(o => o.CalculateSpeed()).ToList();
+        allTargets.AddRange(friends);
+        allTargets.AddRange(foes);
         return allTargets;
     }
 } 

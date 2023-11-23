@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using MyBox;
+using System;
 
 public class AbilityBox : MonoBehaviour
 {
@@ -11,16 +12,12 @@ public class AbilityBox : MonoBehaviour
     public TMP_Text textName;
     public TMP_Text textDescription;
     public TMP_Text textCountdown;
-    public Image groundedOff;
-    public Image airborneOff;
 
     public void ReceiveAbility(Ability ability)
     {
-        button.interactable = true;
+        try {button.interactable = ability.CanPlay(); } catch (NullReferenceException) { /*do nothing*/ };
         textName.text = ability.myName;
         textDescription.text = ability.description;
-        textCountdown.text = $"{ability.countdown}";
-        //groundedOff.gameObject.SetActive(ability.positionTarget == Ability.PositionTarget.All || ability.positionTarget == Ability.PositionTarget.OnlyAirborne);
-        //airborneOff.gameObject.SetActive(ability.positionTarget == Ability.PositionTarget.All || ability.positionTarget == Ability.PositionTarget.OnlyGrounded);
+        textCountdown.text = $"{ability.cooldown}";
     }
 }
