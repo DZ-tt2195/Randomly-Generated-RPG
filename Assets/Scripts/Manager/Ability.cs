@@ -115,7 +115,7 @@ public class Ability : MonoBehaviour
                             if (listOfTargets[i].currentPosition != Character.Position.Airborne) listOfTargets.RemoveAt(i);
                         break;
                     case "NOHELPER":
-                        if (TurnManager.instance.friends.Count == 4) return false;
+                        if (TurnManager.instance.teammates.Count == 4) return false;
                         break;
                     case "NOTNEUTRAL":
                         for (int i = listOfTargets.Count - 1; i >= 0; i--)
@@ -147,31 +147,31 @@ public class Ability : MonoBehaviour
                 listOfTargets.Add(this.self);
                 break;
             case TeamTarget.All:
-                foreach (Character foe in TurnManager.instance.foes) { listOfTargets.Add(foe); }
-                foreach (Character friend in TurnManager.instance.friends) { listOfTargets.Add(friend); }
+                foreach (Character foe in TurnManager.instance.enemies) { listOfTargets.Add(foe); }
+                foreach (Character friend in TurnManager.instance.teammates) { listOfTargets.Add(friend); }
                 break;
             case TeamTarget.AnyOne:
-                foreach (Character foe in TurnManager.instance.foes) { listOfTargets.Add(foe); }
-                foreach (Character friend in TurnManager.instance.friends) { listOfTargets.Add(friend); }
+                foreach (Character foe in TurnManager.instance.enemies) { listOfTargets.Add(foe); }
+                foreach (Character friend in TurnManager.instance.teammates) { listOfTargets.Add(friend); }
                 break;
             case TeamTarget.OneTeammate:
-                foreach (Character friend in TurnManager.instance.friends) { listOfTargets.Add(friend); }
+                foreach (Character friend in TurnManager.instance.teammates) { listOfTargets.Add(friend); }
                 break;
             case TeamTarget.OtherTeammate:
-                foreach (Character friend in TurnManager.instance.friends) { if (friend != this.self) listOfTargets.Add(friend); }
+                foreach (Character friend in TurnManager.instance.teammates) { if (friend != this.self) listOfTargets.Add(friend); }
                 break;
             case TeamTarget.AllTeammates:
-                foreach (Character friend in TurnManager.instance.friends) { listOfTargets.Add(friend); }
+                foreach (Character friend in TurnManager.instance.teammates) { listOfTargets.Add(friend); }
                 break;
             case TeamTarget.OneEnemy:
-                foreach (Character foe in TurnManager.instance.foes) { listOfTargets.Add(foe); }
+                foreach (Character foe in TurnManager.instance.enemies) { listOfTargets.Add(foe); }
                 break;
             case TeamTarget.OtherEnemy:
-                foreach (Character foe in TurnManager.instance.foes) { if (foe != this.self) listOfTargets.Add(foe); }
+                foreach (Character foe in TurnManager.instance.enemies) { if (foe != this.self) listOfTargets.Add(foe); }
                 listOfTargets.Remove(this.self);
                 break;
             case TeamTarget.AllEnemies:
-                foreach (Character foe in TurnManager.instance.foes) { listOfTargets.Add(foe); }
+                foreach (Character foe in TurnManager.instance.enemies) { listOfTargets.Add(foe); }
                 break;
         }
         return listOfTargets;

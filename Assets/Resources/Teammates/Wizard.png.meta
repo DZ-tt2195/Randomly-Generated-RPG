@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 24ca6dd972e884ff88a6e8af871c4ad2
+guid: 90f1032bb747349b7ba4818da95a3244
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -43,7 +43,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 2
+  spriteMode: 1
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -121,70 +121,7 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites:
-    - serializedVersion: 2
-      name: Player Characters_0
-      rect:
-        serializedVersion: 2
-        x: 362
-        y: 1553
-        width: 807
-        height: 805
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: fa385769889ec48a796d56396991721d
-      internalID: -35337202
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Player Characters_1
-      rect:
-        serializedVersion: 2
-        x: 1327
-        y: 1015
-        width: 805
-        height: 806
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: bc605483f19df4418a4a7ba74c0defe4
-      internalID: -1891711716
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Player Characters_2
-      rect:
-        serializedVersion: 2
-        x: 2270
-        y: 222
-        width: 805
-        height: 807
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 5e60ba6e64b1d40b39e0cd1c11fe0681
-      internalID: 1485450777
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
+    sprites: []
     outline: []
     physicsShape: []
     bones: []
@@ -195,10 +132,7 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable:
-      Player Characters_0: -35337202
-      Player Characters_1: -1891711716
-      Player Characters_2: 1485450777
+    nameFileIdTable: {}
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

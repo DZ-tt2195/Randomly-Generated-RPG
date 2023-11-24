@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
+[System.Serializable]
 public class CharacterData
 {
     public string name;
@@ -17,6 +18,7 @@ public class CharacterData
     public string skillNumbers;
 }
 
+[System.Serializable]
 public class AbilityData
 {
     public string name;

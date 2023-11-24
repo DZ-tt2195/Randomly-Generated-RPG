@@ -5,15 +5,18 @@ using UnityEngine.UI;
 using MyBox;
 using TMPro;
 using System.Linq;
+using Unity.VisualScripting;
 
 public class TurnManager : MonoBehaviour
 {
     public static TurnManager instance;
+    [SerializeField] EnemyCharacter enemyPrefab;
+
     public List<AbilityBox> listOfBoxes = new List<AbilityBox>();
-    [ReadOnly] public List<Character> friends = new List<Character>();
-    [ReadOnly] public List<Character> foes = new List<Character>();
+    [ReadOnly] public List<Character> teammates = new List<Character>();
+    [ReadOnly] public List<Character> enemies = new List<Character>();
     [ReadOnly] public List<Character> speedQueue = new List<Character>();
-    [ReadOnly] public List<Character> persistent = new List<Character>();
+
     bool decrease = true;
 
     private void Awake()
@@ -27,8 +30,7 @@ public class TurnManager : MonoBehaviour
         for (int i = 0; i < TitleScreen.instance.listOfPlayers.Count; i++)
         {
             Character nextFriend = TitleScreen.instance.listOfPlayers[i];
-            friends.Add(nextFriend);
-            persistent.Add(nextFriend);
+            teammates.Add(nextFriend);
             nextFriend.transform.SetParent(grouping);
             nextFriend.transform.localPosition = new Vector3(-850 + (600 * i), -550, 0);
         }
@@ -46,13 +48,27 @@ public class TurnManager : MonoBehaviour
     public void ListAllFriends()
     {
         string allFriends = "";
-        foreach (Character character in friends)
+        foreach (Character character in teammates)
             allFriends += character.name + ",";
         Debug.Log(allFriends);
     }
 
     IEnumerator ResolveRound()
     {
+        if (enemies.Count == 0)
+        {
+            int numEnemies = Random.Range(2, 4);
+            for (int i = 0; i<numEnemies; i++)
+            {
+                EnemyCharacter nextCharacter = Instantiate(enemyPrefab);
+                nextCharacter.SetupCharacter(Character.CharacterType.Enemy, TitleScreen.instance.listOfEnemies[Random.Range(0, TitleScreen.instance.listOfEnemies.Count)]);
+
+                enemies.Add(nextCharacter);
+                nextCharacter.transform.SetParent(TitleScreen.instance.canvas);
+                nextCharacter.transform.localPosition = new Vector3(-850 + (600 * i), 300, 0);
+            }
+        }
+
         speedQueue = AllCharacters();
 
         while (speedQueue.Count > 0)
@@ -71,7 +87,7 @@ public class TurnManager : MonoBehaviour
             }
         }
 
-        foreach (Character character in friends)
+        foreach (Character character in teammates)
         {
             foreach (Ability ability in character.listOfAbilities)
             {
@@ -80,7 +96,7 @@ public class TurnManager : MonoBehaviour
             }
         }
 
-        foreach(Character character in foes)
+        foreach(Character character in enemies)
         {
             foreach (Ability ability in character.listOfAbilities)
             {
@@ -94,12 +110,12 @@ public class TurnManager : MonoBehaviour
 
     public void DisableCharacterButtons()
     {
-        foreach (Character character in friends)
+        foreach (Character character in teammates)
         {
             character.button.interactable = false;
             character.border.gameObject.SetActive(false);
         }
-        foreach (Character character in foes)
+        foreach (Character character in enemies)
         {
             character.button.interactable = false;
             character.border.gameObject.SetActive(false);
@@ -109,8 +125,8 @@ public class TurnManager : MonoBehaviour
     public List<Character> AllCharacters()
     {
         List<Character> allTargets = new List<Character>();
-        allTargets.AddRange(friends);
-        allTargets.AddRange(foes);
+        allTargets.AddRange(teammates);
+        allTargets.AddRange(enemies);
         return allTargets;
     }
 } 

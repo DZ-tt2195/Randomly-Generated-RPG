@@ -15,18 +15,17 @@ using static UnityEditor.Experimental.GraphView.GraphView;
 public class TitleScreen : MonoBehaviour
 {
     public static TitleScreen instance;
-    Transform canvas;
+    [ReadOnly] public Transform canvas;
+
     private string ID = "1x5vKp4X4HPKyRix3w0n9aldY6Dh3B0eBegUM0WtfXFY";
     private string apiKey = "AIzaSyCl_GqHd1-WROqf7i2YddE3zH6vSv3sNTA";
     private string baseUrl = "https://sheets.googleapis.com/v4/spreadsheets/";
 
     [SerializeField] PlayerCharacter playerPrefab;
-    [Tooltip("0 = Knight, 1 = Angel, 2 = Wizard")] [SerializeField] List<Sprite> playerSprites;
-
     [Tooltip("store all players")][ReadOnly] public List<Character> listOfPlayers = new List<Character>();
-    [Tooltip("store all abilities")] [ReadOnly] public List<AbilityData> listOfAbilities;
-    [Tooltip("store all enemies")][ReadOnly] public List<CharacterData> listOfEnemies;
-    [Tooltip("store all helpers")][ReadOnly] public List<CharacterData> listOfHelpers;
+    [Tooltip("store all ability data")] [ReadOnly] public List<AbilityData> listOfAbilities;
+    [Tooltip("store all enemy data")][ReadOnly] public List<CharacterData> listOfEnemies;
+    [Tooltip("store all helper data")][ReadOnly] public List<CharacterData> listOfHelpers;
 
     private void Awake()
     {
@@ -58,7 +57,7 @@ public class TitleScreen : MonoBehaviour
         }
         else
         {
-            string filePath = $"Assets/Resources/{range}.txt";
+            string filePath = $"Assets/Resources/File Data/{range}.txt";
             File.WriteAllText($"{filePath}", www.downloadHandler.text);
             Debug.Log($"downloaded {range} from the internet");
 
@@ -86,12 +85,11 @@ public class TitleScreen : MonoBehaviour
         for (int i = 0; i < players.Count; i++)
         {
             PlayerCharacter nextCharacter = Instantiate(playerPrefab);
-            nextCharacter.SetupCharacter(players[i]);
-            nextCharacter.image.sprite = playerSprites[i];
+            nextCharacter.SetupCharacter(Character.CharacterType.Teammate, players[i]);
 
             listOfPlayers.Add(nextCharacter);
             nextCharacter.transform.SetParent(canvas);
-            nextCharacter.transform.localPosition = new Vector3(-750 + (750 * i), 0, 0);
+            nextCharacter.transform.localPosition = new Vector3(-850 + (600 * i), -550, 0);
             nextCharacter.transform.SetAsFirstSibling();
         }
 

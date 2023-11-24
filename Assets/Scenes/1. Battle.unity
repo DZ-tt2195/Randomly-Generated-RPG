@@ -153,14 +153,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1e1988355d0b41d28e84d643f77ddc7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemyPrefab: {fileID: 7238922449587838795, guid: 403fd0cd1bf9946d8a06c5b31801a237, type: 3}
   listOfBoxes:
   - {fileID: 285312153}
   - {fileID: 944996650}
   - {fileID: 2013960028}
   - {fileID: 1455748386}
   - {fileID: 1005308018}
-  friends: []
-  foes: []
+  teammates: []
+  enemies: []
+  speedQueue: []
 --- !u!224 &146587604
 RectTransform:
   m_ObjectHideFlags: 0
@@ -975,10 +977,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 800, y: 600}
+  m_ReferenceResolution: {x: 2560, y: 1440}
   m_ScreenMatchMode: 0
   m_MatchWidthOrHeight: 0
   m_PhysicalUnit: 3

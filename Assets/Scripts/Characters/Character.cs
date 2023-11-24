@@ -11,6 +11,7 @@ using UnityEngine.EventSystems;
 
 public class Character : MonoBehaviour, IPointerClickHandler
 {
+
 #region Variables
 
     protected int baseHealth;
@@ -30,13 +31,15 @@ public class Character : MonoBehaviour, IPointerClickHandler
 
     public enum Position { Grounded, Airborne, Dead};
     protected Position startingPosition;
-    public Position currentPosition;
+    [ReadOnly] public Position currentPosition;
 
     public enum Emotion { Dead, Neutral, Happy, Ecstatic, Angry, Enraged, Sad, Depressed};
     protected Emotion startingEmotion;
-    public Emotion currentEmotion;
+    [ReadOnly] public Emotion currentEmotion;
 
     [ReadOnly] public List<Ability> listOfAbilities = new List<Ability>();
+    public enum CharacterType { Teammate, Enemy, Helper}
+    [ReadOnly] public CharacterType myType;
 
     [ReadOnly] public Image image;
     [ReadOnly] public Image border;
@@ -54,9 +57,12 @@ public class Character : MonoBehaviour, IPointerClickHandler
         button = GetComponent<Button>();
     }
 
-    public void SetupCharacter(CharacterData data)
+    public void SetupCharacter(CharacterType type, CharacterData data)
     {
+        this.transform.localScale = new Vector3(1, 1, 1);
+        myType = type;
         this.name = data.name;
+        this.image.sprite = Resources.Load<Sprite>($"Teammates/{this.name}");
         baseHealth = data.baseHealth; currentHealth = baseHealth;
         baseAttack = data.baseAttack;
         baseDefense = data.baseDefense;
@@ -84,14 +90,31 @@ public class Character : MonoBehaviour, IPointerClickHandler
 
     private void FixedUpdate()
     {
+        BorderControl();
+        ScreenPosition();
+    }
+
+    void BorderControl()
+    {
         Color newColor = this.border.color;
         newColor.a = borderColor;
         this.border.color = newColor;
+    }
 
+    void ScreenPosition()
+    {
         if (currentPosition == Position.Airborne)
         {
             Vector3 newPosition = transform.localPosition;
-            newPosition.y = -425 + 50 * Mathf.Cos(Time.time * 2.5f);
+            int startingPosition = (myType == CharacterType.Enemy) ? 425 : -425;
+            newPosition.y = startingPosition + 50 * Mathf.Cos(Time.time * 2.5f);
+            transform.localPosition = newPosition;
+        }
+        else
+        {
+            Vector3 newPosition = transform.localPosition;
+            int startingPosition = (myType == CharacterType.Enemy) ? 300 : -550;
+            newPosition.y = startingPosition;
             transform.localPosition = newPosition;
         }
     }
@@ -233,14 +256,14 @@ public class Character : MonoBehaviour, IPointerClickHandler
         currentEmotion = Emotion.Dead;
         currentPosition = Position.Dead;
 
-        if (TurnManager.instance.persistent.Contains(this))
+        if (this.myType == CharacterType.Teammate)
         {
 
         }
         else
         {
-            TurnManager.instance.friends.Remove(this);
-            TurnManager.instance.foes.Remove(this);
+            TurnManager.instance.teammates.Remove(this);
+            TurnManager.instance.enemies.Remove(this);
             Destroy(this.gameObject);
         }
         yield return null;
@@ -331,6 +354,16 @@ public class Character : MonoBehaviour, IPointerClickHandler
             currentEmotion = Emotion.Ecstatic;
         else
             currentEmotion = newEmotion;
+
+        if (newEmotion == Emotion.Angry || newEmotion == Emotion.Enraged)
+            border.color = Color.red;
+        if (newEmotion == Emotion.Happy || newEmotion == Emotion.Ecstatic)
+            border.color = Color.yellow;
+        if (newEmotion == Emotion.Sad || newEmotion == Emotion.Depressed)
+            border.color = Color.blue;
+        if (newEmotion == Emotion.Neutral)
+            border.color = Color.white;
+
         yield return null;
     }
 
@@ -368,4 +401,5 @@ public class Character : MonoBehaviour, IPointerClickHandler
     }
 
     #endregion
+
 }
