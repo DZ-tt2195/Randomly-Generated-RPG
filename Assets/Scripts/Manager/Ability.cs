@@ -4,11 +4,12 @@ using UnityEngine;
 using UnityEngine.UI;
 using MyBox;
 using TMPro;
-using UnityEngine.UIElements;
 
 public class Ability : MonoBehaviour
 {
+
 #region Setup
+
     public Character self;
 
     public string myName;
@@ -17,7 +18,9 @@ public class Ability : MonoBehaviour
     public string playCondition;
     public string description;
     public int healthChange;
-    public int cooldown;
+
+    public int baseCooldown;
+    public int currentCooldown;
 
     public float modifyAttack;
     public float modifyDefense;
@@ -43,7 +46,7 @@ public class Ability : MonoBehaviour
         description = data.description;
         playCondition = data.playCondition;
         healthChange = data.healthChange;
-        cooldown = data.cooldown;
+        baseCooldown = data.cooldown; currentCooldown = baseCooldown;
         modifyAttack = data.modifyAttack;
         modifyDefense = data.modifyDefense;
         modifySpeed = data.modifySpeed;
@@ -75,6 +78,249 @@ public class Ability : MonoBehaviour
         }
         else
             return 1;
+    }
+
+    #endregion
+
+#region Play Condition
+
+    public bool CanPlay()
+    {
+        if (currentCooldown == 0)
+        {
+            listOfTargets = GetTargets();
+
+            string divide = playCondition.Replace(" ", "");
+            divide = divide.ToUpper();
+            string[] methodsInStrings = divide.Split('/');
+
+            for (int i = listOfTargets.Count - 1; i >= 0; i--)
+            {
+                if (methodsInStrings[0] == "ISDEAD" && listOfTargets[i].CalculateHealth() > 0)
+                    listOfTargets.RemoveAt(i);
+                else if (listOfTargets[i].CalculateHealth() <= 0)
+                    listOfTargets.RemoveAt(i);
+            }
+
+            foreach (string nextMethod in methodsInStrings)
+            {
+                switch (nextMethod)
+                {
+                    case "GROUNDEDONLY":
+                        for (int i = listOfTargets.Count - 1; i >= 0; i--)
+                            if (listOfTargets[i].currentPosition != Character.Position.Grounded) listOfTargets.RemoveAt(i);
+                        break;
+                    case "AIRBORNEONLY":
+                        for (int i = listOfTargets.Count - 1; i >= 0; i--)
+                            if (listOfTargets[i].currentPosition != Character.Position.Airborne) listOfTargets.RemoveAt(i);
+                        break;
+                    case "NOHELPER":
+                        if (TurnManager.instance.friends.Count == 4) return false;
+                        break;
+                    case "NOTNEUTRAL":
+                        for (int i = listOfTargets.Count - 1; i >= 0; i--)
+                            if (listOfTargets[i].currentEmotion != Character.Emotion.Neutral) listOfTargets.RemoveAt(i);
+                        break;
+                }
+            }
+
+            if (teamTarget == TeamTarget.None)
+                return true;
+            else
+                return listOfTargets.Count > 0;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    List<Character> GetTargets()
+    {
+        List<Character> listOfTargets = new List<Character>();
+
+        switch (teamTarget)
+        {
+            case TeamTarget.None:
+                break;
+            case TeamTarget.Self:
+                listOfTargets.Add(this.self);
+                break;
+            case TeamTarget.All:
+                foreach (Character foe in TurnManager.instance.foes) { listOfTargets.Add(foe); }
+                foreach (Character friend in TurnManager.instance.friends) { listOfTargets.Add(friend); }
+                break;
+            case TeamTarget.AnyOne:
+                foreach (Character foe in TurnManager.instance.foes) { listOfTargets.Add(foe); }
+                foreach (Character friend in TurnManager.instance.friends) { listOfTargets.Add(friend); }
+                break;
+            case TeamTarget.OneTeammate:
+                foreach (Character friend in TurnManager.instance.friends) { listOfTargets.Add(friend); }
+                break;
+            case TeamTarget.OtherTeammate:
+                foreach (Character friend in TurnManager.instance.friends) { if (friend != this.self) listOfTargets.Add(friend); }
+                break;
+            case TeamTarget.AllTeammates:
+                foreach (Character friend in TurnManager.instance.friends) { listOfTargets.Add(friend); }
+                break;
+            case TeamTarget.OneEnemy:
+                foreach (Character foe in TurnManager.instance.foes) { listOfTargets.Add(foe); }
+                break;
+            case TeamTarget.OtherEnemy:
+                foreach (Character foe in TurnManager.instance.foes) { if (foe != this.self) listOfTargets.Add(foe); }
+                listOfTargets.Remove(this.self);
+                break;
+            case TeamTarget.AllEnemies:
+                foreach (Character foe in TurnManager.instance.foes) { listOfTargets.Add(foe); }
+                break;
+        }
+        return listOfTargets;
+    }
+
+#endregion
+
+#region Play Instructions
+
+    public IEnumerator ResolveMethod(string methodName)
+    {
+        switch (methodName)
+        {
+            case "ATTACK":
+                for (int i = 0; i < listOfTargets.Count; i++)
+                    yield return listOfTargets[i].TakeDamage(CalculateDamage(self, listOfTargets[i]));
+                break;
+            case "SELFHEAL":
+                yield return self.GainHealth(healthChange);
+                break;
+            case "TARGETSHEAL":
+                for (int i = 0; i < listOfTargets.Count; i++)
+                    yield return listOfTargets[i].GainHealth(healthChange);
+                break;
+
+            case "SELFGROUNDED":
+                yield return self.ChangePosition(Character.Position.Grounded);
+                break;
+            case "TARGETSGROUNDED":
+                for (int i = 0; i < listOfTargets.Count; i++)
+                    yield return listOfTargets[i].ChangePosition(Character.Position.Grounded); 
+                break;
+
+            case "SELFAIRBORNE":
+                yield return self.ChangePosition(Character.Position.Airborne);
+                break;
+            case "TARGETSAIRBORNE":
+                for (int i = 0; i < listOfTargets.Count; i++)
+                    yield return listOfTargets[i].ChangePosition(Character.Position.Airborne);
+                break;
+
+            case "SELFHAPPY":
+                yield return self.ChangeEmotion(Character.Emotion.Happy);
+                break;
+            case "TARGETSHAPPY":
+                for (int i = 0; i < listOfTargets.Count; i++)
+                    yield return listOfTargets[i].ChangeEmotion(Character.Emotion.Happy);
+                break;
+
+            case "SELFECSTATIC":
+                yield return self.ChangeEmotion(Character.Emotion.Ecstatic);
+                break;
+            case "TARGETSECSTATIC":
+                for (int i = 0; i < listOfTargets.Count; i++)
+                    yield return listOfTargets[i].ChangeEmotion(Character.Emotion.Ecstatic);
+                break;
+
+            case "SELFSAD":
+                yield return self.ChangeEmotion(Character.Emotion.Sad);
+                break;
+            case "TARGETSSAD":
+                for (int i = 0; i < listOfTargets.Count; i++)
+                    yield return listOfTargets[i].ChangeEmotion(Character.Emotion.Sad);
+                break;
+
+            case "SELFDEPRESSED":
+                yield return self.ChangeEmotion(Character.Emotion.Depressed);
+                break;
+            case "TARGETSDEPRESSED":
+                for (int i = 0; i < listOfTargets.Count; i++)
+                    yield return listOfTargets[i].ChangeEmotion(Character.Emotion.Depressed);
+                break;
+
+            case "SELFANGRY":
+                yield return self.ChangeEmotion(Character.Emotion.Angry);
+                break;
+            case "TARGETSANGRY":
+                for (int i = 0; i < listOfTargets.Count; i++)
+                    yield return listOfTargets[i].ChangeEmotion(Character.Emotion.Angry);
+                break;
+
+            case "SELFENRAGED":
+                yield return self.ChangeEmotion(Character.Emotion.Enraged);
+                break;
+            case "TARGETSENRAGED":
+                for (int i = 0; i < listOfTargets.Count; i++)
+                    yield return listOfTargets[i].ChangeEmotion(Character.Emotion.Enraged);
+                break;
+
+            case "SELFNEUTRAL":
+                yield return self.ChangeEmotion(Character.Emotion.Neutral);
+                break;
+            case "TARGETSNEUTRAL":
+                for (int i = 0; i < listOfTargets.Count; i++)
+                    yield return listOfTargets[i].ChangeEmotion(Character.Emotion.Neutral);
+                break;
+
+            case "SELFATTACKSTAT":
+                yield return self.ChangeAttack(modifyAttack);
+                break;
+            case "TARGETSATTACKSTAT":
+                for (int i = 0; i < listOfTargets.Count; i++)
+                    yield return listOfTargets[i].ChangeAttack(modifyAttack);
+                break;
+
+            case "SELFDEFENSESTAT":
+                yield return self.ChangeDefense(modifyDefense);
+                break;
+            case "TARGETSDEFENSESTAT":
+                for (int i = 0; i < listOfTargets.Count; i++)
+                    yield return listOfTargets[i].ChangeDefense(modifyDefense);
+                break;
+
+            case "SELFSPEEDSTAT":
+                yield return self.ChangeSpeed(modifySpeed);
+                break;
+            case "TARGETSSPEEDSTAT":
+                for (int i = 0; i < listOfTargets.Count; i++)
+                    yield return listOfTargets[i].ChangeSpeed(modifySpeed);
+                break;
+
+            case "SELFLUCKSTAT":
+                yield return self.ChangeLuck(modifyLuck);
+                break;
+            case "TARGETSLUCKSTAT":
+                for (int i = 0; i < listOfTargets.Count; i++)
+                    yield return listOfTargets[i].ChangeLuck(modifyLuck);
+                break;
+
+            case "SELFACCURACYSTAT":
+                yield return self.ChangeAccuracy(modifyAccuracy);
+                break;
+            case "TARGETSACCURACYSTAT":
+                for (int i = 0; i < listOfTargets.Count; i++)
+                    yield return listOfTargets[i].ChangeAccuracy(modifyAccuracy);
+                break;
+
+            case "SELFDESTRUCT":
+                yield return self.HasDied();
+                break;
+            case "TARGETSREVIVE":
+                for (int i = 0; i < listOfTargets.Count; i++)
+                    yield return listOfTargets[i].Revive(healthChange);
+                break;
+
+            default:
+                Debug.LogError($"{methodName} isn't a method");
+                break;
+        }
     }
 
     float Effectiveness(Character user, Character target)
@@ -214,7 +460,12 @@ public class Ability : MonoBehaviour
     {
         if (RollAccuracy(user.CalculateAccuracy()))
         {
-            return (int)(Random.Range(0.75f, 1.25f) * RollCritical(user.CalculateLuck()) * Effectiveness(user, target) * healthChange * user.CalculateAttack() - target.CalculateDefense());
+            return (int)(Random.Range(0.8f, 1.2f)
+            * RollCritical(user.CalculateLuck())
+            * Effectiveness(user, target)
+            * healthChange
+            * user.CalculateAttack()
+            - target.CalculateDefense(user));
         }
         else
         {
@@ -222,102 +473,6 @@ public class Ability : MonoBehaviour
         }
     }
 
-    #endregion
+#endregion
 
-#region Play Condition
-
-    public bool CanPlay()
-    {
-        if (cooldown == 0)
-        {
-            listOfTargets = GetTargets();
-
-            string divide = playCondition.Replace(" ", "");
-            divide = divide.ToUpper();
-            string[] methodsInStrings = divide.Split('/');
-
-            for (int i = listOfTargets.Count - 1; i >= 0; i--)
-            {
-                if (methodsInStrings[0] == "ISDEAD" && listOfTargets[i].GetHealth() > 0)
-                    listOfTargets.RemoveAt(i);
-                else if (listOfTargets[i].GetHealth() < 0)
-                    listOfTargets.RemoveAt(i);
-            }
-
-            foreach (string nextMethod in methodsInStrings)
-            {
-                switch (nextMethod)
-                {
-                    case "GROUNDEDONLY":
-                        for (int i = listOfTargets.Count - 1; i >= 0; i--)
-                            if (listOfTargets[i].currentPosition != Character.Position.Grounded) listOfTargets.RemoveAt(i);
-                        break;
-                    case "AIRBORNEONLY":
-                        for (int i = listOfTargets.Count - 1; i >= 0; i--)
-                            if (listOfTargets[i].currentPosition != Character.Position.Airborne) listOfTargets.RemoveAt(i);
-                        break;
-                    case "NOHELPER":
-                        if (TurnManager.instance.friends.Count == 4) return false;
-                        break;
-                    case "NOTNEUTRAL":
-                        for (int i = listOfTargets.Count - 1; i >= 0; i--)
-                            if (listOfTargets[i].currentEmotion != Character.Emotion.Neutral) listOfTargets.RemoveAt(i);
-                        break;
-                }
-            }
-
-            if (teamTarget == TeamTarget.None)
-                return true;
-            else
-                return listOfTargets.Count > 0;
-        }
-        else
-        {
-            return false;
-        }
-    }
-
-    List<Character> GetTargets()
-    {
-        List<Character> listOfTargets = new List<Character>();
-
-        switch (teamTarget)
-        {
-            case TeamTarget.None:
-                break;
-            case TeamTarget.Self:
-                listOfTargets.Add(this.self);
-                break;
-            case TeamTarget.All:
-                foreach (Character foe in TurnManager.instance.foes) { listOfTargets.Add(foe); }
-                foreach (Character friend in TurnManager.instance.friends) { listOfTargets.Add(friend); }
-                break;
-            case TeamTarget.AnyOne:
-                foreach (Character foe in TurnManager.instance.foes) { listOfTargets.Add(foe); }
-                foreach (Character friend in TurnManager.instance.friends) { listOfTargets.Add(friend); }
-                break;
-            case TeamTarget.OneTeammate:
-                foreach (Character friend in TurnManager.instance.friends) { listOfTargets.Add(friend); }
-                break;
-            case TeamTarget.OtherTeammate:
-                foreach (Character friend in TurnManager.instance.friends) { if (friend != this.self) listOfTargets.Add(friend); }
-                break;
-            case TeamTarget.AllTeammates:
-                foreach (Character friend in TurnManager.instance.friends) { listOfTargets.Add(friend); }
-                break;
-            case TeamTarget.OneEnemy:
-                foreach (Character foe in TurnManager.instance.foes) { listOfTargets.Add(foe); }
-                break;
-            case TeamTarget.OtherEnemy:
-                foreach (Character foe in TurnManager.instance.foes) { if (foe != this.self) listOfTargets.Add(foe); }
-                listOfTargets.Remove(this.self);
-                break;
-            case TeamTarget.AllEnemies:
-                foreach (Character foe in TurnManager.instance.foes) { listOfTargets.Add(foe); }
-                break;
-        }
-        return listOfTargets;
-    }
-
-    #endregion
 }

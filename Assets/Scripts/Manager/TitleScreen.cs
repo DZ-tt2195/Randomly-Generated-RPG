@@ -20,7 +20,6 @@ public class TitleScreen : MonoBehaviour
     private string apiKey = "AIzaSyCl_GqHd1-WROqf7i2YddE3zH6vSv3sNTA";
     private string baseUrl = "https://sheets.googleapis.com/v4/spreadsheets/";
 
-
     [SerializeField] PlayerCharacter playerPrefab;
     [Tooltip("0 = Knight, 1 = Angel, 2 = Wizard")] [SerializeField] List<Sprite> playerSprites;
 

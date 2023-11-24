@@ -11,6 +11,8 @@ using UnityEngine.EventSystems;
 
 public class Character : MonoBehaviour, IPointerClickHandler
 {
+#region Variables
+
     protected int baseHealth;
     protected int currentHealth;
 
@@ -41,7 +43,9 @@ public class Character : MonoBehaviour, IPointerClickHandler
     public static float borderColor;
     [ReadOnly] public Button button;
 
-    #region Setup
+    #endregion
+
+#region Setup
 
     private void Awake()
     {
@@ -76,7 +80,7 @@ public class Character : MonoBehaviour, IPointerClickHandler
 
     #endregion
 
-    #region UI
+#region UI
 
     private void FixedUpdate()
     {
@@ -102,41 +106,237 @@ public class Character : MonoBehaviour, IPointerClickHandler
 
     #endregion
 
-    #region Stats
+#region Stats
 
-    public int GetHealth()
+    public int CalculateHealth()
     {
         return currentHealth;
     }
 
     public float CalculateAttack()
     {
-        return baseAttack * modifyAttack;
+        float emotionEffect;
+        switch (currentEmotion)
+        {
+            case Emotion.Angry:
+                emotionEffect = 1.15f;
+                break;
+            case Emotion.Enraged:
+                emotionEffect = 1.3f;
+                break;
+            default:
+                emotionEffect = 1f;
+                break;
+        }
+
+        return baseAttack * modifyAttack * emotionEffect;
     }
 
-    public float CalculateDefense()
+    public float CalculateDefense(Character attacker)
     {
-        return baseDefense * modifyDefense;
+        float emotionEffect = 1f;
+
+        if (this.currentEmotion == Emotion.Sad )
+        {
+            if (attacker.currentEmotion != Emotion.Enraged && attacker.currentEmotion != Emotion.Angry)
+                emotionEffect = 1.15f;
+        }
+        if (this.currentEmotion == Emotion.Depressed)
+        {
+            if (attacker.currentEmotion != Emotion.Enraged && attacker.currentEmotion != Emotion.Angry)
+                emotionEffect = 1.3f;
+        }
+
+        return baseDefense * modifyDefense * emotionEffect;
     }
 
     public float CalculateSpeed()
     {
-        return baseSpeed * modifySpeed;
+        float emotionEffect;
+        switch (currentEmotion)
+        {
+            case Emotion.Happy:
+                emotionEffect = 1.15f;
+                break;
+            case Emotion.Ecstatic:
+                emotionEffect = 1.3f;
+                break;
+            default:
+                emotionEffect = 1f;
+                break;
+        }
+
+        return baseSpeed * modifySpeed * emotionEffect;
     }
 
     public float CalculateLuck()
     {
-        return baseLuck * modifyLuck;
+        float emotionEffect;
+        switch (currentEmotion)
+        {
+            case Emotion.Happy:
+                emotionEffect = 1.15f;
+                break;
+            case Emotion.Ecstatic:
+                emotionEffect = 1.3f;
+                break;
+            default:
+                emotionEffect = 1f;
+                break;
+        }
+        return baseLuck * modifyLuck * emotionEffect;
     }
 
     public float CalculateAccuracy()
     {
-        return baseAccuracy * modifyAccuracy;
+        float emotionEffect;
+        switch (currentEmotion)
+        {
+            case Emotion.Sad:
+                emotionEffect = 0.9f;
+                break;
+            case Emotion.Depressed:
+                emotionEffect = 0.8f;
+                break;
+            default:
+                emotionEffect = 1f;
+                break;
+        }
+        return baseAccuracy * modifyAccuracy * emotionEffect;
     }
 
     #endregion
 
-    #region Abilities
+#region Change Stats
+
+    public IEnumerator GainHealth(int health)
+    {
+        currentHealth += health;
+        if (currentHealth > baseHealth)
+            currentHealth = baseHealth;
+        yield return null;
+    }
+
+    public IEnumerator TakeDamage(int damage)
+    {
+        yield return null;
+        currentHealth -= damage;
+        if (currentHealth <= 0)
+        {
+            yield return HasDied();
+        }
+    }
+
+    public IEnumerator HasDied()
+    {
+        currentHealth = -1;
+        currentEmotion = Emotion.Dead;
+        currentPosition = Position.Dead;
+
+        if (TurnManager.instance.persistent.Contains(this))
+        {
+
+        }
+        else
+        {
+            TurnManager.instance.friends.Remove(this);
+            TurnManager.instance.foes.Remove(this);
+            Destroy(this.gameObject);
+        }
+        yield return null;
+    }
+
+    public IEnumerator Revive(int health)
+    {
+        currentHealth = health;
+        currentEmotion = startingEmotion;
+        currentPosition = startingPosition;
+
+        modifyAttack = 1f;
+        modifyDefense = 1f;
+        modifyAccuracy = 1f;
+        modifyLuck = 1f;
+        modifyAccuracy = 1f;
+        yield return null;
+    }
+
+    public IEnumerator ChangeAttack(float effect)
+    {
+        modifyAttack += effect;
+        if (modifyAttack < 0.5f)
+            modifyAttack = 0.5f;
+        else if (modifyAttack > 1.5f)
+            modifyAttack = 1.5f;
+
+        yield return null;
+    }
+
+    public IEnumerator ChangeDefense(float effect)
+    {
+        modifyDefense += effect;
+        if (modifyDefense < 0.5f)
+            modifyDefense = 0.5f;
+        else if (modifyDefense > 1.5f)
+            modifyDefense = 1.5f;
+
+        yield return null;
+    }
+
+    public IEnumerator ChangeSpeed(float effect)
+    {
+        modifySpeed += effect;
+        if (modifySpeed < 0.5f)
+            modifySpeed = 0.5f;
+        else if (modifySpeed > 1.5f)
+            modifySpeed = 1.5f;
+
+        yield return null;
+    }
+
+    public IEnumerator ChangeLuck(float effect)
+    {
+        modifyLuck += effect;
+        if (modifyLuck < 0.5f)
+            modifyLuck = 0.5f;
+        else if (modifyLuck > 1.5f)
+            modifyLuck = 1.5f;
+
+        yield return null;
+    }
+
+    public IEnumerator ChangeAccuracy(float effect)
+    {
+        modifyAccuracy += effect;
+        if (modifyAccuracy < 0.5f)
+            modifyAccuracy = 0.5f;
+        else if (modifyAccuracy > 1.5f)
+            modifyAccuracy = 1.5f;
+
+        yield return null;
+    }
+
+    public IEnumerator ChangePosition(Position newPosition)
+    {
+        yield return null;
+        currentPosition = newPosition;
+    }
+
+    public IEnumerator ChangeEmotion(Emotion newEmotion)
+    {
+        if (newEmotion == Emotion.Angry && currentEmotion == Emotion.Angry)
+            currentEmotion = Emotion.Enraged;
+        else if (newEmotion == Emotion.Sad && currentEmotion == Emotion.Sad)
+            currentEmotion = Emotion.Depressed;
+        else if (newEmotion == Emotion.Happy && currentEmotion == Emotion.Happy)
+            currentEmotion = Emotion.Ecstatic;
+        else
+            currentEmotion = newEmotion;
+        yield return null;
+    }
+
+    #endregion
+
+#region Abilities
 
     public virtual IEnumerator MyTurn()
     {
@@ -147,5 +347,25 @@ public class Character : MonoBehaviour, IPointerClickHandler
     {
         yield return null;
     }
+
+    protected IEnumerator ResolveAbility(Ability ability)
+    {
+        string divide = ability.instructions.Replace(" ", "");
+        divide = divide.ToUpper();
+        string[] methodsInStrings = divide.Split('/');
+
+        foreach (string nextMethod in methodsInStrings)
+        {
+            if (nextMethod == "" || nextMethod == "NONE")
+            {
+                continue;
+            }
+            else
+            {
+                yield return ability.ResolveMethod(nextMethod);
+            }
+        }
+    }
+
     #endregion
 }

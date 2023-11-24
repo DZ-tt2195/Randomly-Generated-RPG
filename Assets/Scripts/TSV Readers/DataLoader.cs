@@ -140,7 +140,16 @@ public class DataLoader
 
     static float StringToFloat(string line)
     {
-        return (line == "") ? 0f : float.Parse(line);
+        try
+        {
+            return (line == "") ? 0f : float.Parse(line);
+        }
+        catch (FormatException)
+        {
+            Debug.Log(line);
+            return -1f;
+        }
+
     }
 
     static int StringToInt(string line)

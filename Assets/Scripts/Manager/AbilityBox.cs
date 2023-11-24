@@ -18,6 +18,6 @@ public class AbilityBox : MonoBehaviour
         try {button.interactable = ability.CanPlay(); } catch (NullReferenceException) { /*do nothing*/ };
         textName.text = ability.myName;
         textDescription.text = ability.description;
-        textCountdown.text = $"{ability.cooldown}";
+        textCountdown.text = $"{ability.baseCooldown}";
     }
 }

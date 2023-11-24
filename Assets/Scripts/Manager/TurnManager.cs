@@ -13,6 +13,7 @@ public class TurnManager : MonoBehaviour
     [ReadOnly] public List<Character> friends = new List<Character>();
     [ReadOnly] public List<Character> foes = new List<Character>();
     [ReadOnly] public List<Character> speedQueue = new List<Character>();
+    [ReadOnly] public List<Character> persistent = new List<Character>();
     bool decrease = true;
 
     private void Awake()
@@ -27,10 +28,10 @@ public class TurnManager : MonoBehaviour
         {
             Character nextFriend = TitleScreen.instance.listOfPlayers[i];
             friends.Add(nextFriend);
+            persistent.Add(nextFriend);
             nextFriend.transform.SetParent(grouping);
             nextFriend.transform.localPosition = new Vector3(-850 + (600 * i), -550, 0);
         }
-        //foes.Add(friends[2]);
 
         StartCoroutine(ResolveRound());
     }
@@ -55,7 +56,6 @@ public class TurnManager : MonoBehaviour
         speedQueue = AllCharacters();
 
         while (speedQueue.Count > 0)
-        //while (speedQueue.Count > 0 && friends.Count > 0 && foes.Count > 0)
         {
             DisableCharacterButtons();
             speedQueue = speedQueue.OrderByDescending(o => o.CalculateSpeed()).ToList();
@@ -64,16 +64,19 @@ public class TurnManager : MonoBehaviour
             Character nextInLine = speedQueue[0];
             speedQueue.RemoveAt(0);
 
-            nextInLine.border.gameObject.SetActive(true);
-            yield return nextInLine.MyTurn();
+            if (nextInLine != null && nextInLine.CalculateHealth() > 0)
+            {
+                nextInLine.border.gameObject.SetActive(true);
+                yield return nextInLine.MyTurn();
+            }
         }
 
         foreach (Character character in friends)
         {
             foreach (Ability ability in character.listOfAbilities)
             {
-                if (ability.cooldown > 0)
-                    ability.cooldown--;
+                if (ability.currentCooldown > 0)
+                    ability.currentCooldown--;
             }
         }
 
@@ -81,8 +84,8 @@ public class TurnManager : MonoBehaviour
         {
             foreach (Ability ability in character.listOfAbilities)
             {
-                if (ability.cooldown > 0)
-                    ability.cooldown--;
+                if (ability.currentCooldown > 0)
+                    ability.currentCooldown--;
             }
         }
 

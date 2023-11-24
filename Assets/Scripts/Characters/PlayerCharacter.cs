@@ -10,6 +10,18 @@ public class PlayerCharacter : Character
 
     public override IEnumerator MyTurn()
     {
+        EnableAbilityBoxes();
+        yield return WaitForChoice();
+
+        Ability chosenAbility = this.listOfAbilities[choice];
+        this.border.gameObject.SetActive(false);
+        yield return ChooseTarget(chosenAbility);
+        chosenAbility.currentCooldown = chosenAbility.baseCooldown;
+        yield return ResolveAbility(chosenAbility);
+    }
+
+    void EnableAbilityBoxes()
+    {
         TurnManager.instance.listOfBoxes[0].transform.parent.gameObject.SetActive(true);
         for (int i = 0; i < TurnManager.instance.listOfBoxes.Count; i++)
         {
@@ -25,11 +37,6 @@ public class PlayerCharacter : Character
             }
             catch (ArgumentOutOfRangeException) { box.gameObject.SetActive(false); }
         }
-
-        yield return WaitForChoice();
-        Ability chosenAbility = this.listOfAbilities[choice];
-        this.border.gameObject.SetActive(false);
-        yield return ChooseTarget(chosenAbility);
     }
 
     protected override IEnumerator ChooseTarget(Ability ability)
@@ -50,9 +57,9 @@ public class PlayerCharacter : Character
             }
 
             yield return WaitForChoice();
-            Character chosenCharacter = ability.listOfTargets[choice];
-            ability.listOfTargets.Clear();
-            ability.listOfTargets.Add(chosenCharacter);
+
+            List<Character> selectedTarget = new List<Character>{ability.listOfTargets[choice]};
+            ability.listOfTargets = selectedTarget;
         }
     }
 
