@@ -112,12 +112,12 @@ public class TurnManager : MonoBehaviour
     {
         foreach (Character character in teammates)
         {
-            character.button.interactable = false;
+            character.myButton.interactable = false;
             character.border.gameObject.SetActive(false);
         }
         foreach (Character character in enemies)
         {
-            character.button.interactable = false;
+            character.myButton.interactable = false;
             character.border.gameObject.SetActive(false);
         }
     }

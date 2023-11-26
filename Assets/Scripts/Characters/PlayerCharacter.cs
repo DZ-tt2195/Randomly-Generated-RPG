@@ -50,15 +50,15 @@ public class PlayerCharacter : Character
             {
                 Character character = ability.listOfTargets[i];
                 character.border.gameObject.SetActive(true);
-                character.button.interactable = true;
-                character.button.onClick.RemoveAllListeners();
+                character.myButton.interactable = true;
+                character.myButton.onClick.RemoveAllListeners();
                 int buttonNum = i;
-                character.button.onClick.AddListener(() => ReceiveChoice(buttonNum));
+                character.myButton.onClick.AddListener(() => ReceiveChoice(buttonNum));
             }
 
             yield return WaitForChoice();
 
-            List<Character> selectedTarget = new List<Character>{ability.listOfTargets[choice]};
+            List<Character> selectedTarget = new() { ability.listOfTargets[choice]};
             ability.listOfTargets = selectedTarget;
         }
     }

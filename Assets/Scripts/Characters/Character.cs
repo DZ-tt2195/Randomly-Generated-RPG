@@ -8,14 +8,16 @@ using MyBox;
 using UnityEngine.EventSystems;
 
 [RequireComponent(typeof(Button))] [RequireComponent(typeof(Image))]
-
 public class Character : MonoBehaviour, IPointerClickHandler
 {
 
 #region Variables
 
+    Vector3 originalSize = new Vector3(1, 1, 1);
+
     protected int baseHealth;
     protected int currentHealth;
+    [SerializeField] TMP_Text healthText;
 
     protected float baseAttack;
     protected float baseDefense;
@@ -31,20 +33,22 @@ public class Character : MonoBehaviour, IPointerClickHandler
 
     public enum Position { Grounded, Airborne, Dead};
     protected Position startingPosition;
-    [ReadOnly] public Position currentPosition;
+    /*[ReadOnly]*/ public Position currentPosition;
 
     public enum Emotion { Dead, Neutral, Happy, Ecstatic, Angry, Enraged, Sad, Depressed};
     protected Emotion startingEmotion;
-    [ReadOnly] public Emotion currentEmotion;
+    /*[ReadOnly]*/ public Emotion currentEmotion;
+    [SerializeField] TMP_Text emotionText;
 
     [ReadOnly] public List<Ability> listOfAbilities = new List<Ability>();
     public enum CharacterType { Teammate, Enemy, Helper}
     [ReadOnly] public CharacterType myType;
 
-    [ReadOnly] public Image image;
-    [ReadOnly] public Image border;
     public static float borderColor;
-    [ReadOnly] public Button button;
+    public Image image;
+    public Image border;
+    public Button myButton;
+    [SerializeField] Button infoButton;
 
     #endregion
 
@@ -52,25 +56,34 @@ public class Character : MonoBehaviour, IPointerClickHandler
 
     private void Awake()
     {
-        border = this.transform.GetChild(0).GetComponent<Image>();
-        image = GetComponent<Image>();
-        button = GetComponent<Button>();
+        infoButton.onClick.AddListener(RightClickInfo);
     }
 
     public void SetupCharacter(CharacterType type, CharacterData data)
     {
-        this.transform.localScale = new Vector3(1, 1, 1);
         myType = type;
         this.name = data.name;
-        this.image.sprite = Resources.Load<Sprite>($"Teammates/{this.name}");
         baseHealth = data.baseHealth; currentHealth = baseHealth;
         baseAttack = data.baseAttack;
         baseDefense = data.baseDefense;
         baseSpeed = data.baseSpeed;
         baseLuck = data.baseLuck;
         baseAccuracy = data.baseAccuracy;
-        currentPosition = data.startingPosition;
-        startingEmotion = data.startingEmotion; currentEmotion = startingEmotion;
+        StartCoroutine(ChangePosition( data.startingPosition));
+        startingEmotion = data.startingEmotion; StartCoroutine(ChangeEmotion(data.startingEmotion));
+
+        switch (myType)
+        {
+            case CharacterType.Teammate:
+                this.image.sprite = Resources.Load<Sprite>($"Teammates/{this.name}");
+                break;
+            case CharacterType.Enemy:
+                this.image.sprite = Resources.Load<Sprite>($"Enemies/{this.name}");
+                break;
+            case CharacterType.Helper:
+                this.image.sprite = Resources.Load<Sprite>($"Helpers/{this.name}");
+                break;
+        }
 
         string[] divideIntoNumbers = data.skillNumbers.Split(',');
         foreach (string x in divideIntoNumbers)
@@ -90,6 +103,7 @@ public class Character : MonoBehaviour, IPointerClickHandler
 
     private void FixedUpdate()
     {
+        this.transform.localScale = originalSize;
         BorderControl();
         ScreenPosition();
     }
@@ -123,8 +137,13 @@ public class Character : MonoBehaviour, IPointerClickHandler
     {
         if (eventData.button == PointerEventData.InputButton.Right)
         {
-            RightClick.instance.DisplayInfo(this);
+            RightClickInfo();
         }
+    }
+
+    void RightClickInfo()
+    {
+        RightClick.instance.DisplayInfo(this);
     }
 
     #endregion
@@ -138,20 +157,12 @@ public class Character : MonoBehaviour, IPointerClickHandler
 
     public float CalculateAttack()
     {
-        float emotionEffect;
-        switch (currentEmotion)
+        var emotionEffect = currentEmotion switch
         {
-            case Emotion.Angry:
-                emotionEffect = 1.15f;
-                break;
-            case Emotion.Enraged:
-                emotionEffect = 1.3f;
-                break;
-            default:
-                emotionEffect = 1f;
-                break;
-        }
-
+            Emotion.Angry => 1.15f,
+            Emotion.Enraged => 1.3f,
+            _ => 1f,
+        };
         return baseAttack * modifyAttack * emotionEffect;
     }
 
@@ -175,56 +186,34 @@ public class Character : MonoBehaviour, IPointerClickHandler
 
     public float CalculateSpeed()
     {
-        float emotionEffect;
-        switch (currentEmotion)
+        var emotionEffect = currentEmotion switch
         {
-            case Emotion.Happy:
-                emotionEffect = 1.15f;
-                break;
-            case Emotion.Ecstatic:
-                emotionEffect = 1.3f;
-                break;
-            default:
-                emotionEffect = 1f;
-                break;
-        }
-
+            Emotion.Happy => 1.15f,
+            Emotion.Ecstatic => 1.3f,
+            _ => 1f,
+        };
         return baseSpeed * modifySpeed * emotionEffect;
     }
 
     public float CalculateLuck()
     {
-        float emotionEffect;
-        switch (currentEmotion)
+        var emotionEffect = currentEmotion switch
         {
-            case Emotion.Happy:
-                emotionEffect = 1.15f;
-                break;
-            case Emotion.Ecstatic:
-                emotionEffect = 1.3f;
-                break;
-            default:
-                emotionEffect = 1f;
-                break;
-        }
+            Emotion.Happy => 1.15f,
+            Emotion.Ecstatic => 1.3f,
+            _ => 1f,
+        };
         return baseLuck * modifyLuck * emotionEffect;
     }
 
     public float CalculateAccuracy()
     {
-        float emotionEffect;
-        switch (currentEmotion)
+        var emotionEffect = currentEmotion switch
         {
-            case Emotion.Sad:
-                emotionEffect = 0.9f;
-                break;
-            case Emotion.Depressed:
-                emotionEffect = 0.8f;
-                break;
-            default:
-                emotionEffect = 1f;
-                break;
-        }
+            Emotion.Sad => 0.9f,
+            Emotion.Depressed => 0.8f,
+            _ => 1f,
+        };
         return baseAccuracy * modifyAccuracy * emotionEffect;
     }
 
@@ -237,13 +226,14 @@ public class Character : MonoBehaviour, IPointerClickHandler
         currentHealth += health;
         if (currentHealth > baseHealth)
             currentHealth = baseHealth;
+        healthText.text = $"{Math.Round((float)currentHealth/baseHealth), 0}%";
         yield return null;
     }
 
     public IEnumerator TakeDamage(int damage)
     {
-        yield return null;
         currentHealth -= damage;
+        healthText.text = $"{Math.Round((float)currentHealth / baseHealth),0}%";
         if (currentHealth <= 0)
         {
             yield return HasDied();
@@ -253,8 +243,9 @@ public class Character : MonoBehaviour, IPointerClickHandler
     public IEnumerator HasDied()
     {
         currentHealth = -1;
-        currentEmotion = Emotion.Dead;
+        yield return ChangeEmotion(Emotion.Dead);
         currentPosition = Position.Dead;
+        healthText.text = $"0%";
 
         if (this.myType == CharacterType.Teammate)
         {
@@ -266,21 +257,19 @@ public class Character : MonoBehaviour, IPointerClickHandler
             TurnManager.instance.enemies.Remove(this);
             Destroy(this.gameObject);
         }
-        yield return null;
     }
 
     public IEnumerator Revive(int health)
     {
         currentHealth = health;
-        currentEmotion = startingEmotion;
-        currentPosition = startingPosition;
+        yield return ChangePosition(startingPosition);
+        yield return ChangeEmotion(startingEmotion);
 
         modifyAttack = 1f;
         modifyDefense = 1f;
         modifyAccuracy = 1f;
         modifyLuck = 1f;
         modifyAccuracy = 1f;
-        yield return null;
     }
 
     public IEnumerator ChangeAttack(float effect)
@@ -355,14 +344,41 @@ public class Character : MonoBehaviour, IPointerClickHandler
         else
             currentEmotion = newEmotion;
 
-        if (newEmotion == Emotion.Angry || newEmotion == Emotion.Enraged)
-            border.color = Color.red;
-        if (newEmotion == Emotion.Happy || newEmotion == Emotion.Ecstatic)
-            border.color = Color.yellow;
-        if (newEmotion == Emotion.Sad || newEmotion == Emotion.Depressed)
-            border.color = Color.blue;
-        if (newEmotion == Emotion.Neutral)
-            border.color = Color.white;
+        switch (currentEmotion)
+        {
+            case Emotion.Neutral:
+                emotionText.text = "NEUTRAL";
+                border.color = Color.white;
+                break;
+            case Emotion.Happy:
+                emotionText.text = "HAPPY";
+                border.color = Color.yellow;
+                break;
+            case Emotion.Ecstatic:
+                emotionText.text = "ECSTATIC";
+                border.color = Color.yellow;
+                break;
+            case Emotion.Angry:
+                emotionText.text = "ANGRY";
+                border.color = Color.red;
+                break;
+            case Emotion.Enraged:
+                emotionText.text = "ENRAGED";
+                border.color = Color.red;
+                break;
+            case Emotion.Sad:
+                emotionText.text = "SAD";
+                border.color = Color.blue;
+                break;
+            case Emotion.Depressed:
+                emotionText.text = "DEPRESSED";
+                border.color = Color.blue;
+                break;
+            case Emotion.Dead:
+                emotionText.text = "DEAD";
+                border.color = Color.gray;
+                break;
+        }
 
         yield return null;
     }

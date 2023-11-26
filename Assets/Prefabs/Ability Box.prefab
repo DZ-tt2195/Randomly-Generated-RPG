@@ -141,7 +141,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: DESCRIPTION
+  m_text: hi
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -350,8 +350,6 @@ MonoBehaviour:
   textName: {fileID: 7979161190938639262}
   textDescription: {fileID: 5022448540105558371}
   textCountdown: {fileID: 6913434744222329844}
-  groundedOff: {fileID: 0}
-  airborneOff: {fileID: 0}
 --- !u!1 &8777249670550904667
 GameObject:
   m_ObjectHideFlags: 0

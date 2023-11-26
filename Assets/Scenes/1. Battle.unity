@@ -153,7 +153,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1e1988355d0b41d28e84d643f77ddc7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyPrefab: {fileID: 7238922449587838795, guid: 403fd0cd1bf9946d8a06c5b31801a237, type: 3}
+  enemyPrefab: {fileID: -7599006229869363901, guid: a1e109225b5924a9caa9a92a6abbbdcd, type: 3}
   listOfBoxes:
   - {fileID: 285312153}
   - {fileID: 944996650}
