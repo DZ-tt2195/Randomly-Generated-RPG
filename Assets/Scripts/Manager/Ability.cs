@@ -317,6 +317,10 @@ public class Ability : MonoBehaviour
                     yield return listOfTargets[i].Revive(healthChange);
                 break;
 
+            case "SUMMONHELPER":
+                TurnManager.instance.CreateHelper(summonHelper);
+                break;
+
             default:
                 Debug.LogError($"{methodName} isn't a method");
                 break;
@@ -328,129 +332,69 @@ public class Ability : MonoBehaviour
         float answer = 1;
         if (user.currentEmotion == Character.Emotion.Happy)
         {
-            switch (target.currentEmotion)
+            answer = target.currentEmotion switch
             {
-                case (Character.Emotion.Angry):
-                    answer = 1.25f;
-                    break;
-                case (Character.Emotion.Enraged):
-                    answer = 1.25f;
-                    break;
-                case (Character.Emotion.Sad):
-                    answer = 0.75f;
-                    break;
-                case (Character.Emotion.Depressed):
-                    answer = 0.75f;
-                    break;
-                default:
-                    answer = 1.0f;
-                    break;
-            }
+                (Character.Emotion.Angry) => 1.25f,
+                (Character.Emotion.Enraged) => 1.25f,
+                (Character.Emotion.Sad) => 0.75f,
+                (Character.Emotion.Depressed) => 0.75f,
+                _ => 1.0f,
+            };
         }
         else if (user.currentEmotion == Character.Emotion.Ecstatic)
         {
-            switch (target.currentEmotion)
+            answer = target.currentEmotion switch
             {
-                case (Character.Emotion.Angry):
-                    answer = 1.5f;
-                    break;
-                case (Character.Emotion.Enraged):
-                    answer = 1.5f;
-                    break;
-                case (Character.Emotion.Sad):
-                    answer = 0.5f;
-                    break;
-                case (Character.Emotion.Depressed):
-                    answer = 0.5f;
-                    break;
-                default:
-                    answer = 1.0f;
-                    break;
-            }
+                (Character.Emotion.Angry) => 1.5f,
+                (Character.Emotion.Enraged) => 1.5f,
+                (Character.Emotion.Sad) => 0.5f,
+                (Character.Emotion.Depressed) => 0.5f,
+                _ => 1.0f,
+            };
         }
         else if (user.currentEmotion == Character.Emotion.Angry)
         {
-            switch (target.currentEmotion)
+            answer = target.currentEmotion switch
             {
-                case (Character.Emotion.Sad):
-                    answer = 1.25f;
-                    break;
-                case (Character.Emotion.Depressed):
-                    answer = 1.25f;
-                    break;
-                case (Character.Emotion.Happy):
-                    answer = 0.75f;
-                    break;
-                case (Character.Emotion.Ecstatic):
-                    answer = 0.75f;
-                    break;
-                default:
-                    answer = 1.0f;
-                    break;
-            }
+                (Character.Emotion.Sad) => 1.25f,
+                (Character.Emotion.Depressed) => 1.25f,
+                (Character.Emotion.Happy) => 0.75f,
+                (Character.Emotion.Ecstatic) => 0.75f,
+                _ => 1.0f,
+            };
         }
         else if (user.currentEmotion == Character.Emotion.Enraged)
         {
-            switch (target.currentEmotion)
+            answer = target.currentEmotion switch
             {
-                case (Character.Emotion.Sad):
-                    answer = 1.5f;
-                    break;
-                case (Character.Emotion.Depressed):
-                    answer = 1.5f;
-                    break;
-                case (Character.Emotion.Happy):
-                    answer = 0.5f;
-                    break;
-                case (Character.Emotion.Ecstatic):
-                    answer = 0.5f;
-                    break;
-                default:
-                    answer = 1.0f;
-                    break;
-            }
+                (Character.Emotion.Sad) => 1.5f,
+                (Character.Emotion.Depressed) => 1.5f,
+                (Character.Emotion.Happy) => 0.5f,
+                (Character.Emotion.Ecstatic) => 0.5f,
+                _ => 1.0f,
+            };
         }
         else if (user.currentEmotion == Character.Emotion.Sad)
         {
-            switch (target.currentEmotion)
+            answer = target.currentEmotion switch
             {
-                case (Character.Emotion.Happy):
-                    answer = 1.25f;
-                    break;
-                case (Character.Emotion.Ecstatic):
-                    answer = 1.25f;
-                    break;
-                case (Character.Emotion.Angry):
-                    answer = 0.75f;
-                    break;
-                case (Character.Emotion.Enraged):
-                    answer = 0.75f;
-                    break;
-                default:
-                    answer = 1.0f;
-                    break;
-            }
+                (Character.Emotion.Happy) => 1.25f,
+                (Character.Emotion.Ecstatic) => 1.25f,
+                (Character.Emotion.Angry) => 0.75f,
+                (Character.Emotion.Enraged) => 0.75f,
+                _ => 1.0f,
+            };
         }
         else if (user.currentEmotion == Character.Emotion.Depressed)
         {
-            switch (target.currentEmotion)
+            answer = target.currentEmotion switch
             {
-                case (Character.Emotion.Happy):
-                    answer = 1.5f;
-                    break;
-                case (Character.Emotion.Ecstatic):
-                    answer = 1.5f;
-                    break;
-                case (Character.Emotion.Angry):
-                    answer = 0.5f;
-                    break;
-                case (Character.Emotion.Enraged):
-                    answer = 0.5f;
-                    break;
-                default:
-                    answer = 1.0f;
-                    break;
-            }
+                (Character.Emotion.Happy) => 1.5f,
+                (Character.Emotion.Ecstatic) => 1.5f,
+                (Character.Emotion.Angry) => 0.5f,
+                (Character.Emotion.Enraged) => 0.5f,
+                _ => 1.0f,
+            };
         }
 
         return answer;

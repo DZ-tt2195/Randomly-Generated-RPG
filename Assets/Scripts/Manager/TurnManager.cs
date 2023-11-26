@@ -11,6 +11,7 @@ public class TurnManager : MonoBehaviour
 {
     public static TurnManager instance;
     [SerializeField] EnemyCharacter enemyPrefab;
+    [SerializeField] PlayerCharacter helperPrefab;
 
     public List<AbilityBox> listOfBoxes = new List<AbilityBox>();
     [ReadOnly] public List<Character> teammates = new List<Character>();
@@ -26,12 +27,11 @@ public class TurnManager : MonoBehaviour
 
     private void Start()
     {
-        Transform grouping = GameObject.Find("Group of Players").transform;
         for (int i = 0; i < TitleScreen.instance.listOfPlayers.Count; i++)
         {
             Character nextFriend = TitleScreen.instance.listOfPlayers[i];
             teammates.Add(nextFriend);
-            nextFriend.transform.SetParent(grouping);
+            nextFriend.transform.SetParent(TitleScreen.instance.canvas);
             nextFriend.transform.localPosition = new Vector3(-850 + (600 * i), -550, 0);
         }
 
@@ -53,6 +53,26 @@ public class TurnManager : MonoBehaviour
         Debug.Log(allFriends);
     }
 
+    public void CreateHelper(int ID)
+    {
+        PlayerCharacter nextCharacter = Instantiate(helperPrefab);
+        nextCharacter.SetupCharacter(Character.CharacterType.Helper, TitleScreen.instance.listOfHelpers[ID]);
+
+        nextCharacter.transform.SetParent(TitleScreen.instance.canvas);
+        nextCharacter.transform.localPosition = new Vector3(-850 + (600 * teammates.Count), 300, 0);
+        teammates.Add(nextCharacter);
+    }
+
+    public void CreateEnemy()
+    {
+        EnemyCharacter nextCharacter = Instantiate(enemyPrefab);
+        nextCharacter.SetupCharacter(Character.CharacterType.Enemy, TitleScreen.instance.listOfEnemies[Random.Range(0, TitleScreen.instance.listOfEnemies.Count)]);
+
+        nextCharacter.transform.SetParent(TitleScreen.instance.canvas);
+        nextCharacter.transform.localPosition = new Vector3(-850 + (600 * enemies.Count), 300, 0);
+        enemies.Add(nextCharacter);
+    }
+
     IEnumerator ResolveRound()
     {
         if (enemies.Count == 0)
@@ -60,12 +80,7 @@ public class TurnManager : MonoBehaviour
             int numEnemies = Random.Range(2, 4);
             for (int i = 0; i<numEnemies; i++)
             {
-                EnemyCharacter nextCharacter = Instantiate(enemyPrefab);
-                nextCharacter.SetupCharacter(Character.CharacterType.Enemy, TitleScreen.instance.listOfEnemies[Random.Range(0, TitleScreen.instance.listOfEnemies.Count)]);
-
-                enemies.Add(nextCharacter);
-                nextCharacter.transform.SetParent(TitleScreen.instance.canvas);
-                nextCharacter.transform.localPosition = new Vector3(-850 + (600 * i), 300, 0);
+                CreateEnemy();
             }
         }
 
@@ -84,24 +99,6 @@ public class TurnManager : MonoBehaviour
             {
                 nextInLine.border.gameObject.SetActive(true);
                 yield return nextInLine.MyTurn();
-            }
-        }
-
-        foreach (Character character in teammates)
-        {
-            foreach (Ability ability in character.listOfAbilities)
-            {
-                if (ability.currentCooldown > 0)
-                    ability.currentCooldown--;
-            }
-        }
-
-        foreach(Character character in enemies)
-        {
-            foreach (Ability ability in character.listOfAbilities)
-            {
-                if (ability.currentCooldown > 0)
-                    ability.currentCooldown--;
             }
         }
 

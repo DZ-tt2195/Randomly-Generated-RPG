@@ -8,16 +8,12 @@ public class PlayerCharacter : Character
 {
     int choice;
 
-    public override IEnumerator MyTurn()
+    protected override IEnumerator ChooseAbility()
     {
         EnableAbilityBoxes();
         yield return WaitForChoice();
-
-        Ability chosenAbility = this.listOfAbilities[choice];
+        thisTurnAbility = this.listOfAbilities[choice];
         this.border.gameObject.SetActive(false);
-        yield return ChooseTarget(chosenAbility);
-        chosenAbility.currentCooldown = chosenAbility.baseCooldown;
-        yield return ResolveAbility(chosenAbility);
     }
 
     void EnableAbilityBoxes()

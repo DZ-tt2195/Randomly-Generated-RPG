@@ -6,8 +6,9 @@ using static Ability;
 
 public class EnemyCharacter : Character
 {
-    public override IEnumerator MyTurn()
+    protected override IEnumerator ChooseAbility()
     {
+        yield return null;
         List<Ability> availableAbilities = new List<Ability>();
         foreach (Ability ability in this.listOfAbilities)
         {
@@ -15,17 +16,7 @@ public class EnemyCharacter : Character
                 availableAbilities.Add(ability);
         }
 
-        if (availableAbilities.Count == 0)
-        {
-            yield return ResolveAbility(listOfAbilities[0]);
-        }
-        else
-        {
-            Ability chosenAbility = availableAbilities[Random.Range(0, availableAbilities.Count)];
-            yield return ChooseTarget(chosenAbility);
-            chosenAbility.currentCooldown = chosenAbility.baseCooldown;
-            yield return ResolveAbility(chosenAbility);
-        }
+        thisTurnAbility = (availableAbilities.Count == 0) ? listOfAbilities[0] : availableAbilities[Random.Range(0, availableAbilities.Count)];
     }
 
     protected override IEnumerator ChooseTarget(Ability ability)

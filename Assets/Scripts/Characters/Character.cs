@@ -33,14 +33,16 @@ public class Character : MonoBehaviour, IPointerClickHandler
 
     public enum Position { Grounded, Airborne, Dead};
     protected Position startingPosition;
-    /*[ReadOnly]*/ public Position currentPosition;
+    [ReadOnly] public Position currentPosition;
 
     public enum Emotion { Dead, Neutral, Happy, Ecstatic, Angry, Enraged, Sad, Depressed};
     protected Emotion startingEmotion;
-    /*[ReadOnly]*/ public Emotion currentEmotion;
+    [ReadOnly] public Emotion currentEmotion;
     [SerializeField] TMP_Text emotionText;
 
     [ReadOnly] public List<Ability> listOfAbilities = new List<Ability>();
+    protected Ability thisTurnAbility;
+
     public enum CharacterType { Teammate, Enemy, Helper}
     [ReadOnly] public CharacterType myType;
 
@@ -50,7 +52,7 @@ public class Character : MonoBehaviour, IPointerClickHandler
     public Button myButton;
     [SerializeField] Button infoButton;
 
-    #endregion
+#endregion
 
 #region Setup
 
@@ -387,7 +389,33 @@ public class Character : MonoBehaviour, IPointerClickHandler
 
 #region Abilities
 
-    public virtual IEnumerator MyTurn()
+    public IEnumerator MyTurn()
+    {
+        yield return ChooseAbility();
+        yield return ChooseTarget(thisTurnAbility);
+
+        foreach (Ability ability in listOfAbilities)
+        {
+            if (ability.currentCooldown > 0)
+                ability.currentCooldown--;
+        }
+
+        int happinessPenalty = 0;
+        switch (currentEmotion)
+        {
+            case Emotion.Happy:
+                happinessPenalty = 1;
+                break;
+            case Emotion.Ecstatic:
+                happinessPenalty = 2;
+                break;
+        }
+
+        thisTurnAbility.currentCooldown = thisTurnAbility.baseCooldown + happinessPenalty;
+        yield return ResolveAbility(thisTurnAbility);
+    }
+
+    protected virtual IEnumerator ChooseAbility()
     {
         yield return null;
     }

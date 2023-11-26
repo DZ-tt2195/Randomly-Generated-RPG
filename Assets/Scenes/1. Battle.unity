@@ -154,6 +154,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyPrefab: {fileID: -7599006229869363901, guid: a1e109225b5924a9caa9a92a6abbbdcd, type: 3}
+  helperPrefab: {fileID: 3941694292795390410, guid: 750995808170643f1b046855142825f7, type: 3}
   listOfBoxes:
   - {fileID: 285312153}
   - {fileID: 944996650}
