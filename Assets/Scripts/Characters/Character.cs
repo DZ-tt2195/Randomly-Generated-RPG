@@ -71,7 +71,7 @@ public class Character : MonoBehaviour, IPointerClickHandler
         baseSpeed = data.baseSpeed;
         baseLuck = data.baseLuck;
         baseAccuracy = data.baseAccuracy;
-        StartCoroutine(ChangePosition( data.startingPosition));
+        StartCoroutine(ChangePosition(data.startingPosition));
         startingEmotion = data.startingEmotion; StartCoroutine(ChangeEmotion(data.startingEmotion));
 
         switch (myType)
@@ -228,14 +228,16 @@ public class Character : MonoBehaviour, IPointerClickHandler
         currentHealth += health;
         if (currentHealth > baseHealth)
             currentHealth = baseHealth;
-        healthText.text = $"{Math.Round((float)currentHealth/baseHealth), 0}%";
+        healthText.text = $"{100 * ((float)currentHealth / baseHealth):F1}%";
+
         yield return null;
     }
 
     public IEnumerator TakeDamage(int damage)
     {
+        Debug.Log(damage);
         currentHealth -= damage;
-        healthText.text = $"{Math.Round((float)currentHealth / baseHealth),0}%";
+        healthText.text = $"{100 * ((float)currentHealth / baseHealth):F1}%";
         if (currentHealth <= 0)
         {
             yield return HasDied();
@@ -263,7 +265,7 @@ public class Character : MonoBehaviour, IPointerClickHandler
 
     public IEnumerator Revive(int health)
     {
-        currentHealth = health;
+        yield return GainHealth(health);
         yield return ChangePosition(startingPosition);
         yield return ChangeEmotion(startingEmotion);
 
@@ -400,19 +402,22 @@ public class Character : MonoBehaviour, IPointerClickHandler
                 ability.currentCooldown--;
         }
 
-        int happinessPenalty = 0;
-        switch (currentEmotion)
+        if (thisTurnAbility.myName != "Do Nothing")
         {
-            case Emotion.Happy:
-                happinessPenalty = 1;
-                break;
-            case Emotion.Ecstatic:
-                happinessPenalty = 2;
-                break;
-        }
+            int happinessPenalty = 0;
+            switch (currentEmotion)
+            {
+                case Emotion.Happy:
+                    happinessPenalty = 1;
+                    break;
+                case Emotion.Ecstatic:
+                    happinessPenalty = 2;
+                    break;
+            }
 
-        thisTurnAbility.currentCooldown = thisTurnAbility.baseCooldown + happinessPenalty;
-        yield return ResolveAbility(thisTurnAbility);
+            thisTurnAbility.currentCooldown = thisTurnAbility.baseCooldown + happinessPenalty;
+            yield return ResolveAbility(thisTurnAbility);
+        }
     }
 
     protected virtual IEnumerator ChooseAbility()

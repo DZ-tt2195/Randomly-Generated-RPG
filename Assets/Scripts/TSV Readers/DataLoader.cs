@@ -106,7 +106,7 @@ public class DataLoader
 
     static Ability.TeamTarget StringToTeamTarget(string line)
     {
-        line = line.ToUpper();
+        line = line.ToUpper().Trim();
         return line switch
         {
             "ANY ONE" => Ability.TeamTarget.AnyOne,
@@ -125,7 +125,7 @@ public class DataLoader
 
     static Character.Emotion StringToEmotion(string line)
     {
-        line = line.ToUpper();
+        line = line.ToUpper().Trim();
         return line switch
         {
             "NEUTRAL" => Character.Emotion.Neutral,
@@ -142,6 +142,7 @@ public class DataLoader
 
     static float StringToFloat(string line)
     {
+        line = line.Trim();
         try
         {
             return (line == "") ? 0f : float.Parse(line);
@@ -156,6 +157,7 @@ public class DataLoader
 
     static int StringToInt(string line)
     {
+        line = line.Trim();
         try
         {
             return (line == "") ? 0 : int.Parse(line);

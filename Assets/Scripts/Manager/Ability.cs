@@ -68,16 +68,17 @@ public class Ability : MonoBehaviour
         return result;
     }
 
-    int RollCritical(float value)
+    float RollCritical(float value)
     {
         float roll = (Random.Range(0f, 1f));
         bool result = roll <= value;
         if (result)
         {
-            return 2;
+            Debug.Log("critical hit");
+            return 1.5f;
         }
         else
-            return 1;
+            return 1f;
     }
 
     #endregion
@@ -404,15 +405,18 @@ public class Ability : MonoBehaviour
     {
         if (RollAccuracy(user.CalculateAccuracy()))
         {
-            return (int)(Random.Range(0.8f, 1.2f)
-            * RollCritical(user.CalculateLuck())
-            * Effectiveness(user, target)
-            * healthChange
-            * user.CalculateAttack()
-            - target.CalculateDefense(user));
+            float randomEffect = (Random.Range(0.8f, 1.2f));
+            float critical = RollCritical(user.CalculateLuck());
+            float effectiveness = Effectiveness(user, target);
+            float attack = user.CalculateAttack();
+            float defense = target.CalculateDefense(user);
+
+            Debug.Log($"{randomEffect} * {critical} * {effectiveness} * {attack} + {healthChange} - {defense}");
+            return (int)(randomEffect * critical * effectiveness * attack + healthChange - defense);
         }
         else
         {
+            Debug.Log("missed");
             return 0;
         }
     }

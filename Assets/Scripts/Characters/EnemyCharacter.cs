@@ -9,7 +9,7 @@ public class EnemyCharacter : Character
     protected override IEnumerator ChooseAbility()
     {
         yield return null;
-        List<Ability> availableAbilities = new List<Ability>();
+        List<Ability> availableAbilities = new();
         foreach (Ability ability in this.listOfAbilities)
         {
             if (ability.myName != "Skip Turn" && ability.CanPlay())
@@ -17,6 +17,7 @@ public class EnemyCharacter : Character
         }
 
         thisTurnAbility = (availableAbilities.Count == 0) ? listOfAbilities[0] : availableAbilities[Random.Range(0, availableAbilities.Count)];
+        Debug.Log(thisTurnAbility.myName);
     }
 
     protected override IEnumerator ChooseTarget(Ability ability)
@@ -26,7 +27,7 @@ public class EnemyCharacter : Character
 
         if (narrowDown.Contains(ability.teamTarget))
         {
-            List<Character> selectedTarget = new List<Character> { ability.listOfTargets[Random.Range(0, ability.listOfTargets.Count)] };
+            List<Character> selectedTarget = new() { ability.listOfTargets[Random.Range(0, ability.listOfTargets.Count)] };
             ability.listOfTargets = selectedTarget;
         }
     }
