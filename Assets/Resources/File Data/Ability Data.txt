@@ -171,7 +171,7 @@
     ],
     [
       "Angel",
-      "Revival Spirit",
+      "Spirit",
       "Summon an Airborne Helper that can sacrifice itself to bring a dead Teammate back.",
       "SummonHelper",
       "",
@@ -323,7 +323,7 @@
       "ONE ENEMY"
     ],
     [
-      "Revival Spirit",
+      "Spirit",
       "Revive",
       "Bring back a dead Teammate, then this dies.",
       "TargetsRevive/SelfDestruct",
@@ -340,7 +340,7 @@
       "ONE TEAMMATE"
     ],
     [
-      "EnemyName",
+      "Archer",
       "Basic Attack",
       "Deal damage to any Teammate.",
       "Attack",

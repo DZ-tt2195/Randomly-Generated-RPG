@@ -12,7 +12,7 @@
       "Skills"
     ],
     [
-      "EnemyName",
+      "Archer",
       "75",
       "4",
       "10",

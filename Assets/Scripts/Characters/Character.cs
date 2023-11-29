@@ -228,7 +228,7 @@ public class Character : MonoBehaviour, IPointerClickHandler
         currentHealth += health;
         if (currentHealth > baseHealth)
             currentHealth = baseHealth;
-        healthText.text = $"{100 * ((float)currentHealth / baseHealth):F1}%";
+        healthText.text = $"{100 * ((float)currentHealth / baseHealth):F0}%";
 
         yield return null;
     }
@@ -237,7 +237,7 @@ public class Character : MonoBehaviour, IPointerClickHandler
     {
         Debug.Log(damage);
         currentHealth -= damage;
-        healthText.text = $"{100 * ((float)currentHealth / baseHealth):F1}%";
+        healthText.text = $"{100 * ((float)currentHealth / baseHealth):F0}%";
         if (currentHealth <= 0)
         {
             yield return HasDied();
