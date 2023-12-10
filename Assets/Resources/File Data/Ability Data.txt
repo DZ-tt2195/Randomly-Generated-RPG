@@ -341,7 +341,7 @@
     ],
     [
       "Archer",
-      "Basic Attack",
+      "Arrow",
       "Deal damage to any Teammate.",
       "Attack",
       "",

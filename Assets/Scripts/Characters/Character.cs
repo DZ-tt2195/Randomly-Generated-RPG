@@ -106,15 +106,8 @@ public class Character : MonoBehaviour, IPointerClickHandler
     private void FixedUpdate()
     {
         this.transform.localScale = originalSize;
-        BorderControl();
+        this.border.SetAlpha(borderColor);
         ScreenPosition();
-    }
-
-    void BorderControl()
-    {
-        Color newColor = this.border.color;
-        newColor.a = borderColor;
-        this.border.color = newColor;
     }
 
     void ScreenPosition()
