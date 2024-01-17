@@ -199,75 +199,75 @@ public class Ability : MonoBehaviour
                 break;
 
             case "SELFGROUNDED":
-                yield return self.ChangePosition(Character.Position.Grounded);
+                yield return self.ChangePosition(Character.Position.Grounded, true);
                 break;
             case "TARGETSGROUNDED":
                 for (int i = 0; i < listOfTargets.Count; i++)
-                    yield return listOfTargets[i].ChangePosition(Character.Position.Grounded); 
+                    yield return listOfTargets[i].ChangePosition(Character.Position.Grounded, true); 
                 break;
 
             case "SELFAIRBORNE":
-                yield return self.ChangePosition(Character.Position.Airborne);
+                yield return self.ChangePosition(Character.Position.Airborne, true);
                 break;
             case "TARGETSAIRBORNE":
                 for (int i = 0; i < listOfTargets.Count; i++)
-                    yield return listOfTargets[i].ChangePosition(Character.Position.Airborne);
+                    yield return listOfTargets[i].ChangePosition(Character.Position.Airborne, true);
                 break;
 
             case "SELFHAPPY":
-                yield return self.ChangeEmotion(Character.Emotion.Happy);
+                yield return self.ChangeEmotion(Character.Emotion.Happy, true);
                 break;
             case "TARGETSHAPPY":
                 for (int i = 0; i < listOfTargets.Count; i++)
-                    yield return listOfTargets[i].ChangeEmotion(Character.Emotion.Happy);
+                    yield return listOfTargets[i].ChangeEmotion(Character.Emotion.Happy, true);
                 break;
 
             case "SELFECSTATIC":
-                yield return self.ChangeEmotion(Character.Emotion.Ecstatic);
+                yield return self.ChangeEmotion(Character.Emotion.Ecstatic, true);
                 break;
             case "TARGETSECSTATIC":
                 for (int i = 0; i < listOfTargets.Count; i++)
-                    yield return listOfTargets[i].ChangeEmotion(Character.Emotion.Ecstatic);
+                    yield return listOfTargets[i].ChangeEmotion(Character.Emotion.Ecstatic, true);
                 break;
 
             case "SELFSAD":
-                yield return self.ChangeEmotion(Character.Emotion.Sad);
+                yield return self.ChangeEmotion(Character.Emotion.Sad, true);
                 break;
             case "TARGETSSAD":
                 for (int i = 0; i < listOfTargets.Count; i++)
-                    yield return listOfTargets[i].ChangeEmotion(Character.Emotion.Sad);
+                    yield return listOfTargets[i].ChangeEmotion(Character.Emotion.Sad, true);
                 break;
 
             case "SELFDEPRESSED":
-                yield return self.ChangeEmotion(Character.Emotion.Depressed);
+                yield return self.ChangeEmotion(Character.Emotion.Depressed, true);
                 break;
             case "TARGETSDEPRESSED":
                 for (int i = 0; i < listOfTargets.Count; i++)
-                    yield return listOfTargets[i].ChangeEmotion(Character.Emotion.Depressed);
+                    yield return listOfTargets[i].ChangeEmotion(Character.Emotion.Depressed, true);
                 break;
 
             case "SELFANGRY":
-                yield return self.ChangeEmotion(Character.Emotion.Angry);
+                yield return self.ChangeEmotion(Character.Emotion.Angry, true);
                 break;
             case "TARGETSANGRY":
                 for (int i = 0; i < listOfTargets.Count; i++)
-                    yield return listOfTargets[i].ChangeEmotion(Character.Emotion.Angry);
+                    yield return listOfTargets[i].ChangeEmotion(Character.Emotion.Angry, true);
                 break;
 
             case "SELFENRAGED":
-                yield return self.ChangeEmotion(Character.Emotion.Enraged);
+                yield return self.ChangeEmotion(Character.Emotion.Enraged, true);
                 break;
             case "TARGETSENRAGED":
                 for (int i = 0; i < listOfTargets.Count; i++)
-                    yield return listOfTargets[i].ChangeEmotion(Character.Emotion.Enraged);
+                    yield return listOfTargets[i].ChangeEmotion(Character.Emotion.Enraged, true);
                 break;
 
             case "SELFNEUTRAL":
-                yield return self.ChangeEmotion(Character.Emotion.Neutral);
+                yield return self.ChangeEmotion(Character.Emotion.Neutral, true);
                 break;
             case "TARGETSNEUTRAL":
                 for (int i = 0; i < listOfTargets.Count; i++)
-                    yield return listOfTargets[i].ChangeEmotion(Character.Emotion.Neutral);
+                    yield return listOfTargets[i].ChangeEmotion(Character.Emotion.Neutral, true);
                 break;
 
             case "SELFATTACKSTAT":
@@ -405,14 +405,12 @@ public class Ability : MonoBehaviour
     {
         if (RollAccuracy(user.CalculateAccuracy()))
         {
-            float randomEffect = (Random.Range(0.8f, 1.2f));
+            float damageVariation = (Random.Range(0.8f, 1.2f));
             float critical = RollCritical(user.CalculateLuck());
             float effectiveness = Effectiveness(user, target);
             float attack = user.CalculateAttack();
             float defense = target.CalculateDefense(user);
-
-            Debug.Log($"{randomEffect} * {critical} * {effectiveness} * {attack} + {healthChange} - {defense}");
-            return (int)(randomEffect * critical * effectiveness * attack + healthChange - defense);
+            return (int)(damageVariation * critical * effectiveness * attack + healthChange - defense);
         }
         else
         {

@@ -5,7 +5,6 @@ using UnityEngine.UI;
 using MyBox;
 using TMPro;
 using System.Linq;
-using Unity.VisualScripting;
 
 public class TurnManager : MonoBehaviour
 {
@@ -22,6 +21,7 @@ public class TurnManager : MonoBehaviour
     [ReadOnly] public List<Character> speedQueue = new List<Character>();
 
     bool decrease = true;
+    int currentRound;
 
     #endregion
 
@@ -51,6 +51,9 @@ public class TurnManager : MonoBehaviour
 
     IEnumerator ResolveRound()
     {
+        currentRound++;
+        Log.instance.AddText($"ROUND {currentRound}");
+
         if (enemies.Count == 0)
         {
             int numEnemies = Random.Range(2, 4);
@@ -64,6 +67,7 @@ public class TurnManager : MonoBehaviour
 
         while (speedQueue.Count > 0)
         {
+            Log.instance.AddText($"");
             DisableCharacterButtons();
             speedQueue = speedQueue.OrderByDescending(o => o.CalculateSpeed()).ToList();
             listOfBoxes[0].transform.parent.gameObject.SetActive(false);
@@ -97,6 +101,7 @@ public class TurnManager : MonoBehaviour
     {
         PlayerCharacter nextCharacter = Instantiate(helperPrefab);
         nextCharacter.SetupCharacter(Character.CharacterType.Helper, TitleScreen.instance.listOfHelpers[ID]);
+        Log.instance.AddText($"{Log.Article(nextCharacter.name)} entered the fight.");
 
         nextCharacter.transform.SetParent(TitleScreen.instance.canvas);
         nextCharacter.transform.localPosition = new Vector3(-850 + (600 * teammates.Count), 300, 0);
@@ -107,6 +112,7 @@ public class TurnManager : MonoBehaviour
     {
         EnemyCharacter nextCharacter = Instantiate(enemyPrefab);
         nextCharacter.SetupCharacter(Character.CharacterType.Enemy, TitleScreen.instance.listOfEnemies[Random.Range(0, TitleScreen.instance.listOfEnemies.Count)]);
+        Log.instance.AddText($"{Log.Article(nextCharacter.name)} entered the fight.");
 
         nextCharacter.transform.SetParent(TitleScreen.instance.canvas);
         nextCharacter.transform.localPosition = new Vector3(-1000 + (500 * enemies.Count), 300, 0);

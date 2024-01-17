@@ -25,6 +25,20 @@ public class Log : MonoBehaviour
                 AddText($"Test {RT.transform.childCount+1}");
         #endif
     }
+
+    public static string Article(string followingWord)
+    {
+        if (followingWord.StartsWith('A')
+            || followingWord.StartsWith('E')
+            || followingWord.StartsWith('I')
+            || followingWord.StartsWith('O')
+            || followingWord.StartsWith('U'))
+        {
+            return $"an {followingWord}";
+        }
+        else
+            return $"a {followingWord}";
+    }
     
     public void AddText(string text)
     {

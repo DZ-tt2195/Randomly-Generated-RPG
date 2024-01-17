@@ -20,7 +20,7 @@
       "Everyone",
       "Skip Turn",
       "This does nothing this turn.",
-      "",
+      "None",
       "",
       "",
       "",
