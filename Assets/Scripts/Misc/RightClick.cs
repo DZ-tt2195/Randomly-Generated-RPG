@@ -27,16 +27,16 @@ public class RightClick : MonoBehaviour
             this.transform.GetChild(0).gameObject.SetActive(false);
     }
 
-    public void DisplayInfo(Character character)
+    public void DisplayInfo(Character character, Sprite sprite)
     {
         background.SetActive(true);
-        image.sprite = character.image.sprite;
+        image.sprite = sprite;
         nameText.text = character.name;
         for (int i = 0; i<listOfBoxes.Count; i++)
         {
             try
             {
-                listOfBoxes[i].ReceiveAbility(character.listOfAbilities[i]);
+                listOfBoxes[i].ReceiveAbility(character.listOfAbilities[i+1]);
                 listOfBoxes[i].gameObject.SetActive(true);
             }
             catch (ArgumentOutOfRangeException)

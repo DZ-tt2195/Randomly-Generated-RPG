@@ -9,6 +9,9 @@ using Unity.VisualScripting;
 
 public class TurnManager : MonoBehaviour
 {
+
+#region Variables
+
     public static TurnManager instance;
     [SerializeField] EnemyCharacter enemyPrefab;
     [SerializeField] PlayerCharacter helperPrefab;
@@ -19,6 +22,10 @@ public class TurnManager : MonoBehaviour
     [ReadOnly] public List<Character> speedQueue = new List<Character>();
 
     bool decrease = true;
+
+    #endregion
+
+#region Setup
 
     private void Awake()
     {
@@ -32,25 +39,58 @@ public class TurnManager : MonoBehaviour
             Character nextFriend = TitleScreen.instance.listOfPlayers[i];
             teammates.Add(nextFriend);
             nextFriend.transform.SetParent(TitleScreen.instance.canvas);
-            nextFriend.transform.localPosition = new Vector3(-850 + (600 * i), -550, 0);
+            nextFriend.transform.localPosition = new Vector3(-1000 + (500 * i), -550, 0);
         }
 
         StartCoroutine(ResolveRound());
     }
+
+    #endregion
+
+#region Gameplay
+
+    IEnumerator ResolveRound()
+    {
+        if (enemies.Count == 0)
+        {
+            int numEnemies = Random.Range(2, 4);
+            for (int i = 0; i < numEnemies; i++)
+            {
+                CreateEnemy();
+            }
+        }
+
+        speedQueue = AllCharacters();
+
+        while (speedQueue.Count > 0)
+        {
+            DisableCharacterButtons();
+            speedQueue = speedQueue.OrderByDescending(o => o.CalculateSpeed()).ToList();
+            listOfBoxes[0].transform.parent.gameObject.SetActive(false);
+
+            Character nextInLine = speedQueue[0];
+            speedQueue.RemoveAt(0);
+
+            if (nextInLine != null && nextInLine.CalculateHealth() > 0)
+            {
+                nextInLine.border.gameObject.SetActive(true);
+                yield return nextInLine.MyTurn();
+                nextInLine.border.gameObject.SetActive(false);
+            }
+        }
+
+        StartCoroutine(ResolveRound());
+    }
+
+    #endregion
+
+#region Misc
 
     void FixedUpdate()
     {
         Character.borderColor += (decrease) ? -0.05f : 0.05f;
         if (Character.borderColor < 0 || Character.borderColor > 1)
             decrease = !decrease;
-    }
-
-    public void ListAllFriends()
-    {
-        string allFriends = "";
-        foreach (Character character in teammates)
-            allFriends += character.name + ",";
-        Debug.Log(allFriends);
     }
 
     public void CreateHelper(int ID)
@@ -69,40 +109,8 @@ public class TurnManager : MonoBehaviour
         nextCharacter.SetupCharacter(Character.CharacterType.Enemy, TitleScreen.instance.listOfEnemies[Random.Range(0, TitleScreen.instance.listOfEnemies.Count)]);
 
         nextCharacter.transform.SetParent(TitleScreen.instance.canvas);
-        nextCharacter.transform.localPosition = new Vector3(-850 + (600 * enemies.Count), 300, 0);
+        nextCharacter.transform.localPosition = new Vector3(-1000 + (500 * enemies.Count), 300, 0);
         enemies.Add(nextCharacter);
-    }
-
-    IEnumerator ResolveRound()
-    {
-        if (enemies.Count == 0)
-        {
-            int numEnemies = Random.Range(2, 4);
-            for (int i = 0; i<numEnemies; i++)
-            {
-                CreateEnemy();
-            }
-        }
-
-        speedQueue = AllCharacters();
-
-        while (speedQueue.Count > 0)
-        {
-            DisableCharacterButtons();
-            speedQueue = speedQueue.OrderByDescending(o => o.CalculateSpeed()).ToList();
-            TurnManager.instance.listOfBoxes[0].transform.parent.gameObject.SetActive(false);
-
-            Character nextInLine = speedQueue[0];
-            speedQueue.RemoveAt(0);
-
-            if (nextInLine != null && nextInLine.CalculateHealth() > 0)
-            {
-                nextInLine.border.gameObject.SetActive(true);
-                yield return nextInLine.MyTurn();
-            }
-        }
-
-        StartCoroutine(ResolveRound());
     }
 
     public void DisableCharacterButtons()
@@ -126,4 +134,7 @@ public class TurnManager : MonoBehaviour
         allTargets.AddRange(enemies);
         return allTargets;
     }
-} 
+
+#endregion
+
+}

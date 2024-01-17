@@ -10,7 +10,6 @@ using UnityEngine.Networking;
 using System.IO;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
-using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class TitleScreen : MonoBehaviour
 {
@@ -119,8 +118,7 @@ public class TitleScreen : MonoBehaviour
         RightClick.instance.transform.localPosition = new Vector3(0, 0);
 
         FPS.instance.transform.SetParent(canvas);
-        FPS.instance.transform.localPosition = new Vector3(-1200, 666);
-
+        FPS.instance.transform.localPosition = new Vector3(1200, 666);
     }
 
     public void UnloadObjects()

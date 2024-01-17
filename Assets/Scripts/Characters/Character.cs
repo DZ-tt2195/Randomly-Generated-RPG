@@ -13,44 +13,44 @@ public class Character : MonoBehaviour, IPointerClickHandler
 
 #region Variables
 
-    Vector3 originalSize = new Vector3(1, 1, 1);
-
-    protected int baseHealth;
-    protected int currentHealth;
-    [SerializeField] TMP_Text healthText;
-
-    protected float baseAttack;
-    protected float baseDefense;
-    protected float baseSpeed;
-    protected float baseLuck;
-    protected float baseAccuracy;
-
-    protected float modifyAttack = 1f;
-    protected float modifyDefense = 1f;
-    protected float modifySpeed = 1f;
-    protected float modifyLuck = 1f;
-    protected float modifyAccuracy = 1f;
-
-    public enum Position { Grounded, Airborne, Dead};
-    protected Position startingPosition;
-    [ReadOnly] public Position currentPosition;
-
-    public enum Emotion { Dead, Neutral, Happy, Ecstatic, Angry, Enraged, Sad, Depressed};
-    protected Emotion startingEmotion;
-    [ReadOnly] public Emotion currentEmotion;
-    [SerializeField] TMP_Text emotionText;
-
-    [ReadOnly] public List<Ability> listOfAbilities = new List<Ability>();
-    protected Ability thisTurnAbility;
-
-    public enum CharacterType { Teammate, Enemy, Helper}
-    [ReadOnly] public CharacterType myType;
-
     public static float borderColor;
-    public Image image;
-    public Image border;
-    public Button myButton;
-    [SerializeField] Button infoButton;
+    Vector3 originalSize = new Vector3(1, 1, 1);
+    public enum Position { Grounded, Airborne, Dead };
+    public enum Emotion { Dead, Neutral, Happy, Ecstatic, Angry, Enraged, Sad, Depressed };
+    public enum CharacterType { Teammate, Enemy, Helper }
+
+    [Foldout("Player info", true)]
+        protected Ability thisTurnAbility;
+        [ReadOnly] public List<Ability> listOfAbilities = new List<Ability>();
+        [ReadOnly] public CharacterType myType;
+
+    [Foldout("Stats", true)]
+        protected int baseHealth;
+        protected float baseAttack;
+        protected float baseDefense;
+        protected float baseSpeed;
+        protected float baseLuck;
+        protected float baseAccuracy;
+
+        protected Position startingPosition;
+        protected Emotion startingEmotion;
+
+        protected int currentHealth;
+        /*[ReadOnly]*/ public Position currentPosition;
+        [ReadOnly] public Emotion currentEmotion;
+        protected float modifyAttack = 1f;
+        protected float modifyDefense = 1f;
+        protected float modifySpeed = 1f;
+        protected float modifyLuck = 1f;
+        protected float modifyAccuracy = 1f;
+
+    [Foldout("UI", true)]
+        [ReadOnly] public Image border;
+        [ReadOnly] public Button myButton;
+        Image image;
+        Button infoButton;
+        TMP_Text emotionText;
+        TMP_Text healthText;
 
 #endregion
 
@@ -58,7 +58,13 @@ public class Character : MonoBehaviour, IPointerClickHandler
 
     private void Awake()
     {
+        image = GetComponent<Image>();
+        infoButton = transform.Find("Info").GetComponent<Button>();
         infoButton.onClick.AddListener(RightClickInfo);
+        myButton = GetComponent<Button>();
+        border = transform.Find("border").GetComponent<Image>();
+        emotionText = transform.Find("Emotion Text").GetComponent<TMP_Text>();
+        healthText = transform.Find("Health %").GetChild(0).GetComponent<TMP_Text>();
     }
 
     public void SetupCharacter(CharacterType type, CharacterData data)
@@ -99,7 +105,7 @@ public class Character : MonoBehaviour, IPointerClickHandler
         }
     }
 
-    #endregion
+#endregion
 
 #region UI
 
@@ -138,10 +144,10 @@ public class Character : MonoBehaviour, IPointerClickHandler
 
     void RightClickInfo()
     {
-        RightClick.instance.DisplayInfo(this);
+        RightClick.instance.DisplayInfo(this, image.sprite);
     }
 
-    #endregion
+#endregion
 
 #region Stats
 
