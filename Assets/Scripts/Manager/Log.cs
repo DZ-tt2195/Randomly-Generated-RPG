@@ -40,10 +40,10 @@ public class Log : MonoBehaviour
             return $"a {followingWord}";
     }
     
-    public void AddText(string text)
+    public void AddText(string logText)
     {
         TMP_Text newText = Instantiate(textBoxClone, RT.transform);
-        newText.text = text;
+        newText.text = string.IsNullOrEmpty(logText) ? "" : char.ToUpper(logText[0]) + logText.Substring(1);
 
         if (RT.transform.childCount >= 28)
         {
