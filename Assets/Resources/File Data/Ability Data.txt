@@ -189,7 +189,7 @@
     [
       "Wizard",
       "Blaze",
-      "Deal light damage to all enemies.",
+      "Deal light damage to all Enemies.",
       "Attack",
       "",
       "",
@@ -308,7 +308,7 @@
     [
       "Golem",
       "Rock Punch",
-      "Deal small damage to a Grounded Enemy.",
+      "Deal light damage to a Grounded Enemy.",
       "Attack",
       "",
       "GroundedOnly",
@@ -325,7 +325,7 @@
     [
       "Spirit",
       "Revive",
-      "Bring back a dead Teammate, then this dies.",
+      "Bring back a dead Teammate, then this leaves combat.",
       "TargetsRevive/SelfDestruct",
       "",
       "IsDead",
