@@ -62,19 +62,19 @@ public class Ability : MonoBehaviour
 #region Stats
 
     bool RollAccuracy(float value)
-    {
-        float roll = (Random.Range(0f, 1f));
+    { 
+        float roll = Random.Range(0f, 1f);
         bool result = roll <= value;
         return result;
     }
 
     float RollCritical(float value)
     {
-        float roll = (Random.Range(0f, 1f));
+        float roll = Random.Range(0f, 1f);
         bool result = roll <= value;
         if (result)
         {
-            Debug.Log("critical hit");
+            Log.instance.AddText("Critical hit!");
             return 1.5f;
         }
         else
@@ -120,7 +120,7 @@ public class Ability : MonoBehaviour
                         break;
                     case "NOTNEUTRAL":
                         for (int i = listOfTargets.Count - 1; i >= 0; i--)
-                            if (listOfTargets[i].currentEmotion != Character.Emotion.Neutral) listOfTargets.RemoveAt(i);
+                            if (listOfTargets[i].currentEmotion == Character.Emotion.Neutral) listOfTargets.RemoveAt(i);
                         break;
                 }
             }
@@ -405,7 +405,7 @@ public class Ability : MonoBehaviour
     {
         if (RollAccuracy(user.CalculateAccuracy()))
         {
-            float damageVariation = (Random.Range(0.8f, 1.2f));
+            float damageVariation = Random.Range(0.8f, 1.2f);
             float critical = RollCritical(user.CalculateLuck());
             float effectiveness = Effectiveness(user, target);
             float attack = user.CalculateAttack();
@@ -414,7 +414,7 @@ public class Ability : MonoBehaviour
         }
         else
         {
-            Debug.Log("missed");
+            Log.instance.AddText($"{user.name}'s attack misses.");
             return 0;
         }
     }

@@ -83,6 +83,7 @@ public class TurnManager : MonoBehaviour
             }
         }
 
+        Log.instance.AddText($"");
         StartCoroutine(ResolveRound());
     }
 
@@ -100,18 +101,18 @@ public class TurnManager : MonoBehaviour
     public void CreateHelper(int ID)
     {
         PlayerCharacter nextCharacter = Instantiate(helperPrefab);
-        nextCharacter.SetupCharacter(Character.CharacterType.Helper, TitleScreen.instance.listOfHelpers[ID]);
+        nextCharacter.SetupCharacter(Character.CharacterType.Teammate, TitleScreen.instance.listOfHelpers[ID], true);
         Log.instance.AddText($"{Log.Article(nextCharacter.name)} entered the fight.");
 
         nextCharacter.transform.SetParent(TitleScreen.instance.canvas);
-        nextCharacter.transform.localPosition = new Vector3(-850 + (600 * teammates.Count), 300, 0);
+        nextCharacter.transform.localPosition = new Vector3(500, -550, 0);
         teammates.Add(nextCharacter);
     }
 
     public void CreateEnemy()
     {
         EnemyCharacter nextCharacter = Instantiate(enemyPrefab);
-        nextCharacter.SetupCharacter(Character.CharacterType.Enemy, TitleScreen.instance.listOfEnemies[Random.Range(0, TitleScreen.instance.listOfEnemies.Count)]);
+        nextCharacter.SetupCharacter(Character.CharacterType.Enemy, TitleScreen.instance.listOfEnemies[Random.Range(0, TitleScreen.instance.listOfEnemies.Count)], false);
         Log.instance.AddText($"{Log.Article(nextCharacter.name)} entered the fight.");
 
         nextCharacter.transform.SetParent(TitleScreen.instance.canvas);

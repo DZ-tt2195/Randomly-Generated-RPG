@@ -84,7 +84,7 @@ public class TitleScreen : MonoBehaviour
         for (int i = 0; i < players.Count; i++)
         {
             PlayerCharacter nextCharacter = Instantiate(playerPrefab);
-            nextCharacter.SetupCharacter(Character.CharacterType.Teammate, players[i]);
+            nextCharacter.SetupCharacter(Character.CharacterType.Teammate, players[i], false);
 
             listOfPlayers.Add(nextCharacter);
             nextCharacter.transform.SetParent(canvas);

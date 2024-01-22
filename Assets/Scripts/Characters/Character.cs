@@ -17,12 +17,13 @@ public class Character : MonoBehaviour, IPointerClickHandler
     Vector3 originalSize = new Vector3(1, 1, 1);
     public enum Position { Grounded, Airborne, Dead };
     public enum Emotion { Dead, Neutral, Happy, Ecstatic, Angry, Enraged, Sad, Depressed };
-    public enum CharacterType { Teammate, Enemy, Helper }
+    public enum CharacterType { Teammate, Enemy }
 
     [Foldout("Player info", true)]
         protected Ability thisTurnAbility;
         [ReadOnly] public List<Ability> listOfAbilities = new List<Ability>();
         [ReadOnly] public CharacterType myType;
+        [ReadOnly] public bool isHelper;
 
     [Foldout("Stats", true)]
         protected int baseHealth;
@@ -67,7 +68,7 @@ public class Character : MonoBehaviour, IPointerClickHandler
         healthText = transform.Find("Health %").GetChild(0).GetComponent<TMP_Text>();
     }
 
-    public void SetupCharacter(CharacterType type, CharacterData data)
+    public void SetupCharacter(CharacterType type, CharacterData data, bool isHelper)
     {
         myType = type;
         this.name = data.name;
@@ -79,18 +80,19 @@ public class Character : MonoBehaviour, IPointerClickHandler
         baseAccuracy = data.baseAccuracy;
         StartCoroutine(ChangePosition(data.startingPosition, false));
         startingEmotion = data.startingEmotion; StartCoroutine(ChangeEmotion(data.startingEmotion, false));
+        this.isHelper = isHelper;
 
-        switch (myType)
+        if (this.isHelper)
         {
-            case CharacterType.Teammate:
-                this.image.sprite = Resources.Load<Sprite>($"Teammates/{this.name}");
-                break;
-            case CharacterType.Enemy:
-                this.image.sprite = Resources.Load<Sprite>($"Enemies/{this.name}");
-                break;
-            case CharacterType.Helper:
-                this.image.sprite = Resources.Load<Sprite>($"Helpers/{this.name}");
-                break;
+            this.image.sprite = Resources.Load<Sprite>($"Helpers/{this.name}");
+        }
+        else if (myType == CharacterType.Teammate )
+        {
+            this.image.sprite = Resources.Load<Sprite>($"Teammates/{this.name}");
+        }
+        else if (myType == CharacterType.Enemy)
+        {
+            this.image.sprite = Resources.Load<Sprite>($"Enemies/{this.name}");
         }
 
         string[] divideIntoNumbers = data.skillNumbers.Split(',');
