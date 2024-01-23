@@ -7,6 +7,7 @@ using System;
 public class CharacterData
 {
     public string name;
+    public string description;
     public int baseHealth;
     public float baseAttack;
     public float baseDefense;
@@ -23,6 +24,7 @@ public class AbilityData
 {
     public string name;
     public string description;
+    public string logDescription;
     public string instructions;
     public string nextInstructions;
     public string playCondition;
@@ -57,15 +59,16 @@ public class DataLoader
             }
 
             newCharacter.name = line[0];
-            newCharacter.baseHealth = StringToInt(line[1]);
-            newCharacter.baseAttack = StringToFloat(line[2]);
-            newCharacter.baseDefense = StringToFloat(line[3]);
-            newCharacter.baseSpeed = StringToFloat(line[4]);
-            newCharacter.baseLuck = StringToFloat(line[5]);
-            newCharacter.baseAccuracy = StringToFloat(line[6]);
-            newCharacter.startingPosition = (line[7] == "GROUNDED") ? Character.Position.Grounded : Character.Position.Airborne;
-            newCharacter.startingEmotion = StringToEmotion(line[8]);
-            newCharacter.skillNumbers = line[9];
+            newCharacter.description = line[1];
+            newCharacter.baseHealth = StringToInt(line[2]);
+            newCharacter.baseAttack = StringToFloat(line[3]);
+            newCharacter.baseDefense = StringToFloat(line[4]);
+            newCharacter.baseSpeed = StringToFloat(line[5]);
+            newCharacter.baseLuck = StringToFloat(line[6]);
+            newCharacter.baseAccuracy = StringToFloat(line[7]);
+            newCharacter.startingPosition = (line[8] == "GROUNDED") ? Character.Position.Grounded : Character.Position.Airborne;
+            newCharacter.startingEmotion = StringToEmotion(line[9]);
+            newCharacter.skillNumbers = line[10];
         }
         return nextData;
     }
@@ -88,18 +91,19 @@ public class DataLoader
 
             newAbility.name = line[1];
             newAbility.description = line[2];
-            newAbility.instructions = line[3];
-            newAbility.nextInstructions = line[4];
-            newAbility.playCondition = line[5];
-            newAbility.healthChange = StringToInt(line[6]);
-            newAbility.cooldown = StringToInt(line[7]);
-            newAbility.modifyAttack = StringToFloat(line[8]);
-            newAbility.modifyDefense = StringToFloat(line[9]);
-            newAbility.modifySpeed = StringToFloat(line[10]);
-            newAbility.modifyLuck = StringToFloat(line[11]);
-            newAbility.modifyAccuracy = StringToFloat(line[12]);
-            newAbility.helperID = StringToInt(line[13]);
-            newAbility.teamTarget = StringToTeamTarget(line[14]);
+            newAbility.logDescription = line[3];
+            newAbility.instructions = line[4];
+            newAbility.nextInstructions = line[5];
+            newAbility.playCondition = line[6];
+            newAbility.healthChange = StringToInt(line[7]);
+            newAbility.cooldown = StringToInt(line[8]);
+            newAbility.modifyAttack = StringToFloat(line[9]);
+            newAbility.modifyDefense = StringToFloat(line[10]);
+            newAbility.modifySpeed = StringToFloat(line[11]);
+            newAbility.modifyLuck = StringToFloat(line[12]);
+            newAbility.modifyAccuracy = StringToFloat(line[13]);
+            newAbility.helperID = StringToInt(line[14]);
+            newAbility.teamTarget = StringToTeamTarget(line[15]);
         }
         return nextData;
     }

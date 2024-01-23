@@ -112,13 +112,13 @@ public class TitleScreen : MonoBehaviour
 
     IEnumerator BringBackObjects()
     { 
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.25f);
 
         RightClick.instance.transform.SetParent(canvas);
         RightClick.instance.transform.localPosition = new Vector3(0, 0);
 
         FPS.instance.transform.SetParent(canvas);
-        FPS.instance.transform.localPosition = new Vector3(1200, 666);
+        FPS.instance.transform.localPosition = new Vector3(-1190, 666);
     }
 
     public void UnloadObjects()

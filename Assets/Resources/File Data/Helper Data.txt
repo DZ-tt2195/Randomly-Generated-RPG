@@ -1,6 +1,7 @@
 {
     [
       "Helper Name",
+      "Description",
       "Base Health",
       "Base Attack",
       "Base Defense",
@@ -13,8 +14,9 @@
     ],
     [
       "Student",
-      "40",
-      "0",
+      "Changes Enemy Emotions.",
+      "50",
+      "1",
       "10",
       "50",
       "0",
@@ -25,9 +27,10 @@
     ],
     [
       "Spirit",
-      "20",
-      "0",
-      "0",
+      "Can sacrifice itself to revive a Teammate.",
+      "30",
+      "1",
+      "10",
       "100",
       "0",
       "0",
@@ -37,6 +40,7 @@
     ],
     [
       "Golem",
+      "Tanks damage.",
       "100",
       "2",
       "30",

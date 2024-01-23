@@ -22,8 +22,9 @@ public class TurnManager : MonoBehaviour
 
     bool decrease = true;
     int currentRound;
+    bool stillBattling = true;
 
-    #endregion
+#endregion
 
 #region Setup
 
@@ -59,15 +60,14 @@ public class TurnManager : MonoBehaviour
             int numEnemies = Random.Range(2, 4);
             for (int i = 0; i < numEnemies; i++)
             {
-                CreateEnemy();
+                CreateEnemy(Random.Range(0, TitleScreen.instance.listOfEnemies.Count));
             }
         }
 
         speedQueue = AllCharacters();
 
-        while (speedQueue.Count > 0)
+        while (speedQueue.Count > 0 && stillBattling)
         {
-            Log.instance.AddText($"");
             DisableCharacterButtons();
             speedQueue = speedQueue.OrderByDescending(o => o.CalculateSpeed()).ToList();
             listOfBoxes[0].transform.parent.gameObject.SetActive(false);
@@ -77,14 +77,33 @@ public class TurnManager : MonoBehaviour
 
             if (nextInLine != null && nextInLine.CalculateHealth() > 0)
             {
+                Log.instance.AddText($"");
                 nextInLine.border.gameObject.SetActive(true);
                 yield return nextInLine.MyTurn();
                 nextInLine.border.gameObject.SetActive(false);
             }
+
+            CheckTeammates();
         }
 
-        Log.instance.AddText($"");
-        StartCoroutine(ResolveRound());
+        if (stillBattling)
+        {
+            Log.instance.AddText($"");
+            StartCoroutine(ResolveRound());
+        }
+    }
+
+    void CheckTeammates()
+    {
+        foreach (Character character in teammates)
+        {
+            if (character.CalculateHealth() > 0)
+                return;
+        }
+
+        stillBattling = false;
+        Log.instance.AddText("");
+        Log.instance.AddText("You lost.");
     }
 
     #endregion
@@ -109,10 +128,10 @@ public class TurnManager : MonoBehaviour
         teammates.Add(nextCharacter);
     }
 
-    public void CreateEnemy()
+    public void CreateEnemy(int ID)
     {
         EnemyCharacter nextCharacter = Instantiate(enemyPrefab);
-        nextCharacter.SetupCharacter(Character.CharacterType.Enemy, TitleScreen.instance.listOfEnemies[Random.Range(0, TitleScreen.instance.listOfEnemies.Count)], false);
+        nextCharacter.SetupCharacter(Character.CharacterType.Enemy, TitleScreen.instance.listOfEnemies[ID], false);
         Log.instance.AddText($"{Log.Article(nextCharacter.name)} entered the fight.");
 
         nextCharacter.transform.SetParent(TitleScreen.instance.canvas);

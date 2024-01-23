@@ -1,6 +1,7 @@
 {
     [
       "Enemy Name",
+      "Description",
       "Base Health",
       "Base Attack",
       "Base Defense",
@@ -13,6 +14,7 @@
     ],
     [
       "Archer",
+      "Placeholder.",
       "75",
       "4",
       "10",

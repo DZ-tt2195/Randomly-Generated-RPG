@@ -52,6 +52,7 @@ public class Character : MonoBehaviour, IPointerClickHandler
         Button infoButton;
         TMP_Text emotionText;
         TMP_Text healthText;
+        protected string description;
 
 #endregion
 
@@ -72,6 +73,7 @@ public class Character : MonoBehaviour, IPointerClickHandler
     {
         myType = type;
         this.name = data.name;
+        this.description = data.description;
         baseHealth = data.baseHealth; currentHealth = baseHealth;
         baseAttack = data.baseAttack;
         baseDefense = data.baseDefense;
@@ -438,8 +440,12 @@ public class Character : MonoBehaviour, IPointerClickHandler
                 ability.currentCooldown--;
         }
 
-        if (thisTurnAbility.myName != "Do Nothing")
+        Log.instance.AddText(Log.Substitute(thisTurnAbility, this));
+        if (thisTurnAbility.myName == "Do Nothing")
         {
+        }
+        else
+        { 
             int happinessPenalty = 0;
             switch (currentEmotion)
             {
@@ -468,7 +474,6 @@ public class Character : MonoBehaviour, IPointerClickHandler
 
     protected IEnumerator ResolveAbility(Ability ability)
     {
-        Log.instance.AddText($"{(this.name)} uses {ability.myName}.");
         string divide = ability.instructions.Replace(" ", "");
         divide = divide.ToUpper();
         string[] methodsInStrings = divide.Split('/');
@@ -486,6 +491,6 @@ public class Character : MonoBehaviour, IPointerClickHandler
         }
     }
 
-    #endregion
+#endregion
 
 }

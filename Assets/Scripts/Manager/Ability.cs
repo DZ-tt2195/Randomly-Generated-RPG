@@ -13,10 +13,12 @@ public class Ability : MonoBehaviour
     public Character self;
 
     public string myName;
+    public string description;
+    public string logDescription;
+
     public string instructions;
     public string nextInstructions;
     public string playCondition;
-    public string description;
     public int healthChange;
 
     public int baseCooldown;
@@ -35,7 +37,6 @@ public class Ability : MonoBehaviour
     public TeamTarget teamTarget;
 
     public int summonHelper;
-
     public List<Character> listOfTargets;
 
     public void SetupAbility(AbilityData data)
@@ -44,6 +45,7 @@ public class Ability : MonoBehaviour
         instructions = data.instructions;
         nextInstructions = data.nextInstructions;
         description = data.description;
+        logDescription = data.logDescription;
         playCondition = data.playCondition;
         healthChange = data.healthChange;
         baseCooldown = data.cooldown; currentCooldown = baseCooldown;

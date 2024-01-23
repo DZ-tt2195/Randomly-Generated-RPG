@@ -1,6 +1,7 @@
 {
     [
       "Player Name",
+      "Description",
       "Base Health",
       "Base Attack",
       "Base Defense",
@@ -13,8 +14,9 @@
     ],
     [
       "Knight",
+      "Does high damage against individual and Grounded Enemies.",
       "100",
-      "7",
+      "6",
       "20",
       "75",
       "0.15",
@@ -25,11 +27,12 @@
     ],
     [
       "Angel",
+      "Focuses on healing from above.",
       "50",
-      "0",
+      "2",
       "5",
       "50",
-      "0",
+      "0.15",
       "1",
       "AIRBORNE",
       "NEUTRAL",
@@ -37,8 +40,9 @@
     ],
     [
       "Wizard",
+      "Does damage against groups and Airborne Enemies.",
       "75",
-      "3.5",
+      "4",
       "10",
       "25",
       "0.15",

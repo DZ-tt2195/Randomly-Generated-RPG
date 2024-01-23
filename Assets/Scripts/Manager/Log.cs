@@ -26,6 +26,14 @@ public class Log : MonoBehaviour
         #endif
     }
 
+    public static string Substitute(Ability ability, Character user)
+    {
+        string sentence = ability.logDescription;
+        sentence = sentence.Replace("THIS", user.name);
+        try{ sentence = sentence.Replace("TARGET", ability.listOfTargets[0].name);} catch{/*do nothing*/}
+        return sentence;
+    }
+
     public static string Article(string followingWord)
     {
         if (followingWord.StartsWith('A')
@@ -37,7 +45,9 @@ public class Log : MonoBehaviour
             return $"an {followingWord}";
         }
         else
+        {
             return $"a {followingWord}";
+        }
     }
     
     public void AddText(string logText)
