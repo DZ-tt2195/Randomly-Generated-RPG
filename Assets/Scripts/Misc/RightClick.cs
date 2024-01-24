@@ -12,7 +12,7 @@ public class RightClick : MonoBehaviour
 
     [SerializeField] Image image;
     [SerializeField] TMP_Text nameText;
-    [SerializeField] TMP_Text emotionText;
+    [SerializeField] TMP_Text descriptionText;
     [SerializeField] List<AbilityBox> listOfBoxes = new();
 
     private void Awake()
@@ -44,7 +44,9 @@ public class RightClick : MonoBehaviour
                 listOfBoxes[i].gameObject.SetActive(false);
             }
         }
+        descriptionText.text = character.description;
 
+        /*
         switch (character.currentEmotion)
         {
             case Character.Emotion.Dead:
@@ -80,5 +82,6 @@ public class RightClick : MonoBehaviour
                 emotionText.text = "DEPRESSED: 30% more defense against non-Angry attacks; 20% less accuracy.";
                 break;
         }
+        */
     }
 }

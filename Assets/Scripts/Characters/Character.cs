@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -52,7 +51,7 @@ public class Character : MonoBehaviour, IPointerClickHandler
         Button infoButton;
         TMP_Text emotionText;
         TMP_Text healthText;
-        protected string description;
+        [ReadOnly] public string description;
 
 #endregion
 
@@ -425,7 +424,7 @@ public class Character : MonoBehaviour, IPointerClickHandler
         yield return null;
     }
 
-    #endregion
+#endregion
 
 #region Abilities
 
@@ -459,6 +458,17 @@ public class Character : MonoBehaviour, IPointerClickHandler
 
             thisTurnAbility.currentCooldown = thisTurnAbility.baseCooldown + happinessPenalty;
             yield return ResolveAbility(thisTurnAbility);
+        }
+
+        if (this.currentEmotion == Emotion.Angry)
+        {
+            Log.instance.AddText($"{this.name} is Angry.");
+            yield return TakeDamage((int)(baseHealth * 0.05f));
+        }
+        else if (this.currentEmotion == Emotion.Enraged)
+        {
+            Log.instance.AddText($"{this.name} is Enraged.");
+            yield return TakeDamage((int)(baseHealth * 0.1f));
         }
     }
 

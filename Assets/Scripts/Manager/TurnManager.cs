@@ -21,6 +21,7 @@ public class TurnManager : MonoBehaviour
     [ReadOnly] public List<Character> speedQueue = new List<Character>();
 
     bool decrease = true;
+    int currentWave;
     int currentRound;
     bool stillBattling = true;
 
@@ -43,16 +44,31 @@ public class TurnManager : MonoBehaviour
             nextFriend.transform.localPosition = new Vector3(-1000 + (500 * i), -550, 0);
         }
 
-        StartCoroutine(ResolveRound());
+        NewWave();
     }
 
-    #endregion
+#endregion
 
 #region Gameplay
+
+    void NewWave()
+    {
+        currentWave++;
+        Log.instance.AddText($"WAVE {currentWave}");
+
+        int numEnemies = Random.Range(2, 4);
+        for (int i = 0; i < numEnemies; i++)
+        {
+            CreateEnemy(Random.Range(0, TitleScreen.instance.listOfEnemies.Count));
+        }
+
+        StartCoroutine(ResolveRound());
+    }
 
     IEnumerator ResolveRound()
     {
         currentRound++;
+        Log.instance.AddText($"");
         Log.instance.AddText($"ROUND {currentRound}");
 
         if (enemies.Count == 0)
@@ -88,8 +104,10 @@ public class TurnManager : MonoBehaviour
 
         if (stillBattling)
         {
-            Log.instance.AddText($"");
-            StartCoroutine(ResolveRound());
+            if (enemies.Count > 0)
+                StartCoroutine(ResolveRound());
+            else
+                NewWave();
         }
     }
 
