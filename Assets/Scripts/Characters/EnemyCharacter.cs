@@ -22,12 +22,59 @@ public class EnemyCharacter : Character
     protected override IEnumerator ChooseTarget(Ability ability)
     {
         yield return null;
-        var narrowDown = new HashSet<TeamTarget> { TeamTarget.AnyOne, TeamTarget.OneTeammate, TeamTarget.OtherTeammate, TeamTarget.OneEnemy, TeamTarget.OtherEnemy };
+        HashSet<TeamTarget> narrowDown = new() { TeamTarget.AnyOne, TeamTarget.OneTeammate, TeamTarget.OtherTeammate, TeamTarget.OneEnemy, TeamTarget.OtherEnemy };
 
         if (narrowDown.Contains(ability.teamTarget))
         {
-            List<Character> selectedTarget = new() { ability.listOfTargets[Random.Range(0, ability.listOfTargets.Count)] };
-            ability.listOfTargets = selectedTarget;
+            this.aiTargeting = this.aiTargeting.ToUpper().Trim();
+            List<Character> selectedTarget = ability.listOfTargets;
+
+            switch (this.aiTargeting)
+            {
+                case "PRIORITIZEAIRBORNE":
+                    List<Character> airborneTargets = new();
+                    foreach (Character character in ability.listOfTargets)
+                    {
+                        if (character.currentPosition == Position.Airborne)
+                            airborneTargets.Add(character);
+                    }
+                    Debug.Log($"found {airborneTargets.Count} airborne");
+                    if (airborneTargets.Count>0)
+                    {
+                        selectedTarget = airborneTargets;
+                    }
+                    break;
+
+                case "PRIORITIZEGROUNDED":
+                    List<Character> groundedTargets = new();
+                    foreach (Character character in ability.listOfTargets)
+                    {
+                        if (character.currentPosition == Position.Grounded)
+                            groundedTargets.Add(character);
+                    }
+                    Debug.Log($"found {groundedTargets.Count} grounded");
+                    if (groundedTargets.Count > 0)
+                    {
+                        selectedTarget = groundedTargets;
+                    }
+                    break;
+
+                case "LEASTHEALTH":
+                    List<Character> ascendingHealth = ability.listOfTargets.OrderBy(o => o.CalculateHealth()).ToList();
+                    selectedTarget = new() { ascendingHealth[0] };
+                    break;
+
+                case "MOSTHEALTH":
+                    List<Character> descendingHealth = ability.listOfTargets.OrderByDescending(o => o.CalculateHealth()).ToList();
+                    selectedTarget = new() { descendingHealth[0] };
+                    break;
+
+                default:
+                    Debug.Log($"not programmed: {this.aiTargeting}");
+                    break;
+            }
+
+            ability.listOfTargets = new() { selectedTarget[Random.Range(0, selectedTarget.Count)] };
         }
     }
 }

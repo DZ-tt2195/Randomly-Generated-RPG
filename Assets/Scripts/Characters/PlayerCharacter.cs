@@ -37,7 +37,7 @@ public class PlayerCharacter : Character
 
     protected override IEnumerator ChooseTarget(Ability ability)
     {
-        var narrowDown = new HashSet<TeamTarget> { TeamTarget.AnyOne, TeamTarget.OneTeammate, TeamTarget.OtherTeammate, TeamTarget.OneEnemy, TeamTarget.OtherEnemy };
+        HashSet<TeamTarget> narrowDown = new() { TeamTarget.AnyOne, TeamTarget.OneTeammate, TeamTarget.OtherTeammate, TeamTarget.OneEnemy, TeamTarget.OtherEnemy };
 
         if (narrowDown.Contains(ability.teamTarget))
         {
@@ -53,7 +53,6 @@ public class PlayerCharacter : Character
             }
 
             yield return WaitForChoice();
-
             List<Character> selectedTarget = new() { ability.listOfTargets[choice]};
             ability.listOfTargets = selectedTarget;
         }

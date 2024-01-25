@@ -23,6 +23,7 @@ public class Character : MonoBehaviour, IPointerClickHandler
         [ReadOnly] public List<Ability> listOfAbilities = new List<Ability>();
         [ReadOnly] public CharacterType myType;
         [ReadOnly] public bool isHelper;
+        protected string aiTargeting;
 
     [Foldout("Stats", true)]
         protected int baseHealth;
@@ -82,6 +83,7 @@ public class Character : MonoBehaviour, IPointerClickHandler
         StartCoroutine(ChangePosition(data.startingPosition, false));
         startingEmotion = data.startingEmotion; StartCoroutine(ChangeEmotion(data.startingEmotion, false));
         this.isHelper = isHelper;
+        this.aiTargeting = data.aiTargeting;
 
         if (this.isHelper)
         {

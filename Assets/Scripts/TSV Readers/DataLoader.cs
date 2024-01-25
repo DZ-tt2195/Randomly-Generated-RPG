@@ -17,6 +17,7 @@ public class CharacterData
     public Character.Position startingPosition;
     public Character.Emotion startingEmotion;
     public string skillNumbers;
+    public string aiTargeting;
 }
 
 [System.Serializable]
@@ -69,6 +70,7 @@ public class DataLoader
             newCharacter.startingPosition = (line[8] == "GROUNDED") ? Character.Position.Grounded : Character.Position.Airborne;
             newCharacter.startingEmotion = StringToEmotion(line[9]);
             newCharacter.skillNumbers = line[10];
+            try { newCharacter.aiTargeting = line[11]; } catch (IndexOutOfRangeException) { /*do nothing*/};
         }
         return nextData;
     }
