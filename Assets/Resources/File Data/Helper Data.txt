@@ -10,6 +10,7 @@
       "Base Accuracy",
       "Start Position",
       "Start Emotion",
+      "Enters Fight",
       "Skills"
     ],
     [
@@ -23,6 +24,7 @@
       "1",
       "GROUNDED",
       "NEUTRAL",
+      "",
       "0,1,14,15,16,"
     ],
     [
@@ -36,6 +38,7 @@
       "0",
       "AIRBORNE",
       "NEUTRAL",
+      "",
       "0,1,18,"
     ],
     [
@@ -49,6 +52,7 @@
       "0.9",
       "GROUNDED",
       "NEUTRAL",
+      "",
       "0,1,17,"
     ]
   ]

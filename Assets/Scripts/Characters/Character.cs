@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using TMPro;
 using MyBox;
 using UnityEngine.EventSystems;
+using UnityEditor.Experimental.GraphView;
 
 [RequireComponent(typeof(Button))] [RequireComponent(typeof(Image))]
 public class Character : MonoBehaviour, IPointerClickHandler
@@ -24,6 +25,7 @@ public class Character : MonoBehaviour, IPointerClickHandler
         [ReadOnly] public CharacterType myType;
         [ReadOnly] public bool isHelper;
         protected string aiTargeting;
+        protected string entersFight;
 
     [Foldout("Stats", true)]
         protected int baseHealth;
@@ -69,8 +71,9 @@ public class Character : MonoBehaviour, IPointerClickHandler
         healthText = transform.Find("Health %").GetChild(0).GetComponent<TMP_Text>();
     }
 
-    public void SetupCharacter(CharacterType type, CharacterData data, bool isHelper)
+    public IEnumerator SetupCharacter(CharacterType type, CharacterData data, bool isHelper)
     {
+        yield return null;
         myType = type;
         this.name = data.name;
         this.description = data.description;
@@ -98,14 +101,31 @@ public class Character : MonoBehaviour, IPointerClickHandler
             this.image.sprite = Resources.Load<Sprite>($"Enemies/{this.name}");
         }
 
-        string[] divideIntoNumbers = data.skillNumbers.Split(',');
-        foreach (string x in divideIntoNumbers)
+        string[] divideSkillsIntoNumbers = data.skillNumbers.Split(',');
+        foreach (string skill in divideSkillsIntoNumbers)
         {
-            if (x.Trim() != "")
+            if (skill.Trim() != "")
             {
                 Ability nextAbility = this.gameObject.AddComponent<Ability>();
                 listOfAbilities.Add(nextAbility);
-                nextAbility.SetupAbility(TitleScreen.instance.listOfAbilities[int.Parse(x)]);
+                nextAbility.SetupAbility(TitleScreen.instance.listOfAbilities[int.Parse(skill)]);
+            }
+        }
+
+        string[] divideEntersIntoNumbers = data.entersFight.Split(',');
+        foreach (string enters in divideEntersIntoNumbers)
+        {
+            if (enters.Trim() != "")
+            {
+                Ability nextAbility = this.gameObject.AddComponent<Ability>();
+                nextAbility.SetupAbility(TitleScreen.instance.listOfEntersFight[int.Parse(enters)]);
+
+                if (nextAbility.CanPlay())
+                {
+                    Log.instance.AddText(Log.Substitute(nextAbility, this));
+                    yield return ChooseTarget(nextAbility);
+                    yield return ResolveAbility(nextAbility);
+                }
             }
         }
     }
@@ -367,11 +387,15 @@ public class Character : MonoBehaviour, IPointerClickHandler
     public IEnumerator ChangePosition(Position newPosition, bool logged)
     {
         yield return null;
-        currentPosition = newPosition;
-        if (newPosition == Position.Grounded && logged)
-            Log.instance.AddText($"{(this.name)} is now grounded.");
-        if (newPosition == Position.Airborne && logged)
-            Log.instance.AddText($"{(this.name)} is now airborne.");
+
+        if (currentPosition != newPosition)
+        {
+            currentPosition = newPosition;
+            if (newPosition == Position.Grounded && logged)
+                Log.instance.AddText($"{(this.name)} is now grounded.");
+            if (newPosition == Position.Airborne && logged)
+                Log.instance.AddText($"{(this.name)} is now airborne.");
+        }
     }
 
     public IEnumerator ChangeEmotion(Emotion newEmotion, bool logged)

@@ -44,14 +44,14 @@ public class TurnManager : MonoBehaviour
             nextFriend.transform.localPosition = new Vector3(-1000 + (500 * i), -550, 0);
         }
 
-        NewWave();
+        StartCoroutine(NewWave());
     }
 
 #endregion
 
 #region Gameplay
 
-    void NewWave()
+    IEnumerator NewWave()
     {
         currentWave++;
         Log.instance.AddText($"WAVE {currentWave}");
@@ -59,7 +59,7 @@ public class TurnManager : MonoBehaviour
         int numEnemies = Random.Range(2, 4);
         for (int i = 0; i < numEnemies; i++)
         {
-            CreateEnemy(Random.Range(0, TitleScreen.instance.listOfEnemies.Count));
+            yield return CreateEnemy(Random.Range(0, TitleScreen.instance.listOfEnemies.Count));
         }
 
         StartCoroutine(ResolveRound());
@@ -70,15 +70,6 @@ public class TurnManager : MonoBehaviour
         currentRound++;
         Log.instance.AddText($"");
         Log.instance.AddText($"ROUND {currentRound}");
-
-        if (enemies.Count == 0)
-        {
-            int numEnemies = Random.Range(2, 4);
-            for (int i = 0; i < numEnemies; i++)
-            {
-                CreateEnemy(Random.Range(0, TitleScreen.instance.listOfEnemies.Count));
-            }
-        }
 
         speedQueue = AllCharacters();
 
@@ -107,7 +98,7 @@ public class TurnManager : MonoBehaviour
             if (enemies.Count > 0)
                 StartCoroutine(ResolveRound());
             else
-                NewWave();
+                StartCoroutine(NewWave());
         }
     }
 
@@ -135,10 +126,10 @@ public class TurnManager : MonoBehaviour
             decrease = !decrease;
     }
 
-    public void CreateHelper(int ID)
+    public IEnumerator CreateHelper(int ID)
     {
         PlayerCharacter nextCharacter = Instantiate(helperPrefab);
-        nextCharacter.SetupCharacter(Character.CharacterType.Teammate, TitleScreen.instance.listOfHelpers[ID], true);
+        yield return (nextCharacter.SetupCharacter(Character.CharacterType.Teammate, TitleScreen.instance.listOfHelpers[ID], true));
         Log.instance.AddText($"{Log.Article(nextCharacter.name)} entered the fight.");
 
         nextCharacter.transform.SetParent(TitleScreen.instance.canvas);
@@ -146,10 +137,10 @@ public class TurnManager : MonoBehaviour
         teammates.Add(nextCharacter);
     }
 
-    public void CreateEnemy(int ID)
+    public IEnumerator CreateEnemy(int ID)
     {
         EnemyCharacter nextCharacter = Instantiate(enemyPrefab);
-        nextCharacter.SetupCharacter(Character.CharacterType.Enemy, TitleScreen.instance.listOfEnemies[ID], false);
+        yield return (nextCharacter.SetupCharacter(Character.CharacterType.Enemy, TitleScreen.instance.listOfEnemies[ID], false));
         Log.instance.AddText($"{Log.Article(nextCharacter.name)} entered the fight.");
 
         nextCharacter.transform.SetParent(TitleScreen.instance.canvas);

@@ -1,0 +1,39 @@
+{
+    [
+      "Controller",
+      "Ability Name",
+      "Description",
+      "Log Description",
+      "Instructions",
+      "Next turn",
+      "Play condition",
+      "Health Change",
+      "Cooldown",
+      "Attack stat",
+      "Defense stat",
+      "Speed stat",
+      "Luck stat",
+      "Accuracy stat",
+      "Summon",
+      "Target"
+    ],
+    [
+      "Wolf",
+      "Roar",
+      "All Teammates become Sad.",
+      "THIS roars out loud.",
+      "TargetsSad",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "ALL TEAMMATES"
+    ]
+  ]
+}

@@ -9,9 +9,10 @@ using System;
 public class AbilityBox : MonoBehaviour
 {
     public Button button;
-    public TMP_Text textName;
-    public TMP_Text textDescription;
-    public TMP_Text textCountdown;
+    [SerializeField] TMP_Text textName;
+    [SerializeField] TMP_Text textDescription;
+    [SerializeField] TMP_Text textCountdown;
+    [SerializeField] TMP_Text onCooldown;
 
     public void ReceiveAbility(Ability ability)
     {
@@ -27,6 +28,16 @@ public class AbilityBox : MonoBehaviour
         else
         {
             textCountdown.transform.parent.gameObject.SetActive(false);
+        }
+
+        if (ability.currentCooldown > 0)
+        {
+            onCooldown.transform.parent.gameObject.SetActive(true);
+            onCooldown.text = $"{ability.currentCooldown}";
+        }
+        else
+        {
+            onCooldown.transform.parent.gameObject.SetActive(false);
         }
     }
 }

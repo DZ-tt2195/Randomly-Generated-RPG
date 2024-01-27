@@ -29,6 +29,7 @@ public class RightClick : MonoBehaviour
 
     public void DisplayInfo(Character character, Sprite sprite)
     {
+        this.transform.SetAsLastSibling();
         background.SetActive(true);
         image.sprite = sprite;
         nameText.text = character.name;

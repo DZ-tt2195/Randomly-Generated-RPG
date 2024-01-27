@@ -13,6 +13,9 @@ using UnityEngine.SceneManagement;
 
 public class TitleScreen : MonoBehaviour
 {
+
+#region Variables
+
     public static TitleScreen instance;
     [ReadOnly] public Transform canvas;
 
@@ -23,8 +26,13 @@ public class TitleScreen : MonoBehaviour
     [SerializeField] PlayerCharacter playerPrefab;
     [Tooltip("store all players")][ReadOnly] public List<Character> listOfPlayers = new List<Character>();
     [Tooltip("store all ability data")] [ReadOnly] public List<AbilityData> listOfAbilities;
+    [Tooltip("store all enters fight data")][ReadOnly] public List<AbilityData> listOfEntersFight;
     [Tooltip("store all enemy data")][ReadOnly] public List<CharacterData> listOfEnemies;
     [Tooltip("store all helper data")][ReadOnly] public List<CharacterData> listOfHelpers;
+
+#endregion
+
+#region Setup
 
     private void Awake()
     {
@@ -58,7 +66,6 @@ public class TitleScreen : MonoBehaviour
         {
             string filePath = $"Assets/Resources/File Data/{range}.txt";
             File.WriteAllText($"{filePath}", www.downloadHandler.text);
-            Debug.Log($"downloaded {range} from the internet");
 
             string[] allLines = File.ReadAllLines($"{filePath}");
             List<string> modifiedLines = allLines.ToList();
@@ -69,30 +76,39 @@ public class TitleScreen : MonoBehaviour
 
     IEnumerator GenerateStuff()
     {
+        GameObject loadButton = GameObject.Find("Play Button");
+        loadButton.SetActive(false);
+
         #if UNITY_EDITOR
             yield return DownloadFile("Player Data");
-            yield return DownloadFile("Ability Data");
             yield return DownloadFile("Helper Data");
             yield return DownloadFile("Enemy Data");
+            yield return DownloadFile("Ability Data");
+            yield return DownloadFile("Enters Fight Data");
         #endif
 
         List<CharacterData> players = DataLoader.ReadCharacterData("Player Data");
         listOfHelpers = DataLoader.ReadCharacterData("Helper Data");
         listOfEnemies = DataLoader.ReadCharacterData("Enemy Data");
         listOfAbilities = DataLoader.ReadAbilityData("Ability Data");
+        listOfEntersFight = DataLoader.ReadAbilityData("Enters Fight Data");
 
         for (int i = 0; i < players.Count; i++)
         {
             PlayerCharacter nextCharacter = Instantiate(playerPrefab);
-            nextCharacter.SetupCharacter(Character.CharacterType.Teammate, players[i], false);
-
+            yield return (nextCharacter.SetupCharacter(Character.CharacterType.Teammate, players[i], false));
             listOfPlayers.Add(nextCharacter);
             nextCharacter.transform.SetParent(canvas);
             nextCharacter.transform.localPosition = new Vector3(-850 + (600 * i), -550, 0);
             nextCharacter.transform.SetAsFirstSibling();
         }
 
+        loadButton.SetActive(true);
     }
+
+#endregion
+
+#region Loading Scenes
 
     private void OnEnable()
     {
@@ -134,4 +150,7 @@ public class TitleScreen : MonoBehaviour
         next.transform.SetParent(null);
         DontDestroyOnLoad(next);
     }
+
+    #endregion
+
 }

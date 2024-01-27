@@ -13,7 +13,9 @@ public class EnemyCharacter : Character
         foreach (Ability ability in this.listOfAbilities)
         {
             if (ability.myName != "Skip Turn" && ability.CanPlay())
+            {
                 availableAbilities.Add(ability);
+            }
         }
 
         thisTurnAbility = (availableAbilities.Count == 0) ? listOfAbilities[0] : availableAbilities[Random.Range(0, availableAbilities.Count)];
@@ -27,18 +29,17 @@ public class EnemyCharacter : Character
         if (narrowDown.Contains(ability.teamTarget))
         {
             this.aiTargeting = this.aiTargeting.ToUpper().Trim();
-            List<Character> selectedTarget = ability.listOfTargets;
+            List<Character> selectedTarget = ability.listOfTargets.Shuffle();
 
             switch (this.aiTargeting)
             {
                 case "PRIORITIZEAIRBORNE":
                     List<Character> airborneTargets = new();
-                    foreach (Character character in ability.listOfTargets)
+                    foreach (Character character in selectedTarget)
                     {
                         if (character.currentPosition == Position.Airborne)
                             airborneTargets.Add(character);
                     }
-                    Debug.Log($"found {airborneTargets.Count} airborne");
                     if (airborneTargets.Count>0)
                     {
                         selectedTarget = airborneTargets;
@@ -47,12 +48,11 @@ public class EnemyCharacter : Character
 
                 case "PRIORITIZEGROUNDED":
                     List<Character> groundedTargets = new();
-                    foreach (Character character in ability.listOfTargets)
+                    foreach (Character character in selectedTarget)
                     {
                         if (character.currentPosition == Position.Grounded)
                             groundedTargets.Add(character);
                     }
-                    Debug.Log($"found {groundedTargets.Count} grounded");
                     if (groundedTargets.Count > 0)
                     {
                         selectedTarget = groundedTargets;
@@ -60,13 +60,18 @@ public class EnemyCharacter : Character
                     break;
 
                 case "LEASTHEALTH":
-                    List<Character> ascendingHealth = ability.listOfTargets.OrderBy(o => o.CalculateHealth()).ToList();
+                    List<Character> ascendingHealth = selectedTarget.OrderBy(o => o.CalculateHealth()).ToList();
                     selectedTarget = new() { ascendingHealth[0] };
                     break;
 
                 case "MOSTHEALTH":
-                    List<Character> descendingHealth = ability.listOfTargets.OrderByDescending(o => o.CalculateHealth()).ToList();
+                    List<Character> descendingHealth = selectedTarget.OrderByDescending(o => o.CalculateHealth()).ToList();
                     selectedTarget = new() { descendingHealth[0] };
+                    break;
+
+                case "EFFECTIVENESS":
+                    List<Character> effectiveTargets = selectedTarget.OrderBy(o => ability.Effectiveness(this, o)).ToList();
+                    selectedTarget = new() { effectiveTargets[0] };
                     break;
 
                 default:

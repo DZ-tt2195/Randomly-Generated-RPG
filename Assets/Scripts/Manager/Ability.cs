@@ -321,7 +321,7 @@ public class Ability : MonoBehaviour
                 break;
 
             case "SUMMONHELPER":
-                TurnManager.instance.CreateHelper(summonHelper);
+                yield return TurnManager.instance.CreateHelper(summonHelper);
                 break;
 
             default:
@@ -330,7 +330,7 @@ public class Ability : MonoBehaviour
         }
     }
 
-    float Effectiveness(Character user, Character target)
+    public float Effectiveness(Character user, Character target)
     {
         float answer = 1;
         if (user.currentEmotion == Character.Emotion.Happy)
