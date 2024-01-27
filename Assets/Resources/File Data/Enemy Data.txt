@@ -15,17 +15,17 @@
     ],
     [
       "Archer",
-      "Placeholder enemy who attacks, preferring to shoot anyone in the sky.",
+      "Attacks Teammates, prioritizing ones who are Airborne.",
       "75",
       "4",
-      "10",
+      "5",
       "50",
       "0.15",
       "1",
       "GROUNDED",
       "NEUTRAL",
       "0,19,",
-      "PreferAirborne"
+      "PrioritizeAirborne"
     ]
   ]
 }

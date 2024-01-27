@@ -259,7 +259,7 @@ public class Character : MonoBehaviour, IPointerClickHandler
 
         if (this.myType == CharacterType.Teammate)
         {
-
+            image.color = Color.gray;
         }
         else
         {
@@ -275,6 +275,7 @@ public class Character : MonoBehaviour, IPointerClickHandler
         yield return GainHealth(health);
         yield return ChangePosition(startingPosition, false);
         yield return ChangeEmotion(startingEmotion, false);
+        image.color = Color.white;
 
         modifyAttack = 1f;
         modifyDefense = 1f;
