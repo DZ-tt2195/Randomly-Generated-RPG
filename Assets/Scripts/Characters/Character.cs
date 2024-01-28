@@ -416,34 +416,42 @@ public class Character : MonoBehaviour, IPointerClickHandler
         {
             case Emotion.Neutral:
                 emotionText.text = "NEUTRAL";
+                emotionText.color = Color.white;
                 border.color = Color.white;
                 break;
             case Emotion.Happy:
                 emotionText.text = "HAPPY";
+                emotionText.color = Color.yellow;
                 border.color = Color.yellow;
                 break;
             case Emotion.Ecstatic:
                 emotionText.text = "ECSTATIC";
+                emotionText.color = Color.yellow;
                 border.color = Color.yellow;
                 break;
             case Emotion.Angry:
                 emotionText.text = "ANGRY";
+                emotionText.color = Color.red;
                 border.color = Color.red;
                 break;
             case Emotion.Enraged:
                 emotionText.text = "ENRAGED";
+                emotionText.color = Color.red;
                 border.color = Color.red;
                 break;
             case Emotion.Sad:
                 emotionText.text = "SAD";
+                emotionText.color = Color.blue;
                 border.color = Color.blue;
                 break;
             case Emotion.Depressed:
                 emotionText.text = "DEPRESSED";
+                emotionText.color = Color.blue;
                 border.color = Color.blue;
                 break;
             case Emotion.Dead:
                 emotionText.text = "DEAD";
+                emotionText.color = Color.gray;
                 border.color = Color.gray;
                 break;
         }

@@ -25,6 +25,9 @@ public class TurnManager : MonoBehaviour
     int currentRound;
     bool stillBattling = true;
 
+    [SerializeField] Button emotionGuide;
+    [SerializeField] GameObject emotionTransform;
+
 #endregion
 
 #region Setup
@@ -32,6 +35,7 @@ public class TurnManager : MonoBehaviour
     private void Awake()
     {
         instance = this;
+        emotionGuide.onClick.AddListener(SeeEmotions);
     }
 
     private void Start()
@@ -124,6 +128,20 @@ public class TurnManager : MonoBehaviour
         Character.borderColor += (decrease) ? -0.05f : 0.05f;
         if (Character.borderColor < 0 || Character.borderColor > 1)
             decrease = !decrease;
+    }
+
+    void SeeEmotions()
+    {
+        emotionTransform.SetActive(true);
+        emotionTransform.transform.SetAsLastSibling();
+    }
+
+    private void Update()
+    {
+        if (emotionTransform.activeSelf && Input.GetMouseButtonDown(0))
+        {
+            emotionTransform.SetActive(false);
+        }
     }
 
     public IEnumerator CreateHelper(int ID)
