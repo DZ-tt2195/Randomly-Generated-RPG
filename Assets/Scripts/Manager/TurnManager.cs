@@ -60,8 +60,7 @@ public class TurnManager : MonoBehaviour
         currentWave++;
         Log.instance.AddText($"WAVE {currentWave}");
 
-        int numEnemies = Random.Range(2, 4);
-        for (int i = 0; i < numEnemies; i++)
+        for (int i = 0; i < 4; i++)
         {
             yield return CreateEnemy(Random.Range(0, TitleScreen.instance.listOfEnemies.Count));
         }
@@ -100,9 +99,14 @@ public class TurnManager : MonoBehaviour
         if (stillBattling)
         {
             if (enemies.Count > 0)
+            {
                 StartCoroutine(ResolveRound());
+            }
             else
+            {
+                Log.instance.AddText($"");
                 StartCoroutine(NewWave());
+            }
         }
     }
 
@@ -117,11 +121,12 @@ public class TurnManager : MonoBehaviour
         stillBattling = false;
         Log.instance.AddText("");
         Log.instance.AddText("You lost.");
+        Log.instance.AddText($"Survived {currentWave-1} waves.");
     }
 
     #endregion
 
-#region Misc
+    #region Misc
 
     void FixedUpdate()
     {

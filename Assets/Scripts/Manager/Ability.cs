@@ -87,7 +87,7 @@ public class Ability : MonoBehaviour
 
 #region Play Condition
 
-    public bool CanPlay()
+    public bool CanPlay(Character user)
     {
         if (currentCooldown == 0)
         {
@@ -109,6 +109,21 @@ public class Ability : MonoBehaviour
             {
                 switch (nextMethod)
                 {
+                    case "SELFHAPPY":
+                        return (user.currentEmotion == Character.Emotion.Happy || user.currentEmotion == Character.Emotion.Ecstatic);
+                    case "SELFECSTATIC":
+                        return (user.currentEmotion == Character.Emotion.Ecstatic);
+
+                    case "SELFANGRY":
+                        return (user.currentEmotion == Character.Emotion.Angry || user.currentEmotion == Character.Emotion.Enraged);
+                    case "SELFENRAGED":
+                        return (user.currentEmotion == Character.Emotion.Enraged);
+
+                    case "SELFSAD":
+                        return (user.currentEmotion == Character.Emotion.Sad || user.currentEmotion == Character.Emotion.Depressed);
+                    case "SELFDEPRESSED":
+                        return (user.currentEmotion == Character.Emotion.Depressed);
+
                     case "GROUNDEDONLY":
                         for (int i = listOfTargets.Count - 1; i >= 0; i--)
                             if (listOfTargets[i].currentPosition != Character.Position.Grounded) listOfTargets.RemoveAt(i);
@@ -186,6 +201,8 @@ public class Ability : MonoBehaviour
 
     public IEnumerator ResolveMethod(string methodName)
     {
+        TurnManager.instance.listOfBoxes[0].transform.parent.gameObject.SetActive(false);
+
         switch (methodName)
         {
             case "ATTACK":
@@ -400,6 +417,11 @@ public class Ability : MonoBehaviour
             };
         }
 
+        if (answer > 1)
+            Log.instance.AddText("It's super effective!");
+        else if (answer < 1)
+            Log.instance.AddText("It's not very effective...");
+
         return answer;
     }
 
@@ -408,8 +430,8 @@ public class Ability : MonoBehaviour
         if (RollAccuracy(user.CalculateAccuracy()))
         {
             float damageVariation = Random.Range(0.8f, 1.2f);
-            float critical = RollCritical(user.CalculateLuck());
             float effectiveness = Effectiveness(user, target);
+            float critical = RollCritical(user.CalculateLuck());
             float attack = user.CalculateAttack();
             float defense = target.CalculateDefense(user);
             return (int)(damageVariation * critical * effectiveness * attack + healthChange - defense);

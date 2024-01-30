@@ -14,9 +14,9 @@ public class AbilityBox : MonoBehaviour
     [SerializeField] TMP_Text textCountdown;
     [SerializeField] TMP_Text onCooldown;
 
-    public void ReceiveAbility(Ability ability)
+    public void ReceiveAbility(Ability ability, Character user)
     {
-        try {button.interactable = ability.CanPlay(); } catch (NullReferenceException) { /*do nothing*/ };
+        try {button.interactable = ability.CanPlay(user); } catch (NullReferenceException) { /*do nothing*/ };
         textName.text = ability.myName;
         textDescription.text = ability.description;
 

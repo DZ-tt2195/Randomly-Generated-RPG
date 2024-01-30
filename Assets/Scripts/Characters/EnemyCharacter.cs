@@ -12,7 +12,7 @@ public class EnemyCharacter : Character
         List<Ability> availableAbilities = new();
         foreach (Ability ability in this.listOfAbilities)
         {
-            if (ability.myName != "Skip Turn" && ability.CanPlay())
+            if (ability.myName != "Skip Turn" && ability.CanPlay(this))
             {
                 availableAbilities.Add(ability);
             }

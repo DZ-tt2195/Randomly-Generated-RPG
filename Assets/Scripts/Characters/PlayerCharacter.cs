@@ -24,7 +24,7 @@ public class PlayerCharacter : Character
             AbilityBox box = TurnManager.instance.listOfBoxes[i];
             try
             {
-                box.ReceiveAbility(listOfAbilities[i]);
+                box.ReceiveAbility(listOfAbilities[i], this);
                 box.gameObject.SetActive(true);
 
                 box.button.onClick.RemoveAllListeners();
@@ -37,6 +37,7 @@ public class PlayerCharacter : Character
 
     protected override IEnumerator ChooseTarget(Ability ability)
     {
+        TurnManager.instance.listOfBoxes[0].transform.parent.gameObject.SetActive(false);
         HashSet<TeamTarget> narrowDown = new() { TeamTarget.AnyOne, TeamTarget.OneTeammate, TeamTarget.OtherTeammate, TeamTarget.OneEnemy, TeamTarget.OtherEnemy };
 
         if (narrowDown.Contains(ability.teamTarget))

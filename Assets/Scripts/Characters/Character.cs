@@ -5,7 +5,6 @@ using UnityEngine.UI;
 using TMPro;
 using MyBox;
 using UnityEngine.EventSystems;
-using UnityEditor.Experimental.GraphView;
 
 [RequireComponent(typeof(Button))] [RequireComponent(typeof(Image))]
 public class Character : MonoBehaviour, IPointerClickHandler
@@ -26,6 +25,7 @@ public class Character : MonoBehaviour, IPointerClickHandler
         [ReadOnly] public bool isHelper;
         protected string aiTargeting;
         protected string entersFight;
+        [ReadOnly] public Weapon weapon;
 
     [Foldout("Stats", true)]
         protected int baseHealth;
@@ -120,7 +120,7 @@ public class Character : MonoBehaviour, IPointerClickHandler
                 Ability nextAbility = this.gameObject.AddComponent<Ability>();
                 nextAbility.SetupAbility(TitleScreen.instance.listOfEntersFight[int.Parse(enters)]);
 
-                if (nextAbility.CanPlay())
+                if (nextAbility.CanPlay(this))
                 {
                     Log.instance.AddText(Log.Substitute(nextAbility, this));
                     yield return ChooseTarget(nextAbility);
@@ -169,10 +169,31 @@ public class Character : MonoBehaviour, IPointerClickHandler
 
     void RightClickInfo()
     {
-        RightClick.instance.DisplayInfo(this, image.sprite);
+        string stats1 = "";
+        string stats2 = "";
+
+        stats1 += $"Health: {currentHealth} / {baseHealth}\n";
+        stats1 += $"Attack: {baseAttack} {ConvertStatPercentage(modifyAttack)}\n";
+        stats1 += $"Defense: {baseDefense} {ConvertStatPercentage(modifyDefense)}\n";
+
+        stats2 += $"Speed: {baseSpeed} {ConvertStatPercentage(modifySpeed)}\n";
+        stats2 += $"Luck: {100 * baseLuck:F0}% {ConvertStatPercentage(modifyLuck)}\n";
+        stats2 += $"Accuracy: {100 * baseAccuracy:F0}% {ConvertStatPercentage(modifyAccuracy)}\n";
+
+        RightClick.instance.DisplayInfo(this, image.sprite, stats1, stats2);
     }
 
-#endregion
+    string ConvertStatPercentage(float stat)
+    {
+        if (stat == 1f)
+            return "";
+        else if (stat > 1f)
+            return $"+ {100 * (stat - 1):F0}%";
+        else
+            return $"- {100 * (stat - 1) * -1:F0}%";
+    }
+
+    #endregion
 
 #region Stats
 
@@ -271,7 +292,7 @@ public class Character : MonoBehaviour, IPointerClickHandler
 
     public IEnumerator HasDied()
     {
-        currentHealth = -1;
+        currentHealth = 0;
         yield return ChangeEmotion(Emotion.Dead, false);
         currentPosition = Position.Dead;
         healthText.text = $"0%";
@@ -400,11 +421,11 @@ public class Character : MonoBehaviour, IPointerClickHandler
 
     public IEnumerator ChangeEmotion(Emotion newEmotion, bool logged)
     {
-        if (newEmotion == Emotion.Angry && currentEmotion == Emotion.Angry)
+        if (newEmotion == Emotion.Angry && currentEmotion == Emotion.Angry || currentEmotion == Emotion.Enraged)
             currentEmotion = Emotion.Enraged;
-        else if (newEmotion == Emotion.Sad && currentEmotion == Emotion.Sad)
+        else if (newEmotion == Emotion.Sad && currentEmotion == Emotion.Sad || currentEmotion == Emotion.Depressed)
             currentEmotion = Emotion.Depressed;
-        else if (newEmotion == Emotion.Happy && currentEmotion == Emotion.Happy)
+        else if (newEmotion == Emotion.Happy && currentEmotion == Emotion.Happy || currentEmotion == Emotion.Ecstatic)
             currentEmotion = Emotion.Ecstatic;
         else
             currentEmotion = newEmotion;
@@ -475,7 +496,7 @@ public class Character : MonoBehaviour, IPointerClickHandler
         }
 
         Log.instance.AddText(Log.Substitute(thisTurnAbility, this));
-        if (thisTurnAbility.myName == "Do Nothing")
+        if (thisTurnAbility.myName == "Skip Turn")
         {
         }
         else
