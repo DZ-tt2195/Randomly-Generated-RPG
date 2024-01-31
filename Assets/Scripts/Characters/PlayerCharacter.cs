@@ -11,6 +11,7 @@ public class PlayerCharacter : Character
     protected override IEnumerator ChooseAbility()
     {
         EnableAbilityBoxes();
+        TurnManager.instance.instructions.text = $"{this.name}'s Turn: Choose an ability.";
         yield return WaitForChoice();
         thisTurnAbility = this.listOfAbilities[choice];
         this.border.gameObject.SetActive(false);
@@ -42,6 +43,7 @@ public class PlayerCharacter : Character
 
         if (narrowDown.Contains(ability.teamTarget))
         {
+            TurnManager.instance.instructions.text = $"Choose a character to target.";
             TurnManager.instance.DisableCharacterButtons();
             for (int i = 0; i < ability.listOfTargets.Count; i++)
             {

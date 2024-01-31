@@ -16,6 +16,8 @@ public class TurnManager : MonoBehaviour
     [SerializeField] PlayerCharacter helperPrefab;
 
     public List<AbilityBox> listOfBoxes = new List<AbilityBox>();
+    public TMP_Text instructions;
+
     [ReadOnly] public List<Character> teammates = new List<Character>();
     [ReadOnly] public List<Character> enemies = new List<Character>();
     [ReadOnly] public List<Character> speedQueue = new List<Character>();
@@ -88,6 +90,7 @@ public class TurnManager : MonoBehaviour
 
             if (nextInLine != null && nextInLine.CalculateHealth() > 0)
             {
+                instructions.text = "";
                 Log.instance.AddText($"");
                 nextInLine.border.gameObject.SetActive(true);
                 yield return nextInLine.MyTurn();
@@ -120,6 +123,7 @@ public class TurnManager : MonoBehaviour
         }
 
         stillBattling = false;
+        instructions.text = "";
         Log.instance.AddText("");
         Log.instance.AddText("You lost.");
         Log.instance.AddText($"Survived {currentWave-1} waves.");

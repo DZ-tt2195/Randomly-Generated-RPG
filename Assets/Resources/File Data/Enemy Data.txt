@@ -46,7 +46,7 @@
     ],
     [
       "Wolf",
-      "Makes all Teammates Sad, and then hunts them down while Angry.",
+      "Makes all Teammates Sad when it enters the fight, and then hunts them down while Angry.",
       "100",
       "55",
       "6",

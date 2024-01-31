@@ -136,7 +136,6 @@ public class Character : MonoBehaviour, IPointerClickHandler
 
     private void FixedUpdate()
     {
-        this.transform.localScale = originalSize;
         this.border.SetAlpha(borderColor);
         ScreenPosition();
     }
@@ -147,13 +146,13 @@ public class Character : MonoBehaviour, IPointerClickHandler
         {
             Vector3 newPosition = transform.localPosition;
             int startingPosition = (myType == CharacterType.Enemy) ? 425 : -425;
-            newPosition.y = startingPosition + 50 * Mathf.Cos(Time.time * 2.5f);
+            newPosition.y = startingPosition + 45 * Mathf.Cos(Time.time * 2.5f);
             transform.localPosition = newPosition;
         }
         else
         {
             Vector3 newPosition = transform.localPosition;
-            int startingPosition = (myType == CharacterType.Enemy) ? 300 : -550;
+            int startingPosition = (myType == CharacterType.Enemy) ? 300 : -575;
             newPosition.y = startingPosition;
             transform.localPosition = newPosition;
         }
@@ -495,6 +494,7 @@ public class Character : MonoBehaviour, IPointerClickHandler
                 ability.currentCooldown--;
         }
 
+        TurnManager.instance.instructions.text = "";
         Log.instance.AddText(Log.Substitute(thisTurnAbility, this));
         if (thisTurnAbility.myName == "Skip Turn")
         {
