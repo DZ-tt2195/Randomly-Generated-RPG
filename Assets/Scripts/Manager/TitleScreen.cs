@@ -99,7 +99,7 @@ public class TitleScreen : MonoBehaviour
             yield return (nextCharacter.SetupCharacter(Character.CharacterType.Teammate, players[i], false));
             listOfPlayers.Add(nextCharacter);
             nextCharacter.transform.SetParent(canvas);
-            nextCharacter.transform.localPosition = new Vector3(-850 + (600 * i), -550, 0);
+            nextCharacter.transform.localPosition = new Vector3(-1000 + (500 * i), -550, 0);
             nextCharacter.transform.SetAsFirstSibling();
         }
 

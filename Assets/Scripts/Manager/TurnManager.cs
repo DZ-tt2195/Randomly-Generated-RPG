@@ -60,7 +60,8 @@ public class TurnManager : MonoBehaviour
         currentWave++;
         Log.instance.AddText($"WAVE {currentWave}");
 
-        for (int i = 0; i < 4; i++)
+        int randomNum = Random.Range(2, 4);
+        for (int i = 0; i < randomNum; i++)
         {
             yield return CreateEnemy(Random.Range(0, TitleScreen.instance.listOfEnemies.Count));
         }
@@ -126,7 +127,7 @@ public class TurnManager : MonoBehaviour
 
     #endregion
 
-    #region Misc
+#region Misc
 
     void FixedUpdate()
     {

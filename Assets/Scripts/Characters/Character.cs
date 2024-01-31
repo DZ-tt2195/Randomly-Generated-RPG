@@ -409,7 +409,7 @@ public class Character : MonoBehaviour, IPointerClickHandler
     {
         yield return null;
 
-        if (currentPosition != newPosition)
+        if (newPosition != Position.Dead && currentPosition != newPosition)
         {
             currentPosition = newPosition;
             if (newPosition == Position.Grounded && logged)
@@ -421,11 +421,11 @@ public class Character : MonoBehaviour, IPointerClickHandler
 
     public IEnumerator ChangeEmotion(Emotion newEmotion, bool logged)
     {
-        if (newEmotion == Emotion.Angry && currentEmotion == Emotion.Angry || currentEmotion == Emotion.Enraged)
+        if (newEmotion == Emotion.Angry && currentEmotion == Emotion.Angry || newEmotion == Emotion.Angry && currentEmotion == Emotion.Enraged)
             currentEmotion = Emotion.Enraged;
-        else if (newEmotion == Emotion.Sad && currentEmotion == Emotion.Sad || currentEmotion == Emotion.Depressed)
+        else if (newEmotion == Emotion.Sad && currentEmotion == Emotion.Sad || newEmotion == Emotion.Sad && currentEmotion == Emotion.Depressed)
             currentEmotion = Emotion.Depressed;
-        else if (newEmotion == Emotion.Happy && currentEmotion == Emotion.Happy || currentEmotion == Emotion.Ecstatic)
+        else if (newEmotion == Emotion.Happy && currentEmotion == Emotion.Happy || newEmotion == Emotion.Happy && currentEmotion == Emotion.Ecstatic)
             currentEmotion = Emotion.Ecstatic;
         else
             currentEmotion = newEmotion;

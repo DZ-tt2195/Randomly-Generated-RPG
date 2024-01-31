@@ -109,16 +109,22 @@ public class Ability : MonoBehaviour
             {
                 switch (nextMethod)
                 {
+                    case "NOTHAPPY":
+                        return (user.currentEmotion != Character.Emotion.Happy && user.currentEmotion != Character.Emotion.Ecstatic);
                     case "SELFHAPPY":
                         return (user.currentEmotion == Character.Emotion.Happy || user.currentEmotion == Character.Emotion.Ecstatic);
                     case "SELFECSTATIC":
                         return (user.currentEmotion == Character.Emotion.Ecstatic);
 
+                    case "NOTANGRY":
+                        return (user.currentEmotion != Character.Emotion.Angry && user.currentEmotion != Character.Emotion.Enraged);
                     case "SELFANGRY":
                         return (user.currentEmotion == Character.Emotion.Angry || user.currentEmotion == Character.Emotion.Enraged);
                     case "SELFENRAGED":
                         return (user.currentEmotion == Character.Emotion.Enraged);
 
+                    case "NOTSAD":
+                        return (user.currentEmotion != Character.Emotion.Sad && user.currentEmotion != Character.Emotion.Depressed);
                     case "SELFSAD":
                         return (user.currentEmotion == Character.Emotion.Sad || user.currentEmotion == Character.Emotion.Depressed);
                     case "SELFDEPRESSED":
