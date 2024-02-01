@@ -283,21 +283,22 @@ public class Character : MonoBehaviour, IPointerClickHandler
         currentHealth -= damage;
         healthText.text = $"{100 * ((float)currentHealth / baseHealth):F0}%";
         Log.instance.AddText($"{(this.name)} takes {damage} damage.");
+
         if (currentHealth <= 0)
-        {
-            yield return HasDied();
-        }
+            yield return HasDied(true);
     }
 
-    public IEnumerator HasDied()
+    public IEnumerator HasDied(bool logged)
     {
         currentHealth = 0;
         yield return ChangeEmotion(Emotion.Dead, false);
         currentPosition = Position.Dead;
         healthText.text = $"0%";
-        Log.instance.AddText($"{(this.name)} has died.");
 
-        if (this.myType == CharacterType.Teammate)
+        if (logged)
+            Log.instance.AddText($"{(this.name)} has died.");
+
+        if (this.myType == CharacterType.Teammate && !isHelper)
         {
             image.color = Color.gray;
         }

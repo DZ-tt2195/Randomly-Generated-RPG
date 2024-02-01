@@ -134,7 +134,7 @@ public class TitleScreen : MonoBehaviour
         RightClick.instance.transform.localPosition = new Vector3(0, 0);
 
         FPS.instance.transform.SetParent(canvas);
-        FPS.instance.transform.localPosition = new Vector3(-1190, 666);
+        FPS.instance.transform.localPosition = new Vector3(-1190, 670);
     }
 
     public void UnloadObjects()

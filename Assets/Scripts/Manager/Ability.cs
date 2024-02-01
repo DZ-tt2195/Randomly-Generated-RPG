@@ -99,16 +99,34 @@ public class Ability : MonoBehaviour
 
             for (int i = listOfTargets.Count - 1; i >= 0; i--)
             {
-                if (methodsInStrings[0] == "ISDEAD" && listOfTargets[i].CalculateHealth() > 0)
-                    listOfTargets.RemoveAt(i);
+                if (methodsInStrings[0] == "ISDEAD")
+                {
+                    if (listOfTargets[i].CalculateHealth() > 0)
+                    {
+                        listOfTargets.RemoveAt(i);
+                    }
+                    else
+                    {
+                    }
+                }
                 else if (listOfTargets[i].CalculateHealth() <= 0)
+                {
                     listOfTargets.RemoveAt(i);
+                }
             }
 
             foreach (string nextMethod in methodsInStrings)
             {
                 switch (nextMethod)
                 {
+                    case "":
+                        break;
+
+                    case "SELFGROUNDED":
+                        return user.currentPosition == Character.Position.Grounded;
+                    case "SELFAIRBORNE":
+                        return user.currentPosition == Character.Position.Airborne;
+
                     case "NOTHAPPY":
                         return (user.currentEmotion != Character.Emotion.Happy && user.currentEmotion != Character.Emotion.Ecstatic);
                     case "SELFHAPPY":
@@ -144,6 +162,10 @@ public class Ability : MonoBehaviour
                     case "NOTNEUTRAL":
                         for (int i = listOfTargets.Count - 1; i >= 0; i--)
                             if (listOfTargets[i].currentEmotion == Character.Emotion.Neutral) listOfTargets.RemoveAt(i);
+                        break;
+
+                    default:
+                        Debug.LogError($"{nextMethod} isn't a method");
                         break;
                 }
             }
@@ -211,6 +233,9 @@ public class Ability : MonoBehaviour
 
         switch (methodName)
         {
+            case "":
+                break;
+
             case "ATTACK":
                 for (int i = 0; i < listOfTargets.Count; i++)
                     yield return listOfTargets[i].TakeDamage(CalculateDamage(self, listOfTargets[i]));
@@ -335,8 +360,11 @@ public class Ability : MonoBehaviour
                     yield return listOfTargets[i].ChangeAccuracy(modifyAccuracy);
                 break;
 
+            case "LEAVEFIGHT":
+                yield return self.HasDied(false);
+                break;
             case "SELFDESTRUCT":
-                yield return self.HasDied();
+                yield return self.HasDied(true);
                 break;
             case "TARGETSREVIVE":
                 for (int i = 0; i < listOfTargets.Count; i++)
