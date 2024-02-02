@@ -25,6 +25,7 @@ public class TurnManager : MonoBehaviour
     bool decrease = true;
     int currentWave;
     int currentRound;
+    float enemyMultiplier = 1f;
     bool stillBattling = true;
 
     [SerializeField] Button emotionGuide;
@@ -60,18 +61,25 @@ public class TurnManager : MonoBehaviour
     IEnumerator NewWave()
     {
         currentWave++;
+        enemyMultiplier = 1 + (currentWave - 1) * 0.05f;
+        
         Log.instance.AddText($"WAVE {currentWave}");
+        if (currentWave > 1)
+        {
+            Log.instance.AddText($"Enemies are now {100 * (enemyMultiplier - 1):F0}% stronger.");
+            Log.instance.AddText("");
+        }
 
         int randomNum = Random.Range(2, 4);
         for (int i = 0; i < randomNum; i++)
         {
-            yield return CreateEnemy(Random.Range(0, TitleScreen.instance.listOfEnemies.Count));
+            yield return CreateEnemy(Random.Range(0, TitleScreen.instance.listOfEnemies.Count), enemyMultiplier);
         }
 
-        StartCoroutine(ResolveRound());
+        StartCoroutine(NewRound());
     }
 
-    IEnumerator ResolveRound()
+    IEnumerator NewRound()
     {
         currentRound++;
         Log.instance.AddText($"");
@@ -98,20 +106,22 @@ public class TurnManager : MonoBehaviour
             }
 
             CheckTeammates();
+
+            if (stillBattling)
+            {
+                if (enemies.Count == 0)
+                {
+                    Log.instance.AddText($"");
+                    StartCoroutine(NewWave());
+                    yield break;
+                }
+                else
+                {
+                }
+            }
         }
 
-        if (stillBattling)
-        {
-            if (enemies.Count > 0)
-            {
-                StartCoroutine(ResolveRound());
-            }
-            else
-            {
-                Log.instance.AddText($"");
-                StartCoroutine(NewWave());
-            }
-        }
+        StartCoroutine(NewRound());
     }
 
     void CheckTeammates()
@@ -129,7 +139,7 @@ public class TurnManager : MonoBehaviour
         Log.instance.AddText($"Survived {currentWave-1} waves.");
     }
 
-    #endregion
+#endregion
 
 #region Misc
 
@@ -165,11 +175,11 @@ public class TurnManager : MonoBehaviour
         teammates.Add(nextCharacter);
     }
 
-    public IEnumerator CreateEnemy(int ID)
+    public IEnumerator CreateEnemy(int ID, float multiplier)
     {
         EnemyCharacter nextCharacter = Instantiate(enemyPrefab);
-        yield return (nextCharacter.SetupCharacter(Character.CharacterType.Enemy, TitleScreen.instance.listOfEnemies[ID], false));
-        Log.instance.AddText($"{Log.Article(nextCharacter.name)} entered the fight.");
+        Log.instance.AddText($"{Log.Article(TitleScreen.instance.listOfEnemies[ID].name)} entered the fight.");
+        yield return (nextCharacter.SetupCharacter(Character.CharacterType.Enemy, TitleScreen.instance.listOfEnemies[ID], false, multiplier));
 
         nextCharacter.transform.SetParent(TitleScreen.instance.canvas);
         nextCharacter.transform.localPosition = new Vector3(-1000 + (500 * enemies.Count), 300, 0);

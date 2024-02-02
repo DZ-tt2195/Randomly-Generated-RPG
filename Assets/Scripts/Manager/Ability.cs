@@ -238,14 +238,16 @@ public class Ability : MonoBehaviour
 
             case "ATTACK":
                 for (int i = 0; i < listOfTargets.Count; i++)
-                    yield return listOfTargets[i].TakeDamage(CalculateDamage(self, listOfTargets[i]));
+                    if (listOfTargets[i] != null)
+                        yield return listOfTargets[i].TakeDamage(CalculateDamage(self, listOfTargets[i]));
                 break;
             case "SELFHEAL":
                 yield return self.GainHealth(healthChange);
                 break;
             case "TARGETSHEAL":
                 for (int i = 0; i < listOfTargets.Count; i++)
-                    yield return listOfTargets[i].GainHealth(healthChange);
+                    if (listOfTargets[i] != null)
+                        yield return listOfTargets[i].GainHealth(healthChange);
                 break;
 
             case "SELFGROUNDED":
