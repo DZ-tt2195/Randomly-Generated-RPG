@@ -83,8 +83,8 @@ public class Character : MonoBehaviour, IPointerClickHandler
         baseSpeed = (int)(data.baseSpeed * multiplier);
         baseLuck = data.baseLuck;
         baseAccuracy = data.baseAccuracy;
-        StartCoroutine(ChangePosition(data.startingPosition, false));
-        startingEmotion = data.startingEmotion; StartCoroutine(ChangeEmotion(data.startingEmotion, false));
+        StartCoroutine(ChangePosition(data.startingPosition, -1));
+        startingEmotion = data.startingEmotion; StartCoroutine(ChangeEmotion(data.startingEmotion, -1));
         this.isHelper = isHelper;
         this.aiTargeting = data.aiTargeting;
 
@@ -122,9 +122,9 @@ public class Character : MonoBehaviour, IPointerClickHandler
 
                 if (nextAbility.CanPlay(this))
                 {
-                    Log.instance.AddText(Log.Substitute(nextAbility, this));
+                    Log.instance.AddText(Log.Substitute(nextAbility, this), 1);
                     yield return ChooseTarget(nextAbility);
-                    yield return ResolveAbility(nextAbility);
+                    yield return ResolveAbility(nextAbility, 2);
                 }
             }
         }
@@ -267,7 +267,7 @@ public class Character : MonoBehaviour, IPointerClickHandler
 
 #region Change Stats
 
-    public IEnumerator GainHealth(int health)
+    public IEnumerator GainHealth(int health, int logged)
     {
         if (this == null) yield break;
 
@@ -275,35 +275,34 @@ public class Character : MonoBehaviour, IPointerClickHandler
         if (currentHealth > baseHealth)
             currentHealth = baseHealth;
         healthText.text = $"{100 * ((float)currentHealth / baseHealth):F0}%";
-        Log.instance.AddText($"{(this.name)} regains {health} HP.");
+        Log.instance.AddText($"{(this.name)} regains {health} HP.", logged);
 
         yield return null;
     }
 
-    public IEnumerator TakeDamage(int damage)
+    public IEnumerator TakeDamage(int damage, int logged)
     {
         if (this == null) yield break;
 
         currentHealth -= damage;
         healthText.text = $"{100 * ((float)currentHealth / baseHealth):F0}%";
-        Log.instance.AddText($"{(this.name)} takes {damage} damage.");
+        Log.instance.AddText($"{(this.name)} takes {damage} damage.", logged);
 
         if (currentHealth <= 0)
-            yield return HasDied(true);
+            yield return HasDied(logged);
     }
 
-    public IEnumerator HasDied(bool logged)
+    public IEnumerator HasDied(int logged)
     {
         if (this == null) yield break;
 
         currentHealth = 0;
-        yield return ChangeEmotion(Emotion.Dead, false);
+        yield return ChangeEmotion(Emotion.Dead, logged);
         currentPosition = Position.Dead;
         healthText.text = $"0%";
 
-        if (logged)
-            Log.instance.AddText($"{(this.name)} has died.");
-
+        Log.instance.AddText($"{(this.name)} has died.", logged);
+    
         if (this.myType == CharacterType.Teammate && !isHelper)
         {
             image.color = Color.gray;
@@ -316,14 +315,14 @@ public class Character : MonoBehaviour, IPointerClickHandler
         }
     }
 
-    public IEnumerator Revive(int health)
+    public IEnumerator Revive(int health, int logged)
     {
         if (this == null) yield break;
 
-        Log.instance.AddText($"{(this.name)} comes back to life.");
-        yield return GainHealth(health);
-        yield return ChangePosition(startingPosition, false);
-        yield return ChangeEmotion(startingEmotion, false);
+        Log.instance.AddText($"{(this.name)} comes back to life.", logged);
+        yield return GainHealth(health, logged);
+        yield return ChangePosition(startingPosition, -1);
+        yield return ChangeEmotion(startingEmotion, -1);
         image.color = Color.white;
 
         modifyAttack = 1f;
@@ -333,7 +332,7 @@ public class Character : MonoBehaviour, IPointerClickHandler
         modifyAccuracy = 1f;
     }
 
-    public IEnumerator ChangeAttack(float effect)
+    public IEnumerator ChangeAttack(float effect, int logged)
     {
         if (this == null) yield break;
 
@@ -344,14 +343,14 @@ public class Character : MonoBehaviour, IPointerClickHandler
             modifyAttack = 1.5f;
 
         if (effect < 0)
-            Log.instance.AddText($"{(this.name)}'s attack is reduced.");
+            Log.instance.AddText($"{(this.name)}'s attack is reduced.", logged);
         if (effect > 0)
-            Log.instance.AddText($"{(this.name)}'s attack is increased.");
+            Log.instance.AddText($"{(this.name)}'s attack is increased.", logged);
 
         yield return null;
     }
 
-    public IEnumerator ChangeDefense(float effect)
+    public IEnumerator ChangeDefense(float effect, int logged)
     {
         if (this == null) yield break;
 
@@ -362,14 +361,14 @@ public class Character : MonoBehaviour, IPointerClickHandler
             modifyDefense = 1.5f;
 
         if (effect < 0)
-            Log.instance.AddText($"{(this.name)}'s defense is reduced.");
+            Log.instance.AddText($"{(this.name)}'s defense is reduced.", logged);
         if (effect > 0)
-            Log.instance.AddText($"{(this.name)}'s defense is increased.");
+            Log.instance.AddText($"{(this.name)}'s defense is increased.", logged);
 
         yield return null;
     }
 
-    public IEnumerator ChangeSpeed(float effect)
+    public IEnumerator ChangeSpeed(float effect, int logged)
     {
         if (this == null) yield break;
 
@@ -380,14 +379,14 @@ public class Character : MonoBehaviour, IPointerClickHandler
             modifySpeed = 1.5f;
 
         if (effect < 0)
-            Log.instance.AddText($"{(this.name)}'s speed is reduced.");
+            Log.instance.AddText($"{(this.name)}'s speed is reduced.", logged);
         if (effect > 0)
-            Log.instance.AddText($"{(this.name)}'s speed is increased.");
+            Log.instance.AddText($"{(this.name)}'s speed is increased.", logged);
 
         yield return null;
     }
 
-    public IEnumerator ChangeLuck(float effect)
+    public IEnumerator ChangeLuck(float effect, int logged)
     {
         if (this == null) yield break;
 
@@ -398,14 +397,14 @@ public class Character : MonoBehaviour, IPointerClickHandler
             modifyLuck = 1.5f;
 
         if (effect < 0)
-            Log.instance.AddText($"{(this.name)}'s luck is reduced.");
+            Log.instance.AddText($"{(this.name)}'s luck is reduced.", logged);
         if (effect > 0)
-            Log.instance.AddText($"{(this.name)}'s luck is increased.");
+            Log.instance.AddText($"{(this.name)}'s luck is increased.", logged);
 
         yield return null;
     }
 
-    public IEnumerator ChangeAccuracy(float effect)
+    public IEnumerator ChangeAccuracy(float effect, int logged)
     {
         if (this == null) yield break;
 
@@ -416,28 +415,28 @@ public class Character : MonoBehaviour, IPointerClickHandler
             modifyAccuracy = 1.5f;
 
         if (effect < 0)
-            Log.instance.AddText($"{(this.name)}'s accuracy is reduced.");
+            Log.instance.AddText($"{(this.name)}'s accuracy is reduced.", logged);
         if (effect > 0)
-            Log.instance.AddText($"{(this.name)}'s accuracy is increased.");
+            Log.instance.AddText($"{(this.name)}'s accuracy is increased.", logged);
 
         yield return null;
     }
 
-    public IEnumerator ChangePosition(Position newPosition, bool logged)
+    public IEnumerator ChangePosition(Position newPosition, int logged)
     {
         if (this == null) yield break;
 
         if (newPosition != Position.Dead && currentPosition != newPosition)
         {
             currentPosition = newPosition;
-            if (newPosition == Position.Grounded && logged)
-                Log.instance.AddText($"{(this.name)} is now grounded.");
-            if (newPosition == Position.Airborne && logged)
-                Log.instance.AddText($"{(this.name)} is now airborne.");
+            if (newPosition == Position.Grounded)
+                Log.instance.AddText($"{(this.name)} is now grounded.", logged);
+            if (newPosition == Position.Airborne)
+                Log.instance.AddText($"{(this.name)} is now airborne.", logged);
         }
     }
 
-    public IEnumerator ChangeEmotion(Emotion newEmotion, bool logged)
+    public IEnumerator ChangeEmotion(Emotion newEmotion, int logged)
     {
         if (this == null) yield break;
 
@@ -450,8 +449,8 @@ public class Character : MonoBehaviour, IPointerClickHandler
         else
             currentEmotion = newEmotion;
 
-        if (logged)
-            Log.instance.AddText($"{(this.name)} is now {currentEmotion}.");
+        if (Log.instance != null)
+            Log.instance.AddText($"{(this.name)} is now {currentEmotion}.", logged);
 
         switch (currentEmotion)
         {
@@ -504,7 +503,7 @@ public class Character : MonoBehaviour, IPointerClickHandler
 
 #region Abilities
 
-    public IEnumerator MyTurn()
+    public IEnumerator MyTurn(int logged)
     {
         yield return ChooseAbility();
         yield return ChooseTarget(thisTurnAbility);
@@ -516,7 +515,7 @@ public class Character : MonoBehaviour, IPointerClickHandler
         }
 
         TurnManager.instance.instructions.text = "";
-        Log.instance.AddText(Log.Substitute(thisTurnAbility, this));
+        Log.instance.AddText(Log.Substitute(thisTurnAbility, this), logged);
         if (thisTurnAbility.myName == "Skip Turn")
         {
         }
@@ -534,18 +533,18 @@ public class Character : MonoBehaviour, IPointerClickHandler
             }
 
             thisTurnAbility.currentCooldown = thisTurnAbility.baseCooldown + happinessPenalty;
-            yield return ResolveAbility(thisTurnAbility);
+            yield return ResolveAbility(thisTurnAbility, logged+1);
         }
 
         if (this.currentEmotion == Emotion.Angry)
         {
-            Log.instance.AddText($"{this.name} is Angry.");
-            yield return TakeDamage((int)(baseHealth * 0.1f));
+            Log.instance.AddText($"{this.name} is Angry.", logged);
+            yield return TakeDamage((int)(baseHealth * 0.1f), logged+1);
         }
         else if (this.currentEmotion == Emotion.Enraged)
         {
-            Log.instance.AddText($"{this.name} is Enraged.");
-            yield return TakeDamage((int)(baseHealth * 0.2f));
+            Log.instance.AddText($"{this.name} is Enraged.", logged);
+            yield return TakeDamage((int)(baseHealth * 0.2f), logged+1);
         }
     }
 
@@ -559,7 +558,7 @@ public class Character : MonoBehaviour, IPointerClickHandler
         yield return null;
     }
 
-    protected IEnumerator ResolveAbility(Ability ability)
+    protected IEnumerator ResolveAbility(Ability ability, int logged)
     {
         string divide = ability.instructions.Replace(" ", "");
         divide = divide.ToUpper();
@@ -573,7 +572,7 @@ public class Character : MonoBehaviour, IPointerClickHandler
             }
             else
             {
-                yield return ability.ResolveMethod(nextMethod);
+                yield return ability.ResolveMethod(nextMethod, logged);
             }
         }
     }

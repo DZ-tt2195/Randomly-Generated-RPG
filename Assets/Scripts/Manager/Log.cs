@@ -22,7 +22,7 @@ public class Log : MonoBehaviour
     {
         #if UNITY_EDITOR
             if (Input.GetKeyDown(KeyCode.Space))
-                AddText($"Test {RT.transform.childCount+1}");
+                AddText($"Test {RT.transform.childCount+1}", 0);
         #endif
     }
 
@@ -50,10 +50,15 @@ public class Log : MonoBehaviour
         }
     }
     
-    public void AddText(string logText)
+    public void AddText(string logText, int indent)
     {
+        if (indent < 0)
+            return;
+
         TMP_Text newText = Instantiate(textBoxClone, RT.transform);
-        newText.text = string.IsNullOrEmpty(logText) ? "" : char.ToUpper(logText[0]) + logText.Substring(1);
+        newText.text = "";
+        for (int i = 0; i < indent; i++) newText.text += "        ";
+        newText.text += string.IsNullOrEmpty(logText) ? "" : char.ToUpper(logText[0]) + logText[1..];
 
         if (RT.transform.childCount >= 28)
         {

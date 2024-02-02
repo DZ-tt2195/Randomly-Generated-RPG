@@ -16,7 +16,7 @@
     ],
     [
       "Archer",
-      "Shoots down Airborne Teammates, with critical hits.",
+      "Shoots down Airborne Teammates with a high chance of critical hits.",
       "65",
       "25",
       "8",

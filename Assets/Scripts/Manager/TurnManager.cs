@@ -63,17 +63,17 @@ public class TurnManager : MonoBehaviour
         currentWave++;
         enemyMultiplier = 1 + (currentWave - 1) * 0.05f;
         
-        Log.instance.AddText($"WAVE {currentWave}");
+        Log.instance.AddText($"WAVE {currentWave}", 0);
         if (currentWave > 1)
         {
-            Log.instance.AddText($"Enemies are now {100 * (enemyMultiplier - 1):F0}% stronger.");
-            Log.instance.AddText("");
+            Log.instance.AddText($"Enemies are now {100 * (enemyMultiplier - 1):F0}% stronger.", 0);
+            Log.instance.AddText("", 0);
         }
 
         int randomNum = Random.Range(2, 4);
         for (int i = 0; i < randomNum; i++)
         {
-            yield return CreateEnemy(Random.Range(0, TitleScreen.instance.listOfEnemies.Count), enemyMultiplier);
+            yield return CreateEnemy(Random.Range(0, TitleScreen.instance.listOfEnemies.Count), enemyMultiplier, 1);
         }
 
         StartCoroutine(NewRound());
@@ -82,8 +82,8 @@ public class TurnManager : MonoBehaviour
     IEnumerator NewRound()
     {
         currentRound++;
-        Log.instance.AddText($"");
-        Log.instance.AddText($"ROUND {currentRound}");
+        Log.instance.AddText($"", 0);
+        Log.instance.AddText($"ROUND {currentRound}", 0);
 
         speedQueue = AllCharacters();
 
@@ -99,9 +99,9 @@ public class TurnManager : MonoBehaviour
             if (nextInLine != null && nextInLine.CalculateHealth() > 0)
             {
                 instructions.text = "";
-                Log.instance.AddText($"");
+                Log.instance.AddText($"", 0);
                 nextInLine.border.gameObject.SetActive(true);
-                yield return nextInLine.MyTurn();
+                yield return nextInLine.MyTurn(0);
                 nextInLine.border.gameObject.SetActive(false);
             }
 
@@ -111,7 +111,7 @@ public class TurnManager : MonoBehaviour
             {
                 if (enemies.Count == 0)
                 {
-                    Log.instance.AddText($"");
+                    Log.instance.AddText($"", 0);
                     StartCoroutine(NewWave());
                     yield break;
                 }
@@ -134,9 +134,9 @@ public class TurnManager : MonoBehaviour
 
         stillBattling = false;
         instructions.text = "";
-        Log.instance.AddText("");
-        Log.instance.AddText("You lost.");
-        Log.instance.AddText($"Survived {currentWave-1} waves.");
+        Log.instance.AddText("", 0);
+        Log.instance.AddText("You lost.", 0);
+        Log.instance.AddText($"Survived {currentWave-1} waves.", 0);
     }
 
 #endregion
@@ -164,21 +164,21 @@ public class TurnManager : MonoBehaviour
         }
     }
 
-    public IEnumerator CreateHelper(int ID)
+    public IEnumerator CreateHelper(int ID, int logged)
     {
         PlayerCharacter nextCharacter = Instantiate(helperPrefab);
         yield return (nextCharacter.SetupCharacter(Character.CharacterType.Teammate, TitleScreen.instance.listOfHelpers[ID], true));
-        Log.instance.AddText($"{Log.Article(nextCharacter.name)} entered the fight.");
+        Log.instance.AddText($"{Log.Article(nextCharacter.name)} entered the fight.", logged);
 
         nextCharacter.transform.SetParent(TitleScreen.instance.canvas);
         nextCharacter.transform.localPosition = new Vector3(500, -550, 0);
         teammates.Add(nextCharacter);
     }
 
-    public IEnumerator CreateEnemy(int ID, float multiplier)
+    public IEnumerator CreateEnemy(int ID, float multiplier, int logged)
     {
         EnemyCharacter nextCharacter = Instantiate(enemyPrefab);
-        Log.instance.AddText($"{Log.Article(TitleScreen.instance.listOfEnemies[ID].name)} entered the fight.");
+        Log.instance.AddText($"{Log.Article(TitleScreen.instance.listOfEnemies[ID].name)} entered the fight.", logged);
         yield return (nextCharacter.SetupCharacter(Character.CharacterType.Enemy, TitleScreen.instance.listOfEnemies[ID], false, multiplier));
 
         nextCharacter.transform.SetParent(TitleScreen.instance.canvas);
