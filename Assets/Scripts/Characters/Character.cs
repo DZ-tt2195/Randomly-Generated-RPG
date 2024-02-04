@@ -452,7 +452,7 @@ public class Character : MonoBehaviour, IPointerClickHandler
         else
             currentEmotion = newEmotion;
 
-        if (Log.instance != null)
+        if (Log.instance != null && currentEmotion == Emotion.Dead)
             Log.instance.AddText($"{(this.name)} is now {currentEmotion}.", logged);
 
         switch (currentEmotion)
@@ -518,6 +518,7 @@ public class Character : MonoBehaviour, IPointerClickHandler
         }
 
         TurnManager.instance.instructions.text = "";
+        TurnManager.instance.DisableCharacterButtons();
         Log.instance.AddText(Log.Substitute(thisTurnAbility, this), logged);
 
         if (thisTurnAbility.myName != "Skip Turn")

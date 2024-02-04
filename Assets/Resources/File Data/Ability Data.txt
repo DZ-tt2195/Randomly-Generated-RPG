@@ -147,7 +147,7 @@
       "Angel",
       "Happiest Day",
       "Any Teammate or Enemy becomes Happy. Raise their Accuracy.",
-      "THIS gives TARGET its Happiest Day.",
+      "THIS gives TARGET their Happiest Day.",
       "TargetsHappy/TargetsAccuracyStat",
       "",
       "",
