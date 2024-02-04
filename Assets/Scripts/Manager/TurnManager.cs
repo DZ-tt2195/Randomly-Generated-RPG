@@ -31,6 +31,8 @@ public class TurnManager : MonoBehaviour
     [SerializeField] Button emotionGuide;
     [SerializeField] GameObject emotionTransform;
 
+    public WaitForSeconds WaitTime;
+
 #endregion
 
 #region Setup
@@ -39,15 +41,16 @@ public class TurnManager : MonoBehaviour
     {
         instance = this;
         emotionGuide.onClick.AddListener(SeeEmotions);
+        WaitTime = new WaitForSeconds(PlayerPrefs.GetFloat("Wait"));
     }
 
     private void Start()
     {
-        for (int i = 0; i < TitleScreen.instance.listOfPlayers.Count; i++)
+        for (int i = 0; i < FileManager.instance.listOfPlayers.Count; i++)
         {
-            Character nextFriend = TitleScreen.instance.listOfPlayers[i];
+            Character nextFriend = FileManager.instance.listOfPlayers[i];
             teammates.Add(nextFriend);
-            nextFriend.transform.SetParent(TitleScreen.instance.canvas);
+            nextFriend.transform.SetParent(FileManager.instance.canvas);
             nextFriend.transform.localPosition = new Vector3(-1000 + (500 * i), -550, 0);
         }
 
@@ -60,20 +63,22 @@ public class TurnManager : MonoBehaviour
 
     IEnumerator NewWave()
     {
+        instructions.text = "";
+        listOfBoxes[0].transform.parent.gameObject.SetActive(false);
+        DisableCharacterButtons();
+
+        yield return WaitTime;
+
         currentWave++;
         enemyMultiplier = 1 + (currentWave - 1) * 0.05f;
         
         Log.instance.AddText($"WAVE {currentWave}", 0);
-        if (currentWave > 1)
-        {
-            Log.instance.AddText($"Enemies are now {100 * (enemyMultiplier - 1):F0}% stronger.", 0);
-            Log.instance.AddText("", 0);
-        }
+        if (currentWave > 1) Log.instance.AddText($"Enemies are now {100 * (enemyMultiplier - 1):F0}% stronger.", 0);
 
         int randomNum = Random.Range(2, 4);
         for (int i = 0; i < randomNum; i++)
         {
-            yield return CreateEnemy(Random.Range(0, TitleScreen.instance.listOfEnemies.Count), enemyMultiplier, 1);
+            yield return CreateEnemy(Random.Range(0, FileManager.instance.listOfEnemies.Count), enemyMultiplier, 1);
         }
 
         StartCoroutine(NewRound());
@@ -101,6 +106,7 @@ public class TurnManager : MonoBehaviour
                 instructions.text = "";
                 Log.instance.AddText($"", 0);
                 nextInLine.border.gameObject.SetActive(true);
+
                 yield return nextInLine.MyTurn(0);
                 nextInLine.border.gameObject.SetActive(false);
             }
@@ -133,7 +139,11 @@ public class TurnManager : MonoBehaviour
         }
 
         stillBattling = false;
+        DisableCharacterButtons();
+
         instructions.text = "";
+        listOfBoxes[0].transform.parent.gameObject.SetActive(false);
+
         Log.instance.AddText("", 0);
         Log.instance.AddText("You lost.", 0);
         Log.instance.AddText($"Survived {currentWave-1} waves.", 0);
@@ -167,23 +177,21 @@ public class TurnManager : MonoBehaviour
     public IEnumerator CreateHelper(int ID, int logged)
     {
         PlayerCharacter nextCharacter = Instantiate(helperPrefab);
-        yield return (nextCharacter.SetupCharacter(Character.CharacterType.Teammate, TitleScreen.instance.listOfHelpers[ID], true));
-        Log.instance.AddText($"{Log.Article(nextCharacter.name)} entered the fight.", logged);
-
-        nextCharacter.transform.SetParent(TitleScreen.instance.canvas);
+        nextCharacter.transform.SetParent(FileManager.instance.canvas);
         nextCharacter.transform.localPosition = new Vector3(500, -550, 0);
         teammates.Add(nextCharacter);
+        Log.instance.AddText($"{Log.Article(FileManager.instance.listOfHelpers[ID].name)} entered the fight.", logged);
+        yield return (nextCharacter.SetupCharacter(Character.CharacterType.Teammate, FileManager.instance.listOfHelpers[ID], true));
     }
 
     public IEnumerator CreateEnemy(int ID, float multiplier, int logged)
     {
         EnemyCharacter nextCharacter = Instantiate(enemyPrefab);
-        Log.instance.AddText($"{Log.Article(TitleScreen.instance.listOfEnemies[ID].name)} entered the fight.", logged);
-        yield return (nextCharacter.SetupCharacter(Character.CharacterType.Enemy, TitleScreen.instance.listOfEnemies[ID], false, multiplier));
-
-        nextCharacter.transform.SetParent(TitleScreen.instance.canvas);
+        nextCharacter.transform.SetParent(FileManager.instance.canvas);
         nextCharacter.transform.localPosition = new Vector3(-1000 + (500 * enemies.Count), 300, 0);
         enemies.Add(nextCharacter);
+        Log.instance.AddText($"{Log.Article(FileManager.instance.listOfEnemies[ID].name)} entered the fight.", logged);
+        yield return (nextCharacter.SetupCharacter(Character.CharacterType.Enemy, FileManager.instance.listOfEnemies[ID], false, multiplier));
     }
 
     public void DisableCharacterButtons()

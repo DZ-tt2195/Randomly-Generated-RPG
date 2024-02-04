@@ -108,7 +108,7 @@ public class Character : MonoBehaviour, IPointerClickHandler
             {
                 Ability nextAbility = this.gameObject.AddComponent<Ability>();
                 listOfAbilities.Add(nextAbility);
-                nextAbility.SetupAbility(TitleScreen.instance.listOfAbilities[int.Parse(skill)]);
+                nextAbility.SetupAbility(FileManager.instance.listOfAbilities[int.Parse(skill)]);
             }
         }
 
@@ -118,7 +118,7 @@ public class Character : MonoBehaviour, IPointerClickHandler
             if (enters.Trim() != "")
             {
                 Ability nextAbility = this.gameObject.AddComponent<Ability>();
-                nextAbility.SetupAbility(TitleScreen.instance.listOfEntersFight[int.Parse(enters)]);
+                nextAbility.SetupAbility(FileManager.instance.listOfEntersFight[int.Parse(enters)]);
 
                 if (nextAbility.CanPlay(this))
                 {
@@ -429,10 +429,14 @@ public class Character : MonoBehaviour, IPointerClickHandler
         if (newPosition != Position.Dead && currentPosition != newPosition)
         {
             currentPosition = newPosition;
-            if (newPosition == Position.Grounded)
-                Log.instance.AddText($"{(this.name)} is now grounded.", logged);
-            if (newPosition == Position.Airborne)
-                Log.instance.AddText($"{(this.name)} is now airborne.", logged);
+            try
+            {
+                if (newPosition == Position.Grounded)
+                    Log.instance.AddText($"{(this.name)} is now grounded.", logged);
+                if (newPosition == Position.Airborne)
+                    Log.instance.AddText($"{(this.name)} is now airborne.", logged);
+            }
+            catch { };
         }
     }
 
@@ -516,6 +520,8 @@ public class Character : MonoBehaviour, IPointerClickHandler
 
         TurnManager.instance.instructions.text = "";
         Log.instance.AddText(Log.Substitute(thisTurnAbility, this), logged);
+        yield return TurnManager.instance.WaitTime;
+
         if (thisTurnAbility.myName == "Skip Turn")
         {
         }

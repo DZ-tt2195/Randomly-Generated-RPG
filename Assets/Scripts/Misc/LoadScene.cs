@@ -8,7 +8,7 @@ using MyBox;
 public class LoadScene : MonoBehaviour
 {
     [Scene]
-    public string scene;
+    [SerializeField] string scene;
 
     Button button;
 
@@ -20,7 +20,7 @@ public class LoadScene : MonoBehaviour
 
     public void NextScene()
     {
-        TitleScreen.instance.UnloadObjects();
+        FileManager.instance.UnloadObjects();
         SceneManager.LoadScene(scene);
     }
 }

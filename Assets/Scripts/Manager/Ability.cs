@@ -121,6 +121,8 @@ public class Ability : MonoBehaviour
                 {
                     case "":
                         break;
+                    case "ISDEAD":
+                        break;
 
                     case "SELFGROUNDED":
                         return user.currentPosition == Character.Position.Grounded;
@@ -229,6 +231,7 @@ public class Ability : MonoBehaviour
 
     public IEnumerator ResolveMethod(string methodName, int logged)
     {
+        yield return TurnManager.instance.WaitTime;
         TurnManager.instance.listOfBoxes[0].transform.parent.gameObject.SetActive(false);
 
         switch (methodName)
