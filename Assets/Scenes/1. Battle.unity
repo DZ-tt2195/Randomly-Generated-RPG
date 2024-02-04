@@ -572,7 +572,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: -200}
-  m_SizeDelta: {x: 1000, y: 215}
+  m_SizeDelta: {x: 1200, y: 215}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &362212469
 MonoBehaviour:
@@ -594,7 +594,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "20% more attack.\nLose 10% health at end of turn. \nBecomes Enraged when
+  m_text: "25% more attack.\nLose 10% health at end of turn. \nBecomes Enraged when
     stacked."
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8c64c47af7c1c4fb5b88d184433c6c44, type: 2}
@@ -729,7 +729,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "20% more luck and speed.\nAbilities used have 1 extra turn of cooldown.
+  m_text: "25% more luck and speed.\nAbilities used have 1 extra turn of cooldown.
     \nBecomes Ecstatic when stacked."
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8c64c47af7c1c4fb5b88d184433c6c44, type: 2}
@@ -1710,7 +1710,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1557996419
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2688,8 +2688,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 200}
-  m_SizeDelta: {x: 1000, y: 215}
+  m_AnchoredPosition: {x: 0, y: 240}
+  m_SizeDelta: {x: 1200, y: 215}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2041052318
 MonoBehaviour:
@@ -2711,7 +2711,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: '20% more defense against non-Angry attacks
+  m_text: '25% more defense against non-Angry attacks
 
     10% less accuracy.
 

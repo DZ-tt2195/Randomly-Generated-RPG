@@ -13,7 +13,6 @@ public class Character : MonoBehaviour, IPointerClickHandler
 #region Variables
 
     public static float borderColor;
-    Vector3 originalSize = new Vector3(1, 1, 1);
     public enum Position { Grounded, Airborne, Dead };
     public enum Emotion { Dead, Neutral, Happy, Ecstatic, Angry, Enraged, Sad, Depressed };
     public enum CharacterType { Teammate, Enemy }
@@ -205,8 +204,8 @@ public class Character : MonoBehaviour, IPointerClickHandler
     {
         var emotionEffect = currentEmotion switch
         {
-            Emotion.Angry => 1.2f,
-            Emotion.Enraged => 1.4f,
+            Emotion.Angry => 1.25f,
+            Emotion.Enraged => 1.5f,
             _ => 1f,
         };
         return baseAttack * modifyAttack * emotionEffect;
@@ -219,12 +218,12 @@ public class Character : MonoBehaviour, IPointerClickHandler
         if (this.currentEmotion == Emotion.Sad )
         {
             if (attacker.currentEmotion != Emotion.Enraged && attacker.currentEmotion != Emotion.Angry)
-                emotionEffect = 1.2f;
+                emotionEffect = 1.25f;
         }
         if (this.currentEmotion == Emotion.Depressed)
         {
             if (attacker.currentEmotion != Emotion.Enraged && attacker.currentEmotion != Emotion.Angry)
-                emotionEffect = 1.4f;
+                emotionEffect = 1.5f;
         }
 
         return baseDefense * modifyDefense * emotionEffect;
@@ -234,8 +233,8 @@ public class Character : MonoBehaviour, IPointerClickHandler
     {
         var emotionEffect = currentEmotion switch
         {
-            Emotion.Happy => 1.2f,
-            Emotion.Ecstatic => 1.4f,
+            Emotion.Happy => 1.25f,
+            Emotion.Ecstatic => 1.5f,
             _ => 1f,
         };
         return baseSpeed * modifySpeed * emotionEffect;
@@ -245,8 +244,8 @@ public class Character : MonoBehaviour, IPointerClickHandler
     {
         var emotionEffect = currentEmotion switch
         {
-            Emotion.Happy => 1.2f,
-            Emotion.Ecstatic => 1.4f,
+            Emotion.Happy => 1.25f,
+            Emotion.Ecstatic => 1.5f,
             _ => 1f,
         };
         return baseLuck * modifyLuck * emotionEffect;
@@ -503,7 +502,7 @@ public class Character : MonoBehaviour, IPointerClickHandler
         yield return null;
     }
 
-#endregion
+    #endregion
 
 #region Abilities
 
@@ -520,37 +519,30 @@ public class Character : MonoBehaviour, IPointerClickHandler
 
         TurnManager.instance.instructions.text = "";
         Log.instance.AddText(Log.Substitute(thisTurnAbility, this), logged);
-        yield return TurnManager.instance.WaitTime;
 
-        if (thisTurnAbility.myName == "Skip Turn")
+        if (thisTurnAbility.myName != "Skip Turn")
         {
-        }
-        else
-        { 
-            int happinessPenalty = 0;
-            switch (currentEmotion)
+            int happinessPenalty = currentEmotion switch
             {
-                case Emotion.Happy:
-                    happinessPenalty = 1;
-                    break;
-                case Emotion.Ecstatic:
-                    happinessPenalty = 2;
-                    break;
-            }
-
+                Emotion.Happy => 1,
+                Emotion.Ecstatic => 2,
+                _ => 0,
+            };
             thisTurnAbility.currentCooldown = thisTurnAbility.baseCooldown + happinessPenalty;
-            yield return ResolveAbility(thisTurnAbility, logged+1);
-        }
 
-        if (this.currentEmotion == Emotion.Angry)
-        {
-            Log.instance.AddText($"{this.name} is Angry.", logged);
-            yield return TakeDamage((int)(baseHealth * 0.1f), logged+1);
-        }
-        else if (this.currentEmotion == Emotion.Enraged)
-        {
-            Log.instance.AddText($"{this.name} is Enraged.", logged);
-            yield return TakeDamage((int)(baseHealth * 0.2f), logged+1);
+            yield return TurnManager.instance.WaitTime;
+            yield return ResolveAbility(thisTurnAbility, logged + 1);
+
+            if (this.currentEmotion == Emotion.Angry)
+            {
+                Log.instance.AddText($"{this.name} is Angry.", logged);
+                yield return TakeDamage((int)(baseHealth * 0.1f), logged + 1);
+            }
+            else if (this.currentEmotion == Emotion.Enraged)
+            {
+                Log.instance.AddText($"{this.name} is Enraged.", logged);
+                yield return TakeDamage((int)(baseHealth * 0.2f), logged + 1);
+            }
         }
     }
 
@@ -569,18 +561,7 @@ public class Character : MonoBehaviour, IPointerClickHandler
         string divide = ability.instructions.Replace(" ", "");
         divide = divide.ToUpper();
         string[] methodsInStrings = divide.Split('/');
-
-        foreach (string nextMethod in methodsInStrings)
-        {
-            if (nextMethod == "" || nextMethod == "NONE")
-            {
-                continue;
-            }
-            else
-            {
-                yield return ability.ResolveMethod(nextMethod, logged);
-            }
-        }
+        yield return ability.ResolveInstructions(methodsInStrings, logged);
     }
 
 #endregion

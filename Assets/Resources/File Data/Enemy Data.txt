@@ -33,7 +33,7 @@
       "Bat",
       "Drains health from Grounded Teammates.",
       "85",
-      "3",
+      "30",
       "5",
       "60",
       "0.1",

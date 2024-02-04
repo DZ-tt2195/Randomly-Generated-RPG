@@ -10,34 +10,36 @@ public class Ability : MonoBehaviour
 
 #region Setup
 
-    public Character self;
+    [ReadOnly] public Character self;
 
-    public string myName;
-    public string description;
-    public string logDescription;
+    [ReadOnly] public string myName;
+    [ReadOnly] public string description;
+    [ReadOnly] public string logDescription;
 
-    public string instructions;
-    public string nextInstructions;
-    public string playCondition;
-    public int healthChange;
+    [ReadOnly] public string instructions;
+    [ReadOnly] public string nextInstructions;
+    [ReadOnly] public string playCondition;
+    [ReadOnly] public int healthChange;
 
-    public int baseCooldown;
-    public int currentCooldown;
+    [ReadOnly] public int baseCooldown;
+    [ReadOnly] public int currentCooldown;
 
-    public float modifyAttack;
-    public float modifyDefense;
-    public float modifySpeed;
-    public float modifyLuck;
-    public float modifyAccuracy;
+    [ReadOnly] public float modifyAttack;
+    [ReadOnly] public float modifyDefense;
+    [ReadOnly] public float modifySpeed;
+    [ReadOnly] public float modifyLuck;
+    [ReadOnly] public float modifyAccuracy;
 
-    public Character.Emotion? newEmotion;
-    public Character.Position? newPosition;
+    [ReadOnly] public Character.Emotion? newEmotion;
+    [ReadOnly] public Character.Position? newPosition;
 
     public enum TeamTarget { None, Self, AnyOne, All, OneTeammate, OtherTeammate, OneEnemy, OtherEnemy, AllTeammates, AllEnemies };
-    public TeamTarget teamTarget;
+    [ReadOnly] public TeamTarget teamTarget;
 
-    public int summonHelper;
-    public List<Character> listOfTargets;
+    [ReadOnly] public int summonHelper;
+    [ReadOnly] public List<Character> listOfTargets;
+
+    [ReadOnly] public int damageDealt;
 
     public void SetupAbility(AbilityData data)
     {
@@ -59,7 +61,7 @@ public class Ability : MonoBehaviour
         self = GetComponent<Character>();
     }
 
-    #endregion
+#endregion
 
 #region Stats
 
@@ -105,9 +107,6 @@ public class Ability : MonoBehaviour
                     {
                         listOfTargets.RemoveAt(i);
                     }
-                    else
-                    {
-                    }
                 }
                 else if (listOfTargets[i].CalculateHealth() <= 0)
                 {
@@ -120,6 +119,8 @@ public class Ability : MonoBehaviour
                 switch (nextMethod)
                 {
                     case "":
+                        break;
+                    case "NONE":
                         break;
                     case "ISDEAD":
                         break;
@@ -229,160 +230,175 @@ public class Ability : MonoBehaviour
 
 #region Play Instructions
 
-    public IEnumerator ResolveMethod(string methodName, int logged)
+    public IEnumerator ResolveInstructions(string[] listOfMethods, int logged)
     {
-        yield return TurnManager.instance.WaitTime;
-        TurnManager.instance.listOfBoxes[0].transform.parent.gameObject.SetActive(false);
-
-        switch (methodName)
+        foreach (string methodName in listOfMethods)
         {
-            case "":
-                break;
+            yield return TurnManager.instance.WaitTime;
+            TurnManager.instance.listOfBoxes[0].transform.parent.gameObject.SetActive(false);
 
-            case "ATTACK":
-                for (int i = 0; i < listOfTargets.Count; i++)
-                    if (listOfTargets[i] != null)
-                        yield return listOfTargets[i].TakeDamage(CalculateDamage(self, listOfTargets[i]), logged);
-                break;
-            case "SELFHEAL":
-                yield return self.GainHealth(healthChange, logged);
-                break;
-            case "TARGETSHEAL":
-                for (int i = 0; i < listOfTargets.Count; i++)
-                    if (listOfTargets[i] != null)
-                        yield return listOfTargets[i].GainHealth(healthChange, logged);
-                break;
+            switch (methodName)
+            {
+                case "":
+                    break;
+                case "NONE":
+                    break;
+                case "DEALTDAMAGE":
+                    if (damageDealt == 0)
+                        yield break;
+                    break;
 
-            case "SELFGROUNDED":
-                yield return self.ChangePosition(Character.Position.Grounded, logged);
-                break;
-            case "TARGETSGROUNDED":
-                for (int i = 0; i < listOfTargets.Count; i++)
-                    yield return listOfTargets[i].ChangePosition(Character.Position.Grounded, logged); 
-                break;
+                case "ATTACK":
+                    for (int i = 0; i < listOfTargets.Count; i++)
+                        if (listOfTargets[i] != null)
+                        {
+                            damageDealt = CalculateDamage(self, listOfTargets[i]);
+                            yield return listOfTargets[i].TakeDamage(damageDealt, logged);
+                        }
+                    break;
+                case "SELFHEAL":
+                    yield return self.GainHealth(healthChange, logged);
+                    break;
+                case "HEALFROMDAMAGE":
+                    yield return self.GainHealth(damageDealt, logged);
+                    break;
+                case "TARGETSHEAL":
+                    for (int i = 0; i < listOfTargets.Count; i++)
+                        if (listOfTargets[i] != null)
+                            yield return listOfTargets[i].GainHealth(healthChange, logged);
+                    break;
 
-            case "SELFAIRBORNE":
-                yield return self.ChangePosition(Character.Position.Airborne, logged);
-                break;
-            case "TARGETSAIRBORNE":
-                for (int i = 0; i < listOfTargets.Count; i++)
-                    yield return listOfTargets[i].ChangePosition(Character.Position.Airborne, logged);
-                break;
+                case "SELFGROUNDED":
+                    yield return self.ChangePosition(Character.Position.Grounded, logged);
+                    break;
+                case "TARGETSGROUNDED":
+                    for (int i = 0; i < listOfTargets.Count; i++)
+                        yield return listOfTargets[i].ChangePosition(Character.Position.Grounded, logged);
+                    break;
 
-            case "SELFHAPPY":
-                yield return self.ChangeEmotion(Character.Emotion.Happy, logged);
-                break;
-            case "TARGETSHAPPY":
-                for (int i = 0; i < listOfTargets.Count; i++)
-                    yield return listOfTargets[i].ChangeEmotion(Character.Emotion.Happy, logged);
-                break;
+                case "SELFAIRBORNE":
+                    yield return self.ChangePosition(Character.Position.Airborne, logged);
+                    break;
+                case "TARGETSAIRBORNE":
+                    for (int i = 0; i < listOfTargets.Count; i++)
+                        yield return listOfTargets[i].ChangePosition(Character.Position.Airborne, logged);
+                    break;
 
-            case "SELFECSTATIC":
-                yield return self.ChangeEmotion(Character.Emotion.Ecstatic, logged);
-                break;
-            case "TARGETSECSTATIC":
-                for (int i = 0; i < listOfTargets.Count; i++)
-                    yield return listOfTargets[i].ChangeEmotion(Character.Emotion.Ecstatic, logged);
-                break;
+                case "SELFHAPPY":
+                    yield return self.ChangeEmotion(Character.Emotion.Happy, logged);
+                    break;
+                case "TARGETSHAPPY":
+                    for (int i = 0; i < listOfTargets.Count; i++)
+                        yield return listOfTargets[i].ChangeEmotion(Character.Emotion.Happy, logged);
+                    break;
 
-            case "SELFSAD":
-                yield return self.ChangeEmotion(Character.Emotion.Sad, logged);
-                break;
-            case "TARGETSSAD":
-                for (int i = 0; i < listOfTargets.Count; i++)
-                    yield return listOfTargets[i].ChangeEmotion(Character.Emotion.Sad, logged);
-                break;
+                case "SELFECSTATIC":
+                    yield return self.ChangeEmotion(Character.Emotion.Ecstatic, logged);
+                    break;
+                case "TARGETSECSTATIC":
+                    for (int i = 0; i < listOfTargets.Count; i++)
+                        yield return listOfTargets[i].ChangeEmotion(Character.Emotion.Ecstatic, logged);
+                    break;
 
-            case "SELFDEPRESSED":
-                yield return self.ChangeEmotion(Character.Emotion.Depressed, logged);
-                break;
-            case "TARGETSDEPRESSED":
-                for (int i = 0; i < listOfTargets.Count; i++)
-                    yield return listOfTargets[i].ChangeEmotion(Character.Emotion.Depressed, logged);
-                break;
+                case "SELFSAD":
+                    yield return self.ChangeEmotion(Character.Emotion.Sad, logged);
+                    break;
+                case "TARGETSSAD":
+                    for (int i = 0; i < listOfTargets.Count; i++)
+                        yield return listOfTargets[i].ChangeEmotion(Character.Emotion.Sad, logged);
+                    break;
 
-            case "SELFANGRY":
-                yield return self.ChangeEmotion(Character.Emotion.Angry, logged);
-                break;
-            case "TARGETSANGRY":
-                for (int i = 0; i < listOfTargets.Count; i++)
-                    yield return listOfTargets[i].ChangeEmotion(Character.Emotion.Angry, logged);
-                break;
+                case "SELFDEPRESSED":
+                    yield return self.ChangeEmotion(Character.Emotion.Depressed, logged);
+                    break;
+                case "TARGETSDEPRESSED":
+                    for (int i = 0; i < listOfTargets.Count; i++)
+                        yield return listOfTargets[i].ChangeEmotion(Character.Emotion.Depressed, logged);
+                    break;
 
-            case "SELFENRAGED":
-                yield return self.ChangeEmotion(Character.Emotion.Enraged, logged);
-                break;
-            case "TARGETSENRAGED":
-                for (int i = 0; i < listOfTargets.Count; i++)
-                    yield return listOfTargets[i].ChangeEmotion(Character.Emotion.Enraged, logged);
-                break;
+                case "SELFANGRY":
+                    yield return self.ChangeEmotion(Character.Emotion.Angry, logged);
+                    break;
+                case "TARGETSANGRY":
+                    for (int i = 0; i < listOfTargets.Count; i++)
+                        yield return listOfTargets[i].ChangeEmotion(Character.Emotion.Angry, logged);
+                    break;
 
-            case "SELFNEUTRAL":
-                yield return self.ChangeEmotion(Character.Emotion.Neutral, logged);
-                break;
-            case "TARGETSNEUTRAL":
-                for (int i = 0; i < listOfTargets.Count; i++)
-                    yield return listOfTargets[i].ChangeEmotion(Character.Emotion.Neutral, logged);
-                break;
+                case "SELFENRAGED":
+                    yield return self.ChangeEmotion(Character.Emotion.Enraged, logged);
+                    break;
+                case "TARGETSENRAGED":
+                    for (int i = 0; i < listOfTargets.Count; i++)
+                        yield return listOfTargets[i].ChangeEmotion(Character.Emotion.Enraged, logged);
+                    break;
 
-            case "SELFATTACKSTAT":
-                yield return self.ChangeAttack(modifyAttack, logged);
-                break;
-            case "TARGETSATTACKSTAT":
-                for (int i = 0; i < listOfTargets.Count; i++)
-                    yield return listOfTargets[i].ChangeAttack(modifyAttack, logged);
-                break;
+                case "SELFNEUTRAL":
+                    yield return self.ChangeEmotion(Character.Emotion.Neutral, logged);
+                    break;
+                case "TARGETSNEUTRAL":
+                    for (int i = 0; i < listOfTargets.Count; i++)
+                        yield return listOfTargets[i].ChangeEmotion(Character.Emotion.Neutral, logged);
+                    break;
 
-            case "SELFDEFENSESTAT":
-                yield return self.ChangeDefense(modifyDefense, logged);
-                break;
-            case "TARGETSDEFENSESTAT":
-                for (int i = 0; i < listOfTargets.Count; i++)
-                    yield return listOfTargets[i].ChangeDefense(modifyDefense, logged);
-                break;
+                case "SELFATTACKSTAT":
+                    yield return self.ChangeAttack(modifyAttack, logged);
+                    break;
+                case "TARGETSATTACKSTAT":
+                    for (int i = 0; i < listOfTargets.Count; i++)
+                        yield return listOfTargets[i].ChangeAttack(modifyAttack, logged);
+                    break;
 
-            case "SELFSPEEDSTAT":
-                yield return self.ChangeSpeed(modifySpeed, logged);
-                break;
-            case "TARGETSSPEEDSTAT":
-                for (int i = 0; i < listOfTargets.Count; i++)
-                    yield return listOfTargets[i].ChangeSpeed(modifySpeed, logged);
-                break;
+                case "SELFDEFENSESTAT":
+                    yield return self.ChangeDefense(modifyDefense, logged);
+                    break;
+                case "TARGETSDEFENSESTAT":
+                    for (int i = 0; i < listOfTargets.Count; i++)
+                        yield return listOfTargets[i].ChangeDefense(modifyDefense, logged);
+                    break;
 
-            case "SELFLUCKSTAT":
-                yield return self.ChangeLuck(modifyLuck, logged);
-                break;
-            case "TARGETSLUCKSTAT":
-                for (int i = 0; i < listOfTargets.Count; i++)
-                    yield return listOfTargets[i].ChangeLuck(modifyLuck, logged);
-                break;
+                case "SELFSPEEDSTAT":
+                    yield return self.ChangeSpeed(modifySpeed, logged);
+                    break;
+                case "TARGETSSPEEDSTAT":
+                    for (int i = 0; i < listOfTargets.Count; i++)
+                        yield return listOfTargets[i].ChangeSpeed(modifySpeed, logged);
+                    break;
 
-            case "SELFACCURACYSTAT":
-                yield return self.ChangeAccuracy(modifyAccuracy, logged);
-                break;
-            case "TARGETSACCURACYSTAT":
-                for (int i = 0; i < listOfTargets.Count; i++)
-                    yield return listOfTargets[i].ChangeAccuracy(modifyAccuracy, logged);
-                break;
+                case "SELFLUCKSTAT":
+                    yield return self.ChangeLuck(modifyLuck, logged);
+                    break;
+                case "TARGETSLUCKSTAT":
+                    for (int i = 0; i < listOfTargets.Count; i++)
+                        yield return listOfTargets[i].ChangeLuck(modifyLuck, logged);
+                    break;
 
-            case "LEAVEFIGHT":
-                yield return self.HasDied(-1);
-                break;
-            case "SELFDESTRUCT":
-                yield return self.HasDied(logged);
-                break;
-            case "TARGETSREVIVE":
-                for (int i = 0; i < listOfTargets.Count; i++)
-                    yield return listOfTargets[i].Revive(healthChange, logged);
-                break;
+                case "SELFACCURACYSTAT":
+                    yield return self.ChangeAccuracy(modifyAccuracy, logged);
+                    break;
+                case "TARGETSACCURACYSTAT":
+                    for (int i = 0; i < listOfTargets.Count; i++)
+                        yield return listOfTargets[i].ChangeAccuracy(modifyAccuracy, logged);
+                    break;
 
-            case "SUMMONHELPER":
-                yield return TurnManager.instance.CreateHelper(summonHelper, logged);
-                break;
+                case "LEAVEFIGHT":
+                    yield return self.HasDied(-1);
+                    break;
+                case "SELFDESTRUCT":
+                    yield return self.HasDied(logged);
+                    break;
+                case "TARGETSREVIVE":
+                    for (int i = 0; i < listOfTargets.Count; i++)
+                        yield return listOfTargets[i].Revive(healthChange, logged);
+                    break;
 
-            default:
-                Debug.LogError($"{methodName} isn't a method");
-                break;
+                case "SUMMONHELPER":
+                    yield return TurnManager.instance.CreateHelper(summonHelper, logged);
+                    break;
+
+                default:
+                    Debug.LogError($"{methodName} isn't a method");
+                    break;
+            }
         }
     }
 
