@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using System;
+using static Character;
 
 public class RightClick : MonoBehaviour
 {
@@ -19,7 +20,7 @@ public class RightClick : MonoBehaviour
     TMP_Text weaponName;
     TMP_Text weaponDescription;
 
-    TMP_Text emotion;
+    TMP_Text emotionText;
     TMP_Text stats1;
     TMP_Text stats2;
 
@@ -43,7 +44,7 @@ public class RightClick : MonoBehaviour
         weaponDescription = weaponStuff.transform.Find("Weapon Description").GetComponent<TMP_Text>();
 
         Transform statsStuff = background.transform.Find("Stats Stuff");
-        emotion = statsStuff.transform.Find("Emotion").GetComponent<TMP_Text>();
+        emotionText = statsStuff.transform.Find("Emotion").GetComponent<TMP_Text>();
         stats1 = statsStuff.transform.Find("Stats Part 1").GetComponent<TMP_Text>();
         stats2 = statsStuff.transform.Find("Stats Part 2").GetComponent<TMP_Text>();
 
@@ -58,12 +59,12 @@ public class RightClick : MonoBehaviour
             this.transform.GetChild(0).gameObject.SetActive(false);
     }
 
-    public void DisplayInfo(Character character, Sprite sprite, string firstStat, string secondStat)
+    public void DisplayInfo(Character character, Sprite characterSprite, Sprite weaponSprite, string firstStat, string secondStat)
     {
         this.transform.SetAsLastSibling();
         background.SetActive(true);
 
-        characterImage.sprite = sprite;
+        characterImage.sprite = characterSprite;
         characterName.text = character.name;
         characterDescription.text = character.description;
 
@@ -76,7 +77,42 @@ public class RightClick : MonoBehaviour
             weaponStuff.gameObject.SetActive(true);
         }
 
-        emotion.text = character.currentEmotion.ToString();
+        switch (character.currentEmotion)
+        {
+            case Emotion.Neutral:
+                emotionText.text = "NEUTRAL";
+                emotionText.color = Color.white;
+                break;
+            case Emotion.Happy:
+                emotionText.text = "HAPPY";
+                emotionText.color = Color.yellow;
+                break;
+            case Emotion.Ecstatic:
+                emotionText.text = "ECSTATIC";
+                emotionText.color = Color.yellow;
+                break;
+            case Emotion.Angry:
+                emotionText.text = "ANGRY";
+                emotionText.color = Color.red;
+                break;
+            case Emotion.Enraged:
+                emotionText.text = "ENRAGED";
+                emotionText.color = Color.red;
+                break;
+            case Emotion.Sad:
+                emotionText.text = "SAD";
+                emotionText.color = Color.blue;
+                break;
+            case Emotion.Depressed:
+                emotionText.text = "DEPRESSED";
+                emotionText.color = Color.blue;
+                break;
+            case Emotion.Dead:
+                emotionText.text = "DEAD";
+                emotionText.color = Color.gray;
+                break;
+        }
+
         stats1.text = firstStat;
         stats2.text = secondStat;
 

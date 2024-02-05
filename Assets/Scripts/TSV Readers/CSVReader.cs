@@ -15,12 +15,12 @@ public class TSVReader
         string editData = data.text;
         editData = editData.Replace("],", "").Replace("{", "").Replace("}", "");
 
-        string[] numCards = editData.Split("[");
-        string[][] list = new string[numCards.Length][];
+        string[] numLines = editData.Split("[");
+        string[][] list = new string[numLines.Length][];
 
-        for (int i = 0; i < numCards.Length; i++)
+        for (int i = 0; i < numLines.Length; i++)
         {
-            list[i] = numCards[i].Split("\",");
+            list[i] = numLines[i].Split("\",");
         }
         return list;
     }

@@ -42,19 +42,25 @@ public class TitleScreen : MonoBehaviour
             yield return FileManager.instance.DownloadFile("Helper Data");
             yield return FileManager.instance.DownloadFile("Enemy Data");
             yield return FileManager.instance.DownloadFile("Ability Data");
-            yield return FileManager.instance.DownloadFile("Enters Fight Data");
+            yield return FileManager.instance.DownloadFile("Other Ability Data");
+            yield return FileManager.instance.DownloadFile("Weapon Data");
         #endif
 
         List<CharacterData> playerData = DataLoader.ReadCharacterData("Player Data");
         FileManager.instance.listOfHelpers = DataLoader.ReadCharacterData("Helper Data");
         FileManager.instance.listOfEnemies = DataLoader.ReadCharacterData("Enemy Data");
         FileManager.instance.listOfAbilities = DataLoader.ReadAbilityData("Ability Data");
-        FileManager.instance.listOfEntersFight = DataLoader.ReadAbilityData("Enters Fight Data");
+        FileManager.instance.listOfOtherAbilities = DataLoader.ReadAbilityData("Other Ability Data");
+        FileManager.instance.listOfWeapons = DataLoader.ReadWeaponData("Weapon Data");
 
         for (int i = 0; i < playerData.Count; i++)
         {
             PlayerCharacter nextCharacter = Instantiate(playerPrefab);
-            yield return (nextCharacter.SetupCharacter(Character.CharacterType.Teammate, playerData[i], false));
+            WeaponData randomWeapon;
+            if (FileManager.instance.listOfWeapons.Count == 0) randomWeapon = null;
+            else randomWeapon = FileManager.instance.listOfWeapons[Random.Range(0, FileManager.instance.listOfWeapons.Count)];
+
+            yield return nextCharacter.SetupCharacter(Character.CharacterType.Teammate, playerData[i], false, randomWeapon);
             FileManager.instance.listOfPlayers.Add(nextCharacter);
 
             nextCharacter.transform.SetParent(FileManager.instance.canvas);

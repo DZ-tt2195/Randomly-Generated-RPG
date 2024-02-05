@@ -400,7 +400,7 @@
       "Drain",
       "Deal damage to any Teammate and regain that much health.",
       "THIS drains TARGET's health.",
-      "Attack/HealFromDamage",
+      "Attack/DealtDamage/HealFromDamage",
       "",
       "",
       "2",

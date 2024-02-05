@@ -1,0 +1,18 @@
+{
+    [
+      "Weapon Name",
+      "Description",
+      "Ability",
+      "Stat Calculation",
+      "Start of Turn",
+      "End of Turn",
+      "New Wave",
+      "On Death",
+      "Attack stat",
+      "Defense stat",
+      "Speed stat",
+      "Luck stat",
+      "Accuracy stat"
+    ]
+  ]
+}

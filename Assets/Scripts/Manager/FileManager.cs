@@ -21,11 +21,12 @@ public class FileManager : MonoBehaviour
 
     [Tooltip("store all players")][ReadOnly] public List<Character> listOfPlayers = new List<Character>();
     [Tooltip("store all ability data")][ReadOnly] public List<AbilityData> listOfAbilities;
-    [Tooltip("store all enters fight data")][ReadOnly] public List<AbilityData> listOfEntersFight;
+    [Tooltip("store all other ability data")][ReadOnly] public List<AbilityData> listOfOtherAbilities;
     [Tooltip("store all enemy data")][ReadOnly] public List<CharacterData> listOfEnemies;
     [Tooltip("store all helper data")][ReadOnly] public List<CharacterData> listOfHelpers;
+    [Tooltip("store all weapon data")][ReadOnly] public List<WeaponData> listOfWeapons;
 
-#endregion
+    #endregion
 
 #region Setup
 
@@ -65,7 +66,7 @@ public class FileManager : MonoBehaviour
         }
     }
 
-    #endregion
+#endregion
 
 #region Loading Scenes
 
@@ -87,22 +88,31 @@ public class FileManager : MonoBehaviour
 
     IEnumerator BringBackObjects()
     {
-        yield return new WaitForSeconds(0.25f);
+        yield return new WaitForSeconds(0.2f);
 
         RightClick.instance.transform.SetParent(canvas);
         RightClick.instance.transform.localPosition = new Vector3(0, 0);
 
         FPS.instance.transform.SetParent(canvas);
         FPS.instance.transform.localPosition = new Vector3(-1190, 670);
+
+        GameSettings.instance.transform.SetParent(canvas);
+        GameSettings.instance.transform.localPosition = new Vector3(0, 0);
     }
 
-    public void UnloadObjects()
+    public void UnloadObjects(string sceneName)
     {
+        Debug.Log(sceneName);
+
         Preserve(FPS.instance.gameObject);
         Preserve(RightClick.instance.gameObject);
+        Preserve(GameSettings.instance.gameObject);
 
-        foreach (Character player in listOfPlayers)
-            Preserve(player.gameObject);
+        if (sceneName != "0. Title Screen")
+        {
+            foreach (Character player in listOfPlayers)
+                Preserve(player.gameObject);
+        }
     }
 
     void Preserve(GameObject next)

@@ -38,7 +38,7 @@ public class Character : MonoBehaviour, IPointerClickHandler
         protected Emotion startingEmotion;
 
         protected int currentHealth;
-        /*[ReadOnly]*/ public Position currentPosition;
+        [ReadOnly] public Position currentPosition;
         [ReadOnly] public Emotion currentEmotion;
         protected float modifyAttack = 1f;
         protected float modifyDefense = 1f;
@@ -49,7 +49,8 @@ public class Character : MonoBehaviour, IPointerClickHandler
     [Foldout("UI", true)]
         [ReadOnly] public Image border;
         [ReadOnly] public Button myButton;
-        Image image;
+        Image myImage;
+        Image weaponImage;
         Button infoButton;
         TMP_Text emotionText;
         TMP_Text healthText;
@@ -61,46 +62,59 @@ public class Character : MonoBehaviour, IPointerClickHandler
 
     private void Awake()
     {
-        image = GetComponent<Image>();
+        myImage = GetComponent<Image>();
         infoButton = transform.Find("Info").GetComponent<Button>();
         infoButton.onClick.AddListener(RightClickInfo);
         myButton = GetComponent<Button>();
         border = transform.Find("border").GetComponent<Image>();
         emotionText = transform.Find("Emotion Text").GetComponent<TMP_Text>();
         healthText = transform.Find("Health %").GetChild(0).GetComponent<TMP_Text>();
+        weaponImage = transform.Find("Weapon Image").GetComponent<Image>();
     }
 
-    public IEnumerator SetupCharacter(CharacterType type, CharacterData data, bool isHelper, float multiplier = 1f)
+    public IEnumerator SetupCharacter(CharacterType type, CharacterData characterData, bool isHelper, WeaponData weaponData, float multiplier = 1f)
     {
         yield return null;
         myType = type;
-        this.name = data.name;
-        this.description = data.description;
-        baseHealth = (int)(data.baseHealth * multiplier); currentHealth = baseHealth;
-        baseAttack = (int)(data.baseAttack * multiplier);
-        baseDefense = (int)(data.baseDefense * multiplier);
-        baseSpeed = (int)(data.baseSpeed * multiplier);
-        baseLuck = data.baseLuck;
-        baseAccuracy = data.baseAccuracy;
-        StartCoroutine(ChangePosition(data.startingPosition, -1));
-        startingEmotion = data.startingEmotion; StartCoroutine(ChangeEmotion(data.startingEmotion, -1));
+        this.name = characterData.name;
+        this.description = characterData.description;
+        baseHealth = (int)(characterData.baseHealth * multiplier); currentHealth = baseHealth;
+        baseAttack = (int)(characterData.baseAttack * multiplier);
+        baseDefense = (int)(characterData.baseDefense * multiplier);
+        baseSpeed = (int)(characterData.baseSpeed * multiplier);
+        baseLuck = characterData.baseLuck;
+        baseAccuracy = characterData.baseAccuracy;
+        StartCoroutine(ChangePosition(characterData.startingPosition, -1));
+        startingEmotion = characterData.startingEmotion; StartCoroutine(ChangeEmotion(characterData.startingEmotion, -1));
         this.isHelper = isHelper;
-        this.aiTargeting = data.aiTargeting;
+        this.aiTargeting = characterData.aiTargeting;
 
         if (this.isHelper)
         {
-            this.image.sprite = Resources.Load<Sprite>($"Helpers/{this.name}");
+            this.myImage.sprite = Resources.Load<Sprite>($"Helpers/{this.name}");
         }
         else if (myType == CharacterType.Teammate )
         {
-            this.image.sprite = Resources.Load<Sprite>($"Teammates/{this.name}");
+            this.myImage.sprite = Resources.Load<Sprite>($"Teammates/{this.name}");
         }
         else if (myType == CharacterType.Enemy)
         {
-            this.image.sprite = Resources.Load<Sprite>($"Enemies/{this.name}");
+            this.myImage.sprite = Resources.Load<Sprite>($"Enemies/{this.name}");
         }
 
-        string[] divideSkillsIntoNumbers = data.skillNumbers.Split(',');
+        if (weapon == null)
+        {
+            weaponImage.gameObject.SetActive(false);
+            this.weapon = null;
+        }
+        else
+        {
+            this.weapon = this.gameObject.AddComponent<Weapon>();
+            this.weapon.SetupWeapon(weaponData);
+            weaponImage.sprite = Resources.Load<Sprite>($"Weapons/{this.weapon.myName}");
+        }
+
+        string[] divideSkillsIntoNumbers = characterData.skillNumbers.Split(',');
         foreach (string skill in divideSkillsIntoNumbers)
         {
             if (skill.Trim() != "")
@@ -111,13 +125,13 @@ public class Character : MonoBehaviour, IPointerClickHandler
             }
         }
 
-        string[] divideEntersIntoNumbers = data.entersFight.Split(',');
+        string[] divideEntersIntoNumbers = characterData.entersFight.Split(',');
         foreach (string enters in divideEntersIntoNumbers)
         {
             if (enters.Trim() != "")
             {
                 Ability nextAbility = this.gameObject.AddComponent<Ability>();
-                nextAbility.SetupAbility(FileManager.instance.listOfEntersFight[int.Parse(enters)]);
+                nextAbility.SetupAbility(FileManager.instance.listOfOtherAbilities[int.Parse(enters)]);
 
                 if (nextAbility.CanPlay(this))
                 {
@@ -178,7 +192,7 @@ public class Character : MonoBehaviour, IPointerClickHandler
         stats2 += $"Luck: {100 * baseLuck:F0}% {ConvertStatPercentage(modifyLuck)}\n";
         stats2 += $"Accuracy: {100 * baseAccuracy:F0}% {ConvertStatPercentage(modifyAccuracy)}\n";
 
-        RightClick.instance.DisplayInfo(this, image.sprite, stats1, stats2);
+        RightClick.instance.DisplayInfo(this, myImage.sprite, null, stats1, stats2);
     }
 
     string ConvertStatPercentage(float stat)
@@ -304,7 +318,7 @@ public class Character : MonoBehaviour, IPointerClickHandler
     
         if (this.myType == CharacterType.Teammate && !isHelper)
         {
-            image.color = Color.gray;
+            myImage.color = Color.gray;
         }
         else
         {
@@ -322,7 +336,7 @@ public class Character : MonoBehaviour, IPointerClickHandler
         yield return GainHealth(health, logged);
         yield return ChangePosition(startingPosition, -1);
         yield return ChangeEmotion(startingEmotion, -1);
-        image.color = Color.white;
+        myImage.color = Color.white;
 
         modifyAttack = 1f;
         modifyDefense = 1f;
@@ -452,7 +466,7 @@ public class Character : MonoBehaviour, IPointerClickHandler
         else
             currentEmotion = newEmotion;
 
-        if (Log.instance != null && currentEmotion == Emotion.Dead)
+        if (Log.instance != null && currentEmotion != Emotion.Dead)
             Log.instance.AddText($"{(this.name)} is now {currentEmotion}.", logged);
 
         switch (currentEmotion)
@@ -502,7 +516,7 @@ public class Character : MonoBehaviour, IPointerClickHandler
         yield return null;
     }
 
-    #endregion
+#endregion
 
 #region Abilities
 

@@ -17,7 +17,7 @@
     [
       "Archer",
       "Shoots down Airborne Teammates with a high chance of critical hits.",
-      "65",
+      "70",
       "25",
       "8",
       "30",
@@ -32,9 +32,9 @@
     [
       "Bat",
       "Drains health from Grounded Teammates.",
-      "85",
+      "80",
       "30",
-      "5",
+      "4",
       "60",
       "0.1",
       "0.9",
@@ -47,7 +47,7 @@
     [
       "Wolf",
       "Makes all Teammates Sad when it enters the fight, and then hunts them down while Angry.",
-      "100",
+      "90",
       "35",
       "6",
       "40",

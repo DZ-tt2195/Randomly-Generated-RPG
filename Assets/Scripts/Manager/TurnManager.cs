@@ -12,26 +12,29 @@ public class TurnManager : MonoBehaviour
 #region Variables
 
     public static TurnManager instance;
-    [SerializeField] EnemyCharacter enemyPrefab;
-    [SerializeField] PlayerCharacter helperPrefab;
+    [Foldout("Prefabs", true)]
+        [SerializeField] EnemyCharacter enemyPrefab;
+        [SerializeField] PlayerCharacter helperPrefab;
+        [ReadOnly] public WaitForSeconds WaitTime;
 
-    public List<AbilityBox> listOfBoxes = new List<AbilityBox>();
-    public TMP_Text instructions;
+    [Foldout("UI", true)]
+        public List<AbilityBox> listOfBoxes = new List<AbilityBox>();
+        public TMP_Text instructions;
+        bool decrease = true;
+        [SerializeField] Button emotionGuide;
+        [SerializeField] GameObject emotionTransform;
+        [SerializeField] Button quitButton;
 
-    [ReadOnly] public List<Character> teammates = new List<Character>();
-    [ReadOnly] public List<Character> enemies = new List<Character>();
-    [ReadOnly] public List<Character> speedQueue = new List<Character>();
+    [Foldout("Character lists", true)]
+        [ReadOnly] public List<Character> teammates = new List<Character>();
+        [ReadOnly] public List<Character> enemies = new List<Character>();
+        [ReadOnly] public List<Character> speedQueue = new List<Character>();
 
-    bool decrease = true;
-    int currentWave;
-    int currentRound;
-    float enemyMultiplier = 1f;
-    bool stillBattling = true;
-
-    [SerializeField] Button emotionGuide;
-    [SerializeField] GameObject emotionTransform;
-
-    public WaitForSeconds WaitTime;
+    [Foldout("Info tracking", true)]
+        int currentWave;
+        int currentRound;
+        float enemyMultiplier = 1f;
+        bool stillBattling = true;
 
 #endregion
 
@@ -41,7 +44,7 @@ public class TurnManager : MonoBehaviour
     {
         instance = this;
         emotionGuide.onClick.AddListener(SeeEmotions);
-        WaitTime = new WaitForSeconds(PlayerPrefs.GetFloat("Wait"));
+        WaitTime = new WaitForSeconds(PlayerPrefs.GetFloat("Animation Speed"));
     }
 
     private void Start()
@@ -54,6 +57,7 @@ public class TurnManager : MonoBehaviour
             nextFriend.transform.localPosition = new Vector3(-1000 + (500 * i), -550, 0);
         }
 
+        quitButton.gameObject.SetActive(false);
         StartCoroutine(NewWave());
     }
 
@@ -111,7 +115,7 @@ public class TurnManager : MonoBehaviour
                 nextInLine.border.gameObject.SetActive(false);
             }
 
-            CheckTeammates();
+            CheckGameOver();
 
             if (stillBattling)
             {
@@ -130,7 +134,7 @@ public class TurnManager : MonoBehaviour
         StartCoroutine(NewRound());
     }
 
-    void CheckTeammates()
+    void CheckGameOver()
     {
         foreach (Character character in teammates)
         {
@@ -147,6 +151,7 @@ public class TurnManager : MonoBehaviour
         Log.instance.AddText("", 0);
         Log.instance.AddText("You lost.", 0);
         Log.instance.AddText($"Survived {currentWave-1} waves.", 0);
+        quitButton.gameObject.SetActive(true);
     }
 
 #endregion
@@ -181,7 +186,7 @@ public class TurnManager : MonoBehaviour
         nextCharacter.transform.localPosition = new Vector3(500, -550, 0);
         teammates.Add(nextCharacter);
         Log.instance.AddText($"{Log.Article(FileManager.instance.listOfHelpers[ID].name)} entered the fight.", logged);
-        yield return (nextCharacter.SetupCharacter(Character.CharacterType.Teammate, FileManager.instance.listOfHelpers[ID], true));
+        yield return (nextCharacter.SetupCharacter(Character.CharacterType.Teammate, FileManager.instance.listOfHelpers[ID], true, null));
     }
 
     public IEnumerator CreateEnemy(int ID, float multiplier, int logged)
@@ -191,7 +196,7 @@ public class TurnManager : MonoBehaviour
         nextCharacter.transform.localPosition = new Vector3(-1000 + (500 * enemies.Count), 300, 0);
         enemies.Add(nextCharacter);
         Log.instance.AddText($"{Log.Article(FileManager.instance.listOfEnemies[ID].name)} entered the fight.", logged);
-        yield return (nextCharacter.SetupCharacter(Character.CharacterType.Enemy, FileManager.instance.listOfEnemies[ID], false, multiplier));
+        yield return (nextCharacter.SetupCharacter(Character.CharacterType.Enemy, FileManager.instance.listOfEnemies[ID], false, null, multiplier));
     }
 
     public void DisableCharacterButtons()

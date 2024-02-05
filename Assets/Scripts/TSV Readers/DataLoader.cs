@@ -4,6 +4,24 @@ using UnityEngine;
 using System;
 
 [System.Serializable]
+public class WeaponData
+{
+    public string name;
+    public string description;
+    public string skillNumbers;
+    public string statCalculation;
+    public string startOfTurn;
+    public string endOfTurn;
+    public string newWave;
+    public string onDeath;
+    public float modifyAttack;
+    public float modifyDefense;
+    public float modifySpeed;
+    public float modifyLuck;
+    public float modifyAccuracy;
+}
+
+[System.Serializable]
 public class CharacterData
 {
     public string name;
@@ -45,13 +63,13 @@ public class DataLoader
 {
     public static List<CharacterData> ReadCharacterData(string fileToLoad)
     {
-        List<CharacterData> nextData = new List<CharacterData>();
+        List<CharacterData> nextData = new();
         var data = TSVReader.ReadFile(fileToLoad);
 
         for (int i = 2; i < data.Length; i++)
         {
             string[] line = data[i];
-            CharacterData newCharacter = new CharacterData();
+            CharacterData newCharacter = new();
             nextData.Add(newCharacter);
 
             for (int j = 0; j < line.Length; j++)
@@ -79,12 +97,12 @@ public class DataLoader
 
     public static List<AbilityData> ReadAbilityData(string fileToLoad)
     {
-        List<AbilityData> nextData = new List<AbilityData>();
+        List<AbilityData> nextData = new();
         var data = TSVReader.ReadFile(fileToLoad);
         for (int i = 2; i < data.Length; i++)
         {
             string[] line = data[i];
-            AbilityData newAbility = new AbilityData();
+            AbilityData newAbility = new();
             nextData.Add(newAbility);
 
             for (int j = 0; j < line.Length; j++)
@@ -109,6 +127,39 @@ public class DataLoader
             newAbility.helperID = StringToInt(line[14]);
             newAbility.teamTarget = StringToTeamTarget(line[15]);
         }
+        return nextData;
+    }
+
+    public static List<WeaponData> ReadWeaponData(string fileToLoad)
+    {
+        List<WeaponData> nextData = new();
+        var data = TSVReader.ReadFile(fileToLoad);
+        for (int i = 2; i < data.Length; i++)
+        {
+            string[] line = data[i];
+            WeaponData newWeapon = new();
+            nextData.Add(newWeapon);
+
+            for (int j = 0; j < line.Length; j++)
+            {
+                line[j] = line[j].Trim().Replace("\"", "").Replace("\\", "").Replace("]", "");
+                //Debug.Log(line[j]);
+            }
+
+            newWeapon.name = line[1];
+            newWeapon.description = line[2];
+            try {newWeapon.statCalculation = line[3];} catch (IndexOutOfRangeException){continue;}
+            try { newWeapon.startOfTurn = line[4]; } catch (IndexOutOfRangeException) { continue; }
+            try { newWeapon.endOfTurn = line[5]; } catch (IndexOutOfRangeException) { continue; }
+            try { newWeapon.newWave = line[6]; } catch (IndexOutOfRangeException) { continue; }
+            try { newWeapon.onDeath = line[7]; } catch (IndexOutOfRangeException) { continue; }
+            try { newWeapon.modifyAttack = StringToFloat(line[8]); } catch (IndexOutOfRangeException) { continue; }
+            try { newWeapon.modifyDefense = StringToFloat(line[9]); } catch (IndexOutOfRangeException) { continue; }
+            try { newWeapon.modifySpeed = StringToFloat(line[10]); } catch (IndexOutOfRangeException) { continue; }
+            try { newWeapon.modifyLuck = StringToFloat(line[11]); } catch (IndexOutOfRangeException) { continue; }
+            try { newWeapon.modifyAccuracy = StringToFloat(line[12]); } catch (IndexOutOfRangeException) { continue; }
+        }
+
         return nextData;
     }
 
@@ -160,7 +211,6 @@ public class DataLoader
             Debug.Log(line);
             return -1f;
         }
-
     }
 
     static int StringToInt(string line)
