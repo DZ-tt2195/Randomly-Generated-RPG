@@ -26,7 +26,7 @@
       "GROUNDED",
       "NEUTRAL",
       "",
-      "0,19,20,",
+      "19,20,",
       "PrioritizeAirborne"
     ],
     [
@@ -41,7 +41,7 @@
       "AIRBORNE",
       "NEUTRAL",
       "",
-      "0,21,22,",
+      "21,22,",
       "PrioritizeGrounded"
     ],
     [
@@ -56,7 +56,7 @@
       "GROUNDED",
       "ANGRY",
       "0,",
-      "0,23,24,",
+      "23,24,",
       "Effectiveness"
     ]
   ]

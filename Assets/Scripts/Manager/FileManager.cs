@@ -66,6 +66,11 @@ public class FileManager : MonoBehaviour
         }
     }
 
+    public AbilityData FindAbility(string name)
+    {
+        return listOfAbilities.FirstOrDefault(ability => ability.myName == name);
+    }
+
 #endregion
 
 #region Loading Scenes

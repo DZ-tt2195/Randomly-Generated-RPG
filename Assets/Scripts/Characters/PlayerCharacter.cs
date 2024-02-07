@@ -13,7 +13,7 @@ public class PlayerCharacter : Character
         EnableAbilityBoxes();
         TurnManager.instance.instructions.text = $"{this.name}'s Turn: Choose an ability.";
         yield return WaitForChoice();
-        thisTurnAbility = this.listOfAbilities[choice];
+        chosenAbility = this.listOfAbilities[choice];
         this.border.gameObject.SetActive(false);
     }
 

@@ -5,6 +5,8 @@ using UnityEngine.UI;
 using TMPro;
 using MyBox;
 using UnityEngine.EventSystems;
+using System;
+using System.Linq;
 
 [RequireComponent(typeof(Button))] [RequireComponent(typeof(Image))]
 public class Character : MonoBehaviour, IPointerClickHandler
@@ -18,7 +20,7 @@ public class Character : MonoBehaviour, IPointerClickHandler
     public enum CharacterType { Teammate, Enemy }
 
     [Foldout("Player info", true)]
-        protected Ability thisTurnAbility;
+        protected Ability chosenAbility;
         [ReadOnly] public List<Ability> listOfAbilities = new List<Ability>();
         [ReadOnly] public CharacterType myType;
         [ReadOnly] public bool isHelper;
@@ -49,8 +51,8 @@ public class Character : MonoBehaviour, IPointerClickHandler
     [Foldout("UI", true)]
         [ReadOnly] public Image border;
         [ReadOnly] public Button myButton;
-        Image myImage;
-        Image weaponImage;
+        [ReadOnly] public Image myImage;
+        [ReadOnly] public Image weaponImage;
         Button infoButton;
         TMP_Text emotionText;
         TMP_Text healthText;
@@ -76,7 +78,7 @@ public class Character : MonoBehaviour, IPointerClickHandler
     {
         yield return null;
         myType = type;
-        this.name = characterData.name;
+        this.name = characterData.myName;
         this.description = characterData.description;
         baseHealth = (int)(characterData.baseHealth * multiplier); currentHealth = baseHealth;
         baseAttack = (int)(characterData.baseAttack * multiplier);
@@ -89,9 +91,12 @@ public class Character : MonoBehaviour, IPointerClickHandler
         this.isHelper = isHelper;
         this.aiTargeting = characterData.aiTargeting;
 
+        AddAbility(FileManager.instance.FindAbility("Skip Turn"));
+
         if (this.isHelper)
         {
             this.myImage.sprite = Resources.Load<Sprite>($"Helpers/{this.name}");
+            AddAbility(FileManager.instance.FindAbility("Retreat"));
         }
         else if (myType == CharacterType.Teammate )
         {
@@ -101,6 +106,24 @@ public class Character : MonoBehaviour, IPointerClickHandler
         {
             this.myImage.sprite = Resources.Load<Sprite>($"Enemies/{this.name}");
         }
+
+        string[] divideSkillsIntoNumbers = characterData.skillNumbers.Split(',');
+        List<string> putIntoList = new();
+        foreach (string next in divideSkillsIntoNumbers)
+            putIntoList.Add(next);
+        putIntoList = putIntoList.Shuffle();
+
+        for (int i = 0; i<4; i++)
+        {
+            try
+            {
+                string skillNumber = putIntoList[i];
+                if (skillNumber.Trim() != "")
+                    AddAbility(FileManager.instance.listOfAbilities[int.Parse(skillNumber)]);
+            }
+            catch (ArgumentOutOfRangeException){/*do nothing*/}
+        }
+        listOfAbilities = listOfAbilities.OrderBy(o => o.baseCooldown).ToList();
 
         if (weapon == null)
         {
@@ -113,17 +136,7 @@ public class Character : MonoBehaviour, IPointerClickHandler
             this.weapon.SetupWeapon(weaponData);
             weaponImage.sprite = Resources.Load<Sprite>($"Weapons/{this.weapon.myName}");
         }
-
-        string[] divideSkillsIntoNumbers = characterData.skillNumbers.Split(',');
-        foreach (string skill in divideSkillsIntoNumbers)
-        {
-            if (skill.Trim() != "")
-            {
-                Ability nextAbility = this.gameObject.AddComponent<Ability>();
-                listOfAbilities.Add(nextAbility);
-                nextAbility.SetupAbility(FileManager.instance.listOfAbilities[int.Parse(skill)]);
-            }
-        }
+        WeaponStartingEffects();
 
         string[] divideEntersIntoNumbers = characterData.entersFight.Split(',');
         foreach (string enters in divideEntersIntoNumbers)
@@ -141,6 +154,31 @@ public class Character : MonoBehaviour, IPointerClickHandler
                 }
             }
         }
+    }
+
+    void WeaponStartingEffects()
+    {
+        modifyAttack = 1f;
+        modifyDefense = 1f;
+        modifyAccuracy = 1f;
+        modifyLuck = 1f;
+        modifyAccuracy = 1f;
+
+        if (this.weapon != null)
+        {
+            modifyAttack += this.weapon.startingAttack;
+            modifyDefense += this.weapon.modifyDefense;
+            modifySpeed += this.weapon.modifySpeed;
+            modifyLuck += this.weapon.modifyLuck;
+            modifyAccuracy += this.weapon.modifyAccuracy;
+        }
+    }
+
+    void AddAbility(AbilityData ability)
+    {
+        Ability newAbility = this.gameObject.AddComponent<Ability>();
+        listOfAbilities.Add(newAbility);
+        newAbility.SetupAbility(ability);
     }
 
 #endregion
@@ -192,7 +230,7 @@ public class Character : MonoBehaviour, IPointerClickHandler
         stats2 += $"Luck: {100 * baseLuck:F0}% {ConvertStatPercentage(modifyLuck)}\n";
         stats2 += $"Accuracy: {100 * baseAccuracy:F0}% {ConvertStatPercentage(modifyAccuracy)}\n";
 
-        RightClick.instance.DisplayInfo(this, myImage.sprite, null, stats1, stats2);
+        RightClick.instance.DisplayInfo(this, stats1, stats2);
     }
 
     string ConvertStatPercentage(float stat)
@@ -315,6 +353,8 @@ public class Character : MonoBehaviour, IPointerClickHandler
         healthText.text = $"0%";
 
         Log.instance.AddText($"{(this.name)} has died.", logged);
+        if (this.weapon != null)
+            yield return weapon.OnDeath(logged);
     
         if (this.myType == CharacterType.Teammate && !isHelper)
         {
@@ -337,12 +377,7 @@ public class Character : MonoBehaviour, IPointerClickHandler
         yield return ChangePosition(startingPosition, -1);
         yield return ChangeEmotion(startingEmotion, -1);
         myImage.color = Color.white;
-
-        modifyAttack = 1f;
-        modifyDefense = 1f;
-        modifyAccuracy = 1f;
-        modifyLuck = 1f;
-        modifyAccuracy = 1f;
+        WeaponStartingEffects();
     }
 
     public IEnumerator ChangeAttack(float effect, int logged)
@@ -522,8 +557,10 @@ public class Character : MonoBehaviour, IPointerClickHandler
 
     public IEnumerator MyTurn(int logged)
     {
+        yield return StartOfTurn(logged);
+
         yield return ChooseAbility();
-        yield return ChooseTarget(thisTurnAbility);
+        yield return ChooseTarget(chosenAbility);
 
         foreach (Ability ability in listOfAbilities)
         {
@@ -533,9 +570,9 @@ public class Character : MonoBehaviour, IPointerClickHandler
 
         TurnManager.instance.instructions.text = "";
         TurnManager.instance.DisableCharacterButtons();
-        Log.instance.AddText(Log.Substitute(thisTurnAbility, this), logged);
+        Log.instance.AddText(Log.Substitute(chosenAbility, this), logged);
 
-        if (thisTurnAbility.myName != "Skip Turn")
+        if (chosenAbility.myName != "Skip Turn")
         {
             int happinessPenalty = currentEmotion switch
             {
@@ -543,21 +580,35 @@ public class Character : MonoBehaviour, IPointerClickHandler
                 Emotion.Ecstatic => 2,
                 _ => 0,
             };
-            thisTurnAbility.currentCooldown = thisTurnAbility.baseCooldown + happinessPenalty;
+            chosenAbility.currentCooldown = chosenAbility.baseCooldown + happinessPenalty;
 
             yield return TurnManager.instance.WaitTime;
-            yield return ResolveAbility(thisTurnAbility, logged + 1);
+            yield return ResolveAbility(chosenAbility, logged + 1);
+        }
 
-            if (this.currentEmotion == Emotion.Angry)
-            {
-                Log.instance.AddText($"{this.name} is Angry.", logged);
-                yield return TakeDamage((int)(baseHealth * 0.1f), logged + 1);
-            }
-            else if (this.currentEmotion == Emotion.Enraged)
-            {
-                Log.instance.AddText($"{this.name} is Enraged.", logged);
-                yield return TakeDamage((int)(baseHealth * 0.2f), logged + 1);
-            }
+        yield return EndOfTurn(logged);        
+    }
+
+    IEnumerator StartOfTurn(int logged)
+    {
+        if (this.weapon != null)
+            yield return weapon.StartOfTurn(logged);
+    }
+
+    IEnumerator EndOfTurn(int logged)
+    {
+        if (this.weapon != null)
+            yield return weapon.EndOfTurn(logged);
+
+        if (this.currentEmotion == Emotion.Angry)
+        {
+            Log.instance.AddText($"{this.name} is Angry.", logged);
+            yield return TakeDamage((int)(baseHealth * 0.1f), logged + 1);
+        }
+        else if (this.currentEmotion == Emotion.Enraged)
+        {
+            Log.instance.AddText($"{this.name} is Enraged.", logged);
+            yield return TakeDamage((int)(baseHealth * 0.2f), logged + 1);
         }
     }
 
@@ -573,10 +624,7 @@ public class Character : MonoBehaviour, IPointerClickHandler
 
     protected IEnumerator ResolveAbility(Ability ability, int logged)
     {
-        string divide = ability.instructions.Replace(" ", "");
-        divide = divide.ToUpper();
-        string[] methodsInStrings = divide.Split('/');
-        yield return ability.ResolveInstructions(methodsInStrings, logged);
+        yield return ability.ResolveInstructions(TurnManager.SpliceString(ability.instructions), logged);
     }
 
 #endregion

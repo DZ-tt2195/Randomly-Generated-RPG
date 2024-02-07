@@ -85,6 +85,39 @@ public class TurnManager : MonoBehaviour
             yield return CreateEnemy(Random.Range(0, FileManager.instance.listOfEnemies.Count), enemyMultiplier, 1);
         }
 
+        speedQueue = AllCharacters();
+        while (speedQueue.Count > 0 && stillBattling)
+        {
+            DisableCharacterButtons();
+            speedQueue = speedQueue.OrderByDescending(o => o.CalculateSpeed()).ToList();
+
+            Character nextInLine = speedQueue[0];
+            speedQueue.RemoveAt(0);
+
+            if (nextInLine != null && nextInLine.CalculateHealth() > 0)
+            {
+                instructions.text = "";
+                Log.instance.AddText($"", 0);
+                nextInLine.border.gameObject.SetActive(true);
+
+                if (nextInLine.weapon != null)
+                    yield return nextInLine.weapon.NewWave(1);
+                nextInLine.border.gameObject.SetActive(false);
+            }
+
+            CheckGameOver();
+
+            if (stillBattling)
+            {
+                if (enemies.Count == 0)
+                {
+                    Log.instance.AddText($"", 0);
+                    StartCoroutine(NewWave());
+                    yield break;
+                }
+            }
+        }
+
         StartCoroutine(NewRound());
     }
 
@@ -124,9 +157,6 @@ public class TurnManager : MonoBehaviour
                     Log.instance.AddText($"", 0);
                     StartCoroutine(NewWave());
                     yield break;
-                }
-                else
-                {
                 }
             }
         }
@@ -185,7 +215,7 @@ public class TurnManager : MonoBehaviour
         nextCharacter.transform.SetParent(FileManager.instance.canvas);
         nextCharacter.transform.localPosition = new Vector3(500, -550, 0);
         teammates.Add(nextCharacter);
-        Log.instance.AddText($"{Log.Article(FileManager.instance.listOfHelpers[ID].name)} entered the fight.", logged);
+        Log.instance.AddText($"{Log.Article(FileManager.instance.listOfHelpers[ID].myName)} entered the fight.", logged);
         yield return (nextCharacter.SetupCharacter(Character.CharacterType.Teammate, FileManager.instance.listOfHelpers[ID], true, null));
     }
 
@@ -195,7 +225,7 @@ public class TurnManager : MonoBehaviour
         nextCharacter.transform.SetParent(FileManager.instance.canvas);
         nextCharacter.transform.localPosition = new Vector3(-1000 + (500 * enemies.Count), 300, 0);
         enemies.Add(nextCharacter);
-        Log.instance.AddText($"{Log.Article(FileManager.instance.listOfEnemies[ID].name)} entered the fight.", logged);
+        Log.instance.AddText($"{Log.Article(FileManager.instance.listOfEnemies[ID].myName)} entered the fight.", logged);
         yield return (nextCharacter.SetupCharacter(Character.CharacterType.Enemy, FileManager.instance.listOfEnemies[ID], false, null, multiplier));
     }
 
@@ -219,6 +249,14 @@ public class TurnManager : MonoBehaviour
         allTargets.AddRange(teammates);
         allTargets.AddRange(enemies);
         return allTargets;
+    }
+
+    public static string[] SpliceString(string text)
+    {
+        string divide = text.Replace(" ", "");
+        divide = divide.ToUpper();
+        string[] splitIntoStrings = divide.Split('/');
+        return splitIntoStrings;
     }
 
 #endregion

@@ -18,7 +18,7 @@ public class EnemyCharacter : Character
             }
         }
 
-        thisTurnAbility = (availableAbilities.Count == 0) ? listOfAbilities[0] : availableAbilities[Random.Range(0, availableAbilities.Count)];
+        chosenAbility = (availableAbilities.Count == 0) ? listOfAbilities[0] : availableAbilities[Random.Range(0, availableAbilities.Count)];
     }
 
     protected override IEnumerator ChooseTarget(Ability ability)

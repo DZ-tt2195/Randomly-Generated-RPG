@@ -6,7 +6,7 @@ using System;
 [System.Serializable]
 public class WeaponData
 {
-    public string name;
+    public string myName;
     public string description;
     public string skillNumbers;
     public string statCalculation;
@@ -14,6 +14,11 @@ public class WeaponData
     public string endOfTurn;
     public string newWave;
     public string onDeath;
+    public float startingAttack;
+    public float startingDefense;
+    public float startingSpeed;
+    public float startingLuck;
+    public float startingAccuracy;
     public float modifyAttack;
     public float modifyDefense;
     public float modifySpeed;
@@ -24,7 +29,7 @@ public class WeaponData
 [System.Serializable]
 public class CharacterData
 {
-    public string name;
+    public string myName;
     public string description;
     public int baseHealth;
     public float baseAttack;
@@ -42,7 +47,7 @@ public class CharacterData
 [System.Serializable]
 public class AbilityData
 {
-    public string name;
+    public string myName;
     public string description;
     public string logDescription;
     public string instructions;
@@ -78,7 +83,7 @@ public class DataLoader
                 //Debug.Log(line[j]);
             }
 
-            newCharacter.name = line[0];
+            newCharacter.myName = line[0];
             newCharacter.description = line[1];
             newCharacter.baseHealth = StringToInt(line[2]);
             newCharacter.baseAttack = StringToFloat(line[3]);
@@ -111,7 +116,7 @@ public class DataLoader
                 //Debug.Log(line[j]);
             }
 
-            newAbility.name = line[1];
+            newAbility.myName = line[1];
             newAbility.description = line[2];
             newAbility.logDescription = line[3];
             newAbility.instructions = line[4];
@@ -146,18 +151,23 @@ public class DataLoader
                 //Debug.Log(line[j]);
             }
 
-            newWeapon.name = line[1];
+            newWeapon.myName = line[1];
             newWeapon.description = line[2];
             try {newWeapon.statCalculation = line[3];} catch (IndexOutOfRangeException){continue;}
             try { newWeapon.startOfTurn = line[4]; } catch (IndexOutOfRangeException) { continue; }
             try { newWeapon.endOfTurn = line[5]; } catch (IndexOutOfRangeException) { continue; }
             try { newWeapon.newWave = line[6]; } catch (IndexOutOfRangeException) { continue; }
             try { newWeapon.onDeath = line[7]; } catch (IndexOutOfRangeException) { continue; }
-            try { newWeapon.modifyAttack = StringToFloat(line[8]); } catch (IndexOutOfRangeException) { continue; }
-            try { newWeapon.modifyDefense = StringToFloat(line[9]); } catch (IndexOutOfRangeException) { continue; }
-            try { newWeapon.modifySpeed = StringToFloat(line[10]); } catch (IndexOutOfRangeException) { continue; }
-            try { newWeapon.modifyLuck = StringToFloat(line[11]); } catch (IndexOutOfRangeException) { continue; }
-            try { newWeapon.modifyAccuracy = StringToFloat(line[12]); } catch (IndexOutOfRangeException) { continue; }
+            try { newWeapon.startingAttack = StringToFloat(line[8]); } catch (IndexOutOfRangeException) { continue; }
+            try { newWeapon.startingDefense = StringToFloat(line[9]); } catch (IndexOutOfRangeException) { continue; }
+            try { newWeapon.startingSpeed = StringToFloat(line[10]); } catch (IndexOutOfRangeException) { continue; }
+            try { newWeapon.startingLuck = StringToFloat(line[11]); } catch (IndexOutOfRangeException) { continue; }
+            try { newWeapon.startingAccuracy = StringToFloat(line[12]); } catch (IndexOutOfRangeException) { continue; }
+            try { newWeapon.modifyAttack = StringToFloat(line[13]); } catch (IndexOutOfRangeException) { continue; }
+            try { newWeapon.modifyDefense = StringToFloat(line[14]); } catch (IndexOutOfRangeException) { continue; }
+            try { newWeapon.modifySpeed = StringToFloat(line[15]); } catch (IndexOutOfRangeException) { continue; }
+            try { newWeapon.modifyLuck = StringToFloat(line[16]); } catch (IndexOutOfRangeException) { continue; }
+            try { newWeapon.modifyAccuracy = StringToFloat(line[17]); } catch (IndexOutOfRangeException) { continue; }
         }
 
         return nextData;

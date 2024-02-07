@@ -59,12 +59,12 @@ public class RightClick : MonoBehaviour
             this.transform.GetChild(0).gameObject.SetActive(false);
     }
 
-    public void DisplayInfo(Character character, Sprite characterSprite, Sprite weaponSprite, string firstStat, string secondStat)
+    public void DisplayInfo(Character character, string firstStat, string secondStat)
     {
         this.transform.SetAsLastSibling();
         background.SetActive(true);
 
-        characterImage.sprite = characterSprite;
+        characterImage.sprite = character.myImage.sprite;
         characterName.text = character.name;
         characterDescription.text = character.description;
 
@@ -75,6 +75,9 @@ public class RightClick : MonoBehaviour
         else
         {
             weaponStuff.gameObject.SetActive(true);
+            weaponName.text = character.weapon.myName;
+            weaponImage.sprite = character.weaponImage.sprite;
+            weaponDescription.text = character.weapon.description;
         }
 
         switch (character.currentEmotion)
@@ -116,17 +119,21 @@ public class RightClick : MonoBehaviour
         stats1.text = firstStat;
         stats2.text = secondStat;
 
-        for (int i = 0; i<listOfBoxes.Count; i++)
+        int nextBox = 0;
+        for (int i = 0; i<character.listOfAbilities.Count; i++)
         {
-            try
+            Ability nextAbility = character.listOfAbilities[i];
+            if (nextAbility.myName != "Skip Turn" && nextAbility.myName != "Retreat")
             {
-                listOfBoxes[i].ReceiveAbility(character.listOfAbilities[i+1], character);
-                listOfBoxes[i].gameObject.SetActive(true);
+                listOfBoxes[nextBox].gameObject.SetActive(true);
+                listOfBoxes[nextBox].ReceiveAbility(nextAbility, character);
+                nextBox++;
             }
-            catch (ArgumentOutOfRangeException)
-            {
-                listOfBoxes[i].gameObject.SetActive(false);
-            }
+        }
+
+        for (int i = nextBox; i<listOfBoxes.Count; i++)
+        {
+            listOfBoxes[i].gameObject.SetActive(false);
         }
     }
 }

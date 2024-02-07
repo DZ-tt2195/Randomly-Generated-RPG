@@ -43,7 +43,7 @@ public class Ability : MonoBehaviour
 
     public void SetupAbility(AbilityData data)
     {
-        myName = data.name;
+        myName = data.myName;
         instructions = data.instructions;
         nextInstructions = data.nextInstructions;
         description = data.description;

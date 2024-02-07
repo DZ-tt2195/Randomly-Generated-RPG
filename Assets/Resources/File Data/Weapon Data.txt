@@ -8,11 +8,16 @@
       "End of Turn",
       "New Wave",
       "On Death",
-      "Attack stat",
-      "Defense stat",
-      "Speed stat",
-      "Luck stat",
-      "Accuracy stat"
+      "Starting Attack",
+      "Starting Defense",
+      "Starting Speed",
+      "Starting Luck",
+      "Starting Accuracy",
+      "Modify Attack",
+      "Modify Defense",
+      "Modify Speed",
+      "Modify Luck",
+      "Modify Accuracy"
     ]
   ]
 }

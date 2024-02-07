@@ -20,6 +20,12 @@ public class Weapon : MonoBehaviour
     [ReadOnly] public string newWave;
     [ReadOnly] public string onDeath;
 
+    [ReadOnly] public float startingAttack;
+    [ReadOnly] public float startingDefense;
+    [ReadOnly] public float startingSpeed;
+    [ReadOnly] public float startingLuck;
+    [ReadOnly] public float startingAccuracy;
+
     [ReadOnly] public float modifyAttack;
     [ReadOnly] public float modifyDefense;
     [ReadOnly] public float modifySpeed;
@@ -29,7 +35,7 @@ public class Weapon : MonoBehaviour
     public void SetupWeapon(WeaponData data)
     {
         self = GetComponent<Character>();
-        myName = data.name;
+        myName = data.myName;
         description = data.description;
 
         string[] divideSkillsIntoNumbers = data.skillNumbers.Split(',');
@@ -49,6 +55,12 @@ public class Weapon : MonoBehaviour
         newWave = data.newWave;
         onDeath = data.onDeath;
 
+        startingAttack = data.startingAttack;
+        startingDefense = data.startingDefense;
+        startingSpeed = data.startingSpeed;
+        startingLuck = data.startingLuck;
+        startingAccuracy = data.startingAccuracy;
+
         modifyAttack = data.modifyAttack;
         modifyDefense = data.modifyDefense;
         modifySpeed = data.modifySpeed;
@@ -57,5 +69,111 @@ public class Weapon : MonoBehaviour
     }
 
     #endregion
+
+#region Effects
+
+    public IEnumerator StartOfTurn(int logged)
+    {
+        yield return null;
+        string[] spliced = TurnManager.SpliceString(startOfTurn);
+        foreach (string methodName in spliced)
+        {
+            switch (methodName)
+            {
+                case "":
+                    break;
+                case "NONE":
+                    break;
+
+                default:
+                    Debug.LogError($"{methodName} isn't implemented");
+                    break;
+            }
+        }
+    }
+
+    public IEnumerator EndOfTurn(int logged)
+    {
+        yield return null;
+        string[] spliced = TurnManager.SpliceString(endOfTurn);
+        foreach (string methodName in spliced)
+        {
+            switch (methodName)
+            {
+                case "":
+                    break;
+                case "NONE":
+                    break;
+
+                default:
+                    Debug.LogError($"{methodName} isn't implemented");
+                    break;
+            }
+        }
+    }
+
+    public float StatCalculation()
+    {
+        string[] spliced = TurnManager.SpliceString(statCalculation);
+        foreach (string methodName in spliced)
+        {
+            switch (methodName)
+            {
+                case "":
+                    break;
+                case "NONE":
+                    break;
+
+                default:
+                    Debug.LogError($"{methodName} isn't implemented");
+                    break;
+            }
+        }
+
+        return 0f;
+    }
+
+    public IEnumerator NewWave(int logged)
+    {
+        yield return null;
+        string[] spliced = TurnManager.SpliceString(newWave);
+        foreach (string methodName in spliced)
+        {
+            switch (methodName)
+            {
+                case "":
+                    break;
+                case "NONE":
+                    break;
+
+                default:
+                    Debug.LogError($"{methodName} isn't implemented");
+                    break;
+            }
+        }
+    }
+
+    public IEnumerator OnDeath(int logged)
+    {
+        yield return null;
+        string[] spliced = TurnManager.SpliceString(onDeath);
+        foreach (string methodName in spliced)
+        {
+            switch (methodName)
+            {
+                case "":
+                    break;
+                case "NONE":
+                    break;
+
+                default:
+                    Debug.LogError($"{methodName} isn't implemented");
+                    break;
+            }
+        }
+    }
+
+
+#endregion
 
 }
