@@ -76,7 +76,6 @@ public class Character : MonoBehaviour, IPointerClickHandler
 
     public IEnumerator SetupCharacter(CharacterType type, CharacterData characterData, bool isHelper, WeaponData weaponData, float multiplier = 1f)
     {
-        yield return null;
         myType = type;
         this.name = characterData.myName;
         this.description = characterData.description;
@@ -125,7 +124,7 @@ public class Character : MonoBehaviour, IPointerClickHandler
         }
         listOfAbilities = listOfAbilities.OrderBy(o => o.baseCooldown).ToList();
 
-        if (weapon == null)
+        if (weaponData == null)
         {
             weaponImage.gameObject.SetActive(false);
             this.weapon = null;
@@ -223,27 +222,17 @@ public class Character : MonoBehaviour, IPointerClickHandler
         string stats2 = "";
 
         stats1 += $"Health: {currentHealth} / {baseHealth}\n";
-        stats1 += $"Attack: {baseAttack} {ConvertStatPercentage(modifyAttack)}\n";
-        stats1 += $"Defense: {baseDefense} {ConvertStatPercentage(modifyDefense)}\n";
+        stats1 += $"Attack: {CalculateAttack()}\n";
+        stats1 += $"Defense: {CalculateDefense(null)}\n";
 
-        stats2 += $"Speed: {baseSpeed} {ConvertStatPercentage(modifySpeed)}\n";
-        stats2 += $"Luck: {100 * baseLuck:F0}% {ConvertStatPercentage(modifyLuck)}\n";
-        stats2 += $"Accuracy: {100 * baseAccuracy:F0}% {ConvertStatPercentage(modifyAccuracy)}\n";
+        stats2 += $"Speed: {CalculateSpeed()}\n";
+        stats2 += $"Luck: {(CalculateLuck()*100)}%\n";
+        stats2 += $"Accuracy: {(CalculateAccuracy()*100)}%\n";
 
         RightClick.instance.DisplayInfo(this, stats1, stats2);
     }
 
-    string ConvertStatPercentage(float stat)
-    {
-        if (stat == 1f)
-            return "";
-        else if (stat > 1f)
-            return $"+ {100 * (stat - 1):F0}%";
-        else
-            return $"- {100 * (stat - 1) * -1:F0}%";
-    }
-
-    #endregion
+#endregion
 
 #region Stats
 
@@ -254,13 +243,18 @@ public class Character : MonoBehaviour, IPointerClickHandler
 
     public float CalculateAttack()
     {
-        var emotionEffect = currentEmotion switch
+        float emotionEffect = currentEmotion switch
         {
             Emotion.Angry => 1.25f,
             Emotion.Enraged => 1.5f,
             _ => 1f,
         };
-        return baseAttack * modifyAttack * emotionEffect;
+
+        float weaponEffect = 1;
+        if (weapon != null && weapon.StatCalculation())
+            weaponEffect += weapon.modifyAttack;
+
+        return baseAttack * modifyAttack * emotionEffect * weaponEffect;
     }
 
     public float CalculateDefense(Character attacker)
@@ -269,49 +263,68 @@ public class Character : MonoBehaviour, IPointerClickHandler
 
         if (this.currentEmotion == Emotion.Sad )
         {
-            if (attacker.currentEmotion != Emotion.Enraged && attacker.currentEmotion != Emotion.Angry)
+            if (attacker != null && attacker.currentEmotion != Emotion.Enraged && attacker.currentEmotion != Emotion.Angry)
                 emotionEffect = 1.25f;
         }
         if (this.currentEmotion == Emotion.Depressed)
         {
-            if (attacker.currentEmotion != Emotion.Enraged && attacker.currentEmotion != Emotion.Angry)
+            if (attacker != null && attacker.currentEmotion != Emotion.Enraged && attacker.currentEmotion != Emotion.Angry)
                 emotionEffect = 1.5f;
         }
 
-        return baseDefense * modifyDefense * emotionEffect;
+        float weaponEffect = 1;
+        if (weapon != null && weapon.StatCalculation())
+            weaponEffect += weapon.modifyDefense;
+
+        return baseDefense * modifyDefense * emotionEffect * weaponEffect;
     }
 
     public float CalculateSpeed()
     {
-        var emotionEffect = currentEmotion switch
+        float emotionEffect = currentEmotion switch
         {
             Emotion.Happy => 1.25f,
             Emotion.Ecstatic => 1.5f,
             _ => 1f,
         };
-        return baseSpeed * modifySpeed * emotionEffect;
+
+        float weaponEffect = 1;
+        if (weapon != null && weapon.StatCalculation())
+            weaponEffect += weapon.modifySpeed;
+
+        return baseSpeed * modifySpeed * emotionEffect * weaponEffect;
     }
 
     public float CalculateLuck()
     {
-        var emotionEffect = currentEmotion switch
+        float emotionEffect = currentEmotion switch
         {
             Emotion.Happy => 1.25f,
             Emotion.Ecstatic => 1.5f,
             _ => 1f,
         };
-        return baseLuck * modifyLuck * emotionEffect;
+
+        float weaponEffect = 1;
+        if (weapon != null && weapon.StatCalculation())
+            weaponEffect += weapon.modifyLuck;
+
+        return baseLuck * modifyLuck * emotionEffect * weaponEffect;
     }
 
     public float CalculateAccuracy()
     {
-        var emotionEffect = currentEmotion switch
+        float emotionEffect = currentEmotion switch
         {
             Emotion.Sad => 0.9f,
             Emotion.Depressed => 0.8f,
             _ => 1f,
         };
-        return baseAccuracy * modifyAccuracy * emotionEffect;
+
+        float weaponEffect = 1;
+        if (weapon != null && weapon.StatCalculation())
+            weaponEffect += weapon.modifyAccuracy;
+
+        return baseAccuracy * modifyAccuracy * emotionEffect * weaponEffect;
     }
 
     #endregion
@@ -570,7 +583,6 @@ public class Character : MonoBehaviour, IPointerClickHandler
 
         TurnManager.instance.instructions.text = "";
         TurnManager.instance.DisableCharacterButtons();
-        Log.instance.AddText(Log.Substitute(chosenAbility, this), logged);
 
         if (chosenAbility.myName != "Skip Turn")
         {

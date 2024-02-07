@@ -151,9 +151,10 @@ public class DataLoader
                 //Debug.Log(line[j]);
             }
 
-            newWeapon.myName = line[1];
-            newWeapon.description = line[2];
-            try {newWeapon.statCalculation = line[3];} catch (IndexOutOfRangeException){continue;}
+            newWeapon.myName = line[0];
+            newWeapon.description = line[1];
+            try { newWeapon.skillNumbers = line[2];} catch (IndexOutOfRangeException) { continue; }
+            try { newWeapon.statCalculation = line[3];} catch (IndexOutOfRangeException){continue;}
             try { newWeapon.startOfTurn = line[4]; } catch (IndexOutOfRangeException) { continue; }
             try { newWeapon.endOfTurn = line[5]; } catch (IndexOutOfRangeException) { continue; }
             try { newWeapon.newWave = line[6]; } catch (IndexOutOfRangeException) { continue; }

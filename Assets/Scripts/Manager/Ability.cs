@@ -232,6 +232,7 @@ public class Ability : MonoBehaviour
 
     public IEnumerator ResolveInstructions(string[] listOfMethods, int logged)
     {
+        Log.instance.AddText(Log.Substitute(this, self), logged);
         foreach (string methodName in listOfMethods)
         {
             yield return TurnManager.instance.WaitTime;

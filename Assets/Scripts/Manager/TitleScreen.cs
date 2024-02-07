@@ -52,13 +52,15 @@ public class TitleScreen : MonoBehaviour
         FileManager.instance.listOfAbilities = DataLoader.ReadAbilityData("Ability Data");
         FileManager.instance.listOfOtherAbilities = DataLoader.ReadAbilityData("Other Ability Data");
         FileManager.instance.listOfWeapons = DataLoader.ReadWeaponData("Weapon Data");
+        FileManager.instance.listOfWeapons = FileManager.instance.listOfWeapons.Shuffle();
 
         for (int i = 0; i < playerData.Count; i++)
         {
             PlayerCharacter nextCharacter = Instantiate(playerPrefab);
             WeaponData randomWeapon;
+
             if (FileManager.instance.listOfWeapons.Count == 0) randomWeapon = null;
-            else randomWeapon = FileManager.instance.listOfWeapons[Random.Range(0, FileManager.instance.listOfWeapons.Count)];
+            else randomWeapon = FileManager.instance.listOfWeapons[i];
 
             yield return nextCharacter.SetupCharacter(Character.CharacterType.Teammate, playerData[i], false, randomWeapon);
             FileManager.instance.listOfPlayers.Add(nextCharacter);

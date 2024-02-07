@@ -18,6 +18,38 @@
       "Modify Speed",
       "Modify Luck",
       "Modify Accuracy"
+    ],
+    [
+      "Meteor",
+      "Each time this dies, it deals heavy damage to all enemies.",
+      "1,",
+      "",
+      "",
+      "",
+      "",
+      "UseAbilities"
+    ],
+    [
+      "Lucky Coin",
+      "On a new wave, this heals to full health.",
+      "",
+      "",
+      "",
+      "",
+      "SelfHeal"
+    ],
+    [
+      "Wings",
+      "While this is Airborne, it has more Attack and Speed.",
+      "",
+      "IfAirborne",
+      "",
+      "",
+      "",
+      "",
+      "0.3",
+      "",
+      "0.3"
     ]
   ]
 }

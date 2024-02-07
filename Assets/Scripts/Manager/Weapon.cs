@@ -68,7 +68,7 @@ public class Weapon : MonoBehaviour
         modifyAccuracy = data.modifyAccuracy;
     }
 
-    #endregion
+#endregion
 
 #region Effects
 
@@ -112,7 +112,7 @@ public class Weapon : MonoBehaviour
         }
     }
 
-    public float StatCalculation()
+    public bool StatCalculation()
     {
         string[] spliced = TurnManager.SpliceString(statCalculation);
         foreach (string methodName in spliced)
@@ -123,14 +123,15 @@ public class Weapon : MonoBehaviour
                     break;
                 case "NONE":
                     break;
-
+                case "IFAIRBORNE":
+                    return self.currentPosition == Character.Position.Airborne;
                 default:
                     Debug.LogError($"{methodName} isn't implemented");
                     break;
             }
         }
 
-        return 0f;
+        return true;
     }
 
     public IEnumerator NewWave(int logged)
@@ -144,6 +145,10 @@ public class Weapon : MonoBehaviour
                 case "":
                     break;
                 case "NONE":
+                    break;
+
+                case "SELFHEAL":
+                    yield return self.GainHealth(50, logged);
                     break;
 
                 default:
@@ -166,13 +171,17 @@ public class Weapon : MonoBehaviour
                 case "NONE":
                     break;
 
+                case "USEABILITIES":
+                    foreach (Ability ability in listOfAbilities)
+                        yield return ability.ResolveInstructions(TurnManager.SpliceString(ability.instructions), logged);
+                    break;
+
                 default:
                     Debug.LogError($"{methodName} isn't implemented");
                     break;
             }
         }
     }
-
 
 #endregion
 
