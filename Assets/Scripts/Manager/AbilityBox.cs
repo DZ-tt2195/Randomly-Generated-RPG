@@ -10,15 +10,15 @@ public class AbilityBox : MonoBehaviour
 {
     public Button button;
     [SerializeField] TMP_Text textName;
-    [SerializeField] TMP_Text textDescription;
     [SerializeField] TMP_Text textCountdown;
     [SerializeField] TMP_Text onCooldown;
+    [SerializeField] HoverImage hover;
 
     public void ReceiveAbility(Ability ability, Character user)
     {
         try {button.interactable = ability.CanPlay(user); } catch (NullReferenceException) { /*do nothing*/ };
         textName.text = ability.myName;
-        textDescription.text = ability.description;
+        hover.textBox.text = ability.description;
 
         if (ability.baseCooldown > 0)
         {

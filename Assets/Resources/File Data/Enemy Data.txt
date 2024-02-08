@@ -61,7 +61,7 @@
     ],
     [
       "Bomb",
-      "Explodes after 2 turns.",
+      "Does nothing for 3 turns, and then explodes.",
       "60",
       "40",
       "10",

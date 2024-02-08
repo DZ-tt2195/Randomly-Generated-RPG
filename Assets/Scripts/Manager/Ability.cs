@@ -159,8 +159,8 @@ public class Ability : MonoBehaviour
                         for (int i = listOfTargets.Count - 1; i >= 0; i--)
                             if (listOfTargets[i].currentPosition != Character.Position.Airborne) listOfTargets.RemoveAt(i);
                         break;
-                    case "NOHELPER":
-                        if (TurnManager.instance.teammates.Count == 4) return false;
+                    case "CANSUMMON":
+                        if (TurnManager.instance.teammates.Count >= 5) return false;
                         break;
                     case "NOTNEUTRAL":
                         for (int i = listOfTargets.Count - 1; i >= 0; i--)

@@ -48,10 +48,11 @@ public class TurnManager : MonoBehaviour
     {
         for (int i = 0; i < FileManager.instance.listOfPlayers.Count; i++)
         {
-            Character nextFriend = FileManager.instance.listOfPlayers[i];
-            teammates.Add(nextFriend);
-            nextFriend.transform.SetParent(FileManager.instance.canvas);
-            nextFriend.transform.localPosition = new Vector3(-1100 + (350 * i), -550, 0);
+            Character nextCharacter = FileManager.instance.listOfPlayers[i];
+            teammates.Add(nextCharacter);
+            nextCharacter.transform.SetParent(FileManager.instance.canvas);
+            nextCharacter.transform.SetAsFirstSibling();
+            nextCharacter.transform.localPosition = new Vector3(-1050 + (350 * i), -550, 0);
         }
 
         quitButton.gameObject.SetActive(false);
@@ -75,11 +76,12 @@ public class TurnManager : MonoBehaviour
         
         Log.instance.AddText($"WAVE {currentWave}");
         if (currentWave > 1)
+        {
             Log.instance.AddText($"Enemies are now {100 * (enemyMultiplier - 1):F0}% stronger.");
+            Log.instance.AddText("");
+        }
 
-        Log.instance.AddText("");
-
-        int randomNum = Random.Range(3, 4);
+        int randomNum = Mathf.Min(currentWave, Random.Range(3, 6));
         for (int i = 0; i < randomNum; i++)
         {
             yield return CreateEnemy(Random.Range(0, FileManager.instance.listOfEnemies.Count), enemyMultiplier, 0);
@@ -199,7 +201,8 @@ public class TurnManager : MonoBehaviour
     {
         PlayerCharacter nextCharacter = Instantiate(helperPrefab);
         nextCharacter.transform.SetParent(FileManager.instance.canvas);
-        nextCharacter.transform.localPosition = new Vector3(-1100 + (350 * teammates.Count), -550, 0);
+        nextCharacter.transform.SetAsFirstSibling();
+        nextCharacter.transform.localPosition = new Vector3(-1050 + (350 * teammates.Count), -550, 0);
         teammates.Add(nextCharacter);
 
         nextCharacter.name = FileManager.instance.listOfHelpers[ID].myName;
@@ -211,7 +214,8 @@ public class TurnManager : MonoBehaviour
     {
         EnemyCharacter nextCharacter = Instantiate(enemyPrefab);
         nextCharacter.transform.SetParent(FileManager.instance.canvas);
-        nextCharacter.transform.localPosition = new Vector3(-1100 + (350 * enemies.Count), 300, 0);
+        nextCharacter.transform.SetAsFirstSibling();
+        nextCharacter.transform.localPosition = new Vector3(-1050 + (350 * enemies.Count), 300, 0);
         enemies.Add(nextCharacter);
 
         nextCharacter.name = FileManager.instance.listOfEnemies[ID].myName;
