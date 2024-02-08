@@ -253,7 +253,7 @@ public class Ability : MonoBehaviour
                     for (int i = 0; i < listOfTargets.Count; i++)
                         if (listOfTargets[i] != null)
                         {
-                            damageDealt = CalculateDamage(self, listOfTargets[i]);
+                            damageDealt = CalculateDamage(self, listOfTargets[i], logged);
                             yield return listOfTargets[i].TakeDamage(damageDealt, logged);
                         }
                     break;
@@ -403,7 +403,7 @@ public class Ability : MonoBehaviour
         }
     }
 
-    public float Effectiveness(Character user, Character target)
+    public float Effectiveness(Character user, Character target, int logged)
     {
         float answer = 1;
         if (user.currentEmotion == Character.Emotion.Happy)
@@ -474,19 +474,19 @@ public class Ability : MonoBehaviour
         }
 
         if (answer > 1)
-            Log.instance.AddText("It's super effective!", 1);
+            Log.instance.AddText("It's super effective!", logged);
         else if (answer < 1)
-            Log.instance.AddText("It's not very effective...", 1);
+            Log.instance.AddText("It's not very effective...", logged);
 
         return answer;
     }
 
-    int CalculateDamage(Character user, Character target)
+    int CalculateDamage(Character user, Character target, int logged)
     {
         if (RollAccuracy(user.CalculateAccuracy()))
         {
             float damageVariation = Random.Range(0.8f, 1.2f);
-            float effectiveness = Effectiveness(user, target);
+            float effectiveness = Effectiveness(user, target, logged);
             float critical = RollCritical(user.CalculateLuck());
             float attack = user.CalculateAttack();
             float defense = target.CalculateDefense(user);

@@ -57,7 +57,7 @@ public class TitleScreen : MonoBehaviour
             FileManager.instance.listOfPlayers.Add(nextCharacter);
 
             nextCharacter.transform.SetParent(FileManager.instance.canvas);
-            nextCharacter.transform.localPosition = new Vector3(-1000 + (500 * i), -550, 0);
+            nextCharacter.transform.localPosition = new Vector3(-1100 + (350 * i), -550, 0);
             nextCharacter.transform.SetAsFirstSibling();
         }
 

@@ -51,7 +51,7 @@ public class TurnManager : MonoBehaviour
             Character nextFriend = FileManager.instance.listOfPlayers[i];
             teammates.Add(nextFriend);
             nextFriend.transform.SetParent(FileManager.instance.canvas);
-            nextFriend.transform.localPosition = new Vector3(-1000 + (500 * i), -550, 0);
+            nextFriend.transform.localPosition = new Vector3(-1100 + (350 * i), -550, 0);
         }
 
         quitButton.gameObject.SetActive(false);
@@ -145,7 +145,7 @@ public class TurnManager : MonoBehaviour
                 nextInLine.border.gameObject.SetActive(true);
 
                 yield return nextInLine.MyTurn(0);
-                nextInLine.border.gameObject.SetActive(false);
+                try { nextInLine.border.gameObject.SetActive(false); } catch { /*do nothing*/}
             }
 
             CheckGameOver();
@@ -199,7 +199,7 @@ public class TurnManager : MonoBehaviour
     {
         PlayerCharacter nextCharacter = Instantiate(helperPrefab);
         nextCharacter.transform.SetParent(FileManager.instance.canvas);
-        nextCharacter.transform.localPosition = new Vector3(500, -550, 0);
+        nextCharacter.transform.localPosition = new Vector3(-1100 + (350 * teammates.Count), -550, 0);
         teammates.Add(nextCharacter);
 
         nextCharacter.name = FileManager.instance.listOfHelpers[ID].myName;
@@ -211,7 +211,7 @@ public class TurnManager : MonoBehaviour
     {
         EnemyCharacter nextCharacter = Instantiate(enemyPrefab);
         nextCharacter.transform.SetParent(FileManager.instance.canvas);
-        nextCharacter.transform.localPosition = new Vector3(-1000 + (500 * enemies.Count), 300, 0);
+        nextCharacter.transform.localPosition = new Vector3(-1100 + (350 * enemies.Count), 300, 0);
         enemies.Add(nextCharacter);
 
         nextCharacter.name = FileManager.instance.listOfEnemies[ID].myName;

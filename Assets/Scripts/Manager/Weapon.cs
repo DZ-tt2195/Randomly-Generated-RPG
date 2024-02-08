@@ -171,7 +171,10 @@ public class Weapon : MonoBehaviour
 
                 case "USEABILITIES":
                     foreach (Ability ability in listOfAbilities)
-                        yield return ability.ResolveInstructions(TurnManager.SpliceString(ability.instructions), logged);
+                    {
+                        if (ability.CanPlay(self))
+                            yield return ability.ResolveInstructions(TurnManager.SpliceString(ability.instructions), logged+1);
+                    }
                     break;
 
                 default:

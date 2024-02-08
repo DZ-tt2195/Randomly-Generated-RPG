@@ -70,7 +70,7 @@ public class EnemyCharacter : Character
                     break;
 
                 case "EFFECTIVENESS":
-                    List<Character> effectiveTargets = selectedTarget.OrderBy(o => ability.Effectiveness(this, o)).ToList();
+                    List<Character> effectiveTargets = selectedTarget.OrderBy(o => ability.Effectiveness(this, o, -1)).ToList();
                     selectedTarget = new() { effectiveTargets[0] };
                     break;
 

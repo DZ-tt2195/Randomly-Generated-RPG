@@ -366,7 +366,7 @@ public class Character : MonoBehaviour, IPointerClickHandler
 
         Log.instance.AddText($"{(this.name)} has died.", logged);
         if (this.weapon != null)
-            yield return weapon.OnDeath(logged);
+            yield return weapon.OnDeath(logged+1);
     
         if (this.myType == CharacterType.Teammate && !isHelper)
         {

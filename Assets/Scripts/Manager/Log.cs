@@ -67,7 +67,7 @@ public class Log : MonoBehaviour
         foreach (Character enemy in TurnManager.instance.enemies)
             newText.text = newText.text.Replace(enemy.name, $"<color=#FF0000><b>{enemy.name}</b></color>");
 
-        if (RT.transform.childCount >= 25)
+        if (RT.transform.childCount >= 18)
         {
             RT.sizeDelta = new Vector2(530, RT.sizeDelta.y+50);
 
