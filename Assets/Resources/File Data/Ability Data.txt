@@ -458,7 +458,7 @@
       "",
       "SelfGrounded",
       "",
-      "",
+      "1",
       "",
       "",
       "0.15",
@@ -466,6 +466,24 @@
       "",
       "",
       "SELF"
+    ],
+    [
+      "Bomb",
+      "Explosion",
+      "Deal damage to all Teammates, then this dies.",
+      "THIS explodes.",
+      "Attack/SelfDestruct",
+      "",
+      "",
+      "4",
+      "2",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "ALL TEAMMATES"
     ]
   ]
 }

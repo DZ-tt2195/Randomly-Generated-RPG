@@ -147,7 +147,6 @@ public class Character : MonoBehaviour, IPointerClickHandler
 
                 if (nextAbility.CanPlay(this))
                 {
-                    Log.instance.AddText(Log.Substitute(nextAbility, this), 1);
                     yield return ChooseTarget(nextAbility);
                     yield return ResolveAbility(nextAbility, 2);
                 }
@@ -536,23 +535,23 @@ public class Character : MonoBehaviour, IPointerClickHandler
                 break;
             case Emotion.Angry:
                 emotionText.text = "ANGRY";
-                emotionText.color = Color.red;
-                border.color = Color.red;
+                emotionText.color = new Color(1, 0.3f, 0.3f);
+                border.color = new Color(1, 0.3f, 0.3f);
                 break;
             case Emotion.Enraged:
                 emotionText.text = "ENRAGED";
-                emotionText.color = Color.red;
-                border.color = Color.red;
+                emotionText.color = new Color(1, 0.3f, 0.3f);
+                border.color = new Color(1, 0.3f, 0.3f);
                 break;
             case Emotion.Sad:
                 emotionText.text = "SAD";
-                emotionText.color = Color.blue;
-                border.color = Color.blue;
+                emotionText.color = new Color(0.6f, 0.6f, 1);
+                border.color = new Color(0.6f, 0.6f, 1);
                 break;
             case Emotion.Depressed:
                 emotionText.text = "DEPRESSED";
-                emotionText.color = Color.blue;
-                border.color = Color.blue;
+                emotionText.color = new Color(0.6f, 0.6f, 1);
+                border.color = new Color(0.6f, 0.6f, 1);
                 break;
             case Emotion.Dead:
                 emotionText.text = "DEAD";
@@ -584,7 +583,11 @@ public class Character : MonoBehaviour, IPointerClickHandler
         TurnManager.instance.instructions.text = "";
         TurnManager.instance.DisableCharacterButtons();
 
-        if (chosenAbility.myName != "Skip Turn")
+        if (chosenAbility.myName == "Skip Turn")
+        {
+            Log.instance.AddText(Log.Substitute(chosenAbility, this), 0);
+        }
+        else
         {
             int happinessPenalty = currentEmotion switch
             {

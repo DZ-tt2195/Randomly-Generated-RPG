@@ -14,9 +14,6 @@ public class TitleScreen : MonoBehaviour
     [ReadOnly] public Transform canvas;
     [SerializeField] PlayerCharacter playerPrefab;
 
-    [SerializeField] Slider slider;
-    [SerializeField] TMP_Text sliderText;
-
 #endregion
 
 #region Setup
@@ -24,12 +21,6 @@ public class TitleScreen : MonoBehaviour
     void Start()
     {
         StartCoroutine(GenerateStuff());
-        slider.onValueChanged.AddListener(UpdateText);
-
-        if (PlayerPrefs.HasKey("Wait"))
-            UpdateText(PlayerPrefs.GetFloat("Wait"));
-        else
-            UpdateText(1f);
     }
 
     IEnumerator GenerateStuff()
@@ -71,13 +62,6 @@ public class TitleScreen : MonoBehaviour
         }
 
         loadButton.SetActive(true);
-    }
-
-    void UpdateText(float value)
-    {
-        slider.value = value;
-        sliderText.text = value.ToString("F1");
-        PlayerPrefs.SetFloat("Wait", value);
     }
 
 #endregion

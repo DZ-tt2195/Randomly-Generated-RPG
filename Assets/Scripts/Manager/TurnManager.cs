@@ -21,8 +21,6 @@ public class TurnManager : MonoBehaviour
         public List<AbilityBox> listOfBoxes = new List<AbilityBox>();
         public TMP_Text instructions;
         bool decrease = true;
-        [SerializeField] Button emotionGuide;
-        [SerializeField] GameObject emotionTransform;
         [SerializeField] Button quitButton;
 
     [Foldout("Character lists", true)]
@@ -43,7 +41,6 @@ public class TurnManager : MonoBehaviour
     private void Awake()
     {
         instance = this;
-        emotionGuide.onClick.AddListener(SeeEmotions);
         WaitTime = new WaitForSeconds(PlayerPrefs.GetFloat("Animation Speed"));
     }
 
@@ -76,14 +73,19 @@ public class TurnManager : MonoBehaviour
         currentWave++;
         enemyMultiplier = 1 + (currentWave - 1) * 0.05f;
         
-        Log.instance.AddText($"WAVE {currentWave}", 0);
-        if (currentWave > 1) Log.instance.AddText($"Enemies are now {100 * (enemyMultiplier - 1):F0}% stronger.", 0);
+        Log.instance.AddText($"WAVE {currentWave}");
+        if (currentWave > 1)
+            Log.instance.AddText($"Enemies are now {100 * (enemyMultiplier - 1):F0}% stronger.");
 
-        int randomNum = Random.Range(2, 4);
+        Log.instance.AddText("");
+
+        int randomNum = Random.Range(3, 4);
         for (int i = 0; i < randomNum; i++)
         {
-            yield return CreateEnemy(Random.Range(0, FileManager.instance.listOfEnemies.Count), enemyMultiplier, 1);
+            yield return CreateEnemy(Random.Range(0, FileManager.instance.listOfEnemies.Count), enemyMultiplier, 0);
         }
+
+        Log.instance.AddText($"");
 
         speedQueue = AllCharacters();
         while (speedQueue.Count > 0 && stillBattling)
@@ -97,11 +99,10 @@ public class TurnManager : MonoBehaviour
             if (nextInLine != null && nextInLine.CalculateHealth() > 0)
             {
                 instructions.text = "";
-                Log.instance.AddText($"", 0);
                 nextInLine.border.gameObject.SetActive(true);
 
                 if (nextInLine.weapon != null)
-                    yield return nextInLine.weapon.NewWave(1);
+                    yield return nextInLine.weapon.NewWave(0);
                 nextInLine.border.gameObject.SetActive(false);
             }
 
@@ -111,7 +112,6 @@ public class TurnManager : MonoBehaviour
             {
                 if (enemies.Count == 0)
                 {
-                    Log.instance.AddText($"", 0);
                     StartCoroutine(NewWave());
                     yield break;
                 }
@@ -124,8 +124,8 @@ public class TurnManager : MonoBehaviour
     IEnumerator NewRound()
     {
         currentRound++;
-        Log.instance.AddText($"", 0);
-        Log.instance.AddText($"ROUND {currentRound}", 0);
+        Log.instance.AddText($"");
+        Log.instance.AddText($"ROUND {currentRound}");
 
         speedQueue = AllCharacters();
 
@@ -141,7 +141,7 @@ public class TurnManager : MonoBehaviour
             if (nextInLine != null && nextInLine.CalculateHealth() > 0)
             {
                 instructions.text = "";
-                Log.instance.AddText($"", 0);
+                Log.instance.AddText($"");
                 nextInLine.border.gameObject.SetActive(true);
 
                 yield return nextInLine.MyTurn(0);
@@ -154,7 +154,7 @@ public class TurnManager : MonoBehaviour
             {
                 if (enemies.Count == 0)
                 {
-                    Log.instance.AddText($"", 0);
+                    Log.instance.AddText($"");
                     StartCoroutine(NewWave());
                     yield break;
                 }
@@ -178,9 +178,9 @@ public class TurnManager : MonoBehaviour
         instructions.text = "";
         listOfBoxes[0].transform.parent.gameObject.SetActive(false);
 
-        Log.instance.AddText("", 0);
-        Log.instance.AddText("You lost.", 0);
-        Log.instance.AddText($"Survived {currentWave-1} waves.", 0);
+        Log.instance.AddText("");
+        Log.instance.AddText("You lost.");
+        Log.instance.AddText($"Survived {currentWave-1} waves.");
         quitButton.gameObject.SetActive(true);
     }
 
@@ -195,27 +195,15 @@ public class TurnManager : MonoBehaviour
             decrease = !decrease;
     }
 
-    void SeeEmotions()
-    {
-        emotionTransform.SetActive(true);
-        emotionTransform.transform.SetAsLastSibling();
-    }
-
-    private void Update()
-    {
-        if (emotionTransform.activeSelf && Input.GetMouseButtonDown(0))
-        {
-            emotionTransform.SetActive(false);
-        }
-    }
-
     public IEnumerator CreateHelper(int ID, int logged)
     {
         PlayerCharacter nextCharacter = Instantiate(helperPrefab);
         nextCharacter.transform.SetParent(FileManager.instance.canvas);
         nextCharacter.transform.localPosition = new Vector3(500, -550, 0);
         teammates.Add(nextCharacter);
-        Log.instance.AddText($"{Log.Article(FileManager.instance.listOfHelpers[ID].myName)} entered the fight.", logged);
+
+        nextCharacter.name = FileManager.instance.listOfHelpers[ID].myName;
+        Log.instance.AddText($"{Log.Article(nextCharacter.name)} entered the fight.", logged);
         yield return (nextCharacter.SetupCharacter(Character.CharacterType.Teammate, FileManager.instance.listOfHelpers[ID], true, null));
     }
 
@@ -225,7 +213,9 @@ public class TurnManager : MonoBehaviour
         nextCharacter.transform.SetParent(FileManager.instance.canvas);
         nextCharacter.transform.localPosition = new Vector3(-1000 + (500 * enemies.Count), 300, 0);
         enemies.Add(nextCharacter);
-        Log.instance.AddText($"{Log.Article(FileManager.instance.listOfEnemies[ID].myName)} entered the fight.", logged);
+
+        nextCharacter.name = FileManager.instance.listOfEnemies[ID].myName;
+        Log.instance.AddText($"{Log.Article(nextCharacter.name)} entered the fight.", logged);
         yield return (nextCharacter.SetupCharacter(Character.CharacterType.Enemy, FileManager.instance.listOfEnemies[ID], false, null, multiplier));
     }
 

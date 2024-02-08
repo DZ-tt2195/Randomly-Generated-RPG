@@ -58,6 +58,20 @@
       "0,",
       "23,24,",
       "Effectiveness"
+    ],
+    [
+      "Bomb",
+      "Explodes after 2 turns.",
+      "60",
+      "50",
+      "10",
+      "0",
+      "0",
+      "1.25",
+      "GROUNDED",
+      "NEUTRAL",
+      "",
+      "25,"
     ]
   ]
 }

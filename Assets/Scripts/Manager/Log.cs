@@ -22,7 +22,7 @@ public class Log : MonoBehaviour
     {
         #if UNITY_EDITOR
             if (Input.GetKeyDown(KeyCode.Space))
-                AddText($"Test {RT.transform.childCount+1}", 0);
+                AddText($"Test {RT.transform.childCount+1}");
         #endif
     }
 
@@ -50,15 +50,22 @@ public class Log : MonoBehaviour
         }
     }
     
-    public void AddText(string logText, int indent)
+    public void AddText(string logText, int indent = 0)
     {
         if (indent < 0)
             return;
 
         TMP_Text newText = Instantiate(textBoxClone, RT.transform);
         newText.text = "";
-        for (int i = 0; i < indent; i++) newText.text += "        ";
+        for (int i = 0; i < indent; i++)
+            newText.text += "        ";
         newText.text += string.IsNullOrEmpty(logText) ? "" : char.ToUpper(logText[0]) + logText[1..];
+
+        foreach (Character teammate in TurnManager.instance.teammates)
+            newText.text = newText.text.Replace(teammate.name, $"<color=#00FF00><b>{teammate.name}</b></color>");
+
+        foreach (Character enemy in TurnManager.instance.enemies)
+            newText.text = newText.text.Replace(enemy.name, $"<color=#FF0000><b>{enemy.name}</b></color>");
 
         if (RT.transform.childCount >= 25)
         {

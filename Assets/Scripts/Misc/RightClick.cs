@@ -96,19 +96,19 @@ public class RightClick : MonoBehaviour
                 break;
             case Emotion.Angry:
                 emotionText.text = "ANGRY";
-                emotionText.color = Color.red;
+                emotionText.color = new Color(1, 0.3f, 0.3f);
                 break;
             case Emotion.Enraged:
                 emotionText.text = "ENRAGED";
-                emotionText.color = Color.red;
+                emotionText.color = new Color(1, 0.3f, 0.3f);
                 break;
             case Emotion.Sad:
                 emotionText.text = "SAD";
-                emotionText.color = Color.blue;
+                emotionText.color = new Color(0.6f, 0.6f, 1);
                 break;
             case Emotion.Depressed:
                 emotionText.text = "DEPRESSED";
-                emotionText.color = Color.blue;
+                emotionText.color = new Color(0.6f, 0.6f, 1);
                 break;
             case Emotion.Dead:
                 emotionText.text = "DEAD";

@@ -136,7 +136,6 @@ public class Weapon : MonoBehaviour
 
     public IEnumerator NewWave(int logged)
     {
-        yield return null;
         string[] spliced = TurnManager.SpliceString(newWave);
         foreach (string methodName in spliced)
         {
@@ -160,7 +159,6 @@ public class Weapon : MonoBehaviour
 
     public IEnumerator OnDeath(int logged)
     {
-        yield return null;
         string[] spliced = TurnManager.SpliceString(onDeath);
         foreach (string methodName in spliced)
         {

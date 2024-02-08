@@ -88,13 +88,11 @@ public class FileManager : MonoBehaviour
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         canvas = GameObject.Find("Canvas").transform;
-        StartCoroutine(BringBackObjects());
+        Invoke(nameof(BringBackObjects), 0.2f);
     }
 
-    IEnumerator BringBackObjects()
+    void BringBackObjects()
     {
-        yield return new WaitForSeconds(0.2f);
-
         RightClick.instance.transform.SetParent(canvas);
         RightClick.instance.transform.localPosition = new Vector3(0, 0);
 
@@ -103,15 +101,17 @@ public class FileManager : MonoBehaviour
 
         GameSettings.instance.transform.SetParent(canvas);
         GameSettings.instance.transform.localPosition = new Vector3(0, 0);
+
+        EmotionGuide.instance.transform.SetParent(canvas);
+        EmotionGuide.instance.transform.localPosition = new Vector3(0, 0);
     }
 
     public void UnloadObjects(string sceneName)
     {
-        Debug.Log(sceneName);
-
         Preserve(FPS.instance.gameObject);
         Preserve(RightClick.instance.gameObject);
         Preserve(GameSettings.instance.gameObject);
+        Preserve(EmotionGuide.instance.gameObject);
 
         if (sceneName != "0. Title Screen")
         {

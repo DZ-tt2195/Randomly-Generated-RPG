@@ -31,7 +31,7 @@
     ],
     [
       "Lucky Coin",
-      "On a new wave, this heals to full health.",
+      "On a new wave, this regains health.",
       "",
       "",
       "",

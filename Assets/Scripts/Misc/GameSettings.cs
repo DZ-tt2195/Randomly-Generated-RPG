@@ -30,6 +30,7 @@ public class GameSettings : MonoBehaviour
 
     void SettingsScreen()
     {
+        this.transform.SetAsLastSibling();
         background.SetActive(!background.activeSelf);
     }
 
