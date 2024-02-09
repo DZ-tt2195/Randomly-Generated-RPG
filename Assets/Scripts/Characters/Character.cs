@@ -112,15 +112,22 @@ public class Character : MonoBehaviour, IPointerClickHandler
             putIntoList.Add(next);
         putIntoList = putIntoList.Shuffle();
 
-        for (int i = 0; i<4; i++)
+        for (int i = 0; listOfAbilities.Count < 5 && i<20; i++)
         {
             try
             {
                 string skillNumber = putIntoList[i];
-                if (skillNumber.Trim() != "")
-                    AddAbility(FileManager.instance.listOfAbilities[int.Parse(skillNumber)]);
+                skillNumber.Trim();
+                AddAbility(FileManager.instance.listOfAbilities[int.Parse(skillNumber)]);
             }
-            catch (ArgumentOutOfRangeException){/*do nothing*/}
+            catch (FormatException)
+            {
+                continue;
+            }
+            catch (IndexOutOfRangeException)
+            {
+                break;
+            }
         }
         listOfAbilities = listOfAbilities.OrderBy(o => o.baseCooldown).ToList();
 
@@ -224,8 +231,8 @@ public class Character : MonoBehaviour, IPointerClickHandler
         stats1 += $"Attack: {CalculateAttack():F1}\n";
         stats1 += $"Defense: {CalculateDefense(null)}\n";
 
-        stats2 += $"Speed: {CalculateSpeed():F1}\n";
-        stats2 += $"Luck: {(CalculateLuck()*100):F1}%\n";
+        stats2 += $"<link=\"Speed\"><u>Speed</u></link>: {CalculateSpeed():F1}\n";
+        stats2 += $"<link=\"Luck\"><u>Luck</u></link>: {(CalculateLuck()*100):F1}%\n";
         stats2 += $"Accuracy: {(CalculateAccuracy()*100):F1}%\n";
 
         RightClick.instance.DisplayInfo(this, stats1, stats2);

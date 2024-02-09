@@ -104,6 +104,10 @@ public class FileManager : MonoBehaviour
 
         EmotionGuide.instance.transform.SetParent(canvas);
         EmotionGuide.instance.transform.localPosition = new Vector3(0, 0);
+
+        KeywordTooltip.instance.transform.SetParent(canvas);
+        KeywordTooltip.instance.transform.localPosition = new Vector3(0, 0);
+        KeywordTooltip.instance.gameObject.SetActive(false);
     }
 
     public void UnloadObjects(string sceneName)
@@ -112,6 +116,7 @@ public class FileManager : MonoBehaviour
         Preserve(RightClick.instance.gameObject);
         Preserve(GameSettings.instance.gameObject);
         Preserve(EmotionGuide.instance.gameObject);
+        Preserve(KeywordTooltip.instance.gameObject);
 
         if (sceneName != "0. Title Screen")
         {

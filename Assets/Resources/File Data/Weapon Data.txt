@@ -30,15 +30,6 @@
       "UseAbilities"
     ],
     [
-      "Lucky Coin",
-      "On a new wave, this regains health.",
-      "",
-      "",
-      "",
-      "",
-      "SelfHeal"
-    ],
-    [
       "Wings",
       "While this is Airborne, it has more Attack and Speed.",
       "",
@@ -55,6 +46,15 @@
       "0.2",
       "",
       "0.2"
+    ],
+    [
+      "Lucky Coin",
+      "On a new wave, this regains health.",
+      "",
+      "",
+      "",
+      "",
+      "SelfHeal"
     ]
   ]
 }
