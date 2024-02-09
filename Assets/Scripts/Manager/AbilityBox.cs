@@ -18,7 +18,7 @@ public class AbilityBox : MonoBehaviour
     {
         try {button.interactable = ability.CanPlay(user); } catch (NullReferenceException) { /*do nothing*/ };
         textName.text = ability.myName;
-        hover.textBox.text = ability.description;
+        hover.NewAbility(ability.description);
 
         if (ability.baseCooldown > 0)
         {

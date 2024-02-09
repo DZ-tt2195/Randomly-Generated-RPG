@@ -221,12 +221,12 @@ public class Character : MonoBehaviour, IPointerClickHandler
         string stats2 = "";
 
         stats1 += $"Health: {currentHealth} / {baseHealth}\n";
-        stats1 += $"Attack: {CalculateAttack()}\n";
+        stats1 += $"Attack: {CalculateAttack():F1}\n";
         stats1 += $"Defense: {CalculateDefense(null)}\n";
 
-        stats2 += $"Speed: {CalculateSpeed()}\n";
-        stats2 += $"Luck: {(CalculateLuck()*100)}%\n";
-        stats2 += $"Accuracy: {(CalculateAccuracy()*100)}%\n";
+        stats2 += $"Speed: {CalculateSpeed():F1}\n";
+        stats2 += $"Luck: {(CalculateLuck()*100):F1}%\n";
+        stats2 += $"Accuracy: {(CalculateAccuracy()*100):F1}%\n";
 
         RightClick.instance.DisplayInfo(this, stats1, stats2);
     }

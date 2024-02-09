@@ -56,7 +56,7 @@
     [
       "Knight",
       "Joust",
-      "Deal heavy damage to a Grounded Enemy. This loses Accuracy.",
+      "Deal a lot of damage to a Grounded Enemy. This loses Accuracy.",
       "THIS uses Joust on TARGET.",
       "Attack/DealtDamage/SelfAccuracyStat",
       "",
@@ -200,7 +200,7 @@
     [
       "Wizard",
       "Blaze",
-      "Deal light damage to all Enemies.",
+      "Deal a little damage to all Enemies.",
       "THIS uses Blaze.",
       "Attack",
       "",
@@ -218,7 +218,7 @@
     [
       "Wizard",
       "Lightning Strike",
-      "Deal heavy damage to an Airborne Enemy. They become Grounded.",
+      "Deal a lot of damage to an Airborne Enemy. They become Grounded.",
       "THIS uses Lightning Strike on TARGET.",
       "Attack/DealtDamage/TargetsGrounded",
       "",
@@ -326,7 +326,7 @@
     [
       "Golem",
       "Rock Punch",
-      "Deal light damage to a Grounded Enemy.",
+      "Deal a little damage to a Grounded Enemy.",
       "THIS uses Rock Punch on TARGET.",
       "Attack",
       "",
@@ -346,7 +346,7 @@
       "Revive",
       "Bring back a dead Teammate with full health, then this dies.",
       "THIS revives TARGET.",
-      "TargetsRevive/SelfDeath",
+      "TargetsRevive/SelfDestruct",
       "",
       "IsDead",
       "100",
@@ -434,7 +434,7 @@
     [
       "Wolf",
       "Slash",
-      "Deal heavy damage to a Grounded Teammate.",
+      "Deal a lot of damage to a Grounded Teammate.",
       "THIS uses Slash on TARGET.",
       "Attack",
       "",
@@ -476,7 +476,7 @@
       "",
       "",
       "4",
-      "3",
+      "2",
       "",
       "",
       "",

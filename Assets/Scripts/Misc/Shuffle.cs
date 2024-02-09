@@ -33,7 +33,7 @@ public static class MyExtensions
 
             for (int i = 0; i<originalCount; i++)
             {
-                int randomNumber = Random.Range(0, originalList.Count - 1);
+                int randomNumber = Random.Range(0, originalList.Count);
                 newList.Add(originalList[randomNumber]);
                 originalList.RemoveAt(randomNumber);
             }

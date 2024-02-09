@@ -81,7 +81,7 @@ public class TurnManager : MonoBehaviour
             Log.instance.AddText("");
         }
 
-        int randomNum = Mathf.Min(currentWave, Random.Range(3, 6));
+        int randomNum = Mathf.Min(currentWave+1, Random.Range(3, 6));
         for (int i = 0; i < randomNum; i++)
         {
             yield return CreateEnemy(Random.Range(0, FileManager.instance.listOfEnemies.Count), enemyMultiplier, 0);
@@ -202,9 +202,13 @@ public class TurnManager : MonoBehaviour
         PlayerCharacter nextCharacter = Instantiate(helperPrefab);
         nextCharacter.transform.SetParent(FileManager.instance.canvas);
         nextCharacter.transform.SetAsFirstSibling();
-        nextCharacter.transform.localPosition = new Vector3(-1050 + (350 * teammates.Count), -550, 0);
         teammates.Add(nextCharacter);
 
+        for (int i = 0; i < teammates.Count; i++)
+        {
+            Character next = teammates[i];
+            next.transform.localPosition = new Vector3(-1050 + (350 * i), -550, 0);
+        }
         nextCharacter.name = FileManager.instance.listOfHelpers[ID].myName;
         Log.instance.AddText($"{Log.Article(nextCharacter.name)} entered the fight.", logged);
         yield return (nextCharacter.SetupCharacter(Character.CharacterType.Teammate, FileManager.instance.listOfHelpers[ID], true, null));
@@ -215,8 +219,13 @@ public class TurnManager : MonoBehaviour
         EnemyCharacter nextCharacter = Instantiate(enemyPrefab);
         nextCharacter.transform.SetParent(FileManager.instance.canvas);
         nextCharacter.transform.SetAsFirstSibling();
-        nextCharacter.transform.localPosition = new Vector3(-1050 + (350 * enemies.Count), 300, 0);
         enemies.Add(nextCharacter);
+
+        for (int i = 0; i < enemies.Count; i++)
+        {
+            Character next = enemies[i];
+            next.transform.localPosition = new Vector3(-1050 + (350 * i), 300, 0);
+        }
 
         nextCharacter.name = FileManager.instance.listOfEnemies[ID].myName;
         Log.instance.AddText($"{Log.Article(nextCharacter.name)} entered the fight.", logged);
@@ -247,10 +256,15 @@ public class TurnManager : MonoBehaviour
 
     public static string[] SpliceString(string text)
     {
-        string divide = text.Replace(" ", "");
-        divide = divide.ToUpper();
-        string[] splitIntoStrings = divide.Split('/');
-        return splitIntoStrings;
+        if (text != "")
+        {
+            string divide = text.Replace(" ", "");
+            divide = divide.ToUpper();
+            string[] splitIntoStrings = divide.Split('/');
+            return splitIntoStrings;
+        }
+
+        return new string[0];
     }
 
 #endregion

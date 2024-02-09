@@ -147,7 +147,7 @@ public class Weapon : MonoBehaviour
                     break;
 
                 case "SELFHEAL":
-                    yield return self.GainHealth(50, logged);
+                    yield return self.GainHealth(30, logged);
                     break;
 
                 default:
@@ -173,7 +173,7 @@ public class Weapon : MonoBehaviour
                     foreach (Ability ability in listOfAbilities)
                     {
                         if (ability.CanPlay(self))
-                            yield return ability.ResolveInstructions(TurnManager.SpliceString(ability.instructions), logged+1);
+                            yield return ability.ResolveInstructions(TurnManager.SpliceString(ability.instructions), logged + 1);
                     }
                     break;
 

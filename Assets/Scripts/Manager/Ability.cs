@@ -490,7 +490,9 @@ public class Ability : MonoBehaviour
             float critical = RollCritical(user.CalculateLuck());
             float attack = user.CalculateAttack();
             float defense = target.CalculateDefense(user);
-            return (int)(damageVariation * critical * effectiveness * attack + healthChange - defense);
+
+            int finalDamage = (int)(damageVariation * critical * effectiveness * attack + healthChange - defense);
+            return finalDamage > 0 ? finalDamage : 0;
         }
         else
         {

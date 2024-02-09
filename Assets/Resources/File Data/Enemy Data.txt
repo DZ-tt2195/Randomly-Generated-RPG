@@ -17,7 +17,7 @@
     [
       "Archer",
       "Shoots down Airborne Teammates with a high chance of critical hits.",
-      "70",
+      "75",
       "25",
       "8",
       "30",
@@ -32,7 +32,7 @@
     [
       "Bat",
       "Drains health from Grounded Teammates.",
-      "80",
+      "85",
       "30",
       "4",
       "60",
@@ -61,8 +61,8 @@
     ],
     [
       "Bomb",
-      "Does nothing for 3 turns, and then explodes.",
-      "60",
+      "Does nothing for 2 turns, and then explodes.",
+      "75",
       "40",
       "10",
       "0",
