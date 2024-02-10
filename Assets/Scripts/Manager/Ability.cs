@@ -235,7 +235,7 @@ public class Ability : MonoBehaviour
         Log.instance.AddText(Log.Substitute(this, self), logged-1);
         foreach (string methodName in listOfMethods)
         {
-            yield return TurnManager.instance.WaitTime;
+            yield return TurnManager.instance.WaitTime();
             TurnManager.instance.listOfBoxes[0].transform.parent.gameObject.SetActive(false);
 
             switch (methodName)

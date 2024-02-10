@@ -6,6 +6,17 @@ using MyBox;
 using TMPro;
 using System.Linq;
 
+public class CharacterPositions
+{
+    public Vector3 position;
+    public Character character;
+
+    public CharacterPositions(Vector3 position)
+    {
+        this.position = position;
+    }
+}
+
 public class TurnManager : MonoBehaviour
 {
 
@@ -15,13 +26,14 @@ public class TurnManager : MonoBehaviour
     [Foldout("Prefabs", true)]
         [SerializeField] EnemyCharacter enemyPrefab;
         [SerializeField] PlayerCharacter helperPrefab;
-        [ReadOnly] public WaitForSeconds WaitTime;
 
     [Foldout("UI", true)]
         public List<AbilityBox> listOfBoxes = new List<AbilityBox>();
         public TMP_Text instructions;
         bool decrease = true;
         [SerializeField] Button quitButton;
+        List<CharacterPositions> teammatePositions = new();
+        List<CharacterPositions> enemyPositions = new();
 
     [Foldout("Character lists", true)]
         [ReadOnly] public List<Character> teammates = new List<Character>();
@@ -32,7 +44,7 @@ public class TurnManager : MonoBehaviour
         int currentWave;
         int currentRound;
         float enemyMultiplier = 1f;
-        bool stillBattling = true;
+        bool isBattling = true;
 
 #endregion
 
@@ -41,18 +53,33 @@ public class TurnManager : MonoBehaviour
     private void Awake()
     {
         instance = this;
-        WaitTime = new WaitForSeconds(PlayerPrefs.GetFloat("Animation Speed"));
     }
 
     private void Start()
     {
+        for (int i = 0; i<5; i++)
+        {
+            int nextX = -1050 + (350 * i);
+            teammatePositions.Add(new CharacterPositions(new Vector3(nextX, -550, 0)));
+            enemyPositions.Add(new CharacterPositions(new Vector3(nextX, 300, 0)));
+        }
+
         for (int i = 0; i < FileManager.instance.listOfPlayers.Count; i++)
         {
             Character nextCharacter = FileManager.instance.listOfPlayers[i];
             teammates.Add(nextCharacter);
             nextCharacter.transform.SetParent(FileManager.instance.canvas);
             nextCharacter.transform.SetAsFirstSibling();
-            nextCharacter.transform.localPosition = new Vector3(-1050 + (350 * i), -550, 0);
+
+            foreach (CharacterPositions position in teammatePositions)
+            {
+                if (position.character == null)
+                {
+                    nextCharacter.transform.localPosition = position.position;
+                    position.character = nextCharacter;
+                    break;
+                }
+            }
         }
 
         quitButton.gameObject.SetActive(false);
@@ -69,7 +96,7 @@ public class TurnManager : MonoBehaviour
         listOfBoxes[0].transform.parent.gameObject.SetActive(false);
         DisableCharacterButtons();
 
-        yield return WaitTime;
+        yield return WaitTime();
 
         currentWave++;
         enemyMultiplier = 1 + (currentWave - 1) * 0.05f;
@@ -90,7 +117,7 @@ public class TurnManager : MonoBehaviour
         Log.instance.AddText($"");
 
         speedQueue = AllCharacters();
-        while (speedQueue.Count > 0 && stillBattling)
+        while (speedQueue.Count > 0)
         {
             DisableCharacterButtons();
             speedQueue = speedQueue.OrderByDescending(o => o.CalculateSpeed()).ToList();
@@ -107,17 +134,6 @@ public class TurnManager : MonoBehaviour
                     yield return nextInLine.weapon.NewWave(0);
                 nextInLine.border.gameObject.SetActive(false);
             }
-
-            CheckGameOver();
-
-            if (stillBattling)
-            {
-                if (enemies.Count == 0)
-                {
-                    StartCoroutine(NewWave());
-                    yield break;
-                }
-            }
         }
 
         StartCoroutine(NewRound());
@@ -131,7 +147,7 @@ public class TurnManager : MonoBehaviour
 
         speedQueue = AllCharacters();
 
-        while (speedQueue.Count > 0 && stillBattling)
+        while (speedQueue.Count > 0)
         {
             DisableCharacterButtons();
             speedQueue = speedQueue.OrderByDescending(o => o.CalculateSpeed()).ToList();
@@ -152,18 +168,16 @@ public class TurnManager : MonoBehaviour
 
             CheckGameOver();
 
-            if (stillBattling)
+            if (isBattling && enemies.Count == 0)
             {
-                if (enemies.Count == 0)
-                {
-                    Log.instance.AddText($"");
-                    StartCoroutine(NewWave());
-                    yield break;
-                }
+                Log.instance.AddText($"");
+                StartCoroutine(NewWave());
+                yield break;
             }
         }
 
-        StartCoroutine(NewRound());
+        if (isBattling)
+            StartCoroutine(NewRound());
     }
 
     void CheckGameOver()
@@ -174,19 +188,20 @@ public class TurnManager : MonoBehaviour
                 return;
         }
 
-        stillBattling = false;
+        StopAllCoroutines();
+        isBattling = false;
         DisableCharacterButtons();
 
         instructions.text = "";
         listOfBoxes[0].transform.parent.gameObject.SetActive(false);
+        quitButton.gameObject.SetActive(true);
 
         Log.instance.AddText("");
         Log.instance.AddText("You lost.");
-        Log.instance.AddText($"Survived {currentWave-1} waves.");
-        quitButton.gameObject.SetActive(true);
+        Log.instance.AddText($"Survived {currentWave - 1} {(currentWave - 1 == 1 ? "wave" : "waves")}.");
     }
 
-#endregion
+    #endregion
 
 #region Misc
 
@@ -204,11 +219,16 @@ public class TurnManager : MonoBehaviour
         nextCharacter.transform.SetAsFirstSibling();
         teammates.Add(nextCharacter);
 
-        for (int i = 0; i < teammates.Count; i++)
+        foreach (CharacterPositions position in teammatePositions)
         {
-            Character next = teammates[i];
-            next.transform.localPosition = new Vector3(-1050 + (350 * i), -550, 0);
+            if (position.character == null)
+            {
+                nextCharacter.transform.localPosition = position.position;
+                position.character = nextCharacter;
+                break;
+            }
         }
+
         nextCharacter.name = FileManager.instance.listOfHelpers[ID].myName;
         Log.instance.AddText($"{Log.Article(nextCharacter.name)} entered the fight.", logged);
         yield return (nextCharacter.SetupCharacter(Character.CharacterType.Teammate, FileManager.instance.listOfHelpers[ID], true, null));
@@ -221,10 +241,14 @@ public class TurnManager : MonoBehaviour
         nextCharacter.transform.SetAsFirstSibling();
         enemies.Add(nextCharacter);
 
-        for (int i = 0; i < enemies.Count; i++)
+        foreach (CharacterPositions position in enemyPositions)
         {
-            Character next = enemies[i];
-            next.transform.localPosition = new Vector3(-1050 + (350 * i), 300, 0);
+            if (position.character == null)
+            {
+                nextCharacter.transform.localPosition = position.position;
+                position.character = nextCharacter;
+                break;
+            }
         }
 
         nextCharacter.name = FileManager.instance.listOfEnemies[ID].myName;
@@ -256,15 +280,20 @@ public class TurnManager : MonoBehaviour
 
     public static string[] SpliceString(string text)
     {
-        if (text != "")
+        if (!text.IsNullOrEmpty())
         {
             string divide = text.Replace(" ", "");
-            divide = divide.ToUpper();
+            divide = divide.ToUpper().Trim();
             string[] splitIntoStrings = divide.Split('/');
             return splitIntoStrings;
         }
 
         return new string[0];
+    }
+
+    public IEnumerator WaitTime()
+    {
+        yield return new WaitForSeconds(PlayerPrefs.GetFloat("Animation Speed"));
     }
 
 #endregion

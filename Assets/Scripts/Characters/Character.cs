@@ -112,7 +112,7 @@ public class Character : MonoBehaviour, IPointerClickHandler
             putIntoList.Add(next);
         putIntoList = putIntoList.Shuffle();
 
-        for (int i = 0; listOfAbilities.Count < 5 && i<20; i++)
+        for (int i = 0; listOfAbilities.Count < 5 && i<10; i++)
         {
             try
             {
@@ -124,7 +124,7 @@ public class Character : MonoBehaviour, IPointerClickHandler
             {
                 continue;
             }
-            catch (IndexOutOfRangeException)
+            catch (ArgumentOutOfRangeException)
             {
                 break;
             }
@@ -604,7 +604,7 @@ public class Character : MonoBehaviour, IPointerClickHandler
             };
             chosenAbility.currentCooldown = chosenAbility.baseCooldown + happinessPenalty;
 
-            yield return TurnManager.instance.WaitTime;
+            yield return TurnManager.instance.WaitTime();
             yield return ResolveAbility(chosenAbility, logged + 1);
         }
 
