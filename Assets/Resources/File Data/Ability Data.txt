@@ -74,7 +74,7 @@
     [
       "Knight",
       "Battle Cry",
-      "This and another Teammate gains more Speed and becomes Angry.",
+      "This and another Player gains more Speed and becomes Angry.",
       "THIS uses Battle Cry with TARGET.",
       "SelfAngry/SelfSpeedStat/TargetsAngry/TargetsSpeedStat",
       "",
@@ -87,7 +87,7 @@
       "",
       "",
       "",
-      "OTHER TEAMMATE"
+      "OTHER PLAYER"
     ],
     [
       "Knight",
@@ -128,7 +128,7 @@
     [
       "Angel",
       "Gift of Flight",
-      "A Grounded Teammate or Enemy becomes Airborne.",
+      "A Grounded Player or Enemy becomes Airborne.",
       "THIS gives TARGET the Gift of Flight.",
       "TargetsAirborne",
       "",
@@ -146,7 +146,7 @@
     [
       "Angel",
       "Happiest Day",
-      "Any Teammate or Enemy becomes Happy. Raise their Accuracy.",
+      "Any Player or Enemy becomes Happy. Raise their Accuracy.",
       "THIS gives TARGET their Happiest Day.",
       "TargetsHappy/TargetsAccuracyStat",
       "",
@@ -164,7 +164,7 @@
     [
       "Angel",
       "Calm Down",
-      "Heal a non-Neutral Teammate. They become Neutral.",
+      "Heal a non-Neutral Player. They become Neutral.",
       "THIS helps TARGET Calm Down.",
       "TargetsHeal/TargetsNeutral",
       "",
@@ -177,12 +177,12 @@
       "",
       "",
       "",
-      "ONE TEAMMATE"
+      "ONE PLAYER"
     ],
     [
       "Angel",
       "Spirit",
-      "Summon an Airborne Helper that can bring back a dead Teammate.",
+      "Summon an Airborne Helper that can bring back a dead Player.",
       "THIS summons a Spirit.",
       "SummonHelper",
       "",
@@ -236,7 +236,7 @@
     [
       "Wizard",
       "Seclusion",
-      "A Teammate gains more Defense and Accuracy, and becomes Sad.",
+      "A Player gains more Defense and Accuracy, and becomes Sad.",
       "THIS uses Seclusion on TARGET.",
       "TargetsDefenseStat/TargetsAccuracyStat/TargetsSad",
       "",
@@ -249,7 +249,7 @@
       "",
       "0.2",
       "",
-      "ONE TEAMMATE"
+      "ONE PLAYER"
     ],
     [
       "Wizard",
@@ -344,7 +344,7 @@
     [
       "Spirit",
       "Revive",
-      "Bring back a dead Teammate with full health, then this dies.",
+      "Bring back a dead Player with full health, then this dies.",
       "THIS revives TARGET.",
       "TargetsRevive/SelfDestruct",
       "",
@@ -357,14 +357,14 @@
       "",
       "",
       "",
-      "ONE TEAMMATE"
+      "ONE PLAYER"
     ],
     [
       "Archer",
-      "Arrow",
-      "Deal damage to any Teammate. Their Defense decreases.",
-      "THIS fires against TARGET.",
-      "Attack/TargetsDefenseStat",
+      "Sharp Arrow",
+      "Deal damage to any Player. Their Defense decreases.",
+      "THIS shoots a Sharp Arrow at TARGET.",
+      "Attack/DealtDamage/TargetsDefenseStat",
       "",
       "",
       "2",
@@ -375,7 +375,25 @@
       "",
       "",
       "",
-      "ONE TEAMMATE"
+      "ONE PLAYER"
+    ],
+    [
+      "Archer",
+      "Frozen Arrow",
+      "Deal damage to any Player. They're Stunned for 1 turn.",
+      "THIS shoots a Frozen Arrow at TARGET.",
+      "Attack/DealtDamage/TargetsStun",
+      "",
+      "",
+      "1",
+      "1",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "ONE PLAYER"
     ],
     [
       "Archer",
@@ -398,7 +416,7 @@
     [
       "Bat",
       "Drain",
-      "Deal damage to any Teammate and regain that much health.",
+      "Deal damage to any Player and regain that much health.",
       "THIS drains TARGET's health.",
       "Attack/DealtDamage/HealFromDamage",
       "",
@@ -411,7 +429,7 @@
       "",
       "",
       "",
-      "ONE TEAMMATE"
+      "ONE PLAYER"
     ],
     [
       "Bat",
@@ -434,12 +452,12 @@
     [
       "Wolf",
       "Slash",
-      "Deal a lot of damage to a Grounded Teammate.",
+      "Deal a lot of damage to a Grounded Player.",
       "THIS uses Slash on TARGET.",
       "Attack",
       "",
       "GroundedOnly",
-      "3",
+      "3.5",
       "",
       "",
       "",
@@ -447,7 +465,7 @@
       "",
       "",
       "",
-      "ONE TEAMMATE"
+      "ONE PLAYER"
     ],
     [
       "Wolf",
@@ -470,7 +488,7 @@
     [
       "Bomb",
       "Explosion",
-      "Deal damage to all Teammates, then this dies.",
+      "Deal damage to all Players, then this dies.",
       "THIS explodes.",
       "Attack/SelfDestruct",
       "",
@@ -483,7 +501,7 @@
       "",
       "",
       "",
-      "ALL TEAMMATES"
+      "ALL PLAYERS"
     ]
   ]
 }

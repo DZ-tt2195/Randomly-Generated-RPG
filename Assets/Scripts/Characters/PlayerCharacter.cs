@@ -39,7 +39,7 @@ public class PlayerCharacter : Character
     protected override IEnumerator ChooseTarget(Ability ability)
     {
         TurnManager.instance.listOfBoxes[0].transform.parent.gameObject.SetActive(false);
-        HashSet<TeamTarget> narrowDown = new() { TeamTarget.AnyOne, TeamTarget.OneTeammate, TeamTarget.OtherTeammate, TeamTarget.OneEnemy, TeamTarget.OtherEnemy };
+        HashSet<TeamTarget> narrowDown = new() { TeamTarget.AnyOne, TeamTarget.OnePlayer, TeamTarget.OtherPlayer, TeamTarget.OneEnemy, TeamTarget.OtherEnemy };
 
         if (narrowDown.Contains(ability.teamTarget))
         {

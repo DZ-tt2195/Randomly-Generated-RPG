@@ -24,8 +24,7 @@ public class TurnManager : MonoBehaviour
 
     public static TurnManager instance;
     [Foldout("Prefabs", true)]
-        [SerializeField] EnemyCharacter enemyPrefab;
-        [SerializeField] PlayerCharacter helperPrefab;
+        [SerializeField] GameObject characterPrefab;
 
     [Foldout("UI", true)]
         public List<AbilityBox> listOfBoxes = new List<AbilityBox>();
@@ -36,7 +35,7 @@ public class TurnManager : MonoBehaviour
         List<CharacterPositions> enemyPositions = new();
 
     [Foldout("Character lists", true)]
-        [ReadOnly] public List<Character> teammates = new List<Character>();
+        [ReadOnly] public List<Character> players = new List<Character>();
         [ReadOnly] public List<Character> enemies = new List<Character>();
         [ReadOnly] public List<Character> speedQueue = new List<Character>();
 
@@ -67,7 +66,7 @@ public class TurnManager : MonoBehaviour
         for (int i = 0; i < FileManager.instance.listOfPlayers.Count; i++)
         {
             Character nextCharacter = FileManager.instance.listOfPlayers[i];
-            teammates.Add(nextCharacter);
+            players.Add(nextCharacter);
             nextCharacter.transform.SetParent(FileManager.instance.canvas);
             nextCharacter.transform.SetAsFirstSibling();
 
@@ -182,7 +181,7 @@ public class TurnManager : MonoBehaviour
 
     void CheckGameOver()
     {
-        foreach (Character character in teammates)
+        foreach (Character character in players)
         {
             if (character.CalculateHealth() > 0)
                 return;
@@ -214,10 +213,10 @@ public class TurnManager : MonoBehaviour
 
     public IEnumerator CreateHelper(int ID, int logged)
     {
-        PlayerCharacter nextCharacter = Instantiate(helperPrefab);
+        PlayerCharacter nextCharacter = Instantiate(characterPrefab).AddComponent<PlayerCharacter>();
         nextCharacter.transform.SetParent(FileManager.instance.canvas);
         nextCharacter.transform.SetAsFirstSibling();
-        teammates.Add(nextCharacter);
+        players.Add(nextCharacter);
 
         foreach (CharacterPositions position in teammatePositions)
         {
@@ -236,7 +235,7 @@ public class TurnManager : MonoBehaviour
 
     public IEnumerator CreateEnemy(int ID, float multiplier, int logged)
     {
-        EnemyCharacter nextCharacter = Instantiate(enemyPrefab);
+        EnemyCharacter nextCharacter = Instantiate(characterPrefab).AddComponent<EnemyCharacter>();
         nextCharacter.transform.SetParent(FileManager.instance.canvas);
         nextCharacter.transform.SetAsFirstSibling();
         enemies.Add(nextCharacter);
@@ -258,7 +257,7 @@ public class TurnManager : MonoBehaviour
 
     public void DisableCharacterButtons()
     {
-        foreach (Character character in teammates)
+        foreach (Character character in players)
         {
             character.myButton.interactable = false;
             character.border.gameObject.SetActive(false);
@@ -273,7 +272,7 @@ public class TurnManager : MonoBehaviour
     public List<Character> AllCharacters()
     {
         List<Character> allTargets = new List<Character>();
-        allTargets.AddRange(teammates);
+        allTargets.AddRange(players);
         allTargets.AddRange(enemies);
         return allTargets;
     }

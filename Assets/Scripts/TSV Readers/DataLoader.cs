@@ -53,7 +53,7 @@ public class AbilityData
     public string instructions;
     public string nextInstructions;
     public string playCondition;
-    public int healthChange;
+    public float healthChange;
     public int cooldown;
     public float modifyAttack;
     public float modifyDefense;
@@ -122,7 +122,7 @@ public class DataLoader
             newAbility.instructions = line[4];
             newAbility.nextInstructions = line[5];
             newAbility.playCondition = line[6];
-            newAbility.healthChange = StringToInt(line[7]);
+            newAbility.healthChange = StringToFloat(line[7]);
             newAbility.cooldown = StringToInt(line[8]);
             newAbility.modifyAttack = StringToFloat(line[9]);
             newAbility.modifyDefense = StringToFloat(line[10]);
@@ -182,11 +182,11 @@ public class DataLoader
             "ANY ONE" => Ability.TeamTarget.AnyOne,
             "SELF" => Ability.TeamTarget.Self,
             "ALL" => Ability.TeamTarget.All,
-            "ONE TEAMMATE" => Ability.TeamTarget.OneTeammate,
+            "ONE PLAYER" => Ability.TeamTarget.OnePlayer,
             "ONE ENEMY" => Ability.TeamTarget.OneEnemy,
             "ALL ENEMIES" => Ability.TeamTarget.AllEnemies,
-            "ALL TEAMMATES" => Ability.TeamTarget.AllTeammates,
-            "OTHER TEAMMATE" => Ability.TeamTarget.OtherTeammate,
+            "ALL PLAYERS" => Ability.TeamTarget.AllPlayers,
+            "OTHER PLAYER" => Ability.TeamTarget.OtherPlayer,
             "OTHER ENEMY" => Ability.TeamTarget.OtherEnemy,
             "NONE" => Ability.TeamTarget.None,
             _ => Ability.TeamTarget.None,

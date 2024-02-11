@@ -153,8 +153,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1e1988355d0b41d28e84d643f77ddc7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyPrefab: {fileID: -7599006229869363901, guid: a1e109225b5924a9caa9a92a6abbbdcd, type: 3}
-  helperPrefab: {fileID: 3941694292795390410, guid: 750995808170643f1b046855142825f7, type: 3}
+  characterPrefab: {fileID: 8345166759536211255, guid: 750995808170643f1b046855142825f7, type: 3}
   listOfBoxes:
   - {fileID: 1087068209}
   - {fileID: 728008012}
@@ -163,7 +162,7 @@ MonoBehaviour:
   - {fileID: 1315222551}
   instructions: {fileID: 2035344406}
   quitButton: {fileID: 980028370}
-  teammates: []
+  players: []
   enemies: []
   speedQueue: []
 --- !u!224 &146587604

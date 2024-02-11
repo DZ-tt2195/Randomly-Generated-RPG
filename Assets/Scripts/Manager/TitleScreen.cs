@@ -12,7 +12,7 @@ public class TitleScreen : MonoBehaviour
 
     public static TitleScreen instance;
     [ReadOnly] public Transform canvas;
-    [SerializeField] PlayerCharacter playerPrefab;
+    [SerializeField] GameObject playerPrefab;
 
 #endregion
 
@@ -47,7 +47,7 @@ public class TitleScreen : MonoBehaviour
 
         for (int i = 0; i < playerData.Count; i++)
         {
-            PlayerCharacter nextCharacter = Instantiate(playerPrefab);
+            PlayerCharacter nextCharacter = Instantiate(playerPrefab).AddComponent<PlayerCharacter>();
             WeaponData randomWeapon;
 
             if (FileManager.instance.listOfWeapons.Count == 0) randomWeapon = null;

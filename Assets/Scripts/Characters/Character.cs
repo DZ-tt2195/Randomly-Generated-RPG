@@ -8,7 +8,7 @@ using UnityEngine.EventSystems;
 using System;
 using System.Linq;
 
-[RequireComponent(typeof(Button))] [RequireComponent(typeof(Image))]
+[RequireComponent(typeof(Button))][RequireComponent(typeof(Image))]
 public class Character : MonoBehaviour, IPointerClickHandler
 {
 
@@ -47,6 +47,8 @@ public class Character : MonoBehaviour, IPointerClickHandler
         protected float modifySpeed = 1f;
         protected float modifyLuck = 1f;
         protected float modifyAccuracy = 1f;
+
+        public int turnsStunned {get; private set;}
 
     [Foldout("UI", true)]
         [ReadOnly] public Image border;
@@ -337,17 +339,23 @@ public class Character : MonoBehaviour, IPointerClickHandler
 
 #region Change Stats
 
-    public IEnumerator GainHealth(int health, int logged)
+    public IEnumerator Stun(int amount, int logged)
     {
         if (this == null) yield break;
 
-        currentHealth += health;
+        turnsStunned += amount;
+        Log.instance.AddText($"{(this.name)} is stunned for {turnsStunned} turns.", logged);
+    }
+
+    public IEnumerator GainHealth(float health, int logged)
+    {
+        if (this == null) yield break;
+
+        currentHealth += (int)health;
         if (currentHealth > baseHealth)
             currentHealth = baseHealth;
         healthText.text = $"{100 * ((float)currentHealth / baseHealth):F0}%";
         Log.instance.AddText($"{(this.name)} regains {health} HP.", logged);
-
-        yield return null;
     }
 
     public IEnumerator TakeDamage(int damage, int logged)
@@ -381,13 +389,13 @@ public class Character : MonoBehaviour, IPointerClickHandler
         }
         else
         {
-            TurnManager.instance.teammates.Remove(this);
+            TurnManager.instance.players.Remove(this);
             TurnManager.instance.enemies.Remove(this);
             Destroy(this.gameObject);
         }
     }
 
-    public IEnumerator Revive(int health, int logged)
+    public IEnumerator Revive(float health, int logged)
     {
         if (this == null) yield break;
 
@@ -413,8 +421,6 @@ public class Character : MonoBehaviour, IPointerClickHandler
             Log.instance.AddText($"{(this.name)}'s attack is reduced.", logged);
         if (effect > 0)
             Log.instance.AddText($"{(this.name)}'s attack is increased.", logged);
-
-        yield return null;
     }
 
     public IEnumerator ChangeDefense(float effect, int logged)
@@ -431,8 +437,6 @@ public class Character : MonoBehaviour, IPointerClickHandler
             Log.instance.AddText($"{(this.name)}'s defense is reduced.", logged);
         if (effect > 0)
             Log.instance.AddText($"{(this.name)}'s defense is increased.", logged);
-
-        yield return null;
     }
 
     public IEnumerator ChangeSpeed(float effect, int logged)
@@ -449,8 +453,6 @@ public class Character : MonoBehaviour, IPointerClickHandler
             Log.instance.AddText($"{(this.name)}'s speed is reduced.", logged);
         if (effect > 0)
             Log.instance.AddText($"{(this.name)}'s speed is increased.", logged);
-
-        yield return null;
     }
 
     public IEnumerator ChangeLuck(float effect, int logged)
@@ -467,8 +469,6 @@ public class Character : MonoBehaviour, IPointerClickHandler
             Log.instance.AddText($"{(this.name)}'s luck is reduced.", logged);
         if (effect > 0)
             Log.instance.AddText($"{(this.name)}'s luck is increased.", logged);
-
-        yield return null;
     }
 
     public IEnumerator ChangeAccuracy(float effect, int logged)
@@ -485,8 +485,6 @@ public class Character : MonoBehaviour, IPointerClickHandler
             Log.instance.AddText($"{(this.name)}'s accuracy is reduced.", logged);
         if (effect > 0)
             Log.instance.AddText($"{(this.name)}'s accuracy is increased.", logged);
-
-        yield return null;
     }
 
     public IEnumerator ChangePosition(Position newPosition, int logged)
@@ -526,53 +524,35 @@ public class Character : MonoBehaviour, IPointerClickHandler
         switch (currentEmotion)
         {
             case Emotion.Neutral:
-                emotionText.text = "NEUTRAL";
-                emotionText.color = Color.white;
-                border.color = Color.white;
+                emotionText.text = EmotionText.neutralText;
                 break;
             case Emotion.Happy:
-                emotionText.text = "HAPPY";
-                emotionText.color = Color.yellow;
-                border.color = Color.yellow;
+                emotionText.text = EmotionText.happyText;
                 break;
             case Emotion.Ecstatic:
-                emotionText.text = "ECSTATIC";
-                emotionText.color = Color.yellow;
-                border.color = Color.yellow;
+                emotionText.text = EmotionText.ecstaticText;
                 break;
             case Emotion.Angry:
-                emotionText.text = "ANGRY";
-                emotionText.color = new Color(1, 0.3f, 0.3f);
-                border.color = new Color(1, 0.3f, 0.3f);
+                emotionText.text = EmotionText.angryText;
                 break;
             case Emotion.Enraged:
-                emotionText.text = "ENRAGED";
-                emotionText.color = new Color(1, 0.3f, 0.3f);
-                border.color = new Color(1, 0.3f, 0.3f);
+                emotionText.text = EmotionText.enragedText;
                 break;
             case Emotion.Sad:
-                emotionText.text = "SAD";
-                emotionText.color = new Color(0.6f, 0.6f, 1);
-                border.color = new Color(0.6f, 0.6f, 1);
+                emotionText.text = EmotionText.sadText;
                 break;
             case Emotion.Depressed:
-                emotionText.text = "DEPRESSED";
-                emotionText.color = new Color(0.6f, 0.6f, 1);
-                border.color = new Color(0.6f, 0.6f, 1);
+                emotionText.text = EmotionText.depressedText;
                 break;
             case Emotion.Dead:
-                emotionText.text = "DEAD";
-                emotionText.color = Color.gray;
-                border.color = Color.gray;
+                emotionText.text = EmotionText.deadText;
                 break;
         }
-
-        yield return null;
     }
 
 #endregion
 
-#region Abilities
+#region Abilities and Turns
 
     public IEnumerator MyTurn(int logged)
     {
@@ -590,24 +570,32 @@ public class Character : MonoBehaviour, IPointerClickHandler
         TurnManager.instance.instructions.text = "";
         TurnManager.instance.DisableCharacterButtons();
 
-        if (chosenAbility.myName == "Skip Turn")
+        if (turnsStunned > 0)
         {
-            Log.instance.AddText(Log.Substitute(chosenAbility, this), 0);
+            yield return TurnManager.instance.WaitTime();
+            turnsStunned--;
+            Log.instance.AddText($"{this.name} is stunned.", 0);
         }
         else
         {
-            int happinessPenalty = currentEmotion switch
+            if (chosenAbility.myName == "Skip Turn")
             {
-                Emotion.Happy => 1,
-                Emotion.Ecstatic => 2,
-                _ => 0,
-            };
-            chosenAbility.currentCooldown = chosenAbility.baseCooldown + happinessPenalty;
+                Log.instance.AddText(Log.Substitute(chosenAbility, this), 0);
+            }
+            else
+            {
+                int happinessPenalty = currentEmotion switch
+                {
+                    Emotion.Happy => 1,
+                    Emotion.Ecstatic => 2,
+                    _ => 0,
+                };
+                chosenAbility.currentCooldown = chosenAbility.baseCooldown + happinessPenalty;
 
-            yield return TurnManager.instance.WaitTime();
-            yield return ResolveAbility(chosenAbility, logged + 1);
+                yield return TurnManager.instance.WaitTime();
+                yield return ResolveAbility(chosenAbility, logged + 1);
+            }
         }
-
         yield return EndOfTurn(logged);        
     }
 

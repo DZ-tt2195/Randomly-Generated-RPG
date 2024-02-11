@@ -19,7 +19,7 @@ public class Ability : MonoBehaviour
     [ReadOnly] public string instructions;
     [ReadOnly] public string nextInstructions;
     [ReadOnly] public string playCondition;
-    [ReadOnly] public int healthChange;
+    [ReadOnly] public float healthChange;
 
     [ReadOnly] public int baseCooldown;
     [ReadOnly] public int currentCooldown;
@@ -33,7 +33,7 @@ public class Ability : MonoBehaviour
     [ReadOnly] public Character.Emotion? newEmotion;
     [ReadOnly] public Character.Position? newPosition;
 
-    public enum TeamTarget { None, Self, AnyOne, All, OneTeammate, OtherTeammate, OneEnemy, OtherEnemy, AllTeammates, AllEnemies };
+    public enum TeamTarget { None, Self, AnyOne, All, OnePlayer, OtherPlayer, OneEnemy, OtherEnemy, AllPlayers, AllEnemies };
     [ReadOnly] public TeamTarget teamTarget;
 
     [ReadOnly] public int summonHelper;
@@ -160,7 +160,7 @@ public class Ability : MonoBehaviour
                             if (listOfTargets[i].currentPosition != Character.Position.Airborne) listOfTargets.RemoveAt(i);
                         break;
                     case "CANSUMMON":
-                        if (TurnManager.instance.teammates.Count >= 5) return false;
+                        if (TurnManager.instance.players.Count >= 5) return false;
                         break;
                     case "NOTNEUTRAL":
                         for (int i = listOfTargets.Count - 1; i >= 0; i--)
@@ -197,20 +197,20 @@ public class Ability : MonoBehaviour
                 break;
             case TeamTarget.All:
                 foreach (Character foe in TurnManager.instance.enemies) { listOfTargets.Add(foe); }
-                foreach (Character friend in TurnManager.instance.teammates) { listOfTargets.Add(friend); }
+                foreach (Character friend in TurnManager.instance.players) { listOfTargets.Add(friend); }
                 break;
             case TeamTarget.AnyOne:
                 foreach (Character foe in TurnManager.instance.enemies) { listOfTargets.Add(foe); }
-                foreach (Character friend in TurnManager.instance.teammates) { listOfTargets.Add(friend); }
+                foreach (Character friend in TurnManager.instance.players) { listOfTargets.Add(friend); }
                 break;
-            case TeamTarget.OneTeammate:
-                foreach (Character friend in TurnManager.instance.teammates) { listOfTargets.Add(friend); }
+            case TeamTarget.OnePlayer:
+                foreach (Character friend in TurnManager.instance.players) { listOfTargets.Add(friend); }
                 break;
-            case TeamTarget.OtherTeammate:
-                foreach (Character friend in TurnManager.instance.teammates) { if (friend != this.self) listOfTargets.Add(friend); }
+            case TeamTarget.OtherPlayer:
+                foreach (Character friend in TurnManager.instance.players) { if (friend != this.self) listOfTargets.Add(friend); }
                 break;
-            case TeamTarget.AllTeammates:
-                foreach (Character friend in TurnManager.instance.teammates) { listOfTargets.Add(friend); }
+            case TeamTarget.AllPlayers:
+                foreach (Character friend in TurnManager.instance.players) { listOfTargets.Add(friend); }
                 break;
             case TeamTarget.OneEnemy:
                 foreach (Character foe in TurnManager.instance.enemies) { listOfTargets.Add(foe); }
@@ -394,6 +394,11 @@ public class Ability : MonoBehaviour
 
                 case "SUMMONHELPER":
                     yield return TurnManager.instance.CreateHelper(summonHelper, logged);
+                    break;
+
+                case "TARGETSSTUN":
+                    for (int i = 0; i < listOfTargets.Count; i++)
+                        yield return listOfTargets[i].Stun(1, logged);
                     break;
 
                 default:
