@@ -35,6 +35,7 @@ public class Ability : MonoBehaviour
 
     public enum TeamTarget { None, Self, AnyOne, All, OnePlayer, OtherPlayer, OneEnemy, OtherEnemy, AllPlayers, AllEnemies };
     [ReadOnly] public TeamTarget teamTarget;
+    [ReadOnly] public HashSet<TeamTarget> singleTarget = new() { TeamTarget.AnyOne, TeamTarget.OnePlayer, TeamTarget.OtherPlayer, TeamTarget.OneEnemy, TeamTarget.OtherEnemy };
 
     [ReadOnly] public int summonHelper;
     [ReadOnly] public List<Character> listOfTargets;

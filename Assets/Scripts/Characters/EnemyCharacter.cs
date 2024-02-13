@@ -6,7 +6,7 @@ using static Ability;
 
 public class EnemyCharacter : Character
 {
-    protected override IEnumerator ChooseAbility()
+    protected override IEnumerator ChooseAbility(int logged)
     {
         yield return null;
         List<Ability> availableAbilities = new();
@@ -24,9 +24,8 @@ public class EnemyCharacter : Character
     protected override IEnumerator ChooseTarget(Ability ability)
     {
         yield return null;
-        HashSet<TeamTarget> narrowDown = new() { TeamTarget.AnyOne, TeamTarget.OnePlayer, TeamTarget.OtherPlayer, TeamTarget.OneEnemy, TeamTarget.OtherEnemy };
 
-        if (narrowDown.Contains(ability.teamTarget))
+        if (ability.singleTarget.Contains(ability.teamTarget))
         {
             this.aiTargeting = this.aiTargeting.ToUpper().Trim();
             List<Character> selectedTarget = ability.listOfTargets.Shuffle();

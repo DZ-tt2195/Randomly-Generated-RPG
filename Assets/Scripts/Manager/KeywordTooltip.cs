@@ -11,6 +11,21 @@ public class KeywordHover
     public string description;
 }
 
+public static class TextSubstitute
+{
+    public static string neutralText = $"<color=#FFFFFF>Neutral</color>";
+    public static string deadText = $"<color=#D3D3D3>Dead</color>";
+
+    public static string happyText = $"<color=#00FF00>Happy</color>";
+    public static string ecstaticText = $"<color=#00FF00>Ecstatic</color>";
+
+    public static string angryText = $"<color=#FF4C4C>Angry</color>";
+    public static string enragedText = $"<color=#FF4C4C>Enraged</color>";
+
+    public static string sadText = $"<color=#9999FF>Sad</color>";
+    public static string depressedText = $"<color=#9999FF>Depressed</color>";
+}
+
 public class KeywordTooltip : MonoBehaviour
 {
     public static KeywordTooltip instance;
@@ -32,7 +47,7 @@ public class KeywordTooltip : MonoBehaviour
         {
             if (entry.keyword == keyword)
             {
-                tooltipText.transform.parent.position = position + new Vector3(0, -100, 0);
+                tooltipText.transform.parent.position = position + new Vector3(0, -150, 0);
                 tooltipText.text = entry.description;
             }
         }

@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using MyBox;
 using TMPro;
 using System.Linq;
+//using System.Collections.ObjectModel;
 
 public class CharacterPositions
 {
@@ -25,6 +26,7 @@ public class TurnManager : MonoBehaviour
     public static TurnManager instance;
     [Foldout("Prefabs", true)]
         [SerializeField] GameObject characterPrefab;
+        public TextCollector undoBox;
 
     [Foldout("UI", true)]
         public List<AbilityBox> listOfBoxes = new List<AbilityBox>();
@@ -230,7 +232,7 @@ public class TurnManager : MonoBehaviour
 
         nextCharacter.name = FileManager.instance.listOfHelpers[ID].myName;
         Log.instance.AddText($"{Log.Article(nextCharacter.name)} entered the fight.", logged);
-        yield return (nextCharacter.SetupCharacter(Character.CharacterType.Teammate, FileManager.instance.listOfHelpers[ID], true, null));
+        yield return (nextCharacter.SetupCharacter(Character.CharacterType.Player, FileManager.instance.listOfHelpers[ID], true, null));
     }
 
     public IEnumerator CreateEnemy(int ID, float multiplier, int logged)
@@ -293,6 +295,16 @@ public class TurnManager : MonoBehaviour
     public IEnumerator WaitTime()
     {
         yield return new WaitForSeconds(PlayerPrefs.GetFloat("Animation Speed"));
+    }
+
+    public TextCollector MakeTextCollector(string header, Vector3 position, List<string> buttons)
+    {
+        TextCollector collector = Instantiate(undoBox);
+        collector.StatsSetup(header, position);
+
+        foreach (string text in buttons)
+            collector.AddTextButton(text);
+        return collector;
     }
 
 #endregion

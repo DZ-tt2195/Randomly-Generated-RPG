@@ -7,6 +7,8 @@ using MyBox;
 using UnityEngine.EventSystems;
 using System;
 using System.Linq;
+using static Ability;
+//using UnityEditor.Playables;
 
 [RequireComponent(typeof(Button))][RequireComponent(typeof(Image))]
 public class Character : MonoBehaviour, IPointerClickHandler
@@ -17,48 +19,48 @@ public class Character : MonoBehaviour, IPointerClickHandler
     public static float borderColor;
     public enum Position { Grounded, Airborne, Dead };
     public enum Emotion { Dead, Neutral, Happy, Ecstatic, Angry, Enraged, Sad, Depressed };
-    public enum CharacterType { Teammate, Enemy }
+    public enum CharacterType { Player, Enemy }
 
     [Foldout("Player info", true)]
-        protected Ability chosenAbility;
-        [ReadOnly] public List<Ability> listOfAbilities = new List<Ability>();
-        [ReadOnly] public CharacterType myType;
-        [ReadOnly] public bool isHelper;
-        protected string aiTargeting;
-        protected string entersFight;
-        [ReadOnly] public Weapon weapon;
+    protected Ability chosenAbility;
+    [ReadOnly] public List<Ability> listOfAbilities = new List<Ability>();
+    [ReadOnly] public CharacterType myType;
+    [ReadOnly] public bool isHelper;
+    protected string aiTargeting;
+    protected string entersFight;
+    [ReadOnly] public Weapon weapon;
 
     [Foldout("Stats", true)]
-        protected int baseHealth;
-        protected float baseAttack;
-        protected float baseDefense;
-        protected float baseSpeed;
-        protected float baseLuck;
-        protected float baseAccuracy;
+    protected int baseHealth;
+    protected float baseAttack;
+    protected float baseDefense;
+    protected float baseSpeed;
+    protected float baseLuck;
+    protected float baseAccuracy;
 
-        protected Position startingPosition;
-        protected Emotion startingEmotion;
+    protected Position startingPosition;
+    protected Emotion startingEmotion;
 
-        protected int currentHealth;
-        [ReadOnly] public Position currentPosition;
-        [ReadOnly] public Emotion currentEmotion;
-        protected float modifyAttack = 1f;
-        protected float modifyDefense = 1f;
-        protected float modifySpeed = 1f;
-        protected float modifyLuck = 1f;
-        protected float modifyAccuracy = 1f;
+    protected int currentHealth;
+    [ReadOnly] public Position currentPosition;
+    [ReadOnly] public Emotion currentEmotion;
+    protected float modifyAttack = 1f;
+    protected float modifyDefense = 1f;
+    protected float modifySpeed = 1f;
+    protected float modifyLuck = 1f;
+    protected float modifyAccuracy = 1f;
 
-        public int turnsStunned {get; private set;}
+    public int turnsStunned { get; private set; }
 
     [Foldout("UI", true)]
-        [ReadOnly] public Image border;
-        [ReadOnly] public Button myButton;
-        [ReadOnly] public Image myImage;
-        [ReadOnly] public Image weaponImage;
-        Button infoButton;
-        TMP_Text emotionText;
-        TMP_Text healthText;
-        [ReadOnly] public string description;
+    [ReadOnly] public Image border;
+    [ReadOnly] public Button myButton;
+    [ReadOnly] public Image myImage;
+    [ReadOnly] public Image weaponImage;
+    Button infoButton;
+    TMP_Text emotionText;
+    TMP_Text healthText;
+    [ReadOnly] public string description;
 
 #endregion
 
@@ -99,7 +101,7 @@ public class Character : MonoBehaviour, IPointerClickHandler
             this.myImage.sprite = Resources.Load<Sprite>($"Helpers/{this.name}");
             AddAbility(FileManager.instance.FindAbility("Retreat"));
         }
-        else if (myType == CharacterType.Teammate )
+        else if (myType == CharacterType.Player)
         {
             this.myImage.sprite = Resources.Load<Sprite>($"Teammates/{this.name}");
         }
@@ -114,7 +116,7 @@ public class Character : MonoBehaviour, IPointerClickHandler
             putIntoList.Add(next);
         putIntoList = putIntoList.Shuffle();
 
-        for (int i = 0; listOfAbilities.Count < 5 && i<10; i++)
+        for (int i = 0; listOfAbilities.Count < 5 && i < 10; i++)
         {
             try
             {
@@ -188,7 +190,7 @@ public class Character : MonoBehaviour, IPointerClickHandler
         newAbility.SetupAbility(ability);
     }
 
-#endregion
+    #endregion
 
 #region UI
 
@@ -234,13 +236,13 @@ public class Character : MonoBehaviour, IPointerClickHandler
         stats1 += $"Defense: {CalculateDefense(null)}\n";
 
         stats2 += $"<link=\"Speed\"><u>Speed</u></link>: {CalculateSpeed():F1}\n";
-        stats2 += $"<link=\"Luck\"><u>Luck</u></link>: {(CalculateLuck()*100):F1}%\n";
-        stats2 += $"Accuracy: {(CalculateAccuracy()*100):F1}%\n";
+        stats2 += $"<link=\"Luck\"><u>Luck</u></link>: {(CalculateLuck() * 100):F1}%\n";
+        stats2 += $"Accuracy: {(CalculateAccuracy() * 100):F1}%\n";
 
         RightClick.instance.DisplayInfo(this, stats1, stats2);
     }
 
-#endregion
+    #endregion
 
 #region Stats
 
@@ -269,7 +271,7 @@ public class Character : MonoBehaviour, IPointerClickHandler
     {
         float emotionEffect = 1f;
 
-        if (this.currentEmotion == Emotion.Sad )
+        if (this.currentEmotion == Emotion.Sad)
         {
             if (attacker != null && attacker.currentEmotion != Emotion.Enraged && attacker.currentEmotion != Emotion.Angry)
                 emotionEffect = 1.25f;
@@ -381,9 +383,9 @@ public class Character : MonoBehaviour, IPointerClickHandler
 
         Log.instance.AddText($"{(this.name)} has died.", logged);
         if (this.weapon != null)
-            yield return weapon.OnDeath(logged+1);
-    
-        if (this.myType == CharacterType.Teammate && !isHelper)
+            yield return weapon.OnDeath(logged + 1);
+
+        if (this.myType == CharacterType.Player && !isHelper)
         {
             myImage.color = Color.gray;
         }
@@ -524,52 +526,52 @@ public class Character : MonoBehaviour, IPointerClickHandler
         switch (currentEmotion)
         {
             case Emotion.Neutral:
-                emotionText.text = EmotionText.neutralText;
+                emotionText.text = TextSubstitute.neutralText;
                 break;
             case Emotion.Happy:
-                emotionText.text = EmotionText.happyText;
+                emotionText.text = TextSubstitute.happyText;
                 break;
             case Emotion.Ecstatic:
-                emotionText.text = EmotionText.ecstaticText;
+                emotionText.text = TextSubstitute.ecstaticText;
                 break;
             case Emotion.Angry:
-                emotionText.text = EmotionText.angryText;
+                emotionText.text = TextSubstitute.angryText;
                 break;
             case Emotion.Enraged:
-                emotionText.text = EmotionText.enragedText;
+                emotionText.text = TextSubstitute.enragedText;
                 break;
             case Emotion.Sad:
-                emotionText.text = EmotionText.sadText;
+                emotionText.text = TextSubstitute.sadText;
                 break;
             case Emotion.Depressed:
-                emotionText.text = EmotionText.depressedText;
+                emotionText.text = TextSubstitute.depressedText;
                 break;
             case Emotion.Dead:
-                emotionText.text = EmotionText.deadText;
+                emotionText.text = TextSubstitute.deadText;
                 break;
         }
     }
 
-#endregion
+    #endregion
 
 #region Abilities and Turns
 
     public IEnumerator MyTurn(int logged)
     {
         yield return StartOfTurn(logged);
+        yield return ChooseTurn(logged);
+        yield return ResolveTurn(logged);
+        yield return EndOfTurn(logged);
+    }
 
-        yield return ChooseAbility();
-        yield return ChooseTarget(chosenAbility);
+    IEnumerator StartOfTurn(int logged)
+    {
+        if (this.weapon != null)
+            yield return weapon.StartOfTurn(logged);
+    }
 
-        foreach (Ability ability in listOfAbilities)
-        {
-            if (ability.currentCooldown > 0)
-                ability.currentCooldown--;
-        }
-
-        TurnManager.instance.instructions.text = "";
-        TurnManager.instance.DisableCharacterButtons();
-
+    IEnumerator ChooseTurn(int logged)
+    {
         if (turnsStunned > 0)
         {
             yield return TurnManager.instance.WaitTime();
@@ -578,31 +580,78 @@ public class Character : MonoBehaviour, IPointerClickHandler
         }
         else
         {
-            if (chosenAbility.myName == "Skip Turn")
+            chosenAbility = null;
+            while (chosenAbility == null)
             {
-                Log.instance.AddText(Log.Substitute(chosenAbility, this), 0);
+                yield return ChooseAbility(logged);
+                yield return ChooseTarget(chosenAbility);
+                if (this.myType != CharacterType.Enemy && (PlayerPrefs.GetInt("Confirm Choices") == 1))
+                    yield return ConfirmDecisions();
             }
-            else
-            {
-                int happinessPenalty = currentEmotion switch
-                {
-                    Emotion.Happy => 1,
-                    Emotion.Ecstatic => 2,
-                    _ => 0,
-                };
-                chosenAbility.currentCooldown = chosenAbility.baseCooldown + happinessPenalty;
 
-                yield return TurnManager.instance.WaitTime();
-                yield return ResolveAbility(chosenAbility, logged + 1);
+            foreach (Ability ability in listOfAbilities)
+            {
+                if (ability.currentCooldown > 0)
+                    ability.currentCooldown--;
             }
         }
-        yield return EndOfTurn(logged);        
     }
 
-    IEnumerator StartOfTurn(int logged)
+    protected virtual IEnumerator ChooseAbility(int logged)
     {
-        if (this.weapon != null)
-            yield return weapon.StartOfTurn(logged);
+        yield return null;
+    }
+
+    protected virtual IEnumerator ChooseTarget(Ability ability)
+    {
+        yield return null;
+    }
+
+    IEnumerator ConfirmDecisions()
+    {
+        TurnManager.instance.instructions.text = "";
+        TurnManager.instance.DisableCharacterButtons();
+
+        string part1 = $"{this.name}: Use {chosenAbility.myName}";
+        string part2 = (chosenAbility.singleTarget.Contains(chosenAbility.teamTarget)) ? $" on {chosenAbility.listOfTargets[0].name}?" : "?";
+
+        TextCollector confirmDecision = TurnManager.instance.MakeTextCollector(part1 + part2, new Vector2(0, 0), new List<string>() { "Confirm", "Rechoose" });
+
+        yield return confirmDecision.WaitForChoice();
+        int decision = confirmDecision.chosenButton;
+        Destroy(confirmDecision.gameObject);
+
+        if (decision == 1)
+        {
+            chosenAbility = null;
+            yield break;
+        }
+    }
+
+    IEnumerator ResolveTurn(int logged)
+    {
+        if (chosenAbility.myName == "Skip Turn")
+        {
+            Log.instance.AddText(Log.Substitute(chosenAbility, this), 0);
+        }
+        else
+        {
+            int happinessPenalty = currentEmotion switch
+            {
+                Emotion.Happy => 1,
+                Emotion.Ecstatic => 2,
+                _ => 0,
+            };
+            chosenAbility.currentCooldown = chosenAbility.baseCooldown + happinessPenalty;
+
+            yield return TurnManager.instance.WaitTime();
+            yield return ResolveAbility(chosenAbility, logged + 1);
+        }
+    }
+
+    protected IEnumerator ResolveAbility(Ability ability, int logged)
+    {
+        yield return ability.ResolveInstructions(TurnManager.SpliceString(ability.instructions), logged);
     }
 
     IEnumerator EndOfTurn(int logged)
@@ -620,21 +669,6 @@ public class Character : MonoBehaviour, IPointerClickHandler
             Log.instance.AddText($"{this.name} is Enraged.", logged);
             yield return TakeDamage((int)(baseHealth * 0.2f), logged + 1);
         }
-    }
-
-    protected virtual IEnumerator ChooseAbility()
-    {
-        yield return null;
-    }
-
-    protected virtual IEnumerator ChooseTarget(Ability ability)
-    {
-        yield return null;
-    }
-
-    protected IEnumerator ResolveAbility(Ability ability, int logged)
-    {
-        yield return ability.ResolveInstructions(TurnManager.SpliceString(ability.instructions), logged);
     }
 
 #endregion

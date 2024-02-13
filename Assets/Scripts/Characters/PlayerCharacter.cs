@@ -8,7 +8,7 @@ public class PlayerCharacter : Character
 {
     int choice;
 
-    protected override IEnumerator ChooseAbility()
+    protected override IEnumerator ChooseAbility(int logged)
     {
         EnableAbilityBoxes();
         TurnManager.instance.instructions.text = $"{this.name}'s Turn: Choose an ability.";
@@ -39,12 +39,12 @@ public class PlayerCharacter : Character
     protected override IEnumerator ChooseTarget(Ability ability)
     {
         TurnManager.instance.listOfBoxes[0].transform.parent.gameObject.SetActive(false);
-        HashSet<TeamTarget> narrowDown = new() { TeamTarget.AnyOne, TeamTarget.OnePlayer, TeamTarget.OtherPlayer, TeamTarget.OneEnemy, TeamTarget.OtherEnemy };
 
-        if (narrowDown.Contains(ability.teamTarget))
+        if (ability.singleTarget.Contains(ability.teamTarget))
         {
             TurnManager.instance.instructions.text = $"Choose a character to target.";
             TurnManager.instance.DisableCharacterButtons();
+
             for (int i = 0; i < ability.listOfTargets.Count; i++)
             {
                 Character character = ability.listOfTargets[i];

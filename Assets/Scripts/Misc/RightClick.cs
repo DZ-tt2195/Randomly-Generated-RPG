@@ -83,28 +83,28 @@ public class RightClick : MonoBehaviour
         switch (character.currentEmotion)
         {
             case Emotion.Neutral:
-                emotionText.text = EmotionText.neutralText;
+                emotionText.text = TextSubstitute.neutralText;
                 break;
             case Emotion.Happy:
-                emotionText.text = EmotionText.happyText;
+                emotionText.text = TextSubstitute.happyText;
                 break;
             case Emotion.Ecstatic:
-                emotionText.text = EmotionText.ecstaticText;
+                emotionText.text = TextSubstitute.ecstaticText;
                 break;
             case Emotion.Angry:
-                emotionText.text = EmotionText.angryText;
+                emotionText.text = TextSubstitute.angryText;
                 break;
             case Emotion.Enraged:
-                emotionText.text = EmotionText.enragedText;
+                emotionText.text = TextSubstitute.enragedText;
                 break;
             case Emotion.Sad:
-                emotionText.text = EmotionText.sadText;
+                emotionText.text = TextSubstitute.sadText;
                 break;
             case Emotion.Depressed:
-                emotionText.text = EmotionText.depressedText;
+                emotionText.text = TextSubstitute.depressedText;
                 break;
             case Emotion.Dead:
-                emotionText.text = EmotionText.deadText;
+                emotionText.text = TextSubstitute.deadText;
                 break;
         }
 
