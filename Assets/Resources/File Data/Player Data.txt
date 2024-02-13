@@ -32,28 +32,28 @@
       "Focuses on healing from above.",
       "50",
       "20",
-      "8",
+      "9",
       "40",
       "0.1",
       "0.95",
       "AIRBORNE",
       "NEUTRAL",
       "",
-      "6,7,8,9,"
+      "6,7,8,9,10,"
     ],
     [
       "Wizard",
       "Does damage against groups and Airborne Enemies.",
       "65",
       "30",
-      "11",
+      "12",
       "30",
       "0.1",
       "0.95",
       "GROUNDED",
       "NEUTRAL",
       "",
-      "10,11,12,13,"
+      "11,12,13,14,"
     ]
   ]
 }

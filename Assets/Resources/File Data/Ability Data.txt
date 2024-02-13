@@ -169,7 +169,7 @@
       "TargetsHeal/TargetsNeutral",
       "",
       "NotNeutral",
-      "50",
+      "55",
       "",
       "",
       "",
@@ -178,6 +178,24 @@
       "",
       "",
       "ONE PLAYER"
+    ],
+    [
+      "Angel",
+      "Healing Aura",
+      "Heal all non-Neutral Players by a little bit. Their Emotions go up a tier.",
+      "THIS releases a Healing Aura.",
+      "TargetsHeal/TargetsAmplify",
+      "",
+      "NotNeutral",
+      "30",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "ALL PLAYERS"
     ],
     [
       "Angel",

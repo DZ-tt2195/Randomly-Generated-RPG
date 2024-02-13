@@ -65,8 +65,10 @@ public class KeywordTooltip : MonoBehaviour
         {
             if (entry.keyword == keyword)
             {
-                tooltipText.transform.parent.position = position + new Vector3(0, -150, 0);
                 tooltipText.text = entry.description;
+                tooltipText.transform.parent.position = position + (position.y > 250
+                    ? new Vector3(0, -125, 0)
+                    : new Vector3(0, 125, 0));
             }
         }
     }

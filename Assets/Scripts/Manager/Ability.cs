@@ -342,6 +342,24 @@ public class Ability : MonoBehaviour
                         yield return listOfTargets[i].ChangeEmotion(Character.Emotion.Neutral, logged);
                     break;
 
+                case "TARGETSAMPLIFY":
+                    for (int i = 0; i < listOfTargets.Count; i++)
+                    {
+                        switch (listOfTargets[i].currentEmotion)
+                        {
+                            case Character.Emotion.Happy:
+                                yield return self.ChangeEmotion(Character.Emotion.Ecstatic, logged);
+                                break;
+                            case Character.Emotion.Angry:
+                                yield return self.ChangeEmotion(Character.Emotion.Enraged, logged);
+                                break;
+                            case Character.Emotion.Sad:
+                                yield return self.ChangeEmotion(Character.Emotion.Depressed, logged);
+                                break;
+                        }
+                    }
+                    break;
+
                 case "SELFATTACKSTAT":
                     yield return self.ChangeAttack(modifyAttack, logged);
                     break;
