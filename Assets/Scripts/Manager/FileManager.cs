@@ -107,7 +107,6 @@ public class FileManager : MonoBehaviour
 
         KeywordTooltip.instance.transform.SetParent(canvas);
         KeywordTooltip.instance.transform.localPosition = new Vector3(0, 0);
-        KeywordTooltip.instance.gameObject.SetActive(false);
     }
 
     public void UnloadObjects(string sceneName)

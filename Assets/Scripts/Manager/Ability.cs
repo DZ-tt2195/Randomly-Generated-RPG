@@ -47,7 +47,7 @@ public class Ability : MonoBehaviour
         myName = data.myName;
         instructions = data.instructions;
         nextInstructions = data.nextInstructions;
-        description = data.description;
+        description = KeywordTooltip.instance.EditText(data.description);
         logDescription = data.logDescription;
         playCondition = data.playCondition;
         healthChange = data.healthChange;

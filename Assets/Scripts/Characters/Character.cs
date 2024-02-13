@@ -82,7 +82,7 @@ public class Character : MonoBehaviour, IPointerClickHandler
     {
         myType = type;
         this.name = characterData.myName;
-        this.description = characterData.description;
+        this.description = KeywordTooltip.instance.EditText(characterData.description);
         baseHealth = (int)(characterData.baseHealth * multiplier); currentHealth = baseHealth;
         baseAttack = (int)(characterData.baseAttack * multiplier);
         baseDefense = (int)(characterData.baseDefense * multiplier);
@@ -235,11 +235,11 @@ public class Character : MonoBehaviour, IPointerClickHandler
         stats1 += $"Attack: {CalculateAttack():F1}\n";
         stats1 += $"Defense: {CalculateDefense(null)}\n";
 
-        stats2 += $"<link=\"Speed\"><u>Speed</u></link>: {CalculateSpeed():F1}\n";
-        stats2 += $"<link=\"Luck\"><u>Luck</u></link>: {(CalculateLuck() * 100):F1}%\n";
+        stats2 += $"Speed: {CalculateSpeed():F1}\n";
+        stats2 += $"Luck: {(CalculateLuck() * 100):F1}%\n";
         stats2 += $"Accuracy: {(CalculateAccuracy() * 100):F1}%\n";
 
-        RightClick.instance.DisplayInfo(this, stats1, stats2);
+        RightClick.instance.DisplayInfo(this, KeywordTooltip.instance.EditText(stats1), KeywordTooltip.instance.EditText(stats2));
     }
 
     #endregion

@@ -36,7 +36,7 @@ public class Weapon : MonoBehaviour
     {
         self = GetComponent<Character>();
         myName = data.myName;
-        description = data.description;
+        description = KeywordTooltip.instance.EditText(data.description);
 
         string[] divideSkillsIntoNumbers = data.skillNumbers.Split(',');
         foreach (string skill in divideSkillsIntoNumbers)

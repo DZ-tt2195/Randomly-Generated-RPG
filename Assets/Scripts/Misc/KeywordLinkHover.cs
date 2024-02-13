@@ -29,7 +29,6 @@ public class KeywordLinkHover : MonoBehaviour
             }
             catch (IndexOutOfRangeException)
             {
-                KeywordTooltip.instance.gameObject.SetActive(false);
             }
         }
     }

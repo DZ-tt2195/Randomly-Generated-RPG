@@ -67,12 +67,12 @@ public class Log : MonoBehaviour
             string pattern = $@"\b{Regex.Escape(teammate.name)}\b";
             newText.text = Regex.Replace(newText.text, pattern, $"<color=#00FF00><b>{teammate.name}</b></color>");
         }
-
         foreach (Character enemy in TurnManager.instance.enemies)
         {
             string pattern = $@"\b{Regex.Escape(enemy.name)}\b";
             newText.text = Regex.Replace(newText.text, pattern, $"<color=#FF0000><b>{enemy.name}</b></color>");
         }
+        newText.text = KeywordTooltip.instance.EditText(newText.text);
 
         if (RT.transform.childCount >= 23)
         {
