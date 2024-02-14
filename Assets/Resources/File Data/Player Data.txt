@@ -10,50 +10,46 @@
       "Base Accuracy",
       "Start Position",
       "Start Emotion",
-      "Enters Fight",
       "Skills"
     ],
     [
       "Knight",
       "Does a lot of damage against individual and Grounded Enemies.",
-      "80",
-      "40",
+      "75",
+      "30",
       "15",
       "50",
       "0.1",
       "0.95",
       "GROUNDED",
       "NEUTRAL",
-      "",
-      "2,3,4,5,"
+      "2,3,4,5,6,"
     ],
     [
       "Angel",
       "Focuses on healing from above.",
       "50",
-      "20",
+      "15",
       "9",
       "40",
       "0.1",
       "0.95",
       "AIRBORNE",
       "NEUTRAL",
-      "",
-      "6,7,8,9,10,"
+      "7,8,9,10,11,"
     ],
     [
       "Wizard",
       "Does damage against groups and Airborne Enemies.",
       "65",
-      "30",
+      "20",
       "12",
       "30",
       "0.1",
       "0.95",
       "GROUNDED",
       "NEUTRAL",
-      "",
-      "11,12,13,14,"
+      "12,13,14,15,16,"
     ]
   ]
 }

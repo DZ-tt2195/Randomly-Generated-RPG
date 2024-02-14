@@ -22,7 +22,7 @@
     [
       "Meteor",
       "Each time this dies, it deals heavy damage to all enemies.",
-      "1,",
+      "0,",
       "",
       "",
       "",

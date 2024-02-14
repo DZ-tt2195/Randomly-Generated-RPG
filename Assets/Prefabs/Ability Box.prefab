@@ -504,7 +504,7 @@ GameObject:
   - component: {fileID: 2211527774201483708}
   - component: {fileID: 5167423473137555058}
   - component: {fileID: 5885779210390715385}
-  - component: {fileID: 8218901760924704482}
+  - component: {fileID: 7631818787322554664}
   m_Layer: 0
   m_Name: Ability Box
   m_TagString: Untagged
@@ -633,8 +633,8 @@ MonoBehaviour:
   textName: {fileID: 1376439963667714930}
   textCountdown: {fileID: 1759404231573523795}
   onCooldown: {fileID: 2720551814390327679}
-  hover: {fileID: 8218901760924704482}
---- !u!114 &8218901760924704482
+  hover: {fileID: 7631818787322554664}
+--- !u!114 &7631818787322554664
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -643,7 +643,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 4763938441055505231}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 666d08e0649104f8990ba1409b67a473, type: 3}
+  m_Script: {fileID: 11500000, guid: 1efa7e04835474b9dadc9eae010c5ef8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   background: {fileID: 7514611408647289619}

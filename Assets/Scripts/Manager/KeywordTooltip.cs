@@ -15,7 +15,7 @@ public class KeywordHover
 
 public static class TextSubstitute
 {
-    public static string neutralText = $"<color=#FFFFFF>Neutral</color>";
+    public static string neutralText = $"<link=\"Neutral\"><u><color=#FFFFFF><b>Neutral</b><color=#FFFFFF></u></link>";
     public static string deadText = $"<color=#D3D3D3>Dead</color>";
 
     public static string happyText = $"<link=\"Happy\"><u><color=#00FF00><b>Happy</b><color=#FFFFFF></u></link>";

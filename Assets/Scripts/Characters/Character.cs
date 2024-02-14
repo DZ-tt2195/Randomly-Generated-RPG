@@ -80,6 +80,7 @@ public class Character : MonoBehaviour, IPointerClickHandler
 
     public IEnumerator SetupCharacter(CharacterType type, CharacterData characterData, bool isHelper, WeaponData weaponData, float multiplier = 1f)
     {
+        yield return null;
         myType = type;
         this.name = characterData.myName;
         this.description = KeywordTooltip.instance.EditText(characterData.description);
@@ -124,14 +125,8 @@ public class Character : MonoBehaviour, IPointerClickHandler
                 skillNumber.Trim();
                 AddAbility(FileManager.instance.listOfAbilities[int.Parse(skillNumber)]);
             }
-            catch (FormatException)
-            {
-                continue;
-            }
-            catch (ArgumentOutOfRangeException)
-            {
-                break;
-            }
+            catch (FormatException){continue;}
+            catch (ArgumentOutOfRangeException){break;}
         }
         listOfAbilities = listOfAbilities.OrderBy(o => o.baseCooldown).ToList();
 
@@ -147,22 +142,6 @@ public class Character : MonoBehaviour, IPointerClickHandler
             weaponImage.sprite = Resources.Load<Sprite>($"Weapons/{this.weapon.myName}");
         }
         WeaponStartingEffects();
-
-        string[] divideEntersIntoNumbers = characterData.entersFight.Split(',');
-        foreach (string enters in divideEntersIntoNumbers)
-        {
-            if (enters.Trim() != "")
-            {
-                Ability nextAbility = this.gameObject.AddComponent<Ability>();
-                nextAbility.SetupAbility(FileManager.instance.listOfOtherAbilities[int.Parse(enters)]);
-
-                if (nextAbility.CanPlay(this))
-                {
-                    yield return ChooseTarget(nextAbility);
-                    yield return ResolveAbility(nextAbility, 2);
-                }
-            }
-        }
     }
 
     void WeaponStartingEffects()

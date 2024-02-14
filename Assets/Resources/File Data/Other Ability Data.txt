@@ -18,24 +18,6 @@
       "Target"
     ],
     [
-      "Wolf",
-      "Roar",
-      "All Teammates become Sad.",
-      "THIS roars out loud.",
-      "TargetsSad",
-      "",
-      "",
-      "",
-      "",
-      "",
-      "",
-      "",
-      "",
-      "",
-      "",
-      "ALL TEAMMATES"
-    ],
-    [
       "Meteor",
       "Meteor Crash",
       "Deal damage to all Enemies.",

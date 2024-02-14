@@ -10,7 +10,6 @@
       "Base Accuracy",
       "Start Position",
       "Start Emotion",
-      "Enters Fight",
       "Skills"
     ],
     [
@@ -24,8 +23,7 @@
       "1",
       "GROUNDED",
       "NEUTRAL",
-      "",
-      "15,16,17,"
+      "17,18,19,"
     ],
     [
       "Spirit",
@@ -38,13 +36,12 @@
       "1",
       "AIRBORNE",
       "NEUTRAL",
-      "",
-      "19,"
+      "21,"
     ],
     [
       "Golem",
       "Tanks damage.",
-      "80",
+      "75",
       "10",
       "15",
       "0",
@@ -52,8 +49,7 @@
       "0.9",
       "GROUNDED",
       "NEUTRAL",
-      "",
-      "18,"
+      "20,"
     ]
   ]
 }
