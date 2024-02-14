@@ -377,13 +377,14 @@ public class Character : MonoBehaviour, IPointerClickHandler
         if (this == null) yield break;
 
         currentHealth = 0;
-        yield return ChangeEmotion(Emotion.Dead, logged);
         currentPosition = Position.Dead;
         healthText.text = $"0%";
 
         Log.instance.AddText($"{(this.name)} has died.", logged);
         if (this.weapon != null)
             yield return weapon.OnDeath(logged + 1);
+
+        yield return ChangeEmotion(Emotion.Dead, logged);
 
         if (this.myType == CharacterType.Player && !isHelper)
         {
@@ -500,7 +501,7 @@ public class Character : MonoBehaviour, IPointerClickHandler
             {
                 if (newPosition == Position.Grounded)
                     Log.instance.AddText($"{(this.name)} is now grounded.", logged);
-                if (newPosition == Position.Airborne)
+                else if (newPosition == Position.Airborne)
                     Log.instance.AddText($"{(this.name)} is now airborne.", logged);
             }
             catch { };

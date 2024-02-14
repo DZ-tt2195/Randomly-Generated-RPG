@@ -515,7 +515,7 @@ public class Ability : MonoBehaviour
             float attack = user.CalculateAttack();
             float defense = target.CalculateDefense(user);
 
-            int finalDamage = (int)(damageVariation * critical * effectiveness * attack + healthChange - defense);
+            int finalDamage = (int)(damageVariation * critical * effectiveness + (attack * healthChange) - defense);
             return finalDamage > 0 ? finalDamage : 0;
         }
         else
