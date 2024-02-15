@@ -50,11 +50,11 @@
     [
       "Lucky Coin",
       "On a new wave, this regains health.",
+      "1,",
       "",
       "",
       "",
-      "",
-      "SelfHeal"
+      "UseAbilities"
     ]
   ]
 }

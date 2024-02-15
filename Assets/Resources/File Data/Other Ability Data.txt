@@ -34,6 +34,24 @@
       "",
       "",
       "ALL ENEMIES"
+    ],
+    [
+      "Lucky Coin",
+      "Lucky Heal",
+      "Heal at the start of every wave.",
+      "THIS regains health.",
+      "SelfHeal",
+      "",
+      "",
+      "45",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "SELF"
     ]
   ]
 }

@@ -131,6 +131,9 @@ public class Ability : MonoBehaviour
                     case "SELFAIRBORNE":
                         return user.currentPosition == Character.Position.Airborne;
 
+                    case "SELFSECONDTIER":
+                        return (user.currentEmotion == Character.Emotion.Enraged || user.currentEmotion == Character.Emotion.Ecstatic || user.currentEmotion == Character.Emotion.Depressed);
+
                     case "NOTHAPPY":
                         return (user.currentEmotion != Character.Emotion.Happy && user.currentEmotion != Character.Emotion.Ecstatic);
                     case "SELFHAPPY":
@@ -268,6 +271,22 @@ public class Ability : MonoBehaviour
                     for (int i = 0; i < listOfTargets.Count; i++)
                         if (listOfTargets[i] != null)
                             yield return listOfTargets[i].GainHealth(healthChange, logged);
+                    break;
+
+                case "SELFSWAPPOSITION":
+                    if (self.currentPosition == Character.Position.Airborne)
+                        yield return self.ChangePosition(Character.Position.Grounded, logged);
+                    else if (self.currentPosition == Character.Position.Grounded)
+                        yield return self.ChangePosition(Character.Position.Airborne, logged);
+                    break;
+                case "TARGETSSWAPPOSITION":
+                    for (int i = 0; i < listOfTargets.Count; i++)
+                    {
+                        if (listOfTargets[i].currentPosition == Character.Position.Airborne)
+                            yield return listOfTargets[i].ChangePosition(Character.Position.Grounded, logged);
+                        else if (listOfTargets[i].currentPosition == Character.Position.Grounded)
+                            yield return listOfTargets[i].ChangePosition(Character.Position.Airborne, logged);
+                    }
                     break;
 
                 case "SELFGROUNDED":

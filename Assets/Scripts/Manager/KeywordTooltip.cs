@@ -31,6 +31,7 @@ public static class TextSubstitute
 public class KeywordTooltip : MonoBehaviour
 {
     public static KeywordTooltip instance;
+    float displace;
     [SerializeField] List<KeywordHover> linkedKeywords = new();
     [SerializeField] List<KeywordHover> spriteKeywords = new();
     [SerializeField] TMP_Text tooltipText;
@@ -38,6 +39,7 @@ public class KeywordTooltip : MonoBehaviour
     private void Awake()
     {
         instance = this;
+        displace = tooltipText.rectTransform.sizeDelta.y * 1.25f;
     }
 
     public string EditText(string text)
@@ -56,7 +58,7 @@ public class KeywordTooltip : MonoBehaviour
         tooltipText.transform.parent.gameObject.SetActive(false);
     }
 
-    public void ActivateTextBox(string keyword, Vector3 position)
+    public void ActivateTextBox(string keyword, Vector3 mousePosition)
     {
         tooltipText.transform.parent.gameObject.SetActive(true);
         this.transform.SetAsLastSibling();
@@ -66,9 +68,9 @@ public class KeywordTooltip : MonoBehaviour
             if (entry.keyword == keyword)
             {
                 tooltipText.text = entry.description;
-                tooltipText.transform.parent.position = position + (position.y > 250
-                    ? new Vector3(0, -125, 0)
-                    : new Vector3(0, 125, 0));
+                tooltipText.transform.parent.position = mousePosition + (mousePosition.y > (displace)
+                    ? new Vector3(0, -0.5f*displace, 0)
+                    : new Vector3(0, 0.5f*displace, 0));
             }
         }
     }

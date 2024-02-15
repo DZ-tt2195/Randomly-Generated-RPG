@@ -23,13 +23,8 @@ public class KeywordLinkHover : MonoBehaviour
         if (TMP_TextUtilities.IsIntersectingRectTransform(rectTrans, mousePosition, null))
         {
             int intersectingLink = TMP_TextUtilities.FindIntersectingLink(myText, mousePosition, null);
-            try
-            {
-                KeywordTooltip.instance.ActivateTextBox(myText.textInfo.linkInfo[intersectingLink].GetLinkID(), mousePosition);
-            }
-            catch (IndexOutOfRangeException)
-            {
-            }
+            try{KeywordTooltip.instance.ActivateTextBox(myText.textInfo.linkInfo[intersectingLink].GetLinkID(), mousePosition);}
+            catch (IndexOutOfRangeException){}
         }
     }
 }
