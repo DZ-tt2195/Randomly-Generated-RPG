@@ -145,7 +145,13 @@ public class Weapon : MonoBehaviour
                     break;
                 case "NONE":
                     break;
-
+                case "USEABILITIES":
+                    foreach (Ability ability in listOfAbilities)
+                    {
+                        if (ability.CanPlay(self))
+                            yield return ability.ResolveInstructions(TurnManager.SpliceString(ability.instructions), logged + 1);
+                    }
+                    break;
                 case "SELFHEAL":
                     yield return self.GainHealth(30, logged);
                     break;

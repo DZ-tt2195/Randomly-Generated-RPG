@@ -539,8 +539,17 @@ public class Character : MonoBehaviour, IPointerClickHandler
     public IEnumerator MyTurn(int logged)
     {
         yield return StartOfTurn(logged);
-        yield return ChooseTurn(logged);
-        yield return ResolveTurn(logged);
+        if (turnsStunned > 0)
+        {
+            yield return TurnManager.instance.WaitTime();
+            turnsStunned--;
+            Log.instance.AddText($"{this.name} is stunned.", 0);
+        }
+        else
+        {
+            yield return ChooseTurn(logged);
+            yield return ResolveTurn(logged);
+        }
         yield return EndOfTurn(logged);
     }
 
@@ -552,28 +561,19 @@ public class Character : MonoBehaviour, IPointerClickHandler
 
     IEnumerator ChooseTurn(int logged)
     {
-        if (turnsStunned > 0)
+        chosenAbility = null;
+        while (chosenAbility == null)
         {
-            yield return TurnManager.instance.WaitTime();
-            turnsStunned--;
-            Log.instance.AddText($"{this.name} is stunned.", 0);
+            yield return ChooseAbility(logged);
+            yield return ChooseTarget(chosenAbility);
+            if (this.myType != CharacterType.Enemy && (PlayerPrefs.GetInt("Confirm Choices") == 1))
+                yield return ConfirmDecisions();
         }
-        else
-        {
-            chosenAbility = null;
-            while (chosenAbility == null)
-            {
-                yield return ChooseAbility(logged);
-                yield return ChooseTarget(chosenAbility);
-                if (this.myType != CharacterType.Enemy && (PlayerPrefs.GetInt("Confirm Choices") == 1))
-                    yield return ConfirmDecisions();
-            }
 
-            foreach (Ability ability in listOfAbilities)
-            {
-                if (ability.currentCooldown > 0)
-                    ability.currentCooldown--;
-            }
+        foreach (Ability ability in listOfAbilities)
+        {
+            if (ability.currentCooldown > 0)
+                ability.currentCooldown--;
         }
     }
 
