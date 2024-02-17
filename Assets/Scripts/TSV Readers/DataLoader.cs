@@ -37,8 +37,8 @@ public class CharacterData
     public float baseSpeed;
     public float baseLuck;
     public float baseAccuracy;
-    public Character.Position startingPosition;
-    public Character.Emotion startingEmotion;
+    public Position startingPosition;
+    public Emotion startingEmotion;
     public string skillNumbers;
     public string aiTargeting;
 }
@@ -50,6 +50,8 @@ public class AbilityData
     public string description;
     public string logDescription;
     public string instructions;
+    public AbilityType typeOne;
+    public AbilityType typeTwo;
     public string nextInstructions;
     public string playCondition;
     public float healthChange;
@@ -60,7 +62,7 @@ public class AbilityData
     public float modifyLuck;
     public float modifyAccuracy;
     public int helperID;
-    public Ability.TeamTarget teamTarget;
+    public TeamTarget teamTarget;
 }
 
 public class DataLoader
@@ -90,7 +92,7 @@ public class DataLoader
             newCharacter.baseSpeed = StringToFloat(line[5]);
             newCharacter.baseLuck = StringToFloat(line[6]);
             newCharacter.baseAccuracy = StringToFloat(line[7]);
-            newCharacter.startingPosition = (line[8] == "GROUNDED") ? Character.Position.Grounded : Character.Position.Airborne;
+            newCharacter.startingPosition = (line[8] == "GROUNDED") ? Position.Grounded : Position.Airborne;
             newCharacter.startingEmotion = StringToEmotion(line[9]);
             newCharacter.skillNumbers = line[10];
             try { newCharacter.aiTargeting = line[11]; } catch (IndexOutOfRangeException) { /*do nothing*/};
@@ -117,18 +119,20 @@ public class DataLoader
             newAbility.myName = line[1];
             newAbility.description = line[2];
             newAbility.logDescription = line[3];
-            newAbility.instructions = line[4];
-            newAbility.nextInstructions = line[5];
-            newAbility.playCondition = line[6];
-            newAbility.healthChange = StringToFloat(line[7]);
-            newAbility.cooldown = StringToInt(line[8]);
-            newAbility.modifyAttack = StringToFloat(line[9]);
-            newAbility.modifyDefense = StringToFloat(line[10]);
-            newAbility.modifySpeed = StringToFloat(line[11]);
-            newAbility.modifyLuck = StringToFloat(line[12]);
-            newAbility.modifyAccuracy = StringToFloat(line[13]);
-            newAbility.helperID = StringToInt(line[14]);
-            try { newAbility.teamTarget = StringToTeamTarget(line[15]); } catch (IndexOutOfRangeException) { Debug.Log($"{newAbility.myName} has no target"); }
+            newAbility.typeOne = StringToAbilityType(line[4]);
+            newAbility.typeTwo = StringToAbilityType(line[5]);
+            newAbility.instructions = line[6];
+            newAbility.nextInstructions = line[7];
+            newAbility.playCondition = line[8];
+            newAbility.healthChange = StringToFloat(line[9]);
+            newAbility.cooldown = StringToInt(line[10]);
+            newAbility.modifyAttack = StringToFloat(line[11]);
+            newAbility.modifyDefense = StringToFloat(line[12]);
+            newAbility.modifySpeed = StringToFloat(line[13]);
+            newAbility.modifyLuck = StringToFloat(line[14]);
+            newAbility.modifyAccuracy = StringToFloat(line[15]);
+            newAbility.helperID = StringToInt(line[16]);
+            try { newAbility.teamTarget = StringToTeamTarget(line[17]); } catch (IndexOutOfRangeException) { Debug.Log($"{newAbility.myName} has no target"); }
         }
         return nextData;
     }
@@ -172,39 +176,56 @@ public class DataLoader
         return nextData;
     }
 
-    static Ability.TeamTarget StringToTeamTarget(string line)
+    static AbilityType StringToAbilityType(string line)
     {
         line = line.ToUpper().Trim();
         return line switch
         {
-            "ANY ONE" => Ability.TeamTarget.AnyOne,
-            "SELF" => Ability.TeamTarget.Self,
-            "ALL" => Ability.TeamTarget.All,
-            "ONE PLAYER" => Ability.TeamTarget.OnePlayer,
-            "ONE ENEMY" => Ability.TeamTarget.OneEnemy,
-            "ALL ENEMIES" => Ability.TeamTarget.AllEnemies,
-            "ALL PLAYERS" => Ability.TeamTarget.AllPlayers,
-            "OTHER PLAYER" => Ability.TeamTarget.OtherPlayer,
-            "OTHER ENEMY" => Ability.TeamTarget.OtherEnemy,
-            "NONE" => Ability.TeamTarget.None,
-            _ => Ability.TeamTarget.None,
+            "ATTACK" => AbilityType.Attack,
+            "STATS" => AbilityType.Stats,
+            "EMOTION" => AbilityType.Emotion,
+            "HEALING" => AbilityType.Healing,
+            "POSITION" => AbilityType.Position,
+            "MISC" => AbilityType.Misc,
+            "SUMMON" => AbilityType.Summon,
+            "NONE" => AbilityType.None,
+            _ => AbilityType.None,
         };
     }
 
-    static Character.Emotion StringToEmotion(string line)
+    static TeamTarget StringToTeamTarget(string line)
     {
         line = line.ToUpper().Trim();
         return line switch
         {
-            "NEUTRAL" => Character.Emotion.Neutral,
-            "HAPPY" => Character.Emotion.Happy,
-            "ECSTATIC" => Character.Emotion.Ecstatic,
-            "ANGRY" => Character.Emotion.Angry,
-            "ENRAGED" => Character.Emotion.Enraged,
-            "SAD" => Character.Emotion.Sad,
-            "DEPRESSED" => Character.Emotion.Depressed,
-            "NONE" => Character.Emotion.Neutral,
-            _ => Character.Emotion.Neutral,
+            "ANY ONE" => TeamTarget.AnyOne,
+            "SELF" => TeamTarget.Self,
+            "ALL" => TeamTarget.All,
+            "ONE PLAYER" => TeamTarget.OnePlayer,
+            "ONE ENEMY" => TeamTarget.OneEnemy,
+            "ALL ENEMIES" => TeamTarget.AllEnemies,
+            "ALL PLAYERS" => TeamTarget.AllPlayers,
+            "OTHER PLAYER" => TeamTarget.OtherPlayer,
+            "OTHER ENEMY" => TeamTarget.OtherEnemy,
+            "NONE" => TeamTarget.None,
+            _ => TeamTarget.None,
+        };
+    }
+
+    static Emotion StringToEmotion(string line)
+    {
+        line = line.ToUpper().Trim();
+        return line switch
+        {
+            "NEUTRAL" => Emotion.Neutral,
+            "HAPPY" => Emotion.Happy,
+            "ECSTATIC" => Emotion.Ecstatic,
+            "ANGRY" => Emotion.Angry,
+            "ENRAGED" => Emotion.Enraged,
+            "SAD" => Emotion.Sad,
+            "DEPRESSED" => Emotion.Depressed,
+            "NONE" => Emotion.Neutral,
+            _ => Emotion.Neutral,
         };
     }
 

@@ -14,6 +14,7 @@ public class FileManager : MonoBehaviour
 
     public static FileManager instance;
     [ReadOnly] public Transform canvas;
+    [SerializeField] bool downloadOn;
 
     private string ID = "1x5vKp4X4HPKyRix3w0n9aldY6Dh3B0eBegUM0WtfXFY";
     private string apiKey = "AIzaSyCl_GqHd1-WROqf7i2YddE3zH6vSv3sNTA";
@@ -46,23 +47,26 @@ public class FileManager : MonoBehaviour
 
     internal IEnumerator DownloadFile(string range)
     {
-        string url = $"{baseUrl}{ID}/values/{range}?key={apiKey}";
-        using UnityWebRequest www = UnityWebRequest.Get(url);
-        yield return www.SendWebRequest();
-
-        if (www.result == UnityWebRequest.Result.ConnectionError || www.result == UnityWebRequest.Result.ProtocolError)
+        if (downloadOn)
         {
-            Debug.LogError($"Error: {www.error}");
-        }
-        else
-        {
-            string filePath = $"Assets/Resources/File Data/{range}.txt";
-            File.WriteAllText($"{filePath}", www.downloadHandler.text);
+            string url = $"{baseUrl}{ID}/values/{range}?key={apiKey}";
+            using UnityWebRequest www = UnityWebRequest.Get(url);
+            yield return www.SendWebRequest();
 
-            string[] allLines = File.ReadAllLines($"{filePath}");
-            List<string> modifiedLines = allLines.ToList();
-            modifiedLines.RemoveRange(1, 3);
-            File.WriteAllLines($"{filePath}", modifiedLines.ToArray());
+            if (www.result == UnityWebRequest.Result.ConnectionError || www.result == UnityWebRequest.Result.ProtocolError)
+            {
+                Debug.LogError($"Error: {www.error}");
+            }
+            else
+            {
+                string filePath = $"Assets/Resources/File Data/{range}.txt";
+                File.WriteAllText($"{filePath}", www.downloadHandler.text);
+
+                string[] allLines = File.ReadAllLines($"{filePath}");
+                List<string> modifiedLines = allLines.ToList();
+                modifiedLines.RemoveRange(1, 3);
+                File.WriteAllLines($"{filePath}", modifiedLines.ToArray());
+            }
         }
     }
 

@@ -10,6 +10,10 @@ using System.Linq;
 using static Ability;
 //using UnityEditor.Playables;
 
+public enum Position { Grounded, Airborne, Dead };
+public enum Emotion { Dead, Neutral, Happy, Ecstatic, Angry, Enraged, Sad, Depressed };
+public enum CharacterType { Player, Enemy }
+
 [RequireComponent(typeof(Button))][RequireComponent(typeof(Image))]
 public class Character : MonoBehaviour, IPointerClickHandler
 {
@@ -17,9 +21,6 @@ public class Character : MonoBehaviour, IPointerClickHandler
 #region Variables
 
     public static float borderColor;
-    public enum Position { Grounded, Airborne, Dead };
-    public enum Emotion { Dead, Neutral, Happy, Ecstatic, Angry, Enraged, Sad, Depressed };
-    public enum CharacterType { Player, Enemy }
 
     [Foldout("Player info", true)]
     protected Ability chosenAbility;

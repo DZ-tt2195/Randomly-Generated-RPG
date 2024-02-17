@@ -232,7 +232,7 @@ public class TurnManager : MonoBehaviour
 
         nextCharacter.name = FileManager.instance.listOfHelpers[ID].myName;
         Log.instance.AddText($"{Log.Article(nextCharacter.name)} entered the fight.", logged);
-        yield return (nextCharacter.SetupCharacter(Character.CharacterType.Player, FileManager.instance.listOfHelpers[ID], true, null));
+        yield return (nextCharacter.SetupCharacter(CharacterType.Player, FileManager.instance.listOfHelpers[ID], true, null));
     }
 
     public IEnumerator CreateEnemy(int ID, float multiplier, int logged)
@@ -254,7 +254,7 @@ public class TurnManager : MonoBehaviour
 
         nextCharacter.name = FileManager.instance.listOfEnemies[ID].myName;
         Log.instance.AddText($"{Log.Article(nextCharacter.name)} entered the fight.", logged);
-        yield return (nextCharacter.SetupCharacter(Character.CharacterType.Enemy, FileManager.instance.listOfEnemies[ID], false, null, multiplier));
+        yield return (nextCharacter.SetupCharacter(CharacterType.Enemy, FileManager.instance.listOfEnemies[ID], false, null, multiplier));
     }
 
     public void DisableCharacterButtons()

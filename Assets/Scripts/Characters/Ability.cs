@@ -5,6 +5,9 @@ using UnityEngine.UI;
 using MyBox;
 using TMPro;
 
+public enum TeamTarget { None, Self, AnyOne, All, OnePlayer, OtherPlayer, OneEnemy, OtherEnemy, AllPlayers, AllEnemies };
+public enum AbilityType { None, Attack, Stats, Emotion, Position, Healing, Summon, Misc };
+
 public class Ability : MonoBehaviour
 {
 
@@ -16,9 +19,13 @@ public class Ability : MonoBehaviour
     [ReadOnly] public string description;
     [ReadOnly] public string logDescription;
 
+    [ReadOnly] public AbilityType typeOne;
+    [ReadOnly] public AbilityType typeTwo;
+
     [ReadOnly] public string instructions;
     [ReadOnly] public string nextInstructions;
     [ReadOnly] public string playCondition;
+
     [ReadOnly] public float healthChange;
 
     [ReadOnly] public int baseCooldown;
@@ -30,10 +37,9 @@ public class Ability : MonoBehaviour
     [ReadOnly] public float modifyLuck;
     [ReadOnly] public float modifyAccuracy;
 
-    [ReadOnly] public Character.Emotion? newEmotion;
-    [ReadOnly] public Character.Position? newPosition;
+    [ReadOnly] public Emotion? newEmotion;
+    [ReadOnly] public Position? newPosition;
 
-    public enum TeamTarget { None, Self, AnyOne, All, OnePlayer, OtherPlayer, OneEnemy, OtherEnemy, AllPlayers, AllEnemies };
     [ReadOnly] public TeamTarget teamTarget;
     [ReadOnly] public HashSet<TeamTarget> singleTarget = new() { TeamTarget.AnyOne, TeamTarget.OnePlayer, TeamTarget.OtherPlayer, TeamTarget.OneEnemy, TeamTarget.OtherEnemy };
 
@@ -48,6 +54,8 @@ public class Ability : MonoBehaviour
         instructions = data.instructions;
         nextInstructions = data.nextInstructions;
         description = KeywordTooltip.instance.EditText(data.description);
+        typeOne = data.typeOne;
+        typeTwo = data.typeTwo;
         logDescription = data.logDescription;
         playCondition = data.playCondition;
         healthChange = data.healthChange;
@@ -127,48 +135,48 @@ public class Ability : MonoBehaviour
                         break;
 
                     case "SELFGROUNDED":
-                        return user.currentPosition == Character.Position.Grounded;
+                        return user.currentPosition == Position.Grounded;
                     case "SELFAIRBORNE":
-                        return user.currentPosition == Character.Position.Airborne;
+                        return user.currentPosition == Position.Airborne;
 
                     case "SELFSECONDTIER":
-                        return (user.currentEmotion == Character.Emotion.Enraged || user.currentEmotion == Character.Emotion.Ecstatic || user.currentEmotion == Character.Emotion.Depressed);
+                        return (user.currentEmotion == Emotion.Enraged || user.currentEmotion == Emotion.Ecstatic || user.currentEmotion == Emotion.Depressed);
 
                     case "NOTHAPPY":
-                        return (user.currentEmotion != Character.Emotion.Happy && user.currentEmotion != Character.Emotion.Ecstatic);
+                        return (user.currentEmotion != Emotion.Happy && user.currentEmotion != Emotion.Ecstatic);
                     case "SELFHAPPY":
-                        return (user.currentEmotion == Character.Emotion.Happy || user.currentEmotion == Character.Emotion.Ecstatic);
+                        return (user.currentEmotion == Emotion.Happy || user.currentEmotion == Emotion.Ecstatic);
                     case "SELFECSTATIC":
-                        return (user.currentEmotion == Character.Emotion.Ecstatic);
+                        return (user.currentEmotion == Emotion.Ecstatic);
 
                     case "NOTANGRY":
-                        return (user.currentEmotion != Character.Emotion.Angry && user.currentEmotion != Character.Emotion.Enraged);
+                        return (user.currentEmotion != Emotion.Angry && user.currentEmotion != Emotion.Enraged);
                     case "SELFANGRY":
-                        return (user.currentEmotion == Character.Emotion.Angry || user.currentEmotion == Character.Emotion.Enraged);
+                        return (user.currentEmotion == Emotion.Angry || user.currentEmotion == Emotion.Enraged);
                     case "SELFENRAGED":
-                        return (user.currentEmotion == Character.Emotion.Enraged);
+                        return (user.currentEmotion == Emotion.Enraged);
 
                     case "NOTSAD":
-                        return (user.currentEmotion != Character.Emotion.Sad && user.currentEmotion != Character.Emotion.Depressed);
+                        return (user.currentEmotion != Emotion.Sad && user.currentEmotion != Emotion.Depressed);
                     case "SELFSAD":
-                        return (user.currentEmotion == Character.Emotion.Sad || user.currentEmotion == Character.Emotion.Depressed);
+                        return (user.currentEmotion == Emotion.Sad || user.currentEmotion == Emotion.Depressed);
                     case "SELFDEPRESSED":
-                        return (user.currentEmotion == Character.Emotion.Depressed);
+                        return (user.currentEmotion == Emotion.Depressed);
 
                     case "GROUNDEDONLY":
                         for (int i = listOfTargets.Count - 1; i >= 0; i--)
-                            if (listOfTargets[i].currentPosition != Character.Position.Grounded) listOfTargets.RemoveAt(i);
+                            if (listOfTargets[i].currentPosition != Position.Grounded) listOfTargets.RemoveAt(i);
                         break;
                     case "AIRBORNEONLY":
                         for (int i = listOfTargets.Count - 1; i >= 0; i--)
-                            if (listOfTargets[i].currentPosition != Character.Position.Airborne) listOfTargets.RemoveAt(i);
+                            if (listOfTargets[i].currentPosition != Position.Airborne) listOfTargets.RemoveAt(i);
                         break;
                     case "CANSUMMON":
                         if (TurnManager.instance.players.Count >= 5) return false;
                         break;
                     case "NOTNEUTRAL":
                         for (int i = listOfTargets.Count - 1; i >= 0; i--)
-                            if (listOfTargets[i].currentEmotion == Character.Emotion.Neutral) listOfTargets.RemoveAt(i);
+                            if (listOfTargets[i].currentEmotion == Emotion.Neutral) listOfTargets.RemoveAt(i);
                         break;
 
                     default:
@@ -274,91 +282,91 @@ public class Ability : MonoBehaviour
                     break;
 
                 case "SELFSWAPPOSITION":
-                    if (self.currentPosition == Character.Position.Airborne)
-                        yield return self.ChangePosition(Character.Position.Grounded, logged);
-                    else if (self.currentPosition == Character.Position.Grounded)
-                        yield return self.ChangePosition(Character.Position.Airborne, logged);
+                    if (self.currentPosition == Position.Airborne)
+                        yield return self.ChangePosition(Position.Grounded, logged);
+                    else if (self.currentPosition == Position.Grounded)
+                        yield return self.ChangePosition(Position.Airborne, logged);
                     break;
                 case "TARGETSSWAPPOSITION":
                     for (int i = 0; i < listOfTargets.Count; i++)
                     {
-                        if (listOfTargets[i].currentPosition == Character.Position.Airborne)
-                            yield return listOfTargets[i].ChangePosition(Character.Position.Grounded, logged);
-                        else if (listOfTargets[i].currentPosition == Character.Position.Grounded)
-                            yield return listOfTargets[i].ChangePosition(Character.Position.Airborne, logged);
+                        if (listOfTargets[i].currentPosition == Position.Airborne)
+                            yield return listOfTargets[i].ChangePosition(Position.Grounded, logged);
+                        else if (listOfTargets[i].currentPosition == Position.Grounded)
+                            yield return listOfTargets[i].ChangePosition(Position.Airborne, logged);
                     }
                     break;
 
                 case "SELFGROUNDED":
-                    yield return self.ChangePosition(Character.Position.Grounded, logged);
+                    yield return self.ChangePosition(Position.Grounded, logged);
                     break;
                 case "TARGETSGROUNDED":
                     for (int i = 0; i < listOfTargets.Count; i++)
-                        yield return listOfTargets[i].ChangePosition(Character.Position.Grounded, logged);
+                        yield return listOfTargets[i].ChangePosition(Position.Grounded, logged);
                     break;
 
                 case "SELFAIRBORNE":
-                    yield return self.ChangePosition(Character.Position.Airborne, logged);
+                    yield return self.ChangePosition(Position.Airborne, logged);
                     break;
                 case "TARGETSAIRBORNE":
                     for (int i = 0; i < listOfTargets.Count; i++)
-                        yield return listOfTargets[i].ChangePosition(Character.Position.Airborne, logged);
+                        yield return listOfTargets[i].ChangePosition(Position.Airborne, logged);
                     break;
 
                 case "SELFHAPPY":
-                    yield return self.ChangeEmotion(Character.Emotion.Happy, logged);
+                    yield return self.ChangeEmotion(Emotion.Happy, logged);
                     break;
                 case "TARGETSHAPPY":
                     for (int i = 0; i < listOfTargets.Count; i++)
-                        yield return listOfTargets[i].ChangeEmotion(Character.Emotion.Happy, logged);
+                        yield return listOfTargets[i].ChangeEmotion(Emotion.Happy, logged);
                     break;
 
                 case "SELFECSTATIC":
-                    yield return self.ChangeEmotion(Character.Emotion.Ecstatic, logged);
+                    yield return self.ChangeEmotion(Emotion.Ecstatic, logged);
                     break;
                 case "TARGETSECSTATIC":
                     for (int i = 0; i < listOfTargets.Count; i++)
-                        yield return listOfTargets[i].ChangeEmotion(Character.Emotion.Ecstatic, logged);
+                        yield return listOfTargets[i].ChangeEmotion(Emotion.Ecstatic, logged);
                     break;
 
                 case "SELFSAD":
-                    yield return self.ChangeEmotion(Character.Emotion.Sad, logged);
+                    yield return self.ChangeEmotion(Emotion.Sad, logged);
                     break;
                 case "TARGETSSAD":
                     for (int i = 0; i < listOfTargets.Count; i++)
-                        yield return listOfTargets[i].ChangeEmotion(Character.Emotion.Sad, logged);
+                        yield return listOfTargets[i].ChangeEmotion(Emotion.Sad, logged);
                     break;
 
                 case "SELFDEPRESSED":
-                    yield return self.ChangeEmotion(Character.Emotion.Depressed, logged);
+                    yield return self.ChangeEmotion(Emotion.Depressed, logged);
                     break;
                 case "TARGETSDEPRESSED":
                     for (int i = 0; i < listOfTargets.Count; i++)
-                        yield return listOfTargets[i].ChangeEmotion(Character.Emotion.Depressed, logged);
+                        yield return listOfTargets[i].ChangeEmotion(Emotion.Depressed, logged);
                     break;
 
                 case "SELFANGRY":
-                    yield return self.ChangeEmotion(Character.Emotion.Angry, logged);
+                    yield return self.ChangeEmotion(Emotion.Angry, logged);
                     break;
                 case "TARGETSANGRY":
                     for (int i = 0; i < listOfTargets.Count; i++)
-                        yield return listOfTargets[i].ChangeEmotion(Character.Emotion.Angry, logged);
+                        yield return listOfTargets[i].ChangeEmotion(Emotion.Angry, logged);
                     break;
 
                 case "SELFENRAGED":
-                    yield return self.ChangeEmotion(Character.Emotion.Enraged, logged);
+                    yield return self.ChangeEmotion(Emotion.Enraged, logged);
                     break;
                 case "TARGETSENRAGED":
                     for (int i = 0; i < listOfTargets.Count; i++)
-                        yield return listOfTargets[i].ChangeEmotion(Character.Emotion.Enraged, logged);
+                        yield return listOfTargets[i].ChangeEmotion(Emotion.Enraged, logged);
                     break;
 
                 case "SELFNEUTRAL":
-                    yield return self.ChangeEmotion(Character.Emotion.Neutral, logged);
+                    yield return self.ChangeEmotion(Emotion.Neutral, logged);
                     break;
                 case "TARGETSNEUTRAL":
                     for (int i = 0; i < listOfTargets.Count; i++)
-                        yield return listOfTargets[i].ChangeEmotion(Character.Emotion.Neutral, logged);
+                        yield return listOfTargets[i].ChangeEmotion(Emotion.Neutral, logged);
                     break;
 
                 case "TARGETSAMPLIFY":
@@ -366,14 +374,14 @@ public class Ability : MonoBehaviour
                     {
                         switch (listOfTargets[i].currentEmotion)
                         {
-                            case Character.Emotion.Happy:
-                                yield return self.ChangeEmotion(Character.Emotion.Ecstatic, logged);
+                            case Emotion.Happy:
+                                yield return self.ChangeEmotion(Emotion.Ecstatic, logged);
                                 break;
-                            case Character.Emotion.Angry:
-                                yield return self.ChangeEmotion(Character.Emotion.Enraged, logged);
+                            case Emotion.Angry:
+                                yield return self.ChangeEmotion(Emotion.Enraged, logged);
                                 break;
-                            case Character.Emotion.Sad:
-                                yield return self.ChangeEmotion(Character.Emotion.Depressed, logged);
+                            case Emotion.Sad:
+                                yield return self.ChangeEmotion(Emotion.Depressed, logged);
                                 break;
                         }
                     }
@@ -449,69 +457,69 @@ public class Ability : MonoBehaviour
     public float Effectiveness(Character user, Character target, int logged)
     {
         float answer = 1;
-        if (user.currentEmotion == Character.Emotion.Happy)
+        if (user.currentEmotion == Emotion.Happy)
         {
             answer = target.currentEmotion switch
             {
-                (Character.Emotion.Angry) => 1.25f,
-                (Character.Emotion.Enraged) => 1.25f,
-                (Character.Emotion.Sad) => 0.75f,
-                (Character.Emotion.Depressed) => 0.75f,
+                (Emotion.Angry) => 1.25f,
+                (Emotion.Enraged) => 1.25f,
+                (Emotion.Sad) => 0.75f,
+                (Emotion.Depressed) => 0.75f,
                 _ => 1.0f,
             };
         }
-        else if (user.currentEmotion == Character.Emotion.Ecstatic)
+        else if (user.currentEmotion == Emotion.Ecstatic)
         {
             answer = target.currentEmotion switch
             {
-                (Character.Emotion.Angry) => 1.5f,
-                (Character.Emotion.Enraged) => 1.5f,
-                (Character.Emotion.Sad) => 0.5f,
-                (Character.Emotion.Depressed) => 0.5f,
+                (Emotion.Angry) => 1.5f,
+                (Emotion.Enraged) => 1.5f,
+                (Emotion.Sad) => 0.5f,
+                (Emotion.Depressed) => 0.5f,
                 _ => 1.0f,
             };
         }
-        else if (user.currentEmotion == Character.Emotion.Angry)
+        else if (user.currentEmotion == Emotion.Angry)
         {
             answer = target.currentEmotion switch
             {
-                (Character.Emotion.Sad) => 1.25f,
-                (Character.Emotion.Depressed) => 1.25f,
-                (Character.Emotion.Happy) => 0.75f,
-                (Character.Emotion.Ecstatic) => 0.75f,
+                (Emotion.Sad) => 1.25f,
+                (Emotion.Depressed) => 1.25f,
+                (Emotion.Happy) => 0.75f,
+                (Emotion.Ecstatic) => 0.75f,
                 _ => 1.0f,
             };
         }
-        else if (user.currentEmotion == Character.Emotion.Enraged)
+        else if (user.currentEmotion == Emotion.Enraged)
         {
             answer = target.currentEmotion switch
             {
-                (Character.Emotion.Sad) => 1.5f,
-                (Character.Emotion.Depressed) => 1.5f,
-                (Character.Emotion.Happy) => 0.5f,
-                (Character.Emotion.Ecstatic) => 0.5f,
+                (Emotion.Sad) => 1.5f,
+                (Emotion.Depressed) => 1.5f,
+                (Emotion.Happy) => 0.5f,
+                (Emotion.Ecstatic) => 0.5f,
                 _ => 1.0f,
             };
         }
-        else if (user.currentEmotion == Character.Emotion.Sad)
+        else if (user.currentEmotion == Emotion.Sad)
         {
             answer = target.currentEmotion switch
             {
-                (Character.Emotion.Happy) => 1.25f,
-                (Character.Emotion.Ecstatic) => 1.25f,
-                (Character.Emotion.Angry) => 0.75f,
-                (Character.Emotion.Enraged) => 0.75f,
+                (Emotion.Happy) => 1.25f,
+                (Emotion.Ecstatic) => 1.25f,
+                (Emotion.Angry) => 0.75f,
+                (Emotion.Enraged) => 0.75f,
                 _ => 1.0f,
             };
         }
-        else if (user.currentEmotion == Character.Emotion.Depressed)
+        else if (user.currentEmotion == Emotion.Depressed)
         {
             answer = target.currentEmotion switch
             {
-                (Character.Emotion.Happy) => 1.5f,
-                (Character.Emotion.Ecstatic) => 1.5f,
-                (Character.Emotion.Angry) => 0.5f,
-                (Character.Emotion.Enraged) => 0.5f,
+                (Emotion.Happy) => 1.5f,
+                (Emotion.Ecstatic) => 1.5f,
+                (Emotion.Angry) => 0.5f,
+                (Emotion.Enraged) => 0.5f,
                 _ => 1.0f,
             };
         }

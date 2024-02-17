@@ -18,13 +18,13 @@
       "Shoots down Airborne Teammates with a high chance of critical hits.",
       "90",
       "20",
-      "10",
+      "12",
       "30",
       "0.3",
       "1",
       "GROUNDED",
       "NEUTRAL",
-      "28,29,30,31,",
+      "29,30,31,32,",
       "PrioritizeAirborne"
     ],
     [
@@ -32,27 +32,27 @@
       "Drains health from Grounded Teammates.",
       "90",
       "20",
-      "6",
+      "8",
       "60",
       "0.1",
       "0.85",
       "AIRBORNE",
       "NEUTRAL",
-      "32,33,34,",
+      "33,34,35,",
       "PrioritizeGrounded"
     ],
     [
       "Wolf",
-      "Makes all Teammates Sad, and then hunts them down while Angry.",
+      "Makes itself Angry and hunts down Players who are Sad and Grounded. Can also be dangerous when Airborne.",
       "90",
       "25",
-      "8",
+      "10",
       "40",
       "0.1",
       "0.85",
       "GROUNDED",
       "ANGRY",
-      "35,36,37,38,",
+      "36,37,38,39,",
       "Effectiveness"
     ],
     [
@@ -66,7 +66,7 @@
       "1.25",
       "GROUNDED",
       "NEUTRAL",
-      "39,"
+      "40,"
     ]
   ]
 }

@@ -16,40 +16,40 @@
       "Knight",
       "Does a lot of damage against individual and Grounded Enemies.",
       "80",
-      "25",
+      "30",
       "13",
       "50",
       "0.1",
       "0.95",
       "GROUNDED",
       "NEUTRAL",
-      "2,3,4,5,6,7,8,"
+      "2,3,4,5,6,7,8,9,"
     ],
     [
       "Angel",
       "Focuses on healing from above.",
       "60",
-      "15",
+      "20",
       "6",
       "40",
       "0.1",
       "0.95",
       "AIRBORNE",
       "NEUTRAL",
-      "9,10,11,12,13,14,15,"
+      "11,12,13,14,15,16,17,"
     ],
     [
       "Wizard",
       "Does damage against groups and Airborne Enemies.",
       "70",
-      "20",
+      "25",
       "10",
       "30",
       "0.1",
       "0.95",
       "GROUNDED",
       "NEUTRAL",
-      "16,17,18,19,20,21,22,"
+      "19,20,21,22,23,24,25,"
     ]
   ]
 }

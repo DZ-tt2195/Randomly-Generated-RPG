@@ -53,7 +53,7 @@ public class TitleScreen : MonoBehaviour
             if (FileManager.instance.listOfWeapons.Count == 0) randomWeapon = null;
             else randomWeapon = FileManager.instance.listOfWeapons[i];
 
-            yield return nextCharacter.SetupCharacter(Character.CharacterType.Player, playerData[i], false, randomWeapon);
+            yield return nextCharacter.SetupCharacter(CharacterType.Player, playerData[i], false, randomWeapon);
             FileManager.instance.listOfPlayers.Add(nextCharacter);
 
             nextCharacter.transform.SetParent(FileManager.instance.canvas);

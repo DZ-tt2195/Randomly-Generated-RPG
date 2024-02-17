@@ -124,7 +124,7 @@ public class Weapon : MonoBehaviour
                 case "NONE":
                     break;
                 case "IFAIRBORNE":
-                    return self.currentPosition == Character.Position.Airborne;
+                    return self.currentPosition == Position.Airborne;
                 default:
                     Debug.LogError($"{methodName} isn't implemented");
                     break;

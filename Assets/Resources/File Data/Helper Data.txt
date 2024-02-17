@@ -16,40 +16,40 @@
       "Student",
       "Changes Enemy Emotions.",
       "50",
-      "10",
+      "20",
       "10",
       "60",
       "0",
       "1",
       "GROUNDED",
       "NEUTRAL",
-      "23,24,25,"
+      "26,27,28,"
     ],
     [
       "Spirit",
       "Can sacrifice itself to revive a Teammate.",
       "30",
-      "10",
+      "20",
       "8",
       "75",
       "0",
       "1",
       "AIRBORNE",
       "NEUTRAL",
-      "27,"
+      "18,"
     ],
     [
       "Golem",
       "Tanks damage.",
       "75",
-      "10",
+      "20",
       "15",
       "0",
       "0",
       "0.9",
       "GROUNDED",
       "NEUTRAL",
-      "26,"
+      "10,"
     ]
   ]
 }
