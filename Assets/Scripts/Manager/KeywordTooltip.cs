@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using System.Text.RegularExpressions;
 //using System.Drawing;
 
 [Serializable]
@@ -46,10 +47,14 @@ public class KeywordTooltip : MonoBehaviour
     {
         string answer = text;
         foreach (KeywordHover link in linkedKeywords)
-            answer = answer.Replace(link.keyword, $"<link=\"{link.keyword}\"><u><color=#{ColorUtility.ToHtmlStringRGB(link.color)}><b>{link.keyword}</b><color=#FFFFFF></u></link>");
+        {
+            string pattern = $@"\b{Regex.Escape(link.keyword)}\b";
+            answer = Regex.Replace(answer, pattern, $"<link=\"{link.keyword}\"><u><color=#{ColorUtility.ToHtmlStringRGB(link.color)}><b>{link.keyword}</b><color=#FFFFFF></u></link>");
+        }
         foreach (KeywordHover link in spriteKeywords)
+        {
             answer = answer.Replace(link.keyword, $"<link=\"{link.keyword}\"><sprite=\"Symbols\"name=\"{link.keyword}\"></link>");
-
+        }
         return answer;
     }
 

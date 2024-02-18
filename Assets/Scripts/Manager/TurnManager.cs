@@ -26,6 +26,7 @@ public class TurnManager : MonoBehaviour
     public static TurnManager instance;
     [Foldout("Prefabs", true)]
         [SerializeField] GameObject characterPrefab;
+        [SerializeField] PointsVisual pointsVisual;
         public TextCollector undoBox;
 
     [Foldout("UI", true)]
@@ -305,6 +306,12 @@ public class TurnManager : MonoBehaviour
         foreach (string text in buttons)
             collector.AddTextButton(text);
         return collector;
+    }
+
+    public void CreateVisual(string text, Vector3 position)
+    {
+        PointsVisual pv = Instantiate(pointsVisual, FileManager.instance.canvas);
+        pv.Setup(text, position);
     }
 
 #endregion

@@ -542,12 +542,13 @@ public class Ability : MonoBehaviour
             float attack = user.CalculateAttack();
             float defense = target.CalculateDefense(user);
 
-            int finalDamage = (int)(damageVariation * critical * effectiveness + (attack * healthChange) - defense);
-            return finalDamage > 0 ? finalDamage : 0;
+            int finalDamage = Mathf.Max(0, (int)(damageVariation * critical * effectiveness + (attack * healthChange) - defense));
+            return finalDamage;
         }
         else
         {
             Log.instance.AddText($"{user.name}'s attack misses.", 1);
+            TurnManager.instance.CreateVisual("MISS", target.transform.localPosition);
             return 0;
         }
     }

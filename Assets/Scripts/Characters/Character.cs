@@ -8,6 +8,7 @@ using UnityEngine.EventSystems;
 using System;
 using System.Linq;
 using static Ability;
+//using static UnityEngine.GraphicsBuffer;
 //using UnityEditor.Playables;
 
 public enum Position { Grounded, Airborne, Dead };
@@ -59,7 +60,7 @@ public class Character : MonoBehaviour, IPointerClickHandler
     [ReadOnly] public Image myImage;
     [ReadOnly] public Image weaponImage;
     Button infoButton;
-    TMP_Text emotionText;
+    TMP_Text statusText;
     TMP_Text healthText;
     [ReadOnly] public string description;
 
@@ -74,7 +75,7 @@ public class Character : MonoBehaviour, IPointerClickHandler
         infoButton.onClick.AddListener(RightClickInfo);
         myButton = GetComponent<Button>();
         border = transform.Find("border").GetComponent<Image>();
-        emotionText = transform.Find("Emotion Text").GetComponent<TMP_Text>();
+        statusText = transform.Find("Status Text").GetComponent<TMP_Text>();
         healthText = transform.Find("Health %").GetChild(0).GetComponent<TMP_Text>();
         weaponImage = transform.Find("Weapon Image").GetComponent<Image>();
     }
@@ -326,6 +327,7 @@ public class Character : MonoBehaviour, IPointerClickHandler
         if (this == null) yield break;
 
         turnsStunned += amount;
+        TurnManager.instance.CreateVisual($"STUNNED", this.transform.localPosition);
         Log.instance.AddText($"{(this.name)} is stunned for {turnsStunned} turns.", logged);
     }
 
@@ -337,6 +339,7 @@ public class Character : MonoBehaviour, IPointerClickHandler
         if (currentHealth > baseHealth)
             currentHealth = baseHealth;
         healthText.text = $"{100 * ((float)currentHealth / baseHealth):F0}%";
+        TurnManager.instance.CreateVisual($"+{(int)health}", this.transform.localPosition);
         Log.instance.AddText($"{(this.name)} regains {health} HP.", logged);
     }
 
@@ -346,6 +349,7 @@ public class Character : MonoBehaviour, IPointerClickHandler
 
         currentHealth -= damage;
         healthText.text = $"{100 * ((float)currentHealth / baseHealth):F0}%";
+        TurnManager.instance.CreateVisual($"-{(int)damage}", this.transform.localPosition);
         Log.instance.AddText($"{(this.name)} takes {damage} damage.", logged);
 
         if (currentHealth <= 0)
@@ -507,28 +511,28 @@ public class Character : MonoBehaviour, IPointerClickHandler
         switch (currentEmotion)
         {
             case Emotion.Neutral:
-                emotionText.text = TextSubstitute.neutralText;
+                statusText.text = $"{TextSubstitute.neutralText}\n{currentPosition}";
                 break;
             case Emotion.Happy:
-                emotionText.text = TextSubstitute.happyText;
+                statusText.text = $"{TextSubstitute.happyText}\n{currentPosition}";
                 break;
             case Emotion.Ecstatic:
-                emotionText.text = TextSubstitute.ecstaticText;
+                statusText.text = $"{TextSubstitute.ecstaticText}\n{currentPosition}";
                 break;
             case Emotion.Angry:
-                emotionText.text = TextSubstitute.angryText;
+                statusText.text = $"{TextSubstitute.angryText}\n{currentPosition}";
                 break;
             case Emotion.Enraged:
-                emotionText.text = TextSubstitute.enragedText;
+                statusText.text = $"{TextSubstitute.enragedText}\n{currentPosition}";
                 break;
             case Emotion.Sad:
-                emotionText.text = TextSubstitute.sadText;
+                statusText.text = $"{TextSubstitute.sadText}\n{currentPosition}";
                 break;
             case Emotion.Depressed:
-                emotionText.text = TextSubstitute.depressedText;
+                statusText.text = $"{TextSubstitute.depressedText}\n{currentPosition}";
                 break;
             case Emotion.Dead:
-                emotionText.text = TextSubstitute.deadText;
+                statusText.text = $"{TextSubstitute.deadText}";
                 break;
         }
     }

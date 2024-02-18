@@ -154,6 +154,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   characterPrefab: {fileID: 8345166759536211255, guid: 750995808170643f1b046855142825f7, type: 3}
+  pointsVisual: {fileID: 8766781883395997160, guid: d817be641f2464bdaa47d0a4e0b6d381, type: 3}
   undoBox: {fileID: 7928303491963949573, guid: 0ce383b7ea8ca488c810cadf3b089e7e, type: 3}
   listOfBoxes:
   - {fileID: 1087068209}
