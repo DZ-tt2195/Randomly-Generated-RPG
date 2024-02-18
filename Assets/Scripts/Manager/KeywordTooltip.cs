@@ -14,21 +14,6 @@ public class KeywordHover
     public Color color = Color.white;
 }
 
-public static class TextSubstitute
-{
-    public static string neutralText = $"<link=\"Neutral\"><u><color=#FFFFFF><b>Neutral</b><color=#FFFFFF></u></link>";
-    public static string deadText = $"<color=#D3D3D3>Dead</color>";
-
-    public static string happyText = $"<link=\"Happy\"><u><color=#00FF00><b>Happy</b><color=#FFFFFF></u></link>";
-    public static string ecstaticText = $"<link=\"Ecstatic\"><u><color=#00FF00><b>Ecstatic</b><color=#FFFFFF></u></link>";
-
-    public static string angryText = $"<link=\"Angry\"><u><color=#FF4C4C><b>Angry</b><color=#FFFFFF></u></link>";
-    public static string enragedText = $"<link=\"Enraged\"><u><color=#FF4C4C><b>Enraged</b><color=#FFFFFF></u></link>";
-
-    public static string sadText = $"<link=\"Sad\"><u><color=#9999FF><b>Sad</b><color=#FFFFFF></u></link>";
-    public static string depressedText = $"<link=\"Depressed\"><u><color=#9999FF><b>Depressed</b><color=#FFFFFF></u></link>";
-}
-
 public class KeywordTooltip : MonoBehaviour
 {
     public static KeywordTooltip instance;

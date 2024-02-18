@@ -80,34 +80,7 @@ public class RightClick : MonoBehaviour
             weaponDescription.text = character.weapon.description;
         }
 
-        switch (character.currentEmotion)
-        {
-            case Emotion.Neutral:
-                emotionText.text = TextSubstitute.neutralText;
-                break;
-            case Emotion.Happy:
-                emotionText.text = TextSubstitute.happyText;
-                break;
-            case Emotion.Ecstatic:
-                emotionText.text = TextSubstitute.ecstaticText;
-                break;
-            case Emotion.Angry:
-                emotionText.text = TextSubstitute.angryText;
-                break;
-            case Emotion.Enraged:
-                emotionText.text = TextSubstitute.enragedText;
-                break;
-            case Emotion.Sad:
-                emotionText.text = TextSubstitute.sadText;
-                break;
-            case Emotion.Depressed:
-                emotionText.text = TextSubstitute.depressedText;
-                break;
-            case Emotion.Dead:
-                emotionText.text = TextSubstitute.deadText;
-                break;
-        }
-
+        emotionText.text = KeywordTooltip.instance.EditText($"{character.currentEmotion}");
         stats1.text = firstStat;
         stats2.text = secondStat;
 

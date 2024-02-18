@@ -505,36 +505,9 @@ public class Character : MonoBehaviour, IPointerClickHandler
         else
             currentEmotion = newEmotion;
 
+        statusText.text = KeywordTooltip.instance.EditText($"{currentEmotion}\n{currentPosition}");
         if (Log.instance != null && currentEmotion != Emotion.Dead)
             Log.instance.AddText($"{(this.name)} is now {currentEmotion}.", logged);
-
-        switch (currentEmotion)
-        {
-            case Emotion.Neutral:
-                statusText.text = $"{TextSubstitute.neutralText}\n{currentPosition}";
-                break;
-            case Emotion.Happy:
-                statusText.text = $"{TextSubstitute.happyText}\n{currentPosition}";
-                break;
-            case Emotion.Ecstatic:
-                statusText.text = $"{TextSubstitute.ecstaticText}\n{currentPosition}";
-                break;
-            case Emotion.Angry:
-                statusText.text = $"{TextSubstitute.angryText}\n{currentPosition}";
-                break;
-            case Emotion.Enraged:
-                statusText.text = $"{TextSubstitute.enragedText}\n{currentPosition}";
-                break;
-            case Emotion.Sad:
-                statusText.text = $"{TextSubstitute.sadText}\n{currentPosition}";
-                break;
-            case Emotion.Depressed:
-                statusText.text = $"{TextSubstitute.depressedText}\n{currentPosition}";
-                break;
-            case Emotion.Dead:
-                statusText.text = $"{TextSubstitute.deadText}";
-                break;
-        }
     }
 
     #endregion

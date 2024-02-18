@@ -72,43 +72,43 @@ public class Weapon : MonoBehaviour
 
 #region Effects
 
-    public IEnumerator StartOfTurn(int logged)
+    IEnumerator RunMethod(string methodName, int logged)
     {
         yield return null;
+        switch (methodName)
+        {
+            case "":
+                break;
+            case "NONE":
+                break;
+            case "USEABILITIES":
+                foreach (Ability ability in listOfAbilities)
+                {
+                    if (ability.CanPlay(self))
+                        yield return ability.ResolveInstructions(TurnManager.SpliceString(ability.instructions), logged + 1);
+                }
+                break;
+            default:
+                Debug.LogError($"{methodName} isn't implemented");
+                break;
+        }
+    }
+
+    public IEnumerator StartOfTurn(int logged)
+    {
         string[] spliced = TurnManager.SpliceString(startOfTurn);
         foreach (string methodName in spliced)
         {
-            switch (methodName)
-            {
-                case "":
-                    break;
-                case "NONE":
-                    break;
-
-                default:
-                    Debug.LogError($"{methodName} isn't implemented");
-                    break;
-            }
+            yield return RunMethod(methodName, logged);
         }
     }
 
     public IEnumerator EndOfTurn(int logged)
     {
-        yield return null;
-        string[] spliced = TurnManager.SpliceString(endOfTurn);
+        string[] spliced = TurnManager.SpliceString(startOfTurn);
         foreach (string methodName in spliced)
         {
-            switch (methodName)
-            {
-                case "":
-                    break;
-                case "NONE":
-                    break;
-
-                default:
-                    Debug.LogError($"{methodName} isn't implemented");
-                    break;
-            }
+            yield return RunMethod(methodName, logged);
         }
     }
 
@@ -136,57 +136,19 @@ public class Weapon : MonoBehaviour
 
     public IEnumerator NewWave(int logged)
     {
-        string[] spliced = TurnManager.SpliceString(newWave);
+        string[] spliced = TurnManager.SpliceString(startOfTurn);
         foreach (string methodName in spliced)
         {
-            switch (methodName)
-            {
-                case "":
-                    break;
-                case "NONE":
-                    break;
-                case "USEABILITIES":
-                    foreach (Ability ability in listOfAbilities)
-                    {
-                        if (ability.CanPlay(self))
-                            yield return ability.ResolveInstructions(TurnManager.SpliceString(ability.instructions), logged + 1);
-                    }
-                    break;
-                case "SELFHEAL":
-                    yield return self.GainHealth(30, logged);
-                    break;
-
-                default:
-                    Debug.LogError($"{methodName} isn't implemented");
-                    break;
-            }
+            yield return RunMethod(methodName, logged);
         }
     }
 
     public IEnumerator OnDeath(int logged)
     {
-        string[] spliced = TurnManager.SpliceString(onDeath);
+        string[] spliced = TurnManager.SpliceString(startOfTurn);
         foreach (string methodName in spliced)
         {
-            switch (methodName)
-            {
-                case "":
-                    break;
-                case "NONE":
-                    break;
-
-                case "USEABILITIES":
-                    foreach (Ability ability in listOfAbilities)
-                    {
-                        if (ability.CanPlay(self))
-                            yield return ability.ResolveInstructions(TurnManager.SpliceString(ability.instructions), logged + 1);
-                    }
-                    break;
-
-                default:
-                    Debug.LogError($"{methodName} isn't implemented");
-                    break;
-            }
+            yield return RunMethod(methodName, logged);
         }
     }
 
