@@ -24,10 +24,9 @@ public class FileManager : MonoBehaviour
     [Tooltip("store all ability data")][ReadOnly] public List<AbilityData> listOfAbilities;
     [Tooltip("store all other ability data")][ReadOnly] public List<AbilityData> listOfOtherAbilities;
     [Tooltip("store all enemy data")][ReadOnly] public List<CharacterData> listOfEnemies;
-    [Tooltip("store all helper data")][ReadOnly] public List<CharacterData> listOfHelpers;
     [Tooltip("store all weapon data")][ReadOnly] public List<WeaponData> listOfWeapons;
 
-    #endregion
+#endregion
 
 #region Setup
 

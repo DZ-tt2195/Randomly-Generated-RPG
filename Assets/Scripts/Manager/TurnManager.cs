@@ -214,28 +214,6 @@ public class TurnManager : MonoBehaviour
             decrease = !decrease;
     }
 
-    public IEnumerator CreateHelper(int ID, int logged)
-    {
-        PlayerCharacter nextCharacter = Instantiate(characterPrefab).AddComponent<PlayerCharacter>();
-        nextCharacter.transform.SetParent(FileManager.instance.canvas);
-        nextCharacter.transform.SetAsFirstSibling();
-        players.Add(nextCharacter);
-
-        foreach (CharacterPositions position in teammatePositions)
-        {
-            if (position.character == null)
-            {
-                nextCharacter.transform.localPosition = position.position;
-                position.character = nextCharacter;
-                break;
-            }
-        }
-
-        nextCharacter.name = FileManager.instance.listOfHelpers[ID].myName;
-        Log.instance.AddText($"{Log.Article(nextCharacter.name)} entered the fight.", logged);
-        yield return (nextCharacter.SetupCharacter(CharacterType.Player, FileManager.instance.listOfHelpers[ID], true, null));
-    }
-
     public IEnumerator CreateEnemy(int ID, float multiplier, int logged)
     {
         EnemyCharacter nextCharacter = Instantiate(characterPrefab).AddComponent<EnemyCharacter>();

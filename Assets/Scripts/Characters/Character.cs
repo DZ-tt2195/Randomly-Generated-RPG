@@ -27,7 +27,6 @@ public class Character : MonoBehaviour, IPointerClickHandler
     protected Ability chosenAbility;
     [ReadOnly] public List<Ability> listOfAbilities = new List<Ability>();
     [ReadOnly] public CharacterType myType;
-    [ReadOnly] public bool isHelper;
     protected string aiTargeting;
     protected string entersFight;
     [ReadOnly] public Weapon weapon;
@@ -94,17 +93,10 @@ public class Character : MonoBehaviour, IPointerClickHandler
         baseAccuracy = characterData.baseAccuracy;
         StartCoroutine(ChangePosition(characterData.startingPosition, -1));
         startingEmotion = characterData.startingEmotion; StartCoroutine(ChangeEmotion(characterData.startingEmotion, -1));
-        this.isHelper = isHelper;
         this.aiTargeting = characterData.aiTargeting;
 
         AddAbility(FileManager.instance.FindAbility("Skip Turn"));
-
-        if (this.isHelper)
-        {
-            this.myImage.sprite = Resources.Load<Sprite>($"Helpers/{this.name}");
-            AddAbility(FileManager.instance.FindAbility("Retreat"));
-        }
-        else if (myType == CharacterType.Player)
+        if (myType == CharacterType.Player)
         {
             this.myImage.sprite = Resources.Load<Sprite>($"Teammates/{this.name}");
         }
@@ -370,7 +362,7 @@ public class Character : MonoBehaviour, IPointerClickHandler
 
         yield return ChangeEmotion(Emotion.Dead, logged);
 
-        if (this.myType == CharacterType.Player && !isHelper)
+        if (this.myType == CharacterType.Player)
         {
             myImage.color = Color.gray;
         }

@@ -30,7 +30,6 @@ public class TitleScreen : MonoBehaviour
 
         #if UNITY_EDITOR
             yield return FileManager.instance.DownloadFile("Player Data");
-            yield return FileManager.instance.DownloadFile("Helper Data");
             yield return FileManager.instance.DownloadFile("Enemy Data");
             yield return FileManager.instance.DownloadFile("Ability Data");
             yield return FileManager.instance.DownloadFile("Other Ability Data");
@@ -38,7 +37,6 @@ public class TitleScreen : MonoBehaviour
         #endif
 
         List<CharacterData> playerData = DataLoader.ReadCharacterData("Player Data");
-        FileManager.instance.listOfHelpers = DataLoader.ReadCharacterData("Helper Data");
         FileManager.instance.listOfEnemies = DataLoader.ReadCharacterData("Enemy Data");
         FileManager.instance.listOfAbilities = DataLoader.ReadAbilityData("Ability Data");
         FileManager.instance.listOfOtherAbilities = DataLoader.ReadAbilityData("Other Ability Data");
