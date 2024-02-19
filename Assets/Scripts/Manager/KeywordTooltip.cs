@@ -7,7 +7,7 @@ using System.Text.RegularExpressions;
 //using System.Drawing;
 
 [Serializable]
-public class KeywordHover
+class KeywordHover
 {
     public string keyword;
     public string description;
@@ -34,7 +34,7 @@ public class KeywordTooltip : MonoBehaviour
         foreach (KeywordHover link in linkedKeywords)
         {
             string pattern = $@"\b{Regex.Escape(link.keyword)}\b";
-            answer = Regex.Replace(answer, pattern, $"<link=\"{link.keyword}\"><u><color=#{ColorUtility.ToHtmlStringRGB(link.color)}><b>{link.keyword}</b><color=#FFFFFF></u></link>");
+            answer = Regex.Replace(answer, pattern, $"<link=\"{link.keyword}\"><u><color=#{ColorUtility.ToHtmlStringRGB(link.color)}>{link.keyword}<color=#FFFFFF></u></link>");
         }
         foreach (KeywordHover link in spriteKeywords)
         {

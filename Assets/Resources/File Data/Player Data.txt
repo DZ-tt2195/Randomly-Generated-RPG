@@ -27,7 +27,7 @@
     ],
     [
       "Angel",
-      "Focuses on healing from above.",
+      "Starts off Airborne and focuses on healing.",
       "60",
       "15",
       "6",

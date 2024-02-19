@@ -7,7 +7,7 @@ using TMPro;
 using System.Linq;
 //using System.Collections.ObjectModel;
 
-public class CharacterPositions
+class CharacterPositions
 {
     public Vector3 position;
     public Character character;
