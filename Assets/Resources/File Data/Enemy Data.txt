@@ -16,21 +16,21 @@
     [
       "Archer",
       "Shoots down Airborne Teammates with a high chance of critical hits.",
-      "90",
+      "70",
       "25",
-      "15",
+      "13",
       "30",
       "0.3",
       "1",
       "GROUNDED",
       "NEUTRAL",
-      "21,22,23,24,",
+      "32,33,34,35,",
       "PrioritizeAirborne"
     ],
     [
       "Bat",
       "Drains health from Grounded Teammates.",
-      "90",
+      "80",
       "20",
       "10",
       "60",
@@ -38,27 +38,27 @@
       "0.85",
       "AIRBORNE",
       "NEUTRAL",
-      "25,26,27,",
+      "36,37,38,",
       "PrioritizeGrounded"
     ],
     [
       "Wolf",
       "Makes itself Angry and hunts down Players who are Sad and Grounded. Can also be dangerous when Airborne.",
-      "90",
+      "80",
       "30",
-      "12",
+      "13",
       "40",
       "0.1",
       "0.85",
       "GROUNDED",
       "ANGRY",
-      "28,29,30,31,",
+      "39,40,41,42,",
       "Effectiveness"
     ],
     [
       "Bomb",
       "Does nothing for 2 turns, and then explodes.",
-      "90",
+      "60",
       "30",
       "15",
       "0",
@@ -66,7 +66,20 @@
       "1.25",
       "GROUNDED",
       "NEUTRAL",
-      "32,"
+      "43,"
+    ],
+    [
+      "Puppeteer",
+      "Makes Players Airborne, then drops them down to deal damage.",
+      "90",
+      "20",
+      "10",
+      "50",
+      "0.1",
+      "1",
+      "AIRBORNE",
+      "NEUTRAL",
+      "44,45,"
     ]
   ]
 }

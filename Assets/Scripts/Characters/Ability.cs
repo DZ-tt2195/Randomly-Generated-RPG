@@ -51,7 +51,6 @@ public class Ability : MonoBehaviour
     {
         myName = data.myName;
         instructions = data.instructions;
-        nextInstructions = data.nextInstructions;
         description = KeywordTooltip.instance.EditText(data.description);
         typeOne = data.typeOne;
         typeTwo = data.typeTwo;
@@ -292,11 +291,12 @@ public class Ability : MonoBehaviour
                             yield return listOfTargets[i].TakeDamage(damageDealt, logged);
                         }
                     break;
-                case "SELFHEAL":
-                    yield return self.GainHealth(healthChange, logged);
-                    break;
                 case "HEALFROMDAMAGE":
                     yield return self.GainHealth(damageDealt, logged);
+                    break;
+
+                case "SELFHEAL":
+                    yield return self.GainHealth(healthChange, logged);
                     break;
                 case "TARGETSHEAL":
                     for (int i = 0; i < listOfTargets.Count; i++)
@@ -464,6 +464,31 @@ public class Ability : MonoBehaviour
                 case "TARGETSSTUN":
                     for (int i = 0; i < listOfTargets.Count; i++)
                         yield return listOfTargets[i].Stun(1, logged);
+                    break;
+
+                case "TARGETSFORCEDCOOLDOWN":
+                    for (int i = 0; i < listOfTargets.Count; i++)
+                    {
+                        foreach (Ability ability in listOfTargets[i].listOfAbilities)
+                            if (ability.currentCooldown == 0)
+                                ability.currentCooldown++;
+                    }
+                    break;
+                case "TARGETSINCREASEACTIVECOOLDOWN":
+                    for (int i = 0; i < listOfTargets.Count; i++)
+                    {
+                        foreach (Ability ability in listOfTargets[i].listOfAbilities)
+                            if (ability.currentCooldown > 0)
+                                ability.currentCooldown++;
+                    }
+                    break;
+                case "TARGETSREDUCEACTIVECOOLDOWN":
+                    for (int i = 0; i<listOfTargets.Count; i++)
+                    {
+                        foreach (Ability ability in listOfTargets[i].listOfAbilities)
+                            if (ability.currentCooldown > 0)
+                                ability.currentCooldown--;
+                    }
                     break;
 
                 default:
