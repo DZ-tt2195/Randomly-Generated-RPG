@@ -24,13 +24,13 @@
       "1",
       "GROUNDED",
       "NEUTRAL",
-      "32,33,34,35,",
+      "31,32,33,34,",
       "PrioritizeAirborne"
     ],
     [
       "Bat",
       "Drains health from Grounded Teammates.",
-      "80",
+      "75",
       "20",
       "10",
       "60",
@@ -38,13 +38,13 @@
       "0.85",
       "AIRBORNE",
       "NEUTRAL",
-      "36,37,38,",
+      "35,36,37,",
       "PrioritizeGrounded"
     ],
     [
       "Wolf",
       "Makes itself Angry and hunts down Players who are Sad and Grounded. Can also be dangerous when Airborne.",
-      "80",
+      "90",
       "30",
       "13",
       "40",
@@ -52,7 +52,7 @@
       "0.85",
       "GROUNDED",
       "ANGRY",
-      "39,40,41,42,",
+      "38,39,40,41,",
       "Effectiveness"
     ],
     [
@@ -66,20 +66,20 @@
       "1.25",
       "GROUNDED",
       "NEUTRAL",
-      "43,"
+      "42,"
     ],
     [
       "Puppeteer",
       "Makes Players Airborne, then drops them down to deal damage.",
-      "90",
-      "20",
-      "10",
+      "80",
+      "25",
+      "12",
       "50",
       "0.1",
       "1",
       "AIRBORNE",
       "NEUTRAL",
-      "44,45,"
+      "43,44,"
     ]
   ]
 }

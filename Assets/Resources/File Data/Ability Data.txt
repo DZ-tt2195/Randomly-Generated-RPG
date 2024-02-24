@@ -36,24 +36,6 @@
       "NONE"
     ],
     [
-      "Any Helper",
-      "Retreat",
-      "This leaves combat.",
-      "THIS leaves combat.",
-      "Misc",
-      "",
-      "LeaveFight",
-      "",
-      "",
-      "",
-      "",
-      "",
-      "",
-      "",
-      "",
-      "NONE"
-    ],
-    [
       "Knight",
       "Joust",
       "Deal a lot of damage to a Grounded Enemy. This loses Accuracy.",
@@ -794,7 +776,7 @@
     [
       "Bomb",
       "Explosion",
-      "Deal damage to all Players, then this dies.",
+      "Deal a lot of damage to all Players, then this dies.",
       "THIS explodes.",
       "Attack",
       "",
@@ -830,7 +812,7 @@
     [
       "Puppeteer",
       "Drop",
-      "Deal damage to all Airborne Players. They become Grounded.",
+      "Deal a lot of damage to all Airborne Players. They become Grounded.",
       "THIS drops everyone on the floor.",
       "Attack",
       "Position",
