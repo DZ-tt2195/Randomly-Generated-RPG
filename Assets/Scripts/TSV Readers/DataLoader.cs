@@ -215,11 +215,8 @@ public class DataLoader
         {
             "NEUTRAL" => Emotion.Neutral,
             "HAPPY" => Emotion.Happy,
-            "ECSTATIC" => Emotion.Ecstatic,
             "ANGRY" => Emotion.Angry,
-            "ENRAGED" => Emotion.Enraged,
             "SAD" => Emotion.Sad,
-            "DEPRESSED" => Emotion.Depressed,
             "NONE" => Emotion.Neutral,
             _ => Emotion.Neutral,
         };

@@ -12,7 +12,7 @@ using static Ability;
 //using UnityEditor.Playables;
 
 public enum Position { Grounded, Airborne, Dead };
-public enum Emotion { Dead, Neutral, Happy, Ecstatic, Angry, Enraged, Sad, Depressed };
+public enum Emotion { Dead, Neutral, Happy, Angry, Sad };
 public enum CharacterType { Player, Enemy }
 
 [RequireComponent(typeof(Button))][RequireComponent(typeof(Image))]
@@ -206,7 +206,7 @@ public class Character : MonoBehaviour, IPointerClickHandler
 
         stats1 += $"Health: {currentHealth} / {baseHealth}\n";
         stats1 += $"Attack: {CalculateAttack():F1}\n";
-        stats1 += $"Defense: {CalculateDefense(null)}\n";
+        stats1 += $"Defense: {CalculateDefense()}\n";
 
         stats2 += $"Speed: {CalculateSpeed():F1}\n";
         stats2 += $"Luck: {(CalculateLuck() * 100):F1}%\n";
@@ -229,7 +229,6 @@ public class Character : MonoBehaviour, IPointerClickHandler
         float emotionEffect = currentEmotion switch
         {
             Emotion.Angry => 1.25f,
-            Emotion.Enraged => 1.5f,
             _ => 1f,
         };
 
@@ -240,74 +239,40 @@ public class Character : MonoBehaviour, IPointerClickHandler
         return baseAttack * modifyAttack * emotionEffect * weaponEffect;
     }
 
-    public float CalculateDefense(Character attacker)
+    public float CalculateDefense()
     {
-        float emotionEffect = 1f;
-
-        if (this.currentEmotion == Emotion.Sad)
-        {
-            if (attacker != null && attacker.currentEmotion != Emotion.Enraged && attacker.currentEmotion != Emotion.Angry)
-                emotionEffect = 1.25f;
-        }
-        if (this.currentEmotion == Emotion.Depressed)
-        {
-            if (attacker != null && attacker.currentEmotion != Emotion.Enraged && attacker.currentEmotion != Emotion.Angry)
-                emotionEffect = 1.5f;
-        }
-
         float weaponEffect = 1;
         if (weapon != null && weapon.StatCalculation())
             weaponEffect += weapon.modifyDefense;
 
-        return baseDefense * modifyDefense * emotionEffect * weaponEffect;
+        return baseDefense * modifyDefense * weaponEffect;
     }
 
     public float CalculateSpeed()
     {
-        float emotionEffect = currentEmotion switch
-        {
-            Emotion.Happy => 1.25f,
-            Emotion.Ecstatic => 1.5f,
-            _ => 1f,
-        };
-
         float weaponEffect = 1;
         if (weapon != null && weapon.StatCalculation())
             weaponEffect += weapon.modifySpeed;
 
-        return baseSpeed * modifySpeed * emotionEffect * weaponEffect;
+        return baseSpeed * modifySpeed * weaponEffect;
     }
 
     public float CalculateLuck()
     {
-        float emotionEffect = currentEmotion switch
-        {
-            Emotion.Happy => 1.25f,
-            Emotion.Ecstatic => 1.5f,
-            _ => 1f,
-        };
-
         float weaponEffect = 1;
         if (weapon != null && weapon.StatCalculation())
             weaponEffect += weapon.modifyLuck;
 
-        return baseLuck * modifyLuck * emotionEffect * weaponEffect;
+        return baseLuck * modifyLuck * weaponEffect;
     }
 
     public float CalculateAccuracy()
     {
-        float emotionEffect = currentEmotion switch
-        {
-            Emotion.Sad => 0.9f,
-            Emotion.Depressed => 0.8f,
-            _ => 1f,
-        };
-
         float weaponEffect = 1;
         if (weapon != null && weapon.StatCalculation())
             weaponEffect += weapon.modifyAccuracy;
 
-        return baseAccuracy * modifyAccuracy * emotionEffect * weaponEffect;
+        return baseAccuracy * modifyAccuracy * weaponEffect;
     }
 
     #endregion
@@ -320,7 +285,7 @@ public class Character : MonoBehaviour, IPointerClickHandler
 
         turnsStunned += amount;
         TurnManager.instance.CreateVisual($"STUNNED", this.transform.localPosition);
-        Log.instance.AddText($"{(this.name)} is stunned for {turnsStunned} turns.", logged);
+        Log.instance.AddText($"{this.name} is stunned for {turnsStunned} turn{(turnsStunned == 1 ? "" : "s")}.", logged);
     }
 
     public IEnumerator GainHealth(float health, int logged)
@@ -473,12 +438,14 @@ public class Character : MonoBehaviour, IPointerClickHandler
         if (newPosition != Position.Dead && currentPosition != newPosition)
         {
             currentPosition = newPosition;
+            statusText.text = (currentEmotion == Emotion.Dead) ? "Dead" : KeywordTooltip.instance.EditText($"{currentEmotion}\n{currentPosition}");
+
             try
             {
                 if (newPosition == Position.Grounded)
-                    Log.instance.AddText($"{(this.name)} is now grounded.", logged);
+                    Log.instance.AddText($"{(this.name)} is now Grounded.", logged);
                 else if (newPosition == Position.Airborne)
-                    Log.instance.AddText($"{(this.name)} is now airborne.", logged);
+                    Log.instance.AddText($"{(this.name)} is now Airborne.", logged);
             }
             catch { };
         }
@@ -488,16 +455,9 @@ public class Character : MonoBehaviour, IPointerClickHandler
     {
         if (this == null) yield break;
 
-        if (newEmotion == Emotion.Angry && currentEmotion == Emotion.Angry || newEmotion == Emotion.Angry && currentEmotion == Emotion.Enraged)
-            currentEmotion = Emotion.Enraged;
-        else if (newEmotion == Emotion.Sad && currentEmotion == Emotion.Sad || newEmotion == Emotion.Sad && currentEmotion == Emotion.Depressed)
-            currentEmotion = Emotion.Depressed;
-        else if (newEmotion == Emotion.Happy && currentEmotion == Emotion.Happy || newEmotion == Emotion.Happy && currentEmotion == Emotion.Ecstatic)
-            currentEmotion = Emotion.Ecstatic;
-        else
-            currentEmotion = newEmotion;
-
-        statusText.text = KeywordTooltip.instance.EditText($"{currentEmotion}\n{currentPosition}");
+        currentEmotion = newEmotion;
+        statusText.text = (currentEmotion == Emotion.Dead) ? "Dead" : KeywordTooltip.instance.EditText($"{currentEmotion}\n{currentPosition}");
+        //this.myImage.color = KeywordTooltip.instance.SearchForKeyword(currentEmotion.ToString()).color;
         if (Log.instance != null && currentEmotion != Emotion.Dead)
             Log.instance.AddText($"{(this.name)} is now {currentEmotion}.", logged);
     }
@@ -508,6 +468,7 @@ public class Character : MonoBehaviour, IPointerClickHandler
 
     public IEnumerator MyTurn(int logged)
     {
+        chosenAbility = null;
         yield return StartOfTurn(logged);
         if (turnsStunned > 0)
         {
@@ -583,13 +544,13 @@ public class Character : MonoBehaviour, IPointerClickHandler
         if (chosenAbility.myName == "Skip Turn")
         {
             Log.instance.AddText(Log.Substitute(chosenAbility, this), 0);
+            chosenAbility = null;
         }
         else
         {
             int happinessPenalty = currentEmotion switch
             {
                 Emotion.Happy => 1,
-                Emotion.Ecstatic => 2,
                 _ => 0,
             };
             chosenAbility.currentCooldown = chosenAbility.baseCooldown + happinessPenalty;
@@ -606,21 +567,42 @@ public class Character : MonoBehaviour, IPointerClickHandler
 
     IEnumerator EndOfTurn(int logged)
     {
+        if (this.currentEmotion == Emotion.Angry && chosenAbility != null)
+        {
+            if (chosenAbility.killed)
+            {
+                Log.instance.AddText($"{this.name} is Angry.", logged);
+                yield return Stun(1, logged);
+            }
+        }
+
+        else if (this.currentEmotion == Emotion.Happy && chosenAbility != null)
+        {
+            if (chosenAbility.typeOne != AbilityType.Attack && chosenAbility.typeTwo != AbilityType.Attack)
+            {
+                Log.instance.AddText($"{this.name} is Happy.", logged);
+                yield return ChooseTurn(logged);
+                yield return ResolveTurn(logged);
+            }
+        }
+
+        else if (this.currentEmotion == Emotion.Sad && chosenAbility != null)
+        {
+            Log.instance.AddText($"{this.name} is Sad.", logged);
+            if (chosenAbility.typeOne != AbilityType.Attack && chosenAbility.typeTwo != AbilityType.Attack)
+            {
+                yield return GainHealth((int)(baseHealth * 0.1f), logged + 1);
+            }
+            else
+            {
+                yield return TakeDamage((int)(baseHealth * 0.1f), logged + 1);
+            }
+        }
+
         if (this.weapon != null)
             yield return weapon.EndOfTurn(logged);
-
-        if (this.currentEmotion == Emotion.Angry)
-        {
-            Log.instance.AddText($"{this.name} is Angry.", logged);
-            yield return TakeDamage((int)(baseHealth * 0.1f), logged + 1);
-        }
-        else if (this.currentEmotion == Emotion.Enraged)
-        {
-            Log.instance.AddText($"{this.name} is Enraged.", logged);
-            yield return TakeDamage((int)(baseHealth * 0.2f), logged + 1);
-        }
     }
 
-#endregion
+    #endregion
 
 }

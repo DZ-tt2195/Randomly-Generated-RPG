@@ -17,14 +17,14 @@
       "Archer",
       "Shoots down Airborne Teammates with a high chance of critical hits.",
       "70",
-      "25",
+      "20",
       "13",
       "30",
       "0.3",
       "1",
       "GROUNDED",
       "NEUTRAL",
-      "31,32,33,34,",
+      "30,31,32,33,",
       "PrioritizeAirborne"
     ],
     [
@@ -38,21 +38,21 @@
       "0.85",
       "AIRBORNE",
       "NEUTRAL",
-      "35,36,37,",
+      "34,35,36,",
       "PrioritizeGrounded"
     ],
     [
       "Wolf",
       "Makes itself Angry and hunts down Players who are Sad and Grounded. Can also be dangerous when Airborne.",
       "90",
-      "30",
+      "25",
       "13",
       "40",
       "0.1",
       "0.85",
       "GROUNDED",
       "ANGRY",
-      "38,39,40,41,",
+      "37,38,39,40,",
       "Effectiveness"
     ],
     [
@@ -66,20 +66,20 @@
       "1.25",
       "GROUNDED",
       "NEUTRAL",
-      "42,"
+      "41,"
     ],
     [
       "Puppeteer",
       "Makes Players Airborne, then drops them down to deal damage.",
       "80",
-      "25",
+      "20",
       "12",
       "50",
       "0.1",
       "1",
       "AIRBORNE",
       "NEUTRAL",
-      "43,44,"
+      "42,43,"
     ]
   ]
 }

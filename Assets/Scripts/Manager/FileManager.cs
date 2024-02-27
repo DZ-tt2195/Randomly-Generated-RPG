@@ -99,8 +99,11 @@ public class FileManager : MonoBehaviour
         RightClick.instance.transform.SetParent(canvas);
         RightClick.instance.transform.localPosition = new Vector3(0, 0);
 
-        FPS.instance.transform.SetParent(canvas);
-        FPS.instance.transform.localPosition = new Vector3(-1190, 670);
+        if (FPS.instance != null)
+        {
+            FPS.instance.transform.SetParent(canvas);
+            FPS.instance.transform.localPosition = new Vector3(-1190, 670);
+        }
 
         GameSettings.instance.transform.SetParent(canvas);
         GameSettings.instance.transform.localPosition = new Vector3(0, 0);
@@ -114,12 +117,15 @@ public class FileManager : MonoBehaviour
 
     public void UnloadObjects(string sceneName)
     {
-        Preserve(FPS.instance.gameObject);
+        if (FPS.instance != null)
+            Preserve(FPS.instance.gameObject);
+
         Preserve(RightClick.instance.gameObject);
         Preserve(GameSettings.instance.gameObject);
         Preserve(EmotionGuide.instance.gameObject);
         Preserve(KeywordTooltip.instance.gameObject);
 
+        listOfPlayers.RemoveAll(item => item == null);
         if (sceneName != "0. Title Screen")
         {
             foreach (Character player in listOfPlayers)

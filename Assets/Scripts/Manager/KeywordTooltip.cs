@@ -7,7 +7,7 @@ using System.Text.RegularExpressions;
 //using System.Drawing;
 
 [Serializable]
-class KeywordHover
+public class KeywordHover
 {
     public string keyword;
     public string description;
@@ -43,6 +43,22 @@ public class KeywordTooltip : MonoBehaviour
         return answer;
     }
 
+    public KeywordHover SearchForKeyword(string keyword)
+    {
+        foreach (KeywordHover link in linkedKeywords)
+        {
+            if (link.keyword == keyword)
+                return link;
+        }
+        foreach (KeywordHover link in spriteKeywords)
+        {
+            if (link.keyword == keyword)
+                return link;
+        }
+        Debug.LogError($"{keyword} couldn't be found");
+        return null;
+    }
+
     private void Update()
     {
         tooltipText.transform.parent.gameObject.SetActive(false);
@@ -61,6 +77,18 @@ public class KeywordTooltip : MonoBehaviour
                 tooltipText.transform.parent.position = mousePosition + (mousePosition.y > (displace)
                     ? new Vector3(0, -0.5f*displace, 0)
                     : new Vector3(0, 0.5f*displace, 0));
+                return;
+            }
+        }
+        foreach (KeywordHover entry in spriteKeywords)
+        {
+            if (entry.keyword == keyword)
+            {
+                tooltipText.text = entry.description;
+                tooltipText.transform.parent.position = mousePosition + (mousePosition.y > (displace)
+                    ? new Vector3(0, -0.5f * displace, 0)
+                    : new Vector3(0, 0.5f * displace, 0));
+                return;
             }
         }
     }

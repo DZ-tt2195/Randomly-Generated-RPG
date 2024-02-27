@@ -9,9 +9,10 @@ using System;
 public class AbilityBox : MonoBehaviour
 {
     public Button button;
+    [SerializeField] Image image;
     [SerializeField] TMP_Text textName;
     [SerializeField] TMP_Text textCountdown;
-    [SerializeField] TMP_Text onCooldown;
+    [SerializeField] TMP_Text cantUse;
     [SerializeField] HoverImage hover;
 
     public void ReceiveAbility(Ability ability, Character user)
@@ -32,12 +33,19 @@ public class AbilityBox : MonoBehaviour
 
         if (ability.currentCooldown > 0)
         {
-            onCooldown.transform.parent.gameObject.SetActive(true);
-            onCooldown.text = $"{ability.currentCooldown}";
+            cantUse.transform.parent.gameObject.SetActive(true);
+            cantUse.text = $"{ability.currentCooldown}";
+        }
+        else if (button != null && !button.interactable)
+        {
+            cantUse.transform.parent.gameObject.SetActive(true);
+            cantUse.text = "X";
         }
         else
         {
-            onCooldown.transform.parent.gameObject.SetActive(false);
+            cantUse.transform.parent.gameObject.SetActive(false);
         }
+
+        image.color = (ability.typeOne == AbilityType.Attack || ability.typeTwo == AbilityType.Attack) ? Color.red : Color.blue;
     }
 }

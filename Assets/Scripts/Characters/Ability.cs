@@ -46,6 +46,7 @@ public class Ability : MonoBehaviour
     [ReadOnly] public List<Character> listOfTargets;
 
     [ReadOnly] public int damageDealt;
+    [ReadOnly] public bool killed;
 
     public void SetupAbility(AbilityData data)
     {
@@ -97,125 +98,119 @@ public class Ability : MonoBehaviour
 
     public bool CanPlay(Character user)
     {
-        if (currentCooldown == 0)
+        if (this.myName == "Skip Turn")
+            return true;
+        if (currentCooldown > 0)
+            return false;
+
+        listOfTargets = GetTargets();
+
+        string divide = playCondition.Replace(" ", "");
+        divide = divide.ToUpper();
+        string[] methodsInStrings = divide.Split('/');
+
+        for (int i = listOfTargets.Count - 1; i >= 0; i--)
         {
-            listOfTargets = GetTargets();
-
-            string divide = playCondition.Replace(" ", "");
-            divide = divide.ToUpper();
-            string[] methodsInStrings = divide.Split('/');
-
-            for (int i = listOfTargets.Count - 1; i >= 0; i--)
+            if (methodsInStrings[0] == "ISDEAD")
             {
-                if (methodsInStrings[0] == "ISDEAD")
-                {
-                    if (listOfTargets[i].CalculateHealth() > 0)
-                    {
-                        listOfTargets.RemoveAt(i);
-                    }
-                }
-                else if (listOfTargets[i].CalculateHealth() <= 0)
+                if (listOfTargets[i].CalculateHealth() > 0)
                 {
                     listOfTargets.RemoveAt(i);
                 }
             }
-
-            foreach (string nextMethod in methodsInStrings)
+            else if (listOfTargets[i].CalculateHealth() <= 0)
             {
-                switch (nextMethod)
-                {
-                    case "":
-                        break;
-                    case "NONE":
-                        break;
-                    case "ISDEAD":
-                        break;
-
-                    case "SELFSECONDTIER":
-                        return (user.currentEmotion == Emotion.Enraged || user.currentEmotion == Emotion.Ecstatic || user.currentEmotion == Emotion.Depressed);
-
-
-                    case "TARGETSNEUTRAL":
-                        for (int i = listOfTargets.Count - 1; i >= 0; i--)
-                            if (listOfTargets[i].currentEmotion != Emotion.Neutral) listOfTargets.RemoveAt(i);
-                        break;
-                    case "TARGETSNOTNEUTRAL":
-                        for (int i = listOfTargets.Count - 1; i >= 0; i--)
-                            if (listOfTargets[i].currentEmotion == Emotion.Neutral) listOfTargets.RemoveAt(i);
-                        break;
-                    case "SELFNEUTRAL":
-                        return (user.currentEmotion == Emotion.Neutral);
-                    case "SELFNOTNEUTRAL":
-                        return (user.currentEmotion != Emotion.Neutral);
-
-                    case "TARGETSHAPPY":
-                        for (int i = listOfTargets.Count - 1; i >= 0; i--)
-                            if (listOfTargets[i].currentEmotion != Emotion.Happy || listOfTargets[i].currentEmotion != Emotion.Ecstatic) listOfTargets.RemoveAt(i);
-                        break;
-                    case "TARGETSNOTHAPPY":
-                        for (int i = listOfTargets.Count - 1; i >= 0; i--)
-                            if (listOfTargets[i].currentEmotion == Emotion.Happy || listOfTargets[i].currentEmotion == Emotion.Ecstatic) listOfTargets.RemoveAt(i);
-                        break;
-                    case "SELFHAPPY":
-                        return (user.currentEmotion == Emotion.Happy || user.currentEmotion == Emotion.Ecstatic);
-                    case "SELFNOTHAPPY":
-                        return (user.currentEmotion != Emotion.Happy && user.currentEmotion != Emotion.Ecstatic);
-
-                    case "TARGETSANGRY":
-                        for (int i = listOfTargets.Count - 1; i >= 0; i--)
-                            if (listOfTargets[i].currentEmotion != Emotion.Angry || listOfTargets[i].currentEmotion != Emotion.Enraged) listOfTargets.RemoveAt(i);
-                        break;
-                    case "TARGETSNOTANGRY":
-                        for (int i = listOfTargets.Count - 1; i >= 0; i--)
-                            if (listOfTargets[i].currentEmotion == Emotion.Angry || listOfTargets[i].currentEmotion == Emotion.Enraged) listOfTargets.RemoveAt(i);
-                        break;
-                    case "SELFANGRY":
-                        return (user.currentEmotion == Emotion.Angry || user.currentEmotion == Emotion.Enraged);
-                    case "SELFNOTANGRY":
-                        return (user.currentEmotion != Emotion.Angry && user.currentEmotion != Emotion.Enraged);
-
-                    case "TARGETSSAD":
-                        for (int i = listOfTargets.Count - 1; i >= 0; i--)
-                            if (listOfTargets[i].currentEmotion != Emotion.Sad || listOfTargets[i].currentEmotion != Emotion.Depressed) listOfTargets.RemoveAt(i);
-                        break;
-                    case "TARGETSNOTSAD":
-                        for (int i = listOfTargets.Count - 1; i >= 0; i--)
-                            if (listOfTargets[i].currentEmotion == Emotion.Sad || listOfTargets[i].currentEmotion == Emotion.Depressed) listOfTargets.RemoveAt(i);
-                        break;
-                    case "SELFSAD":
-                        return (user.currentEmotion == Emotion.Sad || user.currentEmotion == Emotion.Depressed);
-                    case "SELFNOTSAD":
-                        return (user.currentEmotion != Emotion.Sad && user.currentEmotion != Emotion.Depressed);
-
-                    case "SELFGROUNDED":
-                        return user.currentPosition == Position.Grounded;
-                    case "TARGETSGROUNDED":
-                        for (int i = listOfTargets.Count - 1; i >= 0; i--)
-                            if (listOfTargets[i].currentPosition != Position.Grounded) listOfTargets.RemoveAt(i);
-                        break;
-
-                    case "SELFAIRBORNE":
-                        return user.currentPosition == Position.Airborne;
-                    case "TARGETSAIRBORNE":
-                        for (int i = listOfTargets.Count - 1; i >= 0; i--)
-                            if (listOfTargets[i].currentPosition != Position.Airborne) listOfTargets.RemoveAt(i);
-                        break;
-
-                    default:
-                        Debug.LogError($"{nextMethod} isn't a method");
-                        break;
-                }
+                listOfTargets.RemoveAt(i);
             }
+        }
 
-            if (teamTarget == TeamTarget.None)
-                return true;
-            else
-                return listOfTargets.Count > 0;
-        }
-        else
+        foreach (string nextMethod in methodsInStrings)
         {
-            return false;
+            switch (nextMethod)
+            {
+                case "":
+                    break;
+                case "NONE":
+                    break;
+                case "ISDEAD":
+                    break;
+
+                case "TARGETSNEUTRAL":
+                    for (int i = listOfTargets.Count - 1; i >= 0; i--)
+                        if (listOfTargets[i].currentEmotion != Emotion.Neutral) listOfTargets.RemoveAt(i);
+                    break;
+                case "TARGETSNOTNEUTRAL":
+                    for (int i = listOfTargets.Count - 1; i >= 0; i--)
+                        if (listOfTargets[i].currentEmotion == Emotion.Neutral) listOfTargets.RemoveAt(i);
+                    break;
+                case "SELFNEUTRAL":
+                    return (user.currentEmotion == Emotion.Neutral);
+                case "SELFNOTNEUTRAL":
+                    return (user.currentEmotion != Emotion.Neutral);
+
+                case "TARGETSHAPPY":
+                    for (int i = listOfTargets.Count - 1; i >= 0; i--)
+                        if (listOfTargets[i].currentEmotion != Emotion.Happy) listOfTargets.RemoveAt(i);
+                    break;
+                case "TARGETSNOTHAPPY":
+                    for (int i = listOfTargets.Count - 1; i >= 0; i--)
+                        if (listOfTargets[i].currentEmotion == Emotion.Happy) listOfTargets.RemoveAt(i);
+                    break;
+                case "SELFHAPPY":
+                    return (user.currentEmotion == Emotion.Happy);
+                case "SELFNOTHAPPY":
+                    return (user.currentEmotion != Emotion.Happy);
+
+                case "TARGETSANGRY":
+                    for (int i = listOfTargets.Count - 1; i >= 0; i--)
+                        if (listOfTargets[i].currentEmotion != Emotion.Angry) listOfTargets.RemoveAt(i);
+                    break;
+                case "TARGETSNOTANGRY":
+                    for (int i = listOfTargets.Count - 1; i >= 0; i--)
+                        if (listOfTargets[i].currentEmotion == Emotion.Angry) listOfTargets.RemoveAt(i);
+                    break;
+                case "SELFANGRY":
+                    return (user.currentEmotion == Emotion.Angry);
+                case "SELFNOTANGRY":
+                    return (user.currentEmotion != Emotion.Angry);
+
+                case "TARGETSSAD":
+                    for (int i = listOfTargets.Count - 1; i >= 0; i--)
+                        if (listOfTargets[i].currentEmotion != Emotion.Sad) listOfTargets.RemoveAt(i);
+                    break;
+                case "TARGETSNOTSAD":
+                    for (int i = listOfTargets.Count - 1; i >= 0; i--)
+                        if (listOfTargets[i].currentEmotion == Emotion.Sad) listOfTargets.RemoveAt(i);
+                    break;
+                case "SELFSAD":
+                    return (user.currentEmotion == Emotion.Sad);
+                case "SELFNOTSAD":
+                    return (user.currentEmotion != Emotion.Sad);
+
+                case "SELFGROUNDED":
+                    return user.currentPosition == Position.Grounded;
+                case "TARGETSGROUNDED":
+                    for (int i = listOfTargets.Count - 1; i >= 0; i--)
+                        if (listOfTargets[i].currentPosition != Position.Grounded) listOfTargets.RemoveAt(i);
+                    break;
+
+                case "SELFAIRBORNE":
+                    return user.currentPosition == Position.Airborne;
+                case "TARGETSAIRBORNE":
+                    for (int i = listOfTargets.Count - 1; i >= 0; i--)
+                        if (listOfTargets[i].currentPosition != Position.Airborne) listOfTargets.RemoveAt(i);
+                    break;
+
+                default:
+                    Debug.LogError($"{nextMethod} isn't a method");
+                    break;
+            }
         }
+
+        if (teamTarget == TeamTarget.None)
+            return true;
+        else
+            return listOfTargets.Count > 0;
     }
 
     List<Character> GetTargets()
@@ -225,6 +220,7 @@ public class Ability : MonoBehaviour
         switch (teamTarget)
         {
             case TeamTarget.None:
+                listOfTargets.Add(this.self);
                 break;
             case TeamTarget.Self:
                 listOfTargets.Add(this.self);
@@ -267,233 +263,166 @@ public class Ability : MonoBehaviour
     public IEnumerator ResolveInstructions(string[] listOfMethods, int logged)
     {
         Log.instance.AddText(Log.Substitute(this, self), logged-1);
-        foreach (string methodName in listOfMethods)
+        killed = false;
+        TurnManager.instance.listOfBoxes[0].transform.parent.gameObject.SetActive(false);
+
+        foreach (Character target in listOfTargets)
         {
-            yield return TurnManager.instance.WaitTime();
-            TurnManager.instance.listOfBoxes[0].transform.parent.gameObject.SetActive(false);
+            if (target == null)
+                continue;
 
-            switch (methodName)
+            foreach (string methodName in listOfMethods)
             {
-                case "":
-                    break;
-                case "NONE":
-                    break;
-                case "DEALTDAMAGE":
-                    if (damageDealt == 0)
-                        yield break;
-                    break;
+                yield return TurnManager.instance.WaitTime();
 
-                case "ATTACK":
-                    for (int i = 0; i < listOfTargets.Count; i++)
-                        if (listOfTargets[i] != null)
-                        {
-                            damageDealt = CalculateDamage(self, listOfTargets[i], logged);
-                            yield return listOfTargets[i].TakeDamage(damageDealt, logged);
-                        }
-                    break;
-                case "HEALFROMDAMAGE":
-                    yield return self.GainHealth(damageDealt, logged);
-                    break;
+                switch (methodName)
+                {
+                    case "":
+                        break;
+                    case "NONE":
+                        break;
+                    case "DEALTDAMAGE":
+                        if (damageDealt == 0)
+                            yield break;
+                        break;
 
-                case "SELFHEAL":
-                    yield return self.GainHealth(healthChange, logged);
-                    break;
-                case "TARGETSHEAL":
-                    for (int i = 0; i < listOfTargets.Count; i++)
-                        if (listOfTargets[i] != null)
-                            yield return listOfTargets[i].GainHealth(healthChange, logged);
-                    break;
+                    case "ATTACK":
+                        damageDealt = CalculateDamage(self, target, logged);
+                        yield return target.TakeDamage(damageDealt, logged);
+                        if (target == null || target.CalculateHealth() <= 0) killed = true;
+                        break;
+                    case "HEALFROMDAMAGE":
+                        yield return self.GainHealth(damageDealt, logged);
+                        break;
 
-                case "SELFSWAPPOSITION":
-                    if (self.currentPosition == Position.Airborne)
+                    case "SELFHEAL":
+                        yield return self.GainHealth(healthChange, logged);
+                        break;
+                    case "TARGETSHEAL":
+                        yield return target.GainHealth(healthChange, logged);
+                        break;
+
+                    case "SELFSWAPPOSITION":
+                        if (self.currentPosition == Position.Airborne)
+                            yield return self.ChangePosition(Position.Grounded, logged);
+                        else if (self.currentPosition == Position.Grounded)
+                            yield return self.ChangePosition(Position.Airborne, logged);
+                        break;
+                    case "TARGETSSWAPPOSITION":
+                        if (target.currentPosition == Position.Airborne)
+                            yield return target.ChangePosition(Position.Grounded, logged);
+                        else if (target.currentPosition == Position.Grounded)
+                            yield return target.ChangePosition(Position.Airborne, logged);
+                        break;
+
+                    case "SELFGROUNDED":
                         yield return self.ChangePosition(Position.Grounded, logged);
-                    else if (self.currentPosition == Position.Grounded)
+                        break;
+                    case "TARGETSGROUNDED":
+                        yield return target.ChangePosition(Position.Grounded, logged);
+                        break;
+
+                    case "SELFAIRBORNE":
                         yield return self.ChangePosition(Position.Airborne, logged);
-                    break;
-                case "TARGETSSWAPPOSITION":
-                    for (int i = 0; i < listOfTargets.Count; i++)
-                    {
-                        if (listOfTargets[i].currentPosition == Position.Airborne)
-                            yield return listOfTargets[i].ChangePosition(Position.Grounded, logged);
-                        else if (listOfTargets[i].currentPosition == Position.Grounded)
-                            yield return listOfTargets[i].ChangePosition(Position.Airborne, logged);
-                    }
-                    break;
+                        break;
+                    case "TARGETSAIRBORNE":
+                        yield return target.ChangePosition(Position.Airborne, logged);
+                        break;
 
-                case "SELFGROUNDED":
-                    yield return self.ChangePosition(Position.Grounded, logged);
-                    break;
-                case "TARGETSGROUNDED":
-                    for (int i = 0; i < listOfTargets.Count; i++)
-                        yield return listOfTargets[i].ChangePosition(Position.Grounded, logged);
-                    break;
+                    case "SELFHAPPY":
+                        yield return self.ChangeEmotion(Emotion.Happy, logged);
+                        break;
+                    case "TARGETSHAPPY":
+                        yield return target.ChangeEmotion(Emotion.Happy, logged);
+                        break;
 
-                case "SELFAIRBORNE":
-                    yield return self.ChangePosition(Position.Airborne, logged);
-                    break;
-                case "TARGETSAIRBORNE":
-                    for (int i = 0; i < listOfTargets.Count; i++)
-                        yield return listOfTargets[i].ChangePosition(Position.Airborne, logged);
-                    break;
+                    case "SELFSAD":
+                        yield return self.ChangeEmotion(Emotion.Sad, logged);
+                        break;
+                    case "TARGETSSAD":
+                        yield return target.ChangeEmotion(Emotion.Sad, logged);
+                        break;
 
-                case "SELFHAPPY":
-                    yield return self.ChangeEmotion(Emotion.Happy, logged);
-                    break;
-                case "TARGETSHAPPY":
-                    for (int i = 0; i < listOfTargets.Count; i++)
-                        yield return listOfTargets[i].ChangeEmotion(Emotion.Happy, logged);
-                    break;
+                    case "SELFANGRY":
+                        yield return self.ChangeEmotion(Emotion.Angry, logged);
+                        break;
+                    case "TARGETSANGRY":
+                        yield return target.ChangeEmotion(Emotion.Angry, logged);
+                        break;
 
-                case "SELFECSTATIC":
-                    yield return self.ChangeEmotion(Emotion.Ecstatic, logged);
-                    break;
-                case "TARGETSECSTATIC":
-                    for (int i = 0; i < listOfTargets.Count; i++)
-                        yield return listOfTargets[i].ChangeEmotion(Emotion.Ecstatic, logged);
-                    break;
+                    case "SELFNEUTRAL":
+                        yield return self.ChangeEmotion(Emotion.Neutral, logged);
+                        break;
+                    case "TARGETSNEUTRAL":
+                        yield return target.ChangeEmotion(Emotion.Neutral, logged);
+                        break;
 
-                case "SELFSAD":
-                    yield return self.ChangeEmotion(Emotion.Sad, logged);
-                    break;
-                case "TARGETSSAD":
-                    for (int i = 0; i < listOfTargets.Count; i++)
-                        yield return listOfTargets[i].ChangeEmotion(Emotion.Sad, logged);
-                    break;
+                    case "SELFATTACKSTAT":
+                        yield return self.ChangeAttack(modifyAttack, logged);
+                        break;
+                    case "TARGETSATTACKSTAT":
+                        yield return target.ChangeAttack(modifyAttack, logged);
+                        break;
 
-                case "SELFDEPRESSED":
-                    yield return self.ChangeEmotion(Emotion.Depressed, logged);
-                    break;
-                case "TARGETSDEPRESSED":
-                    for (int i = 0; i < listOfTargets.Count; i++)
-                        yield return listOfTargets[i].ChangeEmotion(Emotion.Depressed, logged);
-                    break;
+                    case "SELFDEFENSESTAT":
+                        yield return self.ChangeDefense(modifyDefense, logged);
+                        break;
+                    case "TARGETSDEFENSESTAT":
+                        yield return target.ChangeDefense(modifyDefense, logged);
+                        break;
 
-                case "SELFANGRY":
-                    yield return self.ChangeEmotion(Emotion.Angry, logged);
-                    break;
-                case "TARGETSANGRY":
-                    for (int i = 0; i < listOfTargets.Count; i++)
-                        yield return listOfTargets[i].ChangeEmotion(Emotion.Angry, logged);
-                    break;
+                    case "SELFSPEEDSTAT":
+                        yield return self.ChangeSpeed(modifySpeed, logged);
+                        break;
+                    case "TARGETSSPEEDSTAT":
+                        yield return target.ChangeSpeed(modifySpeed, logged);
+                        break;
 
-                case "SELFENRAGED":
-                    yield return self.ChangeEmotion(Emotion.Enraged, logged);
-                    break;
-                case "TARGETSENRAGED":
-                    for (int i = 0; i < listOfTargets.Count; i++)
-                        yield return listOfTargets[i].ChangeEmotion(Emotion.Enraged, logged);
-                    break;
+                    case "SELFLUCKSTAT":
+                        yield return self.ChangeLuck(modifyLuck, logged);
+                        break;
+                    case "TARGETSLUCKSTAT":
+                        yield return target.ChangeLuck(modifyLuck, logged);
+                        break;
 
-                case "SELFNEUTRAL":
-                    yield return self.ChangeEmotion(Emotion.Neutral, logged);
-                    break;
-                case "TARGETSNEUTRAL":
-                    for (int i = 0; i < listOfTargets.Count; i++)
-                        yield return listOfTargets[i].ChangeEmotion(Emotion.Neutral, logged);
-                    break;
+                    case "SELFACCURACYSTAT":
+                        yield return self.ChangeAccuracy(modifyAccuracy, logged);
+                        break;
+                    case "TARGETSACCURACYSTAT":
+                        yield return target.ChangeAccuracy(modifyAccuracy, logged);
+                        break;
 
-                case "TARGETSAMPLIFY":
-                    for (int i = 0; i < listOfTargets.Count; i++)
-                    {
-                        switch (listOfTargets[i].currentEmotion)
-                        {
-                            case Emotion.Happy:
-                                yield return self.ChangeEmotion(Emotion.Ecstatic, logged);
-                                break;
-                            case Emotion.Angry:
-                                yield return self.ChangeEmotion(Emotion.Enraged, logged);
-                                break;
-                            case Emotion.Sad:
-                                yield return self.ChangeEmotion(Emotion.Depressed, logged);
-                                break;
-                        }
-                    }
-                    break;
+                    case "LEAVEFIGHT":
+                        yield return self.HasDied(-1);
+                        break;
+                    case "SELFDESTRUCT":
+                        yield return self.HasDied(logged);
+                        break;
+                    case "TARGETSREVIVE":
+                        yield return target.Revive(healthChange, logged);
+                        break;
 
-                case "SELFATTACKSTAT":
-                    yield return self.ChangeAttack(modifyAttack, logged);
-                    break;
-                case "TARGETSATTACKSTAT":
-                    for (int i = 0; i < listOfTargets.Count; i++)
-                        yield return listOfTargets[i].ChangeAttack(modifyAttack, logged);
-                    break;
+                    case "TARGETSSTUN":
+                        yield return target.Stun(1, logged);
+                        break;
 
-                case "SELFDEFENSESTAT":
-                    yield return self.ChangeDefense(modifyDefense, logged);
-                    break;
-                case "TARGETSDEFENSESTAT":
-                    for (int i = 0; i < listOfTargets.Count; i++)
-                        yield return listOfTargets[i].ChangeDefense(modifyDefense, logged);
-                    break;
+                    case "TARGETSFORCEDCOOLDOWN":
+                        foreach (Ability ability in target.listOfAbilities)
+                            if (ability.currentCooldown == 0) ability.currentCooldown++;
+                        break;
+                    case "TARGETSINCREASEACTIVECOOLDOWN":
+                        foreach (Ability ability in target.listOfAbilities)
+                            if (ability.currentCooldown > 0) ability.currentCooldown++;
+                        break;
+                    case "TARGETSREDUCEACTIVECOOLDOWN":
+                        foreach (Ability ability in target.listOfAbilities)
+                            if (ability.currentCooldown > 0) ability.currentCooldown--;
+                        break;
 
-                case "SELFSPEEDSTAT":
-                    yield return self.ChangeSpeed(modifySpeed, logged);
-                    break;
-                case "TARGETSSPEEDSTAT":
-                    for (int i = 0; i < listOfTargets.Count; i++)
-                        yield return listOfTargets[i].ChangeSpeed(modifySpeed, logged);
-                    break;
-
-                case "SELFLUCKSTAT":
-                    yield return self.ChangeLuck(modifyLuck, logged);
-                    break;
-                case "TARGETSLUCKSTAT":
-                    for (int i = 0; i < listOfTargets.Count; i++)
-                        yield return listOfTargets[i].ChangeLuck(modifyLuck, logged);
-                    break;
-
-                case "SELFACCURACYSTAT":
-                    yield return self.ChangeAccuracy(modifyAccuracy, logged);
-                    break;
-                case "TARGETSACCURACYSTAT":
-                    for (int i = 0; i < listOfTargets.Count; i++)
-                        yield return listOfTargets[i].ChangeAccuracy(modifyAccuracy, logged);
-                    break;
-
-                case "LEAVEFIGHT":
-                    yield return self.HasDied(-1);
-                    break;
-                case "SELFDESTRUCT":
-                    yield return self.HasDied(logged);
-                    break;
-                case "TARGETSREVIVE":
-                    for (int i = 0; i < listOfTargets.Count; i++)
-                        yield return listOfTargets[i].Revive(healthChange, logged);
-                    break;
-
-                case "TARGETSSTUN":
-                    for (int i = 0; i < listOfTargets.Count; i++)
-                        yield return listOfTargets[i].Stun(1, logged);
-                    break;
-
-                case "TARGETSFORCEDCOOLDOWN":
-                    for (int i = 0; i < listOfTargets.Count; i++)
-                    {
-                        foreach (Ability ability in listOfTargets[i].listOfAbilities)
-                            if (ability.currentCooldown == 0)
-                                ability.currentCooldown++;
-                    }
-                    break;
-                case "TARGETSINCREASEACTIVECOOLDOWN":
-                    for (int i = 0; i < listOfTargets.Count; i++)
-                    {
-                        foreach (Ability ability in listOfTargets[i].listOfAbilities)
-                            if (ability.currentCooldown > 0)
-                                ability.currentCooldown++;
-                    }
-                    break;
-                case "TARGETSREDUCEACTIVECOOLDOWN":
-                    for (int i = 0; i<listOfTargets.Count; i++)
-                    {
-                        foreach (Ability ability in listOfTargets[i].listOfAbilities)
-                            if (ability.currentCooldown > 0)
-                                ability.currentCooldown--;
-                    }
-                    break;
-
-                default:
-                    Debug.LogError($"{methodName} isn't a method");
-                    break;
+                    default:
+                        Debug.LogError($"{methodName} isn't a method");
+                        break;
+                }
             }
         }
     }
@@ -506,20 +435,7 @@ public class Ability : MonoBehaviour
             answer = target.currentEmotion switch
             {
                 (Emotion.Angry) => 1.25f,
-                (Emotion.Enraged) => 1.25f,
                 (Emotion.Sad) => 0.75f,
-                (Emotion.Depressed) => 0.75f,
-                _ => 1.0f,
-            };
-        }
-        else if (user.currentEmotion == Emotion.Ecstatic)
-        {
-            answer = target.currentEmotion switch
-            {
-                (Emotion.Angry) => 1.5f,
-                (Emotion.Enraged) => 1.5f,
-                (Emotion.Sad) => 0.5f,
-                (Emotion.Depressed) => 0.5f,
                 _ => 1.0f,
             };
         }
@@ -528,20 +444,7 @@ public class Ability : MonoBehaviour
             answer = target.currentEmotion switch
             {
                 (Emotion.Sad) => 1.25f,
-                (Emotion.Depressed) => 1.25f,
                 (Emotion.Happy) => 0.75f,
-                (Emotion.Ecstatic) => 0.75f,
-                _ => 1.0f,
-            };
-        }
-        else if (user.currentEmotion == Emotion.Enraged)
-        {
-            answer = target.currentEmotion switch
-            {
-                (Emotion.Sad) => 1.5f,
-                (Emotion.Depressed) => 1.5f,
-                (Emotion.Happy) => 0.5f,
-                (Emotion.Ecstatic) => 0.5f,
                 _ => 1.0f,
             };
         }
@@ -550,20 +453,7 @@ public class Ability : MonoBehaviour
             answer = target.currentEmotion switch
             {
                 (Emotion.Happy) => 1.25f,
-                (Emotion.Ecstatic) => 1.25f,
                 (Emotion.Angry) => 0.75f,
-                (Emotion.Enraged) => 0.75f,
-                _ => 1.0f,
-            };
-        }
-        else if (user.currentEmotion == Emotion.Depressed)
-        {
-            answer = target.currentEmotion switch
-            {
-                (Emotion.Happy) => 1.5f,
-                (Emotion.Ecstatic) => 1.5f,
-                (Emotion.Angry) => 0.5f,
-                (Emotion.Enraged) => 0.5f,
                 _ => 1.0f,
             };
         }
@@ -584,7 +474,7 @@ public class Ability : MonoBehaviour
             float effectiveness = Effectiveness(user, target, logged);
             float critical = RollCritical(user.CalculateLuck());
             float attack = user.CalculateAttack();
-            float defense = target.CalculateDefense(user);
+            float defense = target.CalculateDefense();
 
             int finalDamage = Mathf.Max(0, (int)(damageVariation * critical * effectiveness + (attack * healthChange) - defense));
             return finalDamage;
