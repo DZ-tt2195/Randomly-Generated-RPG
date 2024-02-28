@@ -209,6 +209,8 @@ public class Ability : MonoBehaviour
 
         if (teamTarget == TeamTarget.None)
             return true;
+        else if (user.myType == CharacterType.Enemy && user.aiTargeting == "MultipleTargets")
+            return listOfTargets.Count >= 2;
         else
             return listOfTargets.Count > 0;
     }

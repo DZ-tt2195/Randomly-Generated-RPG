@@ -27,7 +27,7 @@ public class Character : MonoBehaviour, IPointerClickHandler
     protected Ability chosenAbility;
     [ReadOnly] public List<Ability> listOfAbilities = new List<Ability>();
     [ReadOnly] public CharacterType myType;
-    protected string aiTargeting;
+    [ReadOnly] public string aiTargeting;
     protected string entersFight;
     [ReadOnly] public Weapon weapon;
 

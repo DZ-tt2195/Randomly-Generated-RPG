@@ -24,7 +24,7 @@
       "1",
       "GROUNDED",
       "NEUTRAL",
-      "30,31,32,33,",
+      "32,33,34,35,",
       "PrioritizeAirborne"
     ],
     [
@@ -38,7 +38,7 @@
       "0.85",
       "AIRBORNE",
       "NEUTRAL",
-      "34,35,36,",
+      "36,37,38,",
       "PrioritizeGrounded"
     ],
     [
@@ -52,7 +52,7 @@
       "0.85",
       "GROUNDED",
       "ANGRY",
-      "37,38,39,40,",
+      "43,44,45,46,",
       "Effectiveness"
     ],
     [
@@ -66,7 +66,7 @@
       "1.25",
       "GROUNDED",
       "NEUTRAL",
-      "41,"
+      "39,"
     ],
     [
       "Puppeteer",
@@ -79,7 +79,8 @@
       "1",
       "AIRBORNE",
       "NEUTRAL",
-      "42,43,"
+      "40,41,42,",
+      "MultipleTargets"
     ]
   ]
 }
