@@ -38,7 +38,6 @@ public class CharacterData
     public float baseLuck;
     public float baseAccuracy;
     public Position startingPosition;
-    public Emotion startingEmotion;
     public string skillNumbers;
     public string aiTargeting;
 }
@@ -91,9 +90,8 @@ public class DataLoader
             newCharacter.baseLuck = StringToFloat(line[6]);
             newCharacter.baseAccuracy = StringToFloat(line[7]);
             newCharacter.startingPosition = (line[8] == "GROUNDED") ? Position.Grounded : Position.Airborne;
-            newCharacter.startingEmotion = StringToEmotion(line[9]);
-            newCharacter.skillNumbers = line[10].Trim();
-            try { newCharacter.aiTargeting = line[11].Trim(); } catch (IndexOutOfRangeException) { /*do nothing*/};
+            newCharacter.skillNumbers = line[9].Trim();
+            try { newCharacter.aiTargeting = line[10].Trim(); } catch (IndexOutOfRangeException) { /*do nothing*/};
         }
         return nextData;
     }

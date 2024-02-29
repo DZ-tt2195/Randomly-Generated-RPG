@@ -48,7 +48,7 @@ public class Ability : MonoBehaviour
     [ReadOnly] public int damageDealt;
     [ReadOnly] public bool killed;
 
-    public void SetupAbility(AbilityData data)
+    public void SetupAbility(AbilityData data, bool startWithCooldown)
     {
         myName = data.myName;
         instructions = data.instructions;
@@ -58,7 +58,8 @@ public class Ability : MonoBehaviour
         logDescription = data.logDescription;
         playCondition = data.playCondition;
         healthChange = data.healthChange;
-        baseCooldown = data.cooldown; currentCooldown = baseCooldown;
+        baseCooldown = data.cooldown;
+        currentCooldown = (startWithCooldown) ? baseCooldown : 0;
         modifyAttack = data.modifyAttack;
         modifyDefense = data.modifyDefense;
         modifySpeed = data.modifySpeed;
@@ -209,8 +210,6 @@ public class Ability : MonoBehaviour
 
         if (teamTarget == TeamTarget.None)
             return true;
-        else if (user.myType == CharacterType.Enemy && user.aiTargeting == "MultipleTargets")
-            return listOfTargets.Count >= 2;
         else
             return listOfTargets.Count > 0;
     }

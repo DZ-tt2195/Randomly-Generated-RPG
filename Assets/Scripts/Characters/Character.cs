@@ -38,9 +38,7 @@ public class Character : MonoBehaviour, IPointerClickHandler
     protected float baseSpeed;
     protected float baseLuck;
     protected float baseAccuracy;
-
     protected Position startingPosition;
-    protected Emotion startingEmotion;
 
     protected int currentHealth;
     [ReadOnly] public Position currentPosition;
@@ -92,18 +90,13 @@ public class Character : MonoBehaviour, IPointerClickHandler
         baseLuck = characterData.baseLuck;
         baseAccuracy = characterData.baseAccuracy;
         StartCoroutine(ChangePosition(characterData.startingPosition, -1));
-        startingEmotion = characterData.startingEmotion; StartCoroutine(ChangeEmotion(characterData.startingEmotion, -1));
+        StartCoroutine(ChangeEmotion((Emotion)UnityEngine.Random.Range(1, 5), -1));
         this.aiTargeting = characterData.aiTargeting;
 
-        AddAbility(FileManager.instance.FindAbility("Skip Turn"));
-        if (myType == CharacterType.Player)
-        {
-            this.myImage.sprite = Resources.Load<Sprite>($"Teammates/{this.name}");
-        }
-        else if (myType == CharacterType.Enemy)
-        {
-            this.myImage.sprite = Resources.Load<Sprite>($"Enemies/{this.name}");
-        }
+        AddAbility(FileManager.instance.FindAbility("Skip Turn"), false);
+        this.myImage.sprite = (myType == CharacterType.Player)
+            ? Resources.Load<Sprite>($"Players/{this.name}")
+            : Resources.Load<Sprite>($"Enemies/{this.name}");
 
         string[] divideSkillsIntoNumbers = characterData.skillNumbers.Split(',');
         List<string> putIntoList = new();
@@ -117,7 +110,7 @@ public class Character : MonoBehaviour, IPointerClickHandler
             {
                 string skillNumber = putIntoList[i];
                 skillNumber.Trim();
-                AddAbility(FileManager.instance.listOfAbilities[int.Parse(skillNumber)]);
+                AddAbility(FileManager.instance.listOfAbilities[int.Parse(skillNumber)], myType != CharacterType.Player);
             }
             catch (FormatException){continue;}
             catch (ArgumentOutOfRangeException){break;}
@@ -156,11 +149,11 @@ public class Character : MonoBehaviour, IPointerClickHandler
         }
     }
 
-    void AddAbility(AbilityData ability)
+    void AddAbility(AbilityData ability, bool startWithCooldown)
     {
         Ability newAbility = this.gameObject.AddComponent<Ability>();
         listOfAbilities.Add(newAbility);
-        newAbility.SetupAbility(ability);
+        newAbility.SetupAbility(ability, startWithCooldown);
     }
 
     #endregion
@@ -346,7 +339,7 @@ public class Character : MonoBehaviour, IPointerClickHandler
         Log.instance.AddText($"{(this.name)} comes back to life.", logged);
         yield return GainHealth(health, logged);
         yield return ChangePosition(startingPosition, -1);
-        yield return ChangeEmotion(startingEmotion, -1);
+        yield return ChangeEmotion((Emotion)UnityEngine.Random.Range(1, 5), -1);
         myImage.color = Color.white;
         WeaponStartingEffects();
     }
@@ -591,11 +584,11 @@ public class Character : MonoBehaviour, IPointerClickHandler
             Log.instance.AddText($"{this.name} is Sad.", logged);
             if (chosenAbility.typeOne != AbilityType.Attack && chosenAbility.typeTwo != AbilityType.Attack)
             {
-                yield return GainHealth((int)(baseHealth * 0.1f), logged + 1);
+                yield return GainHealth((int)(baseHealth * 0.15f), logged + 1);
             }
             else
             {
-                yield return TakeDamage((int)(baseHealth * 0.1f), logged + 1);
+                yield return TakeDamage((int)(baseHealth * 0.15f), logged + 1);
             }
         }
 
