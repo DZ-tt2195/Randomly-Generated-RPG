@@ -145,9 +145,11 @@ public class Ability : MonoBehaviour
                         if (listOfTargets[i].currentEmotion == Emotion.Neutral) listOfTargets.RemoveAt(i);
                     break;
                 case "SELFNEUTRAL":
-                    return (user.currentEmotion == Emotion.Neutral);
+                    if (user.currentEmotion == Emotion.Neutral)
+                        return false; break;
                 case "SELFNOTNEUTRAL":
-                    return (user.currentEmotion != Emotion.Neutral);
+                    if (user.currentEmotion != Emotion.Neutral)
+                        return false; break;
 
                 case "TARGETSHAPPY":
                     for (int i = listOfTargets.Count - 1; i >= 0; i--)
@@ -158,9 +160,11 @@ public class Ability : MonoBehaviour
                         if (listOfTargets[i].currentEmotion == Emotion.Happy) listOfTargets.RemoveAt(i);
                     break;
                 case "SELFHAPPY":
-                    return (user.currentEmotion == Emotion.Happy);
+                    if (user.currentEmotion == Emotion.Happy)
+                        return false; break;
                 case "SELFNOTHAPPY":
-                    return (user.currentEmotion != Emotion.Happy);
+                    if (user.currentEmotion != Emotion.Happy)
+                        return false; break;
 
                 case "TARGETSANGRY":
                     for (int i = listOfTargets.Count - 1; i >= 0; i--)
@@ -171,9 +175,11 @@ public class Ability : MonoBehaviour
                         if (listOfTargets[i].currentEmotion == Emotion.Angry) listOfTargets.RemoveAt(i);
                     break;
                 case "SELFANGRY":
-                    return (user.currentEmotion == Emotion.Angry);
+                    if (user.currentEmotion == Emotion.Angry)
+                        return false; break;
                 case "SELFNOTANGRY":
-                    return (user.currentEmotion != Emotion.Angry);
+                    if (user.currentEmotion != Emotion.Angry)
+                        return false; break;
 
                 case "TARGETSSAD":
                     for (int i = listOfTargets.Count - 1; i >= 0; i--)
@@ -184,19 +190,23 @@ public class Ability : MonoBehaviour
                         if (listOfTargets[i].currentEmotion == Emotion.Sad) listOfTargets.RemoveAt(i);
                     break;
                 case "SELFSAD":
-                    return (user.currentEmotion == Emotion.Sad);
+                    if (user.currentEmotion == Emotion.Sad)
+                        return false; break;
                 case "SELFNOTSAD":
-                    return (user.currentEmotion != Emotion.Sad);
+                    if (user.currentEmotion != Emotion.Sad)
+                        return false; break;
 
                 case "SELFGROUNDED":
-                    return user.currentPosition == Position.Grounded;
+                    if (user.currentPosition == Position.Grounded)
+                        return false; break;
                 case "TARGETSGROUNDED":
                     for (int i = listOfTargets.Count - 1; i >= 0; i--)
                         if (listOfTargets[i].currentPosition != Position.Grounded) listOfTargets.RemoveAt(i);
                     break;
 
                 case "SELFAIRBORNE":
-                    return user.currentPosition == Position.Airborne;
+                    if (user.currentPosition == Position.Airborne)
+                        return false; break;
                 case "TARGETSAIRBORNE":
                     for (int i = listOfTargets.Count - 1; i >= 0; i--)
                         if (listOfTargets[i].currentPosition != Position.Airborne) listOfTargets.RemoveAt(i);

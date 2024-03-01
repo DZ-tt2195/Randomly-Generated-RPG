@@ -503,15 +503,15 @@ public class Character : MonoBehaviour, IPointerClickHandler
         }
         else
         {
+            yield return TurnManager.instance.WaitTime();
+            yield return chosenAbility.ResolveInstructions(TurnManager.SpliceString(chosenAbility.instructions), logged + 1);
+
             int happinessPenalty = currentEmotion switch
             {
                 Emotion.Happy => 1,
                 _ => 0,
             };
             chosenAbility.currentCooldown = chosenAbility.baseCooldown + happinessPenalty;
-
-            yield return TurnManager.instance.WaitTime();
-            yield return chosenAbility.ResolveInstructions(TurnManager.SpliceString(chosenAbility.instructions), logged + 1);
         }
     }
 
