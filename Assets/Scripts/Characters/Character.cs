@@ -468,7 +468,7 @@ public class Character : MonoBehaviour, IPointerClickHandler
         }
         else
         {
-            yield return ResolveTurn(logged);
+            yield return ResolveTurn(logged, false);
         }
         yield return EndOfTurn(logged);
     }
@@ -479,7 +479,7 @@ public class Character : MonoBehaviour, IPointerClickHandler
             yield return weapon.StartOfTurn(logged);
     }
 
-    IEnumerator ResolveTurn(int logged)
+    IEnumerator ResolveTurn(int logged, bool extraAbility)
     {
         chosenAbility = null;
         while (chosenAbility == null)
@@ -492,7 +492,7 @@ public class Character : MonoBehaviour, IPointerClickHandler
 
         foreach (Ability ability in listOfAbilities)
         {
-            if (ability.currentCooldown > 0)
+            if (!extraAbility && ability.currentCooldown > 0)
                 ability.currentCooldown--;
         }
 
@@ -562,7 +562,7 @@ public class Character : MonoBehaviour, IPointerClickHandler
             if (chosenAbility.typeOne != AbilityType.Attack && chosenAbility.typeTwo != AbilityType.Attack)
             {
                 Log.instance.AddText($"{this.name} is Happy.", logged);
-                yield return ResolveTurn(logged+1);
+                yield return ResolveTurn(logged+1, true);
             }
         }
 
