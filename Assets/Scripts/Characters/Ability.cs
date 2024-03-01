@@ -407,10 +407,6 @@ public class Ability : MonoBehaviour
                         yield return target.Stun(1, logged);
                         break;
 
-                    case "TARGETSFORCEDCOOLDOWN":
-                        foreach (Ability ability in target.listOfAbilities)
-                            if (ability.currentCooldown == 0) ability.currentCooldown++;
-                        break;
                     case "TARGETSINCREASEACTIVECOOLDOWN":
                         foreach (Ability ability in target.listOfAbilities)
                             if (ability.currentCooldown > 0) ability.currentCooldown++;

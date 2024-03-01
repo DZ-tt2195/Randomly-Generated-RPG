@@ -7,9 +7,6 @@ using MyBox;
 using UnityEngine.EventSystems;
 using System;
 using System.Linq;
-using static Ability;
-//using static UnityEngine.GraphicsBuffer;
-//using UnityEditor.Playables;
 
 public enum Position { Grounded, Airborne, Dead };
 public enum Emotion { Dead, Neutral, Happy, Angry, Sad };
@@ -457,7 +454,7 @@ public class Character : MonoBehaviour, IPointerClickHandler
 
     #endregion
 
-#region Abilities and Turns
+#region Turns
 
     public IEnumerator MyTurn(int logged)
     {
@@ -471,7 +468,6 @@ public class Character : MonoBehaviour, IPointerClickHandler
         }
         else
         {
-            yield return ChooseTurn(logged);
             yield return ResolveTurn(logged);
         }
         yield return EndOfTurn(logged);
@@ -483,7 +479,7 @@ public class Character : MonoBehaviour, IPointerClickHandler
             yield return weapon.StartOfTurn(logged);
     }
 
-    IEnumerator ChooseTurn(int logged)
+    IEnumerator ResolveTurn(int logged)
     {
         chosenAbility = null;
         while (chosenAbility == null)
@@ -498,6 +494,24 @@ public class Character : MonoBehaviour, IPointerClickHandler
         {
             if (ability.currentCooldown > 0)
                 ability.currentCooldown--;
+        }
+
+        if (chosenAbility.myName == "Skip Turn")
+        {
+            Log.instance.AddText(Log.Substitute(chosenAbility, this), 0);
+            chosenAbility = null;
+        }
+        else
+        {
+            int happinessPenalty = currentEmotion switch
+            {
+                Emotion.Happy => 1,
+                _ => 0,
+            };
+            chosenAbility.currentCooldown = chosenAbility.baseCooldown + happinessPenalty;
+
+            yield return TurnManager.instance.WaitTime();
+            yield return chosenAbility.ResolveInstructions(TurnManager.SpliceString(chosenAbility.instructions), logged + 1);
         }
     }
 
@@ -532,32 +546,6 @@ public class Character : MonoBehaviour, IPointerClickHandler
         }
     }
 
-    IEnumerator ResolveTurn(int logged)
-    {
-        if (chosenAbility.myName == "Skip Turn")
-        {
-            Log.instance.AddText(Log.Substitute(chosenAbility, this), 0);
-            chosenAbility = null;
-        }
-        else
-        {
-            int happinessPenalty = currentEmotion switch
-            {
-                Emotion.Happy => 1,
-                _ => 0,
-            };
-            chosenAbility.currentCooldown = chosenAbility.baseCooldown + happinessPenalty;
-
-            yield return TurnManager.instance.WaitTime();
-            yield return ResolveAbility(chosenAbility, logged + 1);
-        }
-    }
-
-    protected IEnumerator ResolveAbility(Ability ability, int logged)
-    {
-        yield return ability.ResolveInstructions(TurnManager.SpliceString(ability.instructions), logged);
-    }
-
     IEnumerator EndOfTurn(int logged)
     {
         if (this.currentEmotion == Emotion.Angry && chosenAbility != null)
@@ -565,7 +553,7 @@ public class Character : MonoBehaviour, IPointerClickHandler
             if (chosenAbility.killed)
             {
                 Log.instance.AddText($"{this.name} is Angry.", logged);
-                yield return Stun(1, logged);
+                yield return Stun(1, logged+1);
             }
         }
 
@@ -574,8 +562,7 @@ public class Character : MonoBehaviour, IPointerClickHandler
             if (chosenAbility.typeOne != AbilityType.Attack && chosenAbility.typeTwo != AbilityType.Attack)
             {
                 Log.instance.AddText($"{this.name} is Happy.", logged);
-                yield return ChooseTurn(logged);
-                yield return ResolveTurn(logged);
+                yield return ResolveTurn(logged+1);
             }
         }
 
@@ -584,11 +571,11 @@ public class Character : MonoBehaviour, IPointerClickHandler
             Log.instance.AddText($"{this.name} is Sad.", logged);
             if (chosenAbility.typeOne != AbilityType.Attack && chosenAbility.typeTwo != AbilityType.Attack)
             {
-                yield return GainHealth((int)(baseHealth * 0.15f), logged + 1);
+                yield return GainHealth((int)(baseHealth * 0.2f), logged + 1);
             }
             else
             {
-                yield return TakeDamage((int)(baseHealth * 0.15f), logged + 1);
+                yield return TakeDamage((int)(baseHealth * 0.2f), logged + 1);
             }
         }
 
@@ -596,6 +583,6 @@ public class Character : MonoBehaviour, IPointerClickHandler
             yield return weapon.EndOfTurn(logged);
     }
 
-    #endregion
+#endregion
 
 }

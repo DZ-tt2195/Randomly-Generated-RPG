@@ -5,7 +5,6 @@ using UnityEngine.UI;
 using MyBox;
 using TMPro;
 using System.Linq;
-//using System.Collections.ObjectModel;
 
 class CharacterPositions
 {

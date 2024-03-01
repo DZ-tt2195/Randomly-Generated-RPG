@@ -13,7 +13,7 @@
     ],
     [
       "Knight",
-      "Does a lot of damage against individual and Grounded Enemies.",
+      "Does damage against individual and Grounded Enemies.",
       "80",
       "25",
       "14",
@@ -21,19 +21,19 @@
       "0.1",
       "0.95",
       "GROUNDED",
-      "1,2,3,4,5,6,7,8,9,10,"
+      "1,2,3,4,5,6,7,8,9,10,11,"
     ],
     [
       "Angel",
       "Starts off Airborne and focuses on healing.",
       "60",
-      "15",
+      "20",
       "7",
       "40",
       "0.1",
       "0.95",
       "AIRBORNE",
-      "11,12,13,14,15,16,17,18,19,20,21,"
+      "12,13,14,15,16,17,18,19,20,21,"
     ],
     [
       "Wizard",
@@ -41,7 +41,7 @@
       "70",
       "20",
       "10",
-      "30",
+      "25",
       "0.1",
       "0.95",
       "GROUNDED",

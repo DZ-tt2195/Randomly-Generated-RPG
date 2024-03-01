@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using System.Text.RegularExpressions;
-//using System.Drawing;
 
 [Serializable]
 public class KeywordHover
