@@ -548,34 +548,31 @@ public class Character : MonoBehaviour, IPointerClickHandler
 
     IEnumerator EndOfTurn(int logged)
     {
-        if (this.currentEmotion == Emotion.Angry && chosenAbility != null)
+        if (chosenAbility != null)
         {
-            if (chosenAbility.killed)
+            if (this.currentEmotion == Emotion.Angry)
             {
-                Log.instance.AddText($"{this.name} is Angry.", logged);
-                yield return Stun(1, logged+1);
+                if (chosenAbility.killed)
+                {
+                    Log.instance.AddText($"{this.name} is Angry.", logged);
+                    yield return Stun(1, logged + 1);
+                }
             }
-        }
-
-        else if (this.currentEmotion == Emotion.Happy && chosenAbility != null)
-        {
-            if (chosenAbility.typeOne != AbilityType.Attack && chosenAbility.typeTwo != AbilityType.Attack)
+            else if (this.currentEmotion == Emotion.Happy)
             {
-                Log.instance.AddText($"{this.name} is Happy.", logged);
-                yield return ResolveTurn(logged+1, true);
+                if (chosenAbility.typeOne != AbilityType.Attack && chosenAbility.typeTwo != AbilityType.Attack)
+                {
+                    Log.instance.AddText($"{this.name} is Happy.", logged);
+                    yield return ResolveTurn(logged + 1, true);
+                }
             }
-        }
-
-        else if (this.currentEmotion == Emotion.Sad && chosenAbility != null)
-        {
-            Log.instance.AddText($"{this.name} is Sad.", logged);
-            if (chosenAbility.typeOne != AbilityType.Attack && chosenAbility.typeTwo != AbilityType.Attack)
+            else if (this.currentEmotion == Emotion.Sad)
             {
-                yield return GainHealth((int)(baseHealth * 0.2f), logged + 1);
-            }
-            else
-            {
-                yield return TakeDamage((int)(baseHealth * 0.2f), logged + 1);
+                Log.instance.AddText($"{this.name} is Sad.", logged);
+                if (chosenAbility.typeOne != AbilityType.Attack && chosenAbility.typeTwo != AbilityType.Attack)
+                    yield return GainHealth((int)(baseHealth * 0.2f), logged + 1);
+                else
+                    yield return TakeDamage((int)(baseHealth * 0.2f), logged + 1);
             }
         }
 
