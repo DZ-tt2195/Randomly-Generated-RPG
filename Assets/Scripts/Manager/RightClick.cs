@@ -24,7 +24,7 @@ public class RightClick : MonoBehaviour
     TMP_Text stats1;
     TMP_Text stats2;
 
-    List<AbilityBox> listOfBoxes = new();
+    [SerializeField] List<AbilityBox> listOfBoxes = new();
 
     private void Awake()
     {
@@ -47,10 +47,6 @@ public class RightClick : MonoBehaviour
         emotionText = statsStuff.transform.Find("Emotion").GetComponent<TMP_Text>();
         stats1 = statsStuff.transform.Find("Stats Part 1").GetComponent<TMP_Text>();
         stats2 = statsStuff.transform.Find("Stats Part 2").GetComponent<TMP_Text>();
-
-        Transform abilityStuff = background.transform.Find("Ability Stuff");
-        foreach (Transform child in abilityStuff)
-            listOfBoxes.Add(child.GetComponent<AbilityBox>());
     }
 
     private void Update()
@@ -88,7 +84,7 @@ public class RightClick : MonoBehaviour
         for (int i = 0; i<character.listOfAbilities.Count; i++)
         {
             Ability nextAbility = character.listOfAbilities[i];
-            if (nextAbility.myName != "Skip Turn" && nextAbility.myName != "Retreat")
+            if (nextAbility.myName != "Skip Turn")
             {
                 listOfBoxes[nextBox].gameObject.SetActive(true);
                 listOfBoxes[nextBox].ReceiveAbility(nextAbility, character);

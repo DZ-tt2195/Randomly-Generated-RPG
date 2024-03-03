@@ -94,7 +94,7 @@ public class TurnManager : MonoBehaviour
     IEnumerator NewWave()
     {
         instructions.text = "";
-        listOfBoxes[0].transform.parent.gameObject.SetActive(false);
+        instructions.gameObject.transform.parent.gameObject.SetActive(false);
         DisableCharacterButtons();
 
         yield return WaitTime();

@@ -101,7 +101,7 @@ public class Character : MonoBehaviour, IPointerClickHandler
             putIntoList.Add(next);
         putIntoList = putIntoList.Shuffle();
 
-        for (int i = 0; listOfAbilities.Count < 5 && i < 10; i++)
+        for (int i = 0; listOfAbilities.Count < 6 && i < 10; i++)
         {
             try
             {
