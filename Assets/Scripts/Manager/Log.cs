@@ -9,7 +9,7 @@ using System.Text.RegularExpressions;
 public class Log : MonoBehaviour
 {    
     public static Log instance;
-    [ReadOnly] Scrollbar scroll;
+    Scrollbar scroll;
     [SerializeField] RectTransform RT;
     [SerializeField] TMP_Text textBoxClone;
 

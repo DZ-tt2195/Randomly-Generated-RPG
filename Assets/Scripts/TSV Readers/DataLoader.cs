@@ -52,13 +52,15 @@ public class AbilityData
     public AbilityType typeOne;
     public AbilityType typeTwo;
     public string playCondition;
-    public float healthChange;
     public int cooldown;
+    public float attackPower;
+    public float healthRegain;
     public float modifyAttack;
     public float modifyDefense;
     public float modifySpeed;
     public float modifyLuck;
     public float modifyAccuracy;
+    public int miscNumber;
     public TeamTarget teamTarget;
 }
 
@@ -119,14 +121,16 @@ public class DataLoader
             newAbility.typeTwo = StringToAbilityType(line[5]);
             newAbility.instructions = line[6];
             newAbility.playCondition = line[7];
-            newAbility.healthChange = StringToFloat(line[8]);
-            newAbility.cooldown = StringToInt(line[9]);
-            newAbility.modifyAttack = StringToFloat(line[10]);
-            newAbility.modifyDefense = StringToFloat(line[11]);
-            newAbility.modifySpeed = StringToFloat(line[12]);
-            newAbility.modifyLuck = StringToFloat(line[13]);
-            newAbility.modifyAccuracy = StringToFloat(line[14]);
-            try { newAbility.teamTarget = StringToTeamTarget(line[15]); } catch (IndexOutOfRangeException) { Debug.Log($"{newAbility.myName} has no target"); }
+            newAbility.cooldown = StringToInt(line[8]);
+            newAbility.attackPower = StringToFloat(line[9]);
+            newAbility.healthRegain = StringToFloat(line[10]);
+            newAbility.modifyAttack = StringToFloat(line[11]);
+            newAbility.modifyDefense = StringToFloat(line[12]);
+            newAbility.modifySpeed = StringToFloat(line[13]);
+            newAbility.modifyLuck = StringToFloat(line[14]);
+            newAbility.modifyAccuracy = StringToFloat(line[15]);
+            newAbility.miscNumber = StringToInt(line[16]);
+            try { newAbility.teamTarget = StringToTeamTarget(line[17]); } catch (IndexOutOfRangeException) { Debug.Log($"{newAbility.myName} has no target"); }
         }
         return nextData;
     }
@@ -181,7 +185,6 @@ public class DataLoader
             "HEALING" => AbilityType.Healing,
             "POSITION" => AbilityType.Position,
             "MISC" => AbilityType.Misc,
-            "SUMMON" => AbilityType.Summon,
             "NONE" => AbilityType.None,
             _ => AbilityType.None,
         };

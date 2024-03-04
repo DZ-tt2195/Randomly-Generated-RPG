@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using MyBox;
 using TMPro;
+using System;
 
 public class TitleScreen : MonoBehaviour
 {
@@ -13,6 +14,8 @@ public class TitleScreen : MonoBehaviour
     public static TitleScreen instance;
     [ReadOnly] public Transform canvas;
     [SerializeField] GameObject playerPrefab;
+    [SerializeField] bool randomSeed;
+    [SerializeField][ConditionalField(nameof(randomSeed), inverse: true)] int chosenSeed;
 
 #endregion
 
@@ -20,6 +23,17 @@ public class TitleScreen : MonoBehaviour
 
     void Start()
     {
+        if (randomSeed || !Application.isEditor)
+        {
+            chosenSeed = (int)DateTime.Now.Ticks;
+            Debug.Log($"random seed: {chosenSeed}");
+        }
+        else
+        {
+            Debug.Log($"manual seed: {chosenSeed}");
+        }
+        UnityEngine.Random.InitState(chosenSeed);
+
         StartCoroutine(GenerateStuff());
     }
 
@@ -51,7 +65,7 @@ public class TitleScreen : MonoBehaviour
             if (FileManager.instance.listOfWeapons.Count == 0) randomWeapon = null;
             else randomWeapon = FileManager.instance.listOfWeapons[i];
 
-            yield return nextCharacter.SetupCharacter(CharacterType.Player, playerData[i], false, randomWeapon);
+            nextCharacter.SetupCharacter(CharacterType.Player, playerData[i], false, randomWeapon);
             FileManager.instance.listOfPlayers.Add(nextCharacter);
 
             nextCharacter.transform.SetParent(FileManager.instance.canvas);

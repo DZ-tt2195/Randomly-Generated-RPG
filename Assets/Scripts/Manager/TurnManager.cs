@@ -81,6 +81,9 @@ public class TurnManager : MonoBehaviour
                     break;
                 }
             }
+
+            foreach (Ability ability in nextCharacter.listOfAbilities)
+                SaveManager.instance.AddAbility(nextCharacter.name, ability.data);
         }
 
         quitButton.gameObject.SetActive(false);
@@ -111,9 +114,7 @@ public class TurnManager : MonoBehaviour
 
         int randomNum = Mathf.Min(currentWave+1, Random.Range(3, 6));
         for (int i = 0; i < randomNum; i++)
-        {
-            yield return CreateEnemy(Random.Range(0, FileManager.instance.listOfEnemies.Count), enemyMultiplier, 0);
-        }
+            CreateEnemy(Random.Range(0, FileManager.instance.listOfEnemies.Count), enemyMultiplier, 0);
 
         Log.instance.AddText($"");
 
@@ -213,7 +214,7 @@ public class TurnManager : MonoBehaviour
             decrease = !decrease;
     }
 
-    public IEnumerator CreateEnemy(int ID, float multiplier, int logged)
+    public void CreateEnemy(int ID, float multiplier, int logged)
     {
         EnemyCharacter nextCharacter = Instantiate(characterPrefab).AddComponent<EnemyCharacter>();
         nextCharacter.transform.SetParent(FileManager.instance.canvas);
@@ -232,7 +233,8 @@ public class TurnManager : MonoBehaviour
 
         nextCharacter.name = FileManager.instance.listOfEnemies[ID].myName;
         Log.instance.AddText($"{Log.Article(nextCharacter.name)} entered the fight.", logged);
-        yield return (nextCharacter.SetupCharacter(CharacterType.Enemy, FileManager.instance.listOfEnemies[ID], false, null, multiplier));
+        nextCharacter.SetupCharacter(CharacterType.Enemy, FileManager.instance.listOfEnemies[ID], false, null, multiplier);
+        SaveManager.instance.AddEnemy(FileManager.instance.listOfEnemies[ID]);
     }
 
     public void DisableCharacterButtons()

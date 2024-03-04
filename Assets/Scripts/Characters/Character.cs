@@ -22,6 +22,7 @@ public class Character : MonoBehaviour, IPointerClickHandler
 
     [Foldout("Player info", true)]
     protected Ability chosenAbility;
+    [ReadOnly] public CharacterData data;
     [ReadOnly] public List<Ability> listOfAbilities = new List<Ability>();
     [ReadOnly] public CharacterType myType;
     [ReadOnly] public string aiTargeting;
@@ -74,9 +75,9 @@ public class Character : MonoBehaviour, IPointerClickHandler
         weaponImage = transform.Find("Weapon Image").GetComponent<Image>();
     }
 
-    public IEnumerator SetupCharacter(CharacterType type, CharacterData characterData, bool isHelper, WeaponData weaponData, float multiplier = 1f)
+    public void SetupCharacter(CharacterType type, CharacterData characterData, bool isHelper, WeaponData weaponData, float multiplier = 1f)
     {
-        yield return null;
+        data = characterData;
         myType = type;
         this.name = characterData.myName;
         this.description = KeywordTooltip.instance.EditText(characterData.description);
@@ -168,8 +169,8 @@ public class Character : MonoBehaviour, IPointerClickHandler
         if (currentPosition == Position.Airborne)
         {
             Vector3 newPosition = transform.localPosition;
-            int startingPosition = (myType == CharacterType.Enemy) ? 425 : -425;
-            newPosition.y = startingPosition + 45 * Mathf.Cos(Time.time * 2.5f);
+            int startingPosition = (myType == CharacterType.Enemy) ? 375 : -500;
+            newPosition.y = startingPosition + (25 * Mathf.Cos(Time.time * 3f));
             transform.localPosition = newPosition;
         }
         else

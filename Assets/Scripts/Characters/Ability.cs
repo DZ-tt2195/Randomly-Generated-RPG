@@ -1,18 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 using MyBox;
-using TMPro;
 
 public enum TeamTarget { None, Self, AnyOne, All, OnePlayer, OtherPlayer, OneEnemy, OtherEnemy, AllPlayers, AllEnemies };
-public enum AbilityType { None, Attack, Stats, Emotion, Position, Healing, Summon, Misc };
+public enum AbilityType { None, Attack, Stats, Emotion, Position, Healing, Misc };
 
 public class Ability : MonoBehaviour
 {
 
 #region Setup
 
+    [ReadOnly] public AbilityData data;
     [ReadOnly] public Character self;
 
     [ReadOnly] public string myName;
@@ -26,7 +25,9 @@ public class Ability : MonoBehaviour
     [ReadOnly] public string nextInstructions;
     [ReadOnly] public string playCondition;
 
-    [ReadOnly] public float healthChange;
+    [ReadOnly] public float attackPower;
+    [ReadOnly] public float healthRegain;
+    [ReadOnly] public int miscNumber;
 
     [ReadOnly] public int baseCooldown;
     [ReadOnly] public int currentCooldown;
@@ -50,6 +51,7 @@ public class Ability : MonoBehaviour
 
     public void SetupAbility(AbilityData data, bool startWithCooldown)
     {
+        this.data = data;
         myName = data.myName;
         instructions = data.instructions;
         description = KeywordTooltip.instance.EditText(data.description);
@@ -57,15 +59,17 @@ public class Ability : MonoBehaviour
         typeTwo = data.typeTwo;
         logDescription = data.logDescription;
         playCondition = data.playCondition;
-        healthChange = data.healthChange;
         baseCooldown = data.cooldown;
         currentCooldown = (startWithCooldown) ? baseCooldown : 0;
+        attackPower = data.attackPower;
+        healthRegain = data.healthRegain;
         modifyAttack = data.modifyAttack;
         modifyDefense = data.modifyDefense;
         modifySpeed = data.modifySpeed;
         modifyLuck = data.modifyLuck;
         modifyAccuracy = data.modifyAccuracy;
         teamTarget = data.teamTarget;
+        miscNumber = data.miscNumber;
         self = GetComponent<Character>();
     }
 
@@ -125,9 +129,9 @@ public class Ability : MonoBehaviour
             }
         }
 
-        foreach (string nextMethod in methodsInStrings)
+        foreach (string methodName in methodsInStrings)
         {
-            switch (nextMethod)
+            switch (methodName)
             {
                 case "":
                     break;
@@ -213,7 +217,7 @@ public class Ability : MonoBehaviour
                     break;
 
                 default:
-                    Debug.LogError($"{nextMethod} isn't a method");
+                    Debug.LogError($"{self.name}: {methodName} isn't a method");
                     break;
             }
         }
@@ -307,10 +311,10 @@ public class Ability : MonoBehaviour
                         break;
 
                     case "SELFHEAL":
-                        yield return self.GainHealth(healthChange, logged);
+                        yield return self.GainHealth(healthRegain, logged);
                         break;
                     case "TARGETSHEAL":
-                        yield return target.GainHealth(healthChange, logged);
+                        yield return target.GainHealth(healthRegain, logged);
                         break;
 
                     case "SELFSWAPPOSITION":
@@ -409,12 +413,13 @@ public class Ability : MonoBehaviour
                     case "SELFDESTRUCT":
                         yield return self.HasDied(logged);
                         break;
+
                     case "TARGETSREVIVE":
-                        yield return target.Revive(healthChange, logged);
+                        yield return target.Revive(healthRegain, logged);
                         break;
 
                     case "TARGETSSTUN":
-                        yield return target.Stun(1, logged);
+                        yield return target.Stun(miscNumber, logged);
                         break;
 
                     case "TARGETSINCREASEACTIVECOOLDOWN":
@@ -427,7 +432,7 @@ public class Ability : MonoBehaviour
                         break;
 
                     default:
-                        Debug.LogError($"{methodName} isn't a method");
+                        Debug.LogError($"{self.name}: {methodName} isn't a method");
                         break;
                 }
             }
@@ -483,7 +488,7 @@ public class Ability : MonoBehaviour
             float attack = user.CalculateAttack();
             float defense = target.CalculateDefense();
 
-            int finalDamage = Mathf.Max(0, (int)(damageVariation * critical * effectiveness + (attack * healthChange) - defense));
+            int finalDamage = Mathf.Max(0, (int)(damageVariation * critical * effectiveness + (attack * attackPower) - defense));
             return finalDamage;
         }
         else
