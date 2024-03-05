@@ -10,6 +10,7 @@ public class SaveData
     public List<AbilityData> seenAngelAbilities = new();
     public List<AbilityData> seenWizardAbilities = new();
     public List<CharacterData> seenEnemies = new();
+    public List<WeaponData> seenWeapons = new();
 
     public SaveData()
     {
@@ -49,11 +50,21 @@ public class SaveManager : MonoBehaviour
 
     public void AddEnemy(CharacterData data)
     {
-        if (!currentSaveData.seenEnemies.Contains(data))
-        {
-            currentSaveData.seenEnemies.Add(data);
-            ES3.Save("Random RPG", currentSaveData, $"{Application.persistentDataPath}/Random RPG.es3");
-        }
+        foreach (CharacterData savedData in currentSaveData.seenEnemies)
+            if (savedData.myName.Equals(data.myName))
+                return;
+        currentSaveData.seenEnemies.Add(data);
+        ES3.Save("Random RPG", currentSaveData, $"{Application.persistentDataPath}/Random RPG.es3");
+
+    }
+
+    public void AddWeapon(WeaponData data)
+    {
+        foreach (WeaponData savedData in currentSaveData.seenWeapons)
+            if (savedData.myName.Equals(data.myName))
+                return;
+        currentSaveData.seenWeapons.Add(data);
+        ES3.Save("Random RPG", currentSaveData, $"{Application.persistentDataPath}/Random RPG.es3");
     }
 
     public void AddAbility(string character, AbilityData data)

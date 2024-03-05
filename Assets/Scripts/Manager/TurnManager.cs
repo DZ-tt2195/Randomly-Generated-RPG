@@ -82,6 +82,7 @@ public class TurnManager : MonoBehaviour
                 }
             }
 
+            SaveManager.instance.AddWeapon(nextCharacter.weapon.data);
             foreach (Ability ability in nextCharacter.listOfAbilities)
                 SaveManager.instance.AddAbility(nextCharacter.name, ability.data);
         }

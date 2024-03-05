@@ -8,6 +8,7 @@ public class Weapon : MonoBehaviour
 
 #region Setup
 
+    [ReadOnly] public WeaponData data;
     [ReadOnly] public Character self;
 
     [ReadOnly] public string myName;
@@ -35,6 +36,7 @@ public class Weapon : MonoBehaviour
     public void SetupWeapon(WeaponData data)
     {
         self = GetComponent<Character>();
+        this.data = data;
         myName = data.myName;
         description = KeywordTooltip.instance.EditText(data.description);
 

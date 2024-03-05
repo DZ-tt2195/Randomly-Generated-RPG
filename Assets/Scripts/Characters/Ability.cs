@@ -144,64 +144,64 @@ public class Ability : MonoBehaviour
                     for (int i = listOfTargets.Count - 1; i >= 0; i--)
                         if (listOfTargets[i].currentEmotion != Emotion.Neutral) listOfTargets.RemoveAt(i);
                     break;
+                case "SELFNEUTRAL":
+                    if (user.currentEmotion != Emotion.Neutral)
+                        return false; break;
                 case "TARGETSNOTNEUTRAL":
                     for (int i = listOfTargets.Count - 1; i >= 0; i--)
                         if (listOfTargets[i].currentEmotion == Emotion.Neutral) listOfTargets.RemoveAt(i);
                     break;
-                case "SELFNEUTRAL":
-                    if (user.currentEmotion == Emotion.Neutral)
-                        return false; break;
                 case "SELFNOTNEUTRAL":
-                    if (user.currentEmotion != Emotion.Neutral)
+                    if (user.currentEmotion == Emotion.Neutral)
                         return false; break;
 
                 case "TARGETSHAPPY":
                     for (int i = listOfTargets.Count - 1; i >= 0; i--)
                         if (listOfTargets[i].currentEmotion != Emotion.Happy) listOfTargets.RemoveAt(i);
                     break;
+                case "SELFHAPPY":
+                    if (user.currentEmotion != Emotion.Happy)
+                        return false; break;
                 case "TARGETSNOTHAPPY":
                     for (int i = listOfTargets.Count - 1; i >= 0; i--)
                         if (listOfTargets[i].currentEmotion == Emotion.Happy) listOfTargets.RemoveAt(i);
                     break;
-                case "SELFHAPPY":
-                    if (user.currentEmotion == Emotion.Happy)
-                        return false; break;
                 case "SELFNOTHAPPY":
-                    if (user.currentEmotion != Emotion.Happy)
+                    if (user.currentEmotion == Emotion.Happy)
                         return false; break;
 
                 case "TARGETSANGRY":
                     for (int i = listOfTargets.Count - 1; i >= 0; i--)
                         if (listOfTargets[i].currentEmotion != Emotion.Angry) listOfTargets.RemoveAt(i);
                     break;
+                case "SELFANGRY":
+                    if (user.currentEmotion != Emotion.Angry)
+                        return false; break;
                 case "TARGETSNOTANGRY":
                     for (int i = listOfTargets.Count - 1; i >= 0; i--)
                         if (listOfTargets[i].currentEmotion == Emotion.Angry) listOfTargets.RemoveAt(i);
                     break;
-                case "SELFANGRY":
-                    if (user.currentEmotion == Emotion.Angry)
-                        return false; break;
                 case "SELFNOTANGRY":
-                    if (user.currentEmotion != Emotion.Angry)
+                    if (user.currentEmotion == Emotion.Angry)
                         return false; break;
 
                 case "TARGETSSAD":
                     for (int i = listOfTargets.Count - 1; i >= 0; i--)
                         if (listOfTargets[i].currentEmotion != Emotion.Sad) listOfTargets.RemoveAt(i);
                     break;
+                case "SELFSAD":
+                    if (user.currentEmotion != Emotion.Sad)
+                        return false; break;
                 case "TARGETSNOTSAD":
                     for (int i = listOfTargets.Count - 1; i >= 0; i--)
                         if (listOfTargets[i].currentEmotion == Emotion.Sad) listOfTargets.RemoveAt(i);
                     break;
-                case "SELFSAD":
-                    if (user.currentEmotion == Emotion.Sad)
-                        return false; break;
                 case "SELFNOTSAD":
-                    if (user.currentEmotion != Emotion.Sad)
+                    if (user.currentEmotion == Emotion.Sad)
                         return false; break;
 
                 case "SELFGROUNDED":
-                    if (user.currentPosition == Position.Grounded)
+                    if (user.currentPosition != Position.Grounded)
                         return false; break;
                 case "TARGETSGROUNDED":
                     for (int i = listOfTargets.Count - 1; i >= 0; i--)
@@ -209,7 +209,7 @@ public class Ability : MonoBehaviour
                     break;
 
                 case "SELFAIRBORNE":
-                    if (user.currentPosition == Position.Airborne)
+                    if (user.currentPosition != Position.Airborne)
                         return false; break;
                 case "TARGETSAIRBORNE":
                     for (int i = listOfTargets.Count - 1; i >= 0; i--)
