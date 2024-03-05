@@ -310,7 +310,7 @@ public class Character : MonoBehaviour, IPointerClickHandler
 
         Log.instance.AddText($"{(this.name)} has died.", logged);
         if (this.weapon != null)
-            yield return weapon.OnDeath(logged + 1);
+            yield return this.weapon.WeaponEffect(TurnManager.SpliceString(this.weapon.onDeath), logged+1);
 
         yield return ChangeEmotion(Emotion.Dead, logged);
 
@@ -328,7 +328,7 @@ public class Character : MonoBehaviour, IPointerClickHandler
 
     public IEnumerator Revive(float health, int logged)
     {
-        if (this == null) yield break;
+        if (this == null || this.CalculateHealth() > 0) yield break;
 
         Log.instance.AddText($"{(this.name)} comes back to life.", logged);
         yield return GainHealth(health, logged);
@@ -473,7 +473,7 @@ public class Character : MonoBehaviour, IPointerClickHandler
     IEnumerator StartOfTurn(int logged)
     {
         if (this.weapon != null)
-            yield return weapon.StartOfTurn(logged);
+            yield return this.weapon.WeaponEffect(TurnManager.SpliceString(this.weapon.startOfTurn), logged);
     }
 
     IEnumerator ResolveTurn(int logged, bool extraAbility)
@@ -509,6 +509,9 @@ public class Character : MonoBehaviour, IPointerClickHandler
                 _ => 0,
             };
             chosenAbility.currentCooldown = chosenAbility.baseCooldown + happinessPenalty;
+
+            if (chosenAbility.killed && this.weapon != null)
+                yield return this.weapon.WeaponEffect(TurnManager.SpliceString(this.weapon.onKill), logged+1);
         }
     }
 
@@ -574,7 +577,7 @@ public class Character : MonoBehaviour, IPointerClickHandler
         }
 
         if (this.weapon != null)
-            yield return weapon.EndOfTurn(logged);
+            yield return this.weapon.WeaponEffect(TurnManager.SpliceString(this.weapon.endOfTurn), logged);
     }
 
 #endregion

@@ -14,8 +14,8 @@ public class Weapon : MonoBehaviour
     [ReadOnly] public string myName;
     [ReadOnly] public string description;
 
-    [ReadOnly] public List<Ability> listOfAbilities = new();
-    [ReadOnly] public string statCalculation;
+    List<Ability> listOfAbilities = new();
+    string statCalculation;
     [ReadOnly] public string startOfTurn;
     [ReadOnly] public string endOfTurn;
     [ReadOnly] public string newWave;
@@ -72,47 +72,28 @@ public class Weapon : MonoBehaviour
         modifyAccuracy = data.modifyAccuracy;
     }
 
-#endregion
+    #endregion
 
 #region Effects
 
-    IEnumerator RunMethod(string methodName, int logged)
+    public IEnumerator WeaponEffect(string[] listOfMethods, int logged)
     {
-        yield return null;
-        switch (methodName)
+        foreach (string methodName in listOfMethods)
         {
-            case "":
-                break;
-            case "NONE":
-                break;
-            case "USEABILITIES":
-                foreach (Ability ability in listOfAbilities)
-                {
-                    if (ability.CanPlay(self))
-                        yield return ability.ResolveInstructions(TurnManager.SpliceString(ability.instructions), logged + 1);
-                }
-                break;
-            default:
-                Debug.LogError($"{this.myName}: {methodName} isn't implemented");
-                break;
-        }
-    }
-
-    public IEnumerator StartOfTurn(int logged)
-    {
-        string[] spliced = TurnManager.SpliceString(startOfTurn);
-        foreach (string methodName in spliced)
-        {
-            yield return RunMethod(methodName, logged);
-        }
-    }
-
-    public IEnumerator EndOfTurn(int logged)
-    {
-        string[] spliced = TurnManager.SpliceString(endOfTurn);
-        foreach (string methodName in spliced)
-        {
-            yield return RunMethod(methodName, logged);
+            switch (methodName)
+            {
+                case "":
+                    break;
+                case "NONE":
+                    break;
+                case "USEABILITIES":
+                    foreach (Ability ability in listOfAbilities)
+                        if (ability.CanPlay(self)) yield return ability.ResolveInstructions(TurnManager.SpliceString(ability.instructions), logged + 1);
+                    break;
+                default:
+                    Debug.LogError($"{this.myName}: {methodName} isn't implemented");
+                    break;
+            }
         }
     }
 
@@ -136,24 +117,6 @@ public class Weapon : MonoBehaviour
         }
 
         return true;
-    }
-
-    public IEnumerator NewWave(int logged)
-    {
-        string[] spliced = TurnManager.SpliceString(newWave);
-        foreach (string methodName in spliced)
-        {
-            yield return RunMethod(methodName, logged);
-        }
-    }
-
-    public IEnumerator OnDeath(int logged)
-    {
-        string[] spliced = TurnManager.SpliceString(onDeath);
-        foreach (string methodName in spliced)
-        {
-            yield return RunMethod(methodName, logged);
-        }
     }
 
 #endregion

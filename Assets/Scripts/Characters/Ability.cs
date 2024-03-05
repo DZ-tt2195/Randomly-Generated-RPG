@@ -414,10 +414,16 @@ public class Ability : MonoBehaviour
                         yield return self.HasDied(logged);
                         break;
 
+                    case "SELFREVIVE":
+                        yield return self.Revive(healthRegain, logged);
+                        break;
                     case "TARGETSREVIVE":
                         yield return target.Revive(healthRegain, logged);
                         break;
 
+                    case "SELFSTUN":
+                        yield return self.Stun(miscNumber, logged);
+                        break;
                     case "TARGETSSTUN":
                         yield return target.Stun(miscNumber, logged);
                         break;

@@ -22,7 +22,7 @@
     ],
     [
       "Meteor",
-      "Each time this dies, it deals heavy damage to all enemies.",
+      "Each time this dies, it deals a lot of damage to all enemies.",
       "51,",
       "",
       "",
@@ -51,12 +51,24 @@
     ],
     [
       "Lucky Coin",
-      "On a new wave, this regains health.",
+      "If this is dead, it revives itself on a new wave.",
       "52,",
       "",
       "",
       "",
       "UseAbilities"
+    ],
+    [
+      "Battle Plan",
+      "This has higher attack. It gets Stunned on every new wave.",
+      "53,",
+      "",
+      "",
+      "",
+      "UseAbilities",
+      "",
+      "",
+      "0.5"
     ]
   ]
 }

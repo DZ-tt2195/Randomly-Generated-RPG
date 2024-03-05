@@ -113,9 +113,7 @@ public class FileManager : MonoBehaviour
         if (FPS.instance != null)
             Preserve(FPS.instance.gameObject);
 
-        //Preserve(RightClick.instance.gameObject);
-        //Preserve(GameSettings.instance.gameObject);
-        //Preserve(EmotionGuide.instance.gameObject);
+        Preserve(ScreenOverlay.instance.gameObject);
         Preserve(KeywordTooltip.instance.gameObject);
 
         listOfPlayers.RemoveAll(item => item == null);

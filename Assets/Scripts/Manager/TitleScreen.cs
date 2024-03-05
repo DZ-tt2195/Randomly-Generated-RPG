@@ -61,8 +61,8 @@ public class TitleScreen : MonoBehaviour
             PlayerCharacter nextCharacter = Instantiate(playerPrefab).AddComponent<PlayerCharacter>();
             WeaponData randomWeapon;
 
-            if (FileManager.instance.listOfWeapons.Count == 0) randomWeapon = null;
-            else randomWeapon = FileManager.instance.listOfWeapons[i];
+            try{randomWeapon = FileManager.instance.listOfWeapons[i];}
+            catch{randomWeapon = null;}
 
             nextCharacter.SetupCharacter(CharacterType.Player, playerData[i], false, randomWeapon);
             FileManager.instance.listOfPlayers.Add(nextCharacter);

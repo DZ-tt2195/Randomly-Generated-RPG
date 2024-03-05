@@ -82,7 +82,8 @@ public class TurnManager : MonoBehaviour
                 }
             }
 
-            SaveManager.instance.AddWeapon(nextCharacter.weapon.data);
+            if (nextCharacter.weapon != null)
+                SaveManager.instance.AddWeapon(nextCharacter.weapon.data);
             foreach (Ability ability in nextCharacter.listOfAbilities)
                 SaveManager.instance.AddAbility(nextCharacter.name, ability.data);
         }
@@ -133,8 +134,7 @@ public class TurnManager : MonoBehaviour
                 instructions.text = "";
                 nextInLine.border.gameObject.SetActive(true);
 
-                if (nextInLine.weapon != null)
-                    yield return nextInLine.weapon.NewWave(0);
+                yield return nextInLine.weapon.WeaponEffect(SpliceString(nextInLine.weapon.newWave), 0);
                 nextInLine.border.gameObject.SetActive(false);
             }
         }
