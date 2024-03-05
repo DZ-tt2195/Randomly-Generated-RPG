@@ -22,7 +22,6 @@ public class FileManager : MonoBehaviour
 
     [Tooltip("store all players")][ReadOnly] public List<Character> listOfPlayers = new List<Character>();
     [Tooltip("store all ability data")][ReadOnly] public List<AbilityData> listOfAbilities;
-    [Tooltip("store all other ability data")][ReadOnly] public List<AbilityData> listOfOtherAbilities;
     [Tooltip("store all enemy data")][ReadOnly] public List<CharacterData> listOfEnemies;
     [Tooltip("store all weapon data")][ReadOnly] public List<WeaponData> listOfWeapons;
 
@@ -96,20 +95,14 @@ public class FileManager : MonoBehaviour
 
     void BringBackObjects()
     {
-        RightClick.instance.transform.SetParent(canvas);
-        RightClick.instance.transform.localPosition = new Vector3(0, 0);
+        ScreenOverlay.instance.transform.SetParent(canvas);
+        ScreenOverlay.instance.transform.localPosition = new Vector3(0, 0);
 
         if (FPS.instance != null)
         {
             FPS.instance.transform.SetParent(canvas);
             FPS.instance.transform.localPosition = new Vector3(-1190, 670);
         }
-
-        GameSettings.instance.transform.SetParent(canvas);
-        GameSettings.instance.transform.localPosition = new Vector3(0, 0);
-
-        EmotionGuide.instance.transform.SetParent(canvas);
-        EmotionGuide.instance.transform.localPosition = new Vector3(0, 0);
 
         KeywordTooltip.instance.transform.SetParent(canvas);
         KeywordTooltip.instance.transform.localPosition = new Vector3(0, 0);
@@ -120,9 +113,9 @@ public class FileManager : MonoBehaviour
         if (FPS.instance != null)
             Preserve(FPS.instance.gameObject);
 
-        Preserve(RightClick.instance.gameObject);
-        Preserve(GameSettings.instance.gameObject);
-        Preserve(EmotionGuide.instance.gameObject);
+        //Preserve(RightClick.instance.gameObject);
+        //Preserve(GameSettings.instance.gameObject);
+        //Preserve(EmotionGuide.instance.gameObject);
         Preserve(KeywordTooltip.instance.gameObject);
 
         listOfPlayers.RemoveAll(item => item == null);

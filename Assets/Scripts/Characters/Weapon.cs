@@ -20,6 +20,7 @@ public class Weapon : MonoBehaviour
     [ReadOnly] public string endOfTurn;
     [ReadOnly] public string newWave;
     [ReadOnly] public string onDeath;
+    [ReadOnly] public string onKill;
 
     [ReadOnly] public float startingAttack;
     [ReadOnly] public float startingDefense;
@@ -47,7 +48,7 @@ public class Weapon : MonoBehaviour
             {
                 Ability nextAbility = this.gameObject.AddComponent<Ability>();
                 listOfAbilities.Add(nextAbility);
-                nextAbility.SetupAbility(FileManager.instance.listOfOtherAbilities[int.Parse(skill)], false);
+                nextAbility.SetupAbility(FileManager.instance.listOfAbilities[int.Parse(skill)], false);
             }
         }
 
@@ -56,6 +57,7 @@ public class Weapon : MonoBehaviour
         endOfTurn = data.endOfTurn;
         newWave = data.newWave;
         onDeath = data.onDeath;
+        onKill = data.onKill;
 
         startingAttack = data.startingAttack;
         startingDefense = data.startingDefense;
@@ -91,7 +93,7 @@ public class Weapon : MonoBehaviour
                 }
                 break;
             default:
-                Debug.LogError($"{methodName} isn't implemented");
+                Debug.LogError($"{this.myName}: {methodName} isn't implemented");
                 break;
         }
     }
@@ -107,7 +109,7 @@ public class Weapon : MonoBehaviour
 
     public IEnumerator EndOfTurn(int logged)
     {
-        string[] spliced = TurnManager.SpliceString(startOfTurn);
+        string[] spliced = TurnManager.SpliceString(endOfTurn);
         foreach (string methodName in spliced)
         {
             yield return RunMethod(methodName, logged);
@@ -128,7 +130,7 @@ public class Weapon : MonoBehaviour
                 case "IFAIRBORNE":
                     return self.currentPosition == Position.Airborne;
                 default:
-                    Debug.LogError($"{methodName} isn't implemented");
+                    Debug.LogError($"{this.myName}: {methodName} isn't implemented");
                     break;
             }
         }
@@ -138,7 +140,7 @@ public class Weapon : MonoBehaviour
 
     public IEnumerator NewWave(int logged)
     {
-        string[] spliced = TurnManager.SpliceString(startOfTurn);
+        string[] spliced = TurnManager.SpliceString(newWave);
         foreach (string methodName in spliced)
         {
             yield return RunMethod(methodName, logged);
@@ -147,7 +149,7 @@ public class Weapon : MonoBehaviour
 
     public IEnumerator OnDeath(int logged)
     {
-        string[] spliced = TurnManager.SpliceString(startOfTurn);
+        string[] spliced = TurnManager.SpliceString(onDeath);
         foreach (string methodName in spliced)
         {
             yield return RunMethod(methodName, logged);

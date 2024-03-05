@@ -1038,6 +1038,46 @@
       "",
       "",
       "ONE PLAYER"
+    ],
+    [
+      "Meteor",
+      "Meteor Crash",
+      "Deal damage to all Enemies.",
+      "THIS crashes their Meteor.",
+      "Attack",
+      "",
+      "Attack",
+      "",
+      "",
+      "5",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "ALL ENEMIES"
+    ],
+    [
+      "Lucky Coin",
+      "Lucky Heal",
+      "Heal at the start of every wave.",
+      "THIS uses its Lucky Coin.",
+      "Healing",
+      "",
+      "SelfHeal",
+      "",
+      "",
+      "",
+      "40",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "SELF"
     ]
   ]
 }

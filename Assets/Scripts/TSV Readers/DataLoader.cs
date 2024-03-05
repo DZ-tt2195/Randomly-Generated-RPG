@@ -14,6 +14,7 @@ public class WeaponData
     public string endOfTurn;
     public string newWave;
     public string onDeath;
+    public string onKill;
     public float startingAttack;
     public float startingDefense;
     public float startingSpeed;
@@ -159,16 +160,17 @@ public class DataLoader
             try { newWeapon.endOfTurn = line[5]; } catch (IndexOutOfRangeException) { continue; }
             try { newWeapon.newWave = line[6]; } catch (IndexOutOfRangeException) { continue; }
             try { newWeapon.onDeath = line[7]; } catch (IndexOutOfRangeException) { continue; }
-            try { newWeapon.startingAttack = StringToFloat(line[8]); } catch (IndexOutOfRangeException) { continue; }
-            try { newWeapon.startingDefense = StringToFloat(line[9]); } catch (IndexOutOfRangeException) { continue; }
-            try { newWeapon.startingSpeed = StringToFloat(line[10]); } catch (IndexOutOfRangeException) { continue; }
-            try { newWeapon.startingLuck = StringToFloat(line[11]); } catch (IndexOutOfRangeException) { continue; }
-            try { newWeapon.startingAccuracy = StringToFloat(line[12]); } catch (IndexOutOfRangeException) { continue; }
-            try { newWeapon.modifyAttack = StringToFloat(line[13]); } catch (IndexOutOfRangeException) { continue; }
-            try { newWeapon.modifyDefense = StringToFloat(line[14]); } catch (IndexOutOfRangeException) { continue; }
-            try { newWeapon.modifySpeed = StringToFloat(line[15]); } catch (IndexOutOfRangeException) { continue; }
-            try { newWeapon.modifyLuck = StringToFloat(line[16]); } catch (IndexOutOfRangeException) { continue; }
-            try { newWeapon.modifyAccuracy = StringToFloat(line[17]); } catch (IndexOutOfRangeException) { continue; }
+            try { newWeapon.onKill = line[8]; } catch (IndexOutOfRangeException) { continue; }
+            try { newWeapon.startingAttack = StringToFloat(line[9]); } catch (IndexOutOfRangeException) { continue; }
+            try { newWeapon.startingDefense = StringToFloat(line[10]); } catch (IndexOutOfRangeException) { continue; }
+            try { newWeapon.startingSpeed = StringToFloat(line[11]); } catch (IndexOutOfRangeException) { continue; }
+            try { newWeapon.startingLuck = StringToFloat(line[12]); } catch (IndexOutOfRangeException) { continue; }
+            try { newWeapon.startingAccuracy = StringToFloat(line[13]); } catch (IndexOutOfRangeException) { continue; }
+            try { newWeapon.modifyAttack = StringToFloat(line[14]); } catch (IndexOutOfRangeException) { continue; }
+            try { newWeapon.modifyDefense = StringToFloat(line[15]); } catch (IndexOutOfRangeException) { continue; }
+            try { newWeapon.modifySpeed = StringToFloat(line[16]); } catch (IndexOutOfRangeException) { continue; }
+            try { newWeapon.modifyLuck = StringToFloat(line[17]); } catch (IndexOutOfRangeException) { continue; }
+            try { newWeapon.modifyAccuracy = StringToFloat(line[18]); } catch (IndexOutOfRangeException) { continue; }
         }
 
         return nextData;

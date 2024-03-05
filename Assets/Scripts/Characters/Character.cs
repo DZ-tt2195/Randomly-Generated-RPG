@@ -21,43 +21,41 @@ public class Character : MonoBehaviour, IPointerClickHandler
     public static float borderColor;
 
     [Foldout("Player info", true)]
-    protected Ability chosenAbility;
-    [ReadOnly] public CharacterData data;
-    [ReadOnly] public List<Ability> listOfAbilities = new List<Ability>();
-    [ReadOnly] public CharacterType myType;
-    [ReadOnly] public string aiTargeting;
-    protected string entersFight;
-    [ReadOnly] public Weapon weapon;
+        protected Ability chosenAbility;
+        [ReadOnly] public CharacterData data;
+        [ReadOnly] public List<Ability> listOfAbilities = new();
+        [ReadOnly] public CharacterType myType;
+        [ReadOnly] public string aiTargeting;
+        [ReadOnly] public Weapon weapon;
 
     [Foldout("Stats", true)]
-    protected int baseHealth;
-    protected float baseAttack;
-    protected float baseDefense;
-    protected float baseSpeed;
-    protected float baseLuck;
-    protected float baseAccuracy;
-    protected Position startingPosition;
+        protected int baseHealth;
+        protected float baseAttack;
+        protected float baseDefense;
+        protected float baseSpeed;
+        protected float baseLuck;
+        protected float baseAccuracy;
+        protected Position startingPosition;
 
-    protected int currentHealth;
-    [ReadOnly] public Position currentPosition;
-    [ReadOnly] public Emotion currentEmotion;
-    protected float modifyAttack = 1f;
-    protected float modifyDefense = 1f;
-    protected float modifySpeed = 1f;
-    protected float modifyLuck = 1f;
-    protected float modifyAccuracy = 1f;
-
-    public int turnsStunned { get; private set; }
+        protected int currentHealth;
+        [ReadOnly] public Position currentPosition;
+        [ReadOnly] public Emotion currentEmotion;
+        protected float modifyAttack = 1f;
+        protected float modifyDefense = 1f;
+        protected float modifySpeed = 1f;
+        protected float modifyLuck = 1f;
+        protected float modifyAccuracy = 1f;    
+        public int turnsStunned { get; private set; }
 
     [Foldout("UI", true)]
-    [ReadOnly] public Image border;
-    [ReadOnly] public Button myButton;
-    [ReadOnly] public Image myImage;
-    [ReadOnly] public Image weaponImage;
-    Button infoButton;
-    TMP_Text statusText;
-    TMP_Text healthText;
-    [ReadOnly] public string description;
+        [ReadOnly] public Image border;
+        [ReadOnly] public Button myButton;
+        [ReadOnly] public Image myImage;
+        [ReadOnly] public Image weaponImage;
+        Button infoButton;
+        TMP_Text statusText;
+        TMP_Text healthText;
+        [ReadOnly] public string description;
 
 #endregion
 
@@ -92,9 +90,7 @@ public class Character : MonoBehaviour, IPointerClickHandler
         this.aiTargeting = characterData.aiTargeting;
 
         AddAbility(FileManager.instance.FindAbility("Skip Turn"), false);
-        this.myImage.sprite = (myType == CharacterType.Player)
-            ? Resources.Load<Sprite>($"Players/{this.name}")
-            : Resources.Load<Sprite>($"Enemies/{this.name}");
+        this.myImage.sprite = Resources.Load<Sprite>($"Characters/{this.name}");
 
         string[] divideSkillsIntoNumbers = characterData.skillNumbers.Split(',');
         List<string> putIntoList = new();
@@ -154,7 +150,7 @@ public class Character : MonoBehaviour, IPointerClickHandler
         newAbility.SetupAbility(ability, startWithCooldown);
     }
 
-    #endregion
+#endregion
 
 #region UI
 
@@ -203,7 +199,7 @@ public class Character : MonoBehaviour, IPointerClickHandler
         stats2 += $"Luck: {(CalculateLuck() * 100):F1}%\n";
         stats2 += $"Accuracy: {(CalculateAccuracy() * 100):F1}%\n";
 
-        RightClick.instance.DisplayInfo(this, KeywordTooltip.instance.EditText(stats1), KeywordTooltip.instance.EditText(stats2));
+        ScreenOverlay.instance.DisplayCharacterInfo(this, KeywordTooltip.instance.EditText(stats1), KeywordTooltip.instance.EditText(stats2));
     }
 
     #endregion

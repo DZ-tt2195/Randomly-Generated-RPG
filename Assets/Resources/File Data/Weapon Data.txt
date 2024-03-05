@@ -8,6 +8,7 @@
       "End of Turn",
       "New Wave",
       "On Death",
+      "On Kill",
       "Starting Attack",
       "Starting Defense",
       "Starting Speed",
@@ -22,7 +23,7 @@
     [
       "Meteor",
       "Each time this dies, it deals heavy damage to all enemies.",
-      "0,",
+      "51,",
       "",
       "",
       "",
@@ -43,14 +44,15 @@
       "",
       "",
       "",
-      "0.35",
       "",
-      "0.35"
+      "0.3",
+      "",
+      "0.3"
     ],
     [
       "Lucky Coin",
       "On a new wave, this regains health.",
-      "1,",
+      "52,",
       "",
       "",
       "",
