@@ -23,7 +23,7 @@
     [
       "Meteor",
       "Each time this dies, it deals a lot of damage to all enemies.",
-      "51,",
+      "59,",
       "",
       "",
       "",
@@ -52,7 +52,7 @@
     [
       "Lucky Coin",
       "If this is dead, it revives itself on a new wave.",
-      "52,",
+      "60,",
       "",
       "",
       "",
@@ -61,7 +61,7 @@
     [
       "Battle Plan",
       "This has higher attack. It gets Stunned on every new wave.",
-      "53,",
+      "61,",
       "",
       "",
       "",

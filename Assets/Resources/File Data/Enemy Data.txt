@@ -42,13 +42,13 @@
       "Wolf",
       "Makes itself Angry and hunts down Players who are Sad and Grounded. Can also be dangerous when Airborne.",
       "90",
-      "22",
+      "20",
       "13",
       "40",
       "0.15",
       "0.85",
       "GROUNDED",
-      "47,48,49,50,",
+      "55,56,57,58,",
       "Effectiveness"
     ],
     [
@@ -61,7 +61,7 @@
       "0",
       "1.25",
       "GROUNDED",
-      "42,"
+      "50,"
     ],
     [
       "Puppeteer",
@@ -73,7 +73,31 @@
       "0.15",
       "1",
       "AIRBORNE",
-      "43,44,45,46,"
+      "51,52,53,54,"
+    ],
+    [
+      "Kitty",
+      "Heals other Enemies and makes them Happy. Switches between Airborne and Grounded.",
+      "50",
+      "15",
+      "9",
+      "60",
+      "0",
+      "1",
+      "GROUNDED",
+      "46,47,48,49,"
+    ],
+    [
+      "Dragon",
+      "Rests when Grounded, does lots of damage when Airborne.",
+      "100",
+      "22",
+      "14",
+      "70",
+      "0.15",
+      "1",
+      "AIRBORNE",
+      "42,43,44,45,"
     ]
   ]
 }

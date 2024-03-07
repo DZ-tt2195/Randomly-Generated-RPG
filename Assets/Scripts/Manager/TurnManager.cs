@@ -134,7 +134,8 @@ public class TurnManager : MonoBehaviour
                 instructions.text = "";
                 nextInLine.border.gameObject.SetActive(true);
 
-                yield return nextInLine.weapon.WeaponEffect(SpliceString(nextInLine.weapon.newWave), 0);
+                if (nextInLine.weapon != null)
+                    yield return nextInLine.weapon.WeaponEffect(SpliceString(nextInLine.weapon.newWave), 0);
                 nextInLine.border.gameObject.SetActive(false);
             }
         }

@@ -116,7 +116,7 @@ public class Ability : MonoBehaviour
 
         for (int i = listOfTargets.Count - 1; i >= 0; i--)
         {
-            if (methodsInStrings[0] == "ISDEAD")
+            if (methodsInStrings[0].Equals("TARGETSDEAD"))
             {
                 if (listOfTargets[i].CalculateHealth() > 0)
                 {
@@ -137,8 +137,11 @@ public class Ability : MonoBehaviour
                     break;
                 case "NONE":
                     break;
-                case "ISDEAD":
+                case "TARGETSDEAD":
                     break;
+                case "SELFDEAD":
+                    if (user.CalculateHealth() > 0)
+                        return false; break;
 
                 case "TARGETSNEUTRAL":
                     for (int i = listOfTargets.Count - 1; i >= 0; i--)

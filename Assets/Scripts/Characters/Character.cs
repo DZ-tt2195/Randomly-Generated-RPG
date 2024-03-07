@@ -272,7 +272,7 @@ public class Character : MonoBehaviour, IPointerClickHandler
 
         turnsStunned += amount;
         TurnManager.instance.CreateVisual($"STUNNED", this.transform.localPosition);
-        Log.instance.AddText($"{this.name} is stunned for {turnsStunned} turn{(turnsStunned == 1 ? "" : "s")}.", logged);
+        Log.instance.AddText($"{this.name} is Stunned for {turnsStunned} turn{(turnsStunned == 1 ? "" : "s")}.", logged);
     }
 
     public IEnumerator GainHealth(float health, int logged)
@@ -342,80 +342,60 @@ public class Character : MonoBehaviour, IPointerClickHandler
     {
         if (this == null) yield break;
 
-        modifyAttack += effect;
-        if (modifyAttack < 0.5f)
-            modifyAttack = 0.5f;
-        else if (modifyAttack > 1.5f)
-            modifyAttack = 1.5f;
+        modifyAttack = Mathf.Clamp(modifyAttack += effect, 0.5f, 1.5f);
 
         if (effect < 0)
-            Log.instance.AddText($"{(this.name)}'s attack is reduced.", logged);
+            Log.instance.AddText($"{(this.name)}'s Attack is reduced.", logged);
         if (effect > 0)
-            Log.instance.AddText($"{(this.name)}'s attack is increased.", logged);
+            Log.instance.AddText($"{(this.name)}'s Attack is increased.", logged);
     }
 
     public IEnumerator ChangeDefense(float effect, int logged)
     {
         if (this == null) yield break;
 
-        modifyDefense += effect;
-        if (modifyDefense < 0.5f)
-            modifyDefense = 0.5f;
-        else if (modifyDefense > 1.5f)
-            modifyDefense = 1.5f;
+        modifyDefense = Mathf.Clamp(modifyDefense += effect, 0.5f, 1.5f);
 
         if (effect < 0)
-            Log.instance.AddText($"{(this.name)}'s defense is reduced.", logged);
+            Log.instance.AddText($"{(this.name)}'s Defense is reduced.", logged);
         if (effect > 0)
-            Log.instance.AddText($"{(this.name)}'s defense is increased.", logged);
+            Log.instance.AddText($"{(this.name)}'s Defense is increased.", logged);
     }
 
     public IEnumerator ChangeSpeed(float effect, int logged)
     {
         if (this == null) yield break;
 
-        modifySpeed += effect;
-        if (modifySpeed < 0.5f)
-            modifySpeed = 0.5f;
-        else if (modifySpeed > 1.5f)
-            modifySpeed = 1.5f;
+        modifySpeed = Mathf.Clamp(modifySpeed += effect, 0.5f, 1.5f);
 
         if (effect < 0)
-            Log.instance.AddText($"{(this.name)}'s speed is reduced.", logged);
+            Log.instance.AddText($"{(this.name)}'s Speed is reduced.", logged);
         if (effect > 0)
-            Log.instance.AddText($"{(this.name)}'s speed is increased.", logged);
+            Log.instance.AddText($"{(this.name)}'s Speed is increased.", logged);
     }
 
     public IEnumerator ChangeLuck(float effect, int logged)
     {
         if (this == null) yield break;
 
-        modifyLuck += effect;
-        if (modifyLuck < 0.5f)
-            modifyLuck = 0.5f;
-        else if (modifyLuck > 1.5f)
-            modifyLuck = 1.5f;
+        modifyLuck = Mathf.Clamp(modifyLuck += effect, 0.5f, 1.5f);
 
         if (effect < 0)
-            Log.instance.AddText($"{(this.name)}'s luck is reduced.", logged);
+            Log.instance.AddText($"{(this.name)}'s Luck is reduced.", logged);
         if (effect > 0)
-            Log.instance.AddText($"{(this.name)}'s luck is increased.", logged);
+            Log.instance.AddText($"{(this.name)}'s Luck is increased.", logged);
     }
 
     public IEnumerator ChangeAccuracy(float effect, int logged)
     {
         if (this == null) yield break;
 
-        modifyAccuracy += effect;
-        if (modifyAccuracy < 0.5f)
-            modifyAccuracy = 0.5f;
-        else if (modifyAccuracy > 1.5f)
-            modifyAccuracy = 1.5f;
+        modifyAccuracy = Mathf.Clamp(modifyAccuracy += effect, 0.5f, 1.5f);
 
         if (effect < 0)
-            Log.instance.AddText($"{(this.name)}'s accuracy is reduced.", logged);
+            Log.instance.AddText($"{(this.name)}'s Accuracy is reduced.", logged);
         if (effect > 0)
-            Log.instance.AddText($"{(this.name)}'s accuracy is increased.", logged);
+            Log.instance.AddText($"{(this.name)}'s Accuracy is increased.", logged);
     }
 
     public IEnumerator ChangePosition(Position newPosition, int logged)
