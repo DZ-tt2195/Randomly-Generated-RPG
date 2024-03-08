@@ -13,6 +13,9 @@ public class FileManager : MonoBehaviour
 #region Variables
 
     public static FileManager instance;
+    public enum GameMode { Main, Tutorial };
+    [ReadOnly] public GameMode mode;
+
     [ReadOnly] public Transform canvas;
     [SerializeField] bool downloadOn;
 
@@ -68,14 +71,24 @@ public class FileManager : MonoBehaviour
         }
     }
 
-    public AbilityData FindAbility(string name)
+    public AbilityData FindAbility(string target)
     {
-        return listOfAbilities.FirstOrDefault(ability => ability.myName == name);
+        return listOfAbilities.FirstOrDefault(ability => ability.myName == target);
     }
 
-#endregion
+    public CharacterData FindEnemy(string target)
+    {
+        return listOfEnemies.FirstOrDefault(enemy => enemy.myName == target);
+    }
 
-#region Loading Scenes
+    public WeaponData FindWeaon(string target)
+    {
+        return listOfWeapons.FirstOrDefault(weapon => weapon.myName == target);
+    }
+
+    #endregion
+
+#region Scenes
 
     private void OnEnable()
     {

@@ -16,8 +16,10 @@ public class TitleScreen : MonoBehaviour
     [SerializeField] GameObject playerPrefab;
     [SerializeField] bool randomSeed;
     [SerializeField][ConditionalField(nameof(randomSeed), inverse: true)] int chosenSeed;
+    [SerializeField] List<Toggle> listOfCheats = new();
+    [SerializeField] List<Toggle> listOfChallenges = new();
 
-#endregion
+    #endregion
 
 #region Setup
 
@@ -35,10 +37,43 @@ public class TitleScreen : MonoBehaviour
         UnityEngine.Random.InitState(chosenSeed);
 
         Character.borderColor = 0;
-        StartCoroutine(GenerateStuff());
+        StartCoroutine(GenerateFiles());
+
+        foreach (Toggle toggle in listOfCheats)
+        {
+            if (PlayerPrefs.HasKey(toggle.name))
+            {
+                toggle.isOn = PlayerPrefs.GetInt(toggle.name) == 1;
+            }
+            else
+            {
+                toggle.isOn = false;
+            }
+            toggle.onValueChanged.AddListener((bool isOn) => SetPref(isOn, toggle.name));
+            SetPref(toggle.isOn, toggle.name);
+        }
+
+        foreach (Toggle toggle in listOfChallenges)
+        {
+            if (PlayerPrefs.HasKey(toggle.name))
+            {
+                toggle.isOn = PlayerPrefs.GetInt(toggle.name) == 1;
+            }
+            else
+            {
+                toggle.isOn = false;
+            }
+            toggle.onValueChanged.AddListener((bool isOn) => SetPref(isOn, toggle.name));
+            SetPref(toggle.isOn, toggle.name);
+        }
     }
 
-    IEnumerator GenerateStuff()
+    void SetPref(bool isOn, string name)
+    {
+        PlayerPrefs.SetInt(name, (isOn) ? 1 : 0);
+    }
+
+    IEnumerator GenerateFiles()
     {
         GameObject loadButton = GameObject.Find("Play Button");
         loadButton.SetActive(false);
@@ -50,29 +85,61 @@ public class TitleScreen : MonoBehaviour
             yield return FileManager.instance.DownloadFile("Weapon Data");
         #endif
 
-        List<CharacterData> playerData = DataLoader.ReadCharacterData("Player Data");
         FileManager.instance.listOfEnemies = DataLoader.ReadCharacterData("Enemy Data");
         FileManager.instance.listOfAbilities = DataLoader.ReadAbilityData("Ability Data");
         FileManager.instance.listOfWeapons = DataLoader.ReadWeaponData("Weapon Data");
         FileManager.instance.listOfWeapons = FileManager.instance.listOfWeapons.Shuffle();
 
+        GeneratePlayers();
+        loadButton.SetActive(true);
+    }
+
+    void GeneratePlayers()
+    {
+        List<CharacterData> playerData = DataLoader.ReadCharacterData("Player Data");
         for (int i = 0; i < playerData.Count; i++)
         {
             PlayerCharacter nextCharacter = Instantiate(playerPrefab).AddComponent<PlayerCharacter>();
             WeaponData randomWeapon;
 
-            try{randomWeapon = FileManager.instance.listOfWeapons[i];}
-            catch{randomWeapon = null;}
+            try { randomWeapon = FileManager.instance.listOfWeapons[i]; }
+            catch { randomWeapon = null; }
 
-            nextCharacter.SetupCharacter(CharacterType.Player, playerData[i], false, randomWeapon);
+            List<AbilityData> characterAbilities = new();
+            string[] divideSkillsIntoNumbers = playerData[i].skillNumbers.Split(',');
+            List<string> putIntoList = new();
+            foreach (string next in divideSkillsIntoNumbers)
+                putIntoList.Add(next);
+            putIntoList = putIntoList.Shuffle();
+
+            int counter = -1;
+            while (characterAbilities.Count < 5)
+            {
+                counter++;
+                try
+                {
+                    string skillNumber = putIntoList[counter];
+                    skillNumber.Trim();
+                    characterAbilities.Add(FileManager.instance.listOfAbilities[int.Parse(skillNumber)]);
+                }
+                catch (FormatException)
+                {
+                    continue;
+                }
+                catch (ArgumentOutOfRangeException)
+                {
+                    Debug.Log($"ran out of skills");
+                    break;
+                }
+            }
+
+            nextCharacter.SetupCharacter(CharacterType.Player, playerData[i], characterAbilities, 1f, randomWeapon);
             FileManager.instance.listOfPlayers.Add(nextCharacter);
 
             nextCharacter.transform.SetParent(FileManager.instance.canvas);
             nextCharacter.transform.localPosition = new Vector3(-1050 + (350 * i), -550, 0);
             nextCharacter.transform.SetAsFirstSibling();
         }
-
-        loadButton.SetActive(true);
     }
 
 #endregion

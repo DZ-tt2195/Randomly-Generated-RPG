@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using MyBox;
 using TMPro;
 using System.Linq;
+using System;
 
 class CharacterPositions
 {
@@ -31,7 +32,7 @@ public class TurnManager : MonoBehaviour
     [Foldout("UI", true)]
         public List<AbilityBox> listOfBoxes = new List<AbilityBox>();
         public TMP_Text instructions;
-        bool decrease = true;
+        bool borderDecrease = true;
         [SerializeField] Button quitButton;
         List<CharacterPositions> teammatePositions = new();
         List<CharacterPositions> enemyPositions = new();
@@ -44,10 +45,10 @@ public class TurnManager : MonoBehaviour
     [Foldout("Info tracking", true)]
         int currentWave;
         int currentRound;
-        float enemyMultiplier = 1f;
+        float waveMultiplier = 1f;
         bool isBattling = true;
 
-#endregion
+    #endregion
 
 #region Setup
 
@@ -105,19 +106,18 @@ public class TurnManager : MonoBehaviour
         yield return WaitTime();
 
         currentWave++;
-        enemyMultiplier = 1 + (currentWave - 1) * 0.05f;
-        
+        waveMultiplier = 1 + (currentWave - 1) * 0.02f;
+
         Log.instance.AddText($"WAVE {currentWave}");
-        if (currentWave > 1)
+        if (currentWave > 1 && PlayerPrefs.GetInt("Scaling Enemies") == 1)
         {
-            Log.instance.AddText($"Enemies are now {100 * (enemyMultiplier - 1):F0}% stronger.");
+            Log.instance.AddText($"Enemies are now {100 * (waveMultiplier - 1):F0}% stronger.");
             Log.instance.AddText("");
         }
 
-        int randomNum = Mathf.Min(currentWave+1, Random.Range(3, 6));
+        int randomNum = Mathf.Min(currentWave, UnityEngine.Random.Range(3, 6));
         for (int i = 0; i < randomNum; i++)
-            CreateEnemy(Random.Range(0, FileManager.instance.listOfEnemies.Count), enemyMultiplier, 0);
-
+            CreateEnemy(UnityEngine.Random.Range(0, FileManager.instance.listOfEnemies.Count), PlayerPrefs.GetInt("Scaling Enemies") == 1 ? waveMultiplier : 1f, 0);
         Log.instance.AddText($"");
 
         speedQueue = AllCharacters();
@@ -203,6 +203,7 @@ public class TurnManager : MonoBehaviour
         Log.instance.AddText("");
         Log.instance.AddText("You lost.");
         Log.instance.AddText($"Survived {currentWave - 1} {(currentWave - 1 == 1 ? "wave" : "waves")}.");
+        Log.instance.enabled = false;
     }
 
     #endregion
@@ -211,9 +212,9 @@ public class TurnManager : MonoBehaviour
 
     void FixedUpdate()
     {
-        Character.borderColor += (decrease) ? -0.05f : 0.05f;
+        Character.borderColor += (borderDecrease) ? -0.05f : 0.05f;
         if (Character.borderColor < 0 || Character.borderColor > 1)
-            decrease = !decrease;
+            borderDecrease = !borderDecrease;
     }
 
     public void CreateEnemy(int ID, float multiplier, int logged)
@@ -233,10 +234,29 @@ public class TurnManager : MonoBehaviour
             }
         }
 
-        nextCharacter.name = FileManager.instance.listOfEnemies[ID].myName;
+        CharacterData dataFile = FileManager.instance.listOfEnemies[ID];
+        nextCharacter.name = dataFile.myName;
         Log.instance.AddText($"{Log.Article(nextCharacter.name)} entered the fight.", logged);
-        nextCharacter.SetupCharacter(CharacterType.Enemy, FileManager.instance.listOfEnemies[ID], false, null, multiplier);
-        SaveManager.instance.AddEnemy(FileManager.instance.listOfEnemies[ID]);
+
+        List<AbilityData> characterAbilities = new();
+        string[] divideSkillsIntoNumbers = dataFile.skillNumbers.Split(',');
+        for (int j = 0; j < divideSkillsIntoNumbers.Length; j++)
+        {
+            try
+            {
+                string skillNumber = divideSkillsIntoNumbers[j];
+                skillNumber.Trim();
+                characterAbilities.Add(FileManager.instance.listOfAbilities[int.Parse(skillNumber)]);
+            }
+            catch (FormatException) { continue; }
+            catch (ArgumentOutOfRangeException) { break; }
+        }
+
+        nextCharacter.SetupCharacter(CharacterType.Enemy, dataFile, characterAbilities, multiplier, null);
+        SaveManager.instance.AddEnemy(dataFile);
+
+        if (PlayerPrefs.GetInt("Enemies Stunned") == 1)
+            StartCoroutine(nextCharacter.Stun(1, logged + 1));
     }
 
     public void DisableCharacterButtons()

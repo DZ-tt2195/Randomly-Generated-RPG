@@ -73,12 +73,13 @@ public class Character : MonoBehaviour, IPointerClickHandler
         weaponImage = transform.Find("Weapon Image").GetComponent<Image>();
     }
 
-    public void SetupCharacter(CharacterType type, CharacterData characterData, bool isHelper, WeaponData weaponData, float multiplier = 1f)
+    public void SetupCharacter(CharacterType type, CharacterData characterData, List<AbilityData> listOfAbilityData, float multiplier = 1f, WeaponData weaponData = null)
     {
         data = characterData;
         myType = type;
         this.name = characterData.myName;
         this.description = KeywordTooltip.instance.EditText(characterData.description);
+
         baseHealth = (int)(characterData.baseHealth * multiplier); currentHealth = baseHealth;
         baseAttack = (int)(characterData.baseAttack * multiplier);
         baseDefense = (int)(characterData.baseDefense * multiplier);
@@ -92,23 +93,8 @@ public class Character : MonoBehaviour, IPointerClickHandler
         AddAbility(FileManager.instance.FindAbility("Skip Turn"), false);
         this.myImage.sprite = Resources.Load<Sprite>($"Characters/{this.name}");
 
-        string[] divideSkillsIntoNumbers = characterData.skillNumbers.Split(',');
-        List<string> putIntoList = new();
-        foreach (string next in divideSkillsIntoNumbers)
-            putIntoList.Add(next);
-        putIntoList = putIntoList.Shuffle();
-
-        for (int i = 0; listOfAbilities.Count < 6 && i < 10; i++)
-        {
-            try
-            {
-                string skillNumber = putIntoList[i];
-                skillNumber.Trim();
-                AddAbility(FileManager.instance.listOfAbilities[int.Parse(skillNumber)], myType != CharacterType.Player);
-            }
-            catch (FormatException){continue;}
-            catch (ArgumentOutOfRangeException){break;}
-        }
+        foreach (AbilityData data in listOfAbilityData)
+            AddAbility(data, myType != CharacterType.Player);
         listOfAbilities = listOfAbilities.OrderBy(o => o.baseCooldown).ToList();
 
         if (weaponData == null)
@@ -136,10 +122,10 @@ public class Character : MonoBehaviour, IPointerClickHandler
         if (this.weapon != null)
         {
             modifyAttack += this.weapon.startingAttack;
-            modifyDefense += this.weapon.modifyDefense;
-            modifySpeed += this.weapon.modifySpeed;
-            modifyLuck += this.weapon.modifyLuck;
-            modifyAccuracy += this.weapon.modifyAccuracy;
+            modifyDefense += this.weapon.startingDefense;
+            modifySpeed += this.weapon.startingSpeed;
+            modifyLuck += this.weapon.startingLuck;
+            modifyAccuracy += this.weapon.startingAccuracy;
         }
     }
 
@@ -513,7 +499,9 @@ public class Character : MonoBehaviour, IPointerClickHandler
         string part1 = $"{this.name}: Use {chosenAbility.myName}";
         string part2 = (chosenAbility.singleTarget.Contains(chosenAbility.teamTarget)) ? $" on {chosenAbility.listOfTargets[0].name}?" : "?";
 
-        TextCollector confirmDecision = TurnManager.instance.MakeTextCollector(part1 + part2, new Vector2(0, 0), new List<string>() { "Confirm", "Rechoose" });
+        TextCollector confirmDecision = TurnManager.instance.MakeTextCollector
+            (part1 + part2, new Vector2(0, 0),
+            new List<string>() { "Confirm", "Rechoose" });
 
         yield return confirmDecision.WaitForChoice();
         int decision = confirmDecision.chosenButton;
