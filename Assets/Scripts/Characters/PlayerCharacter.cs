@@ -40,7 +40,7 @@ public class PlayerCharacter : Character
     {
         TurnManager.instance.listOfBoxes[0].transform.parent.gameObject.SetActive(false);
 
-        if (ability.singleTarget.Contains(ability.teamTarget))
+        if (ability.singleTarget.Contains(ability.data.teamTarget))
         {
             TurnManager.instance.instructions.text = $"Choose a character to target.";
             TurnManager.instance.DisableCharacterButtons();

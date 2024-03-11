@@ -14,11 +14,14 @@ public class TitleScreen : MonoBehaviour
     public static TitleScreen instance;
     [ReadOnly] public Transform canvas;
     [SerializeField] GameObject playerPrefab;
+
     [SerializeField] bool randomSeed;
     [SerializeField][ConditionalField(nameof(randomSeed), inverse: true)] int chosenSeed;
+
+    [SerializeField] GameObject cheatChallengeObject;
     [SerializeField] List<Toggle> listOfCheats = new();
     [SerializeField] List<Toggle> listOfChallenges = new();
-
+    
     #endregion
 
 #region Setup
@@ -133,13 +136,18 @@ public class TitleScreen : MonoBehaviour
                 }
             }
 
-            nextCharacter.SetupCharacter(CharacterType.Player, playerData[i], characterAbilities, 1f, randomWeapon);
+            nextCharacter.SetupCharacter(CharacterType.Player, playerData[i], characterAbilities, (Emotion)UnityEngine.Random.Range(1,5), 1f, randomWeapon);
             FileManager.instance.listOfPlayers.Add(nextCharacter);
 
             nextCharacter.transform.SetParent(FileManager.instance.canvas);
             nextCharacter.transform.localPosition = new Vector3(-1050 + (350 * i), -550, 0);
             nextCharacter.transform.SetAsFirstSibling();
         }
+    }
+
+    public void CheatChallengeToggle()
+    {
+        cheatChallengeObject.SetActive(!cheatChallengeObject.activeSelf);
     }
 
 #endregion

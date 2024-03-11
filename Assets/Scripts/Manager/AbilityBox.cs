@@ -18,13 +18,13 @@ public class AbilityBox : MonoBehaviour
     public void ReceiveAbility(Ability ability, Character user)
     {
         try {button.interactable = ability.CanPlay(user); } catch (NullReferenceException) { /*do nothing*/ };
-        textName.text = ability.myName;
-        hover.NewAbility(ability.description);
+        textName.text = ability.data.myName;
+        hover.NewAbility(ability.data.description);
 
-        if (ability.baseCooldown > 0)
+        if (ability.data.baseCooldown > 0)
         {
             textCountdown.transform.parent.gameObject.SetActive(true);
-            textCountdown.text = $"{ability.baseCooldown}";
+            textCountdown.text = $"{ability.data.baseCooldown}";
         }
         else
         {
@@ -46,6 +46,6 @@ public class AbilityBox : MonoBehaviour
             cantUse.transform.parent.gameObject.SetActive(false);
         }
 
-        image.color = (ability.typeOne == AbilityType.Attack || ability.typeTwo == AbilityType.Attack) ? Color.red : Color.blue;
+        image.color = (ability.data.typeOne == AbilityType.Attack || ability.data.typeTwo == AbilityType.Attack) ? Color.red : Color.blue;
     }
 }

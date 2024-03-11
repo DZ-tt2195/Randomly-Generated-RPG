@@ -48,7 +48,7 @@ public class TurnManager : MonoBehaviour
         float waveMultiplier = 1f;
         bool isBattling = true;
 
-    #endregion
+#endregion
 
 #region Setup
 
@@ -135,7 +135,7 @@ public class TurnManager : MonoBehaviour
                 nextInLine.border.gameObject.SetActive(true);
 
                 if (nextInLine.weapon != null)
-                    yield return nextInLine.weapon.WeaponEffect(SpliceString(nextInLine.weapon.newWave), 0);
+                    yield return nextInLine.weapon.WeaponEffect(SpliceString(nextInLine.weapon.data.newWave), 0);
                 nextInLine.border.gameObject.SetActive(false);
             }
         }
@@ -252,7 +252,7 @@ public class TurnManager : MonoBehaviour
             catch (ArgumentOutOfRangeException) { break; }
         }
 
-        nextCharacter.SetupCharacter(CharacterType.Enemy, dataFile, characterAbilities, multiplier, null);
+        nextCharacter.SetupCharacter(CharacterType.Enemy, dataFile, characterAbilities, (Emotion)UnityEngine.Random.Range(1, 5), multiplier, null);
         SaveManager.instance.AddEnemy(dataFile);
 
         if (PlayerPrefs.GetInt("Enemies Stunned") == 1)

@@ -11,35 +11,12 @@ public class Weapon : MonoBehaviour
     [ReadOnly] public WeaponData data;
     [ReadOnly] public Character self;
 
-    [ReadOnly] public string myName;
-    [ReadOnly] public string description;
-
     List<Ability> listOfAbilities = new();
-    string statCalculation;
-    [ReadOnly] public string startOfTurn;
-    [ReadOnly] public string endOfTurn;
-    [ReadOnly] public string newWave;
-    [ReadOnly] public string onDeath;
-    [ReadOnly] public string onKill;
-
-    [ReadOnly] public float startingAttack;
-    [ReadOnly] public float startingDefense;
-    [ReadOnly] public float startingSpeed;
-    [ReadOnly] public float startingLuck;
-    [ReadOnly] public float startingAccuracy;
-
-    [ReadOnly] public float modifyAttack;
-    [ReadOnly] public float modifyDefense;
-    [ReadOnly] public float modifySpeed;
-    [ReadOnly] public float modifyLuck;
-    [ReadOnly] public float modifyAccuracy;
 
     public void SetupWeapon(WeaponData data)
     {
         self = GetComponent<Character>();
         this.data = data;
-        myName = data.myName;
-        description = KeywordTooltip.instance.EditText(data.description);
 
         string[] divideSkillsIntoNumbers = data.skillNumbers.Split(',');
         foreach (string skill in divideSkillsIntoNumbers)
@@ -51,7 +28,7 @@ public class Weapon : MonoBehaviour
                 nextAbility.SetupAbility(FileManager.instance.listOfAbilities[int.Parse(skill)], false);
             }
         }
-
+        /*
         statCalculation = data.statCalculation;
         startOfTurn = data.startOfTurn;
         endOfTurn = data.endOfTurn;
@@ -70,6 +47,7 @@ public class Weapon : MonoBehaviour
         modifySpeed = data.modifySpeed;
         modifyLuck = data.modifyLuck;
         modifyAccuracy = data.modifyAccuracy;
+        */
     }
 
     #endregion
@@ -88,10 +66,10 @@ public class Weapon : MonoBehaviour
                     break;
                 case "USEABILITIES":
                     foreach (Ability ability in listOfAbilities)
-                        if (ability.CanPlay(self)) yield return ability.ResolveInstructions(TurnManager.SpliceString(ability.instructions), logged + 1);
+                        if (ability.CanPlay(self)) yield return ability.ResolveInstructions(TurnManager.SpliceString(ability.data.instructions), logged + 1);
                     break;
                 default:
-                    Debug.LogError($"{this.myName}: {methodName} isn't implemented");
+                    Debug.LogError($"{data.myName}: {methodName} isn't implemented");
                     break;
             }
         }
@@ -99,7 +77,7 @@ public class Weapon : MonoBehaviour
 
     public bool StatCalculation()
     {
-        string[] spliced = TurnManager.SpliceString(statCalculation);
+        string[] spliced = TurnManager.SpliceString(data.statCalculation);
         foreach (string methodName in spliced)
         {
             switch (methodName)
@@ -111,7 +89,7 @@ public class Weapon : MonoBehaviour
                 case "IFAIRBORNE":
                     return self.currentPosition == Position.Airborne;
                 default:
-                    Debug.LogError($"{this.myName}: {methodName} isn't implemented");
+                    Debug.LogError($"{data.myName}: {methodName} isn't implemented");
                     break;
             }
         }

@@ -10,7 +10,8 @@
       "Base Accuracy",
       "Start Position",
       "Skills",
-      "AI Targeting"
+      "AI Targeting",
+      "Art Credit"
     ],
     [
       "Archer",
@@ -23,20 +24,22 @@
       "0.85",
       "GROUNDED",
       "34,35,36,37,",
-      "PrioritizeAirborne"
+      "PrioritizeAirborne",
+      "Harald Lieske|Dominion: Allies|(Archer)"
     ],
     [
       "Bat",
       "Drains health from Grounded Teammates.",
       "70",
       "17",
-      "11",
+      "12",
       "60",
       "0.1",
       "0.85",
       "AIRBORNE",
       "38,39,40,41,",
-      "PrioritizeGrounded"
+      "PrioritizeGrounded",
+      "Martin Hoffmann|Dominion: Nocturne|(Bat)"
     ],
     [
       "Wolf",
@@ -49,7 +52,8 @@
       "0.85",
       "GROUNDED",
       "54,55,56,57,",
-      "Effectiveness"
+      "Effectiveness",
+      "Slawomir Maniak|Eldritch Moon|(Kessig Prowler)"
     ],
     [
       "Bomb",
@@ -61,43 +65,51 @@
       "0",
       "1.25",
       "GROUNDED",
-      "49,"
+      "49,",
+      "",
+      "DZ|All Shapes and Sizes|(Bomb)"
     ],
     [
       "Puppeteer",
       "Makes Players Airborne, then drops them down to deal damage. Only attacks when Airborne.",
       "80",
       "17",
-      "11",
+      "12",
       "50",
       "0.1",
       "0.9",
       "AIRBORNE",
-      "50,51,52,53,"
+      "50,51,52,53,",
+      "",
+      "James Ryman|Kaladesh|(Marionette Master)"
     ],
     [
       "Kitty",
       "Heals other Enemies and makes them Happy. Switches between Airborne and Grounded.",
       "60",
       "15",
-      "9",
+      "10",
       "60",
       "0",
       "1",
       "GROUNDED",
-      "46,47,48,"
+      "46,47,48,",
+      "",
+      "Howard Lyon|Eldritch Moon|(Harmless Offering)"
     ],
     [
       "Dragon",
       "Rests when Grounded, does lots of damage when Airborne.",
       "90",
       "18",
-      "13",
+      "12",
       "70",
       "0.1",
       "0.85",
       "AIRBORNE",
-      "42,43,44,45,"
+      "42,43,44,45,",
+      "",
+      "Josh Hass|Amonkhet Invocations|(Omniscience)"
     ]
   ]
 }

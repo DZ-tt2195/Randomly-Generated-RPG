@@ -15,10 +15,12 @@ public class ScreenOverlay : MonoBehaviour
         [SerializeField] Image characterImage;
         [SerializeField] TMP_Text characterName;
         [SerializeField] TMP_Text characterDescription;
+        [SerializeField] TMP_Text characterArtCredit;
         [SerializeField] Transform weaponStuff;
         [SerializeField] Image weaponImage;
         [SerializeField] TMP_Text weaponName;
         [SerializeField] TMP_Text weaponDescription;
+        [SerializeField] TMP_Text weaponArtCredit;
         [SerializeField] TMP_Text emotionText;
         [SerializeField] TMP_Text stats1;
         [SerializeField] TMP_Text stats2;
@@ -74,6 +76,7 @@ public class ScreenOverlay : MonoBehaviour
         characterImage.sprite = character.myImage.sprite;
         characterName.text = character.name;
         characterDescription.text = character.description;
+        characterArtCredit.text = character.data.artCredit;
 
         if (character.weapon == null)
         {
@@ -82,9 +85,10 @@ public class ScreenOverlay : MonoBehaviour
         else
         {
             weaponStuff.gameObject.SetActive(true);
-            weaponName.text = character.weapon.myName;
+            weaponName.text = character.weapon.data.myName;
             weaponImage.sprite = character.weaponImage.sprite;
-            weaponDescription.text = character.weapon.description;
+            weaponDescription.text = character.weapon.data.description;
+            weaponArtCredit.text = character.weapon.data.artCredit;
         }
 
         emotionText.text = KeywordTooltip.instance.EditText($"{character.currentEmotion}");
@@ -95,7 +99,7 @@ public class ScreenOverlay : MonoBehaviour
         for (int i = 0; i < character.listOfAbilities.Count; i++)
         {
             Ability nextAbility = character.listOfAbilities[i];
-            if (nextAbility.myName != "Skip Turn")
+            if (nextAbility.data.myName != "Skip Turn")
             {
                 listOfBoxes[nextBox].gameObject.SetActive(true);
                 listOfBoxes[nextBox].ReceiveAbility(nextAbility, character);

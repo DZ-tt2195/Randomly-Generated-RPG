@@ -25,6 +25,7 @@ public class WeaponData
     public float modifySpeed;
     public float modifyLuck;
     public float modifyAccuracy;
+    public string artCredit;
 }
 
 [System.Serializable]
@@ -41,6 +42,7 @@ public class CharacterData
     public Position startingPosition;
     public string skillNumbers;
     public string aiTargeting;
+    public string artCredit;
 }
 
 [System.Serializable]
@@ -53,7 +55,7 @@ public class AbilityData
     public AbilityType typeOne;
     public AbilityType typeTwo;
     public string playCondition;
-    public int cooldown;
+    public int baseCooldown;
     public float attackPower;
     public float healthRegain;
     public float modifyAttack;
@@ -95,6 +97,7 @@ public class DataLoader
             newCharacter.startingPosition = (line[8] == "GROUNDED") ? Position.Grounded : Position.Airborne;
             newCharacter.skillNumbers = line[9].Trim();
             try { newCharacter.aiTargeting = line[10].Trim(); } catch (IndexOutOfRangeException) { /*do nothing*/};
+            newCharacter.artCredit = line[11].Replace("|", "\n");
         }
         return nextData;
     }
@@ -122,7 +125,7 @@ public class DataLoader
             newAbility.typeTwo = StringToAbilityType(line[5]);
             newAbility.instructions = line[6];
             newAbility.playCondition = line[7];
-            newAbility.cooldown = StringToInt(line[8]);
+            newAbility.baseCooldown = StringToInt(line[8]);
             newAbility.attackPower = StringToFloat(line[9]);
             newAbility.healthRegain = StringToFloat(line[10]);
             newAbility.modifyAttack = StringToFloat(line[11]);
@@ -171,6 +174,7 @@ public class DataLoader
             try { newWeapon.modifySpeed = StringToFloat(line[16]); } catch (IndexOutOfRangeException) { continue; }
             try { newWeapon.modifyLuck = StringToFloat(line[17]); } catch (IndexOutOfRangeException) { continue; }
             try { newWeapon.modifyAccuracy = StringToFloat(line[18]); } catch (IndexOutOfRangeException) { continue; }
+            newWeapon.artCredit = line[19].Replace("|", "\n");
         }
 
         return nextData;

@@ -12,7 +12,7 @@ public class EnemyCharacter : Character
         List<Ability> availableAbilities = new();
         foreach (Ability ability in this.listOfAbilities)
         {
-            if (ability.myName != "Skip Turn" && ability.CanPlay(this))
+            if (ability.data.myName != "Skip Turn" && ability.CanPlay(this))
             {
                 availableAbilities.Add(ability);
             }
@@ -25,12 +25,12 @@ public class EnemyCharacter : Character
     {
         yield return null;
 
-        if (ability.singleTarget.Contains(ability.teamTarget))
+        if (ability.singleTarget.Contains(ability.data.teamTarget))
         {
-            this.aiTargeting = this.aiTargeting.ToUpper().Trim();
+            data.aiTargeting = data.aiTargeting.ToUpper().Trim();
             List<Character> selectedTarget = ability.listOfTargets.Shuffle();
 
-            switch (this.aiTargeting)
+            switch (data.aiTargeting)
             {
                 case "PRIORITIZEAIRBORNE":
                     List<Character> airborneTargets = new();
@@ -74,7 +74,7 @@ public class EnemyCharacter : Character
                     break;
 
                 default:
-                    Debug.Log($"not programmed: {this.aiTargeting}");
+                    Debug.Log($"not programmed: {data.aiTargeting}");
                     break;
             }
 

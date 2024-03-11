@@ -12,38 +12,10 @@ public class Ability : MonoBehaviour
 #region Setup
 
     [ReadOnly] public AbilityData data;
+    [ReadOnly] public HashSet<TeamTarget> singleTarget = new() { TeamTarget.AnyOne, TeamTarget.OnePlayer, TeamTarget.OtherPlayer, TeamTarget.OneEnemy, TeamTarget.OtherEnemy };
     [ReadOnly] public Character self;
 
-    [ReadOnly] public string myName;
-    [ReadOnly] public string description;
-    [ReadOnly] public string logDescription;
-
-    [ReadOnly] public AbilityType typeOne;
-    [ReadOnly] public AbilityType typeTwo;
-
-    [ReadOnly] public string instructions;
-    [ReadOnly] public string nextInstructions;
-    [ReadOnly] public string playCondition;
-
-    [ReadOnly] public float attackPower;
-    [ReadOnly] public float healthRegain;
-    [ReadOnly] public int miscNumber;
-
-    [ReadOnly] public int baseCooldown;
     [ReadOnly] public int currentCooldown;
-
-    [ReadOnly] public float modifyAttack;
-    [ReadOnly] public float modifyDefense;
-    [ReadOnly] public float modifySpeed;
-    [ReadOnly] public float modifyLuck;
-    [ReadOnly] public float modifyAccuracy;
-
-    [ReadOnly] public Emotion? newEmotion;
-    [ReadOnly] public Position? newPosition;
-
-    [ReadOnly] public TeamTarget teamTarget;
-    [ReadOnly] public HashSet<TeamTarget> singleTarget = new() { TeamTarget.AnyOne, TeamTarget.OnePlayer, TeamTarget.OtherPlayer, TeamTarget.OneEnemy, TeamTarget.OtherEnemy };
-
     [ReadOnly] public List<Character> listOfTargets;
 
     [ReadOnly] public int damageDealt;
@@ -52,24 +24,7 @@ public class Ability : MonoBehaviour
     public void SetupAbility(AbilityData data, bool startWithCooldown)
     {
         this.data = data;
-        myName = data.myName;
-        instructions = data.instructions;
-        description = KeywordTooltip.instance.EditText(data.description);
-        typeOne = data.typeOne;
-        typeTwo = data.typeTwo;
-        logDescription = data.logDescription;
-        playCondition = data.playCondition;
-        baseCooldown = data.cooldown;
-        currentCooldown = (startWithCooldown) ? baseCooldown : 0;
-        attackPower = data.attackPower;
-        healthRegain = data.healthRegain;
-        modifyAttack = data.modifyAttack;
-        modifyDefense = data.modifyDefense;
-        modifySpeed = data.modifySpeed;
-        modifyLuck = data.modifyLuck;
-        modifyAccuracy = data.modifyAccuracy;
-        teamTarget = data.teamTarget;
-        miscNumber = data.miscNumber;
+        currentCooldown = (startWithCooldown) ? data.baseCooldown : 0;
         self = GetComponent<Character>();
     }
 
@@ -78,10 +33,9 @@ public class Ability : MonoBehaviour
 #region Stats
 
     bool RollAccuracy(float value)
-    { 
+    {
         float roll = Random.Range(0f, 1f);
-        bool result = roll <= value;
-        return result;
+        return roll <= value;
     }
 
     float RollCritical(float value)
@@ -97,20 +51,20 @@ public class Ability : MonoBehaviour
             return 1f;
     }
 
-    #endregion
+#endregion
 
 #region Play Condition
 
     public bool CanPlay(Character user)
     {
-        if (this.myName == "Skip Turn")
+        if (data.myName == "Skip Turn")
             return true;
         if (currentCooldown > 0)
             return false;
 
         listOfTargets = GetTargets();
 
-        string divide = playCondition.Replace(" ", "");
+        string divide = data.playCondition.Replace(" ", "");
         divide = divide.ToUpper();
         string[] methodsInStrings = divide.Split('/');
 
@@ -142,6 +96,14 @@ public class Ability : MonoBehaviour
                 case "SELFDEAD":
                     if (user.CalculateHealth() > 0)
                         return false; break;
+
+                case "SELFINJURED":
+                    if (user.CalculateHealthPercent() > 0.5f)
+                        return false; break;
+                case "TARGETSINJURED":
+                    for (int i = listOfTargets.Count - 1; i >= 0; i--)
+                        if (listOfTargets[i].CalculateHealthPercent() > 0.5f) listOfTargets.RemoveAt(i);
+                    break;
 
                 case "TARGETSNEUTRAL":
                     for (int i = listOfTargets.Count - 1; i >= 0; i--)
@@ -225,7 +187,7 @@ public class Ability : MonoBehaviour
             }
         }
 
-        if (teamTarget == TeamTarget.None)
+        if (data.teamTarget == TeamTarget.None)
             return true;
         else
             return listOfTargets.Count > 0;
@@ -235,7 +197,7 @@ public class Ability : MonoBehaviour
     {
         List<Character> listOfTargets = new List<Character>();
 
-        switch (teamTarget)
+        switch (data.teamTarget)
         {
             case TeamTarget.None:
                 listOfTargets.Add(this.self);
@@ -314,10 +276,10 @@ public class Ability : MonoBehaviour
                         break;
 
                     case "SELFHEAL":
-                        yield return self.GainHealth(healthRegain, logged);
+                        yield return self.GainHealth(data.healthRegain, logged);
                         break;
                     case "TARGETSHEAL":
-                        yield return target.GainHealth(healthRegain, logged);
+                        yield return target.GainHealth(data.healthRegain, logged);
                         break;
 
                     case "SELFSWAPPOSITION":
@@ -376,38 +338,38 @@ public class Ability : MonoBehaviour
                         break;
 
                     case "SELFATTACKSTAT":
-                        yield return self.ChangeAttack(modifyAttack, logged);
+                        yield return self.ChangeAttack(data.modifyAttack, logged);
                         break;
                     case "TARGETSATTACKSTAT":
-                        yield return target.ChangeAttack(modifyAttack, logged);
+                        yield return target.ChangeAttack(data.modifyAttack, logged);
                         break;
 
                     case "SELFDEFENSESTAT":
-                        yield return self.ChangeDefense(modifyDefense, logged);
+                        yield return self.ChangeDefense(data.modifyDefense, logged);
                         break;
                     case "TARGETSDEFENSESTAT":
-                        yield return target.ChangeDefense(modifyDefense, logged);
+                        yield return target.ChangeDefense(data.modifyDefense, logged);
                         break;
 
                     case "SELFSPEEDSTAT":
-                        yield return self.ChangeSpeed(modifySpeed, logged);
+                        yield return self.ChangeSpeed(data.modifySpeed, logged);
                         break;
                     case "TARGETSSPEEDSTAT":
-                        yield return target.ChangeSpeed(modifySpeed, logged);
+                        yield return target.ChangeSpeed(data.modifySpeed, logged);
                         break;
 
                     case "SELFLUCKSTAT":
-                        yield return self.ChangeLuck(modifyLuck, logged);
+                        yield return self.ChangeLuck(data.modifyLuck, logged);
                         break;
                     case "TARGETSLUCKSTAT":
-                        yield return target.ChangeLuck(modifyLuck, logged);
+                        yield return target.ChangeLuck(data.modifyLuck, logged);
                         break;
 
                     case "SELFACCURACYSTAT":
-                        yield return self.ChangeAccuracy(modifyAccuracy, logged);
+                        yield return self.ChangeAccuracy(data.modifyAccuracy, logged);
                         break;
                     case "TARGETSACCURACYSTAT":
-                        yield return target.ChangeAccuracy(modifyAccuracy, logged);
+                        yield return target.ChangeAccuracy(data.modifyAccuracy, logged);
                         break;
 
                     case "LEAVEFIGHT":
@@ -418,17 +380,17 @@ public class Ability : MonoBehaviour
                         break;
 
                     case "SELFREVIVE":
-                        yield return self.Revive(healthRegain, logged);
+                        yield return self.Revive(data.healthRegain, logged);
                         break;
                     case "TARGETSREVIVE":
-                        yield return target.Revive(healthRegain, logged);
+                        yield return target.Revive(data.healthRegain, logged);
                         break;
 
                     case "SELFSTUN":
-                        yield return self.Stun(miscNumber, logged);
+                        yield return self.Stun(data.miscNumber, logged);
                         break;
                     case "TARGETSSTUN":
-                        yield return target.Stun(miscNumber, logged);
+                        yield return target.Stun(data.miscNumber, logged);
                         break;
 
                     case "TARGETSINCREASEACTIVECOOLDOWN":
@@ -497,7 +459,7 @@ public class Ability : MonoBehaviour
             float attack = user.CalculateAttack();
             float defense = target.CalculateDefense();
 
-            int finalDamage = Mathf.Max(0, (int)(damageVariation * critical * effectiveness + (attack * attackPower) - defense));
+            int finalDamage = Mathf.Max(0, (int)(damageVariation * critical * effectiveness + (attack * data.attackPower) - defense));
             return finalDamage;
         }
         else
