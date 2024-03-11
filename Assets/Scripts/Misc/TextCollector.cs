@@ -10,6 +10,7 @@ using System.Linq;
 public class TextCollector : MonoBehaviour
 {
     [SerializeField] TMP_Text textbox;
+    RectTransform textWidth;
     RectTransform imageWidth;
     Canvas canvas;
 
@@ -20,6 +21,7 @@ public class TextCollector : MonoBehaviour
     void Awake()
     {
         canvas = GameObject.Find("Canvas").GetComponent<Canvas>();
+        textWidth = textbox.GetComponent<RectTransform>();
         imageWidth = this.transform.GetComponent<RectTransform>();
     }
 
@@ -51,7 +53,9 @@ public class TextCollector : MonoBehaviour
         nextButton.onClick.AddListener(() => ReceiveChoice(buttonNumber));
         buttonsInCollector.Add(nextButton);
 
-        imageWidth.sizeDelta = new Vector2(Mathf.Max(buttonsInCollector.Count, 2)*300, 300);
+        imageWidth.sizeDelta = new Vector2(Mathf.Max(buttonsInCollector.Count, 2)*375, 400);
+        textWidth.sizeDelta = new Vector2(Mathf.Max(buttonsInCollector.Count, 2)*375, 250);
+
         for (int i = 0; i < buttonsInCollector.Count; i++)
         {
             Transform nextTransform = buttonsInCollector[i].transform;
