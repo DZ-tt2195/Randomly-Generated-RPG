@@ -97,6 +97,10 @@ public class Ability : MonoBehaviour
                     if (user.CalculateHealth() > 0)
                         return false; break;
 
+                case "SELFMAXHEALTH":
+                    if (user.CalculateHealth() < 1f)
+                        return false; break;
+
                 case "SELFINJURED":
                     if (user.CalculateHealthPercent() > 0.5f)
                         return false; break;
@@ -261,6 +265,7 @@ public class Ability : MonoBehaviour
                         break;
                     case "NONE":
                         break;
+
                     case "DEALTDAMAGE":
                         if (damageDealt == 0)
                             yield break;

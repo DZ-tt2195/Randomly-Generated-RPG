@@ -28,26 +28,6 @@ public class Weapon : MonoBehaviour
                 nextAbility.SetupAbility(FileManager.instance.listOfAbilities[int.Parse(skill)], false);
             }
         }
-        /*
-        statCalculation = data.statCalculation;
-        startOfTurn = data.startOfTurn;
-        endOfTurn = data.endOfTurn;
-        newWave = data.newWave;
-        onDeath = data.onDeath;
-        onKill = data.onKill;
-
-        startingAttack = data.startingAttack;
-        startingDefense = data.startingDefense;
-        startingSpeed = data.startingSpeed;
-        startingLuck = data.startingLuck;
-        startingAccuracy = data.startingAccuracy;
-
-        modifyAttack = data.modifyAttack;
-        modifyDefense = data.modifyDefense;
-        modifySpeed = data.modifySpeed;
-        modifyLuck = data.modifyLuck;
-        modifyAccuracy = data.modifyAccuracy;
-        */
     }
 
     #endregion
@@ -64,10 +44,18 @@ public class Weapon : MonoBehaviour
                     break;
                 case "NONE":
                     break;
-                case "USEABILITIES":
-                    foreach (Ability ability in listOfAbilities)
-                        if (ability.CanPlay(self)) yield return ability.ResolveInstructions(TurnManager.SpliceString(ability.data.instructions), logged + 1);
+
+                case "ABILITYONE":
+                    Ability abilityOne = listOfAbilities[0];
+                    abilityOne.currentCooldown = 0;
+                        if (abilityOne.CanPlay(self)) yield return abilityOne.ResolveInstructions(TurnManager.SpliceString(abilityOne.data.instructions), logged + 1);
                     break;
+                case "ABILITYTWO":
+                    Ability abilityTwo = listOfAbilities[1];
+                    abilityTwo.currentCooldown = 0;
+                        if (abilityTwo.CanPlay(self)) yield return abilityTwo.ResolveInstructions(TurnManager.SpliceString(abilityTwo.data.instructions), logged + 1);
+                    break;
+
                 default:
                     Debug.LogError($"{data.myName}: {methodName} isn't implemented");
                     break;

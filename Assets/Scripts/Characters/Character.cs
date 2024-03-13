@@ -259,11 +259,9 @@ public class Character : MonoBehaviour, IPointerClickHandler
 
     public IEnumerator GainHealth(float health, int logged)
     {
-        if (this == null) yield break;
+        if (this == null || CalculateHealthPercent() >= 1f) yield break;
 
-        currentHealth += (int)health;
-        if (currentHealth > data.baseHealth)
-            currentHealth = data.baseHealth;
+        currentHealth = Mathf.Clamp(currentHealth += (int)health, 0, data.baseHealth);
         healthText.text = $"{100 * CalculateHealthPercent():F0}%";
         TurnManager.instance.CreateVisual($"+{(int)health}", this.transform.localPosition);
         Log.instance.AddText($"{(this.name)} regains {health} HP.", logged);
@@ -407,16 +405,15 @@ public class Character : MonoBehaviour, IPointerClickHandler
 
     public IEnumerator ChangeEmotion(Emotion newEmotion, int logged)
     {
-        if (this == null) yield break;
+        if (this == null || newEmotion == Emotion.Dead) yield break;
 
         currentEmotion = newEmotion;
-        statusText.text = (currentEmotion == Emotion.Dead) ? "Dead" : KeywordTooltip.instance.EditText($"{currentEmotion}\n{currentPosition}");
-        //this.myImage.color = KeywordTooltip.instance.SearchForKeyword(currentEmotion.ToString()).color;
-        if (Log.instance != null && currentEmotion != Emotion.Dead)
+        statusText.text = KeywordTooltip.instance.EditText($"{currentEmotion}\n{currentPosition}");
+        if (Log.instance != null)
             Log.instance.AddText($"{(this.name)} is now {currentEmotion}.", logged);
     }
 
-    #endregion
+#endregion
 
 #region Turns
 
@@ -517,7 +514,7 @@ public class Character : MonoBehaviour, IPointerClickHandler
 
     IEnumerator EndOfTurn(int logged)
     {
-        if (chosenAbility != null)
+        if (chosenAbility != null && chosenAbility.data.myName != "Skip Turn")
         {
             if (this.currentEmotion == Emotion.Angry)
             {
