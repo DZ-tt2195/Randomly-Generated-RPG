@@ -82,7 +82,7 @@ public class DataLoader
 
             for (int j = 0; j < line.Length; j++)
             {
-                line[j] = line[j].Trim().Replace("\"", "").Replace("\\", "").Replace("]","");
+                line[j] = line[j].Trim().Replace("\"", "").Replace("\\", "").Replace("]", "");
                 //Debug.Log(line[j]);
             }
 
@@ -96,7 +96,7 @@ public class DataLoader
             newCharacter.baseAccuracy = StringToFloat(line[7]);
             newCharacter.startingPosition = (line[8] == "GROUNDED") ? Position.Grounded : Position.Airborne;
             newCharacter.skillNumbers = line[9].Trim();
-            try { newCharacter.aiTargeting = line[10].Trim(); } catch (IndexOutOfRangeException) { /*do nothing*/};
+            newCharacter.aiTargeting = line[10].Trim();
             newCharacter.artCredit = line[11].Replace("|", "\n");
         }
         return nextData;
@@ -134,7 +134,7 @@ public class DataLoader
             newAbility.modifyLuck = StringToFloat(line[14]);
             newAbility.modifyAccuracy = StringToFloat(line[15]);
             newAbility.miscNumber = StringToInt(line[16]);
-            try { newAbility.teamTarget = StringToTeamTarget(line[17]); } catch (IndexOutOfRangeException) { Debug.Log($"{newAbility.myName} has no target"); }
+            newAbility.teamTarget = StringToTeamTarget(line[17]);
         }
         return nextData;
     }
@@ -157,26 +157,25 @@ public class DataLoader
 
             newWeapon.myName = line[0];
             newWeapon.description = line[1];
-            try { newWeapon.skillNumbers = line[2];} catch (IndexOutOfRangeException) { continue; }
-            try { newWeapon.statCalculation = line[3];} catch (IndexOutOfRangeException){continue;}
-            try { newWeapon.startOfTurn = line[4]; } catch (IndexOutOfRangeException) { continue; }
-            try { newWeapon.endOfTurn = line[5]; } catch (IndexOutOfRangeException) { continue; }
-            try { newWeapon.newWave = line[6]; } catch (IndexOutOfRangeException) { continue; }
-            try { newWeapon.onDeath = line[7]; } catch (IndexOutOfRangeException) { continue; }
-            try { newWeapon.onKill = line[8]; } catch (IndexOutOfRangeException) { continue; }
-            try { newWeapon.startingAttack = StringToFloat(line[9]); } catch (IndexOutOfRangeException) { continue; }
-            try { newWeapon.startingDefense = StringToFloat(line[10]); } catch (IndexOutOfRangeException) { continue; }
-            try { newWeapon.startingSpeed = StringToFloat(line[11]); } catch (IndexOutOfRangeException) { continue; }
-            try { newWeapon.startingLuck = StringToFloat(line[12]); } catch (IndexOutOfRangeException) { continue; }
-            try { newWeapon.startingAccuracy = StringToFloat(line[13]); } catch (IndexOutOfRangeException) { continue; }
-            try { newWeapon.modifyAttack = StringToFloat(line[14]); } catch (IndexOutOfRangeException) { continue; }
-            try { newWeapon.modifyDefense = StringToFloat(line[15]); } catch (IndexOutOfRangeException) { continue; }
-            try { newWeapon.modifySpeed = StringToFloat(line[16]); } catch (IndexOutOfRangeException) { continue; }
-            try { newWeapon.modifyLuck = StringToFloat(line[17]); } catch (IndexOutOfRangeException) { continue; }
-            try { newWeapon.modifyAccuracy = StringToFloat(line[18]); } catch (IndexOutOfRangeException) { continue; }
-            newWeapon.artCredit = line[19].Replace("|", "\n");
+            newWeapon.skillNumbers = line[2];
+            newWeapon.statCalculation = line[3];
+            newWeapon.startOfTurn = line[4];
+            newWeapon.endOfTurn = line[5];
+            newWeapon.newWave = line[6];
+            newWeapon.onDeath = line[7];
+            newWeapon.onKill = line[8];
+            newWeapon.startingAttack = StringToFloat(line[9]);
+            newWeapon.startingDefense = StringToFloat(line[10]);
+            newWeapon.startingSpeed = StringToFloat(line[11]);
+            newWeapon.startingLuck = StringToFloat(line[12]);
+            newWeapon.startingAccuracy = StringToFloat(line[13]);
+            newWeapon.modifyAttack = StringToFloat(line[14]);
+            newWeapon.modifyDefense = StringToFloat(line[15]);
+            newWeapon.modifySpeed = StringToFloat(line[16]);
+            newWeapon.modifyLuck = StringToFloat(line[17]);
+            newWeapon.modifyAccuracy = StringToFloat(line[18]);
+            newWeapon.artCredit = line[19].Trim().Replace("|", "\n");
         }
-
         return nextData;
     }
 
@@ -199,6 +198,10 @@ public class DataLoader
     static TeamTarget StringToTeamTarget(string line)
     {
         line = line.ToUpper().Trim();
+        if (line == "")
+        {
+            UnityEngine.Debug.LogError("missing team target");
+        }
         return line switch
         {
             "ANY ONE" => TeamTarget.AnyOne,
@@ -215,20 +218,6 @@ public class DataLoader
         };
     }
 
-    static Emotion StringToEmotion(string line)
-    {
-        line = line.ToUpper().Trim();
-        return line switch
-        {
-            "NEUTRAL" => Emotion.Neutral,
-            "HAPPY" => Emotion.Happy,
-            "ANGRY" => Emotion.Angry,
-            "SAD" => Emotion.Sad,
-            "NONE" => Emotion.Neutral,
-            _ => Emotion.Neutral,
-        };
-    }
-
     static float StringToFloat(string line)
     {
         line = line.Trim();
@@ -238,7 +227,7 @@ public class DataLoader
         }
         catch (FormatException)
         {
-            Debug.Log(line);
+            UnityEngine.Debug.Log(line);
             return -1f;
         }
     }
@@ -252,7 +241,7 @@ public class DataLoader
         }
         catch (FormatException)
         {
-            Debug.Log(line);
+            UnityEngine.Debug.Log(line);
             return -1;
         }
     }

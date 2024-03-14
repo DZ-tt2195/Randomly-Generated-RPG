@@ -89,7 +89,6 @@ public class TurnManager : MonoBehaviour
                 SaveManager.instance.AddAbility(nextCharacter.name, ability.data);
         }
 
-        quitButton.gameObject.SetActive(false);
         StartCoroutine(NewWave());
     }
 
@@ -108,39 +107,46 @@ public class TurnManager : MonoBehaviour
         currentWave++;
         waveMultiplier = 1 + (currentWave - 1) * 0.02f;
 
-        Log.instance.AddText($"WAVE {currentWave}");
-        if (currentWave > 1 && PlayerPrefs.GetInt("Scaling Enemies") == 1)
+        if (currentWave > 10)
         {
-            Log.instance.AddText($"Enemies are now {100 * (waveMultiplier - 1):F0}% stronger.");
-            Log.instance.AddText("");
+            CheckGameOver("You won!", $"Survived 10 waves.");
         }
-
-        int randomNum = Mathf.Min(currentWave, UnityEngine.Random.Range(3, 6));
-        for (int i = 0; i < randomNum; i++)
-            CreateEnemy(UnityEngine.Random.Range(0, FileManager.instance.listOfEnemies.Count), PlayerPrefs.GetInt("Scaling Enemies") == 1 ? waveMultiplier : 1f, 0);
-        Log.instance.AddText($"");
-
-        speedQueue = AllCharacters();
-        while (speedQueue.Count > 0)
+        else
         {
-            DisableCharacterButtons();
-            speedQueue = speedQueue.OrderByDescending(o => o.CalculateSpeed()).ToList();
-
-            Character nextInLine = speedQueue[0];
-            speedQueue.RemoveAt(0);
-
-            if (nextInLine != null && nextInLine.CalculateHealth() > 0)
+            Log.instance.AddText($"WAVE {currentWave} / 10");
+            if (currentWave > 1 && PlayerPrefs.GetInt("Scaling Enemies") == 1)
             {
-                instructions.text = "";
-                nextInLine.border.gameObject.SetActive(true);
-
-                if (nextInLine.weapon != null)
-                    yield return nextInLine.weapon.WeaponEffect(SpliceString(nextInLine.weapon.data.newWave), 0);
-                nextInLine.border.gameObject.SetActive(false);
+                Log.instance.AddText($"Enemies are now {100 * (waveMultiplier - 1):F0}% stronger.");
+                Log.instance.AddText("");
             }
-        }
 
-        StartCoroutine(NewRound());
+            int randomNum = Mathf.Max(1, (int)Math.Ceiling(currentWave / 2f));
+            for (int i = 0; i < randomNum; i++)
+                CreateEnemy(UnityEngine.Random.Range(0, FileManager.instance.listOfEnemies.Count), PlayerPrefs.GetInt("Scaling Enemies") == 1 ? waveMultiplier : 1f, 0);
+            Log.instance.AddText($"");
+
+            speedQueue = AllCharacters();
+            while (speedQueue.Count > 0)
+            {
+                DisableCharacterButtons();
+                speedQueue = speedQueue.OrderByDescending(o => o.CalculateSpeed()).ToList();
+
+                Character nextInLine = speedQueue[0];
+                speedQueue.RemoveAt(0);
+
+                if (nextInLine != null && nextInLine.CalculateHealth() > 0)
+                {
+                    instructions.text = "";
+                    nextInLine.border.gameObject.SetActive(true);
+
+                    if (nextInLine.weapon != null)
+                        yield return nextInLine.weapon.WeaponEffect(SpliceString(nextInLine.weapon.data.newWave), 0);
+                    nextInLine.border.gameObject.SetActive(false);
+                }
+            }
+
+            StartCoroutine(NewRound());
+        }
     }
 
     IEnumerator NewRound()
@@ -170,7 +176,7 @@ public class TurnManager : MonoBehaviour
                 try { nextInLine.border.gameObject.SetActive(false); } catch { /*do nothing*/}
             }
 
-            CheckGameOver();
+            CheckGameOver("You lost.", $"Survived {currentWave - 1} {(currentWave - 1 == 1 ? "wave" : "waves")}.");
 
             if (isBattling && enemies.Count == 0)
             {
@@ -184,7 +190,7 @@ public class TurnManager : MonoBehaviour
             StartCoroutine(NewRound());
     }
 
-    void CheckGameOver()
+    void CheckGameOver(string message1, string message2)
     {
         foreach (Character character in players)
         {
@@ -201,12 +207,12 @@ public class TurnManager : MonoBehaviour
         quitButton.gameObject.SetActive(true);
 
         Log.instance.AddText("");
-        Log.instance.AddText("You lost.");
-        Log.instance.AddText($"Survived {currentWave - 1} {(currentWave - 1 == 1 ? "wave" : "waves")}.");
+        Log.instance.AddText(message1);
+        Log.instance.AddText(message2);
         Log.instance.enabled = false;
     }
 
-    #endregion
+#endregion
 
 #region Misc
 

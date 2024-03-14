@@ -18,14 +18,14 @@ public class Log : MonoBehaviour
         scroll = this.transform.GetChild(1).GetComponent<Scrollbar>();
         instance = this;
     }
-
+    /*
     void Update()
     {
         #if UNITY_EDITOR
             if (Input.GetKeyDown(KeyCode.Space))
                 AddText($"Test {RT.transform.childCount+1}");
         #endif
-    }
+    }*/
 
     public static string Substitute(Ability ability, Character user)
     {

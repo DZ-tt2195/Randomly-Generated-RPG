@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using MyBox;
 using TMPro;
 using System;
+using System.Linq;
 
 public class TitleScreen : MonoBehaviour
 {
@@ -21,7 +22,10 @@ public class TitleScreen : MonoBehaviour
     [SerializeField] GameObject cheatChallengeObject;
     [SerializeField] List<Toggle> listOfCheats = new();
     [SerializeField] List<Toggle> listOfChallenges = new();
-    
+
+    List<AbilityData> playerAbilities = new();
+    [SerializeField] TMP_InputField inputField;
+
     #endregion
 
 #region Setup
@@ -95,6 +99,8 @@ public class TitleScreen : MonoBehaviour
 
         GeneratePlayers();
         loadButton.SetActive(true);
+
+        inputField.onValueChanged.AddListener(SearchAbility);
     }
 
     void GeneratePlayers()
@@ -112,7 +118,18 @@ public class TitleScreen : MonoBehaviour
             string[] divideSkillsIntoNumbers = playerData[i].skillNumbers.Split(',');
             List<string> putIntoList = new();
             foreach (string next in divideSkillsIntoNumbers)
+            {
+                next.Trim();
                 putIntoList.Add(next);
+                try
+                {
+                    playerAbilities.Add(FileManager.instance.listOfAbilities[int.Parse(next)]);
+                }
+                catch (FormatException)
+                {
+                    continue;
+                }
+            }
             putIntoList = putIntoList.Shuffle();
 
             int counter = -1;
@@ -122,7 +139,6 @@ public class TitleScreen : MonoBehaviour
                 try
                 {
                     string skillNumber = putIntoList[counter];
-                    skillNumber.Trim();
                     characterAbilities.Add(FileManager.instance.listOfAbilities[int.Parse(skillNumber)]);
                 }
                 catch (FormatException)
@@ -150,6 +166,17 @@ public class TitleScreen : MonoBehaviour
         cheatChallengeObject.SetActive(!cheatChallengeObject.activeSelf);
     }
 
-#endregion
+    void SearchAbility(string newValue)
+    {
+        IEnumerable<AbilityData> searchName = FileManager.instance.listOfAbilities.Where
+            (ability => ability.myName.Contains(newValue, StringComparison.OrdinalIgnoreCase));
+
+        IEnumerable<AbilityData> searchDescription = FileManager.instance.listOfAbilities.Where
+            (ability => ability.description.Contains(newValue, StringComparison.OrdinalIgnoreCase));
+
+        Debug.Log($"{newValue}: Names: {searchName.Count()} Descriptions: {searchDescription.Count()}");
+    }
+
+    #endregion
 
 }
