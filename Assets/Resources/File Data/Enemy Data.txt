@@ -99,7 +99,7 @@
     ],
     [
       "Dragon",
-      "Rests when Grounded, does lots of damage when Airborne.",
+      "Deals lots of damage to all Players when Airborne. Heals itself and becomes Grounded when low on health.",
       "90",
       "17",
       "13",

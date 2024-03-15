@@ -78,11 +78,11 @@ public class Character : MonoBehaviour, IPointerClickHandler
         data.baseLuck *= multiplier;
         data.baseAccuracy *= multiplier;
 
-        StartCoroutine(ChangePosition(data.startingPosition, -1));
-        StartCoroutine(ChangeEmotion(startingEmotion, -1));
-
         AddAbility(FileManager.instance.FindAbility("Skip Turn"), false);
         this.myImage.sprite = Resources.Load<Sprite>($"Characters/{this.name}");
+
+        StartCoroutine(ChangePosition(data.startingPosition, -1));
+        StartCoroutine(ChangeEmotion(startingEmotion, -1));
 
         foreach (AbilityData data in listOfAbilityData)
             AddAbility(data, myType != CharacterType.Player);
@@ -197,7 +197,7 @@ public class Character : MonoBehaviour, IPointerClickHandler
     {
         float emotionEffect = currentEmotion switch
         {
-            Emotion.Angry => 1.25f,
+            Emotion.Angry => 1.2f,
             _ => 1f,
         };
 
@@ -263,7 +263,7 @@ public class Character : MonoBehaviour, IPointerClickHandler
 
         currentHealth = Mathf.Clamp(currentHealth += (int)health, 0, data.baseHealth);
         healthText.text = $"{100 * CalculateHealthPercent():F0}%";
-        TurnManager.instance.CreateVisual($"+{(int)health}", this.transform.localPosition);
+        TurnManager.instance.CreateVisual($"+{(int)health} HP", this.transform.localPosition);
         Log.instance.AddText($"{(this.name)} regains {health} HP.", logged);
     }
 
@@ -273,7 +273,7 @@ public class Character : MonoBehaviour, IPointerClickHandler
 
         currentHealth -= damage;
         healthText.text = $"{100 * CalculateHealthPercent():F0}%";
-        TurnManager.instance.CreateVisual($"-{(int)damage}", this.transform.localPosition);
+        TurnManager.instance.CreateVisual($"-{(int)damage} HP", this.transform.localPosition);
         Log.instance.AddText($"{(this.name)} takes {damage} damage.", logged);
 
         if (currentHealth <= 0)
@@ -395,9 +395,15 @@ public class Character : MonoBehaviour, IPointerClickHandler
             try
             {
                 if (newPosition == Position.Grounded)
+                {
                     Log.instance.AddText($"{(this.name)} is now Grounded.", logged);
+                    TurnManager.instance.CreateVisual($"GROUNDED", this.transform.localPosition);
+                }
                 else if (newPosition == Position.Airborne)
+                {
                     Log.instance.AddText($"{(this.name)} is now Airborne.", logged);
+                    TurnManager.instance.CreateVisual($"AIRBORNE", this.transform.localPosition);
+                }
             }
             catch { };
         }
@@ -405,12 +411,19 @@ public class Character : MonoBehaviour, IPointerClickHandler
 
     public IEnumerator ChangeEmotion(Emotion newEmotion, int logged)
     {
-        if (this == null || newEmotion == Emotion.Dead) yield break;
+        if (this == null || newEmotion == Emotion.Dead || newEmotion == currentEmotion) yield break;
 
         currentEmotion = newEmotion;
         statusText.text = KeywordTooltip.instance.EditText($"{currentEmotion}\n{currentPosition}");
-        if (Log.instance != null)
+
+        Color newColor = KeywordTooltip.instance.SearchForKeyword(currentEmotion.ToString()).color;
+        this.myImage.color = new Color(newColor.r, newColor.g, newColor.b);
+
+        if (Log.instance != null && logged >= 0)
+        {
             Log.instance.AddText($"{(this.name)} is now {currentEmotion}.", logged);
+            TurnManager.instance.CreateVisual($"{currentEmotion}", this.transform.localPosition);
+        }
     }
 
 #endregion

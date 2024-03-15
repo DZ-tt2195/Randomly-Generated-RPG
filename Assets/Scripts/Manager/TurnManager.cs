@@ -107,21 +107,20 @@ public class TurnManager : MonoBehaviour
         currentWave++;
         waveMultiplier = 1 + (currentWave - 1) * 0.02f;
 
-        if (currentWave > 10)
+        if (currentWave > 5)
         {
             CheckGameOver("You won!", $"Survived 10 waves.");
         }
         else
         {
-            Log.instance.AddText($"WAVE {currentWave} / 10");
+            Log.instance.AddText($"WAVE {currentWave} / 5");
             if (currentWave > 1 && PlayerPrefs.GetInt("Scaling Enemies") == 1)
             {
                 Log.instance.AddText($"Enemies are now {100 * (waveMultiplier - 1):F0}% stronger.");
                 Log.instance.AddText("");
             }
 
-            int randomNum = Mathf.Max(1, (int)Math.Ceiling(currentWave / 2f));
-            for (int i = 0; i < randomNum; i++)
+            for (int i = 0; i < currentWave; i++)
                 CreateEnemy(UnityEngine.Random.Range(0, FileManager.instance.listOfEnemies.Count), PlayerPrefs.GetInt("Scaling Enemies") == 1 ? waveMultiplier : 1f, 0);
             Log.instance.AddText($"");
 

@@ -111,7 +111,7 @@
     ],
     [
       "Tent",
-      "When this starts their turn, if it has full health, it gets Stunned; otherwise it heals.",
+      "When this starts their turn, if it has full health, its stats decrease; otherwise it heals.",
       "64,65,",
       "",
       "AbilityOne/AbilityTwo",

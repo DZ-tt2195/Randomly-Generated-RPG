@@ -258,6 +258,7 @@ public class Ability : MonoBehaviour
             foreach (string methodName in listOfMethods)
             {
                 yield return TurnManager.instance.WaitTime();
+                bool runNextMethod = true;
 
                 switch (methodName)
                 {
@@ -268,7 +269,7 @@ public class Ability : MonoBehaviour
 
                     case "DEALTDAMAGE":
                         if (damageDealt == 0)
-                            yield break;
+                            runNextMethod = false;
                         break;
 
                     case "ATTACK":
@@ -276,15 +277,15 @@ public class Ability : MonoBehaviour
                         yield return target.TakeDamage(damageDealt, logged);
                         if (target == null || target.CalculateHealth() <= 0) killed = true;
                         break;
-                    case "HEALFROMDAMAGE":
-                        yield return self.GainHealth(damageDealt, logged);
-                        break;
 
                     case "SELFHEAL":
                         yield return self.GainHealth(data.healthRegain, logged);
                         break;
                     case "TARGETSHEAL":
                         yield return target.GainHealth(data.healthRegain, logged);
+                        break;
+                    case "HEALFROMDAMAGE":
+                        yield return self.GainHealth(damageDealt, logged);
                         break;
 
                     case "SELFSWAPPOSITION":
@@ -411,6 +412,9 @@ public class Ability : MonoBehaviour
                         Debug.LogError($"{self.name}: {methodName} isn't a method");
                         break;
                 }
+
+                if (!runNextMethod)
+                    break;
             }
         }
     }
