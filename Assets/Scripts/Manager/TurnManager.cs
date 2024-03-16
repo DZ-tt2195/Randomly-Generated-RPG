@@ -30,7 +30,9 @@ public class TurnManager : MonoBehaviour
         public TextCollector undoBox;
 
     [Foldout("UI", true)]
-        public List<AbilityBox> listOfBoxes = new List<AbilityBox>();
+        public List<AbilityBox> listOfBoxes = new();
+        [SerializeField] List<TMP_Text> listOfSpeed = new();
+        [SerializeField] List<RightClickMe> listOfSpeedImages = new();
         public TMP_Text instructions;
         bool borderDecrease = true;
         [SerializeField] Button quitButton;
@@ -38,8 +40,8 @@ public class TurnManager : MonoBehaviour
         List<CharacterPositions> enemyPositions = new();
 
     [Foldout("Character lists", true)]
-        [ReadOnly] public List<Character> players = new List<Character>();
-        [ReadOnly] public List<Character> enemies = new List<Character>();
+        [ReadOnly] public List<Character> players = new();
+        [ReadOnly] public List<Character> enemies = new();
         [ReadOnly] public List<Character> speedQueue = new List<Character>();
 
     [Foldout("Info tracking", true)]
@@ -107,6 +109,8 @@ public class TurnManager : MonoBehaviour
         currentWave++;
         waveMultiplier = 1 + (currentWave - 1) * 0.02f;
 
+        listOfSpeedImages[0].transform.parent.parent.gameObject.SetActive(false);
+
         if (currentWave > 5)
         {
             CheckGameOver("You won!", $"Survived 10 waves.");
@@ -122,7 +126,6 @@ public class TurnManager : MonoBehaviour
 
             for (int i = 0; i < currentWave; i++)
                 CreateEnemy(UnityEngine.Random.Range(0, FileManager.instance.listOfEnemies.Count), PlayerPrefs.GetInt("Scaling Enemies") == 1 ? waveMultiplier : 1f, 0);
-            Log.instance.AddText($"");
 
             speedQueue = AllCharacters();
             while (speedQueue.Count > 0)
@@ -148,6 +151,48 @@ public class TurnManager : MonoBehaviour
         }
     }
 
+    void DisplaySpeedQueue()
+    {
+        listOfSpeedImages[0].transform.parent.parent.gameObject.SetActive(true);
+        speedQueue = speedQueue.OrderByDescending(o => o.CalculateSpeed()).ToList();
+
+        for (int i = 0; i < listOfSpeedImages.Count; i++)
+        {
+            try
+            {
+                listOfSpeedImages[i].gameObject.SetActive(true);
+                listOfSpeedImages[i].character = speedQueue[i];
+                listOfSpeedImages[i].image.sprite = speedQueue[i].myImage.sprite;
+                listOfSpeedImages[i].image.color = speedQueue[i].myImage.color;
+            }
+            catch (ArgumentOutOfRangeException)
+            {
+                listOfSpeedImages[i].gameObject.SetActive(false);
+            }
+            catch (MissingReferenceException)
+            {
+                listOfSpeedImages[i].gameObject.SetActive(false);
+            }
+        }
+        /*
+        for (int i = 0; i < listOfSpeed.Count; i++)
+        {
+            try
+            {
+                listOfSpeed[i].text = (i == 0) ? $"Current: {speedQueue[i].name}" : $"{i}: {speedQueue[i].name}";
+            }
+            catch (ArgumentOutOfRangeException)
+            {
+                listOfSpeed[i].text = "";
+            }
+            catch (MissingReferenceException)
+            {
+                listOfSpeed[i].text = "";
+            }
+        }
+        */
+    }
+
     IEnumerator NewRound()
     {
         currentRound++;
@@ -159,7 +204,7 @@ public class TurnManager : MonoBehaviour
         while (speedQueue.Count > 0)
         {
             DisableCharacterButtons();
-            speedQueue = speedQueue.OrderByDescending(o => o.CalculateSpeed()).ToList();
+            DisplaySpeedQueue();
             listOfBoxes[0].transform.parent.gameObject.SetActive(false);
 
             Character nextInLine = speedQueue[0];

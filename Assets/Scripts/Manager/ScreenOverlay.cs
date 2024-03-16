@@ -75,7 +75,7 @@ public class ScreenOverlay : MonoBehaviour
 
         characterImage.sprite = character.myImage.sprite;
         characterName.text = character.name;
-        characterDescription.text = character.description;
+        characterDescription.text = character.data.description;
         characterArtCredit.text = character.data.artCredit;
 
         if (character.weapon == null)

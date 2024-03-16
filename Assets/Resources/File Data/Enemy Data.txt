@@ -51,7 +51,7 @@
       "0.1",
       "0.9",
       "GROUNDED",
-      "57,58,59,60,",
+      "58,59,60,61,",
       "Effectiveness",
       "Slawomir Maniak|Eldritch Moon|(Kessig Prowler)"
     ],
@@ -65,7 +65,7 @@
       "0",
       "1.25",
       "GROUNDED",
-      "52,",
+      "53,",
       "",
       "DZ|All Shapes and Sizes|(Bomb)"
     ],
@@ -79,7 +79,7 @@
       "0.1",
       "0.9",
       "AIRBORNE",
-      "53,54,55,56,",
+      "54,55,56,57,",
       "",
       "James Ryman|Kaladesh|(Marionette Master)"
     ],
@@ -93,7 +93,7 @@
       "0",
       "1",
       "GROUNDED",
-      "49,50,51,",
+      "49,50,51,52,",
       "",
       "Howard Lyon|Eldritch Moon|(Harmless Offering)"
     ],

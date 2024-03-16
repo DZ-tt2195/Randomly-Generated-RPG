@@ -4,7 +4,6 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using MyBox;
-using UnityEngine.EventSystems;
 using System;
 using System.Linq;
 
@@ -13,7 +12,7 @@ public enum Emotion { Dead, Neutral, Happy, Angry, Sad };
 public enum CharacterType { Player, Enemy }
 
 [RequireComponent(typeof(Button))][RequireComponent(typeof(Image))]
-public class Character : MonoBehaviour, IPointerClickHandler
+public class Character : MonoBehaviour
 {
 
 #region Variables
@@ -29,24 +28,37 @@ public class Character : MonoBehaviour, IPointerClickHandler
 
     [Foldout("Stats", true)]
         protected int currentHealth;
-        [ReadOnly] public Position currentPosition;
-        [ReadOnly] public Emotion currentEmotion;
-        protected float modifyAttack = 1f;
+
+        private Position _currentPosition;
+        [ReadOnly] public Position currentPosition
+        {
+            get { return _currentPosition; }
+            private set {
+            statusText.text = KeywordTooltip.instance.EditText($"{currentEmotion} {data.myName}\n{value}"); _currentPosition = value; }
+        }
+
+        private Emotion _currentEmotion;
+        [ReadOnly] public Emotion currentEmotion
+        {
+            get { return _currentEmotion; }
+            private set{
+            statusText.text = KeywordTooltip.instance.EditText($"{value} {data.myName}\n{currentPosition}"); _currentEmotion = value;}
+    }
+
+    protected float modifyAttack = 1f;
         protected float modifyDefense = 1f;
         protected float modifySpeed = 1f;
         protected float modifyLuck = 1f;
         protected float modifyAccuracy = 1f;    
-        public int turnsStunned { get; private set; }
+        [ReadOnly] public int turnsStunned { get; private set; }
 
     [Foldout("UI", true)]
         [ReadOnly] public Image border;
         [ReadOnly] public Button myButton;
         [ReadOnly] public Image myImage;
         [ReadOnly] public Image weaponImage;
-        Button infoButton;
         TMP_Text statusText;
         TMP_Text healthText;
-        [ReadOnly] public string description;
 
 #endregion
 
@@ -55,8 +67,6 @@ public class Character : MonoBehaviour, IPointerClickHandler
     private void Awake()
     {
         myImage = GetComponent<Image>();
-        infoButton = transform.Find("Info").GetComponent<Button>();
-        infoButton.onClick.AddListener(RightClickInfo);
         myButton = GetComponent<Button>();
         border = transform.Find("border").GetComponent<Image>();
         statusText = transform.Find("Status Text").GetComponent<TMP_Text>();
@@ -69,7 +79,7 @@ public class Character : MonoBehaviour, IPointerClickHandler
         data = characterData;
         myType = type;
         this.name = characterData.myName;
-        this.description = KeywordTooltip.instance.EditText(data.description);
+        data.description = KeywordTooltip.instance.EditText(data.description);
 
         data.baseHealth = (int)(data.baseHealth * multiplier); currentHealth = data.baseHealth;
         data.baseAttack = (int)(data.baseAttack * multiplier);
@@ -153,30 +163,6 @@ public class Character : MonoBehaviour, IPointerClickHandler
             newPosition.y = startingPosition;
             transform.localPosition = newPosition;
         }
-    }
-
-    public void OnPointerClick(PointerEventData eventData)
-    {
-        if (eventData.button == PointerEventData.InputButton.Right)
-        {
-            RightClickInfo();
-        }
-    }
-
-    void RightClickInfo()
-    {
-        string stats1 = "";
-        string stats2 = "";
-
-        stats1 += $"Health: {currentHealth} / {data.baseHealth}\n";
-        stats1 += $"Attack: {CalculateAttack():F1}\n";
-        stats1 += $"Defense: {CalculateDefense()}\n";
-
-        stats2 += $"Speed: {CalculateSpeed():F1}\n";
-        stats2 += $"Luck: {(CalculateLuck() * 100):F1}%\n";
-        stats2 += $"Accuracy: {(CalculateAccuracy() * 100):F1}%\n";
-
-        ScreenOverlay.instance.DisplayCharacterInfo(this, KeywordTooltip.instance.EditText(stats1), KeywordTooltip.instance.EditText(stats2));
     }
 
     #endregion
@@ -292,15 +278,14 @@ public class Character : MonoBehaviour, IPointerClickHandler
         if (this.weapon != null)
             yield return this.weapon.WeaponEffect(TurnManager.SpliceString(this.weapon.data.onDeath), logged+1);
 
-        yield return ChangeEmotion(Emotion.Dead, logged);
-
+        TurnManager.instance.speedQueue.Remove(this);
         if (this.myType == CharacterType.Player)
         {
+            TurnManager.instance.players.Remove(this);
             myImage.color = Color.gray;
         }
         else
         {
-            TurnManager.instance.players.Remove(this);
             TurnManager.instance.enemies.Remove(this);
             Destroy(this.gameObject);
         }
@@ -311,10 +296,12 @@ public class Character : MonoBehaviour, IPointerClickHandler
         if (this == null || this.CalculateHealth() > 0) yield break;
 
         Log.instance.AddText($"{(this.name)} comes back to life.", logged);
+        TurnManager.instance.players.Add(this);
+
         yield return GainHealth(health, logged);
         yield return ChangePosition(data.startingPosition, -1);
         yield return ChangeEmotion((Emotion)UnityEngine.Random.Range(1, 5), -1);
-        myImage.color = Color.white;
+
         WeaponStartingEffects();
     }
 
@@ -390,9 +377,8 @@ public class Character : MonoBehaviour, IPointerClickHandler
         if (newPosition != Position.Dead && currentPosition != newPosition)
         {
             currentPosition = newPosition;
-            statusText.text = (currentEmotion == Emotion.Dead) ? "Dead" : KeywordTooltip.instance.EditText($"{currentEmotion}\n{currentPosition}");
 
-            try
+            if (Log.instance != null && logged >= 0)
             {
                 if (newPosition == Position.Grounded)
                 {
@@ -405,7 +391,6 @@ public class Character : MonoBehaviour, IPointerClickHandler
                     TurnManager.instance.CreateVisual($"AIRBORNE", this.transform.localPosition);
                 }
             }
-            catch { };
         }
     }
 
@@ -414,7 +399,6 @@ public class Character : MonoBehaviour, IPointerClickHandler
         if (this == null || newEmotion == Emotion.Dead || newEmotion == currentEmotion) yield break;
 
         currentEmotion = newEmotion;
-        statusText.text = KeywordTooltip.instance.EditText($"{currentEmotion}\n{currentPosition}");
 
         Color newColor = KeywordTooltip.instance.SearchForKeyword(currentEmotion.ToString()).color;
         this.myImage.color = new Color(newColor.r, newColor.g, newColor.b);

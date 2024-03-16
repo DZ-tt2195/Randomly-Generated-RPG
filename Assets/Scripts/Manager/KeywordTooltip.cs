@@ -16,7 +16,8 @@ public class KeywordHover
 public class KeywordTooltip : MonoBehaviour
 {
     public static KeywordTooltip instance;
-    float displace;
+    float XCap;
+    float Ydisplace;
     [SerializeField] List<KeywordHover> linkedKeywords = new();
     [SerializeField] List<KeywordHover> spriteKeywords = new();
     [SerializeField] TMP_Text tooltipText;
@@ -24,7 +25,8 @@ public class KeywordTooltip : MonoBehaviour
     private void Awake()
     {
         instance = this;
-        displace = tooltipText.rectTransform.sizeDelta.y * 1.25f;
+        XCap = tooltipText.rectTransform.sizeDelta.x/2f;
+        Ydisplace = tooltipText.rectTransform.sizeDelta.y * 1.25f;
     }
 
     public string EditText(string text)
@@ -63,6 +65,14 @@ public class KeywordTooltip : MonoBehaviour
         tooltipText.transform.parent.gameObject.SetActive(false);
     }
 
+    Vector3 CalculatePosition(Vector3 mousePosition)
+    {
+        return new Vector3
+            (Mathf.Clamp(mousePosition.x, XCap, Screen.width-XCap),
+            mousePosition.y > Ydisplace ? mousePosition.y + (-0.5f * Ydisplace) : mousePosition.y + (0.5f * Ydisplace),
+            0);
+    }
+
     public void ActivateTextBox(string keyword, Vector3 mousePosition)
     {
         tooltipText.transform.parent.gameObject.SetActive(true);
@@ -73,9 +83,7 @@ public class KeywordTooltip : MonoBehaviour
             if (entry.keyword == keyword)
             {
                 tooltipText.text = entry.description;
-                tooltipText.transform.parent.position = mousePosition + (mousePosition.y > (displace)
-                    ? new Vector3(0, -0.5f*displace, 0)
-                    : new Vector3(0, 0.5f*displace, 0));
+                tooltipText.transform.parent.position = CalculatePosition(mousePosition);
                 return;
             }
         }
@@ -84,9 +92,7 @@ public class KeywordTooltip : MonoBehaviour
             if (entry.keyword == keyword)
             {
                 tooltipText.text = entry.description;
-                tooltipText.transform.parent.position = mousePosition + (mousePosition.y > (displace)
-                    ? new Vector3(0, -0.5f * displace, 0)
-                    : new Vector3(0, 0.5f * displace, 0));
+                tooltipText.transform.parent.position = CalculatePosition(mousePosition);
                 return;
             }
         }

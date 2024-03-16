@@ -1,0 +1,43 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
+using MyBox;
+
+public class RightClickMe : MonoBehaviour, IPointerClickHandler
+{
+    [ReadOnly] public Character character;
+    [ReadOnly] public Image image;
+
+    private void Awake()
+    {
+        image = GetComponent<Image>();
+    }
+
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        if (eventData.button == PointerEventData.InputButton.Right)
+        {
+            if (character == null)
+                character = GetComponent<Character>();
+            RightClickInfo();
+        }
+    }
+
+    void RightClickInfo()
+    {
+        string stats1 = "";
+        string stats2 = "";
+
+        stats1 += $"Health: {character.CalculateHealth()} / {character.data.baseHealth}\n";
+        stats1 += $"Attack: {character.CalculateAttack():F1}\n";
+        stats1 += $"Defense: {character.CalculateDefense()}\n";
+
+        stats2 += $"Speed: {character.CalculateSpeed():F1}\n";
+        stats2 += $"Luck: {character.CalculateLuck() * 100:F1}%\n";
+        stats2 += $"Accuracy: {character.CalculateAccuracy() * 100:F1}%\n";
+
+        ScreenOverlay.instance.DisplayCharacterInfo(character, KeywordTooltip.instance.EditText(stats1), KeywordTooltip.instance.EditText(stats2));
+    }
+}
