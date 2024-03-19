@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using MyBox;
 
 [System.Serializable]
 public class WeaponData
@@ -40,7 +41,7 @@ public class CharacterData
     public float baseLuck;
     public float baseAccuracy;
     public Position startingPosition;
-    public string skillNumbers;
+    [ReadOnly] public string skillNumbers;
     public string aiTargeting;
     public string artCredit;
 }

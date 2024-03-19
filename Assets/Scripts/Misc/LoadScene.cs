@@ -4,13 +4,12 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using MyBox;
-using static FileManager;
 
 public class LoadScene : MonoBehaviour
 {
     [Scene]
     [SerializeField] string scene;
-    [SerializeField] GameMode mode;
+    [SerializeField] FileManager.GameMode mode;
 
     Button button;
 

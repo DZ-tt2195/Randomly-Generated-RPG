@@ -372,6 +372,7 @@ GameObject:
   - component: {fileID: 146587603}
   - component: {fileID: 146587605}
   - component: {fileID: 146587606}
+  - component: {fileID: 146587607}
   m_Layer: 0
   m_Name: Turn Manager
   m_TagString: Untagged
@@ -469,6 +470,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Active: 0
   Target: {fileID: 980028367}
+--- !u!114 &146587607
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 146587602}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed62496e85434631a8ce8752f246de34, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Active: 0
+  Target: {fileID: 1675742381}
 --- !u!1 &373542995
 GameObject:
   m_ObjectHideFlags: 0
@@ -4322,6 +4337,61 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2035344404}
   m_CullTransparentMesh: 1
+--- !u!1 &2053818002
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2053818004}
+  - component: {fileID: 2053818003}
+  m_Layer: 0
+  m_Name: Tutorial Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &2053818003
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2053818002}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 93ec6c3d9cdc14acba418f6aec455b72, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  forcedPlayerInfo:
+  - name: Knight
+    forcedEmotion: 3
+    listOfAbilities: []
+  - name: Angel
+    forcedEmotion: 2
+    listOfAbilities: []
+  - name: Wizard
+    forcedEmotion: 4
+    listOfAbilities: []
+  characterPrefab: {fileID: 8345166759536211255, guid: 750995808170643f1b046855142825f7, type: 3}
+--- !u!4 &2053818004
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2053818002}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2096580377
 GameObject:
   m_ObjectHideFlags: 0
@@ -4454,5 +4524,6 @@ SceneRoots:
   m_Roots:
   - {fileID: 1058481265}
   - {fileID: 146587604}
+  - {fileID: 2053818004}
   - {fileID: 1244131043}
   - {fileID: 1461714330}

@@ -8,6 +8,9 @@ using UnityEngine.UI;
 public class ScreenOverlay : MonoBehaviour
 {
     public static ScreenOverlay instance;
+    public enum CurrentScreen { None, Character, Settings, Emotion};
+    public CurrentScreen displayedScreen { get; private set; }
+
     [SerializeField] GameObject blackBackground;
 
     [Foldout("Character display", true)]
@@ -58,17 +61,21 @@ public class ScreenOverlay : MonoBehaviour
 
     private void Update()
     {
-        if (Input.anyKey && !Input.GetMouseButton(0) && !Input.GetMouseButton(1))
+        this.transform.SetAsLastSibling();
+        if ((Input.anyKey && !Input.GetMouseButton(0) && !Input.GetMouseButton(1)) ||
+            (!gameSettingsBackground.activeInHierarchy && Input.GetMouseButton(0) || Input.GetMouseButton(1)))
         {
             blackBackground.SetActive(false);
             characterDisplayBackground.SetActive(false);
             gameSettingsBackground.SetActive(false);
             emotionBackground.SetActive(false);
+            displayedScreen = CurrentScreen.None;
         }
     }
 
     public void DisplayCharacterInfo(Character character, string firstStat, string secondStat)
     {
+        displayedScreen = CurrentScreen.Character;
         blackBackground.SetActive(true);
         characterDisplayBackground.transform.SetAsLastSibling();
         characterDisplayBackground.SetActive(true);
@@ -115,6 +122,7 @@ public class ScreenOverlay : MonoBehaviour
 
     void SettingsScreen()
     {
+        displayedScreen = CurrentScreen.Settings;
         gameSettingsBackground.transform.SetAsLastSibling();
         blackBackground.SetActive(true);
         gameSettingsBackground.SetActive(true);
@@ -135,6 +143,7 @@ public class ScreenOverlay : MonoBehaviour
 
     void SeeEmotions()
     {
+        displayedScreen = CurrentScreen.Emotion;
         blackBackground.SetActive(true);
         emotionBackground.SetActive(true);
         emotionBackground.transform.SetAsLastSibling();

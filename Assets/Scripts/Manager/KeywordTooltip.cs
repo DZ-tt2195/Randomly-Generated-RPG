@@ -8,7 +8,7 @@ using System.Text.RegularExpressions;
 [Serializable]
 public class KeywordHover
 {
-    public string keyword;
+    public List<string> keywordVariations;
     public string description;
     public Color color = Color.white;
 }
@@ -34,29 +34,35 @@ public class KeywordTooltip : MonoBehaviour
         string answer = text;
         foreach (KeywordHover link in linkedKeywords)
         {
-            string pattern = $@"\b{Regex.Escape(link.keyword)}\b";
-            answer = Regex.Replace(answer, pattern, $"<link=\"{link.keyword}\"><u><color=#{ColorUtility.ToHtmlStringRGB(link.color)}>{link.keyword}<color=#FFFFFF></u></link>");
+            foreach (string keyword in link.keywordVariations)
+            {
+                string pattern = $@"\b{Regex.Escape(keyword)}\b";
+                answer = Regex.Replace(answer, pattern, $"<link=\"{keyword}\"><u><color=#{ColorUtility.ToHtmlStringRGB(link.color)}>{keyword}<color=#FFFFFF></u></link>");
+            }
         }
         foreach (KeywordHover link in spriteKeywords)
         {
-            answer = answer.Replace(link.keyword, $"<link=\"{link.keyword}\"><sprite=\"Symbols\"name=\"{link.keyword}\"></link>");
+            answer = answer.Replace(link.keywordVariations[0], $"<link=\"{link.keywordVariations[0]}\"><sprite=\"Symbols\"name=\"{link.keywordVariations[0]}\"></link>");
         }
         return answer;
     }
 
-    public KeywordHover SearchForKeyword(string keyword)
+    public KeywordHover SearchForKeyword(string target)
     {
         foreach (KeywordHover link in linkedKeywords)
         {
-            if (link.keyword == keyword)
-                return link;
+            foreach (string keyword in link.keywordVariations)
+            {
+                if (keyword.Equals(target))
+                    return link;
+            }
         }
         foreach (KeywordHover link in spriteKeywords)
         {
-            if (link.keyword == keyword)
+            if (link.keywordVariations[0].Equals(target))
                 return link;
         }
-        Debug.LogError($"{keyword} couldn't be found");
+        Debug.LogError($"{target} couldn't be found");
         return null;
     }
 
@@ -73,23 +79,26 @@ public class KeywordTooltip : MonoBehaviour
             0);
     }
 
-    public void ActivateTextBox(string keyword, Vector3 mousePosition)
+    public void ActivateTextBox(string target, Vector3 mousePosition)
     {
         tooltipText.transform.parent.gameObject.SetActive(true);
         this.transform.SetAsLastSibling();
 
         foreach (KeywordHover entry in linkedKeywords)
         {
-            if (entry.keyword == keyword)
+            foreach (string keyword in entry.keywordVariations)
             {
-                tooltipText.text = entry.description;
-                tooltipText.transform.parent.position = CalculatePosition(mousePosition);
-                return;
+                if (keyword.Equals(target))
+                {
+                    tooltipText.text = entry.description;
+                    tooltipText.transform.parent.position = CalculatePosition(mousePosition);
+                    return;
+                }
             }
         }
         foreach (KeywordHover entry in spriteKeywords)
         {
-            if (entry.keyword == keyword)
+            if (entry.keywordVariations[0].Equals(target))
             {
                 tooltipText.text = entry.description;
                 tooltipText.transform.parent.position = CalculatePosition(mousePosition);

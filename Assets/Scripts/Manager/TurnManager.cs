@@ -68,37 +68,23 @@ public class TurnManager : MonoBehaviour
             enemyPositions.Add(new CharacterPositions(new Vector3(nextX, 300, 0)));
         }
 
-        for (int i = 0; i < FileManager.instance.listOfPlayers.Count; i++)
+        if (FileManager.instance.mode == FileManager.GameMode.Main)
         {
-            Character nextCharacter = FileManager.instance.listOfPlayers[i];
-            players.Add(nextCharacter);
-            nextCharacter.transform.SetParent(FileManager.instance.canvas);
-            nextCharacter.transform.SetAsFirstSibling();
-
-            foreach (CharacterPositions position in teammatePositions)
+            for (int i = 0; i < FileManager.instance.listOfPlayers.Count; i++)
             {
-                if (position.character == null)
-                {
-                    nextCharacter.transform.localPosition = position.position;
-                    position.character = nextCharacter;
-                    break;
-                }
+                Character nextCharacter = FileManager.instance.listOfPlayers[i];
+                players.Add(nextCharacter);
             }
 
-            if (nextCharacter.weapon != null)
-                SaveManager.instance.AddWeapon(nextCharacter.weapon.data);
-            foreach (Ability ability in nextCharacter.listOfAbilities)
-                SaveManager.instance.AddAbility(nextCharacter.name, ability.data);
+            StartCoroutine(NewWave());
         }
-
-        StartCoroutine(NewWave());
     }
 
 #endregion
 
 #region Gameplay
 
-    IEnumerator NewWave()
+    public IEnumerator NewWave()
     {
         instructions.text = "";
         instructions.gameObject.transform.parent.gameObject.SetActive(false);
@@ -125,7 +111,9 @@ public class TurnManager : MonoBehaviour
             }
 
             for (int i = 0; i < currentWave; i++)
-                CreateEnemy(UnityEngine.Random.Range(0, FileManager.instance.listOfEnemies.Count), PlayerPrefs.GetInt("Scaling Enemies") == 1 ? waveMultiplier : 1f, 0);
+                CreateEnemy(
+                    FileManager.instance.listOfEnemies[UnityEngine.Random.Range(0, FileManager.instance.listOfEnemies.Count)],
+                    (Emotion)UnityEngine.Random.Range(1, 5), 0, PlayerPrefs.GetInt("Scaling Enemies") == 1 ? waveMultiplier : 1f);
 
             speedQueue = AllCharacters();
             while (speedQueue.Count > 0)
@@ -193,7 +181,7 @@ public class TurnManager : MonoBehaviour
         */
     }
 
-    IEnumerator NewRound()
+    public IEnumerator NewRound()
     {
         currentRound++;
         Log.instance.AddText($"");
@@ -267,7 +255,7 @@ public class TurnManager : MonoBehaviour
             borderDecrease = !borderDecrease;
     }
 
-    public void CreateEnemy(int ID, float multiplier, int logged)
+    public void CreateEnemy(CharacterData dataFile, Emotion startingEmotion, int logged, float multiplier = 1f)
     {
         EnemyCharacter nextCharacter = Instantiate(characterPrefab).AddComponent<EnemyCharacter>();
         nextCharacter.transform.SetParent(FileManager.instance.canvas);
@@ -284,7 +272,6 @@ public class TurnManager : MonoBehaviour
             }
         }
 
-        CharacterData dataFile = FileManager.instance.listOfEnemies[ID];
         nextCharacter.name = dataFile.myName;
         Log.instance.AddText($"{Log.Article(nextCharacter.name)} entered the fight.", logged);
 
@@ -302,11 +289,32 @@ public class TurnManager : MonoBehaviour
             catch (ArgumentOutOfRangeException) { break; }
         }
 
-        nextCharacter.SetupCharacter(CharacterType.Enemy, dataFile, characterAbilities, (Emotion)UnityEngine.Random.Range(1, 5), multiplier, null);
+        nextCharacter.SetupCharacter(CharacterType.Enemy, dataFile, characterAbilities, startingEmotion, multiplier, null);
         SaveManager.instance.AddEnemy(dataFile);
 
-        if (PlayerPrefs.GetInt("Enemies Stunned") == 1)
+        if (FileManager.instance.mode == FileManager.GameMode.Main && PlayerPrefs.GetInt("Enemies Stunned") == 1)
             StartCoroutine(nextCharacter.Stun(1, logged + 1));
+    }
+
+    public void AddPlayer(Character character)
+    {
+        character.transform.SetParent(FileManager.instance.canvas);
+        character.transform.SetAsFirstSibling();
+
+        foreach (CharacterPositions position in teammatePositions)
+        {
+            if (position.character == null)
+            {
+                character.transform.localPosition = position.position;
+                position.character = character;
+                break;
+            }
+        }
+
+        if (character.weapon != null)
+            SaveManager.instance.AddWeapon(character.weapon.data);
+        foreach (Ability ability in character.listOfAbilities)
+            SaveManager.instance.AddAbility(character.name, ability.data);
     }
 
     public void DisableCharacterButtons()
@@ -349,13 +357,20 @@ public class TurnManager : MonoBehaviour
         yield return new WaitForSeconds(PlayerPrefs.GetFloat("Animation Speed"));
     }
 
-    public TextCollector MakeTextCollector(string header, Vector3 position, List<string> buttons)
+    public TextCollector MakeTextCollector(string header, Vector3 position, List<string> buttons = null)
     {
         TextCollector collector = Instantiate(undoBox);
         collector.StatsSetup(header, position);
 
-        foreach (string text in buttons)
-            collector.AddTextButton(text);
+        try
+        {
+            foreach (string text in buttons)
+                collector.AddTextButton(text);
+        }
+        catch (NullReferenceException)
+        {
+            //do nothing
+        }
         return collector;
     }
 

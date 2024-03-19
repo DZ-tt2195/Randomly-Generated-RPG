@@ -71,6 +71,10 @@ public class FileManager : MonoBehaviour
         }
     }
 
+    #endregion
+
+#region Helper Methods
+
     public AbilityData FindAbility(string target)
     {
         return listOfAbilities.FirstOrDefault(ability => ability.myName == target);
@@ -81,12 +85,12 @@ public class FileManager : MonoBehaviour
         return listOfEnemies.FirstOrDefault(enemy => enemy.myName == target);
     }
 
-    public WeaponData FindWeaon(string target)
+    public WeaponData FindWeapon(string target)
     {
         return listOfWeapons.FirstOrDefault(weapon => weapon.myName == target);
     }
 
-    #endregion
+#endregion
 
 #region Scenes
 

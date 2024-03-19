@@ -82,7 +82,7 @@ public class TitleScreen : MonoBehaviour
 
     IEnumerator GenerateFiles()
     {
-        GameObject loadButton = GameObject.Find("Play Button");
+        GameObject loadButton = GameObject.Find("Gameplay Buttons");
         loadButton.SetActive(false);
 
         #if UNITY_EDITOR
@@ -99,7 +99,6 @@ public class TitleScreen : MonoBehaviour
 
         GeneratePlayers();
         loadButton.SetActive(true);
-
         inputField.onValueChanged.AddListener(SearchAbility);
     }
 
