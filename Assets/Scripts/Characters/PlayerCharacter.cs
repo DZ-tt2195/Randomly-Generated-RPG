@@ -23,6 +23,7 @@ public class PlayerCharacter : Character
         for (int i = 0; i < TurnManager.instance.listOfBoxes.Count; i++)
         {
             AbilityBox box = TurnManager.instance.listOfBoxes[i];
+
             try
             {
                 box.ReceiveAbility(listOfAbilities[i], this);
@@ -33,6 +34,9 @@ public class PlayerCharacter : Character
                 box.button.onClick.AddListener(() => ReceiveChoice(buttonNum));
             }
             catch (ArgumentOutOfRangeException) { box.gameObject.SetActive(false); }
+
+            if (i == 0 && FileManager.instance.mode == FileManager.GameMode.Tutorial)
+                box.gameObject.SetActive(false);
         }
     }
 

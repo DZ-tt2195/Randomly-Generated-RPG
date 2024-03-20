@@ -51,7 +51,7 @@
       "0.1",
       "0.9",
       "GROUNDED",
-      "59,60,61,62,",
+      "60,61,62,63,",
       "Effectiveness",
       "Slawomir Maniak|Eldritch Moon|(Kessig Prowler)"
     ],
@@ -79,7 +79,7 @@
       "0.1",
       "0.9",
       "AIRBORNE",
-      "55,56,57,58,",
+      "56,57,58,59,",
       "",
       "James Ryman|Kaladesh|(Marionette Master)"
     ],
@@ -124,6 +124,20 @@
       "54,",
       "",
       "Alayna Danner|Dominion: Adventures|(Page)"
+    ],
+    [
+      "Crow",
+      "Basic Enemy who attacks Grounded and Airborne Players.",
+      "50",
+      "15",
+      "13",
+      "30",
+      "0",
+      "1",
+      "AIRBORNE",
+      "55,",
+      "",
+      "Una Fricker|Classic Sixth Edition|(Storm Crow)"
     ]
   ]
 }

@@ -444,7 +444,7 @@ public class Character : MonoBehaviour
         {
             yield return ChooseAbility(logged);
             yield return ChooseTarget(chosenAbility);
-            if (this.myType != CharacterType.Enemy && (PlayerPrefs.GetInt("Confirm Choices") == 1))
+            if (this.myType == CharacterType.Player && (PlayerPrefs.GetInt("Confirm Choices") == 1))
                 yield return ConfirmDecisions();
         }
 
@@ -470,6 +470,15 @@ public class Character : MonoBehaviour
                 _ => 0,
             };
             chosenAbility.currentCooldown = chosenAbility.data.baseCooldown + happinessPenalty;
+
+            if (FileManager.instance.mode == FileManager.GameMode.Tutorial)
+            {
+                if (TutorialManager.instance.currentCharacter == this)
+                {
+                    TutorialManager.instance.currentCharacter = null;
+                    yield return TutorialManager.instance.NextStep();
+                }
+            }
 
             if (chosenAbility.killed && this.weapon != null)
                 yield return this.weapon.WeaponEffect(TurnManager.SpliceString(weapon.data.onKill), logged+1);

@@ -99,7 +99,7 @@ public class TurnManager : MonoBehaviour
 
         if (currentWave > 5)
         {
-            CheckGameOver("You won!", $"Survived 10 waves.");
+            GameFinished("You won!", $"Survived 10 waves.");
         }
         else
         {
@@ -210,9 +210,12 @@ public class TurnManager : MonoBehaviour
                 try { nextInLine.border.gameObject.SetActive(false); } catch { /*do nothing*/}
             }
 
-            CheckGameOver("You lost.", $"Survived {currentWave - 1} {(currentWave - 1 == 1 ? "wave" : "waves")}.");
-
-            if (isBattling && enemies.Count == 0)
+            if (CheckLost())
+            {
+                GameFinished("You lost.", $"Survived {currentWave - 1} {(currentWave - 1 == 1 ? "wave" : "waves")}.");
+                yield break;
+            }
+            else if (enemies.Count == 0 && FileManager.instance.mode == FileManager.GameMode.Main)
             {
                 Log.instance.AddText($"");
                 StartCoroutine(NewWave());
@@ -224,14 +227,19 @@ public class TurnManager : MonoBehaviour
             StartCoroutine(NewRound());
     }
 
-    void CheckGameOver(string message1, string message2)
+    bool CheckLost()
     {
         foreach (Character character in players)
         {
             if (character.CalculateHealth() > 0)
-                return;
+                return false;
         }
 
+        return true;
+    }
+
+    public void GameFinished(string message1, string message2)
+    {
         StopAllCoroutines();
         isBattling = false;
         DisableCharacterButtons();
@@ -257,7 +265,7 @@ public class TurnManager : MonoBehaviour
             borderDecrease = !borderDecrease;
     }
 
-    public void CreateEnemy(CharacterData dataFile, Emotion startingEmotion, int logged, float multiplier = 1f)
+    public Character CreateEnemy(CharacterData dataFile, Emotion startingEmotion, int logged, float multiplier = 1f)
     {
         EnemyCharacter nextCharacter = Instantiate(characterPrefab).AddComponent<EnemyCharacter>();
         nextCharacter.transform.SetParent(FileManager.instance.canvas);
@@ -296,6 +304,7 @@ public class TurnManager : MonoBehaviour
 
         if (FileManager.instance.mode == FileManager.GameMode.Main && PlayerPrefs.GetInt("Enemies Stunned") == 1)
             StartCoroutine(nextCharacter.Stun(1, logged + 1));
+        return nextCharacter;
     }
 
     public void AddPlayer(Character character)
