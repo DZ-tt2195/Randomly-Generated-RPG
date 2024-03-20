@@ -9,7 +9,7 @@ using System.Linq;
 
 public class TextCollector : MonoBehaviour
 {
-    [SerializeField] TMP_Text textbox;
+    public TMP_Text textbox;
     RectTransform textWidth;
     RectTransform imageWidth;
     Canvas canvas;

@@ -1100,6 +1100,26 @@
       "ALL PLAYERS"
     ],
     [
+      "Page",
+      "Attack",
+      "Deal damage to a Grounded Player.",
+      "THIS attacks TARGET.",
+      "Attack",
+      "",
+      "Attack",
+      "TargetsGrounded",
+      "",
+      "2.5",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "ONE PLAYER"
+    ],
+    [
       "Puppeteer",
       "Dangle",
       "All Players become Airborne and their Speed gets reduced.",

@@ -2378,8 +2378,8 @@ RectTransform:
   m_Children:
   - {fileID: 1675742382}
   - {fileID: 1961655407}
-  - {fileID: 980028368}
   - {fileID: 1724201459}
+  - {fileID: 980028368}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -4369,13 +4369,10 @@ MonoBehaviour:
   forcedPlayerInfo:
   - name: Knight
     forcedEmotion: 3
-    listOfAbilities: []
   - name: Angel
     forcedEmotion: 2
-    listOfAbilities: []
   - name: Wizard
     forcedEmotion: 4
-    listOfAbilities: []
   characterPrefab: {fileID: 8345166759536211255, guid: 750995808170643f1b046855142825f7, type: 3}
 --- !u!4 &2053818004
 Transform:

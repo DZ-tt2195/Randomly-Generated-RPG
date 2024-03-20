@@ -35,23 +35,64 @@ public class Ability : MonoBehaviour
     bool RollAccuracy(float value)
     {
         float roll = Random.Range(0f, 1f);
-        return roll <= value;
+        return (roll <= value && FileManager.instance.mode == FileManager.GameMode.Main);
     }
 
     float RollCritical(float value)
     {
         float roll = Random.Range(0f, 1f);
         bool result = roll <= value;
-        if (result)
+        if (result && FileManager.instance.mode == FileManager.GameMode.Main)
         {
             Log.instance.AddText("Critical hit!", 1);
             return 1.5f;
         }
         else
+        {
             return 1f;
+        }
     }
 
-#endregion
+    public float Effectiveness(Character user, Character target, int logged)
+    {
+        float answer = 1;
+        if (user.currentEmotion == Emotion.Happy)
+        {
+            answer = target.currentEmotion switch
+            {
+                (Emotion.Angry) => 1.25f,
+                (Emotion.Sad) => 0.75f,
+                _ => 1.0f,
+            };
+        }
+        else if (user.currentEmotion == Emotion.Angry)
+        {
+            answer = target.currentEmotion switch
+            {
+                (Emotion.Sad) => 1.25f,
+                (Emotion.Happy) => 0.75f,
+                _ => 1.0f,
+            };
+        }
+        else if (user.currentEmotion == Emotion.Sad)
+        {
+            answer = target.currentEmotion switch
+            {
+                (Emotion.Happy) => 1.25f,
+                (Emotion.Angry) => 0.75f,
+                _ => 1.0f,
+            };
+        }
+
+        if (answer > 1)
+            Log.instance.AddText("It's super effective!", logged);
+        else if (answer < 1)
+            Log.instance.AddText("It's not very effective...", logged);
+
+        return answer;
+    }
+
+    #endregion
 
 #region Play Condition
 
@@ -417,45 +458,6 @@ public class Ability : MonoBehaviour
                     break;
             }
         }
-    }
-
-    public float Effectiveness(Character user, Character target, int logged)
-    {
-        float answer = 1;
-        if (user.currentEmotion == Emotion.Happy)
-        {
-            answer = target.currentEmotion switch
-            {
-                (Emotion.Angry) => 1.25f,
-                (Emotion.Sad) => 0.75f,
-                _ => 1.0f,
-            };
-        }
-        else if (user.currentEmotion == Emotion.Angry)
-        {
-            answer = target.currentEmotion switch
-            {
-                (Emotion.Sad) => 1.25f,
-                (Emotion.Happy) => 0.75f,
-                _ => 1.0f,
-            };
-        }
-        else if (user.currentEmotion == Emotion.Sad)
-        {
-            answer = target.currentEmotion switch
-            {
-                (Emotion.Happy) => 1.25f,
-                (Emotion.Angry) => 0.75f,
-                _ => 1.0f,
-            };
-        }
-
-        if (answer > 1)
-            Log.instance.AddText("It's super effective!", logged);
-        else if (answer < 1)
-            Log.instance.AddText("It's not very effective...", logged);
-
-        return answer;
     }
 
     int CalculateDamage(Character user, Character target, int logged)

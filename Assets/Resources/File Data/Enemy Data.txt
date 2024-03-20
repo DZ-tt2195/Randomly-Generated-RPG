@@ -51,7 +51,7 @@
       "0.1",
       "0.9",
       "GROUNDED",
-      "58,59,60,61,",
+      "59,60,61,62,",
       "Effectiveness",
       "Slawomir Maniak|Eldritch Moon|(Kessig Prowler)"
     ],
@@ -79,7 +79,7 @@
       "0.1",
       "0.9",
       "AIRBORNE",
-      "54,55,56,57,",
+      "55,56,57,58,",
       "",
       "James Ryman|Kaladesh|(Marionette Master)"
     ],
@@ -110,6 +110,20 @@
       "45,46,47,48,",
       "",
       "Josh Hass|Amonkhet Invocations|(Omniscience)"
+    ],
+    [
+      "Page",
+      "Basic Enemy who attacks Grounded Players.",
+      "50",
+      "15",
+      "13",
+      "20",
+      "0",
+      "1",
+      "GROUNDED",
+      "54,",
+      "",
+      "Alayna Danner|Dominion: Adventures|(Page)"
     ]
   ]
 }

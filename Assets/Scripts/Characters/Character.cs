@@ -130,7 +130,7 @@ public class Character : MonoBehaviour
         }
     }
 
-    void AddAbility(AbilityData ability, bool startWithCooldown)
+    internal void AddAbility(AbilityData ability, bool startWithCooldown)
     {
         Ability newAbility = this.gameObject.AddComponent<Ability>();
         listOfAbilities.Add(newAbility);

@@ -110,32 +110,34 @@ public class TurnManager : MonoBehaviour
                 Log.instance.AddText("");
             }
 
-            for (int i = 0; i < currentWave; i++)
-                CreateEnemy(
-                    FileManager.instance.listOfEnemies[UnityEngine.Random.Range(0, FileManager.instance.listOfEnemies.Count)],
-                    (Emotion)UnityEngine.Random.Range(1, 5), 0, PlayerPrefs.GetInt("Scaling Enemies") == 1 ? waveMultiplier : 1f);
-
-            speedQueue = AllCharacters();
-            while (speedQueue.Count > 0)
+            if (FileManager.instance.mode == FileManager.GameMode.Main)
             {
-                DisableCharacterButtons();
-                speedQueue = speedQueue.OrderByDescending(o => o.CalculateSpeed()).ToList();
+                for (int i = 0; i < currentWave; i++)
+                    CreateEnemy(
+                        FileManager.instance.listOfEnemies[UnityEngine.Random.Range(0, FileManager.instance.listOfEnemies.Count)],
+                        (Emotion)UnityEngine.Random.Range(1, 5), 0, PlayerPrefs.GetInt("Scaling Enemies") == 1 ? waveMultiplier : 1f);
 
-                Character nextInLine = speedQueue[0];
-                speedQueue.RemoveAt(0);
-
-                if (nextInLine != null && nextInLine.CalculateHealth() > 0)
+                speedQueue = AllCharacters();
+                while (speedQueue.Count > 0)
                 {
-                    instructions.text = "";
-                    nextInLine.border.gameObject.SetActive(true);
+                    DisableCharacterButtons();
+                    speedQueue = speedQueue.OrderByDescending(o => o.CalculateSpeed()).ToList();
 
-                    if (nextInLine.weapon != null)
-                        yield return nextInLine.weapon.WeaponEffect(SpliceString(nextInLine.weapon.data.newWave), 0);
-                    nextInLine.border.gameObject.SetActive(false);
+                    Character nextInLine = speedQueue[0];
+                    speedQueue.RemoveAt(0);
+
+                    if (nextInLine != null && nextInLine.CalculateHealth() > 0)
+                    {
+                        instructions.text = "";
+                        nextInLine.border.gameObject.SetActive(true);
+
+                        if (nextInLine.weapon != null)
+                            yield return nextInLine.weapon.WeaponEffect(SpliceString(nextInLine.weapon.data.newWave), 0);
+                        nextInLine.border.gameObject.SetActive(false);
+                    }
                 }
+                StartCoroutine(NewRound());
             }
-
-            StartCoroutine(NewRound());
         }
     }
 
@@ -218,7 +220,7 @@ public class TurnManager : MonoBehaviour
             }
         }
 
-        if (isBattling)
+        if (isBattling && FileManager.instance.mode == FileManager.GameMode.Main)
             StartCoroutine(NewRound());
     }
 
@@ -298,6 +300,7 @@ public class TurnManager : MonoBehaviour
 
     public void AddPlayer(Character character)
     {
+        players.Add(character);
         character.transform.SetParent(FileManager.instance.canvas);
         character.transform.SetAsFirstSibling();
 

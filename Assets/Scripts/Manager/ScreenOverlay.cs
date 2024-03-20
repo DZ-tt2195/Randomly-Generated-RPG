@@ -5,10 +5,14 @@ using MyBox;
 using TMPro;
 using UnityEngine.UI;
 
+public enum CurrentScreen { None, Character, Settings, Emotion };
+
 public class ScreenOverlay : MonoBehaviour
 {
+
+#region Variables
+
     public static ScreenOverlay instance;
-    public enum CurrentScreen { None, Character, Settings, Emotion};
     public CurrentScreen displayedScreen { get; private set; }
 
     [SerializeField] GameObject blackBackground;
@@ -40,6 +44,10 @@ public class ScreenOverlay : MonoBehaviour
         [SerializeField] Button emotionButton;
         [SerializeField] GameObject emotionBackground;
         [SerializeField] List<TMP_Text> listOfDescriptions = new();
+
+    #endregion
+
+#region Setup
 
     private void Awake()
     {
@@ -148,4 +156,7 @@ public class ScreenOverlay : MonoBehaviour
         emotionBackground.SetActive(true);
         emotionBackground.transform.SetAsLastSibling();
     }
+
+#endregion
+
 }
