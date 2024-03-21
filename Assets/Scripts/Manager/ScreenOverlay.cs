@@ -136,14 +136,14 @@ public class ScreenOverlay : MonoBehaviour
         gameSettingsBackground.SetActive(true);
     }
 
-    void SetAnimationSpeed(float value)
+    public void SetAnimationSpeed(float value)
     {
         animationSlider.value = value;
         animationText.text = value.ToString("F1");
         PlayerPrefs.SetFloat("Animation Speed", value);
     }
 
-    void SetUndo(bool value)
+    public void SetUndo(bool value)
     {
         undoToggle.isOn = value;
         PlayerPrefs.SetInt("Confirm Choices", value ? 1 : 0);

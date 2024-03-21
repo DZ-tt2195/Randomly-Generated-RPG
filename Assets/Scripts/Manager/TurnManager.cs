@@ -25,30 +25,30 @@ public class TurnManager : MonoBehaviour
 
     public static TurnManager instance;
     [Foldout("Prefabs", true)]
-        [SerializeField] GameObject characterPrefab;
-        [SerializeField] PointsVisual pointsVisual;
-        public TextCollector undoBox;
+    [SerializeField] GameObject characterPrefab;
+    [SerializeField] PointsVisual pointsVisual;
+    public TextCollector undoBox;
 
     [Foldout("UI", true)]
-        public List<AbilityBox> listOfBoxes = new();
-        [SerializeField] List<TMP_Text> listOfSpeed = new();
-        [SerializeField] List<RightClickMe> listOfSpeedImages = new();
-        public TMP_Text instructions;
-        bool borderDecrease = true;
-        [SerializeField] Button quitButton;
-        List<CharacterPositions> teammatePositions = new();
-        List<CharacterPositions> enemyPositions = new();
+    public List<AbilityBox> listOfBoxes = new();
+    [SerializeField] List<TMP_Text> listOfSpeed = new();
+    [SerializeField] List<RightClickMe> listOfSpeedImages = new();
+    public TMP_Text instructions;
+    bool borderDecrease = true;
+    [SerializeField] Button quitButton;
+    List<CharacterPositions> teammatePositions = new();
+    List<CharacterPositions> enemyPositions = new();
 
     [Foldout("Character lists", true)]
-        [ReadOnly] public List<Character> players = new();
-        [ReadOnly] public List<Character> enemies = new();
-        [ReadOnly] public List<Character> speedQueue = new List<Character>();
+    [ReadOnly] public List<Character> players = new();
+    [ReadOnly] public List<Character> enemies = new();
+    [ReadOnly] public List<Character> speedQueue = new List<Character>();
 
     [Foldout("Info tracking", true)]
-        int currentWave;
-        int currentRound;
-        float waveMultiplier = 1f;
-        bool isBattling = true;
+    int currentWave;
+    int currentRound;
+    float waveMultiplier = 1f;
+    bool isBattling;
 
 #endregion
 
@@ -61,6 +61,7 @@ public class TurnManager : MonoBehaviour
 
     private void Start()
     {
+        isBattling = true;
         for (int i = 0; i<5; i++)
         {
             int nextX = -1050 + (350 * i);
@@ -101,7 +102,7 @@ public class TurnManager : MonoBehaviour
         else
         {
             Log.instance.AddText($"WAVE {currentWave} / 5");
-            if (currentWave > 1 && PlayerPrefs.GetInt("Scaling Enemies") == 1)
+            if (currentWave > 1 && FileManager.instance.mode == FileManager.GameMode.Main && PlayerPrefs.GetInt("Scaling Enemies") == 1)
             {
                 Log.instance.AddText($"Enemies are now {100 * (waveMultiplier - 1):F0}% stronger.");
                 Log.instance.AddText("");
@@ -240,13 +241,22 @@ public class TurnManager : MonoBehaviour
 
     public void GameFinished(string message1, string message2)
     {
-        StopAllCoroutines();
+        try
+        {
+            StopAllCoroutines();
+            TutorialManager.instance.StopAllCoroutines();
+        }
+        catch
+        {
+            //do nothing
+        }
         isBattling = false;
         DisableCharacterButtons();
 
         instructions.text = "";
         listOfBoxes[0].transform.parent.gameObject.SetActive(false);
         quitButton.gameObject.SetActive(true);
+        listOfSpeedImages[0].transform.parent.parent.gameObject.SetActive(false);
 
         Log.instance.AddText("");
         Log.instance.AddText(message1);

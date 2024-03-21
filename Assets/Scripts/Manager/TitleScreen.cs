@@ -88,11 +88,13 @@ public class TitleScreen : MonoBehaviour
         #if UNITY_EDITOR
             yield return FileManager.instance.DownloadFile("Player Data");
             yield return FileManager.instance.DownloadFile("Enemy Data");
+            yield return FileManager.instance.DownloadFile("Bonus Enemy Data");
             yield return FileManager.instance.DownloadFile("Ability Data");
             yield return FileManager.instance.DownloadFile("Weapon Data");
         #endif
 
         FileManager.instance.listOfEnemies = DataLoader.ReadCharacterData("Enemy Data");
+        FileManager.instance.listOfBonusEnemies = DataLoader.ReadCharacterData("Bonus Enemy Data");
         FileManager.instance.listOfAbilities = DataLoader.ReadAbilityData("Ability Data");
         FileManager.instance.listOfWeapons = DataLoader.ReadWeaponData("Weapon Data");
         FileManager.instance.listOfWeapons = FileManager.instance.listOfWeapons.Shuffle();

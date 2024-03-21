@@ -26,6 +26,7 @@ public class FileManager : MonoBehaviour
     [Tooltip("store all players")][ReadOnly] public List<Character> listOfPlayers = new List<Character>();
     [Tooltip("store all ability data")][ReadOnly] public List<AbilityData> listOfAbilities;
     [Tooltip("store all enemy data")][ReadOnly] public List<CharacterData> listOfEnemies;
+    [Tooltip("store all bonus enemy data")][ReadOnly] public List<CharacterData> listOfBonusEnemies;
     [Tooltip("store all weapon data")][ReadOnly] public List<WeaponData> listOfWeapons;
 
 #endregion
@@ -83,6 +84,11 @@ public class FileManager : MonoBehaviour
     public CharacterData FindEnemy(string target)
     {
         return listOfEnemies.FirstOrDefault(enemy => enemy.myName == target);
+    }
+
+    public CharacterData FindBonusEnemy(string target)
+    {
+        return listOfBonusEnemies.FirstOrDefault(enemy => enemy.myName == target);
     }
 
     public WeaponData FindWeapon(string target)

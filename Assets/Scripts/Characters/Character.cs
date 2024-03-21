@@ -547,9 +547,9 @@ public class Character : MonoBehaviour
             {
                 Log.instance.AddText($"{this.name} is Sad.", logged);
                 if (chosenAbility.data.typeOne != AbilityType.Attack && chosenAbility.data.typeTwo != AbilityType.Attack)
-                    yield return GainHealth((int)(data.baseHealth * 0.2f), logged + 1);
+                    yield return GainHealth((int)(data.baseHealth * 0.15f), logged + 1);
                 else
-                    yield return TakeDamage((int)(data.baseHealth * 0.2f), logged + 1);
+                    yield return TakeDamage((int)(data.baseHealth * 0.15f), logged + 1);
             }
         }
 

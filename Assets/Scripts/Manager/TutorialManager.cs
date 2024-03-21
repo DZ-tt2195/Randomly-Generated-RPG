@@ -34,6 +34,8 @@ public class TutorialManager : MonoBehaviour
         }
         else
         {
+            ScreenOverlay.instance.SetAnimationSpeed(0.5f);
+            ScreenOverlay.instance.SetUndo(true);
             GeneratePlayers();
             currentStep = 1;
             StartCoroutine(NextStep());
@@ -95,7 +97,7 @@ public class TutorialManager : MonoBehaviour
 
             case 3: //first time attacking
                 yield return TurnManager.instance.NewWave();
-                TurnManager.instance.CreateEnemy(FileManager.instance.FindEnemy("Page"), Emotion.Neutral, 0);
+                TurnManager.instance.CreateEnemy(FileManager.instance.FindBonusEnemy("Page"), Emotion.Neutral, 0);
 
                 yield return ClickThroughDialogue(new List<string>()
                 { "Here's your first enemy. Use the first Knight's ability against it." });
@@ -147,7 +149,7 @@ public class TutorialManager : MonoBehaviour
             case 7: //introduce angel's healing
                 Log.instance.AddText("");
                 yield return TurnManager.instance.NewWave();
-                TurnManager.instance.CreateEnemy(FileManager.instance.FindEnemy("Page"), Emotion.Happy, 0);
+                TurnManager.instance.CreateEnemy(FileManager.instance.FindBonusEnemy("Page"), Emotion.Happy, 0);
 
                 yield return ClickThroughDialogue(new List<string>()
                 { "This Page is Happy. Happy is super effective against Angry, which puts your Knight at a disadvantage.",
@@ -177,9 +179,9 @@ public class TutorialManager : MonoBehaviour
                 Log.instance.AddText("");
                 yield return TurnManager.instance.NewWave();
 
-                TurnManager.instance.CreateEnemy(FileManager.instance.FindEnemy("Page"), Emotion.Neutral, 0);
-                TurnManager.instance.CreateEnemy(FileManager.instance.FindEnemy("Crow"), Emotion.Neutral, 0);
-                TurnManager.instance.CreateEnemy(FileManager.instance.FindEnemy("Crow"), Emotion.Neutral, 0);
+                TurnManager.instance.CreateEnemy(FileManager.instance.FindBonusEnemy("Page"), Emotion.Neutral, 0);
+                TurnManager.instance.CreateEnemy(FileManager.instance.FindBonusEnemy("Crow"), Emotion.Neutral, 0);
+                TurnManager.instance.CreateEnemy(FileManager.instance.FindBonusEnemy("Crow"), Emotion.Neutral, 0);
 
                 yield return ClickThroughDialogue(new List<string>()
                 { "Characters are either Grounded or Airborne. Your Knight is incapable of hitting Airborne enemies, so they’ll have to attack the Page for now." });

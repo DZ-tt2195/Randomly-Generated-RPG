@@ -110,34 +110,6 @@
       "45,46,47,48,",
       "",
       "Josh Hass|Amonkhet Invocations|(Omniscience)"
-    ],
-    [
-      "Page",
-      "Basic Enemy who attacks Grounded Players.",
-      "65",
-      "16",
-      "13",
-      "20",
-      "0",
-      "1",
-      "GROUNDED",
-      "54,",
-      "",
-      "Alayna Danner|Dominion: Adventures|(Page)"
-    ],
-    [
-      "Crow",
-      "Basic Enemy who attacks Grounded and Airborne Players.",
-      "65",
-      "16",
-      "13",
-      "30",
-      "0",
-      "1",
-      "AIRBORNE",
-      "55,",
-      "",
-      "Una Fricker|Classic Sixth Edition|(Storm Crow)"
     ]
   ]
 }

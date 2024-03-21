@@ -24,6 +24,7 @@ public class Ability : MonoBehaviour
     public void SetupAbility(AbilityData data, bool startWithCooldown)
     {
         this.data = data;
+        data.description = KeywordTooltip.instance.EditText(data.description);
         currentCooldown = (startWithCooldown) ? data.baseCooldown : 0;
         self = GetComponent<Character>();
     }
