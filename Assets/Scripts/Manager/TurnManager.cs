@@ -70,11 +70,8 @@ public class TurnManager : MonoBehaviour
 
         if (FileManager.instance.mode == FileManager.GameMode.Main)
         {
-            for (int i = 0; i < FileManager.instance.listOfPlayers.Count; i++)
-            {
-                Character nextCharacter = FileManager.instance.listOfPlayers[i];
-                players.Add(nextCharacter);
-            }
+            foreach (Character player in FileManager.instance.listOfPlayers)
+                AddPlayer(player);
 
             StartCoroutine(NewWave());
         }
@@ -215,10 +212,13 @@ public class TurnManager : MonoBehaviour
                 GameFinished("You lost.", $"Survived {currentWave - 1} {(currentWave - 1 == 1 ? "wave" : "waves")}.");
                 yield break;
             }
-            else if (enemies.Count == 0 && FileManager.instance.mode == FileManager.GameMode.Main)
+            else if (enemies.Count == 0)
             {
-                Log.instance.AddText($"");
-                StartCoroutine(NewWave());
+                if (FileManager.instance.mode == FileManager.GameMode.Main)
+                {
+                    Log.instance.AddText($"");
+                    StartCoroutine(NewWave());
+                }
                 yield break;
             }
         }
@@ -265,7 +265,7 @@ public class TurnManager : MonoBehaviour
             borderDecrease = !borderDecrease;
     }
 
-    public Character CreateEnemy(CharacterData dataFile, Emotion startingEmotion, int logged, float multiplier = 1f)
+    public void CreateEnemy(CharacterData dataFile, Emotion startingEmotion, int logged, float multiplier = 1f)
     {
         EnemyCharacter nextCharacter = Instantiate(characterPrefab).AddComponent<EnemyCharacter>();
         nextCharacter.transform.SetParent(FileManager.instance.canvas);
@@ -304,7 +304,6 @@ public class TurnManager : MonoBehaviour
 
         if (FileManager.instance.mode == FileManager.GameMode.Main && PlayerPrefs.GetInt("Enemies Stunned") == 1)
             StartCoroutine(nextCharacter.Stun(1, logged + 1));
-        return nextCharacter;
     }
 
     public void AddPlayer(Character character)

@@ -32,6 +32,9 @@ public class EnemyCharacter : Character
 
             switch (data.aiTargeting)
             {
+                case "":
+                    break;
+
                 case "PRIORITIZEAIRBORNE":
                     List<Character> airborneTargets = new();
                     foreach (Character character in selectedTarget)

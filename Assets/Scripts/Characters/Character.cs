@@ -245,7 +245,7 @@ public class Character : MonoBehaviour
 
     public IEnumerator GainHealth(float health, int logged)
     {
-        if (this == null || CalculateHealthPercent() >= 1f) yield break;
+        if (this == null) yield break;
 
         currentHealth = Mathf.Clamp(currentHealth += (int)health, 0, data.baseHealth);
         healthText.text = $"{100 * CalculateHealthPercent():F0}%";
@@ -259,11 +259,16 @@ public class Character : MonoBehaviour
 
         currentHealth -= damage;
         healthText.text = $"{100 * CalculateHealthPercent():F0}%";
-        TurnManager.instance.CreateVisual($"-{(int)damage} HP", this.transform.localPosition);
-        Log.instance.AddText($"{(this.name)} takes {damage} damage.", logged);
 
+        if (damage > 0)
+        {
+            TurnManager.instance.CreateVisual($"-{(int)damage} HP", this.transform.localPosition);
+            Log.instance.AddText($"{(this.name)} takes {damage} damage.", logged);
+        }
         if (currentHealth <= 0)
+        {
             yield return HasDied(logged);
+        }
     }
 
     public IEnumerator HasDied(int logged)
@@ -414,7 +419,7 @@ public class Character : MonoBehaviour
 
 #region Turns
 
-    public IEnumerator MyTurn(int logged)
+    internal IEnumerator MyTurn(int logged)
     {
         chosenAbility = null;
         yield return StartOfTurn(logged);

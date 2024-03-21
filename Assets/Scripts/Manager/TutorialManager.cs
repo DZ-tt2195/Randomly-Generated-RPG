@@ -154,6 +154,7 @@ public class TutorialManager : MonoBehaviour
                 break;
 
             case 7: //introduce angel's healing
+                Log.instance.AddText("");
                 yield return TurnManager.instance.NewWave();
                 TurnManager.instance.CreateEnemy(FileManager.instance.FindEnemy("Page"), Emotion.Happy, 0);
 
@@ -186,16 +187,17 @@ public class TutorialManager : MonoBehaviour
                     Vector3.zero, new List<string>() { "Next" });
                 yield return collector8.WaitForChoice();
 
-                collector8.textbox.text = "Since your Angel didn’t attack, it can use an extra ability. Try changing the Page’s Emotion.";
+                collector8.textbox.text = "Since your Angel didn’t attack, it can use an extra ability. Try changing the Page’s Emotion so your Knight will gain the advantage.";
                 yield return collector8.WaitForChoice();
                 Destroy(collector8.gameObject);
                 break;
 
             case 9: //introduce grounded and airborne
+                Log.instance.AddText("");
                 yield return TurnManager.instance.NewWave();
-                Character enemy1 = TurnManager.instance.CreateEnemy(FileManager.instance.FindEnemy("Page"), Emotion.Neutral, 0);
-                Character enemy2 = TurnManager.instance.CreateEnemy(FileManager.instance.FindEnemy("Crow"), Emotion.Neutral, 0);
-                Character enemy3 = TurnManager.instance.CreateEnemy(FileManager.instance.FindEnemy("Crow"), Emotion.Neutral, 0);
+                TurnManager.instance.CreateEnemy(FileManager.instance.FindEnemy("Page"), Emotion.Neutral, 0);
+                TurnManager.instance.CreateEnemy(FileManager.instance.FindEnemy("Crow"), Emotion.Neutral, 0);
+                TurnManager.instance.CreateEnemy(FileManager.instance.FindEnemy("Crow"), Emotion.Neutral, 0);
 
                 TextCollector collector9 = TurnManager.instance.MakeTextCollector(
                     "Characters are either Grounded or Airborne. Your Knight is incapable of hitting Airborne enemies, so they’ll have to attack the Page for now.",
@@ -247,6 +249,10 @@ public class TutorialManager : MonoBehaviour
                     "Your Wizard is Sad, which means everytime it attacks, it loses some health. But when it uses a non-attacking ability, it regains health.",
                     Vector3.zero, new List<string>() { "Next" });
                 yield return collector12.WaitForChoice();
+
+                collector12.textbox.text = "Attacking abilities are colored red, and non-attacking ones are colored blue.";
+                yield return collector12.WaitForChoice();
+
                 Destroy(collector12.gameObject);
 
                 currentStep = 13;
@@ -269,6 +275,7 @@ public class TutorialManager : MonoBehaviour
 
             case 14: //finish off the enemies
                 listOfPlayers[2].AddAbility(FileManager.instance.FindAbility("Blaze"), false);
+                listOfPlayers[2].AddAbility(FileManager.instance.FindAbility("Fog"), false);
                 TextCollector collector14 = TurnManager.instance.MakeTextCollector(
                     "Anyways, now that the enemies are Grounded, your Knight is capable of hitting them, so finish off those enemies.",
                     Vector3.zero, new List<string>() { "Next" });

@@ -20,10 +20,11 @@ public class PlayerCharacter : Character
     void EnableAbilityBoxes()
     {
         TurnManager.instance.listOfBoxes[0].transform.parent.gameObject.SetActive(true);
+        int canUse = 0;
+
         for (int i = 0; i < TurnManager.instance.listOfBoxes.Count; i++)
         {
             AbilityBox box = TurnManager.instance.listOfBoxes[i];
-
             try
             {
                 box.ReceiveAbility(listOfAbilities[i], this);
@@ -32,11 +33,20 @@ public class PlayerCharacter : Character
                 box.button.onClick.RemoveAllListeners();
                 int buttonNum = i;
                 box.button.onClick.AddListener(() => ReceiveChoice(buttonNum));
+                canUse += (box.button.interactable) ? 1 : 0;
             }
-            catch (ArgumentOutOfRangeException) { box.gameObject.SetActive(false); }
-
-            if (i == 0 && FileManager.instance.mode == FileManager.GameMode.Tutorial)
+            catch (ArgumentOutOfRangeException)
+            {
                 box.gameObject.SetActive(false);
+            }
+
+            if (FileManager.instance.mode == FileManager.GameMode.Tutorial)
+            {
+                if (i == 0)
+                    box.gameObject.SetActive(false);
+                if (canUse > 0)
+                    TurnManager.instance.listOfBoxes[0].gameObject.SetActive(true);
+            }
         }
     }
 

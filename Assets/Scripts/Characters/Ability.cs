@@ -34,8 +34,15 @@ public class Ability : MonoBehaviour
 
     bool RollAccuracy(float value)
     {
-        float roll = Random.Range(0f, 1f);
-        return (roll <= value && FileManager.instance.mode == FileManager.GameMode.Main);
+        if (FileManager.instance.mode == FileManager.GameMode.Main)
+        {
+            float roll = Random.Range(0f, 1f);
+            return (roll <= value);
+        }
+        else
+        {
+            return true;
+        }
     }
 
     float RollCritical(float value)
@@ -464,7 +471,7 @@ public class Ability : MonoBehaviour
     {
         if (RollAccuracy(user.CalculateAccuracy()))
         {
-            float damageVariation = Random.Range(0.8f, 1.2f);
+            float damageVariation = (FileManager.instance.mode == FileManager.GameMode.Main) ? Random.Range(0.8f, 1.2f) : 1;
             float effectiveness = Effectiveness(user, target, logged);
             float critical = RollCritical(user.CalculateLuck());
             float attack = user.CalculateAttack();
