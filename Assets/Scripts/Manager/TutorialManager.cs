@@ -80,7 +80,7 @@ public class TutorialManager : MonoBehaviour
 
             case 2: //right click on knight
                 TurnManager.instance.AddPlayer(listOfPlayers[0]); //add knight
-                listOfPlayers[0].AddAbility(FileManager.instance.FindAbility("Stab"), false);
+                listOfPlayers[0].AddAbility(FileManager.instance.FindPlayerAbility("Stab"), false);
 
                 TextCollector collector2 = TurnManager.instance.MakeTextCollector(
                     "You have 3 party members each game. Right click on the Knight to read what they do.",
@@ -108,7 +108,7 @@ public class TutorialManager : MonoBehaviour
                 break;
 
             case 4: //introduce cooldowns
-                listOfPlayers[0].AddAbility(FileManager.instance.FindAbility("Joust"), false);
+                listOfPlayers[0].AddAbility(FileManager.instance.FindPlayerAbility("Joust"), false);
                 yield return ClickThroughDialogue(new List<string>()
                 { "The ability you used has a cooldown, so you can't use it again this round. Instead use its other ability." });
 
@@ -131,7 +131,7 @@ public class TutorialManager : MonoBehaviour
 
             case 6: //introduce angel
                 TurnManager.instance.AddPlayer(listOfPlayers[1]); //add angel
-                listOfPlayers[1].AddAbility(FileManager.instance.FindAbility("Share Healing"), false);
+                listOfPlayers[1].AddAbility(FileManager.instance.FindPlayerAbility("Share Healing"), false);
 
                 TextCollector collector6 = TurnManager.instance.MakeTextCollector(
                     "Here's your 2nd party member. Right click on the Angel to read what they do.",
@@ -167,7 +167,7 @@ public class TutorialManager : MonoBehaviour
                 break;
 
             case 8: //introduce happy
-                listOfPlayers[1].AddAbility(FileManager.instance.FindAbility("Induce Sadness"), false);
+                listOfPlayers[1].AddAbility(FileManager.instance.FindPlayerAbility("Induce Sadness"), false);
 
                 yield return ClickThroughDialogue(new List<string>()
                 { "Your Angel is Happy, which means it can use an extra ability when it doesn't attack, but all its abilities have longer cooldowns.",
@@ -194,7 +194,7 @@ public class TutorialManager : MonoBehaviour
 
             case 10: //introduce wizard
                 TurnManager.instance.AddPlayer(listOfPlayers[2]); //add angel
-                listOfPlayers[2].AddAbility(FileManager.instance.FindAbility("Falling Rocks"), false);
+                listOfPlayers[2].AddAbility(FileManager.instance.FindPlayerAbility("Falling Rocks"), false);
 
                 TextCollector collector10 = TurnManager.instance.MakeTextCollector(
                     "Finally, your 3rd party member is the Wizard. Right click on them to read what they do.",
@@ -247,8 +247,8 @@ public class TutorialManager : MonoBehaviour
                 break;
 
             case 14: //finish off the enemies
-                listOfPlayers[2].AddAbility(FileManager.instance.FindAbility("Blaze"), false);
-                listOfPlayers[2].AddAbility(FileManager.instance.FindAbility("Fog"), false);
+                listOfPlayers[2].AddAbility(FileManager.instance.FindPlayerAbility("Blaze"), false);
+                listOfPlayers[2].AddAbility(FileManager.instance.FindPlayerAbility("Fog"), false);
 
                 yield return ClickThroughDialogue(new List<string>()
                 { "Anyways, now that the enemies are Grounded, your Knight is capable of hitting them, so finish off those enemies."});

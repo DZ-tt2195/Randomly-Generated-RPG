@@ -23,7 +23,7 @@
       "0.3",
       "0.9",
       "GROUNDED",
-      "37,38,39,40,",
+      "1,2,3,4,",
       "PrioritizeAirborne",
       "Harald Lieske|Dominion: Allies|(Archer)"
     ],
@@ -37,7 +37,7 @@
       "0.1",
       "0.9",
       "AIRBORNE",
-      "41,42,43,44,",
+      "5,6,7,8,",
       "PrioritizeGrounded",
       "Martin Hoffmann|Dominion: Nocturne|(Bat)"
     ],
@@ -51,7 +51,7 @@
       "0.1",
       "0.9",
       "GROUNDED",
-      "60,61,62,63,",
+      "24,25,26,27,",
       "Effectiveness",
       "Slawomir Maniak|Eldritch Moon|(Kessig Prowler)"
     ],
@@ -65,7 +65,7 @@
       "0",
       "1.25",
       "GROUNDED",
-      "53,",
+      "17,",
       "",
       "DZ|All Shapes and Sizes|(Bomb)"
     ],
@@ -79,7 +79,7 @@
       "0.1",
       "0.9",
       "AIRBORNE",
-      "56,57,58,59,",
+      "20,21,22,23,",
       "",
       "James Ryman|Kaladesh|(Marionette Master)"
     ],
@@ -93,7 +93,7 @@
       "0",
       "1",
       "GROUNDED",
-      "49,50,51,52,",
+      "13,14,15,16,",
       "",
       "Howard Lyon|Eldritch Moon|(Harmless Offering)"
     ],
@@ -107,7 +107,7 @@
       "0.1",
       "0.9",
       "AIRBORNE",
-      "45,46,47,48,",
+      "9,10,11,12,",
       "",
       "Josh Hass|Amonkhet Invocations|(Omniscience)"
     ]

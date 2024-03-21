@@ -27,7 +27,7 @@ public class PlayerCharacter : Character
             AbilityBox box = TurnManager.instance.listOfBoxes[i];
             try
             {
-                box.ReceiveAbility(listOfAbilities[i], this);
+                box.ReceiveAbility(listOfAbilities[i].CanPlay(this), listOfAbilities[i]);
                 box.gameObject.SetActive(true);
 
                 box.button.onClick.RemoveAllListeners();

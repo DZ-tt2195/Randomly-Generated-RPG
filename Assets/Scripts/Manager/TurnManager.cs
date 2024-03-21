@@ -303,14 +303,14 @@ public class TurnManager : MonoBehaviour
             {
                 string skillNumber = divideSkillsIntoNumbers[j];
                 skillNumber.Trim();
-                characterAbilities.Add(FileManager.instance.listOfAbilities[int.Parse(skillNumber)]);
+                characterAbilities.Add(FileManager.instance.listOfOtherAbilities[int.Parse(skillNumber)]);
             }
             catch (FormatException) { continue; }
             catch (ArgumentOutOfRangeException) { break; }
         }
 
         nextCharacter.SetupCharacter(CharacterType.Enemy, dataFile, characterAbilities, startingEmotion, multiplier, null);
-        SaveManager.instance.AddEnemy(dataFile);
+        SaveManager.instance.SaveEnemy(dataFile);
 
         if (FileManager.instance.mode == FileManager.GameMode.Main && PlayerPrefs.GetInt("Enemies Stunned") == 1)
             StartCoroutine(nextCharacter.Stun(1, logged + 1));
@@ -333,9 +333,9 @@ public class TurnManager : MonoBehaviour
         }
 
         if (character.weapon != null)
-            SaveManager.instance.AddWeapon(character.weapon.data);
+            SaveManager.instance.SaveWeapon(character.weapon.data);
         foreach (Ability ability in character.listOfAbilities)
-            SaveManager.instance.AddAbility(character.name, ability.data);
+            SaveManager.instance.SaveAbility(character.name, ability.data);
     }
 
     public void DisableCharacterButtons()

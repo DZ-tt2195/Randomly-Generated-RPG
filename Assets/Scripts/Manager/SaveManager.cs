@@ -48,17 +48,16 @@ public class SaveManager : MonoBehaviour
         }
     }
 
-    public void AddEnemy(CharacterData data)
+    public void SaveEnemy(CharacterData data)
     {
         foreach (CharacterData savedData in currentSaveData.seenEnemies)
             if (savedData.myName.Equals(data.myName))
                 return;
         currentSaveData.seenEnemies.Add(data);
         ES3.Save("Random RPG", currentSaveData, $"{Application.persistentDataPath}/Random RPG.es3");
-
     }
 
-    public void AddWeapon(WeaponData data)
+    public void SaveWeapon(WeaponData data)
     {
         foreach (WeaponData savedData in currentSaveData.seenWeapons)
             if (savedData.myName.Equals(data.myName))
@@ -67,7 +66,7 @@ public class SaveManager : MonoBehaviour
         ES3.Save("Random RPG", currentSaveData, $"{Application.persistentDataPath}/Random RPG.es3");
     }
 
-    public void AddAbility(string character, AbilityData data)
+    public void SaveAbility(string character, AbilityData data)
     {
         switch (character)
         {

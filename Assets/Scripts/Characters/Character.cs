@@ -88,7 +88,7 @@ public class Character : MonoBehaviour
         data.baseLuck *= multiplier;
         data.baseAccuracy *= multiplier;
 
-        AddAbility(FileManager.instance.FindAbility("Skip Turn"), false);
+        AddAbility(FileManager.instance.FindOtherAbility("Skip Turn"), false);
         this.myImage.sprite = Resources.Load<Sprite>($"Characters/{this.name}");
 
         StartCoroutine(ChangePosition(data.startingPosition, -1));
@@ -134,7 +134,7 @@ public class Character : MonoBehaviour
     {
         Ability newAbility = this.gameObject.AddComponent<Ability>();
         listOfAbilities.Add(newAbility);
-        newAbility.SetupAbility(ability, startWithCooldown);
+        newAbility.SetupAbility(ability, startWithCooldown, false);
     }
 
 #endregion

@@ -24,7 +24,8 @@ public class FileManager : MonoBehaviour
     private string baseUrl = "https://sheets.googleapis.com/v4/spreadsheets/";
 
     [Tooltip("store all players")][ReadOnly] public List<Character> listOfPlayers = new List<Character>();
-    [Tooltip("store all ability data")][ReadOnly] public List<AbilityData> listOfAbilities;
+    [Tooltip("store all ability data")][ReadOnly] public List<AbilityData> listOfPlayerAbilities;
+    [Tooltip("store all ability data")][ReadOnly] public List<AbilityData> listOfOtherAbilities;
     [Tooltip("store all enemy data")][ReadOnly] public List<CharacterData> listOfEnemies;
     [Tooltip("store all bonus enemy data")][ReadOnly] public List<CharacterData> listOfBonusEnemies;
     [Tooltip("store all weapon data")][ReadOnly] public List<WeaponData> listOfWeapons;
@@ -76,9 +77,14 @@ public class FileManager : MonoBehaviour
 
 #region Helper Methods
 
-    public AbilityData FindAbility(string target)
+    public AbilityData FindPlayerAbility(string target)
     {
-        return listOfAbilities.FirstOrDefault(ability => ability.myName == target);
+        return listOfPlayerAbilities.FirstOrDefault(ability => ability.myName == target);
+    }
+
+    public AbilityData FindOtherAbility(string target)
+    {
+        return listOfOtherAbilities.FirstOrDefault(ability => ability.myName == target);
     }
 
     public CharacterData FindEnemy(string target)

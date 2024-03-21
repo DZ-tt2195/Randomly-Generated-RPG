@@ -117,7 +117,7 @@ public class ScreenOverlay : MonoBehaviour
             if (nextAbility.data.myName != "Skip Turn")
             {
                 listOfBoxes[nextBox].gameObject.SetActive(true);
-                listOfBoxes[nextBox].ReceiveAbility(nextAbility, character);
+                listOfBoxes[nextBox].ReceiveAbility(TurnManager.instance != null && nextAbility.CanPlay(character), nextAbility);
                 nextBox++;
             }
         }

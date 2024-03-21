@@ -24,7 +24,6 @@ public class TitleScreen : MonoBehaviour
     [SerializeField] List<Toggle> listOfChallenges = new();
 
     List<AbilityData> playerAbilities = new();
-    [SerializeField] TMP_InputField inputField;
 
     #endregion
 
@@ -89,19 +88,20 @@ public class TitleScreen : MonoBehaviour
             yield return FileManager.instance.DownloadFile("Player Data");
             yield return FileManager.instance.DownloadFile("Enemy Data");
             yield return FileManager.instance.DownloadFile("Bonus Enemy Data");
-            yield return FileManager.instance.DownloadFile("Ability Data");
+            yield return FileManager.instance.DownloadFile("Player Ability Data");
+            yield return FileManager.instance.DownloadFile("Other Ability Data");
             yield return FileManager.instance.DownloadFile("Weapon Data");
         #endif
 
         FileManager.instance.listOfEnemies = DataLoader.ReadCharacterData("Enemy Data");
         FileManager.instance.listOfBonusEnemies = DataLoader.ReadCharacterData("Bonus Enemy Data");
-        FileManager.instance.listOfAbilities = DataLoader.ReadAbilityData("Ability Data");
+        FileManager.instance.listOfPlayerAbilities = DataLoader.ReadAbilityData("Player Ability Data");
+        FileManager.instance.listOfOtherAbilities = DataLoader.ReadAbilityData("Other Ability Data");
         FileManager.instance.listOfWeapons = DataLoader.ReadWeaponData("Weapon Data");
         FileManager.instance.listOfWeapons = FileManager.instance.listOfWeapons.Shuffle();
 
         GeneratePlayers();
         loadButton.SetActive(true);
-        inputField.onValueChanged.AddListener(SearchAbility);
     }
 
     void GeneratePlayers()
@@ -124,7 +124,7 @@ public class TitleScreen : MonoBehaviour
                 putIntoList.Add(next);
                 try
                 {
-                    playerAbilities.Add(FileManager.instance.listOfAbilities[int.Parse(next)]);
+                    playerAbilities.Add(FileManager.instance.listOfPlayerAbilities[int.Parse(next)]);
                 }
                 catch (FormatException)
                 {
@@ -140,7 +140,7 @@ public class TitleScreen : MonoBehaviour
                 try
                 {
                     string skillNumber = putIntoList[counter];
-                    characterAbilities.Add(FileManager.instance.listOfAbilities[int.Parse(skillNumber)]);
+                    characterAbilities.Add(FileManager.instance.listOfPlayerAbilities[int.Parse(skillNumber)]);
                 }
                 catch (FormatException)
                 {
@@ -167,17 +167,6 @@ public class TitleScreen : MonoBehaviour
         cheatChallengeObject.SetActive(!cheatChallengeObject.activeSelf);
     }
 
-    void SearchAbility(string newValue)
-    {
-        IEnumerable<AbilityData> searchName = FileManager.instance.listOfAbilities.Where
-            (ability => ability.myName.Contains(newValue, StringComparison.OrdinalIgnoreCase));
-
-        IEnumerable<AbilityData> searchDescription = FileManager.instance.listOfAbilities.Where
-            (ability => ability.description.Contains(newValue, StringComparison.OrdinalIgnoreCase));
-
-        Debug.Log($"{newValue}: Names: {searchName.Count()} Descriptions: {searchDescription.Count()}");
-    }
-
-    #endregion
+#endregion
 
 }

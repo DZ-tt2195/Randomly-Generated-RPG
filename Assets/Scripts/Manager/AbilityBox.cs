@@ -9,15 +9,17 @@ using System;
 public class AbilityBox : MonoBehaviour
 {
     public Button button;
+    public Ability ability { get; private set; }
     [SerializeField] Image image;
     [SerializeField] TMP_Text textName;
     [SerializeField] TMP_Text textCountdown;
     [SerializeField] TMP_Text cantUse;
     [SerializeField] HoverImage hover;
 
-    public void ReceiveAbility(Ability ability, Character user)
+    public void ReceiveAbility(bool noOverlay, Ability ability)
     {
-        try {button.interactable = ability.CanPlay(user); } catch (NullReferenceException) { /*do nothing*/ };
+        this.ability = ability;
+        try { button.interactable = !noOverlay; } catch (NullReferenceException) { /*do nothing*/ };
         textName.text = ability.data.myName;
         hover.NewAbility(ability.data.description);
 
@@ -31,12 +33,12 @@ public class AbilityBox : MonoBehaviour
             textCountdown.transform.parent.gameObject.SetActive(false);
         }
 
-        if (ability.currentCooldown > 0)
+        if (!noOverlay && ability.currentCooldown > 0)
         {
             cantUse.transform.parent.gameObject.SetActive(true);
             cantUse.text = $"{ability.currentCooldown}";
         }
-        else if (button != null && !button.interactable)
+        else if (!noOverlay && button != null && !button.interactable)
         {
             cantUse.transform.parent.gameObject.SetActive(true);
             cantUse.text = "X";
