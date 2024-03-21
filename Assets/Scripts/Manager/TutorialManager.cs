@@ -53,16 +53,24 @@ public class TutorialManager : MonoBehaviour
         }
     }
 
+    IEnumerator ClickThroughDialogue(List<string> allDialogue)
+    {
+        TextCollector collector = TurnManager.instance.MakeTextCollector("", Vector3.zero, new List<string>() { "Next" });
+        foreach (string nextString in allDialogue)
+        {
+            collector.textbox.text = nextString;
+            yield return collector.WaitForChoice();
+        }
+        Destroy(collector.gameObject);
+    }
+
     public IEnumerator NextStep()
     {
         switch (currentStep)
         {
             case 1: //introduce the concept of the game
-                TextCollector collector1 = TurnManager.instance.MakeTextCollector(
-                    "This is a turn-based RPG where you're given random abilities against random enemies.",
-                    Vector3.zero, new List<string>() { "Next" });
-                yield return collector1.WaitForChoice();
-                Destroy(collector1.gameObject);
+                yield return ClickThroughDialogue(new List<string>()
+                { "This is a turn-based RPG where you're given random abilities against random enemies." });
 
                 currentStep = 2;
                 StartCoroutine(NextStep());
@@ -89,11 +97,8 @@ public class TutorialManager : MonoBehaviour
                 yield return TurnManager.instance.NewWave();
                 TurnManager.instance.CreateEnemy(FileManager.instance.FindEnemy("Page"), Emotion.Neutral, 0);
 
-                TextCollector collector3 = TurnManager.instance.MakeTextCollector(
-                    "Here's your first enemy. Use the first Knight's ability against it.",
-                    Vector3.zero, new List<string>() { "Fight" });
-                yield return collector3.WaitForChoice();
-                Destroy(collector3.gameObject);
+                yield return ClickThroughDialogue(new List<string>()
+                { "Here's your first enemy. Use the first Knight's ability against it." });
 
                 yield return TurnManager.instance.NewRound();
                 currentStep = 4;
@@ -102,11 +107,8 @@ public class TutorialManager : MonoBehaviour
 
             case 4: //introduce cooldowns
                 listOfPlayers[0].AddAbility(FileManager.instance.FindAbility("Joust"), false);
-                TextCollector collector4 = TurnManager.instance.MakeTextCollector(
-                    "The ability you used has a cooldown, so you can't use it again this round. Instead use the other ability.",
-                    Vector3.zero, new List<string>() { "Fight" });
-                yield return collector4.WaitForChoice();
-                Destroy(collector4.gameObject);
+                yield return ClickThroughDialogue(new List<string>()
+                { "The ability you used has a cooldown, so you can't use it again this round. Instead use its other ability." });
 
                 yield return TurnManager.instance.NewRound();
                 currentStep = 5;
@@ -114,23 +116,12 @@ public class TutorialManager : MonoBehaviour
                 break;
 
             case 5: //introduce angry
-                TextCollector collector5 = TurnManager.instance.MakeTextCollector(
-                    "You killed your first enemy! Now it's time to explain Emotions.",
-                    Vector3.zero, new List<string>() { "Next" });
-                yield return collector5.WaitForChoice();
-
-                collector5.textbox.text = "Everyone begins with random emotions. Emotions are super-effective against other emotions, and have their own effects.";
-                yield return collector5.WaitForChoice();
-
-                collector5.textbox.text = "Happy beats Angry, which beats Sad, which beats Happy. Neutral is neutral against everything else.";
-                yield return collector5.WaitForChoice();
-
-                collector5.textbox.text = "This game, your Knight started off Angry, which means they have a higher Attack, but they get Stunned each time they kill an enemy.";
-                yield return collector5.WaitForChoice();
-
-                collector5.textbox.text = "Your Knight being Stunned means they're forced skip their next turn.";
-                yield return collector5.WaitForChoice();
-                Destroy(collector5.gameObject);
+                yield return ClickThroughDialogue(new List<string>()
+                { "You killed your first enemy! Now it's time to explain Emotions.",
+                "Everyone begins with random emotions. Emotions are super-effective against other emotions, and have their own effects.",
+                "Happy beats Angry, which beats Sad, which beats Happy. Neutral is neutral against everything else.",
+                "This game, your Knight started off Angry, which means they have a higher Attack, but they get Stunned each time they kill an enemy.",
+                "Your Knight being Stunned means they're forced skip their next turn." });
 
                 currentStep = 6;
                 StartCoroutine(NextStep());
@@ -158,17 +149,10 @@ public class TutorialManager : MonoBehaviour
                 yield return TurnManager.instance.NewWave();
                 TurnManager.instance.CreateEnemy(FileManager.instance.FindEnemy("Page"), Emotion.Happy, 0);
 
-                TextCollector collector7 = TurnManager.instance.MakeTextCollector(
-                    "This Page is Happy. Happy is super effective against Angry, which puts your Knight at a disadvantage.",
-                    Vector3.zero, new List<string>() { "Next" });
-                yield return collector7.WaitForChoice();
-
-                collector7.textbox.text = "Normally, your Knight would take their turn first, because they have the higher Speed. But they’re Stunned right now.";
-                yield return collector7.WaitForChoice();
-
-                collector7.textbox.text = "So instead it's your Angel's turn. Use the Angel’s ability to heal the Knight.";
-                yield return collector7.WaitForChoice();
-                Destroy(collector7.gameObject);
+                yield return ClickThroughDialogue(new List<string>()
+                { "This Page is Happy. Happy is super effective against Angry, which puts your Knight at a disadvantage.",
+                "Normally, your Knight would take their turn first, because they have the higher Speed. But they’re Stunned right now.",
+                "So instead it's your Angel's turn. Use the Angel’s ability to heal the Knight." });
 
                 currentCharacter = listOfPlayers[1]; //wait for angel's next turn
                 currentStep = 8;
@@ -182,28 +166,24 @@ public class TutorialManager : MonoBehaviour
 
             case 8: //introduce happy
                 listOfPlayers[1].AddAbility(FileManager.instance.FindAbility("Induce Sadness"), false);
-                TextCollector collector8 = TurnManager.instance.MakeTextCollector(
-                    "Your Angel is Happy, which means it can use an extra ability when it doesn't attack, but all its abilities have longer cooldowns.",
-                    Vector3.zero, new List<string>() { "Next" });
-                yield return collector8.WaitForChoice();
 
-                collector8.textbox.text = "Since your Angel didn’t attack, it can use an extra ability. Try changing the Page’s Emotion so your Knight will gain the advantage.";
-                yield return collector8.WaitForChoice();
-                Destroy(collector8.gameObject);
+                yield return ClickThroughDialogue(new List<string>()
+                { "Your Angel is Happy, which means it can use an extra ability when it doesn't attack, but all its abilities have longer cooldowns.",
+                "Since your Angel didn’t attack, it can use an extra ability. But Share Healing is on cooldown for now.",
+                "Instead, you can change the Page’s Emotion to let your Knight gain the advantage."});
                 break;
 
             case 9: //introduce grounded and airborne
                 Log.instance.AddText("");
                 yield return TurnManager.instance.NewWave();
+
                 TurnManager.instance.CreateEnemy(FileManager.instance.FindEnemy("Page"), Emotion.Neutral, 0);
                 TurnManager.instance.CreateEnemy(FileManager.instance.FindEnemy("Crow"), Emotion.Neutral, 0);
                 TurnManager.instance.CreateEnemy(FileManager.instance.FindEnemy("Crow"), Emotion.Neutral, 0);
 
-                TextCollector collector9 = TurnManager.instance.MakeTextCollector(
-                    "Characters are either Grounded or Airborne. Your Knight is incapable of hitting Airborne enemies, so they’ll have to attack the Page for now.",
-                    Vector3.zero, new List<string>() { "Next" });
-                yield return collector9.WaitForChoice();
-                Destroy(collector9.gameObject);
+                yield return ClickThroughDialogue(new List<string>()
+                { "Characters are either Grounded or Airborne. Your Knight is incapable of hitting Airborne enemies, so they’ll have to attack the Page for now." });
+
                 yield return TurnManager.instance.NewRound();
 
                 currentStep = 10;
@@ -228,11 +208,8 @@ public class TutorialManager : MonoBehaviour
                 break;
 
             case 11: //introduce wizard abilities
-                TextCollector collector11 = TurnManager.instance.MakeTextCollector(
-                    "The Wizard has an ability that can force all airborne enemies to be Grounded. When it’s their turn, use Falling Rocks against the 2 Airborne enemies.",
-                    Vector3.zero, new List<string>() { "Next" });
-                yield return collector11.WaitForChoice();
-                Destroy(collector11.gameObject);
+                yield return ClickThroughDialogue(new List<string>()
+                { "The Wizard has an ability that can force all airborne enemies to be Grounded. When it’s their turn, use Falling Rocks against the 2 Crows." });
 
                 currentCharacter = listOfPlayers[2]; //wait for wizard's next turn
                 currentStep = 12;
@@ -245,15 +222,9 @@ public class TutorialManager : MonoBehaviour
                 break;
 
             case 12: //introduce sad
-                TextCollector collector12 = TurnManager.instance.MakeTextCollector(
-                    "Your Wizard is Sad, which means everytime it attacks, it loses some health. But when it uses a non-attacking ability, it regains health.",
-                    Vector3.zero, new List<string>() { "Next" });
-                yield return collector12.WaitForChoice();
-
-                collector12.textbox.text = "Attacking abilities are colored red, and non-attacking ones are colored blue.";
-                yield return collector12.WaitForChoice();
-
-                Destroy(collector12.gameObject);
+                yield return ClickThroughDialogue(new List<string>()
+                { "Your Wizard is Sad, which means everytime it attacks, it loses some health. But when it uses a non-attacking ability, it regains health.",
+                "Attacking abilities are colored red, and non-attacking ones are colored blue."});
 
                 currentStep = 13;
                 yield return (NextStep());
@@ -276,11 +247,9 @@ public class TutorialManager : MonoBehaviour
             case 14: //finish off the enemies
                 listOfPlayers[2].AddAbility(FileManager.instance.FindAbility("Blaze"), false);
                 listOfPlayers[2].AddAbility(FileManager.instance.FindAbility("Fog"), false);
-                TextCollector collector14 = TurnManager.instance.MakeTextCollector(
-                    "Anyways, now that the enemies are Grounded, your Knight is capable of hitting them, so finish off those enemies.",
-                    Vector3.zero, new List<string>() { "Next" });
-                yield return collector14.WaitForChoice();
-                Destroy(collector14.gameObject);
+
+                yield return ClickThroughDialogue(new List<string>()
+                { "Anyways, now that the enemies are Grounded, your Knight is capable of hitting them, so finish off those enemies."});
                 break;
 
             case 15: //tutorial over
