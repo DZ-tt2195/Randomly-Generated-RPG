@@ -49,6 +49,7 @@ public class CharacterData
 [System.Serializable]
 public class AbilityData
 {
+    public string user;
     public string myName;
     public string description;
     public string logDescription;
@@ -119,6 +120,7 @@ public class DataLoader
                 //Debug.Log(line[j]);
             }
 
+            newAbility.user = line[0];
             newAbility.myName = line[1];
             newAbility.description = line[2];
             newAbility.logDescription = line[3];
