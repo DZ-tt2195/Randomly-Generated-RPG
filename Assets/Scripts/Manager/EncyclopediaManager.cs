@@ -3,6 +3,7 @@ using UnityEngine;
 using MyBox;
 using TMPro;
 using System;
+using System.Linq;
 
 public enum PlayerSearch { All, Knight, Angel, Wizard };
 public class EncyclopediaManager : MonoBehaviour
@@ -10,7 +11,7 @@ public class EncyclopediaManager : MonoBehaviour
 
 #region Variables
 
-    [Foldout("Player Abilities", true)]
+    [Foldout("Ability Search", true)]
     List<AbilityBox> knightAbilities = new();
     List<AbilityBox> angelAbilities = new();
     List<AbilityBox> wizardAbilities = new();
@@ -19,6 +20,12 @@ public class EncyclopediaManager : MonoBehaviour
     [SerializeField] TMP_InputField abilitySearch;
     [SerializeField] TMP_Dropdown characterDropdown;
     [SerializeField] TMP_Dropdown typeDropdown;
+
+    [Foldout("Weapon Search", true)]
+    List<HoverImage> weaponBoxes = new();
+    [SerializeField] HoverImage weaponBoxPrefab;
+    [SerializeField] Transform storeWeaponBoxes;
+    [SerializeField] TMP_InputField weaponSearch;
 
     private void Start()
     {
@@ -46,11 +53,19 @@ public class EncyclopediaManager : MonoBehaviour
                     break;
             }
         }
+        knightAbilities = knightAbilities.OrderBy(box => box.ability.data.myName).ToList();
+        angelAbilities = angelAbilities.OrderBy(box => box.ability.data.myName).ToList();
+        wizardAbilities = wizardAbilities.OrderBy(box => box.ability.data.myName).ToList();
         SearchAbility();
 
+        FileManager.instance.listOfWeapons = FileManager.instance.listOfWeapons.OrderBy(data => data.myName).ToList();
+
+
+
+        FileManager.instance.listOfEnemies = FileManager.instance.listOfEnemies.OrderBy(data => data.myName).ToList();
     }
 
-#endregion
+    #endregion
 
 #region Ability Search
 

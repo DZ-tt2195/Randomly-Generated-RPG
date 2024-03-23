@@ -15,7 +15,7 @@ public class HoverImage : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
         background.gameObject.SetActive(false);
     }
 
-    public void NewAbility(string description)
+    public void NewDescription(string description)
     {
         textBox.text = description;
         background.gameObject.SetActive(false);

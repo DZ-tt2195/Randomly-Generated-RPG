@@ -22,16 +22,17 @@
       "Art Credit"
     ],
     [
-      "Meteor",
-      "Each time this dies, it deals a lot of damage to all enemies.",
-      "28,",
-      "",
+      "Battle Plan",
+      "This has higher Attack and Defense. It gets Stunned on every new wave.",
+      "30,",
       "",
       "",
       "",
       "AbilityOne",
       "",
       "",
+      "0.5",
+      "0.5",
       "",
       "",
       "",
@@ -40,30 +41,7 @@
       "",
       "",
       "",
-      "",
-      "Scott Murphy|Magic 2015|(Meteorite)"
-    ],
-    [
-      "Wings",
-      "While this is Airborne, it has more Attack and Speed.",
-      "",
-      "IfAirborne",
-      "",
-      "",
-      "",
-      "",
-      "",
-      "",
-      "",
-      "",
-      "",
-      "",
-      "0.3",
-      "",
-      "0.3",
-      "",
-      "",
-      "Kev Walker|Ixalan|(Cobbled Wings)"
+      "Harald Lieske|Dominion: Allies|(Battle Plan)"
     ],
     [
       "Lucky Coin",
@@ -88,17 +66,16 @@
       "Claus Stephan|Dominion: Nocturne|(Lucky Coin)"
     ],
     [
-      "Battle Plan",
-      "This has higher Attack and Defense. It gets Stunned on every new wave.",
-      "30,",
+      "Meteor",
+      "Each time this dies, it deals a lot of damage to all enemies.",
+      "28,",
+      "",
       "",
       "",
       "",
       "AbilityOne",
       "",
       "",
-      "0.5",
-      "0.5",
       "",
       "",
       "",
@@ -107,7 +84,8 @@
       "",
       "",
       "",
-      "Harald Lieske|Dominion: Allies|(Battle Plan)"
+      "",
+      "Scott Murphy|Magic 2015|(Meteorite)"
     ],
     [
       "Tent",
@@ -130,6 +108,28 @@
       "",
       "",
       "Garret DeChellis|Dominion: Allies|(Tent)"
+    ],
+    [
+      "Wings",
+      "While this is Airborne, it has more Attack and Speed.",
+      "",
+      "IfAirborne",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "0.3",
+      "",
+      "0.3",
+      "",
+      "",
+      "Kev Walker|Ixalan|(Cobbled Wings)"
     ]
   ]
 }

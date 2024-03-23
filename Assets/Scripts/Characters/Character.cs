@@ -314,7 +314,7 @@ public class Character : MonoBehaviour
     {
         if (this == null) yield break;
 
-        modifyAttack = Mathf.Clamp(modifyAttack += effect, 0.5f, 1.5f);
+        modifyAttack = Mathf.Clamp(modifyAttack += effect, 0.25f, 1.75f);
         TurnManager.instance.CreateVisual($"{(effect > 0 ? '+' : '-')}{100*Math.Abs(effect)}% ATTACK", this.transform.localPosition);
 
         if (effect < 0)
@@ -327,7 +327,7 @@ public class Character : MonoBehaviour
     {
         if (this == null) yield break;
 
-        modifyDefense = Mathf.Clamp(modifyDefense += effect, 0.5f, 1.5f);
+        modifyDefense = Mathf.Clamp(modifyDefense += effect, 0.25f, 1.75f);
         TurnManager.instance.CreateVisual($"{(effect > 0 ? '+' : '-')}{100*Math.Abs(effect)}% DEFENSE", this.transform.localPosition);
 
         if (effect < 0)
@@ -340,7 +340,7 @@ public class Character : MonoBehaviour
     {
         if (this == null) yield break;
 
-        modifySpeed = Mathf.Clamp(modifySpeed += effect, 0.5f, 1.5f);
+        modifySpeed = Mathf.Clamp(modifySpeed += effect, 0.25f, 1.75f);
         TurnManager.instance.CreateVisual($"{(effect > 0 ? '+' : '-')}{100*Math.Abs(effect)}% SPEED", this.transform.localPosition);
 
         if (effect < 0)
@@ -353,7 +353,7 @@ public class Character : MonoBehaviour
     {
         if (this == null) yield break;
 
-        modifyLuck = Mathf.Clamp(modifyLuck += effect, 0.5f, 1.5f);
+        modifyLuck = Mathf.Clamp(modifyLuck += effect, 0.25f, 1.75f);
         TurnManager.instance.CreateVisual($"{(effect > 0 ? '+' : '-')}{100*Math.Abs(effect)}% LUCK", this.transform.localPosition);
 
         if (effect < 0)
@@ -366,7 +366,7 @@ public class Character : MonoBehaviour
     {
         if (this == null) yield break;
 
-        modifyAccuracy = Mathf.Clamp(modifyAccuracy += effect, 0.5f, 1.5f);
+        modifyAccuracy = Mathf.Clamp(modifyAccuracy += effect, 0.25f, 1.75f);
         TurnManager.instance.CreateVisual($"{(effect > 0 ? '+' : '-')}{100*Math.Abs(effect)}% ACCURACY", this.transform.localPosition);
 
         if (effect < 0)
