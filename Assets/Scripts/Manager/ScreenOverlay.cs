@@ -6,7 +6,6 @@ using TMPro;
 using UnityEngine.UI;
 
 public enum CurrentScreen { None, Character, Settings, Emotion };
-
 public class ScreenOverlay : MonoBehaviour
 {
 
@@ -59,7 +58,7 @@ public class ScreenOverlay : MonoBehaviour
 
     private void Start()
     {
-        SetAnimationSpeed(PlayerPrefs.HasKey("Animation Speed") ? PlayerPrefs.GetFloat("Animation Speed") : 1f);
+        SetAnimationSpeed(PlayerPrefs.HasKey("Animation Speed") ? PlayerPrefs.GetFloat("Animation Speed") : 0.5f);
         SetUndo(!PlayerPrefs.HasKey("Confirm Choices") || PlayerPrefs.GetInt("Confirm Choices") == 1);
 
         emotionButton.onClick.AddListener(SeeEmotions);

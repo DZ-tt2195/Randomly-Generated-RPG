@@ -13,6 +13,9 @@ public class TitleScreen : MonoBehaviour
 #region Variables
 
     public static TitleScreen instance;
+    float generationTime = 0f;
+    bool _stillGenerating;
+    bool stillGenerating { get { return _stillGenerating; } set { { _stillGenerating = value; } Debug.Log(generationTime); } }
     [SerializeField] GameObject playerPrefab;
 
     [SerializeField] bool randomSeed;
@@ -45,32 +48,16 @@ public class TitleScreen : MonoBehaviour
         StartCoroutine(GenerateFiles());
 
         foreach (Toggle toggle in listOfCheats)
-        {
-            if (PlayerPrefs.HasKey(toggle.name))
-            {
-                toggle.isOn = PlayerPrefs.GetInt(toggle.name) == 1;
-            }
-            else
-            {
-                toggle.isOn = false;
-            }
-            toggle.onValueChanged.AddListener((bool isOn) => SetPref(isOn, toggle.name));
-            SetPref(toggle.isOn, toggle.name);
-        }
-
+            InitialToggle(toggle);
         foreach (Toggle toggle in listOfChallenges)
-        {
-            if (PlayerPrefs.HasKey(toggle.name))
-            {
-                toggle.isOn = PlayerPrefs.GetInt(toggle.name) == 1;
-            }
-            else
-            {
-                toggle.isOn = false;
-            }
-            toggle.onValueChanged.AddListener((bool isOn) => SetPref(isOn, toggle.name));
-            SetPref(toggle.isOn, toggle.name);
-        }
+            InitialToggle(toggle);
+    }
+
+    void InitialToggle(Toggle toggle)
+    {
+        toggle.isOn = PlayerPrefs.HasKey(toggle.name) && PlayerPrefs.GetInt(toggle.name) == 1;
+        toggle.onValueChanged.AddListener((bool isOn) => SetPref(isOn, toggle.name));
+        SetPref(toggle.isOn, toggle.name);
     }
 
     void SetPref(bool isOn, string name)
@@ -78,19 +65,27 @@ public class TitleScreen : MonoBehaviour
         PlayerPrefs.SetInt(name, (isOn) ? 1 : 0);
     }
 
+    private void Update()
+    {
+        if (stillGenerating)
+            generationTime += Time.deltaTime;
+    }
+
     IEnumerator GenerateFiles()
     {
-        GameObject loadButton = GameObject.Find("Gameplay Buttons");
-        loadButton.SetActive(false);
+        stillGenerating = true;
+        GameObject loadButtons = GameObject.Find("Gameplay Buttons");
+        loadButtons.SetActive(false);
 
-        #if UNITY_EDITOR
+        if (Application.isEditor)
+        {
             yield return FileManager.instance.DownloadFile("Player Data");
             yield return FileManager.instance.DownloadFile("Enemy Data");
             yield return FileManager.instance.DownloadFile("Bonus Enemy Data");
             yield return FileManager.instance.DownloadFile("Player Ability Data");
             yield return FileManager.instance.DownloadFile("Other Ability Data");
             yield return FileManager.instance.DownloadFile("Weapon Data");
-        #endif
+        }
 
         FileManager.instance.listOfEnemies = DataLoader.ReadCharacterData("Enemy Data");
         FileManager.instance.listOfBonusEnemies = DataLoader.ReadCharacterData("Bonus Enemy Data");
@@ -100,7 +95,10 @@ public class TitleScreen : MonoBehaviour
         FileManager.instance.listOfWeapons = FileManager.instance.listOfWeapons.Shuffle();
 
         GeneratePlayers();
-        loadButton.SetActive(true);
+
+        GameObject.Find("Loading Text").SetActive(false);
+        loadButtons.SetActive(true);
+        stillGenerating = false;
     }
 
     void GeneratePlayers()

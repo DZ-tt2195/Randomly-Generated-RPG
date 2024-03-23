@@ -58,7 +58,7 @@ public class FileManager : MonoBehaviour
 
             if (www.result == UnityWebRequest.Result.ConnectionError || www.result == UnityWebRequest.Result.ProtocolError)
             {
-                Debug.LogError($"Error: {www.error}");
+                Debug.LogError($"Download failed: {www.error}");
             }
             else
             {

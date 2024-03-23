@@ -9,7 +9,8 @@ public class LoadScene : MonoBehaviour
 {
     [Scene]
     [SerializeField] string scene;
-    [SerializeField] FileManager.GameMode mode;
+    [SerializeField] FileManager.GameMode gameMode;
+    [SerializeField] LoadSceneMode loadMode;
 
     Button button;
 
@@ -22,7 +23,7 @@ public class LoadScene : MonoBehaviour
     public void NextScene()
     {
         FileManager.instance.UnloadObjects(scene);
-        FileManager.instance.mode = mode;
-        SceneManager.LoadScene(scene);
+        FileManager.instance.mode = gameMode;
+        SceneManager.LoadScene(scene, loadMode);
     }
 }
