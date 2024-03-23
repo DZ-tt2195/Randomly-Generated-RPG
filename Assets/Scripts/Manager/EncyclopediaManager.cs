@@ -22,24 +22,22 @@ public class EncyclopediaManager : MonoBehaviour
     [SerializeField] TMP_Dropdown typeDropdown;
 
     [Foldout("Weapon Search", true)]
-    List<HoverImage> weaponBoxes = new();
-    [SerializeField] HoverImage weaponBoxPrefab;
+    List<WeaponBox> listOfWeaponBoxes = new();
+    [SerializeField] WeaponBox weaponBoxPrefab;
     [SerializeField] Transform storeWeaponBoxes;
     [SerializeField] TMP_InputField weaponSearch;
 
     private void Start()
     {
-        abilitySearch.onValueChanged.AddListener(ChangeInput);
-        characterDropdown.onValueChanged.AddListener(ChangeDropdown);
-        typeDropdown.onValueChanged.AddListener(ChangeDropdown);
-
+        abilitySearch.onValueChanged.AddListener(ChangeAbilityInput);
+        characterDropdown.onValueChanged.AddListener(ChangeAbilityDropdown);
+        typeDropdown.onValueChanged.AddListener(ChangeAbilityDropdown);
         foreach (AbilityData data in FileManager.instance.listOfPlayerAbilities)
         {
             Ability nextAbility = this.gameObject.AddComponent<Ability>();
-            nextAbility.SetupAbility(data, false, false);
+            nextAbility.SetupAbility(data, false, true);
             AbilityBox nextBox = Instantiate(abilityBoxPrefab, null);
             nextBox.ReceiveAbility(true, nextAbility);
-
             switch (data.user)
             {
                 case "Knight":
@@ -58,26 +56,24 @@ public class EncyclopediaManager : MonoBehaviour
         wizardAbilities = wizardAbilities.OrderBy(box => box.ability.data.myName).ToList();
         SearchAbility();
 
+        weaponSearch.onValueChanged.AddListener(ChangeWeaponInput);
         FileManager.instance.listOfWeapons = FileManager.instance.listOfWeapons.OrderBy(data => data.myName).ToList();
-
-
+        foreach (WeaponData data in FileManager.instance.listOfWeapons)
+        {
+            Weapon nextWeapon = this.gameObject.AddComponent<Weapon>();
+            nextWeapon.SetupWeapon(data);
+            WeaponBox nextBox = Instantiate(weaponBoxPrefab, null);
+            nextBox.ReceiveWeapon(nextWeapon);
+            listOfWeaponBoxes.Add(nextBox);
+        }
+        SearchWeapon();
 
         FileManager.instance.listOfEnemies = FileManager.instance.listOfEnemies.OrderBy(data => data.myName).ToList();
     }
 
     #endregion
 
-#region Ability Search
-
-    void ChangeInput(string text)
-    {
-        SearchAbility();
-    }
-
-    void ChangeDropdown(int n)
-    {
-        SearchAbility();
-    }
+#region Helper Methods
 
     bool CompareCharacters(PlayerSearch setting, PlayerSearch current)
     {
@@ -86,12 +82,11 @@ public class EncyclopediaManager : MonoBehaviour
         return setting == current;
     }
 
-    bool CompareStrings(string searchBox, AbilityData data)
+    bool CompareStrings(string searchBox, string comparison)
     {
-        if (searchBox == "")
+        if (searchBox.IsNullOrEmpty())
             return true;
-        return data.myName.IndexOf(searchBox, StringComparison.OrdinalIgnoreCase) >= 0
-            || data.description.IndexOf(searchBox, StringComparison.OrdinalIgnoreCase) >= 0;
+        return (comparison.IndexOf(searchBox, StringComparison.OrdinalIgnoreCase) >= 0);
     }
 
     bool CompareTypes(AbilityType setting, AbilityData data)
@@ -99,6 +94,20 @@ public class EncyclopediaManager : MonoBehaviour
         if (setting == AbilityType.None)
             return true;
         return (data.typeOne == setting || data.typeTwo == setting);
+    }
+
+    #endregion
+
+#region Ability Search
+
+    void ChangeAbilityInput(string text)
+    {
+        SearchAbility();
+    }
+
+    void ChangeAbilityDropdown(int n)
+    {
+        SearchAbility();
     }
 
     void SearchAbility()
@@ -145,24 +154,50 @@ public class EncyclopediaManager : MonoBehaviour
 
         foreach (AbilityBox box in knightAbilities)
         {
-            if (CompareCharacters(player, PlayerSearch.Knight) && CompareStrings(abilitySearch.text, box.ability.data) && CompareTypes(type, box.ability.data))
+            if (CompareCharacters(player, PlayerSearch.Knight)
+                && CompareStrings(abilitySearch.text, box.ability.data.myName) || CompareStrings(abilitySearch.text, box.ability.editedDescription)
+                && CompareTypes(type, box.ability.data))
                 box.transform.SetParent(storeAbilityBoxes);
             else
                 box.transform.SetParent(null);
         }
         foreach (AbilityBox box in angelAbilities)
         {
-            if (CompareCharacters(player, PlayerSearch.Angel) && CompareStrings(abilitySearch.text, box.ability.data) && CompareTypes(type, box.ability.data))
+            if (CompareCharacters(player, PlayerSearch.Angel)
+                && CompareStrings(abilitySearch.text, box.ability.data.myName) || CompareStrings(abilitySearch.text, box.ability.editedDescription)
+                && CompareTypes(type, box.ability.data))
                 box.transform.SetParent(storeAbilityBoxes);
             else
                 box.transform.SetParent(null);
         }
         foreach (AbilityBox box in wizardAbilities)
         {
-            if (CompareCharacters(player, PlayerSearch.Wizard) && CompareStrings(abilitySearch.text, box.ability.data) && CompareTypes(type, box.ability.data))
+            if (CompareCharacters(player, PlayerSearch.Wizard)
+                && CompareStrings(abilitySearch.text, box.ability.data.myName) || CompareStrings(abilitySearch.text, box.ability.editedDescription)
+                && CompareTypes(type, box.ability.data))
                 box.transform.SetParent(storeAbilityBoxes);
             else
                 box.transform.SetParent(null);
+        }
+    }
+
+    #endregion
+
+#region Weapon Search
+
+    void ChangeWeaponInput(string text)
+    {
+        SearchWeapon();
+    }
+
+    void SearchWeapon()
+    {
+        foreach (WeaponBox nextBox in listOfWeaponBoxes)
+        {
+            if (CompareStrings(weaponSearch.text, nextBox.weapon.data.myName) || CompareStrings(weaponSearch.text, nextBox.weapon.editedDescription))
+                nextBox.transform.SetParent(storeWeaponBoxes);
+            else
+                nextBox.transform.SetParent(null);
         }
     }
 

@@ -102,7 +102,7 @@ public class ScreenOverlay : MonoBehaviour
             weaponStuff.gameObject.SetActive(true);
             weaponName.text = character.weapon.data.myName;
             weaponImage.sprite = character.weaponImage.sprite;
-            weaponDescription.text = character.weapon.data.description;
+            weaponDescription.text = character.weapon.editedDescription;
             weaponArtCredit.text = character.weapon.data.artCredit;
         }
 

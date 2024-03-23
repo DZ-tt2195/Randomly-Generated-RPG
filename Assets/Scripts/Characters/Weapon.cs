@@ -10,14 +10,16 @@ public class Weapon : MonoBehaviour
 
     [ReadOnly] public WeaponData data;
     [ReadOnly] public Character self;
-
+    [ReadOnly] public Sprite sprite;
+    [ReadOnly] public string editedDescription;
     List<Ability> listOfAbilities = new();
 
     public void SetupWeapon(WeaponData data)
     {
         self = GetComponent<Character>();
         this.data = data;
-        data.description = KeywordTooltip.instance.EditText(data.description);
+        sprite = Resources.Load<Sprite>($"Weapons/{data.myName}");
+        editedDescription = KeywordTooltip.instance.EditText(data.description);
 
         string[] divideSkillsIntoNumbers = data.skillNumbers.Split(',');
         foreach (string skill in divideSkillsIntoNumbers)

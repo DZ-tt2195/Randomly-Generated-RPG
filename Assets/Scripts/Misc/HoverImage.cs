@@ -8,7 +8,7 @@ using UnityEngine.EventSystems;
 public class HoverImage : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     [SerializeField] Image background;
-    [SerializeField] TMP_Text textBox;
+    public TMP_Text description;
 
     private void Start()
     {
@@ -17,7 +17,7 @@ public class HoverImage : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
 
     public void NewDescription(string description)
     {
-        textBox.text = description;
+        this.description.text = description;
         background.gameObject.SetActive(false);
     }
 

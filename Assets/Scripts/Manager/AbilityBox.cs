@@ -21,7 +21,7 @@ public class AbilityBox : MonoBehaviour
         this.ability = ability;
         try { button.interactable = !noOverlay; } catch (NullReferenceException) { /*do nothing*/ };
         textName.text = ability.data.myName;
-        hover.NewDescription(ability.data.description);
+        hover.NewDescription(ability.editedDescription);
 
         if (ability.data.baseCooldown > 0)
         {

@@ -13,7 +13,6 @@ public class TitleScreen : MonoBehaviour
 #region Variables
 
     public static TitleScreen instance;
-    [ReadOnly] public Transform canvas;
     [SerializeField] GameObject playerPrefab;
 
     [SerializeField] bool randomSeed;
@@ -106,6 +105,10 @@ public class TitleScreen : MonoBehaviour
 
     void GeneratePlayers()
     {
+        foreach (Character player in FileManager.instance.listOfPlayers)
+            Destroy(player.gameObject);
+        FileManager.instance.listOfPlayers.Clear();
+
         List<CharacterData> playerData = DataLoader.ReadCharacterData("Player Data");
         for (int i = 0; i < playerData.Count; i++)
         {
@@ -155,10 +158,6 @@ public class TitleScreen : MonoBehaviour
 
             nextCharacter.SetupCharacter(CharacterType.Player, playerData[i], characterAbilities, (Emotion)UnityEngine.Random.Range(1,5), 1f, randomWeapon);
             FileManager.instance.listOfPlayers.Add(nextCharacter);
-
-            nextCharacter.transform.SetParent(FileManager.instance.canvas);
-            nextCharacter.transform.localPosition = new Vector3(-1050 + (350 * i), -550, 0);
-            nextCharacter.transform.SetAsFirstSibling();
         }
     }
 

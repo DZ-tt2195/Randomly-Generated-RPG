@@ -14,6 +14,7 @@ public class Ability : MonoBehaviour
     [ReadOnly] public AbilityData data;
     [ReadOnly] public HashSet<TeamTarget> singleTarget = new() { TeamTarget.AnyOne, TeamTarget.OnePlayer, TeamTarget.OtherPlayer, TeamTarget.OneEnemy, TeamTarget.OtherEnemy };
     [ReadOnly] public Character self;
+    [ReadOnly] public string editedDescription;
 
     [ReadOnly] public int currentCooldown;
     [ReadOnly] public List<Character> listOfTargets;
@@ -24,7 +25,7 @@ public class Ability : MonoBehaviour
     public void SetupAbility(AbilityData data, bool startWithCooldown, bool editDescription)
     {
         this.data = data;
-        if (editDescription) data.description = KeywordTooltip.instance.EditText(data.description);
+        if (editDescription) editedDescription = KeywordTooltip.instance.EditText(data.description);
         currentCooldown = (startWithCooldown) ? data.baseCooldown : 0;
         self = GetComponent<Character>();
     }
