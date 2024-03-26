@@ -159,7 +159,7 @@ public class TutorialManager : MonoBehaviour
                 currentCharacter = listOfPlayers[1]; //wait for angel's next turn
                 currentStep = 8;
 
-                while (TurnManager.instance.enemies.Count>0)
+                while (TurnManager.instance.listOfEnemies.Count>0)
                     yield return TurnManager.instance.NewRound();
 
                 currentStep = 9;
@@ -216,7 +216,7 @@ public class TutorialManager : MonoBehaviour
                 currentCharacter = listOfPlayers[2]; //wait for wizard's next turn
                 currentStep = 12;
 
-                while (TurnManager.instance.enemies.Count > 0)
+                while (TurnManager.instance.listOfEnemies.Count > 0)
                     yield return TurnManager.instance.NewRound();
 
                 currentStep = 15;

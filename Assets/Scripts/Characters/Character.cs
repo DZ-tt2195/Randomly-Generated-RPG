@@ -143,9 +143,11 @@ public class Character : MonoBehaviour
 
     private void FixedUpdate()
     {
-        this.border.SetAlpha(borderColor);
         if (FileManager.instance.mode != FileManager.GameMode.Other)
+        {
+            this.border.SetAlpha(borderColor);
             ScreenPosition();
+        }
     }
 
     void ScreenPosition()
@@ -287,12 +289,12 @@ public class Character : MonoBehaviour
         TurnManager.instance.speedQueue.Remove(this);
         if (this.myType == CharacterType.Player)
         {
-            TurnManager.instance.players.Remove(this);
+            TurnManager.instance.listOfPlayers.Remove(this);
             myImage.color = Color.gray;
         }
         else
         {
-            TurnManager.instance.enemies.Remove(this);
+            TurnManager.instance.listOfEnemies.Remove(this);
             Destroy(this.gameObject);
         }
     }
@@ -302,7 +304,7 @@ public class Character : MonoBehaviour
         if (this == null || this.CalculateHealth() > 0) yield break;
 
         Log.instance.AddText($"{(this.name)} comes back to life.", logged);
-        TurnManager.instance.players.Add(this);
+        TurnManager.instance.listOfPlayers.Add(this);
 
         yield return GainHealth(health, logged);
         yield return ChangePosition(data.startingPosition, -1);

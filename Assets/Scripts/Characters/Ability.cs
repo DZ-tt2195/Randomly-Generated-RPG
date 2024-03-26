@@ -260,31 +260,31 @@ public class Ability : MonoBehaviour
                 listOfTargets.Add(this.self);
                 break;
             case TeamTarget.All:
-                foreach (Character foe in TurnManager.instance.enemies) { listOfTargets.Add(foe); }
-                foreach (Character friend in TurnManager.instance.players) { listOfTargets.Add(friend); }
+                foreach (Character foe in TurnManager.instance.listOfEnemies) { listOfTargets.Add(foe); }
+                foreach (Character friend in TurnManager.instance.listOfPlayers) { listOfTargets.Add(friend); }
                 break;
             case TeamTarget.AnyOne:
-                foreach (Character foe in TurnManager.instance.enemies) { listOfTargets.Add(foe); }
-                foreach (Character friend in TurnManager.instance.players) { listOfTargets.Add(friend); }
+                foreach (Character foe in TurnManager.instance.listOfEnemies) { listOfTargets.Add(foe); }
+                foreach (Character friend in TurnManager.instance.listOfPlayers) { listOfTargets.Add(friend); }
                 break;
             case TeamTarget.OnePlayer:
-                foreach (Character friend in TurnManager.instance.players) { listOfTargets.Add(friend); }
+                foreach (Character friend in TurnManager.instance.listOfPlayers) { listOfTargets.Add(friend); }
                 break;
             case TeamTarget.OtherPlayer:
-                foreach (Character friend in TurnManager.instance.players) { if (friend != this.self) listOfTargets.Add(friend); }
+                foreach (Character friend in TurnManager.instance.listOfPlayers) { if (friend != this.self) listOfTargets.Add(friend); }
                 break;
             case TeamTarget.AllPlayers:
-                foreach (Character friend in TurnManager.instance.players) { listOfTargets.Add(friend); }
+                foreach (Character friend in TurnManager.instance.listOfPlayers) { listOfTargets.Add(friend); }
                 break;
             case TeamTarget.OneEnemy:
-                foreach (Character foe in TurnManager.instance.enemies) { listOfTargets.Add(foe); }
+                foreach (Character foe in TurnManager.instance.listOfEnemies) { listOfTargets.Add(foe); }
                 break;
             case TeamTarget.OtherEnemy:
-                foreach (Character foe in TurnManager.instance.enemies) { if (foe != this.self) listOfTargets.Add(foe); }
+                foreach (Character foe in TurnManager.instance.listOfEnemies) { if (foe != this.self) listOfTargets.Add(foe); }
                 listOfTargets.Remove(this.self);
                 break;
             case TeamTarget.AllEnemies:
-                foreach (Character foe in TurnManager.instance.enemies) { listOfTargets.Add(foe); }
+                foreach (Character foe in TurnManager.instance.listOfEnemies) { listOfTargets.Add(foe); }
                 break;
         }
         return listOfTargets;
@@ -326,6 +326,14 @@ public class Ability : MonoBehaviour
                         damageDealt = CalculateDamage(self, target, logged);
                         yield return target.TakeDamage(damageDealt, logged);
                         if (target == null || target.CalculateHealth() <= 0) killed = true;
+                        break;
+
+                    case "PASSTURN":
+                        yield return target.MyTurn(logged);
+                        break;
+
+                    case "SELFCOPY":
+                        TurnManager.instance.CreateEnemy(self.data, (Emotion)UnityEngine.Random.Range(1, 5), logged);
                         break;
 
                     case "SELFHEAL":

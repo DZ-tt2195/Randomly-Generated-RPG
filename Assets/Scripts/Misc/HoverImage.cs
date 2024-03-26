@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
@@ -8,7 +6,7 @@ using UnityEngine.EventSystems;
 public class HoverImage : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     [SerializeField] Image background;
-    public TMP_Text description;
+    [SerializeField] TMP_Text descriptionTextBox;
 
     private void Start()
     {
@@ -17,7 +15,7 @@ public class HoverImage : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
 
     public void NewDescription(string description)
     {
-        this.description.text = description;
+        this.descriptionTextBox.text = description;
         background.gameObject.SetActive(false);
     }
 

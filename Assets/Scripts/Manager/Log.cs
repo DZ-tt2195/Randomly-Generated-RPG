@@ -62,12 +62,12 @@ public class Log : MonoBehaviour
             newText.text += "   ";
         newText.text += string.IsNullOrEmpty(logText) ? "" : char.ToUpper(logText[0]) + logText[1..];
 
-        foreach (Character teammate in TurnManager.instance.players)
+        foreach (Character teammate in TurnManager.instance.listOfPlayers)
         {
             string pattern = $@"\b{Regex.Escape(teammate.name)}\b";
             newText.text = Regex.Replace(newText.text, pattern, $"<color=#00FF00>{teammate.name}</color>");
         }
-        foreach (Character enemy in TurnManager.instance.enemies)
+        foreach (Character enemy in TurnManager.instance.listOfEnemies)
         {
             string pattern = $@"\b{Regex.Escape(enemy.name)}\b";
             newText.text = Regex.Replace(newText.text, pattern, $"<color=#FF0000>{enemy.name}</color>");

@@ -40,8 +40,8 @@ public class TurnManager : MonoBehaviour
     List<CharacterPositions> enemyPositions = new();
 
     [Foldout("Character lists", true)]
-    [ReadOnly] public List<Character> players = new();
-    [ReadOnly] public List<Character> enemies = new();
+    [ReadOnly] public List<Character> listOfPlayers = new();
+    [ReadOnly] public List<Character> listOfEnemies = new();
     [ReadOnly] public List<Character> speedQueue = new List<Character>();
 
     [Foldout("Info tracking", true)]
@@ -117,7 +117,7 @@ public class TurnManager : MonoBehaviour
                 for (int i = 0; i < currentWave; i++)
                     CreateEnemy(
                         FileManager.instance.listOfEnemies[UnityEngine.Random.Range(0, FileManager.instance.listOfEnemies.Count)],
-                        (Emotion)UnityEngine.Random.Range(1, 5), 0, PlayerPrefs.GetInt("Scaling Enemies") == 1 ? waveMultiplier : 1f);
+                        (Emotion)UnityEngine.Random.Range(1, 5), 0);
 
                 speedQueue = AllCharacters();
                 while (speedQueue.Count > 0)
@@ -166,23 +166,6 @@ public class TurnManager : MonoBehaviour
                 listOfSpeedImages[i].gameObject.SetActive(false);
             }
         }
-        /*
-        for (int i = 0; i < listOfSpeed.Count; i++)
-        {
-            try
-            {
-                listOfSpeed[i].text = (i == 0) ? $"Current: {speedQueue[i].name}" : $"{i}: {speedQueue[i].name}";
-            }
-            catch (ArgumentOutOfRangeException)
-            {
-                listOfSpeed[i].text = "";
-            }
-            catch (MissingReferenceException)
-            {
-                listOfSpeed[i].text = "";
-            }
-        }
-        */
     }
 
     public IEnumerator NewRound()
@@ -217,7 +200,7 @@ public class TurnManager : MonoBehaviour
                 GameFinished("You lost.", $"Survived {currentWave - 1} {(currentWave - 1 == 1 ? "wave" : "waves")}.");
                 yield break;
             }
-            else if (enemies.Count == 0)
+            else if (listOfEnemies.Count == 0)
             {
                 if (FileManager.instance.mode == FileManager.GameMode.Main)
                 {
@@ -234,7 +217,7 @@ public class TurnManager : MonoBehaviour
 
     bool CheckLost()
     {
-        foreach (Character character in players)
+        foreach (Character character in listOfPlayers)
         {
             if (character.CalculateHealth() > 0)
                 return false;
@@ -279,50 +262,53 @@ public class TurnManager : MonoBehaviour
             borderDecrease = !borderDecrease;
     }
 
-    public void CreateEnemy(CharacterData dataFile, Emotion startingEmotion, int logged, float multiplier = 1f)
+    public void CreateEnemy(CharacterData dataFile, Emotion startingEmotion, int logged)
     {
-        EnemyCharacter nextCharacter = Instantiate(characterPrefab).AddComponent<EnemyCharacter>();
-        nextCharacter.transform.SetParent(FileManager.instance.canvas);
-        nextCharacter.transform.SetAsFirstSibling();
-        enemies.Add(nextCharacter);
-
-        foreach (CharacterPositions position in enemyPositions)
+        if (listOfEnemies.Count < 5)
         {
-            if (position.character == null)
+            EnemyCharacter nextCharacter = Instantiate(characterPrefab).AddComponent<EnemyCharacter>();
+            nextCharacter.transform.SetParent(FileManager.instance.canvas);
+            nextCharacter.transform.SetAsFirstSibling();
+            listOfEnemies.Add(nextCharacter);
+
+            foreach (CharacterPositions position in enemyPositions)
             {
-                nextCharacter.transform.localPosition = position.position;
-                position.character = nextCharacter;
-                break;
+                if (position.character == null)
+                {
+                    nextCharacter.transform.localPosition = position.position;
+                    position.character = nextCharacter;
+                    break;
+                }
             }
-        }
 
-        nextCharacter.name = dataFile.myName;
-        Log.instance.AddText($"{Log.Article(nextCharacter.name)} entered the fight.", logged);
+            nextCharacter.name = dataFile.myName;
+            Log.instance.AddText($"{Log.Article(nextCharacter.name)} entered the fight.", logged);
 
-        List<AbilityData> characterAbilities = new();
-        string[] divideSkillsIntoNumbers = dataFile.skillNumbers.Split(',');
-        for (int j = 0; j < divideSkillsIntoNumbers.Length; j++)
-        {
-            try
+            List<AbilityData> characterAbilities = new();
+            string[] divideSkillsIntoNumbers = dataFile.skillNumbers.Split(',');
+            for (int j = 0; j < divideSkillsIntoNumbers.Length; j++)
             {
-                string skillNumber = divideSkillsIntoNumbers[j];
-                skillNumber.Trim();
-                characterAbilities.Add(FileManager.instance.listOfOtherAbilities[int.Parse(skillNumber)]);
+                try
+                {
+                    string skillNumber = divideSkillsIntoNumbers[j];
+                    skillNumber.Trim();
+                    characterAbilities.Add(FileManager.instance.listOfOtherAbilities[int.Parse(skillNumber)]);
+                }
+                catch (FormatException) { continue; }
+                catch (ArgumentOutOfRangeException) { break; }
             }
-            catch (FormatException) { continue; }
-            catch (ArgumentOutOfRangeException) { break; }
+
+            nextCharacter.SetupCharacter(CharacterType.Enemy, dataFile, characterAbilities, startingEmotion, PlayerPrefs.GetInt("Scaling Enemies") == 1 ? waveMultiplier : 1f, null);
+            SaveManager.instance.SaveEnemy(dataFile);
+
+            if (FileManager.instance.mode == FileManager.GameMode.Main && PlayerPrefs.GetInt("Enemies Stunned") == 1)
+                StartCoroutine(nextCharacter.Stun(1, logged + 1));
         }
-
-        nextCharacter.SetupCharacter(CharacterType.Enemy, dataFile, characterAbilities, startingEmotion, multiplier, null);
-        SaveManager.instance.SaveEnemy(dataFile);
-
-        if (FileManager.instance.mode == FileManager.GameMode.Main && PlayerPrefs.GetInt("Enemies Stunned") == 1)
-            StartCoroutine(nextCharacter.Stun(1, logged + 1));
     }
 
     public void AddPlayer(Character character)
     {
-        players.Add(character);
+        listOfPlayers.Add(character);
         character.transform.SetParent(FileManager.instance.canvas);
         character.transform.SetAsFirstSibling();
 
@@ -344,12 +330,12 @@ public class TurnManager : MonoBehaviour
 
     public void DisableCharacterButtons()
     {
-        foreach (Character character in players)
+        foreach (Character character in listOfPlayers)
         {
             character.myButton.interactable = false;
             character.border.gameObject.SetActive(false);
         }
-        foreach (Character character in enemies)
+        foreach (Character character in listOfEnemies)
         {
             character.myButton.interactable = false;
             character.border.gameObject.SetActive(false);
@@ -359,8 +345,8 @@ public class TurnManager : MonoBehaviour
     public List<Character> AllCharacters()
     {
         List<Character> allTargets = new List<Character>();
-        allTargets.AddRange(players);
-        allTargets.AddRange(enemies);
+        allTargets.AddRange(listOfPlayers);
+        allTargets.AddRange(listOfEnemies);
         return allTargets;
     }
 

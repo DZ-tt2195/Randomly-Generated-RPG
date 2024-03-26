@@ -502,7 +502,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   background: {fileID: 7514611408647289619}
-  description: {fileID: 8533023170752993814}
+  descriptionTextBox: {fileID: 8533023170752993814}
 --- !u!114 &429049134224692069
 MonoBehaviour:
   m_ObjectHideFlags: 0

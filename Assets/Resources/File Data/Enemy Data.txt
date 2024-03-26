@@ -15,7 +15,7 @@
     ],
     [
       "Archer",
-      "Shoots down Airborne Teammates with a high chance of critical hits.",
+      "Shoots down Airborne Players with a high chance of critical hits.",
       "70",
       "17",
       "14",
@@ -29,7 +29,7 @@
     ],
     [
       "Bat",
-      "Drains health from Grounded Teammates.",
+      "Drains health from Grounded Players.",
       "80",
       "15",
       "12",
@@ -73,7 +73,7 @@
       "Kitty",
       "Heals other Enemies and makes them Happy. Switches between Airborne and Grounded.",
       "70",
-      "16",
+      "15",
       "12",
       "55",
       "0",
@@ -107,9 +107,23 @@
       "0.2",
       "0.85",
       "GROUNDED",
-      "24,25,26,27,",
+      "26,27,28,29,",
       "Effectiveness",
       "Slawomir Maniak|Eldritch Moon|(Kessig Prowler)"
+    ],
+    [
+      "Rats",
+      "Defensive enemy that makes copies of itself.",
+      "50",
+      "15",
+      "15",
+      "50",
+      "0",
+      "0.8",
+      "GROUNDED",
+      "24,25,",
+      "",
+      "Ian Kirkpatrick|Dominion: Dark Ages|Rats"
     ]
   ]
 }

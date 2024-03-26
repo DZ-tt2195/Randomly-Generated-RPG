@@ -24,7 +24,7 @@
     [
       "Battle Plan",
       "This has higher Attack and Defense. It gets Stunned on every new wave.",
-      "30,",
+      "32,",
       "",
       "",
       "",
@@ -46,7 +46,7 @@
     [
       "Lucky Coin",
       "If this is dead, it revives itself on a new wave.",
-      "29,",
+      "31,",
       "",
       "",
       "",
@@ -68,7 +68,7 @@
     [
       "Meteor",
       "Each time this dies, it deals a lot of damage to all enemies.",
-      "28,",
+      "30,",
       "",
       "",
       "",
@@ -89,8 +89,8 @@
     ],
     [
       "Tent",
-      "When this starts their turn, if it has full health, its stats decrease; otherwise it heals.",
-      "31,32,",
+      "When this starts their turn, if it has full health, all its stats decrease; otherwise it heals.",
+      "33,34,",
       "",
       "AbilityOne/AbilityTwo",
       "",

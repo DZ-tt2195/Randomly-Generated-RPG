@@ -29,8 +29,14 @@ public class EncyclopediaManager : MonoBehaviour
     [Foldout("Weapon Search", true)]
     List<WeaponBox> listOfWeaponBoxes = new();
     [SerializeField] WeaponBox weaponBoxPrefab;
-    [SerializeField] Transform storeWeaponBoxes;
+    [SerializeField] RectTransform storeWeaponBoxes;
     [SerializeField] TMP_InputField weaponInput;
+
+    [Foldout("Enemy Search", true)]
+    List<Character> listOfEnemyBoxes = new();
+    [SerializeField] GameObject characterPrefab;
+    [SerializeField] RectTransform storeEnemyBoxes;
+    [SerializeField] TMP_InputField enemyInput;
 
     void ChangeMode(int n)
     {
@@ -55,8 +61,10 @@ public class EncyclopediaManager : MonoBehaviour
         {
             Ability nextAbility = this.gameObject.AddComponent<Ability>();
             nextAbility.SetupAbility(data, false);
+
             AbilityBox nextBox = Instantiate(abilityBoxPrefab, null);
             nextBox.ReceiveAbility(true, nextAbility);
+
             switch (data.user)
             {
                 case "Knight":
@@ -81,16 +89,41 @@ public class EncyclopediaManager : MonoBehaviour
         {
             Weapon nextWeapon = this.gameObject.AddComponent<Weapon>();
             nextWeapon.SetupWeapon(data);
+
             WeaponBox nextBox = Instantiate(weaponBoxPrefab, null);
-            nextBox.ReceiveWeapon(nextWeapon);
             listOfWeaponBoxes.Add(nextBox);
+            nextBox.ReceiveWeapon(nextWeapon);
         }
         SearchWeapon();
 
         FileManager.instance.listOfEnemies = FileManager.instance.listOfEnemies.OrderBy(data => data.myName).ToList();
+        enemyInput.onValueChanged.AddListener(ChangeEnemyInput);
+        foreach (CharacterData data in FileManager.instance.listOfEnemies)
+        {
+            Character nextEnemy = Instantiate(characterPrefab).AddComponent<Character>();
+            List<AbilityData> characterAbilities = new();
+            string[] divideSkillsIntoNumbers = data.skillNumbers.Split(',');
+            for (int j = 0; j < divideSkillsIntoNumbers.Length; j++)
+            {
+                try
+                {
+                    string skillNumber = divideSkillsIntoNumbers[j];
+                    skillNumber.Trim();
+                    characterAbilities.Add(FileManager.instance.listOfOtherAbilities[int.Parse(skillNumber)]);
+                }
+                catch (FormatException) { continue; }
+                catch (ArgumentOutOfRangeException) { break; }
+            }
+
+            nextEnemy.SetupCharacter(CharacterType.Enemy, data, characterAbilities, Emotion.Neutral);
+            listOfEnemyBoxes.Add(nextEnemy);
+            foreach (Transform child in nextEnemy.transform)
+                Destroy(child.gameObject);
+        }
+        SearchEnemy();
     }
 
-    #endregion
+#endregion
 
 #region Helper Methods
 
@@ -198,6 +231,8 @@ public class EncyclopediaManager : MonoBehaviour
             else
                 box.transform.SetParent(null);
         }
+
+        storeAbilityBoxes.sizeDelta = new Vector3(2560, Math.Max(875, 175 * (1+(storeAbilityBoxes.childCount / 6))));
     }
 
     #endregion
@@ -218,8 +253,29 @@ public class EncyclopediaManager : MonoBehaviour
             else
                 nextBox.transform.SetParent(null);
         }
+        storeWeaponBoxes.sizeDelta = new Vector3(2560, Math.Max(875, 175 * (1 + (storeWeaponBoxes.childCount / 6))));
     }
 
-#endregion
+    #endregion
 
+#region Enemy Search
+
+    void ChangeEnemyInput(string text)
+    {
+        SearchEnemy();
+    }
+
+    void SearchEnemy()
+    {
+        foreach (Character nextEnemy in listOfEnemyBoxes)
+        {
+            if (CompareStrings(enemyInput.text, nextEnemy.data.myName) || CompareStrings(enemyInput.text, nextEnemy.data.description))
+                nextEnemy.transform.SetParent(storeEnemyBoxes);
+            else
+                nextEnemy.transform.SetParent(null);
+        }
+        storeEnemyBoxes.sizeDelta = new Vector3(2560, Math.Max(875, 175 * (1 + (storeEnemyBoxes.childCount / 6))));
+    }
+
+    #endregion
 }
