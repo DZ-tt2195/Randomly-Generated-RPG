@@ -4,7 +4,7 @@ using UnityEngine;
 using System;
 using MyBox;
 
-[System.Serializable]
+[Serializable]
 public class WeaponData
 {
     public string myName;
@@ -29,7 +29,7 @@ public class WeaponData
     public string artCredit;
 }
 
-[System.Serializable]
+[Serializable]
 public class CharacterData
 {
     public string myName;
@@ -46,7 +46,7 @@ public class CharacterData
     public string artCredit;
 }
 
-[System.Serializable]
+[Serializable]
 public class AbilityData
 {
     public string user;

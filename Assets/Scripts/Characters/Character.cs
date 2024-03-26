@@ -134,7 +134,7 @@ public class Character : MonoBehaviour
     {
         Ability newAbility = this.gameObject.AddComponent<Ability>();
         listOfAbilities.Add(newAbility);
-        newAbility.SetupAbility(ability, startWithCooldown, false);
+        newAbility.SetupAbility(ability, startWithCooldown);
     }
 
 #endregion
@@ -144,7 +144,8 @@ public class Character : MonoBehaviour
     private void FixedUpdate()
     {
         this.border.SetAlpha(borderColor);
-        ScreenPosition();
+        if (FileManager.instance.mode != FileManager.GameMode.Other)
+            ScreenPosition();
     }
 
     void ScreenPosition()

@@ -17,7 +17,7 @@ public class WeaponBox : MonoBehaviour
     { 
         this.weapon = weapon;
         textName.text = weapon.data.myName;
-        hover.NewDescription(weapon.editedDescription);
         image.sprite = weapon.sprite;
+        hover.NewDescription(weapon.editedDescription);
     }
 }

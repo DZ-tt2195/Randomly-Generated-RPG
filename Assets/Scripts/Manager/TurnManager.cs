@@ -101,7 +101,11 @@ public class TurnManager : MonoBehaviour
         }
         else
         {
-            Log.instance.AddText($"WAVE {currentWave} / 5");
+            if (FileManager.instance.mode == FileManager.GameMode.Main)
+                Log.instance.AddText($"WAVE {currentWave} / 5");
+            else if (FileManager.instance.mode == FileManager.GameMode.Tutorial)
+                Log.instance.AddText($"WAVE {currentWave} / 3");
+
             if (currentWave > 1 && FileManager.instance.mode == FileManager.GameMode.Main && PlayerPrefs.GetInt("Scaling Enemies") == 1)
             {
                 Log.instance.AddText($"Enemies are now {100 * (waveMultiplier - 1):F0}% stronger.");

@@ -22,10 +22,10 @@ public class Ability : MonoBehaviour
     [ReadOnly] public int damageDealt;
     [ReadOnly] public bool killed;
 
-    public void SetupAbility(AbilityData data, bool startWithCooldown, bool editDescription)
+    public void SetupAbility(AbilityData data, bool startWithCooldown)
     {
         this.data = data;
-        if (editDescription) editedDescription = KeywordTooltip.instance.EditText(data.description);
+        editedDescription = KeywordTooltip.instance.EditText(data.description);
         currentCooldown = (startWithCooldown) ? data.baseCooldown : 0;
         self = GetComponent<Character>();
     }

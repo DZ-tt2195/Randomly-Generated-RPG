@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using TMPro;
 using MyBox;
 using System;
+using UnityEngine.EventSystems;
 
 public class AbilityBox : MonoBehaviour
 {
@@ -16,10 +17,10 @@ public class AbilityBox : MonoBehaviour
     [SerializeField] TMP_Text cantUse;
     [SerializeField] HoverImage hover;
 
-    public void ReceiveAbility(bool noOverlay, Ability ability)
+    public void ReceiveAbility(bool disableOverlay, Ability ability)
     {
         this.ability = ability;
-        try { button.interactable = !noOverlay; } catch (NullReferenceException) { /*do nothing*/ };
+        try { button.interactable = disableOverlay; } catch (NullReferenceException) { /*do nothing*/ };
         textName.text = ability.data.myName;
         hover.NewDescription(ability.editedDescription);
 
@@ -33,12 +34,12 @@ public class AbilityBox : MonoBehaviour
             textCountdown.transform.parent.gameObject.SetActive(false);
         }
 
-        if (!noOverlay && ability.currentCooldown > 0)
+        if (!disableOverlay && ability.currentCooldown > 0)
         {
             cantUse.transform.parent.gameObject.SetActive(true);
             cantUse.text = $"{ability.currentCooldown}";
         }
-        else if (!noOverlay && button != null && !button.interactable)
+        else if (!disableOverlay && button != null && !button.interactable)
         {
             cantUse.transform.parent.gameObject.SetActive(true);
             cantUse.text = "X";

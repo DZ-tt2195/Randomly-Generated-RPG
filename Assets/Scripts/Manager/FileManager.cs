@@ -13,8 +13,8 @@ public class FileManager : MonoBehaviour
 #region Variables
 
     public static FileManager instance;
-    public enum GameMode { Main, Tutorial };
-    [ReadOnly] public GameMode mode;
+    public enum GameMode { Main, Tutorial, Other };
+    [ReadOnly] public GameMode mode = GameMode.Other;
 
     [ReadOnly] public Transform canvas;
     [SerializeField] bool downloadOn;

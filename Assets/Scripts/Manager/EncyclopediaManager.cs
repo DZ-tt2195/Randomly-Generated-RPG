@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using MyBox;
 using TMPro;
+using UnityEngine.UI;
 using System;
 using System.Linq;
 
@@ -11,13 +12,17 @@ public class EncyclopediaManager : MonoBehaviour
 
 #region Variables
 
+    [Foldout("Changing searches", true)]
+    [SerializeField] List<Button> currentSearch = new();
+    [SerializeField] List<GameObject> masterGameObject = new();
+
     [Foldout("Ability Search", true)]
     List<AbilityBox> knightAbilities = new();
     List<AbilityBox> angelAbilities = new();
     List<AbilityBox> wizardAbilities = new();
     [SerializeField] AbilityBox abilityBoxPrefab;
-    [SerializeField] Transform storeAbilityBoxes;
-    [SerializeField] TMP_InputField abilitySearch;
+    [SerializeField] RectTransform storeAbilityBoxes;
+    [SerializeField] TMP_InputField abilityInput;
     [SerializeField] TMP_Dropdown characterDropdown;
     [SerializeField] TMP_Dropdown typeDropdown;
 
@@ -25,17 +30,31 @@ public class EncyclopediaManager : MonoBehaviour
     List<WeaponBox> listOfWeaponBoxes = new();
     [SerializeField] WeaponBox weaponBoxPrefab;
     [SerializeField] Transform storeWeaponBoxes;
-    [SerializeField] TMP_InputField weaponSearch;
+    [SerializeField] TMP_InputField weaponInput;
+
+    void ChangeMode(int n)
+    {
+        for (int i = 0; i < currentSearch.Count; i++)
+        {
+            masterGameObject[i].SetActive(i == n);
+        }
+    }
 
     private void Start()
     {
-        abilitySearch.onValueChanged.AddListener(ChangeAbilityInput);
+        for (int i = 0; i<currentSearch.Count; i++)
+        {
+            int k = i;
+            currentSearch[i].onClick.AddListener(() => ChangeMode(k));
+        }
+
+        abilityInput.onValueChanged.AddListener(ChangeAbilityInput);
         characterDropdown.onValueChanged.AddListener(ChangeAbilityDropdown);
         typeDropdown.onValueChanged.AddListener(ChangeAbilityDropdown);
         foreach (AbilityData data in FileManager.instance.listOfPlayerAbilities)
         {
             Ability nextAbility = this.gameObject.AddComponent<Ability>();
-            nextAbility.SetupAbility(data, false, true);
+            nextAbility.SetupAbility(data, false);
             AbilityBox nextBox = Instantiate(abilityBoxPrefab, null);
             nextBox.ReceiveAbility(true, nextAbility);
             switch (data.user)
@@ -56,7 +75,7 @@ public class EncyclopediaManager : MonoBehaviour
         wizardAbilities = wizardAbilities.OrderBy(box => box.ability.data.myName).ToList();
         SearchAbility();
 
-        weaponSearch.onValueChanged.AddListener(ChangeWeaponInput);
+        weaponInput.onValueChanged.AddListener(ChangeWeaponInput);
         FileManager.instance.listOfWeapons = FileManager.instance.listOfWeapons.OrderBy(data => data.myName).ToList();
         foreach (WeaponData data in FileManager.instance.listOfWeapons)
         {
@@ -112,69 +131,69 @@ public class EncyclopediaManager : MonoBehaviour
 
     void SearchAbility()
     {
-        PlayerSearch player = PlayerSearch.All;
+        PlayerSearch searchPlayer = PlayerSearch.All;
         switch (characterDropdown.options[characterDropdown.value].text)
         {
             case "All":
-                player = PlayerSearch.All;
+                searchPlayer = PlayerSearch.All;
                 break;
             case "Knight":
-                player = PlayerSearch.Knight;
+                searchPlayer = PlayerSearch.Knight;
                 break;
             case "Angel":
-                player = PlayerSearch.Angel;
+                searchPlayer = PlayerSearch.Angel;
                 break;
             case "Wizard":
-                player = PlayerSearch.Wizard;
+                searchPlayer = PlayerSearch.Wizard;
                 break;
         }
 
-        AbilityType type = AbilityType.None;
+        AbilityType searchType = AbilityType.None;
         switch (typeDropdown.options[typeDropdown.value].text)
         {
             case "All":
-                type = AbilityType.None;
+                searchType = AbilityType.None;
                 break;
             case "Attack":
-                type = AbilityType.Attack;
+                searchType = AbilityType.Attack;
                 break;
             case "Healing":
-                type = AbilityType.Healing;
+                searchType = AbilityType.Healing;
                 break;
             case "Emotion":
-                type = AbilityType.Emotion;
+                searchType = AbilityType.Emotion;
                 break;
             case "Position":
-                type = AbilityType.Position;
+                searchType = AbilityType.Position;
                 break;
             case "Stats":
-                type = AbilityType.Stats;
+                searchType = AbilityType.Stats;
                 break;
         }
 
         foreach (AbilityBox box in knightAbilities)
         {
-            if (CompareCharacters(player, PlayerSearch.Knight)
-                && CompareStrings(abilitySearch.text, box.ability.data.myName) || CompareStrings(abilitySearch.text, box.ability.editedDescription)
-                && CompareTypes(type, box.ability.data))
+            if (CompareCharacters(searchPlayer, PlayerSearch.Knight)
+                && (CompareStrings(abilityInput.text, box.ability.data.myName) || CompareStrings(abilityInput.text, box.ability.editedDescription))
+                && CompareTypes(searchType, box.ability.data))
                 box.transform.SetParent(storeAbilityBoxes);
             else
                 box.transform.SetParent(null);
         }
         foreach (AbilityBox box in angelAbilities)
         {
-            if (CompareCharacters(player, PlayerSearch.Angel)
-                && CompareStrings(abilitySearch.text, box.ability.data.myName) || CompareStrings(abilitySearch.text, box.ability.editedDescription)
-                && CompareTypes(type, box.ability.data))
+            if (CompareCharacters(searchPlayer, PlayerSearch.Angel)
+                && (CompareStrings(abilityInput.text, box.ability.data.myName) || CompareStrings(abilityInput.text, box.ability.editedDescription))
+                && CompareTypes(searchType, box.ability.data))
                 box.transform.SetParent(storeAbilityBoxes);
             else
                 box.transform.SetParent(null);
         }
         foreach (AbilityBox box in wizardAbilities)
         {
-            if (CompareCharacters(player, PlayerSearch.Wizard)
-                && CompareStrings(abilitySearch.text, box.ability.data.myName) || CompareStrings(abilitySearch.text, box.ability.editedDescription)
-                && CompareTypes(type, box.ability.data))
+            if (CompareCharacters(searchPlayer, PlayerSearch.Wizard)
+                && (CompareStrings(abilityInput.text, box.ability.data.myName) || CompareStrings(abilityInput.text, box.ability.editedDescription))
+                && CompareTypes(searchType, box.ability.data))
                 box.transform.SetParent(storeAbilityBoxes);
             else
                 box.transform.SetParent(null);
@@ -194,7 +213,7 @@ public class EncyclopediaManager : MonoBehaviour
     {
         foreach (WeaponBox nextBox in listOfWeaponBoxes)
         {
-            if (CompareStrings(weaponSearch.text, nextBox.weapon.data.myName) || CompareStrings(weaponSearch.text, nextBox.weapon.editedDescription))
+            if (CompareStrings(weaponInput.text, nextBox.weapon.data.myName) || CompareStrings(weaponInput.text, nextBox.weapon.editedDescription))
                 nextBox.transform.SetParent(storeWeaponBoxes);
             else
                 nextBox.transform.SetParent(null);

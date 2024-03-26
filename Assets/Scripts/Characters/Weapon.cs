@@ -28,7 +28,7 @@ public class Weapon : MonoBehaviour
             {
                 Ability nextAbility = this.gameObject.AddComponent<Ability>();
                 listOfAbilities.Add(nextAbility);
-                nextAbility.SetupAbility(FileManager.instance.listOfOtherAbilities[int.Parse(skill)], false, true);
+                nextAbility.SetupAbility(FileManager.instance.listOfOtherAbilities[int.Parse(skill)], false);
             }
         }
     }
