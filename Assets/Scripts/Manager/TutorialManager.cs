@@ -50,7 +50,7 @@ public class TutorialManager : MonoBehaviour
             PlayerCharacter nextCharacter = Instantiate(characterPrefab).AddComponent<PlayerCharacter>();
             List<AbilityData> characterAbilities = new();
 
-            nextCharacter.SetupCharacter(CharacterType.Player, playerData[i], characterAbilities, forcedPlayerInfo[i].forcedEmotion);
+            nextCharacter.SetupCharacter(CharacterType.Player, playerData[i], characterAbilities, forcedPlayerInfo[i].forcedEmotion, false);
             listOfPlayers.Add(nextCharacter);
         }
     }

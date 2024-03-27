@@ -18,14 +18,20 @@ public class TitleScreen : MonoBehaviour
     bool stillGenerating { get { return _stillGenerating; } set { { _stillGenerating = value; } Debug.Log(generationTime); } }
     [SerializeField] GameObject playerPrefab;
 
+    [Foldout("RNG", true)]
     [SerializeField] bool randomSeed;
     [SerializeField][ConditionalField(nameof(randomSeed), inverse: true)] int chosenSeed;
 
+    [Foldout("Cheats/Challenges", true)]
     [SerializeField] GameObject cheatChallengeObject;
     [SerializeField] List<Toggle> listOfCheats = new();
     [SerializeField] List<Toggle> listOfChallenges = new();
 
-    List<AbilityData> playerAbilities = new();
+    [Foldout("Info Screen", true)]
+    [SerializeField] List<Button> infoScreenToggles = new();
+    [SerializeField] GameObject infoScreen;
+    [SerializeField] List<WeaponBox> weaponBoxes = new();
+    [SerializeField] List<AbilityBox> abilityBoxes = new();
 
     #endregion
 
@@ -47,22 +53,13 @@ public class TitleScreen : MonoBehaviour
         Character.borderColor = 0;
         StartCoroutine(GenerateFiles());
 
+        foreach (Button button in infoScreenToggles)
+            button.onClick.AddListener(ToggleInfoScreen);
+
         foreach (Toggle toggle in listOfCheats)
             InitialToggle(toggle);
         foreach (Toggle toggle in listOfChallenges)
             InitialToggle(toggle);
-    }
-
-    void InitialToggle(Toggle toggle)
-    {
-        toggle.isOn = PlayerPrefs.HasKey(toggle.name) && PlayerPrefs.GetInt(toggle.name) == 1;
-        toggle.onValueChanged.AddListener((bool isOn) => SetPref(isOn, toggle.name));
-        SetPref(toggle.isOn, toggle.name);
-    }
-
-    void SetPref(bool isOn, string name)
-    {
-        PlayerPrefs.SetInt(name, (isOn) ? 1 : 0);
     }
 
     private void Update()
@@ -123,14 +120,6 @@ public class TitleScreen : MonoBehaviour
             {
                 next.Trim();
                 putIntoList.Add(next);
-                try
-                {
-                    playerAbilities.Add(FileManager.instance.listOfPlayerAbilities[int.Parse(next)]);
-                }
-                catch (FormatException)
-                {
-                    continue;
-                }
             }
             putIntoList = putIntoList.Shuffle();
 
@@ -154,9 +143,36 @@ public class TitleScreen : MonoBehaviour
                 }
             }
 
-            nextCharacter.SetupCharacter(CharacterType.Player, playerData[i], characterAbilities, (Emotion)UnityEngine.Random.Range(1,5), 1f, randomWeapon);
+            nextCharacter.SetupCharacter(CharacterType.Player, playerData[i], characterAbilities, (Emotion)UnityEngine.Random.Range(1,5), false, 1f, randomWeapon);
             FileManager.instance.listOfPlayers.Add(nextCharacter);
+
+            nextCharacter.transform.SetParent(weaponBoxes[i].transform.parent);
+            nextCharacter.transform.localPosition = new Vector3(-1050, 0, 0);
+            weaponBoxes[i].ReceiveWeapon(nextCharacter.weapon);
+            for (int j = 1; j<nextCharacter.listOfAbilities.Count; j++)
+                abilityBoxes[i * 5 + j - 1].ReceiveAbility(true, nextCharacter.listOfAbilities[j]);
         }
+    }
+
+    void ToggleInfoScreen()
+    {
+        infoScreen.SetActive(!infoScreen.activeSelf);
+    }
+
+    #endregion
+
+#region Cheats/Challenges
+
+    void InitialToggle(Toggle toggle)
+    {
+        toggle.isOn = PlayerPrefs.HasKey(toggle.name) && PlayerPrefs.GetInt(toggle.name) == 1;
+        toggle.onValueChanged.AddListener((bool isOn) => SetPref(isOn, toggle.name));
+        SetPref(toggle.isOn, toggle.name);
+    }
+
+    void SetPref(bool isOn, string name)
+    {
+        PlayerPrefs.SetInt(name, (isOn) ? 1 : 0);
     }
 
     public void CheatChallengeToggle()
@@ -164,6 +180,6 @@ public class TitleScreen : MonoBehaviour
         cheatChallengeObject.SetActive(!cheatChallengeObject.activeSelf);
     }
 
-#endregion
+    #endregion
 
 }

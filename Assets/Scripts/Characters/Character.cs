@@ -26,9 +26,16 @@ public class Character : MonoBehaviour
         CharacterType myType;
         [ReadOnly] public Weapon weapon;
 
-    [Foldout("Stats", true)]
-        protected int currentHealth;
+    [Foldout("Base Stats", true)]
+        protected int baseHealth;
+        protected int baseAttack;
+        protected int baseDefense;
+        protected int baseSpeed;
+        protected float baseLuck;
+        protected float baseAccuracy;
 
+    [Foldout("Current Stats", true)]
+        protected int currentHealth;
         private Position _currentPosition;
         [ReadOnly] public Position currentPosition
         {
@@ -36,7 +43,6 @@ public class Character : MonoBehaviour
             private set {
             statusText.text = KeywordTooltip.instance.EditText($"{currentEmotion} {data.myName}\n{value}"); _currentPosition = value; }
         }
-
         private Emotion _currentEmotion;
         [ReadOnly] public Emotion currentEmotion
         {
@@ -44,8 +50,7 @@ public class Character : MonoBehaviour
             private set{
             statusText.text = KeywordTooltip.instance.EditText($"{value} {data.myName}\n{currentPosition}"); _currentEmotion = value;}
     }
-
-    protected float modifyAttack = 1f;
+        protected float modifyAttack = 1f;
         protected float modifyDefense = 1f;
         protected float modifySpeed = 1f;
         protected float modifyLuck = 1f;
@@ -74,19 +79,21 @@ public class Character : MonoBehaviour
         weaponImage = transform.Find("Weapon Image").GetComponent<Image>();
     }
 
-    public void SetupCharacter(CharacterType type, CharacterData characterData, List<AbilityData> listOfAbilityData, Emotion startingEmotion, float multiplier = 1f, WeaponData weaponData = null)
+    public void SetupCharacter(CharacterType type, CharacterData characterData,
+        List<AbilityData> listOfAbilityData, Emotion startingEmotion, bool abilitiesBeginWithCooldown,
+        float multiplier = 1f, WeaponData weaponData = null)
     {
         data = characterData;
         myType = type;
         this.name = characterData.myName;
         data.description = KeywordTooltip.instance.EditText(data.description);
 
-        data.baseHealth = (int)(data.baseHealth * multiplier); currentHealth = data.baseHealth;
-        data.baseAttack = (int)(data.baseAttack * multiplier);
-        data.baseDefense = (int)(data.baseDefense * multiplier);
-        data.baseSpeed = (int)(data.baseSpeed * multiplier);
-        data.baseLuck *= multiplier;
-        data.baseAccuracy *= multiplier;
+        this.baseHealth = (int)(data.baseHealth * multiplier); currentHealth = this.baseHealth;
+        this.baseAttack = (int)(data.baseAttack * multiplier);
+        this.baseDefense = (int)(data.baseDefense * multiplier);
+        this.baseSpeed = (int)(data.baseSpeed * multiplier);
+        this.baseLuck = data.baseLuck*multiplier;
+        this.baseAccuracy = data.baseAccuracy*multiplier;
 
         AddAbility(FileManager.instance.FindOtherAbility("Skip Turn"), false);
         this.myImage.sprite = Resources.Load<Sprite>($"Characters/{this.name}");
@@ -95,7 +102,7 @@ public class Character : MonoBehaviour
         StartCoroutine(ChangeEmotion(startingEmotion, -1));
 
         foreach (AbilityData data in listOfAbilityData)
-            AddAbility(data, myType != CharacterType.Player);
+            AddAbility(data, abilitiesBeginWithCooldown);
         listOfAbilities = listOfAbilities.OrderBy(o => o.data.baseCooldown).ToList();
 
         if (weaponData == null)
@@ -179,7 +186,7 @@ public class Character : MonoBehaviour
 
     public float CalculateHealthPercent()
     {
-        return (float)currentHealth / data.baseHealth;
+        return (float)currentHealth / this.baseHealth;
     }
 
     public float CalculateAttack()
@@ -194,7 +201,7 @@ public class Character : MonoBehaviour
         if (weapon != null && weapon.StatCalculation())
             weaponEffect += weapon.data.modifyAttack;
 
-        return data.baseAttack * modifyAttack * emotionEffect * weaponEffect;
+        return this.baseAttack * modifyAttack * emotionEffect * weaponEffect;
     }
 
     public float CalculateDefense()
@@ -203,7 +210,7 @@ public class Character : MonoBehaviour
         if (weapon != null && weapon.StatCalculation())
             weaponEffect += weapon.data.modifyDefense;
 
-        return data.baseDefense * modifyDefense * weaponEffect;
+        return this.baseDefense * modifyDefense * weaponEffect;
     }
 
     public float CalculateSpeed()
@@ -212,7 +219,7 @@ public class Character : MonoBehaviour
         if (weapon != null && weapon.StatCalculation())
             weaponEffect += weapon.data.modifySpeed;
 
-        return data.baseSpeed * modifySpeed * weaponEffect;
+        return this.baseSpeed * modifySpeed * weaponEffect;
     }
 
     public float CalculateLuck()
@@ -221,7 +228,7 @@ public class Character : MonoBehaviour
         if (weapon != null && weapon.StatCalculation())
             weaponEffect += weapon.data.modifyLuck;
 
-        return data.baseLuck * modifyLuck * weaponEffect;
+        return this.baseLuck * modifyLuck * weaponEffect;
     }
 
     public float CalculateAccuracy()
@@ -230,7 +237,7 @@ public class Character : MonoBehaviour
         if (weapon != null && weapon.StatCalculation())
             weaponEffect += weapon.data.modifyAccuracy;
 
-        return data.baseAccuracy * modifyAccuracy * weaponEffect;
+        return this.baseAccuracy * modifyAccuracy * weaponEffect;
     }
 
     #endregion
@@ -250,7 +257,7 @@ public class Character : MonoBehaviour
     {
         if (this == null) yield break;
 
-        currentHealth = Mathf.Clamp(currentHealth += (int)health, 0, data.baseHealth);
+        currentHealth = Mathf.Clamp(currentHealth += (int)health, 0, this.baseHealth);
         healthText.text = $"{100 * CalculateHealthPercent():F0}%";
         TurnManager.instance.CreateVisual($"+{(int)health} HP", this.transform.localPosition);
         Log.instance.AddText($"{(this.name)} regains {health} HP.", logged);
@@ -422,7 +429,7 @@ public class Character : MonoBehaviour
 
 #region Turns
 
-    internal IEnumerator MyTurn(int logged)
+    internal IEnumerator MyTurn(int logged, bool extraTurn)
     {
         chosenAbility = null;
         yield return StartOfTurn(logged);
@@ -434,9 +441,9 @@ public class Character : MonoBehaviour
         }
         else
         {
-            yield return ResolveTurn(logged, false);
+            yield return ResolveTurn(logged, extraTurn);
         }
-        yield return EndOfTurn(logged);
+        yield return EndOfTurn(logged, extraTurn);
     }
 
     IEnumerator StartOfTurn(int logged)
@@ -526,7 +533,7 @@ public class Character : MonoBehaviour
         }
     }
 
-    IEnumerator EndOfTurn(int logged)
+    IEnumerator EndOfTurn(int logged, bool extraTurn)
     {
         if (chosenAbility != null && chosenAbility.data.myName != "Skip Turn")
         {
@@ -540,7 +547,7 @@ public class Character : MonoBehaviour
             }
             else if (this.currentEmotion == Emotion.Happy)
             {
-                if (chosenAbility.data.typeOne != AbilityType.Attack && chosenAbility.data.typeTwo != AbilityType.Attack)
+                if (!extraTurn && chosenAbility.data.typeOne != AbilityType.Attack && chosenAbility.data.typeTwo != AbilityType.Attack)
                 {
                     Log.instance.AddText($"{this.name} is Happy.", logged);
                     yield return ResolveTurn(logged + 1, true);
@@ -550,9 +557,9 @@ public class Character : MonoBehaviour
             {
                 Log.instance.AddText($"{this.name} is Sad.", logged);
                 if (chosenAbility.data.typeOne != AbilityType.Attack && chosenAbility.data.typeTwo != AbilityType.Attack)
-                    yield return GainHealth((int)(data.baseHealth * 0.15f), logged + 1);
+                    yield return GainHealth((int)(this.baseHealth * 0.15f), logged + 1);
                 else
-                    yield return TakeDamage((int)(data.baseHealth * 0.15f), logged + 1);
+                    yield return TakeDamage((int)(this.baseHealth * 0.15f), logged + 1);
             }
         }
 

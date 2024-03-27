@@ -191,7 +191,7 @@ public class TurnManager : MonoBehaviour
                 Log.instance.AddText($"");
                 nextInLine.border.gameObject.SetActive(true);
 
-                yield return nextInLine.MyTurn(0);
+                yield return nextInLine.MyTurn(0, false);
                 try { nextInLine.border.gameObject.SetActive(false); } catch { /*do nothing*/}
             }
 
@@ -298,7 +298,7 @@ public class TurnManager : MonoBehaviour
                 catch (ArgumentOutOfRangeException) { break; }
             }
 
-            nextCharacter.SetupCharacter(CharacterType.Enemy, dataFile, characterAbilities, startingEmotion, PlayerPrefs.GetInt("Scaling Enemies") == 1 ? waveMultiplier : 1f, null);
+            nextCharacter.SetupCharacter(CharacterType.Enemy, dataFile, characterAbilities, startingEmotion, true, PlayerPrefs.GetInt("Scaling Enemies") == 1 ? waveMultiplier : 1f);
             SaveManager.instance.SaveEnemy(dataFile);
 
             if (FileManager.instance.mode == FileManager.GameMode.Main && PlayerPrefs.GetInt("Enemies Stunned") == 1)

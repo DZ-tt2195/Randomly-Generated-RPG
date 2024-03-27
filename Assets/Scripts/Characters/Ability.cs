@@ -329,7 +329,7 @@ public class Ability : MonoBehaviour
                         break;
 
                     case "PASSTURN":
-                        yield return target.MyTurn(logged);
+                        yield return target.MyTurn(logged, true);
                         break;
 
                     case "SELFCOPY":

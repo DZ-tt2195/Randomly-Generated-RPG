@@ -14,7 +14,7 @@ public class FileManager : MonoBehaviour
 
     public static FileManager instance;
     public enum GameMode { Main, Tutorial, Other };
-    [ReadOnly] public GameMode mode = GameMode.Other;
+    public GameMode mode;
 
     [ReadOnly] public Transform canvas;
     [SerializeField] bool downloadOn;

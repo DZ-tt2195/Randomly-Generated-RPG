@@ -115,7 +115,7 @@ public class EncyclopediaManager : MonoBehaviour
                 catch (ArgumentOutOfRangeException) { break; }
             }
 
-            nextEnemy.SetupCharacter(CharacterType.Enemy, data, characterAbilities, Emotion.Neutral);
+            nextEnemy.SetupCharacter(CharacterType.Enemy, data, characterAbilities, Emotion.Neutral, false);
             listOfEnemyBoxes.Add(nextEnemy);
             foreach (Transform child in nextEnemy.transform)
                 Destroy(child.gameObject);
