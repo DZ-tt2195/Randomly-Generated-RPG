@@ -718,6 +718,26 @@
       "",
       "",
       "SELF"
+    ],
+    [
+      "Turnip",
+      "Eat Turnip",
+      "This regains health.",
+      "THIS consumes their Turnip.",
+      "Healing",
+      "",
+      "SelfHeal",
+      "",
+      "",
+      "",
+      "40",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "SELF"
     ]
   ]
 }

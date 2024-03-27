@@ -293,16 +293,19 @@ public class Character : MonoBehaviour
         if (this.weapon != null)
             yield return this.weapon.WeaponEffect(TurnManager.SpliceString(this.weapon.data.onDeath), logged+1);
 
-        TurnManager.instance.speedQueue.Remove(this);
-        if (this.myType == CharacterType.Player)
+        if (this.currentHealth == 0)
         {
-            TurnManager.instance.listOfPlayers.Remove(this);
-            myImage.color = Color.gray;
-        }
-        else
-        {
-            TurnManager.instance.listOfEnemies.Remove(this);
-            Destroy(this.gameObject);
+            TurnManager.instance.speedQueue.Remove(this);
+            if (this.myType == CharacterType.Player)
+            {
+                TurnManager.instance.listOfPlayers.Remove(this);
+                myImage.color = Color.gray;
+            }
+            else
+            {
+                TurnManager.instance.listOfEnemies.Remove(this);
+                Destroy(this.gameObject);
+            }
         }
     }
 

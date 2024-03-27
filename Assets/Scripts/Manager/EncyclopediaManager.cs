@@ -24,7 +24,8 @@ public class EncyclopediaManager : MonoBehaviour
     [SerializeField] RectTransform storeAbilityBoxes;
     [SerializeField] TMP_InputField abilityInput;
     [SerializeField] TMP_Dropdown characterDropdown;
-    [SerializeField] TMP_Dropdown typeDropdown;
+    [SerializeField] TMP_Dropdown type1Dropdown;
+    [SerializeField] TMP_Dropdown type2Dropdown;
 
     [Foldout("Weapon Search", true)]
     List<WeaponBox> listOfWeaponBoxes = new();
@@ -56,7 +57,8 @@ public class EncyclopediaManager : MonoBehaviour
 
         abilityInput.onValueChanged.AddListener(ChangeAbilityInput);
         characterDropdown.onValueChanged.AddListener(ChangeAbilityDropdown);
-        typeDropdown.onValueChanged.AddListener(ChangeAbilityDropdown);
+        type1Dropdown.onValueChanged.AddListener(ChangeAbilityDropdown);
+        type2Dropdown.onValueChanged.AddListener(ChangeAbilityDropdown);
         foreach (AbilityData data in FileManager.instance.listOfPlayerAbilities)
         {
             Ability nextAbility = this.gameObject.AddComponent<Ability>();
@@ -148,7 +150,21 @@ public class EncyclopediaManager : MonoBehaviour
         return (data.typeOne == setting || data.typeTwo == setting);
     }
 
-    #endregion
+    AbilityType ConvertType(string text)
+    {
+        return text switch
+        {
+            "Attack" => AbilityType.Attack,
+            "Healing" => AbilityType.Healing,
+            "Emotion" => AbilityType.Emotion,
+            "Position" => AbilityType.Position,
+            "Stats" => AbilityType.Stats,
+            "Misc" => AbilityType.Misc,
+            _ => AbilityType.None,
+        };
+    }
+
+#endregion
 
 #region Ability Search
 
@@ -181,34 +197,14 @@ public class EncyclopediaManager : MonoBehaviour
                 break;
         }
 
-        AbilityType searchType = AbilityType.None;
-        switch (typeDropdown.options[typeDropdown.value].text)
-        {
-            case "All":
-                searchType = AbilityType.None;
-                break;
-            case "Attack":
-                searchType = AbilityType.Attack;
-                break;
-            case "Healing":
-                searchType = AbilityType.Healing;
-                break;
-            case "Emotion":
-                searchType = AbilityType.Emotion;
-                break;
-            case "Position":
-                searchType = AbilityType.Position;
-                break;
-            case "Stats":
-                searchType = AbilityType.Stats;
-                break;
-        }
+        AbilityType searchType1 = ConvertType(type1Dropdown.options[type1Dropdown.value].text);
+        AbilityType searchType2 = ConvertType(type2Dropdown.options[type2Dropdown.value].text);
 
         foreach (AbilityBox box in knightAbilities)
         {
             if (CompareCharacters(searchPlayer, PlayerSearch.Knight)
                 && (CompareStrings(abilityInput.text, box.ability.data.myName) || CompareStrings(abilityInput.text, box.ability.editedDescription))
-                && CompareTypes(searchType, box.ability.data))
+                && CompareTypes(searchType1, box.ability.data) && CompareTypes(searchType2, box.ability.data))
                 box.transform.SetParent(storeAbilityBoxes);
             else
                 box.transform.SetParent(null);
@@ -217,7 +213,7 @@ public class EncyclopediaManager : MonoBehaviour
         {
             if (CompareCharacters(searchPlayer, PlayerSearch.Angel)
                 && (CompareStrings(abilityInput.text, box.ability.data.myName) || CompareStrings(abilityInput.text, box.ability.editedDescription))
-                && CompareTypes(searchType, box.ability.data))
+                && CompareTypes(searchType1, box.ability.data) && CompareTypes(searchType2, box.ability.data))
                 box.transform.SetParent(storeAbilityBoxes);
             else
                 box.transform.SetParent(null);
@@ -226,7 +222,7 @@ public class EncyclopediaManager : MonoBehaviour
         {
             if (CompareCharacters(searchPlayer, PlayerSearch.Wizard)
                 && (CompareStrings(abilityInput.text, box.ability.data.myName) || CompareStrings(abilityInput.text, box.ability.editedDescription))
-                && CompareTypes(searchType, box.ability.data))
+                && CompareTypes(searchType1, box.ability.data) && CompareTypes(searchType2, box.ability.data))
                 box.transform.SetParent(storeAbilityBoxes);
             else
                 box.transform.SetParent(null);
@@ -278,4 +274,5 @@ public class EncyclopediaManager : MonoBehaviour
     }
 
     #endregion
+
 }

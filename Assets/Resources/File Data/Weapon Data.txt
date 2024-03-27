@@ -130,6 +130,28 @@
       "",
       "",
       "Kev Walker|Ixalan|(Cobbled Wings)"
+    ],
+    [
+      "Turnip",
+      "The first time this would die, it instead regains some health and loses this Weapon.",
+      "35,",
+      "",
+      "",
+      "",
+      "",
+      "DropWeapon/AbilityOne",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "Marco Morte|Dominion: Cornucopia and Guilds|(Huge Turnip)"
     ]
   ]
 }

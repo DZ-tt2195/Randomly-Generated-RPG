@@ -59,6 +59,13 @@ public class Weapon : MonoBehaviour
                         if (abilityTwo.CanPlay(self)) yield return abilityTwo.ResolveInstructions(TurnManager.SpliceString(abilityTwo.data.instructions), logged + 1);
                     break;
 
+                case "DROPWEAPON":
+                    Log.instance.AddText($"{self.data.myName} drops {this.data.myName}.");
+                    self.weapon = null;
+                    self.weaponImage.gameObject.SetActive(false);
+                    Destroy(this.gameObject);
+                    break;
+
                 default:
                     Debug.LogError($"{data.myName}: {methodName} isn't implemented");
                     break;
