@@ -6,10 +6,17 @@ using UnityEngine.EventSystems;
 public class Draggable : MonoBehaviour
 {
     Canvas canvas;
+    RectTransform rect;
+    float XCap;
+    float YCap;
 
     private void Awake()
     {
         canvas = GameObject.Find("Canvas").GetComponent<Canvas>();
+        rect = GetComponent<RectTransform>();
+
+        XCap = (Screen.width - rect.sizeDelta.x)/2;
+        YCap = (Screen.height - rect.sizeDelta.y) / 2;
     }
 
     public void DragHangler(BaseEventData data)
@@ -23,14 +30,9 @@ public class Draggable : MonoBehaviour
 
     private void Update()
     {
-        if (this.transform.localPosition.x < -700)
-            this.transform.localPosition = new Vector3(-700, transform.localPosition.y, 0);
-        else if (this.transform.localPosition.x > 700)
-            this.transform.localPosition = new Vector3(700, transform.localPosition.y, 0);
-
-        if (this.transform.localPosition.y < -400)
-            this.transform.localPosition = new Vector3(transform.localPosition.x, -400, 0);
-        else if (this.transform.localPosition.y > 400)
-            this.transform.localPosition = new Vector3(transform.localPosition.x, 400, 0);
+        this.transform.localPosition = new Vector3(
+            Mathf.Clamp(transform.localPosition.x, -XCap, XCap),
+            Mathf.Clamp(transform.localPosition.y, -YCap, YCap),
+            0);
     }
 }

@@ -6,6 +6,7 @@ using System.Linq;
 using UnityEngine.Networking;
 using System.IO;
 using UnityEngine.SceneManagement;
+using System;
 
 public class FileManager : MonoBehaviour
 {
@@ -77,6 +78,28 @@ public class FileManager : MonoBehaviour
 
 #region Helper Methods
 
+    public List<AbilityData> ConvertNumbersToAbilityData(string list, bool player)
+    {
+        string[] divideIntoNumbers = list.Split(',');
+        List<AbilityData> splitAbilities = new();
+        for (int j = 0; j < divideIntoNumbers.Length-1; j++)
+        {
+            try
+            {
+                string skillNumber = divideIntoNumbers[j];
+                skillNumber.Trim();
+
+                if (player)
+                    splitAbilities.Add(listOfPlayerAbilities[int.Parse(skillNumber)]);
+                else
+                    splitAbilities.Add(listOfOtherAbilities[int.Parse(skillNumber)]);
+            }
+            catch (FormatException) { continue; }
+            catch (ArgumentOutOfRangeException) { break; }
+        }
+        return splitAbilities;
+    }
+
     public AbilityData FindPlayerAbility(string target)
     {
         return listOfPlayerAbilities.FirstOrDefault(ability => ability.myName == target);
@@ -137,7 +160,7 @@ public class FileManager : MonoBehaviour
         KeywordTooltip.instance.transform.localPosition = new Vector3(0, 0);
     }
 
-    public void UnloadObjects(string sceneName)
+    public void UnloadObjects(string originalScene)
     {
         if (FPS.instance != null)
             Preserve(FPS.instance.gameObject);
@@ -146,7 +169,7 @@ public class FileManager : MonoBehaviour
         Preserve(KeywordTooltip.instance.gameObject);
 
         listOfPlayers.RemoveAll(item => item == null);
-        if (sceneName != "0. Title Screen")
+        if (originalScene != "1. Battle")
         {
             foreach (Character player in listOfPlayers)
                 Preserve(player.gameObject);

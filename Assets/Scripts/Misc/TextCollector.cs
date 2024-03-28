@@ -27,7 +27,7 @@ public class TextCollector : MonoBehaviour
 
     internal void StatsSetup(string header, Vector2 position)
     {
-        this.textbox.text = header;
+        this.textbox.text = KeywordTooltip.instance.EditText(header);
         this.transform.SetParent(canvas.transform);
         this.transform.localPosition = position;
         this.transform.localScale = new Vector3(1, 1, 1);

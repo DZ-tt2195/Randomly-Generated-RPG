@@ -75,7 +75,7 @@ public class KeywordTooltip : MonoBehaviour
     {
         return new Vector3
             (Mathf.Clamp(mousePosition.x, XCap, Screen.width-XCap),
-            mousePosition.y > Ydisplace ? mousePosition.y + (-0.5f * Ydisplace) : mousePosition.y + (0.5f * Ydisplace),
+            mousePosition.y + (mousePosition.y > Ydisplace ? -0.5f : 0.5f) * Ydisplace,
             0);
     }
 

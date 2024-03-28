@@ -139,7 +139,7 @@
       "",
       "",
       "",
-      "DropWeapon/AbilityOne",
+      "AbilityOne/DropWeapon",
       "",
       "",
       "",

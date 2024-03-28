@@ -155,6 +155,10 @@ public class Character : MonoBehaviour
             this.border.SetAlpha(borderColor);
             ScreenPosition();
         }
+        else if (this.border != null)
+        {
+            this.border.SetAlpha(0);
+        }
     }
 
     void ScreenPosition()
@@ -289,12 +293,12 @@ public class Character : MonoBehaviour
         currentPosition = Position.Dead;
         healthText.text = $"0%";
 
-        Log.instance.AddText($"{(this.name)} has died.", logged);
         if (this.weapon != null)
             yield return this.weapon.WeaponEffect(TurnManager.SpliceString(this.weapon.data.onDeath), logged+1);
 
         if (this.currentHealth == 0)
         {
+            Log.instance.AddText($"{(this.name)} has died.", logged);
             TurnManager.instance.speedQueue.Remove(this);
             if (this.myType == CharacterType.Player)
             {

@@ -22,7 +22,7 @@ public class LoadScene : MonoBehaviour
 
     public void NextScene()
     {
-        FileManager.instance.UnloadObjects(scene);
+        FileManager.instance.UnloadObjects(SceneManager.GetActiveScene().name);
         FileManager.instance.mode = gameMode;
         SceneManager.LoadScene(scene, loadMode);
     }

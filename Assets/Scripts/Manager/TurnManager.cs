@@ -284,21 +284,7 @@ public class TurnManager : MonoBehaviour
             nextCharacter.name = dataFile.myName;
             Log.instance.AddText($"{Log.Article(nextCharacter.name)} entered the fight.", logged);
 
-            List<AbilityData> characterAbilities = new();
-            string[] divideSkillsIntoNumbers = dataFile.skillNumbers.Split(',');
-            for (int j = 0; j < divideSkillsIntoNumbers.Length; j++)
-            {
-                try
-                {
-                    string skillNumber = divideSkillsIntoNumbers[j];
-                    skillNumber.Trim();
-                    characterAbilities.Add(FileManager.instance.listOfOtherAbilities[int.Parse(skillNumber)]);
-                }
-                catch (FormatException) { continue; }
-                catch (ArgumentOutOfRangeException) { break; }
-            }
-
-            nextCharacter.SetupCharacter(CharacterType.Enemy, dataFile, characterAbilities, startingEmotion, true, PlayerPrefs.GetInt("Scaling Enemies") == 1 ? waveMultiplier : 1f);
+            nextCharacter.SetupCharacter(CharacterType.Enemy, dataFile, FileManager.instance.ConvertNumbersToAbilityData(dataFile.skillNumbers, false), startingEmotion, true, PlayerPrefs.GetInt("Scaling Enemies") == 1 ? waveMultiplier : 1f);
             SaveManager.instance.SaveEnemy(dataFile);
 
             if (FileManager.instance.mode == FileManager.GameMode.Main && PlayerPrefs.GetInt("Enemies Stunned") == 1)

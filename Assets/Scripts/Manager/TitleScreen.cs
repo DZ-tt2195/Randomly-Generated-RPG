@@ -113,24 +113,16 @@ public class TitleScreen : MonoBehaviour
             try { randomWeapon = FileManager.instance.listOfWeapons[i]; }
             catch { randomWeapon = null; }
 
-            List<AbilityData> characterAbilities = new();
-            string[] divideSkillsIntoNumbers = playerData[i].skillNumbers.Split(',');
-            List<string> putIntoList = new();
-            foreach (string next in divideSkillsIntoNumbers)
-            {
-                next.Trim();
-                putIntoList.Add(next);
-            }
-            putIntoList = putIntoList.Shuffle();
+            List<AbilityData> allAbilities = FileManager.instance.ConvertNumbersToAbilityData(playerData[i].skillNumbers, true).Shuffle();
+            List<AbilityData> usedAbilities = new();
 
             int counter = -1;
-            while (characterAbilities.Count < 5)
+            while (usedAbilities.Count < 5)
             {
                 counter++;
                 try
                 {
-                    string skillNumber = putIntoList[counter];
-                    characterAbilities.Add(FileManager.instance.listOfPlayerAbilities[int.Parse(skillNumber)]);
+                    usedAbilities.Add(allAbilities[counter]);
                 }
                 catch (FormatException)
                 {
@@ -143,7 +135,7 @@ public class TitleScreen : MonoBehaviour
                 }
             }
 
-            nextCharacter.SetupCharacter(CharacterType.Player, playerData[i], characterAbilities, (Emotion)UnityEngine.Random.Range(1,5), false, 1f, randomWeapon);
+            nextCharacter.SetupCharacter(CharacterType.Player, playerData[i], usedAbilities, (Emotion)UnityEngine.Random.Range(1,5), false, 1f, randomWeapon);
             FileManager.instance.listOfPlayers.Add(nextCharacter);
 
             nextCharacter.transform.SetParent(weaponBoxes[i].transform.parent);

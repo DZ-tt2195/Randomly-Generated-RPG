@@ -12,6 +12,8 @@ public class EncyclopediaManager : MonoBehaviour
 
 #region Variables
 
+    [SerializeField] TMP_Text searchResults;
+
     [Foldout("Changing searches", true)]
     [SerializeField] List<Button> currentSearch = new();
     [SerializeField] List<GameObject> masterGameObject = new();
@@ -83,7 +85,6 @@ public class EncyclopediaManager : MonoBehaviour
         knightAbilities = knightAbilities.OrderBy(box => box.ability.data.myName).ToList();
         angelAbilities = angelAbilities.OrderBy(box => box.ability.data.myName).ToList();
         wizardAbilities = wizardAbilities.OrderBy(box => box.ability.data.myName).ToList();
-        SearchAbility();
 
         weaponInput.onValueChanged.AddListener(ChangeWeaponInput);
         FileManager.instance.listOfWeapons = FileManager.instance.listOfWeapons.OrderBy(data => data.myName).ToList();
@@ -96,33 +97,21 @@ public class EncyclopediaManager : MonoBehaviour
             listOfWeaponBoxes.Add(nextBox);
             nextBox.ReceiveWeapon(nextWeapon);
         }
-        SearchWeapon();
 
         FileManager.instance.listOfEnemies = FileManager.instance.listOfEnemies.OrderBy(data => data.myName).ToList();
         enemyInput.onValueChanged.AddListener(ChangeEnemyInput);
         foreach (CharacterData data in FileManager.instance.listOfEnemies)
         {
             Character nextEnemy = Instantiate(characterPrefab).AddComponent<Character>();
-            List<AbilityData> characterAbilities = new();
-            string[] divideSkillsIntoNumbers = data.skillNumbers.Split(',');
-            for (int j = 0; j < divideSkillsIntoNumbers.Length; j++)
-            {
-                try
-                {
-                    string skillNumber = divideSkillsIntoNumbers[j];
-                    skillNumber.Trim();
-                    characterAbilities.Add(FileManager.instance.listOfOtherAbilities[int.Parse(skillNumber)]);
-                }
-                catch (FormatException) { continue; }
-                catch (ArgumentOutOfRangeException) { break; }
-            }
-
-            nextEnemy.SetupCharacter(CharacterType.Enemy, data, characterAbilities, Emotion.Neutral, false);
+            nextEnemy.SetupCharacter(CharacterType.Enemy, data, FileManager.instance.ConvertNumbersToAbilityData(data.skillNumbers, false), Emotion.Neutral, false);
             listOfEnemyBoxes.Add(nextEnemy);
             foreach (Transform child in nextEnemy.transform)
                 Destroy(child.gameObject);
         }
+
+        SearchWeapon();
         SearchEnemy();
+        SearchAbility();
     }
 
 #endregion
@@ -229,6 +218,7 @@ public class EncyclopediaManager : MonoBehaviour
         }
 
         storeAbilityBoxes.sizeDelta = new Vector3(2560, Math.Max(875, 175 * (1+(storeAbilityBoxes.childCount / 6))));
+        searchResults.text = $"Found {storeAbilityBoxes.childCount} Abilities";
     }
 
     #endregion
@@ -250,6 +240,7 @@ public class EncyclopediaManager : MonoBehaviour
                 nextBox.transform.SetParent(null);
         }
         storeWeaponBoxes.sizeDelta = new Vector3(2560, Math.Max(875, 175 * (1 + (storeWeaponBoxes.childCount / 6))));
+        searchResults.text = $"Found {storeWeaponBoxes.childCount} Weapons";
     }
 
     #endregion
@@ -271,6 +262,7 @@ public class EncyclopediaManager : MonoBehaviour
                 nextEnemy.transform.SetParent(null);
         }
         storeEnemyBoxes.sizeDelta = new Vector3(2560, Math.Max(875, 175 * (1 + (storeEnemyBoxes.childCount / 6))));
+        searchResults.text = $"Found {storeEnemyBoxes.childCount} Enemies";
     }
 
     #endregion

@@ -60,7 +60,7 @@ public class TutorialManager : MonoBehaviour
         TextCollector collector = TurnManager.instance.MakeTextCollector("", Vector3.zero, new List<string>() { "Next" });
         foreach (string nextString in allDialogue)
         {
-            collector.textbox.text = nextString;
+            collector.textbox.text = KeywordTooltip.instance.EditText(nextString);
             yield return collector.WaitForChoice();
         }
         Destroy(collector.gameObject);
@@ -107,10 +107,10 @@ public class TutorialManager : MonoBehaviour
                 StartCoroutine(NextStep());
                 break;
 
-            case 4: //introduce cooldowns
+            case 4: //introduce Cooldowns
                 listOfPlayers[0].AddAbility(FileManager.instance.FindPlayerAbility("Joust"), false);
                 yield return ClickThroughDialogue(new List<string>()
-                { "The ability you used has a cooldown, so you can't use it again this round. Instead use its other ability." });
+                { "The ability you used has a Cooldown, so you can't use it again this round. Instead use its other ability." });
 
                 yield return TurnManager.instance.NewRound();
                 currentStep = 5;
@@ -122,7 +122,7 @@ public class TutorialManager : MonoBehaviour
                 { "You killed your first enemy! Now it's time to explain Emotions.",
                 "Everyone begins with random emotions. Emotions are super-effective against other emotions, and have their own effects.",
                 "Happy beats Angry, which beats Sad, which beats Happy. Neutral is neutral against everything else.",
-                "This game, your Knight started off Angry, which means they have a higher Attack, but they get Stunned each time they kill an enemy.",
+                "This game, your Knight started off Angry, which means they deal more damage, but they get Stunned each time they kill an enemy.",
                 "Your Knight being Stunned means they're forced skip their next turn." });
 
                 currentStep = 6;
@@ -153,8 +153,8 @@ public class TutorialManager : MonoBehaviour
 
                 yield return ClickThroughDialogue(new List<string>()
                 { "This Page is Happy. Happy is super effective against Angry, which puts your Knight at a disadvantage.",
-                "Normally, your Knight would take their turn first, because they have the higher Speed. But they’re Stunned right now.",
-                "So instead it's your Angel's turn. Use the Angel’s ability to heal the Knight." });
+                "Normally, your Knight would take their turn first because they have the highest Speed. But they’re Stunned right now.",
+                "So instead your Angel will get to act first. Use the Angel’s ability to heal the Knight." });
 
                 currentCharacter = listOfPlayers[1]; //wait for angel's next turn
                 currentStep = 8;
@@ -170,8 +170,8 @@ public class TutorialManager : MonoBehaviour
                 listOfPlayers[1].AddAbility(FileManager.instance.FindPlayerAbility("Induce Sadness"), false);
 
                 yield return ClickThroughDialogue(new List<string>()
-                { "Your Angel is Happy, which means it can use an extra ability when it doesn't attack, but all its abilities have longer cooldowns.",
-                "Since your Angel didn’t attack, it can use an extra ability. But Share Healing is on cooldown for now.",
+                { "Your Angel is Happy, which means it can use an extra ability when it doesn't attack, but all its abilities have longer Cooldowns.",
+                "Since your Angel didn’t attack, it can use an extra ability. But Share Healing is on Cooldown for now.",
                 "Instead, you can change the Page’s Emotion to let your Knight gain the advantage."});
                 break;
 
