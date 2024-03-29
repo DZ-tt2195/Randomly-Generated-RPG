@@ -148,8 +148,8 @@ public class TitleScreen : MonoBehaviour
             nextCharacter.transform.SetParent(weaponBoxes[i].transform.parent);
             nextCharacter.transform.localPosition = new Vector3(-1050, 0, 0);
             weaponBoxes[i].ReceiveWeapon(nextCharacter.weapon);
-            for (int j = 1; j<nextCharacter.listOfAbilities.Count; j++)
-                abilityBoxes[i * 5 + j - 1].ReceiveAbility(true, nextCharacter.listOfAbilities[j]);
+            for (int j = 0; j<nextCharacter.listOfRandomAbilities.Count; j++)
+                abilityBoxes[i * 5 + j].ReceiveAbility(true, nextCharacter.listOfRandomAbilities[j]);
         }
     }
 

@@ -107,7 +107,7 @@ public class Ability : MonoBehaviour
 
     public bool CanPlay(Character user)
     {
-        if (data.myName == "Skip Turn")
+        if (data.myName.Equals("Skip Turn"))
             return true;
         if (currentCooldown > 0)
             return false;
@@ -458,11 +458,15 @@ public class Ability : MonoBehaviour
                         break;
 
                     case "TARGETSINCREASEACTIVECOOLDOWN":
-                        foreach (Ability ability in target.listOfAbilities)
+                        foreach (Ability ability in target.listOfAutoAbilities)
+                            if (ability.currentCooldown > 0) ability.currentCooldown++;
+                        foreach (Ability ability in target.listOfRandomAbilities)
                             if (ability.currentCooldown > 0) ability.currentCooldown++;
                         break;
                     case "TARGETSREDUCEACTIVECOOLDOWN":
-                        foreach (Ability ability in target.listOfAbilities)
+                        foreach (Ability ability in target.listOfAutoAbilities)
+                            if (ability.currentCooldown > 0) ability.currentCooldown--;
+                        foreach (Ability ability in target.listOfRandomAbilities)
                             if (ability.currentCooldown > 0) ability.currentCooldown--;
                         break;
 

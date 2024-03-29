@@ -85,7 +85,7 @@ public class TurnManager : MonoBehaviour
     public IEnumerator NewWave()
     {
         instructions.text = "";
-        instructions.gameObject.transform.parent.gameObject.SetActive(false);
+        listOfBoxes[0].gameObject.transform.parent.gameObject.SetActive(false);
         DisableCharacterButtons();
 
         yield return WaitTime();
@@ -310,7 +310,7 @@ public class TurnManager : MonoBehaviour
 
         if (character.weapon != null)
             SaveManager.instance.SaveWeapon(character.weapon.data);
-        foreach (Ability ability in character.listOfAbilities)
+        foreach (Ability ability in character.listOfRandomAbilities)
             SaveManager.instance.SaveAbility(character.name, ability.data);
     }
 
@@ -330,7 +330,7 @@ public class TurnManager : MonoBehaviour
 
     public List<Character> AllCharacters()
     {
-        List<Character> allTargets = new List<Character>();
+        List<Character> allTargets = new();
         allTargets.AddRange(listOfPlayers);
         allTargets.AddRange(listOfEnemies);
         return allTargets;

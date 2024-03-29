@@ -20,34 +20,47 @@ public class AbilityBox : MonoBehaviour
     {
         this.ability = ability;
         try { button.interactable = disableOverlay; } catch (NullReferenceException) { /*do nothing*/ };
-        textName.text = ability.data.myName;
-        hover.NewDescription(ability.editedDescription);
 
-        if (ability.data.baseCooldown > 0)
-        {
-            textCountdown.transform.parent.gameObject.SetActive(true);
-            textCountdown.text = $"{ability.data.baseCooldown}";
-        }
-        else
+        if (ability == null)
         {
             textCountdown.transform.parent.gameObject.SetActive(false);
-        }
-
-        if (!disableOverlay && ability.currentCooldown > 0)
-        {
-            cantUse.transform.parent.gameObject.SetActive(true);
-            cantUse.text = $"{ability.currentCooldown}";
-        }
-        else if (!disableOverlay && button != null && !button.interactable)
-        {
             cantUse.transform.parent.gameObject.SetActive(true);
             cantUse.text = "X";
-        }
-        else
-        {
-            cantUse.transform.parent.gameObject.SetActive(false);
+            image.color = Color.red;
+            hover.enabled = false;
         }
 
-        image.color = (ability.data.typeOne == AbilityType.Attack || ability.data.typeTwo == AbilityType.Attack) ? Color.red : Color.blue;
+        else
+        {
+            textName.text = ability.data.myName;
+            hover.enabled = true;
+            hover.NewDescription(ability.editedDescription);
+            image.color = (ability.data.typeOne == AbilityType.Attack || ability.data.typeTwo == AbilityType.Attack) ? Color.red : Color.blue;
+
+            if (ability.data.baseCooldown > 0)
+            {
+                textCountdown.transform.parent.gameObject.SetActive(true);
+                textCountdown.text = $"{ability.data.baseCooldown}";
+            }
+            else
+            {
+                textCountdown.transform.parent.gameObject.SetActive(false);
+            }
+
+            if (!disableOverlay && ability.currentCooldown > 0)
+            {
+                cantUse.transform.parent.gameObject.SetActive(true);
+                cantUse.text = $"{ability.currentCooldown}";
+            }
+            else if (!disableOverlay && button != null && !button.interactable)
+            {
+                cantUse.transform.parent.gameObject.SetActive(true);
+                cantUse.text = "X";
+            }
+            else
+            {
+                cantUse.transform.parent.gameObject.SetActive(false);
+            }
+        }
     }
 }

@@ -110,9 +110,9 @@ public class ScreenOverlay : MonoBehaviour
         stats2.text = secondStat;
 
         int nextBox = 0;
-        for (int i = 0; i < character.listOfAbilities.Count; i++)
+        for (int i = 0; i < character.listOfRandomAbilities.Count; i++)
         {
-            Ability nextAbility = character.listOfAbilities[i];
+            Ability nextAbility = character.listOfRandomAbilities[i];
             if (nextAbility.data.myName != "Skip Turn")
             {
                 listOfBoxes[nextBox].gameObject.SetActive(true);

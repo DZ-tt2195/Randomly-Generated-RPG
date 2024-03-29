@@ -80,7 +80,7 @@ public class TutorialManager : MonoBehaviour
 
             case 2: //right click on knight
                 TurnManager.instance.AddPlayer(listOfPlayers[0]); //add knight
-                listOfPlayers[0].AddAbility(FileManager.instance.FindPlayerAbility("Stab"), false);
+                listOfPlayers[0].AddAbility(FileManager.instance.FindPlayerAbility("Stab"), false, false);
 
                 TextCollector collector2 = TurnManager.instance.MakeTextCollector(
                     "You have the same 3 party members each game. Right click on the Knight to see what they do.",
@@ -108,7 +108,7 @@ public class TutorialManager : MonoBehaviour
                 break;
 
             case 4: //introduce Cooldowns
-                listOfPlayers[0].AddAbility(FileManager.instance.FindPlayerAbility("Joust"), false);
+                listOfPlayers[0].AddAbility(FileManager.instance.FindPlayerAbility("Joust"), false, false);
                 yield return ClickThroughDialogue(new List<string>()
                 { "The Ability you used has a Cooldown, so you can't use it again this round. Instead use the other Ability." });
 
@@ -130,7 +130,7 @@ public class TutorialManager : MonoBehaviour
 
             case 6: //introduce angel
                 TurnManager.instance.AddPlayer(listOfPlayers[1]); //add angel
-                listOfPlayers[1].AddAbility(FileManager.instance.FindPlayerAbility("Share Healing"), false);
+                listOfPlayers[1].AddAbility(FileManager.instance.FindPlayerAbility("Share Healing"), false, false);
 
                 TextCollector collector6 = TurnManager.instance.MakeTextCollector(
                     "Here's your 2nd party member. Right click on the Angel to read what they do.",
@@ -166,7 +166,7 @@ public class TutorialManager : MonoBehaviour
                 break;
 
             case 8: //introduce happy
-                listOfPlayers[1].AddAbility(FileManager.instance.FindPlayerAbility("Induce Sadness"), false);
+                listOfPlayers[1].AddAbility(FileManager.instance.FindPlayerAbility("Induce Sadness"), false, false);
 
                 yield return ClickThroughDialogue(new List<string>()
                 { "Your Angel is Happy, which means it can use an extra Ability when it doesn't attack, but all its Abilities have longer Cooldowns.",
@@ -178,8 +178,8 @@ public class TutorialManager : MonoBehaviour
                 Log.instance.AddText("");
                 yield return TurnManager.instance.NewWave();
 
-                listOfPlayers[0].AddAbility(FileManager.instance.FindPlayerAbility("Intimidation"), false);
-                listOfPlayers[1].AddAbility(FileManager.instance.FindPlayerAbility("Delegate"), false);
+                listOfPlayers[0].AddAbility(FileManager.instance.FindPlayerAbility("Intimidation"), false, false);
+                listOfPlayers[1].AddAbility(FileManager.instance.FindPlayerAbility("Delegate"), false, false);
 
                 TurnManager.instance.CreateEnemy(FileManager.instance.FindBonusEnemy("Page"), Emotion.Neutral, 0);
                 TurnManager.instance.CreateEnemy(FileManager.instance.FindBonusEnemy("Crow"), Emotion.Neutral, 0);
@@ -196,7 +196,7 @@ public class TutorialManager : MonoBehaviour
 
             case 10: //introduce wizard
                 TurnManager.instance.AddPlayer(listOfPlayers[2]); //add angel
-                listOfPlayers[2].AddAbility(FileManager.instance.FindPlayerAbility("Falling Rocks"), false);
+                listOfPlayers[2].AddAbility(FileManager.instance.FindPlayerAbility("Falling Rocks"), false, false);
 
                 TextCollector collector10 = TurnManager.instance.MakeTextCollector(
                     "Finally, your 3rd party member is the Wizard. Right click on them to read what they do.",
@@ -227,7 +227,7 @@ public class TutorialManager : MonoBehaviour
 
             case 12: //introduce sad
                 yield return ClickThroughDialogue(new List<string>()
-                { "Your Wizard is Sad, which means everytime it attacks, it'll lose some health. But when it uses a non-attacking Ability, it'll regain health.",
+                { "Your Wizard is Sad, which means everytime it attacks, it'll gain some health. But if it doesn't attack, it'll lose health.",
                 "Attacking Abilities are colored red, and non-attacking ones are colored blue."});
 
                 currentStep = 13;
@@ -249,8 +249,8 @@ public class TutorialManager : MonoBehaviour
                 break;
 
             case 14: //finish off the enemies
-                listOfPlayers[2].AddAbility(FileManager.instance.FindPlayerAbility("Sap Energy"), false);
-                listOfPlayers[2].AddAbility(FileManager.instance.FindPlayerAbility("Ice Blast"), false);
+                listOfPlayers[2].AddAbility(FileManager.instance.FindPlayerAbility("Sap Energy"), false, false);
+                listOfPlayers[2].AddAbility(FileManager.instance.FindPlayerAbility("Ice Blast"), false, false);
 
                 yield return ClickThroughDialogue(new List<string>()
                 { "Anyways, now that the enemies are Grounded, your Knight is capable of hitting them, so finish them off."});

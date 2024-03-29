@@ -10,15 +10,15 @@ public class EnemyCharacter : Character
     {
         yield return null;
         List<Ability> availableAbilities = new();
-        foreach (Ability ability in this.listOfAbilities)
+        foreach (Ability ability in this.listOfRandomAbilities)
         {
-            if (ability.data.myName != "Skip Turn" && ability.CanPlay(this))
+            if (ability.CanPlay(this))
             {
                 availableAbilities.Add(ability);
             }
         }
 
-        chosenAbility = (availableAbilities.Count == 0) ? listOfAbilities[0] : availableAbilities[Random.Range(0, availableAbilities.Count)];
+        chosenAbility = (availableAbilities.Count == 0) ? listOfAutoAbilities[0] : availableAbilities[Random.Range(0, availableAbilities.Count)];
     }
 
     protected override IEnumerator ChooseTarget(Ability ability)

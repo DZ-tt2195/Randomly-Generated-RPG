@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static Ability;
 
 public class PlayerCharacter : Character
 {
@@ -10,49 +9,56 @@ public class PlayerCharacter : Character
 
     protected override IEnumerator ChooseAbility(int logged)
     {
+        List<Ability> allAbilities = new();
+        allAbilities.AddRange(listOfAutoAbilities);
+        allAbilities.AddRange(listOfRandomAbilities);
+
         EnableAbilityBoxes();
         TurnManager.instance.instructions.text = $"{this.name}'s Turn: Choose an ability.";
         yield return WaitForChoice();
-        chosenAbility = this.listOfAbilities[choice];
+        chosenAbility = allAbilities[choice];
         this.border.gameObject.SetActive(false);
     }
 
     void EnableAbilityBoxes()
     {
         TurnManager.instance.listOfBoxes[0].transform.parent.gameObject.SetActive(true);
-        int canUse = 0;
+        int boxesFilled = 0;
 
-        for (int i = 0; i < TurnManager.instance.listOfBoxes.Count; i++)
+        for (int i = 0; i<listOfAutoAbilities.Count; i++)
         {
-            AbilityBox box = TurnManager.instance.listOfBoxes[i];
-            try
-            {
-                box.ReceiveAbility(listOfAbilities[i].CanPlay(this), listOfAbilities[i]);
-                box.gameObject.SetActive(true);
+            AbilityBox box = TurnManager.instance.listOfBoxes[boxesFilled];
+            box.ReceiveAbility(listOfAutoAbilities[i].CanPlay(this), listOfAutoAbilities[i]);
 
-                box.button.onClick.RemoveAllListeners();
-                int buttonNum = i;
-                box.button.onClick.AddListener(() => ReceiveChoice(buttonNum));
-                canUse += (box.button.interactable) ? 1 : 0;
-            }
-            catch (ArgumentOutOfRangeException)
-            {
-                box.gameObject.SetActive(false);
-            }
+            box.button.onClick.RemoveAllListeners();
+            int buttonNum = i;
+            box.button.onClick.AddListener(() => ReceiveChoice(buttonNum));
 
-            if (FileManager.instance.mode == FileManager.GameMode.Tutorial)
-            {
-                if (i == 0)
-                    box.gameObject.SetActive(false);
-                if (canUse > 0)
-                    TurnManager.instance.listOfBoxes[0].gameObject.SetActive(true);
-            }
+            boxesFilled++;
+        }
+
+        for (int i = 0; i<listOfRandomAbilities.Count; i++)
+        {
+            AbilityBox box = TurnManager.instance.listOfBoxes[boxesFilled];
+            box.ReceiveAbility(listOfRandomAbilities[i].CanPlay(this), listOfRandomAbilities[i]);
+
+            box.button.onClick.RemoveAllListeners();
+            int buttonNum = i;
+            box.button.onClick.AddListener(() => ReceiveChoice(buttonNum));
+
+            boxesFilled++;
+        }
+
+        for (int i = boxesFilled; i < TurnManager.instance.listOfBoxes.Count; i++)
+        {
+            TurnManager.instance.listOfBoxes[i].ReceiveAbility(true, null);
         }
     }
 
     protected override IEnumerator ChooseTarget(Ability ability)
     {
-        TurnManager.instance.listOfBoxes[0].transform.parent.gameObject.SetActive(false);
+        foreach (AbilityBox box in TurnManager.instance.listOfBoxes)
+            box.gameObject.SetActive(false);
 
         if (ability.singleTarget.Contains(ability.data.teamTarget))
         {

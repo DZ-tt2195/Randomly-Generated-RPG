@@ -22,7 +22,8 @@ public class Character : MonoBehaviour
     [Foldout("Player info", true)]
         protected Ability chosenAbility;
         [ReadOnly] public CharacterData data;
-        [ReadOnly] public List<Ability> listOfAbilities = new();
+        [ReadOnly] public List<Ability> listOfAutoAbilities = new();
+        [ReadOnly] public List<Ability> listOfRandomAbilities = new();
         CharacterType myType;
         [ReadOnly] public Weapon weapon;
 
@@ -95,15 +96,16 @@ public class Character : MonoBehaviour
         this.baseLuck = data.baseLuck*multiplier;
         this.baseAccuracy = data.baseAccuracy*multiplier;
 
-        AddAbility(FileManager.instance.FindOtherAbility("Skip Turn"), false);
+        AddAbility(FileManager.instance.FindOtherAbility("Skip Turn"), true, false);
+        AddAbility(FileManager.instance.FindOtherAbility("Resurrect"), true, false);
         this.myImage.sprite = Resources.Load<Sprite>($"Characters/{this.name}");
 
         StartCoroutine(ChangePosition(data.startingPosition, -1));
         StartCoroutine(ChangeEmotion(startingEmotion, -1));
 
         foreach (AbilityData data in listOfAbilityData)
-            AddAbility(data, abilitiesBeginWithCooldown);
-        listOfAbilities = listOfAbilities.OrderBy(o => o.data.baseCooldown).ToList();
+            AddAbility(data, false, abilitiesBeginWithCooldown);
+        listOfRandomAbilities = listOfRandomAbilities.OrderBy(o => o.data.baseCooldown).ToList();
 
         if (weaponData == null)
         {
@@ -137,11 +139,14 @@ public class Character : MonoBehaviour
         }
     }
 
-    internal void AddAbility(AbilityData ability, bool startWithCooldown)
+    internal void AddAbility(AbilityData ability, bool auto, bool startWithCooldown)
     {
         Ability newAbility = this.gameObject.AddComponent<Ability>();
-        listOfAbilities.Add(newAbility);
         newAbility.SetupAbility(ability, startWithCooldown);
+        if (auto)
+            listOfAutoAbilities.Add(newAbility);
+        else
+            listOfRandomAbilities.Add(newAbility);
     }
 
 #endregion
@@ -470,7 +475,13 @@ public class Character : MonoBehaviour
                 yield return ConfirmDecisions();
         }
 
-        foreach (Ability ability in listOfAbilities)
+        foreach (Ability ability in listOfAutoAbilities)
+        {
+            if (!extraAbility && ability.currentCooldown > 0)
+                ability.currentCooldown--;
+        }
+
+        foreach (Ability ability in listOfRandomAbilities)
         {
             if (!extraAbility && ability.currentCooldown > 0)
                 ability.currentCooldown--;
@@ -564,9 +575,9 @@ public class Character : MonoBehaviour
             {
                 Log.instance.AddText($"{this.name} is Sad.", logged);
                 if (chosenAbility.data.typeOne != AbilityType.Attack && chosenAbility.data.typeTwo != AbilityType.Attack)
-                    yield return GainHealth((int)(this.baseHealth * 0.15f), logged + 1);
-                else
                     yield return TakeDamage((int)(this.baseHealth * 0.15f), logged + 1);
+                else
+                    yield return GainHealth((int)(this.baseHealth * 0.15f), logged + 1);
             }
         }
 

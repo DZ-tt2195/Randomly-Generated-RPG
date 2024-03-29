@@ -23,7 +23,7 @@
       "0",
       "1",
       "GROUNDED",
-      "18,",
+      "19,",
       "",
       "Alayna Danner|Dominion: Adventures|(Page)"
     ],
@@ -37,7 +37,7 @@
       "0",
       "1",
       "AIRBORNE",
-      "19,",
+      "20,",
       "",
       "Una Fricker|Classic Sixth Edition|(Storm Crow)"
     ]
