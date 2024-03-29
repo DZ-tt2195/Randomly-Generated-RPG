@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 8925941336271624596}
   - component: {fileID: 6522906812863605637}
   m_Layer: 5
-  m_Name: Text Collector
+  m_Name: Collector
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

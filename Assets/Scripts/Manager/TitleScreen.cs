@@ -100,9 +100,16 @@ public class TitleScreen : MonoBehaviour
 
     void GeneratePlayers()
     {
-        foreach (Character player in FileManager.instance.listOfPlayers)
-            Destroy(player.gameObject);
-        FileManager.instance.listOfPlayers.Clear();
+        try
+        {
+            foreach (Character player in FileManager.instance.listOfPlayers)
+                Destroy(player.gameObject);
+            FileManager.instance.listOfPlayers.Clear();
+        }
+        catch
+        {
+            //do nothing
+        }
 
         List<CharacterData> playerData = DataLoader.ReadCharacterData("Player Data");
         for (int i = 0; i < playerData.Count; i++)
@@ -167,7 +174,7 @@ public class TitleScreen : MonoBehaviour
         PlayerPrefs.SetInt(name, (isOn) ? 1 : 0);
     }
 
-    public void CheatChallengeToggle()
+    public void CheatChallengeMenu()
     {
         cheatChallengeObject.SetActive(!cheatChallengeObject.activeSelf);
     }

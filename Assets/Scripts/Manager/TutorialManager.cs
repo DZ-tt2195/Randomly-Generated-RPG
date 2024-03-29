@@ -72,7 +72,7 @@ public class TutorialManager : MonoBehaviour
         {
             case 1: //introduce the concept of the game
                 yield return ClickThroughDialogue(new List<string>()
-                { "This is a turn-based RPG where you're given random abilities against random enemies." });
+                { "This is a turn-based RPG where you're given random Abilities against random enemies." });
 
                 currentStep = 2;
                 StartCoroutine(NextStep());
@@ -83,7 +83,7 @@ public class TutorialManager : MonoBehaviour
                 listOfPlayers[0].AddAbility(FileManager.instance.FindPlayerAbility("Stab"), false);
 
                 TextCollector collector2 = TurnManager.instance.MakeTextCollector(
-                    "You have 3 party members each game. Right click on the Knight to read what they do.",
+                    "You have the same 3 party members each game. Right click on the Knight to see what they do.",
                     Vector3.zero);
                 while (ScreenOverlay.instance.displayedScreen != CurrentScreen.Character)
                     yield return null;
@@ -100,7 +100,7 @@ public class TutorialManager : MonoBehaviour
                 TurnManager.instance.CreateEnemy(FileManager.instance.FindBonusEnemy("Page"), Emotion.Neutral, 0);
 
                 yield return ClickThroughDialogue(new List<string>()
-                { "Here's your first enemy. Use the first Knight's ability against it." });
+                { "Here's your first enemy. Use the Knight's Ability against it." });
 
                 yield return TurnManager.instance.NewRound();
                 currentStep = 4;
@@ -110,7 +110,7 @@ public class TutorialManager : MonoBehaviour
             case 4: //introduce Cooldowns
                 listOfPlayers[0].AddAbility(FileManager.instance.FindPlayerAbility("Joust"), false);
                 yield return ClickThroughDialogue(new List<string>()
-                { "The ability you used has a Cooldown, so you can't use it again this round. Instead use its other ability." });
+                { "The Ability you used has a Cooldown, so you can't use it again this round. Instead use the other Ability." });
 
                 yield return TurnManager.instance.NewRound();
                 currentStep = 5;
@@ -120,10 +120,9 @@ public class TutorialManager : MonoBehaviour
             case 5: //introduce angry
                 yield return ClickThroughDialogue(new List<string>()
                 { "You killed your first enemy! Now it's time to explain Emotions.",
-                "Everyone begins with random emotions. Emotions are super-effective against other emotions, and have their own effects.",
+                "Everyone begins with a random Emotion. Emotions are effective against other Emotions, and have their own effects.",
                 "Happy beats Angry, which beats Sad, which beats Happy. Neutral is neutral against everything else.",
-                "This game, your Knight started off Angry, which means they deal more damage, but they get Stunned each time they kill an enemy.",
-                "Your Knight being Stunned means they're forced skip their next turn." });
+                "This game, your Knight started off Angry, which means they'll deal more damage, but they get Stunned each time they kill an enemy."});
 
                 currentStep = 6;
                 StartCoroutine(NextStep());
@@ -154,7 +153,7 @@ public class TutorialManager : MonoBehaviour
                 yield return ClickThroughDialogue(new List<string>()
                 { "This Page is Happy. Happy is super effective against Angry, which puts your Knight at a disadvantage.",
                 "Normally, your Knight would take their turn first because they have the highest Speed. But they’re Stunned right now.",
-                "So instead your Angel will get to act first. Use the Angel’s ability to heal the Knight." });
+                "So instead your Angel will get to act first. Use the Angel’s Ability to heal the Knight." });
 
                 currentCharacter = listOfPlayers[1]; //wait for angel's next turn
                 currentStep = 8;
@@ -170,14 +169,17 @@ public class TutorialManager : MonoBehaviour
                 listOfPlayers[1].AddAbility(FileManager.instance.FindPlayerAbility("Induce Sadness"), false);
 
                 yield return ClickThroughDialogue(new List<string>()
-                { "Your Angel is Happy, which means it can use an extra ability when it doesn't attack, but all its abilities have longer Cooldowns.",
-                "Since your Angel didn’t attack, it can use an extra ability. But Share Healing is on Cooldown for now.",
+                { "Your Angel is Happy, which means it can use an extra Ability when it doesn't attack, but all its Abilities have longer Cooldowns.",
+                "Since your Angel didn’t attack, it can use an extra Ability. But the Ability it just used is on Cooldown.",
                 "Instead, you can change the Page’s Emotion to let your Knight gain the advantage."});
                 break;
 
             case 9: //introduce grounded and airborne
                 Log.instance.AddText("");
                 yield return TurnManager.instance.NewWave();
+
+                listOfPlayers[0].AddAbility(FileManager.instance.FindPlayerAbility("Intimidation"), false);
+                listOfPlayers[1].AddAbility(FileManager.instance.FindPlayerAbility("Delegate"), false);
 
                 TurnManager.instance.CreateEnemy(FileManager.instance.FindBonusEnemy("Page"), Emotion.Neutral, 0);
                 TurnManager.instance.CreateEnemy(FileManager.instance.FindBonusEnemy("Crow"), Emotion.Neutral, 0);
@@ -209,9 +211,9 @@ public class TutorialManager : MonoBehaviour
                 StartCoroutine(NextStep());
                 break;
 
-            case 11: //introduce wizard abilities
+            case 11: //introduce wizard Abilities
                 yield return ClickThroughDialogue(new List<string>()
-                { "The Wizard has an ability that can force all airborne enemies to be Grounded. When it’s their turn, use Falling Rocks against the 2 Crows." });
+                { "The Wizard has an Ability that can force all Airborne enemies to be Grounded. When it’s their turn, use Falling Rocks against the 2 Crows." });
 
                 currentCharacter = listOfPlayers[2]; //wait for wizard's next turn
                 currentStep = 12;
@@ -225,8 +227,8 @@ public class TutorialManager : MonoBehaviour
 
             case 12: //introduce sad
                 yield return ClickThroughDialogue(new List<string>()
-                { "Your Wizard is Sad, which means everytime it attacks, it loses some health. But when it uses a non-attacking ability, it regains health.",
-                "Attacking abilities are colored red, and non-attacking ones are colored blue."});
+                { "Your Wizard is Sad, which means everytime it attacks, it'll lose some health. But when it uses a non-attacking Ability, it'll regain health.",
+                "Attacking Abilities are colored red, and non-attacking ones are colored blue."});
 
                 currentStep = 13;
                 yield return (NextStep());
@@ -234,7 +236,7 @@ public class TutorialManager : MonoBehaviour
 
             case 13: //emotions guide
                 TextCollector collector13 = TurnManager.instance.MakeTextCollector(
-                    "You can always remind yourself of the Emotions by opening the Emotion Guide in the bottom right.",
+                    "You can always remind yourself of the Emotion and their effects by opening the Emotion Guide in the bottom right.",
                     Vector3.zero);
                 while (ScreenOverlay.instance.displayedScreen != CurrentScreen.Emotion)
                     yield return null;
@@ -247,17 +249,17 @@ public class TutorialManager : MonoBehaviour
                 break;
 
             case 14: //finish off the enemies
-                listOfPlayers[2].AddAbility(FileManager.instance.FindPlayerAbility("Blaze"), false);
-                listOfPlayers[2].AddAbility(FileManager.instance.FindPlayerAbility("Fog"), false);
+                listOfPlayers[2].AddAbility(FileManager.instance.FindPlayerAbility("Sap Energy"), false);
+                listOfPlayers[2].AddAbility(FileManager.instance.FindPlayerAbility("Ice Blast"), false);
 
                 yield return ClickThroughDialogue(new List<string>()
-                { "Anyways, now that the enemies are Grounded, your Knight is capable of hitting them, so finish off those enemies."});
+                { "Anyways, now that the enemies are Grounded, your Knight is capable of hitting them, so finish them off."});
                 break;
 
             case 15: //tutorial over
                 TurnManager.instance.GameFinished("Tutorial finished.", "");
                 TextCollector collector15 = TurnManager.instance.MakeTextCollector(
-                    "You’ve completed the tutorial. In the actual game, each character has 5 random abilities, and they also have random Weapons. Good luck!",
+                    "You’ve completed the tutorial. In the actual game, each character has 5 random Abilities, and they also have random Weapons. Good luck!",
                     Vector3.zero);
                 break;
         }
