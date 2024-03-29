@@ -25,7 +25,6 @@ public class Character : MonoBehaviour
         [ReadOnly] public List<Ability> listOfAutoAbilities = new();
         [ReadOnly] public List<Ability> listOfRandomAbilities = new();
         CharacterType myType;
-        [ReadOnly] public Weapon weapon;
 
     [Foldout("Base Stats", true)]
         protected int baseHealth;
@@ -62,7 +61,6 @@ public class Character : MonoBehaviour
         [ReadOnly] public Image border;
         [ReadOnly] public Button myButton;
         [ReadOnly] public Image myImage;
-        [ReadOnly] public Image weaponImage;
         TMP_Text statusText;
         TMP_Text healthText;
 
@@ -77,12 +75,11 @@ public class Character : MonoBehaviour
         border = transform.Find("border").GetComponent<Image>();
         statusText = transform.Find("Status Text").GetComponent<TMP_Text>();
         healthText = transform.Find("Health %").GetChild(0).GetComponent<TMP_Text>();
-        weaponImage = transform.Find("Weapon Image").GetComponent<Image>();
     }
 
     public void SetupCharacter(CharacterType type, CharacterData characterData,
         List<AbilityData> listOfAbilityData, Emotion startingEmotion, bool abilitiesBeginWithCooldown,
-        float multiplier = 1f, WeaponData weaponData = null)
+        float multiplier = 1f)
     {
         data = characterData;
         myType = type;
@@ -107,36 +104,11 @@ public class Character : MonoBehaviour
             AddAbility(data, false, abilitiesBeginWithCooldown);
         listOfRandomAbilities = listOfRandomAbilities.OrderBy(o => o.data.baseCooldown).ToList();
 
-        if (weaponData == null)
-        {
-            weaponImage.gameObject.SetActive(false);
-            this.weapon = null;
-        }
-        else
-        {
-            this.weapon = this.gameObject.AddComponent<Weapon>();
-            this.weapon.SetupWeapon(weaponData);
-            weaponImage.sprite = Resources.Load<Sprite>($"Weapons/{this.weapon.data.myName}");
-        }
-        WeaponStartingEffects();
-    }
-
-    void WeaponStartingEffects()
-    {
         modifyAttack = 1f;
         modifyDefense = 1f;
         modifyAccuracy = 1f;
         modifyLuck = 1f;
         modifyAccuracy = 1f;
-
-        if (this.weapon != null)
-        {
-            modifyAttack += this.weapon.data.startingAttack;
-            modifyDefense += this.weapon.data.startingDefense;
-            modifySpeed += this.weapon.data.startingSpeed;
-            modifyLuck += this.weapon.data.startingLuck;
-            modifyAccuracy += this.weapon.data.startingAccuracy;
-        }
     }
 
     internal void AddAbility(AbilityData ability, bool auto, bool startWithCooldown)
@@ -206,47 +178,27 @@ public class Character : MonoBehaviour
             _ => 1f,
         };
 
-        float weaponEffect = 1;
-        if (weapon != null && weapon.StatCalculation())
-            weaponEffect += weapon.data.modifyAttack;
-
-        return this.baseAttack * modifyAttack * emotionEffect * weaponEffect;
+        return this.baseAttack * modifyAttack * emotionEffect;
     }
 
     public float CalculateDefense()
     {
-        float weaponEffect = 1;
-        if (weapon != null && weapon.StatCalculation())
-            weaponEffect += weapon.data.modifyDefense;
-
-        return this.baseDefense * modifyDefense * weaponEffect;
+        return this.baseDefense * modifyDefense;
     }
 
     public float CalculateSpeed()
     {
-        float weaponEffect = 1;
-        if (weapon != null && weapon.StatCalculation())
-            weaponEffect += weapon.data.modifySpeed;
-
-        return this.baseSpeed * modifySpeed * weaponEffect;
+        return this.baseSpeed * modifySpeed;
     }
 
     public float CalculateLuck()
     {
-        float weaponEffect = 1;
-        if (weapon != null && weapon.StatCalculation())
-            weaponEffect += weapon.data.modifyLuck;
-
-        return this.baseLuck * modifyLuck * weaponEffect;
+        return this.baseLuck * modifyLuck;
     }
 
     public float CalculateAccuracy()
     {
-        float weaponEffect = 1;
-        if (weapon != null && weapon.StatCalculation())
-            weaponEffect += weapon.data.modifyAccuracy;
-
-        return this.baseAccuracy * modifyAccuracy * weaponEffect;
+        return this.baseAccuracy * modifyAccuracy;
     }
 
     #endregion
@@ -298,9 +250,6 @@ public class Character : MonoBehaviour
         currentPosition = Position.Dead;
         healthText.text = $"0%";
 
-        if (this.weapon != null)
-            yield return this.weapon.WeaponEffect(TurnManager.SpliceString(this.weapon.data.onDeath), logged+1);
-
         if (this.currentHealth == 0)
         {
             Log.instance.AddText($"{(this.name)} has died.", logged);
@@ -329,7 +278,11 @@ public class Character : MonoBehaviour
         yield return ChangePosition(data.startingPosition, -1);
         yield return ChangeEmotion((Emotion)UnityEngine.Random.Range(1, 5), -1);
 
-        WeaponStartingEffects();
+        modifyAttack = 1f;
+        modifyDefense = 1f;
+        modifyAccuracy = 1f;
+        modifyLuck = 1f;
+        modifyAccuracy = 1f;
     }
 
     public IEnumerator ChangeAttack(float effect, int logged)
@@ -460,8 +413,7 @@ public class Character : MonoBehaviour
 
     IEnumerator StartOfTurn(int logged)
     {
-        if (weapon != null)
-            yield return weapon.WeaponEffect(TurnManager.SpliceString(weapon.data.startOfTurn), logged);
+        yield return null;
     }
 
     IEnumerator ResolveTurn(int logged, bool extraAbility)
@@ -512,9 +464,6 @@ public class Character : MonoBehaviour
                     yield return TutorialManager.instance.NextStep();
                 }
             }
-
-            if (chosenAbility.killed && this.weapon != null)
-                yield return this.weapon.WeaponEffect(TurnManager.SpliceString(weapon.data.onKill), logged+1);
         }
     }
 
@@ -580,9 +529,6 @@ public class Character : MonoBehaviour
                     yield return GainHealth((int)(this.baseHealth * 0.15f), logged + 1);
             }
         }
-
-        if (this.weapon != null)
-            yield return this.weapon.WeaponEffect(TurnManager.SpliceString(weapon.data.endOfTurn), logged);
     }
 
 #endregion

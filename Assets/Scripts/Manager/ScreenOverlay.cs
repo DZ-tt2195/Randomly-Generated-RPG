@@ -22,11 +22,6 @@ public class ScreenOverlay : MonoBehaviour
         [SerializeField] TMP_Text characterName;
         [SerializeField] TMP_Text characterDescription;
         [SerializeField] TMP_Text characterArtCredit;
-        [SerializeField] Transform weaponStuff;
-        [SerializeField] Image weaponImage;
-        [SerializeField] TMP_Text weaponName;
-        [SerializeField] TMP_Text weaponDescription;
-        [SerializeField] TMP_Text weaponArtCredit;
         [SerializeField] TMP_Text emotionText;
         [SerializeField] TMP_Text stats1;
         [SerializeField] TMP_Text stats2;
@@ -91,19 +86,6 @@ public class ScreenOverlay : MonoBehaviour
         characterName.text = character.name;
         characterDescription.text = character.data.description;
         characterArtCredit.text = character.data.artCredit;
-
-        if (character.weapon == null)
-        {
-            weaponStuff.gameObject.SetActive(false);
-        }
-        else
-        {
-            weaponStuff.gameObject.SetActive(true);
-            weaponName.text = character.weapon.data.myName;
-            weaponImage.sprite = character.weaponImage.sprite;
-            weaponDescription.text = character.weapon.editedDescription;
-            weaponArtCredit.text = character.weapon.data.artCredit;
-        }
 
         emotionText.text = KeywordTooltip.instance.EditText($"{character.currentEmotion}");
         stats1.text = firstStat;

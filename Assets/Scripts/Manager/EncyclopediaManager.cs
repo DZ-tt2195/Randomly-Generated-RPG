@@ -29,12 +29,6 @@ public class EncyclopediaManager : MonoBehaviour
     [SerializeField] TMP_Dropdown type1Dropdown;
     [SerializeField] TMP_Dropdown type2Dropdown;
 
-    [Foldout("Weapon Search", true)]
-    List<WeaponBox> listOfWeaponBoxes = new();
-    [SerializeField] WeaponBox weaponBoxPrefab;
-    [SerializeField] RectTransform storeWeaponBoxes;
-    [SerializeField] TMP_InputField weaponInput;
-
     [Foldout("Enemy Search", true)]
     List<Character> listOfEnemyBoxes = new();
     [SerializeField] GameObject characterPrefab;
@@ -86,18 +80,6 @@ public class EncyclopediaManager : MonoBehaviour
         angelAbilities = angelAbilities.OrderBy(box => box.ability.data.myName).ToList();
         wizardAbilities = wizardAbilities.OrderBy(box => box.ability.data.myName).ToList();
 
-        weaponInput.onValueChanged.AddListener(ChangeWeaponInput);
-        FileManager.instance.listOfWeapons = FileManager.instance.listOfWeapons.OrderBy(data => data.myName).ToList();
-        foreach (WeaponData data in FileManager.instance.listOfWeapons)
-        {
-            Weapon nextWeapon = this.gameObject.AddComponent<Weapon>();
-            nextWeapon.SetupWeapon(data);
-
-            WeaponBox nextBox = Instantiate(weaponBoxPrefab, null);
-            listOfWeaponBoxes.Add(nextBox);
-            nextBox.ReceiveWeapon(nextWeapon);
-        }
-
         FileManager.instance.listOfEnemies = FileManager.instance.listOfEnemies.OrderBy(data => data.myName).ToList();
         enemyInput.onValueChanged.AddListener(ChangeEnemyInput);
         foreach (CharacterData data in FileManager.instance.listOfEnemies)
@@ -109,7 +91,6 @@ public class EncyclopediaManager : MonoBehaviour
                 Destroy(child.gameObject);
         }
 
-        SearchWeapon();
         SearchEnemy();
         SearchAbility();
     }
@@ -219,28 +200,6 @@ public class EncyclopediaManager : MonoBehaviour
 
         storeAbilityBoxes.sizeDelta = new Vector3(2560, Math.Max(875, 175 * (1+(storeAbilityBoxes.childCount / 6))));
         searchResults.text = $"Found {storeAbilityBoxes.childCount} Abilities";
-    }
-
-    #endregion
-
-#region Weapon Search
-
-    void ChangeWeaponInput(string text)
-    {
-        SearchWeapon();
-    }
-
-    void SearchWeapon()
-    {
-        foreach (WeaponBox nextBox in listOfWeaponBoxes)
-        {
-            if (CompareStrings(weaponInput.text, nextBox.weapon.data.myName) || CompareStrings(weaponInput.text, nextBox.weapon.editedDescription))
-                nextBox.transform.SetParent(storeWeaponBoxes);
-            else
-                nextBox.transform.SetParent(null);
-        }
-        storeWeaponBoxes.sizeDelta = new Vector3(2560, Math.Max(875, 175 * (1 + (storeWeaponBoxes.childCount / 6))));
-        searchResults.text = $"Found {storeWeaponBoxes.childCount} Weapons";
     }
 
     #endregion

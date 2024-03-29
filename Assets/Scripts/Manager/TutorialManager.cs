@@ -34,9 +34,10 @@ public class TutorialManager : MonoBehaviour
         }
         else
         {
-            ScreenOverlay.instance.SetAnimationSpeed(0.5f);
+            ScreenOverlay.instance.SetAnimationSpeed(0.4f);
             ScreenOverlay.instance.SetUndo(true);
             GeneratePlayers();
+
             currentStep = 1;
             StartCoroutine(NextStep());
         }
@@ -72,7 +73,7 @@ public class TutorialManager : MonoBehaviour
         {
             case 1: //introduce the concept of the game
                 yield return ClickThroughDialogue(new List<string>()
-                { "This is a turn-based RPG where you're given random Abilities against random enemies." });
+                { "This is a turn-based RPG where you're given random Abilities against random Enemies." });
 
                 currentStep = 2;
                 StartCoroutine(NextStep());
@@ -100,7 +101,7 @@ public class TutorialManager : MonoBehaviour
                 TurnManager.instance.CreateEnemy(FileManager.instance.FindBonusEnemy("Page"), Emotion.Neutral, 0);
 
                 yield return ClickThroughDialogue(new List<string>()
-                { "Here's your first enemy. Use the Knight's Ability against it." });
+                { "Here's your first Enemy. Use the Knight's Ability against it." });
 
                 yield return TurnManager.instance.NewRound();
                 currentStep = 4;
@@ -119,10 +120,10 @@ public class TutorialManager : MonoBehaviour
 
             case 5: //introduce angry
                 yield return ClickThroughDialogue(new List<string>()
-                { "You killed your first enemy! Now it's time to explain Emotions.",
+                { "You killed your first Enemy! Now it's time to explain Emotions.",
                 "Everyone begins with a random Emotion. Emotions are effective against other Emotions, and have their own effects.",
                 "Happy beats Angry, which beats Sad, which beats Happy. Neutral is neutral against everything else.",
-                "This game, your Knight started off Angry, which means they'll deal more damage, but they get Stunned each time they kill an enemy."});
+                "This game, your Knight started off Angry, which means they'll deal more damage, but they get Stunned each time they kill an Enemy."});
 
                 currentStep = 6;
                 StartCoroutine(NextStep());
@@ -213,7 +214,7 @@ public class TutorialManager : MonoBehaviour
 
             case 11: //introduce wizard Abilities
                 yield return ClickThroughDialogue(new List<string>()
-                { "The Wizard has an Ability that can force all Airborne enemies to be Grounded. When it’s their turn, use Falling Rocks against the 2 Crows." });
+                { "The Wizard has an Ability that can force all Airborne Enemies to be Grounded. When it’s their turn, use Falling Rocks against the 2 Crows." });
 
                 currentCharacter = listOfPlayers[2]; //wait for wizard's next turn
                 currentStep = 12;
@@ -253,13 +254,13 @@ public class TutorialManager : MonoBehaviour
                 listOfPlayers[2].AddAbility(FileManager.instance.FindPlayerAbility("Ice Blast"), false, false);
 
                 yield return ClickThroughDialogue(new List<string>()
-                { "Anyways, now that the enemies are Grounded, your Knight is capable of hitting them, so finish them off."});
+                { "Anyways, now that the Enemies are Grounded, your Knight is capable of hitting them, so finish them off."});
                 break;
 
             case 15: //tutorial over
                 TurnManager.instance.GameFinished("Tutorial finished.", "");
                 TextCollector collector15 = TurnManager.instance.MakeTextCollector(
-                    "You’ve completed the tutorial. In the actual game, each character has 5 random Abilities, and they also have random Weapons. Good luck!",
+                    "You’ve completed the tutorial. In the actual game, each character gets 5 random Abilities to fight 5 waves of Enemies. Good luck!",
                     Vector3.zero);
                 break;
         }

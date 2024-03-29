@@ -5,31 +5,6 @@ using System;
 using MyBox;
 
 [Serializable]
-public class WeaponData
-{
-    public string myName;
-    public string description;
-    public string skillNumbers;
-    public string statCalculation;
-    public string startOfTurn;
-    public string endOfTurn;
-    public string newWave;
-    public string onDeath;
-    public string onKill;
-    public float startingAttack;
-    public float startingDefense;
-    public float startingSpeed;
-    public float startingLuck;
-    public float startingAccuracy;
-    public float modifyAttack;
-    public float modifyDefense;
-    public float modifySpeed;
-    public float modifyLuck;
-    public float modifyAccuracy;
-    public string artCredit;
-}
-
-[Serializable]
 public class CharacterData
 {
     public string myName;
@@ -138,46 +113,6 @@ public class DataLoader
             newAbility.modifyAccuracy = StringToFloat(line[15]);
             newAbility.miscNumber = StringToInt(line[16]);
             newAbility.teamTarget = StringToTeamTarget(line[17]);
-        }
-        return nextData;
-    }
-
-    public static List<WeaponData> ReadWeaponData(string fileToLoad)
-    {
-        List<WeaponData> nextData = new();
-        var data = TSVReader.ReadFile(fileToLoad);
-        for (int i = 2; i < data.Length; i++)
-        {
-            string[] line = data[i];
-            WeaponData newWeapon = new();
-            nextData.Add(newWeapon);
-
-            for (int j = 0; j < line.Length; j++)
-            {
-                line[j] = line[j].Trim().Replace("\"", "").Replace("\\", "").Replace("]", "");
-                //Debug.Log(line[j]);
-            }
-
-            newWeapon.myName = line[0];
-            newWeapon.description = line[1];
-            newWeapon.skillNumbers = line[2];
-            newWeapon.statCalculation = line[3];
-            newWeapon.startOfTurn = line[4];
-            newWeapon.endOfTurn = line[5];
-            newWeapon.newWave = line[6];
-            newWeapon.onDeath = line[7];
-            newWeapon.onKill = line[8];
-            newWeapon.startingAttack = StringToFloat(line[9]);
-            newWeapon.startingDefense = StringToFloat(line[10]);
-            newWeapon.startingSpeed = StringToFloat(line[11]);
-            newWeapon.startingLuck = StringToFloat(line[12]);
-            newWeapon.startingAccuracy = StringToFloat(line[13]);
-            newWeapon.modifyAttack = StringToFloat(line[14]);
-            newWeapon.modifyDefense = StringToFloat(line[15]);
-            newWeapon.modifySpeed = StringToFloat(line[16]);
-            newWeapon.modifyLuck = StringToFloat(line[17]);
-            newWeapon.modifyAccuracy = StringToFloat(line[18]);
-            newWeapon.artCredit = line[19].Trim().Replace("|", "\n");
         }
         return nextData;
     }

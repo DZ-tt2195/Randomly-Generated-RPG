@@ -119,25 +119,6 @@ public class TurnManager : MonoBehaviour
                         FileManager.instance.listOfEnemies[UnityEngine.Random.Range(0, FileManager.instance.listOfEnemies.Count)],
                         (Emotion)UnityEngine.Random.Range(1, 5), 0);
 
-                speedQueue = AllCharacters();
-                while (speedQueue.Count > 0)
-                {
-                    DisableCharacterButtons();
-                    speedQueue = speedQueue.OrderByDescending(o => o.CalculateSpeed()).ToList();
-
-                    Character nextInLine = speedQueue[0];
-                    speedQueue.RemoveAt(0);
-
-                    if (nextInLine != null && nextInLine.CalculateHealth() > 0)
-                    {
-                        instructions.text = "";
-                        nextInLine.border.gameObject.SetActive(true);
-
-                        if (nextInLine.weapon != null)
-                            yield return nextInLine.weapon.WeaponEffect(SpliceString(nextInLine.weapon.data.newWave), 0);
-                        nextInLine.border.gameObject.SetActive(false);
-                    }
-                }
                 StartCoroutine(NewRound());
             }
         }
@@ -308,8 +289,6 @@ public class TurnManager : MonoBehaviour
             }
         }
 
-        if (character.weapon != null)
-            SaveManager.instance.SaveWeapon(character.weapon.data);
         foreach (Ability ability in character.listOfRandomAbilities)
             SaveManager.instance.SaveAbility(character.name, ability.data);
     }

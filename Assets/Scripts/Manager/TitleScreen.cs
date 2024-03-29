@@ -30,7 +30,6 @@ public class TitleScreen : MonoBehaviour
     [Foldout("Info Screen", true)]
     [SerializeField] List<Button> infoScreenToggles = new();
     [SerializeField] GameObject infoScreen;
-    [SerializeField] List<WeaponBox> weaponBoxes = new();
     [SerializeField] List<AbilityBox> abilityBoxes = new();
 
     #endregion
@@ -88,8 +87,6 @@ public class TitleScreen : MonoBehaviour
         FileManager.instance.listOfBonusEnemies = DataLoader.ReadCharacterData("Bonus Enemy Data");
         FileManager.instance.listOfPlayerAbilities = DataLoader.ReadAbilityData("Player Ability Data");
         FileManager.instance.listOfOtherAbilities = DataLoader.ReadAbilityData("Other Ability Data");
-        FileManager.instance.listOfWeapons = DataLoader.ReadWeaponData("Weapon Data");
-        FileManager.instance.listOfWeapons = FileManager.instance.listOfWeapons.Shuffle();
 
         GeneratePlayers();
 
@@ -115,16 +112,11 @@ public class TitleScreen : MonoBehaviour
         for (int i = 0; i < playerData.Count; i++)
         {
             PlayerCharacter nextCharacter = Instantiate(playerPrefab).AddComponent<PlayerCharacter>();
-            WeaponData randomWeapon;
-
-            try { randomWeapon = FileManager.instance.listOfWeapons[i]; }
-            catch { randomWeapon = null; }
-
             List<AbilityData> allAbilities = FileManager.instance.ConvertNumbersToAbilityData(playerData[i].skillNumbers, true).Shuffle();
             List<AbilityData> usedAbilities = new();
 
             int counter = -1;
-            while (usedAbilities.Count < 5)
+            while (usedAbilities.Count < 6)
             {
                 counter++;
                 try
@@ -142,14 +134,13 @@ public class TitleScreen : MonoBehaviour
                 }
             }
 
-            nextCharacter.SetupCharacter(CharacterType.Player, playerData[i], usedAbilities, (Emotion)UnityEngine.Random.Range(1,5), false, 1f, randomWeapon);
+            nextCharacter.SetupCharacter(CharacterType.Player, playerData[i], usedAbilities, (Emotion)UnityEngine.Random.Range(1,5), false, 1f);
             FileManager.instance.listOfPlayers.Add(nextCharacter);
 
-            nextCharacter.transform.SetParent(weaponBoxes[i].transform.parent);
+            nextCharacter.transform.SetParent(abilityBoxes[i*6].transform.parent);
             nextCharacter.transform.localPosition = new Vector3(-1050, 0, 0);
-            weaponBoxes[i].ReceiveWeapon(nextCharacter.weapon);
             for (int j = 0; j<nextCharacter.listOfRandomAbilities.Count; j++)
-                abilityBoxes[i * 5 + j].ReceiveAbility(true, nextCharacter.listOfRandomAbilities[j]);
+                abilityBoxes[i * 6 + j].ReceiveAbility(true, nextCharacter.listOfRandomAbilities[j]);
         }
     }
 
