@@ -31,10 +31,10 @@ public class RightClickMe : MonoBehaviour, IPointerClickHandler
         string stats2 = "";
 
         stats1 += $"Health: {character.CalculateHealth()} / {character.data.baseHealth}\n";
-        stats1 += $"Attack: {character.CalculateAttack():F1}\n";
-        stats1 += $"Defense: {character.CalculateDefense():F1}\n";
+        stats1 += $"Attack: {character.CalculateAttack()}\n";
+        stats1 += $"Defense: {character.CalculateDefense()}\n";
 
-        stats2 += $"Speed: {character.CalculateSpeed():F1}\n";
+        stats2 += $"Speed: {character.CalculateSpeed()}\n";
         stats2 += $"Luck: {character.CalculateLuck() * 100:F1}%\n";
         stats2 += $"Accuracy: {character.CalculateAccuracy() * 100:F1}%\n";
 

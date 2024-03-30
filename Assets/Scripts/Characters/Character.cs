@@ -28,14 +28,18 @@ public class Character : MonoBehaviour
 
     [Foldout("Base Stats", true)]
         protected int baseHealth;
-        protected int baseAttack;
         protected int baseDefense;
         protected int baseSpeed;
         protected float baseLuck;
         protected float baseAccuracy;
 
     [Foldout("Current Stats", true)]
-        protected int currentHealth;
+        private int _currentHealth;
+        [ReadOnly] public int currentHealth
+        {
+            get { return _currentHealth; }
+            private set { _currentHealth = value; healthText.text = value.ToString();}
+        }
         private Position _currentPosition;
         [ReadOnly] public Position currentPosition
         {
@@ -49,12 +53,12 @@ public class Character : MonoBehaviour
             get { return _currentEmotion; }
             private set{
             statusText.text = KeywordTooltip.instance.EditText($"{value} {data.myName}\n{currentPosition}"); _currentEmotion = value;}
-    }
-        protected float modifyAttack = 1f;
-        protected float modifyDefense = 1f;
-        protected float modifySpeed = 1f;
-        protected float modifyLuck = 1f;
-        protected float modifyAccuracy = 1f;    
+        }
+        protected int modifyAttack;
+        protected int modifyDefense;
+        protected int modifySpeed;
+        protected float modifyLuck;
+        protected float modifyAccuracy;    
         [ReadOnly] public int turnsStunned { get; private set; }
 
     [Foldout("UI", true)]
@@ -87,7 +91,6 @@ public class Character : MonoBehaviour
         data.description = KeywordTooltip.instance.EditText(data.description);
 
         this.baseHealth = (int)(data.baseHealth * multiplier); currentHealth = this.baseHealth;
-        this.baseAttack = (int)(data.baseAttack * multiplier);
         this.baseDefense = (int)(data.baseDefense * multiplier);
         this.baseSpeed = (int)(data.baseSpeed * multiplier);
         this.baseLuck = data.baseLuck*multiplier;
@@ -104,11 +107,11 @@ public class Character : MonoBehaviour
             AddAbility(data, false, abilitiesBeginWithCooldown);
         listOfRandomAbilities = listOfRandomAbilities.OrderBy(o => o.data.baseCooldown).ToList();
 
-        modifyAttack = 1f;
-        modifyDefense = 1f;
-        modifyAccuracy = 1f;
-        modifyLuck = 1f;
-        modifyAccuracy = 1f;
+        modifyAttack = 0;
+        modifyDefense = 0;
+        modifySpeed = 0;
+        modifyLuck = 0f;
+        modifyAccuracy = 0f;
     }
 
     internal void AddAbility(AbilityData ability, bool auto, bool startWithCooldown)
@@ -170,35 +173,35 @@ public class Character : MonoBehaviour
         return (float)currentHealth / this.baseHealth;
     }
 
-    public float CalculateAttack()
+    public int CalculateAttack()
     {
-        float emotionEffect = currentEmotion switch
+        int emotionEffect = currentEmotion switch
         {
-            Emotion.Angry => 1.2f,
-            _ => 1f,
+            Emotion.Angry => 2,
+            _ => 0,
         };
 
-        return this.baseAttack * modifyAttack * emotionEffect;
+        return modifyAttack + emotionEffect;
     }
 
-    public float CalculateDefense()
+    public int CalculateDefense()
     {
-        return this.baseDefense * modifyDefense;
+        return this.baseDefense + modifyDefense;
     }
 
-    public float CalculateSpeed()
+    public int CalculateSpeed()
     {
-        return this.baseSpeed * modifySpeed;
+        return this.baseSpeed + modifySpeed;
     }
 
     public float CalculateLuck()
     {
-        return this.baseLuck * modifyLuck;
+        return this.baseLuck + modifyLuck;
     }
 
     public float CalculateAccuracy()
     {
-        return this.baseAccuracy * modifyAccuracy;
+        return this.baseAccuracy + modifyAccuracy;
     }
 
     #endregion
@@ -278,50 +281,50 @@ public class Character : MonoBehaviour
         yield return ChangePosition(data.startingPosition, -1);
         yield return ChangeEmotion((Emotion)UnityEngine.Random.Range(1, 5), -1);
 
-        modifyAttack = 1f;
-        modifyDefense = 1f;
-        modifyAccuracy = 1f;
-        modifyLuck = 1f;
-        modifyAccuracy = 1f;
+        modifyAttack = 0;
+        modifyDefense = 0;
+        modifySpeed = 0;
+        modifyLuck = 0f;
+        modifyAccuracy = 0f;
     }
 
-    public IEnumerator ChangeAttack(float effect, int logged)
+    public IEnumerator ChangeAttack(int effect, int logged)
     {
         if (this == null) yield break;
 
-        modifyAttack = Mathf.Clamp(modifyAttack += effect, 0.25f, 1.75f);
-        TurnManager.instance.CreateVisual($"{(effect > 0 ? '+' : '-')}{100*Math.Abs(effect)}% ATTACK", this.transform.localPosition);
+        modifyAttack = Math.Clamp(modifyAttack += effect, -3, 3);
+        TurnManager.instance.CreateVisual($"{(effect > 0 ? '+' : '-')}{Math.Abs(effect)} ATTACK", this.transform.localPosition);
 
         if (effect < 0)
-            Log.instance.AddText($"{(this.name)}'s Attack is reduced by {100*Math.Abs(effect)}%.", logged);
+            Log.instance.AddText($"{(this.name)}'s Attack is reduced by {effect}%.", logged);
         if (effect > 0)
-            Log.instance.AddText($"{(this.name)}'s Attack is increased by {100*Math.Abs(effect)}%.", logged);
+            Log.instance.AddText($"{(this.name)}'s Attack is increased by {effect}%.", logged);
     }
 
-    public IEnumerator ChangeDefense(float effect, int logged)
+    public IEnumerator ChangeDefense(int effect, int logged)
     {
         if (this == null) yield break;
 
-        modifyDefense = Mathf.Clamp(modifyDefense += effect, 0.25f, 1.75f);
-        TurnManager.instance.CreateVisual($"{(effect > 0 ? '+' : '-')}{100*Math.Abs(effect)}% DEFENSE", this.transform.localPosition);
+        modifyDefense = Math.Clamp(modifyDefense += effect, -3, 3);
+        TurnManager.instance.CreateVisual($"{(effect > 0 ? '+' : '-')}{Math.Abs(effect)} DEFENSE", this.transform.localPosition);
 
         if (effect < 0)
-            Log.instance.AddText($"{(this.name)}'s Defense is reduced by {100*Math.Abs(effect)}%.", logged);
+            Log.instance.AddText($"{(this.name)}'s Defense is reduced by {Math.Abs(effect)}.", logged);
         if (effect > 0)
-            Log.instance.AddText($"{(this.name)}'s Defense is increased by {100*Math.Abs(effect)}%.", logged);
+            Log.instance.AddText($"{(this.name)}'s Defense is increased by {Math.Abs(effect)}.", logged);
     }
 
-    public IEnumerator ChangeSpeed(float effect, int logged)
+    public IEnumerator ChangeSpeed(int effect, int logged)
     {
         if (this == null) yield break;
 
-        modifySpeed = Mathf.Clamp(modifySpeed += effect, 0.25f, 1.75f);
-        TurnManager.instance.CreateVisual($"{(effect > 0 ? '+' : '-')}{100*Math.Abs(effect)}% SPEED", this.transform.localPosition);
+        modifySpeed = Math.Clamp(modifySpeed += effect, -3, 3);
+        TurnManager.instance.CreateVisual($"{(effect > 0 ? '+' : '-')}{Math.Abs(effect)} SPEED", this.transform.localPosition);
 
         if (effect < 0)
-            Log.instance.AddText($"{(this.name)}'s Speed is reduced by {100*Math.Abs(effect)}%.", logged);
+            Log.instance.AddText($"{(this.name)}'s Speed is reduced by {Math.Abs(effect)}.", logged);
         if (effect > 0)
-            Log.instance.AddText($"{(this.name)}'s Speed is increased by {100*Math.Abs(effect)}%.", logged);
+            Log.instance.AddText($"{(this.name)}'s Speed is increased by {Math.Abs(effect)}.", logged);
     }
 
     public IEnumerator ChangeLuck(float effect, int logged)

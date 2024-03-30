@@ -25,7 +25,17 @@ public class Ability : MonoBehaviour
     public void SetupAbility(AbilityData data, bool startWithCooldown)
     {
         this.data = data;
-        editedDescription = KeywordTooltip.instance.EditText(data.description);
+        editedDescription = data.description
+            .Replace("POWER", data.attackPower.ToString())
+            .Replace("REGAIN", data.healthRegain.ToString())
+            .Replace("ATTACKSTAT", Mathf.Abs(data.modifyAttack).ToString())
+            .Replace("SPEEDSTAT", Mathf.Abs(data.modifySpeed).ToString())
+            .Replace("DEFENSESTAT", Mathf.Abs(data.modifyDefense).ToString())
+            .Replace("ACCURACYSTAT", Mathf.Abs(data.modifyAccuracy*100).ToString())
+            .Replace("LUCKSTAT", Mathf.Abs(data.modifyLuck*100).ToString())
+            .Replace("MISC", data.miscNumber.ToString())
+        ;
+        editedDescription = KeywordTooltip.instance.EditText(editedDescription);
         currentCooldown = (startWithCooldown) ? data.baseCooldown : 0;
         self = GetComponent<Character>();
     }
@@ -47,55 +57,55 @@ public class Ability : MonoBehaviour
         }
     }
 
-    float RollCritical(float value)
+    int RollCritical(float value)
     {
         float roll = Random.Range(0f, 1f);
         bool result = roll <= value;
         if (result && FileManager.instance.mode == FileManager.GameMode.Main)
         {
             Log.instance.AddText("Critical hit!", 1);
-            return 1.5f;
+            return 2;
         }
         else
         {
-            return 1f;
+            return 0;
         }
     }
 
-    public float Effectiveness(Character user, Character target, int logged)
+    public int Effectiveness(Character user, Character target, int logged)
     {
-        float answer = 1;
+        int answer = 0;
         if (user.currentEmotion == Emotion.Happy)
         {
             answer = target.currentEmotion switch
             {
-                (Emotion.Angry) => 1.25f,
-                (Emotion.Sad) => 0.75f,
-                _ => 1.0f,
+                (Emotion.Angry) => 1,
+                (Emotion.Sad) => -1,
+                _ => 0,
             };
         }
         else if (user.currentEmotion == Emotion.Angry)
         {
             answer = target.currentEmotion switch
             {
-                (Emotion.Sad) => 1.25f,
-                (Emotion.Happy) => 0.75f,
-                _ => 1.0f,
+                (Emotion.Sad) => 1,
+                (Emotion.Happy) => -1,
+                _ => 0,
             };
         }
         else if (user.currentEmotion == Emotion.Sad)
         {
             answer = target.currentEmotion switch
             {
-                (Emotion.Happy) => 1.25f,
-                (Emotion.Angry) => 0.75f,
-                _ => 1.0f,
+                (Emotion.Happy) => 1,
+                (Emotion.Angry) => -1,
+                _ => 0,
             };
         }
 
-        if (answer > 1)
+        if (answer > 0)
             Log.instance.AddText("It's super effective!", logged);
-        else if (answer < 1)
+        else if (answer < 0)
             Log.instance.AddText("It's not very effective...", logged);
 
         return answer;
@@ -459,15 +469,15 @@ public class Ability : MonoBehaviour
 
                     case "TARGETSINCREASEACTIVECOOLDOWN":
                         foreach (Ability ability in target.listOfAutoAbilities)
-                            if (ability.currentCooldown > 0) ability.currentCooldown++;
+                            if (ability.currentCooldown > 0) ability.currentCooldown+=data.miscNumber;
                         foreach (Ability ability in target.listOfRandomAbilities)
-                            if (ability.currentCooldown > 0) ability.currentCooldown++;
+                            if (ability.currentCooldown > 0) ability.currentCooldown+=data.miscNumber;
                         break;
                     case "TARGETSREDUCEACTIVECOOLDOWN":
                         foreach (Ability ability in target.listOfAutoAbilities)
-                            if (ability.currentCooldown > 0) ability.currentCooldown--;
+                            if (ability.currentCooldown > 0) ability.currentCooldown-=data.miscNumber;
                         foreach (Ability ability in target.listOfRandomAbilities)
-                            if (ability.currentCooldown > 0) ability.currentCooldown--;
+                            if (ability.currentCooldown > 0) ability.currentCooldown-=data.miscNumber;
                         break;
 
                     default:
@@ -485,13 +495,12 @@ public class Ability : MonoBehaviour
     {
         if (RollAccuracy(user.CalculateAccuracy()))
         {
-            float damageVariation = (FileManager.instance.mode == FileManager.GameMode.Main) ? Random.Range(0.8f, 1.2f) : 1;
-            float effectiveness = Effectiveness(user, target, logged);
-            float critical = RollCritical(user.CalculateLuck());
-            float attack = user.CalculateAttack();
-            float defense = target.CalculateDefense();
+            int effectiveness = Effectiveness(user, target, logged);
+            int critical = RollCritical(user.CalculateLuck());
+            int attack = user.CalculateAttack();
+            int defense = target.CalculateDefense();
 
-            int finalDamage = Mathf.Max(0, (int)(damageVariation * critical * effectiveness + (attack * data.attackPower) - defense));
+            int finalDamage = Mathf.Max(0, (int)(critical + effectiveness + (attack + data.attackPower) - defense));
             return finalDamage;
         }
         else
