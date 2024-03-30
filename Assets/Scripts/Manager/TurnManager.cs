@@ -47,7 +47,6 @@ public class TurnManager : MonoBehaviour
     [Foldout("Info tracking", true)]
     int currentWave;
     int currentRound;
-    float waveMultiplier = 1f;
     bool isBattling;
 
 #endregion
@@ -85,15 +84,13 @@ public class TurnManager : MonoBehaviour
     public IEnumerator NewWave()
     {
         instructions.text = "";
-        listOfBoxes[0].gameObject.transform.parent.gameObject.SetActive(false);
+        instructions.transform.parent.gameObject.SetActive(false);
         DisableCharacterButtons();
 
         yield return WaitTime();
 
         currentWave++;
-        waveMultiplier = 1 + (currentWave - 1) * 0.02f;
-
-        listOfSpeedImages[0].transform.parent.parent.gameObject.SetActive(false);
+        instructions.transform.parent.parent.gameObject.SetActive(false);
 
         if (currentWave > 5)
         {
@@ -106,9 +103,23 @@ public class TurnManager : MonoBehaviour
             else if (FileManager.instance.mode == FileManager.GameMode.Tutorial)
                 Log.instance.AddText($"WAVE {currentWave} / 3");
 
+            if (currentWave > 1 && FileManager.instance.mode == FileManager.GameMode.Main && PlayerPrefs.GetInt("Scaling Players") == 1)
+            {
+                Log.instance.AddText($"Players get +{currentWave - 1} to their stats. (Scaling Players)");
+                foreach (Character player in listOfPlayers)
+                {
+                    yield return player.ChangeAttack(1, 1);
+                    yield return player.ChangeDefense(1, 1);
+                    yield return player.ChangeSpeed(1, 1);
+                    yield return player.ChangeLuck(0.1f, 1);
+                    yield return player.ChangeAccuracy(0.1f, 1);
+                }
+                Log.instance.AddText("");
+            }
+
             if (currentWave > 1 && FileManager.instance.mode == FileManager.GameMode.Main && PlayerPrefs.GetInt("Scaling Enemies") == 1)
             {
-                Log.instance.AddText($"Enemies are now {100 * (waveMultiplier - 1):F0}% stronger.");
+                Log.instance.AddText($"Enemies now have +{currentWave-1} to their stats. (Scaling Enemies)");
                 Log.instance.AddText("");
             }
 
@@ -120,31 +131,6 @@ public class TurnManager : MonoBehaviour
                         (Emotion)UnityEngine.Random.Range(1, 5), 0);
 
                 StartCoroutine(NewRound());
-            }
-        }
-    }
-
-    void DisplaySpeedQueue()
-    {
-        listOfSpeedImages[0].transform.parent.parent.gameObject.SetActive(true);
-        speedQueue = speedQueue.OrderByDescending(o => o.CalculateSpeed()).ToList();
-
-        for (int i = 0; i < listOfSpeedImages.Count; i++)
-        {
-            try
-            {
-                listOfSpeedImages[i].gameObject.SetActive(true);
-                listOfSpeedImages[i].character = speedQueue[i];
-                listOfSpeedImages[i].image.sprite = speedQueue[i].myImage.sprite;
-                listOfSpeedImages[i].image.color = speedQueue[i].myImage.color;
-            }
-            catch (ArgumentOutOfRangeException)
-            {
-                listOfSpeedImages[i].gameObject.SetActive(false);
-            }
-            catch (MissingReferenceException)
-            {
-                listOfSpeedImages[i].gameObject.SetActive(false);
             }
         }
     }
@@ -196,17 +182,6 @@ public class TurnManager : MonoBehaviour
             StartCoroutine(NewRound());
     }
 
-    bool CheckLost()
-    {
-        foreach (Character character in listOfPlayers)
-        {
-            if (character.CalculateHealth() > 0)
-                return false;
-        }
-
-        return true;
-    }
-
     public void GameFinished(string message1, string message2)
     {
         try
@@ -232,9 +207,20 @@ public class TurnManager : MonoBehaviour
         Log.instance.enabled = false;
     }
 
+    bool CheckLost()
+    {
+        foreach (Character character in listOfPlayers)
+        {
+            if (character.CalculateHealth() > 0)
+                return false;
+        }
+
+        return true;
+    }
+
 #endregion
 
-#region Misc
+#region UI
 
     void FixedUpdate()
     {
@@ -242,6 +228,72 @@ public class TurnManager : MonoBehaviour
         if (Character.borderColor < 0 || Character.borderColor > 1)
             borderDecrease = !borderDecrease;
     }
+
+    public void DisableCharacterButtons()
+    {
+        foreach (Character character in listOfPlayers)
+        {
+            character.myButton.interactable = false;
+            character.border.gameObject.SetActive(false);
+        }
+        foreach (Character character in listOfEnemies)
+        {
+            character.myButton.interactable = false;
+            character.border.gameObject.SetActive(false);
+        }
+    }
+
+    public TextCollector MakeTextCollector(string header, Vector3 position, List<string> buttons = null)
+    {
+        TextCollector collector = Instantiate(undoBox);
+        collector.StatsSetup(header, position);
+
+        try
+        {
+            foreach (string text in buttons)
+                collector.AddTextButton(text);
+        }
+        catch (NullReferenceException)
+        {
+            //do nothing
+        }
+        return collector;
+    }
+
+    public void CreateVisual(string text, Vector3 position)
+    {
+        PointsVisual pv = Instantiate(pointsVisual, FileManager.instance.canvas);
+        pv.Setup(text, position);
+    }
+
+    void DisplaySpeedQueue()
+    {
+        listOfSpeedImages[0].transform.parent.parent.gameObject.SetActive(true);
+        speedQueue = speedQueue.OrderByDescending(o => o.CalculateSpeed()).ToList();
+
+        for (int i = 0; i < listOfSpeedImages.Count; i++)
+        {
+            try
+            {
+                listOfSpeedImages[i].gameObject.SetActive(true);
+                listOfSpeedImages[i].character = speedQueue[i];
+                listOfSpeedImages[i].image.sprite = speedQueue[i].myImage.sprite;
+                listOfSpeedImages[i].image.color = speedQueue[i].myImage.color;
+            }
+            catch (ArgumentOutOfRangeException)
+            {
+                listOfSpeedImages[i].gameObject.SetActive(false);
+            }
+            catch (MissingReferenceException)
+            {
+                listOfSpeedImages[i].gameObject.SetActive(false);
+            }
+        }
+    }
+
+#endregion
+
+#region Misc
 
     public void CreateEnemy(CharacterData dataFile, Emotion startingEmotion, int logged)
     {
@@ -265,7 +317,7 @@ public class TurnManager : MonoBehaviour
             nextCharacter.name = dataFile.myName;
             Log.instance.AddText($"{Log.Article(nextCharacter.name)} entered the fight.", logged);
 
-            nextCharacter.SetupCharacter(CharacterType.Enemy, dataFile, FileManager.instance.ConvertNumbersToAbilityData(dataFile.skillNumbers, false), startingEmotion, true, PlayerPrefs.GetInt("Scaling Enemies") == 1 ? waveMultiplier : 1f);
+            nextCharacter.SetupCharacter(CharacterType.Enemy, dataFile, FileManager.instance.ConvertNumbersToAbilityData(dataFile.skillNumbers, false), startingEmotion, true, PlayerPrefs.GetInt("Scaling Enemies") == 1 ? currentWave-1 : 0);
             SaveManager.instance.SaveEnemy(dataFile);
 
             if (FileManager.instance.mode == FileManager.GameMode.Main && PlayerPrefs.GetInt("Enemies Stunned") == 1)
@@ -293,20 +345,6 @@ public class TurnManager : MonoBehaviour
             SaveManager.instance.SaveAbility(character.name, ability.data);
     }
 
-    public void DisableCharacterButtons()
-    {
-        foreach (Character character in listOfPlayers)
-        {
-            character.myButton.interactable = false;
-            character.border.gameObject.SetActive(false);
-        }
-        foreach (Character character in listOfEnemies)
-        {
-            character.myButton.interactable = false;
-            character.border.gameObject.SetActive(false);
-        }
-    }
-
     public List<Character> AllCharacters()
     {
         List<Character> allTargets = new();
@@ -331,29 +369,6 @@ public class TurnManager : MonoBehaviour
     public IEnumerator WaitTime()
     {
         yield return new WaitForSeconds(PlayerPrefs.GetFloat("Animation Speed"));
-    }
-
-    public TextCollector MakeTextCollector(string header, Vector3 position, List<string> buttons = null)
-    {
-        TextCollector collector = Instantiate(undoBox);
-        collector.StatsSetup(header, position);
-
-        try
-        {
-            foreach (string text in buttons)
-                collector.AddTextButton(text);
-        }
-        catch (NullReferenceException)
-        {
-            //do nothing
-        }
-        return collector;
-    }
-
-    public void CreateVisual(string text, Vector3 position)
-    {
-        PointsVisual pv = Instantiate(pointsVisual, FileManager.instance.canvas);
-        pv.Setup(text, position);
     }
 
 #endregion

@@ -134,7 +134,7 @@ public class TitleScreen : MonoBehaviour
                 }
             }
 
-            nextCharacter.SetupCharacter(CharacterType.Player, playerData[i], usedAbilities, (Emotion)UnityEngine.Random.Range(1,5), false, 1f);
+            nextCharacter.SetupCharacter(CharacterType.Player, playerData[i], usedAbilities, (Emotion)UnityEngine.Random.Range(1,5), false);
             FileManager.instance.listOfPlayers.Add(nextCharacter);
 
             nextCharacter.transform.SetParent(abilityBoxes[i*6].transform.parent);
@@ -168,6 +168,20 @@ public class TitleScreen : MonoBehaviour
     public void CheatChallengeMenu()
     {
         cheatChallengeObject.SetActive(!cheatChallengeObject.activeSelf);
+    }
+
+    public void ClearAll()
+    {
+        foreach (Toggle cheat in listOfCheats)
+        {
+            cheat.isOn = false;
+            SetPref(false, cheat.name);
+        }
+        foreach (Toggle challenge in listOfChallenges)
+        {
+            challenge.isOn = false;
+            SetPref(false, challenge.name);
+        }
     }
 
     #endregion

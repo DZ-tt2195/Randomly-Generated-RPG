@@ -29,6 +29,8 @@ public class Character : MonoBehaviour
 
     [Foldout("Base Stats", true)]
         protected int baseHealth;
+        protected int baseAttack;
+        protected int baseDefense;
         protected int baseSpeed;
         protected float baseLuck;
         protected float baseAccuracy;
@@ -83,17 +85,19 @@ public class Character : MonoBehaviour
 
     public void SetupCharacter(CharacterType type, CharacterData characterData,
         List<AbilityData> listOfAbilityData, Emotion startingEmotion, bool abilitiesBeginWithCooldown,
-        float multiplier = 1f)
+        int scaling = 0)
     {
         data = characterData;
         myType = type;
         this.name = characterData.myName;
         editedDescription = KeywordTooltip.instance.EditText(data.description);
 
-        this.baseHealth = (int)(data.baseHealth * multiplier); currentHealth = this.baseHealth;
-        this.baseSpeed = (int)(data.baseSpeed * multiplier);
-        this.baseLuck = data.baseLuck*multiplier;
-        this.baseAccuracy = data.baseAccuracy*multiplier;
+        this.baseHealth = data.baseHealth + scaling; currentHealth = this.baseHealth;
+        this.baseAttack = scaling;
+        this.baseDefense = scaling;
+        this.baseSpeed = (data.baseSpeed + scaling);
+        this.baseLuck = data.baseLuck + scaling;
+        this.baseAccuracy = data.baseAccuracy + scaling;
 
         AddAbility(FileManager.instance.FindEnemyAbility("Skip Turn"), true, false);
         AddAbility(FileManager.instance.FindEnemyAbility("Resurrect"), true, false);
@@ -125,41 +129,6 @@ public class Character : MonoBehaviour
 
 #endregion
 
-#region UI
-
-    private void FixedUpdate()
-    {
-        if (FileManager.instance.mode != FileManager.GameMode.Other)
-        {
-            this.border.SetAlpha(borderColor);
-            ScreenPosition();
-        }
-        else if (this.border != null)
-        {
-            this.border.SetAlpha(0);
-        }
-    }
-
-    void ScreenPosition()
-    {
-        if (currentPosition == Position.Airborne)
-        {
-            Vector3 newPosition = transform.localPosition;
-            int startingPosition = (myType == CharacterType.Enemy) ? 375 : -500;
-            newPosition.y = startingPosition + (25 * Mathf.Cos(Time.time * 3f));
-            transform.localPosition = newPosition;
-        }
-        else
-        {
-            Vector3 newPosition = transform.localPosition;
-            int startingPosition = (myType == CharacterType.Enemy) ? 300 : -575;
-            newPosition.y = startingPosition;
-            transform.localPosition = newPosition;
-        }
-    }
-
-    #endregion
-
 #region Stats
 
     public int CalculateHealth()
@@ -180,12 +149,12 @@ public class Character : MonoBehaviour
             _ => 0,
         };
 
-        return modifyAttack + emotionEffect;
+        return this.baseAttack + modifyAttack + emotionEffect;
     }
 
     public int CalculateDefense()
     {
-        return modifyDefense;
+        return this.baseDefense + modifyDefense;
     }
 
     public int CalculateSpeed()
@@ -281,20 +250,20 @@ public class Character : MonoBehaviour
 
     public IEnumerator ChangeAttack(int effect, int logged)
     {
-        if (this == null) yield break;
+        if (this == null || effect == 0) yield break;
 
         modifyAttack = Math.Clamp(modifyAttack += effect, -3, 3);
         TurnManager.instance.CreateVisual($"{(effect > 0 ? '+' : '-')}{Math.Abs(effect)} ATTACK", this.transform.localPosition);
 
         if (effect < 0)
-            Log.instance.AddText($"{(this.name)}'s Attack is reduced by {effect}%.", logged);
+            Log.instance.AddText($"{(this.name)}'s Attack is reduced by {effect}.", logged);
         if (effect > 0)
-            Log.instance.AddText($"{(this.name)}'s Attack is increased by {effect}%.", logged);
+            Log.instance.AddText($"{(this.name)}'s Attack is increased by {effect}.", logged);
     }
 
     public IEnumerator ChangeDefense(int effect, int logged)
     {
-        if (this == null) yield break;
+        if (this == null || effect == 0) yield break;
 
         modifyDefense = Math.Clamp(modifyDefense += effect, -3, 3);
         TurnManager.instance.CreateVisual($"{(effect > 0 ? '+' : '-')}{Math.Abs(effect)} DEFENSE", this.transform.localPosition);
@@ -307,7 +276,7 @@ public class Character : MonoBehaviour
 
     public IEnumerator ChangeSpeed(int effect, int logged)
     {
-        if (this == null) yield break;
+        if (this == null || effect == 0) yield break;
 
         modifySpeed = Math.Clamp(modifySpeed += effect, -3, 3);
         TurnManager.instance.CreateVisual($"{(effect > 0 ? '+' : '-')}{Math.Abs(effect)} SPEED", this.transform.localPosition);
@@ -320,7 +289,7 @@ public class Character : MonoBehaviour
 
     public IEnumerator ChangeLuck(float effect, int logged)
     {
-        if (this == null) yield break;
+        if (this == null || effect == 0f) yield break;
 
         modifyLuck = Mathf.Clamp(modifyLuck += effect, 0.25f, 1.75f);
         TurnManager.instance.CreateVisual($"{(effect > 0 ? '+' : '-')}{100*Math.Abs(effect)}% LUCK", this.transform.localPosition);
@@ -333,7 +302,7 @@ public class Character : MonoBehaviour
 
     public IEnumerator ChangeAccuracy(float effect, int logged)
     {
-        if (this == null) yield break;
+        if (this == null || effect == 0f) yield break;
 
         modifyAccuracy = Mathf.Clamp(modifyAccuracy += effect, 0.25f, 1.75f);
         TurnManager.instance.CreateVisual($"{(effect > 0 ? '+' : '-')}{100*Math.Abs(effect)}% ACCURACY", this.transform.localPosition);
@@ -525,6 +494,41 @@ public class Character : MonoBehaviour
         }
     }
 
-#endregion
+    #endregion
+
+#region UI
+
+    private void FixedUpdate()
+    {
+        if (FileManager.instance.mode != FileManager.GameMode.Other)
+        {
+            this.border.SetAlpha(borderColor);
+            ScreenPosition();
+        }
+        else if (this.border != null)
+        {
+            this.border.SetAlpha(0);
+        }
+    }
+
+    void ScreenPosition()
+    {
+        if (currentPosition == Position.Airborne)
+        {
+            Vector3 newPosition = transform.localPosition;
+            int startingPosition = (myType == CharacterType.Enemy) ? 375 : -500;
+            newPosition.y = startingPosition + (25 * Mathf.Cos(Time.time * 3f));
+            transform.localPosition = newPosition;
+        }
+        else
+        {
+            Vector3 newPosition = transform.localPosition;
+            int startingPosition = (myType == CharacterType.Enemy) ? 300 : -575;
+            newPosition.y = startingPosition;
+            transform.localPosition = newPosition;
+        }
+    }
+
+    #endregion
 
 }
