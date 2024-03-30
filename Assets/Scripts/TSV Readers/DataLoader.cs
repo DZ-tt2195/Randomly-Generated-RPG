@@ -10,7 +10,6 @@ public class CharacterData
     public string myName;
     public string description;
     public int baseHealth;
-    public int baseDefense;
     public int baseSpeed;
     public float baseLuck;
     public float baseAccuracy;
@@ -65,14 +64,13 @@ public class DataLoader
             newCharacter.myName = line[0];
             newCharacter.description = line[1];
             newCharacter.baseHealth = StringToInt(line[2]);
-            newCharacter.baseDefense = StringToInt(line[3]);
-            newCharacter.baseSpeed = StringToInt(line[4]);
-            newCharacter.baseLuck = StringToFloat(line[5]);
-            newCharacter.baseAccuracy = StringToFloat(line[6]);
-            newCharacter.startingPosition = (line[7] == "GROUNDED") ? Position.Grounded : Position.Airborne;
-            newCharacter.skillNumbers = line[8].Trim();
-            newCharacter.aiTargeting = line[9].Trim();
-            newCharacter.artCredit = line[10].Replace("|", "\n");
+            newCharacter.baseSpeed = StringToInt(line[3]);
+            newCharacter.baseLuck = StringToFloat(line[4]);
+            newCharacter.baseAccuracy = StringToFloat(line[5]);
+            newCharacter.startingPosition = (line[6] == "GROUNDED") ? Position.Grounded : Position.Airborne;
+            newCharacter.skillNumbers = line[7].Trim();
+            newCharacter.aiTargeting = line[8].Trim();
+            newCharacter.artCredit = line[9].Replace("|", "\n");
         }
         return nextData;
     }

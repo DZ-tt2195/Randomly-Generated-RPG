@@ -20,6 +20,7 @@ public class Character : MonoBehaviour
     public static float borderColor;
 
     [Foldout("Player info", true)]
+        [ReadOnly] public string editedDescription;
         protected Ability chosenAbility;
         [ReadOnly] public CharacterData data;
         [ReadOnly] public List<Ability> listOfAutoAbilities = new();
@@ -28,7 +29,6 @@ public class Character : MonoBehaviour
 
     [Foldout("Base Stats", true)]
         protected int baseHealth;
-        protected int baseDefense;
         protected int baseSpeed;
         protected float baseLuck;
         protected float baseAccuracy;
@@ -88,10 +88,9 @@ public class Character : MonoBehaviour
         data = characterData;
         myType = type;
         this.name = characterData.myName;
-        data.description = KeywordTooltip.instance.EditText(data.description);
+        editedDescription = KeywordTooltip.instance.EditText(data.description);
 
         this.baseHealth = (int)(data.baseHealth * multiplier); currentHealth = this.baseHealth;
-        this.baseDefense = (int)(data.baseDefense * multiplier);
         this.baseSpeed = (int)(data.baseSpeed * multiplier);
         this.baseLuck = data.baseLuck*multiplier;
         this.baseAccuracy = data.baseAccuracy*multiplier;
@@ -186,7 +185,7 @@ public class Character : MonoBehaviour
 
     public int CalculateDefense()
     {
-        return this.baseDefense + modifyDefense;
+        return modifyDefense;
     }
 
     public int CalculateSpeed()
@@ -222,7 +221,6 @@ public class Character : MonoBehaviour
         if (this == null) yield break;
 
         currentHealth = Mathf.Clamp(currentHealth += (int)health, 0, this.baseHealth);
-        healthText.text = $"{100 * CalculateHealthPercent():F0}%";
         TurnManager.instance.CreateVisual($"+{(int)health} HP", this.transform.localPosition);
         Log.instance.AddText($"{(this.name)} regains {health} HP.", logged);
     }
@@ -232,17 +230,11 @@ public class Character : MonoBehaviour
         if (this == null) yield break;
 
         currentHealth -= damage;
-        healthText.text = $"{100 * CalculateHealthPercent():F0}%";
+        TurnManager.instance.CreateVisual($"-{(int)damage} HP", this.transform.localPosition);
+        Log.instance.AddText($"{(this.name)} takes {damage} damage.", logged);
 
-        if (damage > 0)
-        {
-            TurnManager.instance.CreateVisual($"-{(int)damage} HP", this.transform.localPosition);
-            Log.instance.AddText($"{(this.name)} takes {damage} damage.", logged);
-        }
         if (currentHealth <= 0)
-        {
             yield return HasDied(logged);
-        }
     }
 
     public IEnumerator HasDied(int logged)
@@ -251,7 +243,6 @@ public class Character : MonoBehaviour
 
         currentHealth = 0;
         currentPosition = Position.Dead;
-        healthText.text = $"0%";
 
         if (this.currentHealth == 0)
         {

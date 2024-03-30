@@ -3,7 +3,6 @@
       "Enemy Name",
       "Description",
       "Base Health",
-      "Base Defense",
       "Base Speed",
       "Base Luck",
       "Base Accuracy",
@@ -15,8 +14,7 @@
     [
       "Page",
       "Basic Enemy who attacks Grounded Players.",
-      "7",
-      "1",
+      "9",
       "3",
       "0",
       "1",
@@ -28,8 +26,7 @@
     [
       "Crow",
       "Basic Enemy who attacks Grounded and Airborne Players.",
-      "7",
-      "1",
+      "9",
       "3",
       "0",
       "1",

@@ -500,7 +500,7 @@ public class Ability : MonoBehaviour
             int attack = user.CalculateAttack();
             int defense = target.CalculateDefense();
 
-            int finalDamage = Mathf.Max(0, (int)(critical + effectiveness + (attack + data.attackPower) - defense));
+            int finalDamage = Mathf.Max(0, critical + effectiveness + (attack + data.attackPower) - defense);
             return finalDamage;
         }
         else

@@ -28,10 +28,11 @@ public class PlayerCharacter : Character
         for (int i = 0; i<listOfAutoAbilities.Count; i++)
         {
             AbilityBox box = TurnManager.instance.listOfBoxes[boxesFilled];
+            box.gameObject.SetActive(true);
             box.ReceiveAbility(listOfAutoAbilities[i].CanPlay(this), listOfAutoAbilities[i]);
 
             box.button.onClick.RemoveAllListeners();
-            int buttonNum = i;
+            int buttonNum = boxesFilled;
             box.button.onClick.AddListener(() => ReceiveChoice(buttonNum));
 
             boxesFilled++;
@@ -40,10 +41,11 @@ public class PlayerCharacter : Character
         for (int i = 0; i<listOfRandomAbilities.Count; i++)
         {
             AbilityBox box = TurnManager.instance.listOfBoxes[boxesFilled];
+            box.gameObject.SetActive(true);
             box.ReceiveAbility(listOfRandomAbilities[i].CanPlay(this), listOfRandomAbilities[i]);
 
             box.button.onClick.RemoveAllListeners();
-            int buttonNum = i;
+            int buttonNum = boxesFilled;
             box.button.onClick.AddListener(() => ReceiveChoice(buttonNum));
 
             boxesFilled++;
@@ -51,7 +53,10 @@ public class PlayerCharacter : Character
 
         for (int i = boxesFilled; i < TurnManager.instance.listOfBoxes.Count; i++)
         {
-            TurnManager.instance.listOfBoxes[i].ReceiveAbility(true, null);
+            AbilityBox box = TurnManager.instance.listOfBoxes[i];
+            box.gameObject.SetActive(true);
+            box.button.onClick.RemoveAllListeners();
+            box.ReceiveAbility(true, null);
         }
     }
 

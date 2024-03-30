@@ -29,6 +29,7 @@ public class AbilityBox : MonoBehaviour
             cantUse.text = "X";
             image.color = Color.red;
             hover.enabled = false;
+            hover.background.gameObject.SetActive(false);
         }
 
         else

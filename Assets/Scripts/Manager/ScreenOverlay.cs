@@ -84,7 +84,7 @@ public class ScreenOverlay : MonoBehaviour
 
         characterImage.sprite = character.myImage.sprite;
         characterName.text = character.name;
-        characterDescription.text = character.data.description;
+        characterDescription.text = character.editedDescription;
         characterArtCredit.text = character.data.artCredit;
 
         emotionText.text = KeywordTooltip.instance.EditText($"{character.currentEmotion}");

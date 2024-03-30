@@ -3,7 +3,6 @@
       "Player Name",
       "Description",
       "Base Health",
-      "Base Defense",
       "Base Speed",
       "Base Luck",
       "Base Accuracy",
@@ -15,8 +14,7 @@
     [
       "Knight",
       "Does lots of damage against individual Grounded Enemies.",
-      "8",
-      "3",
+      "9",
       "6",
       "0.25",
       "0.85",
@@ -28,8 +26,7 @@
     [
       "Angel",
       "Starts off Airborne and focuses on healing Players.",
-      "8",
-      "1",
+      "9",
       "5",
       "0.25",
       "0.85",
@@ -41,8 +38,7 @@
     [
       "Wizard",
       "Does damage against groups and Airborne Enemies.",
-      "8",
-      "2",
+      "9",
       "4",
       "0.25",
       "0.85",

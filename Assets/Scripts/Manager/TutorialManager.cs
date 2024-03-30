@@ -123,7 +123,7 @@ public class TutorialManager : MonoBehaviour
                 { "You killed your first Enemy! Now it's time to explain Emotions.",
                 "Everyone begins with a random Emotion. Emotions are effective against other Emotions, and have their own effects.",
                 "Happy beats Angry, which beats Sad, which beats Happy. Neutral is neutral against everything else.",
-                "This game, your Knight started off Angry, which means they'll deal more damage, but they get Stunned each time they kill an Enemy."});
+                "This game, your Knight started off Angry, which means each of their attacks deal 2 more damage, but they get Stunned when they kill an Enemy."});
 
                 currentStep = 6;
                 StartCoroutine(NextStep());
@@ -260,7 +260,7 @@ public class TutorialManager : MonoBehaviour
             case 15: //tutorial over
                 TurnManager.instance.GameFinished("Tutorial finished.", "");
                 TextCollector collector15 = TurnManager.instance.MakeTextCollector(
-                    "You’ve completed the tutorial. In the actual game, each character gets 5 random Abilities to fight 5 waves of Enemies. Good luck!",
+                    "You’ve completed the tutorial. In the actual game, each character gets 6 random Abilities to fight 5 waves of Enemies. Glhf.",
                     Vector3.zero);
                 break;
         }

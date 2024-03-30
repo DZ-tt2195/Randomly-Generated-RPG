@@ -5,7 +5,7 @@ using UnityEngine.EventSystems;
 
 public class HoverImage : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
-    [SerializeField] Image background;
+    public Image background;
     [SerializeField] TMP_Text descriptionTextBox;
 
     private void Start()
