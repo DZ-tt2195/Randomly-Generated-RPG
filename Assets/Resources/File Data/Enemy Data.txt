@@ -31,7 +31,7 @@
       "0.2",
       "0.85",
       "AIRBORNE",
-      "10,11,12,13,",
+      "12,13,14,15,",
       "",
       "Josh Hass|Amonkhet Invocations|(Omniscience)"
     ],
@@ -67,7 +67,7 @@
       "0",
       "1.2",
       "GROUNDED",
-      "18,",
+      "10,",
       "",
       "DZ|All Shapes and Sizes|(Bomb)"
     ],
@@ -79,7 +79,7 @@
       "0",
       "1",
       "GROUNDED",
-      "14,15,16,17,",
+      "16,17,18,19,",
       "",
       "Howard Lyon|Eldritch Moon|(Harmless Offering)"
     ],

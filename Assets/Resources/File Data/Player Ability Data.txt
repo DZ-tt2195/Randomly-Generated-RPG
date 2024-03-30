@@ -222,7 +222,7 @@
     [
       "Knight",
       "Meal",
-      "This becomes Happy and heals by REGAIN.",
+      "This becomes Happy and gains REGAIN Health.",
       "THIS eats a Meal.",
       "Emotion",
       "Healing",
@@ -422,7 +422,7 @@
     [
       "Angel",
       "Calm Down",
-      "Heal a non-Neutral Player by REGAIN. They become Neutral.",
+      "A non-Neutral Player gains REGAIN Health. They become Neutral.",
       "THIS helps TARGET Calm Down.",
       "Healing",
       "Emotion",
@@ -442,7 +442,7 @@
     [
       "Angel",
       "Wind to Wings",
-      "All Airborne Players heal by REGAIN and gain SPEEDSTAT Speed.",
+      "All Airborne Players gains REGAIN Health and SPEEDSTAT Speed.",
       "THIS casts Wind to Wings.",
       "Healing",
       "Stats",
@@ -462,7 +462,7 @@
     [
       "Angel",
       "Defensive Aura",
-      "All Players Heal by REGAIN and gain DEFENSESTAT Defense.",
+      "All Players gain REGAIN Health and DEFENSESTAT Defense.",
       "THIS casts a Defensive Aura.",
       "Healing",
       "Stats",
@@ -482,7 +482,7 @@
     [
       "Angel",
       "Lift Up",
-      "Heal a Grounded Player by REGAIN. They become Airborne.",
+      "A Grounded Player gains REGAIN Health and becomes Airborne.",
       "THIS Lifts Up TARGET.",
       "Healing",
       "Position",
@@ -502,7 +502,7 @@
     [
       "Angel",
       "Down to Earth",
-      "Heal an Airborne Player by REGAIN. They become Grounded.",
+      "An Airborne Player gains REGAIN Health and becomes Grounded.",
       "THIS brings TARGET Down to Earth.",
       "Healing",
       "Position",
@@ -522,7 +522,7 @@
     [
       "Angel",
       "Invigorate",
-      "Heal another Player by REGAIN. Reduce their active Cooldowns by MISC.",
+      "Another Player gains REGAIN Health and their active Cooldowns are reduced by MISC.",
       "THIS Invigorates TARGET.",
       "Healing",
       "",
@@ -542,7 +542,7 @@
     [
       "Angel",
       "Perk Up",
-      "Heal a Player by REGAIN. They gain SPEEDSTAT Speed and LUCKSTAT% Luck.",
+      "A Player gains REGAIN Health, SPEEDSTAT Speed, and LUCKSTAT% Luck.",
       "THIS perks up TARGET.",
       "Healing",
       "Stats",
@@ -562,7 +562,7 @@
     [
       "Angel",
       "Share Healing",
-      "This and another Player heals by REGAIN.",
+      "This and another Player gains REGAIN Health.",
       "THIS and TARGET regains health.",
       "Healing",
       "",
