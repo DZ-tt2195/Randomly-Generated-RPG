@@ -105,7 +105,7 @@ public class ScreenOverlay : MonoBehaviour
 
         for (int i = nextBox; i < listOfBoxes.Count; i++)
         {
-            listOfBoxes[i].gameObject.SetActive(false);
+            listOfBoxes[i].ReceiveAbility(true, null);
         }
     }
 

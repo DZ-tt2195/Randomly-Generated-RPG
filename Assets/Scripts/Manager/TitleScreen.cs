@@ -79,14 +79,14 @@ public class TitleScreen : MonoBehaviour
             yield return FileManager.instance.DownloadFile("Enemy Data");
             yield return FileManager.instance.DownloadFile("Bonus Enemy Data");
             yield return FileManager.instance.DownloadFile("Player Ability Data");
-            yield return FileManager.instance.DownloadFile("Other Ability Data");
+            yield return FileManager.instance.DownloadFile("Enemy Ability Data");
             yield return FileManager.instance.DownloadFile("Weapon Data");
         }
 
         FileManager.instance.listOfEnemies = DataLoader.ReadCharacterData("Enemy Data");
         FileManager.instance.listOfBonusEnemies = DataLoader.ReadCharacterData("Bonus Enemy Data");
         FileManager.instance.listOfPlayerAbilities = DataLoader.ReadAbilityData("Player Ability Data");
-        FileManager.instance.listOfOtherAbilities = DataLoader.ReadAbilityData("Other Ability Data");
+        FileManager.instance.listOfEnemyAbilities = DataLoader.ReadAbilityData("Enemy Ability Data");
 
         GeneratePlayers();
 

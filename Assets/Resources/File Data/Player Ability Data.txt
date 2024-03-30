@@ -282,7 +282,7 @@
     [
       "Knight",
       "Delegate",
-      "Another player takes an extra turn.",
+      "Another Player takes an extra turn",
       "THIS delegates their turn away.",
       "Misc",
       "",
@@ -522,7 +522,7 @@
     [
       "Angel",
       "Invigorate",
-      "Heal another Player by REGAIN. Reduce their active Cooldowns by MISCNUMBER.",
+      "Heal another Player by REGAIN. Reduce their active Cooldowns by MISC.",
       "THIS Invigorates TARGET.",
       "Healing",
       "",
@@ -542,7 +542,7 @@
     [
       "Angel",
       "Perk Up",
-      "Heal a Player by REGAIN. They gain SPEEDSTAT SPEED and LUCKSTAT% Luck.",
+      "Heal a Player by REGAIN. They gain SPEEDSTAT Speed and LUCKSTAT% Luck.",
       "THIS perks up TARGET.",
       "Healing",
       "Stats",
@@ -582,7 +582,7 @@
     [
       "Angel",
       "Delegate",
-      "Another player takes an extra turn.",
+      "Another Player takes an extra turn",
       "THIS delegates their turn away.",
       "Misc",
       "",
@@ -782,7 +782,7 @@
     [
       "Wizard",
       "Delegate",
-      "Another player takes an extra turn.",
+      "Another Player takes an extra turn",
       "THIS delegates their turn away.",
       "Misc",
       "",

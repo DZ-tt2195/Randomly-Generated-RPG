@@ -14,8 +14,8 @@
       "Attack stat: 3",
       "Defense stat: 3",
       "Speed stat: 3",
-      "Luck stat: 2",
-      "Accuracy stat: 0",
+      "Luck stat: 1",
+      "Accuracy stat: 1",
       "Misc number",
       "Target"
     ],
@@ -202,7 +202,7 @@
     [
       "Bat",
       "Bloodlust",
-      "This becomes Happy and gains LUCKSTAT Luck.",
+      "This becomes Happy and gains ACCURACYSTAT Accuracy.",
       "THIS casts Bloodlust.",
       "Emotion",
       "Stats",
@@ -214,8 +214,8 @@
       "",
       "",
       "",
-      "0.1",
       "",
+      "0.1",
       "",
       "SELF"
     ],
@@ -241,7 +241,7 @@
     ],
     [
       "Dragon",
-      "Wing Flag",
+      "Wing Flap",
       "If this is Grounded, it becomes Airborne and gains SPEEDSTAT Speed.",
       "THIS is back for more.",
       "Position",

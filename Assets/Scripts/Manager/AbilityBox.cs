@@ -23,6 +23,7 @@ public class AbilityBox : MonoBehaviour
 
         if (ability == null)
         {
+            textName.text = "";
             textCountdown.transform.parent.gameObject.SetActive(false);
             cantUse.transform.parent.gameObject.SetActive(true);
             cantUse.text = "X";
@@ -35,7 +36,13 @@ public class AbilityBox : MonoBehaviour
             textName.text = ability.data.myName;
             hover.enabled = true;
             hover.NewDescription(ability.editedDescription);
-            image.color = (ability.data.typeOne == AbilityType.Attack || ability.data.typeTwo == AbilityType.Attack) ? Color.red : Color.blue;
+
+            if (ability.data.typeOne == AbilityType.Attack || ability.data.typeTwo == AbilityType.Attack)
+                image.color = Color.red;
+            else if (ability.data.typeOne == AbilityType.Healing || ability.data.typeTwo == AbilityType.Healing)
+                image.color = new Color(0, 0.7f, 0);
+            else
+                image.color = Color.blue;
 
             if (ability.data.baseCooldown > 0)
             {

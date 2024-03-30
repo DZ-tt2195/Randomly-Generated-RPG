@@ -96,8 +96,8 @@ public class Character : MonoBehaviour
         this.baseLuck = data.baseLuck*multiplier;
         this.baseAccuracy = data.baseAccuracy*multiplier;
 
-        AddAbility(FileManager.instance.FindOtherAbility("Skip Turn"), true, false);
-        AddAbility(FileManager.instance.FindOtherAbility("Resurrect"), true, false);
+        AddAbility(FileManager.instance.FindEnemyAbility("Skip Turn"), true, false);
+        AddAbility(FileManager.instance.FindEnemyAbility("Resurrect"), true, false);
         this.myImage.sprite = Resources.Load<Sprite>($"Characters/{this.name}");
 
         StartCoroutine(ChangePosition(data.startingPosition, -1));

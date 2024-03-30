@@ -25,8 +25,8 @@ public class FileManager : MonoBehaviour
     private string baseUrl = "https://sheets.googleapis.com/v4/spreadsheets/";
 
     [Tooltip("store all players")][ReadOnly] public List<Character> listOfPlayers = new List<Character>();
-    [Tooltip("store all ability data")][ReadOnly] public List<AbilityData> listOfPlayerAbilities;
-    [Tooltip("store all ability data")][ReadOnly] public List<AbilityData> listOfOtherAbilities;
+    [Tooltip("store all player ability data")][ReadOnly] public List<AbilityData> listOfPlayerAbilities;
+    [Tooltip("store all enemy ability data")][ReadOnly] public List<AbilityData> listOfEnemyAbilities;
     [Tooltip("store all enemy data")][ReadOnly] public List<CharacterData> listOfEnemies;
     [Tooltip("store all bonus enemy data")][ReadOnly] public List<CharacterData> listOfBonusEnemies;
 
@@ -91,7 +91,7 @@ public class FileManager : MonoBehaviour
                 if (player)
                     splitAbilities.Add(listOfPlayerAbilities[int.Parse(skillNumber)]);
                 else
-                    splitAbilities.Add(listOfOtherAbilities[int.Parse(skillNumber)]);
+                    splitAbilities.Add(listOfEnemyAbilities[int.Parse(skillNumber)]);
             }
             catch (FormatException) { continue; }
             catch (ArgumentOutOfRangeException) { break; }
@@ -104,9 +104,9 @@ public class FileManager : MonoBehaviour
         return listOfPlayerAbilities.FirstOrDefault(ability => ability.myName == target);
     }
 
-    public AbilityData FindOtherAbility(string target)
+    public AbilityData FindEnemyAbility(string target)
     {
-        return listOfOtherAbilities.FirstOrDefault(ability => ability.myName == target);
+        return listOfEnemyAbilities.FirstOrDefault(ability => ability.myName == target);
     }
 
     public CharacterData FindEnemy(string target)

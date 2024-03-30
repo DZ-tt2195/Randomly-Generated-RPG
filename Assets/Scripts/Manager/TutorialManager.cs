@@ -229,7 +229,7 @@ public class TutorialManager : MonoBehaviour
             case 12: //introduce sad
                 yield return ClickThroughDialogue(new List<string>()
                 { "Your Wizard is Sad, which means everytime it attacks, it'll gain some health. But if it doesn't attack, it'll lose health.",
-                "Attacking Abilities are colored red, and non-attacking ones are colored blue."});
+                "Attacking Abilities are colored red, healing Abilities are colored green, the others are colored blue."});
 
                 currentStep = 13;
                 yield return (NextStep());
