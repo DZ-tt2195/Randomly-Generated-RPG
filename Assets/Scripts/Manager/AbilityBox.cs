@@ -38,12 +38,12 @@ public class AbilityBox : MonoBehaviour
             hover.enabled = true;
             hover.NewDescription(ability.editedDescription);
 
-            if (ability.data.typeOne == AbilityType.Attack || ability.data.typeTwo == AbilityType.Attack)
-                image.color = Color.red;
-            else if (ability.data.typeOne == AbilityType.Healing || ability.data.typeTwo == AbilityType.Healing)
-                image.color = new Color(0, 0.7f, 0);
-            else
-                image.color = Color.blue;
+            image.color = ability.mainType switch
+            {
+                AbilityType.Attack => Color.red,
+                AbilityType.Healing => new Color(0, 0.7f, 0),
+                _ => Color.blue,
+            };
 
             if (ability.data.baseCooldown > 0)
             {

@@ -70,10 +70,25 @@ public class TurnManager : MonoBehaviour
 
         if (FileManager.instance.mode == FileManager.GameMode.Main)
         {
+            Log.instance.AddText("Defeat 5 waves of enemies.");
+
+            if (PlayerPrefs.GetInt("Stronger Players") == 1)
+                Log.instance.AddText("Stronger Players Cheat");
+            if (PlayerPrefs.GetInt("Enemies Stunned") == 1)
+                Log.instance.AddText("Enemies Stunned Cheat");
+            if (PlayerPrefs.GetInt("Stronger Enemies") == 1)
+                Log.instance.AddText("Stronger Enemies Challenge");
+
+            Log.instance.AddText("");
             foreach (Character player in FileManager.instance.listOfPlayers)
                 AddPlayer(player);
 
             StartCoroutine(NewWave());
+        }
+        else
+        {
+            Log.instance.AddText("Tutorial mode - 3 waves.");
+            Log.instance.AddText("");
         }
     }
 
@@ -88,50 +103,42 @@ public class TurnManager : MonoBehaviour
         DisableCharacterButtons();
 
         yield return WaitTime();
-
         currentWave++;
-        instructions.transform.parent.parent.gameObject.SetActive(false);
 
         if (currentWave > 5)
         {
             GameFinished("You won!", $"Survived 10 waves.");
         }
-        else
+        else if (FileManager.instance.mode == FileManager.GameMode.Main)
         {
-            if (FileManager.instance.mode == FileManager.GameMode.Main)
-                Log.instance.AddText($"WAVE {currentWave} / 5");
-            else if (FileManager.instance.mode == FileManager.GameMode.Tutorial)
-                Log.instance.AddText($"WAVE {currentWave} / 3");
+            Log.instance.AddText($"WAVE {currentWave} / 5");
 
-            if (currentWave > 1 && FileManager.instance.mode == FileManager.GameMode.Main && PlayerPrefs.GetInt("Scaling Players") == 1)
+            if (currentWave == 1 && PlayerPrefs.GetInt("Stronger Players") == 1)
             {
-                Log.instance.AddText($"Players get +{currentWave - 1} to their stats. (Scaling Players)");
+                Log.instance.AddText($"Players get +1 to their stats. (Stronger Players)");
                 foreach (Character player in listOfPlayers)
                 {
-                    yield return player.ChangeAttack(1, 1);
-                    yield return player.ChangeDefense(1, 1);
-                    yield return player.ChangeSpeed(1, 1);
-                    yield return player.ChangeLuck(0.1f, 1);
-                    yield return player.ChangeAccuracy(0.1f, 1);
+                    yield return player.ChangeAttack(1, -1);
+                    yield return player.ChangeDefense(1, -1);
+                    yield return player.ChangeSpeed(1, -1);
+                    yield return player.ChangeLuck(0.1f, -1);
+                    yield return player.ChangeAccuracy(0.1f, -1);
                 }
                 Log.instance.AddText("");
             }
 
-            if (currentWave > 1 && FileManager.instance.mode == FileManager.GameMode.Main && PlayerPrefs.GetInt("Scaling Enemies") == 1)
-            {
-                Log.instance.AddText($"Enemies now have +{currentWave-1} to their stats. (Scaling Enemies)");
-                Log.instance.AddText("");
-            }
+            if (PlayerPrefs.GetInt("Stronger Enemies") == 1)
+                Log.instance.AddText($"Enemies get +1 to their stats. (Stronger Enemies)");
 
-            if (FileManager.instance.mode == FileManager.GameMode.Main)
-            {
-                for (int i = 0; i < currentWave; i++)
-                    CreateEnemy(
-                        FileManager.instance.listOfEnemies[UnityEngine.Random.Range(0, FileManager.instance.listOfEnemies.Count)],
-                        (Emotion)UnityEngine.Random.Range(1, 5), 0);
+            for (int i = 0; i < currentWave; i++)
+                CreateEnemy(FileManager.instance.listOfEnemies[UnityEngine.Random.Range(0, FileManager.instance.listOfEnemies.Count)],
+                    (Emotion)UnityEngine.Random.Range(1, 5), 0);
 
-                StartCoroutine(NewRound());
-            }
+            StartCoroutine(NewRound());
+        }
+        else
+        {
+            Log.instance.AddText($"WAVE {currentWave} / 3");
         }
     }
 
@@ -197,9 +204,9 @@ public class TurnManager : MonoBehaviour
         DisableCharacterButtons();
 
         instructions.text = "";
-        listOfBoxes[0].transform.parent.gameObject.SetActive(false);
+        instructions.transform.parent.gameObject.SetActive(false);
         quitButton.gameObject.SetActive(true);
-        listOfSpeedImages[0].transform.parent.parent.gameObject.SetActive(false);
+        listOfSpeedImages[0].transform.parent.gameObject.SetActive(false);
 
         Log.instance.AddText("");
         Log.instance.AddText(message1);
@@ -268,7 +275,7 @@ public class TurnManager : MonoBehaviour
 
     void DisplaySpeedQueue()
     {
-        listOfSpeedImages[0].transform.parent.parent.gameObject.SetActive(true);
+        listOfSpeedImages[0].transform.parent.gameObject.SetActive(true);
         speedQueue = speedQueue.OrderByDescending(o => o.CalculateSpeed()).ToList();
 
         for (int i = 0; i < listOfSpeedImages.Count; i++)
@@ -317,8 +324,17 @@ public class TurnManager : MonoBehaviour
             nextCharacter.name = dataFile.myName;
             Log.instance.AddText($"{Log.Article(nextCharacter.name)} entered the fight.", logged);
 
-            nextCharacter.SetupCharacter(CharacterType.Enemy, dataFile, FileManager.instance.ConvertNumbersToAbilityData(dataFile.skillNumbers, false), startingEmotion, true, PlayerPrefs.GetInt("Scaling Enemies") == 1 ? currentWave-1 : 0);
+            nextCharacter.SetupCharacter(CharacterType.Enemy, dataFile, FileManager.instance.ConvertNumbersToAbilityData(dataFile.skillNumbers, false), startingEmotion, true);
             SaveManager.instance.SaveEnemy(dataFile);
+
+            if (FileManager.instance.mode == FileManager.GameMode.Main && PlayerPrefs.GetInt("Stronger Enemies") == 1)
+            {
+                StartCoroutine(nextCharacter.ChangeAttack(1, -1));
+                StartCoroutine(nextCharacter.ChangeDefense(1, -1));
+                StartCoroutine(nextCharacter.ChangeSpeed(1, -1));
+                StartCoroutine(nextCharacter.ChangeLuck(0.1f, -1));
+                StartCoroutine(nextCharacter.ChangeAccuracy(0.1f, -1));
+            }
 
             if (FileManager.instance.mode == FileManager.GameMode.Main && PlayerPrefs.GetInt("Enemies Stunned") == 1)
                 StartCoroutine(nextCharacter.Stun(1, logged + 1));

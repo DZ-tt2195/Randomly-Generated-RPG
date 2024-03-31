@@ -15,6 +15,7 @@ public class Ability : MonoBehaviour
     [ReadOnly] public HashSet<TeamTarget> singleTarget = new() { TeamTarget.AnyOne, TeamTarget.OnePlayer, TeamTarget.OtherPlayer, TeamTarget.OneEnemy, TeamTarget.OtherEnemy };
     [ReadOnly] public Character self;
     [ReadOnly] public string editedDescription;
+    [ReadOnly] public AbilityType mainType;
 
     [ReadOnly] public int currentCooldown;
     [ReadOnly] public List<Character> listOfTargets;
@@ -24,7 +25,9 @@ public class Ability : MonoBehaviour
 
     public void SetupAbility(AbilityData data, bool startWithCooldown)
     {
+        self = GetComponent<Character>();
         this.data = data;
+
         editedDescription = data.description
             .Replace("POWER", data.attackPower.ToString())
             .Replace("REGAIN", data.healthRegain.ToString())
@@ -36,13 +39,16 @@ public class Ability : MonoBehaviour
             .Replace("MISC", data.miscNumber.ToString())
         ;
         editedDescription = KeywordTooltip.instance.EditText(editedDescription);
+
         currentCooldown = (startWithCooldown) ? data.baseCooldown : 0;
-        self = GetComponent<Character>();
+        mainType = (data.typeOne == AbilityType.Attack || data.typeTwo == AbilityType.Attack) ? AbilityType.Attack :
+                   (data.typeOne == AbilityType.Healing || data.typeTwo == AbilityType.Healing) ? AbilityType.Healing :
+                   AbilityType.Misc;
     }
 
 #endregion
 
-#region Stats
+#region Calculations
 
     bool RollAccuracy(float value)
     {
@@ -57,13 +63,13 @@ public class Ability : MonoBehaviour
         }
     }
 
-    int RollCritical(float value)
+    int RollCritical(float value, int logged)
     {
         float roll = Random.Range(0f, 1f);
         bool result = roll <= value;
         if (result && FileManager.instance.mode == FileManager.GameMode.Main)
         {
-            Log.instance.AddText("Critical hit!", 1);
+            Log.instance.AddText("Critical hit!", logged);
             return 2;
         }
         else
@@ -74,44 +80,58 @@ public class Ability : MonoBehaviour
 
     public int Effectiveness(Character user, Character target, int logged)
     {
-        int answer = 0;
-        if (user.currentEmotion == Emotion.Happy)
+        int answer = user.currentEmotion switch
         {
-            answer = target.currentEmotion switch
+            Emotion.Happy => target.currentEmotion switch
             {
-                (Emotion.Angry) => 1,
-                (Emotion.Sad) => -1,
-                _ => 0,
-            };
-        }
-        else if (user.currentEmotion == Emotion.Angry)
-        {
-            answer = target.currentEmotion switch
+                Emotion.Angry => 1,
+                Emotion.Sad => -1,
+                _ => 0
+            },
+            Emotion.Angry => target.currentEmotion switch
             {
-                (Emotion.Sad) => 1,
-                (Emotion.Happy) => -1,
-                _ => 0,
-            };
-        }
-        else if (user.currentEmotion == Emotion.Sad)
-        {
-            answer = target.currentEmotion switch
+                Emotion.Sad => 1,
+                Emotion.Happy => -1,
+                _ => 0
+            },
+            Emotion.Sad => target.currentEmotion switch
             {
-                (Emotion.Happy) => 1,
-                (Emotion.Angry) => -1,
-                _ => 0,
-            };
-        }
+                Emotion.Happy => 1,
+                Emotion.Angry => -1,
+                _ => 0
+            },
+            _ => 0
+        };
 
         if (answer > 0)
             Log.instance.AddText("It's super effective!", logged);
         else if (answer < 0)
-            Log.instance.AddText("It's not very effective...", logged);
+            Log.instance.AddText("It wasn't very effective...", logged);
 
         return answer;
     }
 
-    #endregion
+    int CalculateDamage(Character user, Character target, int logged)
+    {
+        if (RollAccuracy(user.CalculateAccuracy()))
+        {
+            int effectiveness = Effectiveness(user, target, logged);
+            int critical = RollCritical(user.CalculateLuck(), logged);
+            int attack = user.CalculateAttack();
+            int defense = target.CalculateDefense();
+
+            int finalDamage = Mathf.Max(0, critical + effectiveness + attack + data.attackPower - defense);
+            return finalDamage;
+        }
+        else
+        {
+            Log.instance.AddText($"{user.name}'s attack misses {target.name}.", logged);
+            TurnManager.instance.CreateVisual("MISS", target.transform.localPosition);
+            return 0;
+        }
+    }
+
+#endregion
 
 #region Play Condition
 
@@ -308,7 +328,7 @@ public class Ability : MonoBehaviour
     {
         Log.instance.AddText(Log.Substitute(this, self), logged-1);
         killed = false;
-        TurnManager.instance.listOfBoxes[0].transform.parent.gameObject.SetActive(false);
+        TurnManager.instance.instructions.transform.parent.gameObject.SetActive(false);
 
         foreach (Character target in listOfTargets)
         {
@@ -488,26 +508,6 @@ public class Ability : MonoBehaviour
                 if (!runNextMethod)
                     break;
             }
-        }
-    }
-
-    int CalculateDamage(Character user, Character target, int logged)
-    {
-        if (RollAccuracy(user.CalculateAccuracy()))
-        {
-            int effectiveness = Effectiveness(user, target, logged);
-            int critical = RollCritical(user.CalculateLuck());
-            int attack = user.CalculateAttack();
-            int defense = target.CalculateDefense();
-
-            int finalDamage = Mathf.Max(0, critical + effectiveness + (attack + data.attackPower) - defense);
-            return finalDamage;
-        }
-        else
-        {
-            Log.instance.AddText($"{user.name}'s attack misses.", 1);
-            TurnManager.instance.CreateVisual("MISS", target.transform.localPosition);
-            return 0;
         }
     }
 

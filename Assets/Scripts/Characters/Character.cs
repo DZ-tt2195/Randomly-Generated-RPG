@@ -29,8 +29,6 @@ public class Character : MonoBehaviour
 
     [Foldout("Base Stats", true)]
         protected int baseHealth;
-        protected int baseAttack;
-        protected int baseDefense;
         protected int baseSpeed;
         protected float baseLuck;
         protected float baseAccuracy;
@@ -84,20 +82,18 @@ public class Character : MonoBehaviour
     }
 
     public void SetupCharacter(CharacterType type, CharacterData characterData,
-        List<AbilityData> listOfAbilityData, Emotion startingEmotion, bool abilitiesBeginWithCooldown,
-        int scaling = 0)
+        List<AbilityData> listOfAbilityData, Emotion startingEmotion, bool abilitiesBeginWithCooldown)
     {
         data = characterData;
         myType = type;
         this.name = characterData.myName;
         editedDescription = KeywordTooltip.instance.EditText(data.description);
 
-        this.baseHealth = data.baseHealth + scaling; currentHealth = this.baseHealth;
-        this.baseAttack = scaling;
-        this.baseDefense = scaling;
-        this.baseSpeed = (data.baseSpeed + scaling);
-        this.baseLuck = data.baseLuck + scaling;
-        this.baseAccuracy = data.baseAccuracy + scaling;
+        this.baseHealth = data.baseHealth;
+        currentHealth = this.baseHealth;
+        this.baseSpeed = data.baseSpeed;
+        this.baseLuck = data.baseLuck;
+        this.baseAccuracy = data.baseAccuracy;
 
         AddAbility(FileManager.instance.FindEnemyAbility("Skip Turn"), true, false);
         AddAbility(FileManager.instance.FindEnemyAbility("Resurrect"), true, false);
@@ -108,7 +104,7 @@ public class Character : MonoBehaviour
 
         foreach (AbilityData data in listOfAbilityData)
             AddAbility(data, false, abilitiesBeginWithCooldown);
-        listOfRandomAbilities = listOfRandomAbilities.OrderBy(o => o.data.baseCooldown).ToList();
+        listOfRandomAbilities = listOfRandomAbilities.OrderBy(o => o.mainType).ToList();
 
         modifyAttack = 0;
         modifyDefense = 0;
@@ -121,13 +117,10 @@ public class Character : MonoBehaviour
     {
         Ability newAbility = this.gameObject.AddComponent<Ability>();
         newAbility.SetupAbility(ability, startWithCooldown);
-        if (auto)
-            listOfAutoAbilities.Add(newAbility);
-        else
-            listOfRandomAbilities.Add(newAbility);
+        (auto ? listOfAutoAbilities : listOfRandomAbilities).Add(newAbility);
     }
 
-#endregion
+    #endregion
 
 #region Stats
 
@@ -149,12 +142,12 @@ public class Character : MonoBehaviour
             _ => 0,
         };
 
-        return this.baseAttack + modifyAttack + emotionEffect;
+        return modifyAttack + emotionEffect;
     }
 
     public int CalculateDefense()
     {
-        return this.baseDefense + modifyDefense;
+        return modifyDefense;
     }
 
     public int CalculateSpeed()
@@ -477,7 +470,7 @@ public class Character : MonoBehaviour
             }
             else if (this.currentEmotion == Emotion.Happy)
             {
-                if (!extraTurn && chosenAbility.data.typeOne != AbilityType.Attack && chosenAbility.data.typeTwo != AbilityType.Attack)
+                if (!extraTurn && chosenAbility.mainType != AbilityType.Attack)
                 {
                     Log.instance.AddText($"{this.name} is Happy.", logged);
                     yield return ResolveTurn(logged + 1, true);
@@ -486,10 +479,10 @@ public class Character : MonoBehaviour
             else if (this.currentEmotion == Emotion.Sad)
             {
                 Log.instance.AddText($"{this.name} is Sad.", logged);
-                if (chosenAbility.data.typeOne != AbilityType.Attack && chosenAbility.data.typeTwo != AbilityType.Attack)
-                    yield return TakeDamage((int)(this.baseHealth * 0.15f), logged + 1);
-                else
+                if (chosenAbility.mainType == AbilityType.Attack)
                     yield return GainHealth((int)(this.baseHealth * 0.15f), logged + 1);
+                else
+                    yield return TakeDamage((int)(this.baseHealth * 0.15f), logged + 1);
             }
         }
     }
