@@ -118,7 +118,7 @@ public class TurnManager : MonoBehaviour
                 Log.instance.AddText($"Players get +1 to their stats. (Stronger Players)");
                 foreach (Character player in listOfPlayers)
                 {
-                    yield return player.ChangeAttack(1, -1);
+                    yield return player.ChangePower(1, -1);
                     yield return player.ChangeDefense(1, -1);
                     yield return player.ChangeSpeed(1, -1);
                     yield return player.ChangeLuck(0.1f, -1);
@@ -329,7 +329,7 @@ public class TurnManager : MonoBehaviour
 
             if (FileManager.instance.mode == FileManager.GameMode.Main && PlayerPrefs.GetInt("Stronger Enemies") == 1)
             {
-                StartCoroutine(nextCharacter.ChangeAttack(1, -1));
+                StartCoroutine(nextCharacter.ChangePower(1, -1));
                 StartCoroutine(nextCharacter.ChangeDefense(1, -1));
                 StartCoroutine(nextCharacter.ChangeSpeed(1, -1));
                 StartCoroutine(nextCharacter.ChangeLuck(0.1f, -1));

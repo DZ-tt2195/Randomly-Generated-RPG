@@ -54,7 +54,7 @@ public class Character : MonoBehaviour
             private set{
             statusText.text = KeywordTooltip.instance.EditText($"{value} {data.myName}\n{currentPosition}"); _currentEmotion = value;}
         }
-        protected int modifyAttack;
+        protected int modifyPower;
         protected int modifyDefense;
         protected int modifySpeed;
         protected float modifyLuck;
@@ -106,7 +106,7 @@ public class Character : MonoBehaviour
             AddAbility(data, false, abilitiesBeginWithCooldown);
         listOfRandomAbilities = listOfRandomAbilities.OrderBy(o => o.mainType).ToList();
 
-        modifyAttack = 0;
+        modifyPower = 0;
         modifyDefense = 0;
         modifySpeed = 0;
         modifyLuck = 0f;
@@ -134,7 +134,7 @@ public class Character : MonoBehaviour
         return (float)currentHealth / this.baseHealth;
     }
 
-    public int CalculateAttack()
+    public int CalculatePower()
     {
         int emotionEffect = currentEmotion switch
         {
@@ -142,7 +142,7 @@ public class Character : MonoBehaviour
             _ => 0,
         };
 
-        return modifyAttack + emotionEffect;
+        return modifyPower + emotionEffect;
     }
 
     public int CalculateDefense()
@@ -234,24 +234,24 @@ public class Character : MonoBehaviour
         yield return ChangePosition(data.startingPosition, -1);
         yield return ChangeEmotion((Emotion)UnityEngine.Random.Range(1, 5), -1);
 
-        modifyAttack = 0;
+        modifyPower = 0;
         modifyDefense = 0;
         modifySpeed = 0;
         modifyLuck = 0f;
         modifyAccuracy = 0f;
     }
 
-    public IEnumerator ChangeAttack(int effect, int logged)
+    public IEnumerator ChangePower(int effect, int logged)
     {
         if (this == null || effect == 0) yield break;
 
-        modifyAttack = Math.Clamp(modifyAttack += effect, -3, 3);
-        TurnManager.instance.CreateVisual($"{(effect > 0 ? '+' : '-')}{Math.Abs(effect)} ATTACK", this.transform.localPosition);
+        modifyPower = Math.Clamp(modifyPower += effect, -3, 3);
+        TurnManager.instance.CreateVisual($"{(effect > 0 ? '+' : '-')}{Math.Abs(effect)} POWER", this.transform.localPosition);
 
         if (effect < 0)
-            Log.instance.AddText($"{(this.name)}'s Attack is reduced by {effect}.", logged);
+            Log.instance.AddText($"{(this.name)}'s Power is reduced by {effect}.", logged);
         if (effect > 0)
-            Log.instance.AddText($"{(this.name)}'s Attack is increased by {effect}.", logged);
+            Log.instance.AddText($"{(this.name)}'s Power is increased by {effect}.", logged);
     }
 
     public IEnumerator ChangeDefense(int effect, int logged)
@@ -480,9 +480,9 @@ public class Character : MonoBehaviour
             {
                 Log.instance.AddText($"{this.name} is Sad.", logged);
                 if (chosenAbility.mainType == AbilityType.Attack)
-                    yield return GainHealth((int)(this.baseHealth * 0.15f), logged + 1);
+                    yield return GainHealth(2, logged + 1);
                 else
-                    yield return TakeDamage((int)(this.baseHealth * 0.15f), logged + 1);
+                    yield return TakeDamage(2, logged + 1);
             }
         }
     }

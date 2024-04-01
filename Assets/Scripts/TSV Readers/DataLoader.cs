@@ -31,9 +31,9 @@ public class AbilityData
     public AbilityType typeTwo;
     public string playCondition;
     public int baseCooldown;
-    public int attackPower;
+    public int attackDamage;
     public int healthRegain;
-    public int modifyAttack;
+    public int modifyPower;
     public int modifyDefense;
     public int modifySpeed;
     public float modifyLuck;
@@ -100,9 +100,9 @@ public class DataLoader
             newAbility.instructions = line[6];
             newAbility.playCondition = line[7];
             newAbility.baseCooldown = StringToInt(line[8]);
-            newAbility.attackPower = StringToInt(line[9]);
+            newAbility.attackDamage = StringToInt(line[9]);
             newAbility.healthRegain = StringToInt(line[10]);
-            newAbility.modifyAttack = StringToInt(line[11]);
+            newAbility.modifyPower = StringToInt(line[11]);
             newAbility.modifyDefense = StringToInt(line[12]);
             newAbility.modifySpeed = StringToInt(line[13]);
             newAbility.modifyLuck = StringToFloat(line[14]);

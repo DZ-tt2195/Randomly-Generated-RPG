@@ -29,9 +29,9 @@ public class Ability : MonoBehaviour
         this.data = data;
 
         editedDescription = data.description
-            .Replace("POWER", data.attackPower.ToString())
+            .Replace("DAMAGE", data.attackDamage.ToString())
             .Replace("REGAIN", data.healthRegain.ToString())
-            .Replace("ATTACKSTAT", Mathf.Abs(data.modifyAttack).ToString())
+            .Replace("POWERSTAT", Mathf.Abs(data.modifyPower).ToString())
             .Replace("SPEEDSTAT", Mathf.Abs(data.modifySpeed).ToString())
             .Replace("DEFENSESTAT", Mathf.Abs(data.modifyDefense).ToString())
             .Replace("ACCURACYSTAT", Mathf.Abs(data.modifyAccuracy*100).ToString())
@@ -117,10 +117,10 @@ public class Ability : MonoBehaviour
         {
             int effectiveness = Effectiveness(user, target, logged);
             int critical = RollCritical(user.CalculateLuck(), logged);
-            int attack = user.CalculateAttack();
+            int attack = user.CalculatePower();
             int defense = target.CalculateDefense();
 
-            int finalDamage = Mathf.Max(0, critical + effectiveness + attack + data.attackPower - defense);
+            int finalDamage = Mathf.Max(0, critical + effectiveness + attack + data.attackDamage - defense);
             return finalDamage;
         }
         else
@@ -363,14 +363,14 @@ public class Ability : MonoBehaviour
                         break;
 
                     case "SELFCOPY":
-                        TurnManager.instance.CreateEnemy(self.data, (Emotion)UnityEngine.Random.Range(1, 5), logged);
+                        TurnManager.instance.CreateEnemy(self.data, (Emotion)Random.Range(1, 5), logged);
                         break;
 
                     case "SELFHEAL":
-                        yield return self.GainHealth(data.healthRegain, logged);
+                        yield return self.GainHealth(data.healthRegain + self.CalculatePower(), logged);
                         break;
                     case "TARGETSHEAL":
-                        yield return target.GainHealth(data.healthRegain, logged);
+                        yield return target.GainHealth(data.healthRegain + self.CalculatePower(), logged);
                         break;
                     case "HEALFROMDAMAGE":
                         yield return self.GainHealth(damageDealt, logged);
@@ -431,11 +431,11 @@ public class Ability : MonoBehaviour
                         yield return target.ChangeEmotion(Emotion.Neutral, logged);
                         break;
 
-                    case "SELFATTACKSTAT":
-                        yield return self.ChangeAttack(data.modifyAttack, logged);
+                    case "SELFPOWERSTAT":
+                        yield return self.ChangePower(data.modifyPower, logged);
                         break;
-                    case "TARGETSATTACKSTAT":
-                        yield return target.ChangeAttack(data.modifyAttack, logged);
+                    case "TARGETSPOWERSTAT":
+                        yield return target.ChangePower(data.modifyPower, logged);
                         break;
 
                     case "SELFDEFENSESTAT":
