@@ -22,7 +22,7 @@
     [
       "Knight",
       "Embarass",
-      "A Grounded Enemy becomes Sad. Then deal POWER damage to them.",
+      "A Grounded Enemy becomes Sad. Then deal ATK damage to them.",
       "THIS Embarasses TARGET.",
       "Attack",
       "Emotion",
@@ -302,7 +302,7 @@
     [
       "Knight",
       "Intimidation",
-      "Reduce the Attack and Defense of all Enemies by POWERSTAT.",
+      "Reduce the Power and Defense of all Enemies by POWERSTAT.",
       "THIS uses Intimidation.",
       "Stats",
       "",

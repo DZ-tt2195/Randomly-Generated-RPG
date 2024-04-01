@@ -373,6 +373,7 @@ GameObject:
   - component: {fileID: 146587605}
   - component: {fileID: 146587606}
   - component: {fileID: 146587607}
+  - component: {fileID: 146587608}
   m_Layer: 0
   m_Name: Turn Manager
   m_TagString: Untagged
@@ -486,6 +487,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Active: 0
   Target: {fileID: 1675742381}
+--- !u!114 &146587608
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 146587602}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed62496e85434631a8ce8752f246de34, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Active: 0
+  Target: {fileID: 1724201458}
 --- !u!1001 &160430567
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2708,8 +2723,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 225, y: -481.25}
-  m_SizeDelta: {x: 750, y: 477.5}
+  m_AnchoredPosition: {x: 225, y: -480}
+  m_SizeDelta: {x: 750, y: 475}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1724201460
 MonoBehaviour:
@@ -3043,7 +3058,7 @@ MonoBehaviour:
   m_Elasticity: 0.1
   m_Inertia: 0
   m_DecelerationRate: 0.135
-  m_ScrollSensitivity: 10
+  m_ScrollSensitivity: 20
   m_Viewport: {fileID: 0}
   m_HorizontalScrollbar: {fileID: 0}
   m_VerticalScrollbar: {fileID: 2096580379}
@@ -3233,7 +3248,6 @@ GameObject:
   m_Component:
   - component: {fileID: 2053818004}
   - component: {fileID: 2053818003}
-  - component: {fileID: 2053818005}
   m_Layer: 0
   m_Name: Tutorial Manager
   m_TagString: Untagged
@@ -3277,20 +3291,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2053818005
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2053818002}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ed62496e85434631a8ce8752f246de34, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Active: 0
-  Target: {fileID: 1724201458}
 --- !u!1001 &2091436544
 PrefabInstance:
   m_ObjectHideFlags: 0

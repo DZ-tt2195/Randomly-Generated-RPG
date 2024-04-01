@@ -5,8 +5,7 @@ using MyBox;
 
 public class LoadScene : MonoBehaviour
 {
-    [Scene]
-    [SerializeField] string scene;
+    [Scene] [SerializeField] string scene;
     [SerializeField] FileManager.GameMode gameMode;
     [SerializeField] LoadSceneMode loadMode;
 

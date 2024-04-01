@@ -14,7 +14,7 @@
     [
       "Knight",
       "Does lots of damage against individual Grounded Enemies.",
-      "9",
+      "10",
       "6",
       "0.25",
       "0.85",
@@ -26,7 +26,7 @@
     [
       "Angel",
       "Starts off Airborne and focuses on healing Players.",
-      "9",
+      "10",
       "5",
       "0.25",
       "0.85",
@@ -38,7 +38,7 @@
     [
       "Wizard",
       "Does damage against groups and Airborne Enemies.",
-      "9",
+      "10",
       "4",
       "0.25",
       "0.85",

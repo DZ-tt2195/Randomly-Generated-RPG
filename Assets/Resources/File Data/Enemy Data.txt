@@ -62,7 +62,7 @@
     [
       "Bomb",
       "Does nothing for 2 turns, and then explodes.",
-      "11",
+      "12",
       "0",
       "0",
       "1.2",
@@ -74,7 +74,7 @@
     [
       "Kitty",
       "Heals other Enemies and makes them Happy. Switches between Airborne and Grounded.",
-      "11",
+      "10",
       "4",
       "0",
       "1",
@@ -98,7 +98,7 @@
     [
       "Rats",
       "Defensive enemy that makes copies of itself.",
-      "9",
+      "8",
       "5",
       "0",
       "0.85",

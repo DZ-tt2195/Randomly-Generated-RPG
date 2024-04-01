@@ -26,7 +26,7 @@ public class FileManager : MonoBehaviour
         [SerializeField] float transitionTime;
 
     [Foldout("Download", true)]
-        [SerializeField] bool downloadOn;
+        public bool downloadOn = true;
         private string ID = "1x5vKp4X4HPKyRix3w0n9aldY6Dh3B0eBegUM0WtfXFY";
         private string apiKey = "AIzaSyCl_GqHd1-WROqf7i2YddE3zH6vSv3sNTA";
         private string baseUrl = "https://sheets.googleapis.com/v4/spreadsheets/";
@@ -140,6 +140,24 @@ public class FileManager : MonoBehaviour
         SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 
+    public IEnumerator UnloadObjects(string originalScene, string nextScene, GameMode mode)
+    {
+        yield return SceneTransitionEffect(0);
+
+        listOfPlayers.RemoveAll(item => item == null);
+        if (!originalScene.Equals("1. Battle"))
+        {
+            foreach (Character player in listOfPlayers)
+            {
+                player.gameObject.transform.SetParent(null);
+                DontDestroyOnLoad(player.gameObject);
+            }
+        }
+
+        this.mode = mode;
+        SceneManager.LoadScene(nextScene);
+    }
+
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         canvas = GameObject.Find("Canvas").transform;
@@ -150,18 +168,6 @@ public class FileManager : MonoBehaviour
     {
         yield return SceneTransitionEffect(1);
         transitionImage.gameObject.SetActive(false);
-
-        ScreenOverlay.instance.transform.SetParent(canvas);
-        ScreenOverlay.instance.transform.localPosition = new Vector3(0, 0);
-
-        if (FPS.instance != null)
-        {
-            FPS.instance.transform.SetParent(canvas);
-            FPS.instance.transform.localPosition = new Vector3(-1190, 670);
-        }
-
-        KeywordTooltip.instance.transform.SetParent(canvas);
-        KeywordTooltip.instance.transform.localPosition = new Vector3(0, 0);
     }
 
     IEnumerator SceneTransitionEffect(float begin)
@@ -180,31 +186,7 @@ public class FileManager : MonoBehaviour
         transitionImage.SetAlpha(Mathf.Abs(begin - 1));
         transitionImage.gameObject.SetActive(true);
     }
-
-    public IEnumerator UnloadObjects(string originalScene, string nextScene, GameMode mode)
-    {
-        yield return SceneTransitionEffect(0);
-
-        if (FPS.instance != null) Preserve(FPS.instance.gameObject);
-        Preserve(ScreenOverlay.instance.gameObject);
-        Preserve(KeywordTooltip.instance.gameObject);
-        listOfPlayers.RemoveAll(item => item == null);
-        if (originalScene.Equals("1. Battle"))
-        {
-            foreach (Character player in listOfPlayers)
-                Preserve(player.gameObject);
-        }
-
-        this.mode = mode;
-        SceneManager.LoadScene(nextScene);
-    }
-
-    void Preserve(GameObject next)
-    {
-        next.transform.SetParent(null);
-        DontDestroyOnLoad(next);
-    }
-
+    
 #endregion
 
 }
