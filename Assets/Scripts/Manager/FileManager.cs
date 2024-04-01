@@ -7,6 +7,7 @@ using UnityEngine.Networking;
 using System.IO;
 using UnityEngine.SceneManagement;
 using System;
+using UnityEngine.UI;
 
 public class FileManager : MonoBehaviour
 {
@@ -15,20 +16,26 @@ public class FileManager : MonoBehaviour
 
     public static FileManager instance;
     public enum GameMode { Main, Tutorial, Other };
-    public GameMode mode;
 
-    [ReadOnly] public Transform canvas;
-    [SerializeField] bool downloadOn;
+    [Foldout("Misc info", true)]
+        public GameMode mode;
+        [ReadOnly] public Transform canvas;
 
-    private string ID = "1x5vKp4X4HPKyRix3w0n9aldY6Dh3B0eBegUM0WtfXFY";
-    private string apiKey = "AIzaSyCl_GqHd1-WROqf7i2YddE3zH6vSv3sNTA";
-    private string baseUrl = "https://sheets.googleapis.com/v4/spreadsheets/";
+    [Foldout("Scene transition", true)]
+        [SerializeField] Image transitionImage;
+        [SerializeField] float transitionTime;
 
-    [Tooltip("store all players")][ReadOnly] public List<Character> listOfPlayers = new List<Character>();
-    [Tooltip("store all player ability data")][ReadOnly] public List<AbilityData> listOfPlayerAbilities;
-    [Tooltip("store all enemy ability data")][ReadOnly] public List<AbilityData> listOfEnemyAbilities;
-    [Tooltip("store all enemy data")][ReadOnly] public List<CharacterData> listOfEnemies;
-    [Tooltip("store all bonus enemy data")][ReadOnly] public List<CharacterData> listOfBonusEnemies;
+    [Foldout("Download", true)]
+        [SerializeField] bool downloadOn;
+        private string ID = "1x5vKp4X4HPKyRix3w0n9aldY6Dh3B0eBegUM0WtfXFY";
+        private string apiKey = "AIzaSyCl_GqHd1-WROqf7i2YddE3zH6vSv3sNTA";
+        private string baseUrl = "https://sheets.googleapis.com/v4/spreadsheets/";
+
+        [Tooltip("store all players")][ReadOnly] public List<Character> listOfPlayers = new List<Character>();
+        [Tooltip("store all player ability data")][ReadOnly] public List<AbilityData> listOfPlayerAbilities;
+        [Tooltip("store all enemy ability data")][ReadOnly] public List<AbilityData> listOfEnemyAbilities;
+        [Tooltip("store all enemy data")][ReadOnly] public List<CharacterData> listOfEnemies;
+        [Tooltip("store all bonus enemy data")][ReadOnly] public List<CharacterData> listOfBonusEnemies;
 
 #endregion
 
@@ -136,11 +143,14 @@ public class FileManager : MonoBehaviour
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         canvas = GameObject.Find("Canvas").transform;
-        Invoke(nameof(BringBackObjects), 0.2f);
+        StartCoroutine(BringBackObjects());
     }
 
-    void BringBackObjects()
+    IEnumerator BringBackObjects()
     {
+        yield return SceneTransitionEffect(1);
+        transitionImage.gameObject.SetActive(false);
+
         ScreenOverlay.instance.transform.SetParent(canvas);
         ScreenOverlay.instance.transform.localPosition = new Vector3(0, 0);
 
@@ -154,20 +164,39 @@ public class FileManager : MonoBehaviour
         KeywordTooltip.instance.transform.localPosition = new Vector3(0, 0);
     }
 
-    public void UnloadObjects(string originalScene)
+    IEnumerator SceneTransitionEffect(float begin)
     {
-        if (FPS.instance != null)
-            Preserve(FPS.instance.gameObject);
+        transitionImage.gameObject.SetActive(true);
+        transitionImage.SetAlpha(begin);
 
+        float waitTime = 0f;
+        while (waitTime < transitionTime)
+        {
+            transitionImage.SetAlpha(Mathf.Abs(begin - (waitTime / transitionTime)));
+            waitTime += Time.deltaTime;
+            yield return null;
+        }
+
+        transitionImage.SetAlpha(Mathf.Abs(begin - 1));
+        transitionImage.gameObject.SetActive(true);
+    }
+
+    public IEnumerator UnloadObjects(string originalScene, string nextScene, GameMode mode)
+    {
+        yield return SceneTransitionEffect(0);
+
+        if (FPS.instance != null) Preserve(FPS.instance.gameObject);
         Preserve(ScreenOverlay.instance.gameObject);
         Preserve(KeywordTooltip.instance.gameObject);
-
         listOfPlayers.RemoveAll(item => item == null);
-        if (originalScene != "1. Battle")
+        if (originalScene.Equals("1. Battle"))
         {
             foreach (Character player in listOfPlayers)
                 Preserve(player.gameObject);
         }
+
+        this.mode = mode;
+        SceneManager.LoadScene(nextScene);
     }
 
     void Preserve(GameObject next)

@@ -29,7 +29,7 @@ public class Ability : MonoBehaviour
         this.data = data;
 
         editedDescription = data.description
-            .Replace("DAMAGE", data.attackDamage.ToString())
+            .Replace("ATK", data.attackDamage.ToString())
             .Replace("REGAIN", data.healthRegain.ToString())
             .Replace("POWERSTAT", Mathf.Abs(data.modifyPower).ToString())
             .Replace("SPEEDSTAT", Mathf.Abs(data.modifySpeed).ToString())

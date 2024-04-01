@@ -42,7 +42,7 @@
     [
       "Knight",
       "Impale",
-      "Deal POWER damage to a Grounded Enemy. It gets Stunned for MISC turn.",
+      "Deal ATK damage to a Grounded Enemy. It gets Stunned for MISC turn.",
       "THIS Impales TARGET.",
       "Attack",
       "",
@@ -62,7 +62,7 @@
     [
       "Knight",
       "Joust",
-      "Deal POWER damage to a Grounded Enemy. This loses ACCURACYSTAT% Accuracy.",
+      "Deal ATK damage to a Grounded Enemy. This loses ACCURACYSTAT% Accuracy.",
       "THIS uses Joust on TARGET.",
       "Attack",
       "Stats",
@@ -82,7 +82,7 @@
     [
       "Knight",
       "Rage",
-      "If this is Angry, deal POWER damage to a Grounded Enemy.",
+      "If this is Angry, deal ATK damage to a Grounded Enemy.",
       "THIS unleashes its Rage.",
       "Attack",
       "",
@@ -102,7 +102,7 @@
     [
       "Knight",
       "Shun",
-      "Deal POWER damage to an Enemy who's Grounded and Sad.",
+      "Deal ATK damage to an Enemy who's Grounded and Sad.",
       "THIS Shuns TARGET.",
       "Attack",
       "",
@@ -122,7 +122,7 @@
     [
       "Knight",
       "Skirmish",
-      "This becomes Angry and deals POWER damage to a Grounded Enemy.",
+      "This becomes Angry and deals ATK damage to a Grounded Enemy.",
       "THIS starts a Skirmish with TARGET.",
       "Attack",
       "Emotion",
@@ -142,7 +142,7 @@
     [
       "Knight",
       "Sky Hammer",
-      "If this is Airborne, it becomes Grounded and deals POWER damage to a Grounded Enemy.",
+      "If this is Airborne, it becomes Grounded and deals ATK damage to a Grounded Enemy.",
       "THIS brings the Hammer down.",
       "Attack",
       "Position",
@@ -162,7 +162,7 @@
     [
       "Knight",
       "Stab",
-      "This gains LUCKSTAT% Luck, then deals POWER damage to a Grounded Enemy.",
+      "This gains LUCKSTAT% Luck, then deals ATK damage to a Grounded Enemy.",
       "THIS Stabs TARGET.",
       "Attack",
       "Stats",
@@ -642,7 +642,7 @@
     [
       "Wizard",
       "Blaze",
-      "Deal POWER damage to all Grounded Enemies.",
+      "Deal ATK damage to all Grounded Enemies.",
       "THIS uses Blaze.",
       "Attack",
       "",
@@ -662,7 +662,7 @@
     [
       "Wizard",
       "Bounce",
-      "Deal POWER damage to a Grounded Enemy. They become Airborne.",
+      "Deal ATK damage to a Grounded Enemy. They become Airborne.",
       "THIS Bounces TARGET.",
       "Attack",
       "Position",
@@ -682,7 +682,7 @@
     [
       "Wizard",
       "Falling Rocks",
-      "Deal POWER damage to all Airborne Enemies. They become Grounded.",
+      "Deal ATK damage to all Airborne Enemies. They become Grounded.",
       "THIS drops Falling Rocks.",
       "Attack",
       "Position",
@@ -702,7 +702,7 @@
     [
       "Wizard",
       "Flood",
-      "Deal POWER damage to all Grounded Enemies.",
+      "Deal ATK damage to all Grounded Enemies.",
       "THIS casts Flood.",
       "Attack",
       "",
@@ -722,7 +722,7 @@
     [
       "Wizard",
       "Lightning Strike",
-      "Deal POWER damage to an Airborne Enemy. They become Stunned for MISC turn.",
+      "Deal ATK damage to an Airborne Enemy. They become Stunned for MISC turn.",
       "THIS uses Lightning Strike on TARGET.",
       "Attack",
       "",
@@ -742,7 +742,7 @@
     [
       "Wizard",
       "Rough Air",
-      "Deal POWER damage to all Airborne Enemies.",
+      "Deal ATK damage to all Airborne Enemies.",
       "THIS casts Rough Air.",
       "Attack",
       "",
@@ -762,7 +762,7 @@
     [
       "Wizard",
       "Sap Energy",
-      "Deal POWER damage to all Grounded Enemies. They lose POWERSTAT Power.",
+      "Deal ATK damage to all Grounded Enemies. They lose POWERSTAT Power.",
       "THIS Saps Energy from enemies.",
       "Attack",
       "Stats",

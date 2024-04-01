@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
@@ -22,8 +20,6 @@ public class LoadScene : MonoBehaviour
 
     public void NextScene()
     {
-        FileManager.instance.UnloadObjects(SceneManager.GetActiveScene().name);
-        FileManager.instance.mode = gameMode;
-        SceneManager.LoadScene(scene, loadMode);
+        StartCoroutine(FileManager.instance.UnloadObjects(SceneManager.GetActiveScene().name, scene, gameMode));
     }
 }

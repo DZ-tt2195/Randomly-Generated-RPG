@@ -62,7 +62,7 @@
     [
       "Archer",
       "Sharp Arrow",
-      "Deal POWER damage to any Airborne Player. They become Grounded.",
+      "Deal ATK damage to any Airborne Player. They become Grounded.",
       "THIS shoots a Sharp Arrow at TARGET.",
       "Attack",
       "Position",
@@ -82,7 +82,7 @@
     [
       "Archer",
       "Frozen Arrow",
-      "Deal POWER damage to any Player. They're Stunned for MISC turn.",
+      "Deal ATK damage to any Player. They're Stunned for MISC turn.",
       "THIS shoots a Frozen Arrow at TARGET.",
       "Attack",
       "Misc",
@@ -102,7 +102,7 @@
     [
       "Archer",
       "Volley of Arrows",
-      "Deal POWER damage to all Players.",
+      "Deal ATK damage to all Players.",
       "THIS fires a Volley of Arrows.",
       "Attack",
       "",
@@ -142,7 +142,7 @@
     [
       "Bat",
       "Drain",
-      "Deal POWER damage to any Player. This gains REGAIN Health.",
+      "Deal ATK damage to any Player. This gains REGAIN Health.",
       "THIS Drains TARGET's health.",
       "Attack",
       "Healing",
@@ -222,7 +222,7 @@
     [
       "Bomb",
       "Explosion",
-      "Deal POWER damage to all Players, then this dies.",
+      "Deal ATK damage to all Players, then this dies.",
       "THIS explodes.",
       "Attack",
       "",
@@ -242,7 +242,7 @@
     [
       "Crow",
       "Attack",
-      "Deal POWER damage to any Player.",
+      "Deal ATK damage to any Player.",
       "THIS attacks TARGET.",
       "Attack",
       "",
@@ -302,7 +302,7 @@
     [
       "Dragon",
       "Firebreath",
-      "If this is Airborne, it deals POWER damage to all Players.",
+      "If this is Airborne, it deals ATK damage to all Players.",
       "THIS unleashes its Firebreath.",
       "Attack",
       "",
@@ -402,7 +402,7 @@
     [
       "Kitty",
       "Scratch",
-      "Deal POWER damage to a Grounded Player.",
+      "Deal ATK damage to a Grounded Player.",
       "THIS Scratches at TARGET.",
       "Attack",
       "",
@@ -422,7 +422,7 @@
     [
       "Page",
       "Attack",
-      "Deal POWER damage to a Grounded Player.",
+      "Deal ATK damage to a Grounded Player.",
       "THIS attacks TARGET.",
       "Attack",
       "",
@@ -462,7 +462,7 @@
     [
       "Puppeteer",
       "Drop",
-      "Deal POWER damage to all Airborne Players. They become Grounded.",
+      "Deal ATK damage to all Airborne Players. They become Grounded.",
       "THIS drops everyone on the floor.",
       "Attack",
       "Position",
@@ -502,7 +502,7 @@
     [
       "Puppeteer",
       "Collision",
-      "Deal POWER damage to all Airborne Players.",
+      "Deal ATK damage to all Airborne Players.",
       "THIS collides its puppets with each other.",
       "Attack",
       "",
@@ -522,7 +522,7 @@
     [
       "Rats",
       "Attack",
-      "Deal POWER damage to a Grounded Player.",
+      "Deal ATK damage to a Grounded Player.",
       "THIS attacks.",
       "Attack",
       "",
@@ -562,7 +562,7 @@
     [
       "Wolf",
       "Slash",
-      "Deal 2 damage to a Grounded Player.",
+      "Deal ATK damage to a Grounded Player.",
       "THIS uses Slash on TARGET.",
       "Attack",
       "",
@@ -622,7 +622,7 @@
     [
       "Wolf",
       "Aerial Landing",
-      "If this is Airborne, it becomes Grounded and deals POWER damage to a Grounded Player.",
+      "If this is Airborne, it becomes Grounded and deals ATK damage to a Grounded Player.",
       "THIS lands on top of TARGET.",
       "Attack",
       "Position",
