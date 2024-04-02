@@ -80,21 +80,21 @@ public class Ability : MonoBehaviour
 
     public int Effectiveness(Character user, Character target, int logged)
     {
-        int answer = user.currentEmotion switch
+        int answer = user.CurrentEmotion switch
         {
-            Emotion.Happy => target.currentEmotion switch
+            Emotion.Happy => target.CurrentEmotion switch
             {
                 Emotion.Angry => 1,
                 Emotion.Sad => -1,
                 _ => 0
             },
-            Emotion.Angry => target.currentEmotion switch
+            Emotion.Angry => target.CurrentEmotion switch
             {
                 Emotion.Sad => 1,
                 Emotion.Happy => -1,
                 _ => 0
             },
-            Emotion.Sad => target.currentEmotion switch
+            Emotion.Sad => target.CurrentEmotion switch
             {
                 Emotion.Happy => 1,
                 Emotion.Angry => -1,
@@ -191,78 +191,78 @@ public class Ability : MonoBehaviour
 
                 case "TARGETSNEUTRAL":
                     for (int i = listOfTargets.Count - 1; i >= 0; i--)
-                        if (listOfTargets[i].currentEmotion != Emotion.Neutral) listOfTargets.RemoveAt(i);
+                        if (listOfTargets[i].CurrentEmotion != Emotion.Neutral) listOfTargets.RemoveAt(i);
                     break;
                 case "SELFNEUTRAL":
-                    if (user.currentEmotion != Emotion.Neutral)
+                    if (user.CurrentEmotion != Emotion.Neutral)
                         return false; break;
                 case "TARGETSNOTNEUTRAL":
                     for (int i = listOfTargets.Count - 1; i >= 0; i--)
-                        if (listOfTargets[i].currentEmotion == Emotion.Neutral) listOfTargets.RemoveAt(i);
+                        if (listOfTargets[i].CurrentEmotion == Emotion.Neutral) listOfTargets.RemoveAt(i);
                     break;
                 case "SELFNOTNEUTRAL":
-                    if (user.currentEmotion == Emotion.Neutral)
+                    if (user.CurrentEmotion == Emotion.Neutral)
                         return false; break;
 
                 case "TARGETSHAPPY":
                     for (int i = listOfTargets.Count - 1; i >= 0; i--)
-                        if (listOfTargets[i].currentEmotion != Emotion.Happy) listOfTargets.RemoveAt(i);
+                        if (listOfTargets[i].CurrentEmotion != Emotion.Happy) listOfTargets.RemoveAt(i);
                     break;
                 case "SELFHAPPY":
-                    if (user.currentEmotion != Emotion.Happy)
+                    if (user.CurrentEmotion != Emotion.Happy)
                         return false; break;
                 case "TARGETSNOTHAPPY":
                     for (int i = listOfTargets.Count - 1; i >= 0; i--)
-                        if (listOfTargets[i].currentEmotion == Emotion.Happy) listOfTargets.RemoveAt(i);
+                        if (listOfTargets[i].CurrentEmotion == Emotion.Happy) listOfTargets.RemoveAt(i);
                     break;
                 case "SELFNOTHAPPY":
-                    if (user.currentEmotion == Emotion.Happy)
+                    if (user.CurrentEmotion == Emotion.Happy)
                         return false; break;
 
                 case "TARGETSANGRY":
                     for (int i = listOfTargets.Count - 1; i >= 0; i--)
-                        if (listOfTargets[i].currentEmotion != Emotion.Angry) listOfTargets.RemoveAt(i);
+                        if (listOfTargets[i].CurrentEmotion != Emotion.Angry) listOfTargets.RemoveAt(i);
                     break;
                 case "SELFANGRY":
-                    if (user.currentEmotion != Emotion.Angry)
+                    if (user.CurrentEmotion != Emotion.Angry)
                         return false; break;
                 case "TARGETSNOTANGRY":
                     for (int i = listOfTargets.Count - 1; i >= 0; i--)
-                        if (listOfTargets[i].currentEmotion == Emotion.Angry) listOfTargets.RemoveAt(i);
+                        if (listOfTargets[i].CurrentEmotion == Emotion.Angry) listOfTargets.RemoveAt(i);
                     break;
                 case "SELFNOTANGRY":
-                    if (user.currentEmotion == Emotion.Angry)
+                    if (user.CurrentEmotion == Emotion.Angry)
                         return false; break;
 
                 case "TARGETSSAD":
                     for (int i = listOfTargets.Count - 1; i >= 0; i--)
-                        if (listOfTargets[i].currentEmotion != Emotion.Sad) listOfTargets.RemoveAt(i);
+                        if (listOfTargets[i].CurrentEmotion != Emotion.Sad) listOfTargets.RemoveAt(i);
                     break;
                 case "SELFSAD":
-                    if (user.currentEmotion != Emotion.Sad)
+                    if (user.CurrentEmotion != Emotion.Sad)
                         return false; break;
                 case "TARGETSNOTSAD":
                     for (int i = listOfTargets.Count - 1; i >= 0; i--)
-                        if (listOfTargets[i].currentEmotion == Emotion.Sad) listOfTargets.RemoveAt(i);
+                        if (listOfTargets[i].CurrentEmotion == Emotion.Sad) listOfTargets.RemoveAt(i);
                     break;
                 case "SELFNOTSAD":
-                    if (user.currentEmotion == Emotion.Sad)
+                    if (user.CurrentEmotion == Emotion.Sad)
                         return false; break;
 
                 case "SELFGROUNDED":
-                    if (user.currentPosition != Position.Grounded)
+                    if (user.CurrentPosition != Position.Grounded)
                         return false; break;
                 case "TARGETSGROUNDED":
                     for (int i = listOfTargets.Count - 1; i >= 0; i--)
-                        if (listOfTargets[i].currentPosition != Position.Grounded) listOfTargets.RemoveAt(i);
+                        if (listOfTargets[i].CurrentPosition != Position.Grounded) listOfTargets.RemoveAt(i);
                     break;
 
                 case "SELFAIRBORNE":
-                    if (user.currentPosition != Position.Airborne)
+                    if (user.CurrentPosition != Position.Airborne)
                         return false; break;
                 case "TARGETSAIRBORNE":
                     for (int i = listOfTargets.Count - 1; i >= 0; i--)
-                        if (listOfTargets[i].currentPosition != Position.Airborne) listOfTargets.RemoveAt(i);
+                        if (listOfTargets[i].CurrentPosition != Position.Airborne) listOfTargets.RemoveAt(i);
                     break;
 
                 default:
@@ -377,15 +377,15 @@ public class Ability : MonoBehaviour
                         break;
 
                     case "SELFSWAPPOSITION":
-                        if (self.currentPosition == Position.Airborne)
+                        if (self.CurrentPosition == Position.Airborne)
                             yield return self.ChangePosition(Position.Grounded, logged);
-                        else if (self.currentPosition == Position.Grounded)
+                        else if (self.CurrentPosition == Position.Grounded)
                             yield return self.ChangePosition(Position.Airborne, logged);
                         break;
                     case "TARGETSSWAPPOSITION":
-                        if (target.currentPosition == Position.Airborne)
+                        if (target.CurrentPosition == Position.Airborne)
                             yield return target.ChangePosition(Position.Grounded, logged);
-                        else if (target.currentPosition == Position.Grounded)
+                        else if (target.CurrentPosition == Position.Grounded)
                             yield return target.ChangePosition(Position.Airborne, logged);
                         break;
 

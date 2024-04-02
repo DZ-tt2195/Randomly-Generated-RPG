@@ -35,38 +35,48 @@ public class Character : MonoBehaviour
 
     [Foldout("Current Stats", true)]
         private int _currentHealth;
-        [ReadOnly] public int currentHealth
+        [ReadOnly] public int CurrentHealth
         {
             get { return _currentHealth; }
-            private set { _currentHealth = value; healthText.text = value.ToString();}
+            private set { healthText.text = $"{value}/{baseHealth}"; _currentHealth = value; }
         }
         private Position _currentPosition;
-        [ReadOnly] public Position currentPosition
+        [ReadOnly] public Position CurrentPosition
         {
             get { return _currentPosition; }
             private set {
-            statusText.text = KeywordTooltip.instance.EditText($"{currentEmotion} {data.myName}\n{value}"); _currentPosition = value; }
+            _currentPosition = value; CharacterUI();}
         }
         private Emotion _currentEmotion;
-        [ReadOnly] public Emotion currentEmotion
+        [ReadOnly] public Emotion CurrentEmotion
         {
             get { return _currentEmotion; }
             private set{
-            statusText.text = KeywordTooltip.instance.EditText($"{value} {data.myName}\n{currentPosition}"); _currentEmotion = value;}
+            _currentEmotion = value; CharacterUI();}
         }
+        private int _turnsStunned;
+        [ReadOnly]
+        public int TurnsStunned
+        {
+            get { return _turnsStunned; }
+            private set { _turnsStunned = value; CharacterUI(); }
+        }
+
         protected int modifyPower;
         protected int modifyDefense;
         protected int modifySpeed;
         protected float modifyLuck;
-        protected float modifyAccuracy;    
-        [ReadOnly] public int turnsStunned { get; private set; }
+        protected float modifyAccuracy;
 
     [Foldout("UI", true)]
         [ReadOnly] public Image border;
         [ReadOnly] public Button myButton;
         [ReadOnly] public Image myImage;
+        Image statusImage;
         TMP_Text statusText;
         TMP_Text healthText;
+        TMP_Text nameText;
+        Sprite stunSprite;
 
 #endregion
 
@@ -78,7 +88,10 @@ public class Character : MonoBehaviour
         myButton = GetComponent<Button>();
         border = transform.Find("border").GetComponent<Image>();
         statusText = transform.Find("Status Text").GetComponent<TMP_Text>();
-        healthText = transform.Find("Health %").GetChild(0).GetComponent<TMP_Text>();
+        healthText = transform.Find("Health Text").GetChild(0).GetComponent<TMP_Text>();
+        nameText = transform.Find("Name Text").GetChild(0).GetComponent<TMP_Text>();
+        statusImage = transform.Find("Status Image").GetComponent<Image>();
+        stunSprite = Resources.Load<Sprite>($"Art/Stun");
     }
 
     public void SetupCharacter(CharacterType type, CharacterData characterData,
@@ -90,7 +103,7 @@ public class Character : MonoBehaviour
         editedDescription = KeywordTooltip.instance.EditText(data.description);
 
         this.baseHealth = data.baseHealth;
-        currentHealth = this.baseHealth;
+        CurrentHealth = this.baseHealth;
         this.baseSpeed = data.baseSpeed;
         this.baseLuck = data.baseLuck;
         this.baseAccuracy = data.baseAccuracy;
@@ -101,6 +114,7 @@ public class Character : MonoBehaviour
 
         StartCoroutine(ChangePosition(data.startingPosition, -1));
         StartCoroutine(ChangeEmotion(startingEmotion, -1));
+        nameText.text = this.name;
 
         foreach (AbilityData data in listOfAbilityData)
             AddAbility(data, false, abilitiesBeginWithCooldown);
@@ -126,17 +140,17 @@ public class Character : MonoBehaviour
 
     public int CalculateHealth()
     {
-        return currentHealth;
+        return CurrentHealth;
     }
 
     public float CalculateHealthPercent()
     {
-        return (float)currentHealth / this.baseHealth;
+        return (float)CurrentHealth / this.baseHealth;
     }
 
     public int CalculatePower()
     {
-        int emotionEffect = currentEmotion switch
+        int emotionEffect = CurrentEmotion switch
         {
             Emotion.Angry => 2,
             _ => 0,
@@ -173,16 +187,16 @@ public class Character : MonoBehaviour
     {
         if (this == null) yield break;
 
-        turnsStunned += amount;
+        TurnsStunned += amount;
         TurnManager.instance.CreateVisual($"STUNNED", this.transform.localPosition);
-        Log.instance.AddText($"{this.name} is Stunned for {turnsStunned} turn{(turnsStunned == 1 ? "" : "s")}.", logged);
+        Log.instance.AddText($"{this.name} is Stunned for {TurnsStunned} turn{(TurnsStunned == 1 ? "" : "s")}.", logged);
     }
 
     public IEnumerator GainHealth(float health, int logged)
     {
         if (this == null) yield break;
 
-        currentHealth = Mathf.Clamp(currentHealth += (int)health, 0, this.baseHealth);
+        CurrentHealth = Mathf.Clamp(CurrentHealth += (int)health, 0, this.baseHealth);
         TurnManager.instance.CreateVisual($"+{(int)health} HP", this.transform.localPosition);
         Log.instance.AddText($"{(this.name)} regains {health} HP.", logged);
     }
@@ -191,11 +205,11 @@ public class Character : MonoBehaviour
     {
         if (this == null) yield break;
 
-        currentHealth -= damage;
+        CurrentHealth -= damage;
         TurnManager.instance.CreateVisual($"-{(int)damage} HP", this.transform.localPosition);
         Log.instance.AddText($"{(this.name)} takes {damage} damage.", logged);
 
-        if (currentHealth <= 0)
+        if (CurrentHealth <= 0)
             yield return HasDied(logged);
     }
 
@@ -203,10 +217,11 @@ public class Character : MonoBehaviour
     {
         if (this == null) yield break;
 
-        currentHealth = 0;
-        currentPosition = Position.Dead;
+        CurrentHealth = 0;
+        TurnsStunned = 0;
+        CurrentPosition = Position.Dead;
 
-        if (this.currentHealth == 0)
+        if (this.CurrentHealth == 0)
         {
             Log.instance.AddText($"{(this.name)} has died.", logged);
             TurnManager.instance.speedQueue.Remove(this);
@@ -308,41 +323,38 @@ public class Character : MonoBehaviour
 
     public IEnumerator ChangePosition(Position newPosition, int logged)
     {
-        if (this == null) yield break;
+        if (this == null || newPosition == Position.Dead || newPosition == CurrentPosition) yield break;
 
-        if (newPosition != Position.Dead && currentPosition != newPosition)
+        CurrentPosition = newPosition;
+
+        if (Log.instance != null && logged >= 0)
         {
-            currentPosition = newPosition;
-
-            if (Log.instance != null && logged >= 0)
+            if (newPosition == Position.Grounded)
             {
-                if (newPosition == Position.Grounded)
-                {
-                    Log.instance.AddText($"{(this.name)} is now Grounded.", logged);
-                    TurnManager.instance.CreateVisual($"GROUNDED", this.transform.localPosition);
-                }
-                else if (newPosition == Position.Airborne)
-                {
-                    Log.instance.AddText($"{(this.name)} is now Airborne.", logged);
-                    TurnManager.instance.CreateVisual($"AIRBORNE", this.transform.localPosition);
-                }
+                Log.instance.AddText($"{(this.name)} is now Grounded.", logged);
+                TurnManager.instance.CreateVisual($"GROUNDED", this.transform.localPosition);
+            }
+            else if (newPosition == Position.Airborne)
+            {
+                Log.instance.AddText($"{(this.name)} is now Airborne.", logged);
+                TurnManager.instance.CreateVisual($"AIRBORNE", this.transform.localPosition);
             }
         }
     }
 
     public IEnumerator ChangeEmotion(Emotion newEmotion, int logged)
     {
-        if (this == null || newEmotion == Emotion.Dead || newEmotion == currentEmotion) yield break;
+        if (this == null || newEmotion == Emotion.Dead || newEmotion == CurrentEmotion) yield break;
 
-        currentEmotion = newEmotion;
+        CurrentEmotion = newEmotion;
 
-        Color newColor = KeywordTooltip.instance.SearchForKeyword(currentEmotion.ToString()).color;
+        Color newColor = KeywordTooltip.instance.SearchForKeyword(CurrentEmotion.ToString()).color;
         this.myImage.color = new Color(newColor.r, newColor.g, newColor.b);
 
         if (Log.instance != null && logged >= 0)
         {
-            Log.instance.AddText($"{(this.name)} is now {currentEmotion}.", logged);
-            TurnManager.instance.CreateVisual($"{currentEmotion}", this.transform.localPosition);
+            Log.instance.AddText($"{(this.name)} is now {CurrentEmotion}.", logged);
+            TurnManager.instance.CreateVisual($"{CurrentEmotion}", this.transform.localPosition);
         }
     }
 
@@ -354,11 +366,11 @@ public class Character : MonoBehaviour
     {
         chosenAbility = null;
         yield return StartOfTurn(logged);
-        if (turnsStunned > 0)
+        if (TurnsStunned > 0)
         {
             yield return TurnManager.instance.WaitTime();
-            turnsStunned--;
-            Log.instance.AddText($"{this.name} is stunned.", 0);
+            TurnsStunned--;
+            Log.instance.AddText($"{this.name} is Stunned.", 0);
         }
         else
         {
@@ -395,7 +407,7 @@ public class Character : MonoBehaviour
                 ability.currentCooldown--;
         }
 
-        if (chosenAbility.data.myName == "Skip Turn")
+        if (chosenAbility.data.myName.Equals("Skip Turn"))
         {
             Log.instance.AddText(Log.Substitute(chosenAbility, this), 0);
             chosenAbility = null;
@@ -405,7 +417,7 @@ public class Character : MonoBehaviour
             yield return TurnManager.instance.WaitTime();
             yield return chosenAbility.ResolveInstructions(TurnManager.SpliceString(chosenAbility.data.instructions), logged + 1);
 
-            int happinessPenalty = currentEmotion switch
+            int happinessPenalty = CurrentEmotion switch
             {
                 Emotion.Happy => 1,
                 _ => 0,
@@ -439,11 +451,10 @@ public class Character : MonoBehaviour
         TurnManager.instance.DisableCharacterButtons();
 
         string part1 = $"{this.name}: Use {chosenAbility.data.myName}";
-        string part2 = (chosenAbility.singleTarget.Contains(chosenAbility.data.teamTarget)) ? $" on {chosenAbility.listOfTargets[0].name}?" : "?";
+        string part2 = chosenAbility.singleTarget.Contains(chosenAbility.data.teamTarget) ? $" on {chosenAbility.listOfTargets[0].name}?" : "?";
 
         TextCollector confirmDecision = TurnManager.instance.MakeTextCollector
-            (part1 + part2, new Vector2(0, 0),
-            new List<string>() { "Confirm", "Rechoose" });
+            (part1 + part2, new Vector2(0, 0), new List<string>() { "Confirm", "Rechoose" });
 
         yield return confirmDecision.WaitForChoice();
         int decision = confirmDecision.chosenButton;
@@ -460,7 +471,7 @@ public class Character : MonoBehaviour
     {
         if (chosenAbility != null && chosenAbility.data.myName != "Skip Turn")
         {
-            if (this.currentEmotion == Emotion.Angry)
+            if (this.CurrentEmotion == Emotion.Angry)
             {
                 if (chosenAbility.killed)
                 {
@@ -468,7 +479,7 @@ public class Character : MonoBehaviour
                     yield return Stun(1, logged + 1);
                 }
             }
-            else if (this.currentEmotion == Emotion.Happy)
+            else if (this.CurrentEmotion == Emotion.Happy)
             {
                 if (!extraTurn && chosenAbility.mainType != AbilityType.Attack)
                 {
@@ -476,7 +487,7 @@ public class Character : MonoBehaviour
                     yield return ResolveTurn(logged + 1, true);
                 }
             }
-            else if (this.currentEmotion == Emotion.Sad)
+            else if (this.CurrentEmotion == Emotion.Sad)
             {
                 Log.instance.AddText($"{this.name} is Sad.", logged);
                 if (chosenAbility.mainType == AbilityType.Attack)
@@ -506,7 +517,7 @@ public class Character : MonoBehaviour
 
     void ScreenPosition()
     {
-        if (currentPosition == Position.Airborne)
+        if (CurrentPosition == Position.Airborne)
         {
             Vector3 newPosition = transform.localPosition;
             int startingPosition = (myType == CharacterType.Enemy) ? 375 : -500;
@@ -516,12 +527,27 @@ public class Character : MonoBehaviour
         else
         {
             Vector3 newPosition = transform.localPosition;
-            int startingPosition = (myType == CharacterType.Enemy) ? 300 : -575;
+            int startingPosition = (myType == CharacterType.Enemy) ? 300 : -570;
             newPosition.y = startingPosition;
             transform.localPosition = newPosition;
         }
     }
 
-    #endregion
+    void CharacterUI()
+    {
+        statusText.text = KeywordTooltip.instance.EditText($"{CurrentEmotion}\n{CurrentPosition}");
+
+        statusImage.gameObject.SetActive(true);
+        if (TurnsStunned > 0)
+        {
+            statusImage.sprite = stunSprite;
+        }
+        else
+        {
+            statusImage.gameObject.SetActive(false);
+        }
+    }
+
+#endregion
 
 }

@@ -39,7 +39,7 @@ public class EnemyCharacter : Character
                     List<Character> airborneTargets = new();
                     foreach (Character character in selectedTarget)
                     {
-                        if (character.currentPosition == Position.Airborne)
+                        if (character.CurrentPosition == Position.Airborne)
                             airborneTargets.Add(character);
                     }
                     if (airborneTargets.Count>0)
@@ -52,7 +52,7 @@ public class EnemyCharacter : Character
                     List<Character> groundedTargets = new();
                     foreach (Character character in selectedTarget)
                     {
-                        if (character.currentPosition == Position.Grounded)
+                        if (character.CurrentPosition == Position.Grounded)
                             groundedTargets.Add(character);
                     }
                     if (groundedTargets.Count > 0)
