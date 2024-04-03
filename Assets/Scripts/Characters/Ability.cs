@@ -4,7 +4,7 @@ using UnityEngine;
 using MyBox;
 
 public enum TeamTarget { None, Self, AnyOne, All, OnePlayer, OtherPlayer, OneEnemy, OtherEnemy, AllPlayers, AllEnemies };
-public enum AbilityType { None, Attack, Stats, Emotion, Position, Healing, Misc };
+public enum AbilityType { None, Attack, StatPlayer, StatEnemy, EmotionPlayer, EmotionEnemy, PositionPlayer, PositionEnemy, Healing, Misc };
 
 public class Ability : MonoBehaviour
 {

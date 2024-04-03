@@ -3425,11 +3425,17 @@ MonoBehaviour:
       m_Image: {fileID: 0}
     - m_Text: Healing
       m_Image: {fileID: 0}
-    - m_Text: Emotion
+    - m_Text: Emotion - Player
       m_Image: {fileID: 0}
-    - m_Text: Position
+    - m_Text: Emotion - Enemy
       m_Image: {fileID: 0}
-    - m_Text: Stats
+    - m_Text: Position - Player
+      m_Image: {fileID: 0}
+    - m_Text: Position - Enemy
+      m_Image: {fileID: 0}
+    - m_Text: Stats - Player
+      m_Image: {fileID: 0}
+    - m_Text: Stats - Enemu
       m_Image: {fileID: 0}
     - m_Text: Misc
       m_Image: {fileID: 0}
@@ -5654,11 +5660,17 @@ MonoBehaviour:
       m_Image: {fileID: 0}
     - m_Text: Healing
       m_Image: {fileID: 0}
-    - m_Text: Emotion
+    - m_Text: Emotion - Player
       m_Image: {fileID: 0}
-    - m_Text: Position
+    - m_Text: Emotion - Enemy
       m_Image: {fileID: 0}
-    - m_Text: Stats
+    - m_Text: Position - Player
+      m_Image: {fileID: 0}
+    - m_Text: Position - Enemy
+      m_Image: {fileID: 0}
+    - m_Text: Stats - Player
+      m_Image: {fileID: 0}
+    - m_Text: Stats - Enemu
       m_Image: {fileID: 0}
     - m_Text: Misc
       m_Image: {fileID: 0}

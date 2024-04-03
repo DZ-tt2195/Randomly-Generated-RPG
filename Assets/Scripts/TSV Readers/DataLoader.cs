@@ -119,10 +119,13 @@ public class DataLoader
         return line switch
         {
             "ATTACK" => AbilityType.Attack,
-            "STATS" => AbilityType.Stats,
-            "EMOTION" => AbilityType.Emotion,
+            "STATPLAYER" => AbilityType.StatPlayer,
+            "STATENEMY" => AbilityType.StatEnemy,
+            "EMOTIONPLAYER" => AbilityType.EmotionPlayer,
+            "EMOTIONENEMY" => AbilityType.EmotionEnemy,
             "HEALING" => AbilityType.Healing,
-            "POSITION" => AbilityType.Position,
+            "POSITIONPLAYER" => AbilityType.PositionPlayer,
+            "POSITIONENEMY" => AbilityType.PositionEnemy,
             "MISC" => AbilityType.Misc,
             "NONE" => AbilityType.None,
             _ => AbilityType.None,

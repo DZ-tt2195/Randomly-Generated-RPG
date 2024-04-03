@@ -47,6 +47,7 @@ public class FileManager : MonoBehaviour
         {
             canvas = GameObject.Find("Canvas").transform;
             instance = this;
+            this.transform.GetChild(0).gameObject.SetActive(true);
             DontDestroyOnLoad(this.gameObject);
         }
         else

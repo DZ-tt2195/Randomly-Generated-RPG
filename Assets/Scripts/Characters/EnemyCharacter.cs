@@ -2,32 +2,51 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using static Ability;
 
 public class EnemyCharacter : Character
 {
     protected override IEnumerator ChooseAbility(int logged)
     {
         yield return null;
-        List<Ability> availableAbilities = new();
+        List<Ability> allAbilities = new();
+        List<Ability> attackingAbilities = new();
+        List<Ability> miscAbilities = new();
+
         foreach (Ability ability in this.listOfRandomAbilities)
         {
             if (ability.CanPlay(this))
             {
-                availableAbilities.Add(ability);
+                allAbilities.Add(ability);
+                if (ability.mainType == AbilityType.Attack)
+                    attackingAbilities.Add(ability);
+                else
+                    miscAbilities.Add(ability);
             }
         }
 
-        chosenAbility = (availableAbilities.Count == 0) ? listOfAutoAbilities[0] : availableAbilities[Random.Range(0, availableAbilities.Count)];
+        if (allAbilities.Count == 0)
+        {
+            chosenAbility = listOfAutoAbilities[0];
+        }
+        else if (miscAbilities.Count > 0 && this.CurrentEmotion == Emotion.Happy)
+        {
+            chosenAbility = miscAbilities[Random.Range(0, miscAbilities.Count)];
+        }
+        else if (attackingAbilities.Count > 0 && (this.CurrentEmotion == Emotion.Angry) ||
+            (this.CurrentEmotion == Emotion.Sad && CalculateHealthPercent() < 0.5f))
+        {
+            chosenAbility = attackingAbilities[Random.Range(0, attackingAbilities.Count)];
+        }
+        else
+        {
+            chosenAbility = allAbilities[Random.Range(0, allAbilities.Count)];
+        }
     }
 
     protected override IEnumerator ChooseTarget(Ability ability)
     {
-        yield return null;
-
         if (ability.singleTarget.Contains(ability.data.teamTarget))
         {
-            data.aiTargeting = data.aiTargeting.ToUpper().Trim();
             List<Character> selectedTarget = ability.listOfTargets.Shuffle();
 
             switch (data.aiTargeting)
@@ -83,5 +102,6 @@ public class EnemyCharacter : Character
 
             ability.listOfTargets = new() { selectedTarget[Random.Range(0, selectedTarget.Count)] };
         }
+        yield return null;
     }
 }

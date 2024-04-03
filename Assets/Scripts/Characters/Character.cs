@@ -101,6 +101,7 @@ public class Character : MonoBehaviour
         myType = type;
         this.name = characterData.myName;
         editedDescription = KeywordTooltip.instance.EditText(data.description);
+        data.aiTargeting = data.aiTargeting.ToUpper().Trim();
 
         this.baseHealth = data.baseHealth;
         CurrentHealth = this.baseHealth;

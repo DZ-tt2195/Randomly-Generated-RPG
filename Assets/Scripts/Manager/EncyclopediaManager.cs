@@ -126,9 +126,12 @@ public class EncyclopediaManager : MonoBehaviour
         {
             "Attack" => AbilityType.Attack,
             "Healing" => AbilityType.Healing,
-            "Emotion" => AbilityType.Emotion,
-            "Position" => AbilityType.Position,
-            "Stats" => AbilityType.Stats,
+            "Emotion - Player" => AbilityType.EmotionPlayer,
+            "Emotion - Enemy" => AbilityType.EmotionEnemy,
+            "Position - Player" => AbilityType.PositionPlayer,
+            "Position - Enemy" => AbilityType.PositionEnemy,
+            "Stats - Player" => AbilityType.StatPlayer,
+            "Stats - Enemy" => AbilityType.StatEnemy,
             "Misc" => AbilityType.Misc,
             _ => AbilityType.None,
         };
