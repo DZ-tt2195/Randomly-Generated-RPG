@@ -37,21 +37,17 @@ public class TutorialManager : MonoBehaviour
         {
             ScreenOverlay.instance.SetAnimationSpeed(0.4f);
             ScreenOverlay.instance.SetUndo(true);
-            GeneratePlayers();
+
+            List<CharacterData> playerData = DataLoader.ReadCharacterData("Player Data");
+            for (int i = 0; i < playerData.Count; i++)
+            {
+                PlayerCharacter nextCharacter = Instantiate(characterPrefab).AddComponent<PlayerCharacter>();
+                nextCharacter.SetupCharacter(CharacterType.Player, playerData[i], new List<AbilityData>(), forcedPlayerInfo[i].forcedEmotion, false);
+                listOfPlayers.Add(nextCharacter);
+            }
 
             currentStep = 1;
             StartCoroutine(NextStep());
-        }
-    }
-
-    void GeneratePlayers()
-    {
-        List<CharacterData> playerData = DataLoader.ReadCharacterData("Player Data");
-        for (int i = 0; i < playerData.Count; i++)
-        {
-            PlayerCharacter nextCharacter = Instantiate(characterPrefab).AddComponent<PlayerCharacter>();
-            nextCharacter.SetupCharacter(CharacterType.Player, playerData[i], new List<AbilityData>(), forcedPlayerInfo[i].forcedEmotion, false);
-            listOfPlayers.Add(nextCharacter);
         }
     }
 
@@ -122,7 +118,8 @@ public class TutorialManager : MonoBehaviour
                 { "You killed your first Enemy! Now you may have noticed your Knight is \"Angry\".",
                 "Everyone begins with a random Emotion. Emotions are effective against other Emotions, and have their own side effects.",
                 "Happy beats Angry, which beats Sad, which beats Happy. Neutral is neutral against everything else.",
-                "This game, your Knight started off Angry, which means each of their attacks deal 2 more damage, but they get Stunned when they kill an Enemy."});
+                "This game, your Knight started off Angry, which means they have 2 more Power (makes attacks and healing abilities stronger).",
+                "However, they get Stunned when they kill an Enemy (like right now), and will skip their next turn."});
 
                 currentStep = 6;
                 StartCoroutine(NextStep());
@@ -130,7 +127,7 @@ public class TutorialManager : MonoBehaviour
 
             case 6: //introduce angel
                 TurnManager.instance.AddPlayer(listOfPlayers[1]); //add angel
-                listOfPlayers[1].AddAbility(FileManager.instance.FindPlayerAbility("Share Healing"), false, false);
+                listOfPlayers[1].AddAbility(FileManager.instance.FindPlayerAbility("Invigorate"), false, false);
 
                 TextCollector collector6 = TurnManager.instance.MakeTextCollector(
                     "Here's your 2nd party member. Right click on the Angel to read what they do.",
@@ -178,7 +175,10 @@ public class TutorialManager : MonoBehaviour
                 Log.instance.AddText("");
                 yield return TurnManager.instance.NewWave();
 
-                listOfPlayers[0].AddAbility(FileManager.instance.FindPlayerAbility("Intimidation"), false, false);
+                listOfPlayers[0].AddAbility(FileManager.instance.FindPlayerAbility("Shun"), false, false);
+                listOfPlayers[0].AddAbility(FileManager.instance.FindPlayerAbility("Meal"), false, false);
+
+                listOfPlayers[1].AddAbility(FileManager.instance.FindPlayerAbility("Share Healing"), false, false);
                 listOfPlayers[1].AddAbility(FileManager.instance.FindPlayerAbility("Delegate"), false, false);
 
                 TurnManager.instance.CreateEnemy(FileManager.instance.FindBonusEnemy("Page"), Emotion.Neutral, 0);
@@ -187,20 +187,18 @@ public class TutorialManager : MonoBehaviour
 
                 yield return ClickThroughDialogue(new List<string>()
                 { "Everyone is either Grounded or Airborne. Your Knight always starts Grounded, and Angel always starts Airborne.",
-                  "Your Knight can't hit Airborne enemies, so they’ll have to attack the Page for now." });
-
-                yield return TurnManager.instance.NewRound();
+                  "Note that the Knight does not have any Abilities that can attack Airborne Enemies!" });
 
                 currentStep = 10;
                 StartCoroutine(NextStep());
                 break;
 
             case 10: //introduce wizard
-                TurnManager.instance.AddPlayer(listOfPlayers[2]); //add angel
+                TurnManager.instance.AddPlayer(listOfPlayers[2]); //add wizard
                 listOfPlayers[2].AddAbility(FileManager.instance.FindPlayerAbility("Falling Rocks"), false, false);
 
                 TextCollector collector10 = TurnManager.instance.MakeTextCollector(
-                    "Finally, your 3rd party member is the Wizard. Right click on them to read what they do.",
+                    "Your 3rd party member, the Wizard, is able to though. Right click on them to read what they do.",
                     Vector3.zero);
                 while (ScreenOverlay.instance.displayedScreen != CurrentScreen.Character)
                     yield return null;
@@ -250,11 +248,12 @@ public class TutorialManager : MonoBehaviour
                 break;
 
             case 14: //finish off the enemies
-                listOfPlayers[2].AddAbility(FileManager.instance.FindPlayerAbility("Sap Energy"), false, false);
+                listOfPlayers[2].AddAbility(FileManager.instance.FindPlayerAbility("Blaze"), false, false);
                 listOfPlayers[2].AddAbility(FileManager.instance.FindPlayerAbility("Ice Blast"), false, false);
+                listOfPlayers[2].AddAbility(FileManager.instance.FindPlayerAbility("Intimidation"), false, false);
 
                 yield return ClickThroughDialogue(new List<string>()
-                { "Anyways, now that the Enemies are Grounded, your Knight is capable of hitting them, so finish them off."});
+                { "Anyways, now that all the Enemies are Grounded, your Knight is capable of hitting them, so finish them off."});
                 break;
 
             case 15: //tutorial over

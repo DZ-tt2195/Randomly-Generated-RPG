@@ -14,8 +14,8 @@
     [
       "Page",
       "Basic Enemy who attacks Grounded Players.",
-      "10",
-      "3",
+      "9",
+      "8",
       "0",
       "1",
       "GROUNDED",
@@ -26,8 +26,8 @@
     [
       "Crow",
       "Basic Enemy who attacks Grounded and Airborne Players.",
-      "10",
-      "3",
+      "9",
+      "8",
       "0",
       "1",
       "AIRBORNE",

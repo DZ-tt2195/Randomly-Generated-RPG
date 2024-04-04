@@ -28,11 +28,11 @@ public class EnemyCharacter : Character
         {
             chosenAbility = listOfAutoAbilities[0];
         }
-        else if (miscAbilities.Count > 0 && this.CurrentEmotion == Emotion.Happy)
+        else if (miscAbilities.Count != 0 && this.CurrentEmotion == Emotion.Happy)
         {
             chosenAbility = miscAbilities[Random.Range(0, miscAbilities.Count)];
         }
-        else if (attackingAbilities.Count > 0 && (this.CurrentEmotion == Emotion.Angry ||
+        else if (attackingAbilities.Count != 0 && (this.CurrentEmotion == Emotion.Angry ||
             (this.CurrentEmotion == Emotion.Sad && CalculateHealthPercent() < 0.5f)))
         {
             chosenAbility = attackingAbilities[Random.Range(0, attackingAbilities.Count)];

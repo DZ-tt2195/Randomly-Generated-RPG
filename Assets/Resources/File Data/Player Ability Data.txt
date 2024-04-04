@@ -242,7 +242,7 @@
     [
       "Knight",
       "Taunt",
-      "All Enemies become Angry. They lose ACCURACYSTAT% Accuracy.",
+      "All Enemies become Angry and lose ACCURACYSTAT% Accuracy.",
       "THIS Taunts the enemies.",
       "StatEnemy",
       "EmotionEnemy",
@@ -352,7 +352,7 @@
       "",
       "",
       "",
-      "-2",
+      "-1",
       "",
       "",
       "",

@@ -59,7 +59,7 @@ public class Log : MonoBehaviour
         TMP_Text newText = Instantiate(textBoxClone, RT.transform);
         newText.text = "";
         for (int i = 0; i < indent; i++)
-            newText.text += "   ";
+            newText.text += "     ";
         newText.text += string.IsNullOrEmpty(logText) ? "" : char.ToUpper(logText[0]) + logText[1..];
 
         foreach (Character teammate in TurnManager.instance.listOfPlayers)
