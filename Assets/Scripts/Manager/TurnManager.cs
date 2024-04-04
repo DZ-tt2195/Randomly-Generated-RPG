@@ -25,29 +25,29 @@ public class TurnManager : MonoBehaviour
 
     public static TurnManager instance;
     [Foldout("Prefabs", true)]
-    [SerializeField] GameObject characterPrefab;
-    [SerializeField] PointsVisual pointsVisual;
-    public TextCollector undoBox;
+        [SerializeField] GameObject characterPrefab;
+        [SerializeField] PointsVisual pointsVisual;
+        public TextCollector undoBox;
 
     [Foldout("UI", true)]
-    public List<AbilityBox> listOfBoxes = new();
-    [SerializeField] List<TMP_Text> listOfSpeed = new();
-    [SerializeField] List<RightClickMe> listOfSpeedImages = new();
-    public TMP_Text instructions;
-    bool borderDecrease = true;
-    [SerializeField] Button quitButton;
-    List<CharacterPositions> teammatePositions = new();
-    List<CharacterPositions> enemyPositions = new();
+        public List<AbilityBox> listOfBoxes = new();
+        [SerializeField] List<RightClickMe> listOfSpeedImages = new();
+        public TMP_Text instructions;
+        bool borderDecrease = true;
+        [SerializeField] Button quitButton;
+        List<CharacterPositions> teammatePositions = new();
+        List<CharacterPositions> enemyPositions = new();
 
     [Foldout("Character lists", true)]
-    [ReadOnly] public List<Character> listOfPlayers = new();
-    [ReadOnly] public List<Character> listOfEnemies = new();
-    [ReadOnly] public List<Character> speedQueue = new List<Character>();
+        [ReadOnly] public List<Character> listOfPlayers = new();
+        [ReadOnly] public List<Character> listOfEnemies = new();
+        [ReadOnly] public List<Character> listOfDead = new();
+        [ReadOnly] public List<Character> speedQueue = new();
 
-    [Foldout("Info tracking", true)]
-    int currentWave;
-    int currentRound;
-    bool isBattling;
+    [Foldout("Misc", true)]
+        int currentWave;
+        int currentRound;
+        bool isBattling;
 
 #endregion
 

@@ -110,7 +110,7 @@ public class TutorialManager : MonoBehaviour
             case 4: //introduce Cooldowns
                 listOfPlayers[0].AddAbility(FileManager.instance.FindPlayerAbility("Joust"), false, false);
                 yield return ClickThroughDialogue(new List<string>()
-                { "The Ability you used has a Cooldown, so you can't use it again this round. Instead use the other Ability." });
+                { "The Ability you used has a cooldown (Cooldown), so you can't use it again this round. Instead use the other Ability." });
 
                 yield return TurnManager.instance.NewRound();
                 currentStep = 5;
@@ -119,8 +119,8 @@ public class TutorialManager : MonoBehaviour
 
             case 5: //introduce angry
                 yield return ClickThroughDialogue(new List<string>()
-                { "You killed your first Enemy! Now you may have noticed your Knight has an Emotion.",
-                "Everyone begins with a random Emotion. Emotions are effective against other Emotions, and have their own effects.",
+                { "You killed your first Enemy! Now you may have noticed your Knight is \"Angry\".",
+                "Everyone begins with a random Emotion. Emotions are effective against other Emotions, and have their own side effects.",
                 "Happy beats Angry, which beats Sad, which beats Happy. Neutral is neutral against everything else.",
                 "This game, your Knight started off Angry, which means each of their attacks deal 2 more damage, but they get Stunned when they kill an Enemy."});
 
@@ -153,7 +153,7 @@ public class TutorialManager : MonoBehaviour
                 yield return ClickThroughDialogue(new List<string>()
                 { "This Page is Happy. Happy is super effective against Angry, which puts your Knight at a disadvantage.",
                 "Normally, your Knight would take their turn first, because they have the highest Speed. But they’re Stunned right now.",
-                "So instead your Angel will get to act first. Use the Angel’s Ability to heal the Knight." });
+                "So instead your Angel will take their turn first. Use the Angel’s Ability to heal the Knight."});
 
                 currentCharacter = listOfPlayers[1]; //wait for angel's next turn
                 currentStep = 8;
@@ -169,9 +169,9 @@ public class TutorialManager : MonoBehaviour
                 listOfPlayers[1].AddAbility(FileManager.instance.FindPlayerAbility("Induce Sadness"), false, false);
 
                 yield return ClickThroughDialogue(new List<string>()
-                { "Your Angel is Happy, which means they can use an extra Ability when they don't attack, but all their Abilities have longer Cooldowns.",
+                { "Your Angel is Happy, which means they can use an extra Ability when they don't attack, but all their Abilities have 1 more turn of Cooldown.",
                 "You Angel didn’t attack, so they get their extra Ability right now. But the healing Ability they just used is on Cooldown.",
-                "Instead, change the Page’s Emotion to let your Knight gain the advantage."});
+                "Instead, change the Page’s Emotion to Sad to make it so your Angry Knight will gain the advantage."});
                 break;
 
             case 9: //introduce grounded and airborne
@@ -186,7 +186,8 @@ public class TutorialManager : MonoBehaviour
                 TurnManager.instance.CreateEnemy(FileManager.instance.FindBonusEnemy("Crow"), Emotion.Neutral, 0);
 
                 yield return ClickThroughDialogue(new List<string>()
-                { "Everyone is either Grounded or Airborne. Your Knight is incapable of hitting Airborne enemies, so they’ll have to attack the Page for now." });
+                { "Everyone is either Grounded or Airborne. Your Knight always starts Grounded, and Angel always starts Airborne.",
+                  "Your Knight can't hit Airborne enemies, so they’ll have to attack the Page for now." });
 
                 yield return TurnManager.instance.NewRound();
 
@@ -228,7 +229,7 @@ public class TutorialManager : MonoBehaviour
             case 12: //introduce sad
                 yield return ClickThroughDialogue(new List<string>()
                 { "Your Wizard is Sad, which means everytime they attack, they gain 2 Health. But if they don't attack, they lose 2 Health.",
-                "Attacking Abilities are colored red, healing Abilities are colored green, the others are colored blue."});
+                "For your convenience, attacking Abilities are colored red, healing Abilities are colored green, the others are colored blue."});
 
                 currentStep = 13;
                 yield return (NextStep());
@@ -236,7 +237,7 @@ public class TutorialManager : MonoBehaviour
 
             case 13: //emotions guide
                 TextCollector collector13 = TurnManager.instance.MakeTextCollector(
-                    "You can always remind yourself of the Emotion and their effects by opening the Emotion Guide in the bottom right.",
+                    "You can always remind yourself of what each Emotion does by opening the Emotion Guide in the bottom right.",
                     Vector3.zero);
                 while (ScreenOverlay.instance.displayedScreen != CurrentScreen.Emotion)
                     yield return null;

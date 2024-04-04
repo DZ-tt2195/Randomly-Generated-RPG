@@ -32,8 +32,8 @@ public class EnemyCharacter : Character
         {
             chosenAbility = miscAbilities[Random.Range(0, miscAbilities.Count)];
         }
-        else if (attackingAbilities.Count > 0 && (this.CurrentEmotion == Emotion.Angry) ||
-            (this.CurrentEmotion == Emotion.Sad && CalculateHealthPercent() < 0.5f))
+        else if (attackingAbilities.Count > 0 && (this.CurrentEmotion == Emotion.Angry ||
+            (this.CurrentEmotion == Emotion.Sad && CalculateHealthPercent() < 0.5f)))
         {
             chosenAbility = attackingAbilities[Random.Range(0, attackingAbilities.Count)];
         }

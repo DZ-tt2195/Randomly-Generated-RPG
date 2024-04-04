@@ -3435,7 +3435,7 @@ MonoBehaviour:
       m_Image: {fileID: 0}
     - m_Text: Stats - Player
       m_Image: {fileID: 0}
-    - m_Text: Stats - Enemu
+    - m_Text: Stats - Enemy
       m_Image: {fileID: 0}
     - m_Text: Misc
       m_Image: {fileID: 0}
@@ -5670,7 +5670,7 @@ MonoBehaviour:
       m_Image: {fileID: 0}
     - m_Text: Stats - Player
       m_Image: {fileID: 0}
-    - m_Text: Stats - Enemu
+    - m_Text: Stats - Enemy
       m_Image: {fileID: 0}
     - m_Text: Misc
       m_Image: {fileID: 0}

@@ -91,7 +91,7 @@ public class Character : MonoBehaviour
         healthText = transform.Find("Health Text").GetChild(0).GetComponent<TMP_Text>();
         nameText = transform.Find("Name Text").GetChild(0).GetComponent<TMP_Text>();
         statusImage = transform.Find("Status Image").GetComponent<Image>();
-        stunSprite = Resources.Load<Sprite>($"Art/Stun");
+        stunSprite = Resources.Load<Sprite>("Art/Stun");
     }
 
     public void SetupCharacter(CharacterType type, CharacterData characterData,
@@ -199,7 +199,7 @@ public class Character : MonoBehaviour
 
         CurrentHealth = Mathf.Clamp(CurrentHealth += (int)health, 0, this.baseHealth);
         TurnManager.instance.CreateVisual($"+{(int)health} HP", this.transform.localPosition);
-        Log.instance.AddText($"{(this.name)} regains {health} HP.", logged);
+        Log.instance.AddText($"{(this.name)} regains {health} Health.", logged);
     }
 
     public IEnumerator TakeDamage(int damage, int logged)
@@ -222,20 +222,19 @@ public class Character : MonoBehaviour
         TurnsStunned = 0;
         CurrentPosition = Position.Dead;
 
-        if (this.CurrentHealth == 0)
+        Log.instance.AddText($"{this.name} has died.", logged);
+        TurnManager.instance.speedQueue.Remove(this);
+
+        if (this.myType == CharacterType.Player)
         {
-            Log.instance.AddText($"{(this.name)} has died.", logged);
-            TurnManager.instance.speedQueue.Remove(this);
-            if (this.myType == CharacterType.Player)
-            {
-                TurnManager.instance.listOfPlayers.Remove(this);
-                myImage.color = Color.gray;
-            }
-            else
-            {
-                TurnManager.instance.listOfEnemies.Remove(this);
-                Destroy(this.gameObject);
-            }
+            TurnManager.instance.listOfPlayers.Remove(this);
+            TurnManager.instance.listOfDead.Add(this);
+            myImage.color = Color.gray;
+        }
+        else
+        {
+            TurnManager.instance.listOfEnemies.Remove(this);
+            Destroy(this.gameObject);
         }
     }
 
@@ -245,6 +244,7 @@ public class Character : MonoBehaviour
 
         Log.instance.AddText($"{(this.name)} comes back to life.", logged);
         TurnManager.instance.listOfPlayers.Add(this);
+        TurnManager.instance.listOfDead.Remove(this);
 
         yield return GainHealth(health, logged);
         yield return ChangePosition(data.startingPosition, -1);
@@ -261,7 +261,7 @@ public class Character : MonoBehaviour
     {
         if (this == null || effect == 0) yield break;
 
-        modifyPower = Math.Clamp(modifyPower += effect, -3, 3);
+        modifyPower = Math.Clamp(modifyPower += effect, -5, 5);
         TurnManager.instance.CreateVisual($"{(effect > 0 ? '+' : '-')}{Math.Abs(effect)} POWER", this.transform.localPosition);
 
         if (effect < 0)
@@ -274,7 +274,7 @@ public class Character : MonoBehaviour
     {
         if (this == null || effect == 0) yield break;
 
-        modifyDefense = Math.Clamp(modifyDefense += effect, -3, 3);
+        modifyDefense = Math.Clamp(modifyDefense += effect, -5, 5);
         TurnManager.instance.CreateVisual($"{(effect > 0 ? '+' : '-')}{Math.Abs(effect)} DEFENSE", this.transform.localPosition);
 
         if (effect < 0)
@@ -287,7 +287,7 @@ public class Character : MonoBehaviour
     {
         if (this == null || effect == 0) yield break;
 
-        modifySpeed = Math.Clamp(modifySpeed += effect, -3, 3);
+        modifySpeed = Math.Clamp(modifySpeed += effect, -5, 5);
         TurnManager.instance.CreateVisual($"{(effect > 0 ? '+' : '-')}{Math.Abs(effect)} SPEED", this.transform.localPosition);
 
         if (effect < 0)
@@ -300,7 +300,7 @@ public class Character : MonoBehaviour
     {
         if (this == null || effect == 0f) yield break;
 
-        modifyLuck = Mathf.Clamp(modifyLuck += effect, 0.25f, 1.75f);
+        modifyLuck = Mathf.Clamp(modifyLuck += effect, -0.75f, 0.75f);
         TurnManager.instance.CreateVisual($"{(effect > 0 ? '+' : '-')}{100*Math.Abs(effect)}% LUCK", this.transform.localPosition);
 
         if (effect < 0)
@@ -313,7 +313,7 @@ public class Character : MonoBehaviour
     {
         if (this == null || effect == 0f) yield break;
 
-        modifyAccuracy = Mathf.Clamp(modifyAccuracy += effect, 0.25f, 1.75f);
+        modifyAccuracy = Mathf.Clamp(modifyAccuracy += effect, -0.75f, 0.75f);
         TurnManager.instance.CreateVisual($"{(effect > 0 ? '+' : '-')}{100*Math.Abs(effect)}% ACCURACY", this.transform.localPosition);
 
         if (effect < 0)
@@ -396,16 +396,18 @@ public class Character : MonoBehaviour
                 yield return ConfirmDecisions();
         }
 
-        foreach (Ability ability in listOfAutoAbilities)
+        if (!extraAbility)
         {
-            if (!extraAbility && ability.currentCooldown > 0)
-                ability.currentCooldown--;
-        }
-
-        foreach (Ability ability in listOfRandomAbilities)
-        {
-            if (!extraAbility && ability.currentCooldown > 0)
-                ability.currentCooldown--;
+            foreach (Ability ability in listOfAutoAbilities)
+            {
+                if (ability.currentCooldown > 0)
+                    ability.currentCooldown--;
+            }
+            foreach (Ability ability in listOfRandomAbilities)
+            {
+                if (ability.currentCooldown > 0)
+                    ability.currentCooldown--;
+            }
         }
 
         if (chosenAbility.data.myName.Equals("Skip Turn"))
@@ -425,13 +427,10 @@ public class Character : MonoBehaviour
             };
             chosenAbility.currentCooldown = chosenAbility.data.baseCooldown + happinessPenalty;
 
-            if (FileManager.instance.mode == FileManager.GameMode.Tutorial)
+            if (FileManager.instance.mode == FileManager.GameMode.Tutorial && TutorialManager.instance.currentCharacter == this)
             {
-                if (TutorialManager.instance.currentCharacter == this)
-                {
-                    TutorialManager.instance.currentCharacter = null;
-                    yield return TutorialManager.instance.NextStep();
-                }
+                TutorialManager.instance.currentCharacter = null;
+                yield return TutorialManager.instance.NextStep();
             }
         }
     }

@@ -14,7 +14,7 @@ public class CharacterData
     public float baseLuck;
     public float baseAccuracy;
     public Position startingPosition;
-    [ReadOnly] public string skillNumbers;
+    public string skillNumbers;
     public string aiTargeting;
     public string artCredit;
 }
@@ -58,7 +58,6 @@ public class DataLoader
             for (int j = 0; j < line.Length; j++)
             {
                 line[j] = line[j].Trim().Replace("\"", "").Replace("\\", "").Replace("]", "");
-                //Debug.Log(line[j]);
             }
 
             newCharacter.myName = line[0];
@@ -88,7 +87,6 @@ public class DataLoader
             for (int j = 0; j < line.Length; j++)
             {
                 line[j] = line[j].Trim().Replace("\"", "").Replace("\\", "").Replace("]", "");
-                //Debug.Log(line[j]);
             }
 
             newAbility.user = line[0];
@@ -137,7 +135,7 @@ public class DataLoader
         line = line.ToUpper().Trim();
         if (line == "")
         {
-            UnityEngine.Debug.LogError("missing team target");
+            Debug.LogError("missing team target");
         }
         return line switch
         {
@@ -164,7 +162,7 @@ public class DataLoader
         }
         catch (FormatException)
         {
-            UnityEngine.Debug.Log(line);
+            Debug.Log(line);
             return -1f;
         }
     }
@@ -178,7 +176,7 @@ public class DataLoader
         }
         catch (FormatException)
         {
-            UnityEngine.Debug.Log(line);
+            Debug.Log(line);
             return -1;
         }
     }

@@ -69,7 +69,7 @@ public class Ability : MonoBehaviour
         bool result = roll <= value;
         if (result && FileManager.instance.mode == FileManager.GameMode.Main)
         {
-            Log.instance.AddText("Critical hit!", logged);
+            Log.instance.AddText("Critical hit! (+2 Damage)", logged);
             return 2;
         }
         else
@@ -104,9 +104,9 @@ public class Ability : MonoBehaviour
         };
 
         if (answer > 0)
-            Log.instance.AddText("It's super effective!", logged);
+            Log.instance.AddText("It's super effective! (+1 Damage)", logged);
         else if (answer < 0)
-            Log.instance.AddText("It wasn't very effective...", logged);
+            Log.instance.AddText("It wasn't very effective... (-1 Damage)", logged);
 
         return answer;
     }
@@ -142,24 +142,21 @@ public class Ability : MonoBehaviour
         if (currentCooldown > 0)
             return false;
 
-        listOfTargets = GetTargets();
-
         string divide = data.playCondition.Replace(" ", "");
         divide = divide.ToUpper();
         string[] methodsInStrings = divide.Split('/');
 
-        for (int i = listOfTargets.Count - 1; i >= 0; i--)
+        if (methodsInStrings[0].Equals("TARGETSDEAD"))
         {
-            if (methodsInStrings[0].Equals("TARGETSDEAD"))
+            listOfTargets = TurnManager.instance.listOfDead;
+        }
+        else
+        {
+            listOfTargets = GetTargets();
+            for (int i = listOfTargets.Count - 1; i >= 0; i--)
             {
-                if (listOfTargets[i].CalculateHealth() > 0)
-                {
+                if (listOfTargets[i].CalculateHealth() <= 0)
                     listOfTargets.RemoveAt(i);
-                }
-            }
-            else if (listOfTargets[i].CalculateHealth() <= 0)
-            {
-                listOfTargets.RemoveAt(i);
             }
         }
 

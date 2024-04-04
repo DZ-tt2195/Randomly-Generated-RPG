@@ -20,6 +20,7 @@ public class FileManager : MonoBehaviour
     [Foldout("Misc info", true)]
         public GameMode mode;
         [ReadOnly] public Transform canvas;
+        [SerializeField] Canvas permanentCanvas;
 
     [Foldout("Scene transition", true)]
         [SerializeField] Image transitionImage;
@@ -47,13 +48,17 @@ public class FileManager : MonoBehaviour
         {
             canvas = GameObject.Find("Canvas").transform;
             instance = this;
-            this.transform.GetChild(0).gameObject.SetActive(true);
             DontDestroyOnLoad(this.gameObject);
         }
         else
         {
             Destroy(this.gameObject);
         }
+    }
+
+    private void Start()
+    {
+        permanentCanvas.gameObject.SetActive(true);
     }
 
     internal IEnumerator DownloadFile(string range)
