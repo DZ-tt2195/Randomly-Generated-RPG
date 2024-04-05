@@ -22,6 +22,7 @@ public class Ability : MonoBehaviour
 
     [ReadOnly] public int damageDealt;
     [ReadOnly] public bool killed;
+    [ReadOnly] public bool fullHeal;
 
     public void SetupAbility(AbilityData data, bool startWithCooldown)
     {
@@ -365,12 +366,15 @@ public class Ability : MonoBehaviour
 
                     case "SELFHEAL":
                         yield return self.GainHealth(data.healthRegain + self.CalculatePower(), logged);
+                        if (self.CalculateHealth() >= 1f) fullHeal = true;
                         break;
                     case "TARGETSHEAL":
                         yield return target.GainHealth(data.healthRegain + self.CalculatePower(), logged);
+                        if (self.CalculateHealth() >= 1f) fullHeal = true;
                         break;
                     case "HEALFROMDAMAGE":
                         yield return self.GainHealth(damageDealt, logged);
+                        if (self.CalculateHealth() >= 1f) fullHeal = true;
                         break;
 
                     case "SELFSWAPPOSITION":

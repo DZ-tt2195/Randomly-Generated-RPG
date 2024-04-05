@@ -118,8 +118,8 @@ public class TutorialManager : MonoBehaviour
                 { "You killed your first Enemy! Now you may have noticed your Knight is \"Angry\".",
                 "Everyone begins with a random Emotion. Emotions are effective against other Emotions, and have their own side effects.",
                 "Happy beats Angry, which beats Sad, which beats Happy. Neutral is neutral against everything else.",
-                "This game, your Knight started off Angry, which means they have 2 more Power (makes attacks and healing abilities stronger).",
-                "However, they get Stunned when they kill an Enemy (like right now), and will skip their next turn."});
+                "This game, your Knight started off Angry, which means they get +2 Power (attacks and healing abilities are stronger).",
+                "However, if they kill an Enemy (like they just did right now), or heal someone to full Health, they get Stunned and miss their next turn."});
 
                 currentStep = 6;
                 StartCoroutine(NextStep());
@@ -149,7 +149,7 @@ public class TutorialManager : MonoBehaviour
 
                 yield return ClickThroughDialogue(new List<string>()
                 { "This Page is Happy. Happy is super effective against Angry, which puts your Knight at a disadvantage.",
-                "Normally, your Knight would take their turn first, because they have the highest Speed. But they’re Stunned right now.",
+                "Your Knight would take their turn first (because they have the highest Speed), but they’re Stunned.",
                 "So instead your Angel will take their turn first. Use the Angel’s Ability to heal the Knight."});
 
                 currentCharacter = listOfPlayers[1]; //wait for angel's next turn
@@ -166,9 +166,10 @@ public class TutorialManager : MonoBehaviour
                 listOfPlayers[1].AddAbility(FileManager.instance.FindPlayerAbility("Induce Sadness"), false, false);
 
                 yield return ClickThroughDialogue(new List<string>()
-                { "Your Angel is Happy, which means they can use an extra Ability when they don't attack, but all their Abilities have 1 more turn of Cooldown.",
-                "You Angel didn’t attack, so they get their extra Ability right now. But the healing Ability they just used is on Cooldown.",
-                "Instead, change the Page’s Emotion to Sad to make it so your Angry Knight will gain the advantage."});
+                { "Your Angel is Happy, which means they get an extra turn when they don't attack, but all their Abilities have 1 more turn of Cooldown.",
+                "Emotions also apply to Enemies. If you right click the Page, you'll see that their attack Ability got placed on Cooldown.",
+                "You Angel didn’t attack, so they get an extra turn. However, Invigorate is on an even longer Cooldown.",
+                "Instead, you can change the Page’s Emotion to Sad. That way, your Angry Knight will gain the advantage."});
                 break;
 
             case 9: //introduce grounded and airborne
@@ -187,7 +188,7 @@ public class TutorialManager : MonoBehaviour
 
                 yield return ClickThroughDialogue(new List<string>()
                 { "Everyone is either Grounded or Airborne. Your Knight always starts Grounded, and Angel always starts Airborne.",
-                  "Note that the Knight does not have any Abilities that can attack Airborne Enemies!" });
+                  "One of the Knight's big weaknesses is that they have no way to attack Airborne Enemies." });
 
                 currentStep = 10;
                 StartCoroutine(NextStep());
@@ -198,7 +199,7 @@ public class TutorialManager : MonoBehaviour
                 listOfPlayers[2].AddAbility(FileManager.instance.FindPlayerAbility("Falling Rocks"), false, false);
 
                 TextCollector collector10 = TurnManager.instance.MakeTextCollector(
-                    "Your 3rd party member, the Wizard, is able to though. Right click on them to read what they do.",
+                    "And now, your 3rd party member. Right click on the Wizard to read what they do.",
                     Vector3.zero);
                 while (ScreenOverlay.instance.displayedScreen != CurrentScreen.Character)
                     yield return null;
@@ -212,7 +213,7 @@ public class TutorialManager : MonoBehaviour
 
             case 11: //introduce wizard Abilities
                 yield return ClickThroughDialogue(new List<string>()
-                { "The Wizard has an Ability that forces all Airborne Enemies to be Grounded. When it’s their turn, use Falling Rocks against the 2 Crows." });
+                { "Your Wizard has an Ability that forces all Airborne Enemies to be Grounded. When it’s their turn, use Falling Rocks against the 2 Crows." });
 
                 currentCharacter = listOfPlayers[2]; //wait for wizard's next turn
                 currentStep = 12;
@@ -235,7 +236,7 @@ public class TutorialManager : MonoBehaviour
 
             case 13: //emotions guide
                 TextCollector collector13 = TurnManager.instance.MakeTextCollector(
-                    "You can always remind yourself of what each Emotion does by opening the Emotion Guide in the bottom right.",
+                    "You can always remind yourself of what each Emotion does by opening the Emotion Guide in the bottom right corner.",
                     Vector3.zero);
                 while (ScreenOverlay.instance.displayedScreen != CurrentScreen.Emotion)
                     yield return null;
@@ -259,7 +260,7 @@ public class TutorialManager : MonoBehaviour
             case 15: //tutorial over
                 TurnManager.instance.GameFinished("Tutorial finished.", "");
                 TextCollector collector15 = TurnManager.instance.MakeTextCollector(
-                    "You’ve completed the tutorial. In the actual game, each character gets 6 random Abilities to fight 5 waves of Enemies. Glhf.",
+                    "You’ve completed the tutorial. In the main game, each character gets 6 random Abilities to fight 5 waves of Enemies. Glhf.",
                     Vector3.zero);
                 break;
         }

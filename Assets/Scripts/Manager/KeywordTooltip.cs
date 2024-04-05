@@ -9,7 +9,7 @@ using System.Text.RegularExpressions;
 public class KeywordHover
 {
     public List<string> keywordVariations;
-    public string description;
+    [TextArea(5,0)] public string description;
     public Color color = Color.white;
 }
 
@@ -27,6 +27,14 @@ public class KeywordTooltip : MonoBehaviour
         instance = this;
         XCap = tooltipText.rectTransform.sizeDelta.x/2f;
         Ydisplace = tooltipText.rectTransform.sizeDelta.y * 1.25f;
+    }
+
+    private void Start()
+    {
+        foreach (KeywordHover hover in linkedKeywords)
+            hover.description = EditText(hover.description);
+        foreach (KeywordHover hover in spriteKeywords)
+            hover.description = EditText(hover.description);
     }
 
     public string EditText(string text)

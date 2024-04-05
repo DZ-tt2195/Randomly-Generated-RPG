@@ -53,8 +53,8 @@ public class TextCollector : MonoBehaviour
         nextButton.onClick.AddListener(() => ReceiveChoice(buttonNumber));
         buttonsInCollector.Add(nextButton);
 
-        imageWidth.sizeDelta = new Vector2(Mathf.Max(buttonsInCollector.Count, 2)*375, 400);
-        textWidth.sizeDelta = new Vector2(Mathf.Max(buttonsInCollector.Count, 2)*375, 250);
+        imageWidth.sizeDelta = new Vector2(Mathf.Max(buttonsInCollector.Count, 2)*375, imageWidth.sizeDelta.y);
+        textWidth.sizeDelta = new Vector2(Mathf.Max(buttonsInCollector.Count, 2)*375, textWidth.sizeDelta.y);
 
         for (int i = 0; i < buttonsInCollector.Count; i++)
         {

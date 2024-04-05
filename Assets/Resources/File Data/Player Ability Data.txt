@@ -582,7 +582,7 @@
     [
       "Angel",
       "Crash Landing",
-      "An Airborne Enemy becomes Grounded. They lose DEFENSESTAT Defense.",
+      "An Airborne Enemy becomes Grounded and loses DEFENSESTAT Defense.",
       "THIS makes TARGET Crash Land.",
       "StatEnemy",
       "PositionEnemy",

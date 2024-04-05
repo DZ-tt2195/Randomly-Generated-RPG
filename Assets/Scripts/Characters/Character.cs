@@ -198,7 +198,7 @@ public class Character : MonoBehaviour
         if (this == null) yield break;
 
         CurrentHealth = Mathf.Clamp(CurrentHealth += (int)health, 0, this.baseHealth);
-        TurnManager.instance.CreateVisual($"+{(int)health} HP", this.transform.localPosition);
+        TurnManager.instance.CreateVisual($"+{(int)health} HEALTH", this.transform.localPosition);
         Log.instance.AddText($"{(this.name)} regains {health} Health.", logged);
     }
 
@@ -207,7 +207,7 @@ public class Character : MonoBehaviour
         if (this == null) yield break;
 
         CurrentHealth -= damage;
-        TurnManager.instance.CreateVisual($"-{(int)damage} HP", this.transform.localPosition);
+        TurnManager.instance.CreateVisual($"-{(int)damage} HEALTH", this.transform.localPosition);
         Log.instance.AddText($"{(this.name)} takes {damage} damage.", logged);
 
         if (CurrentHealth <= 0)
@@ -473,7 +473,7 @@ public class Character : MonoBehaviour
         {
             if (this.CurrentEmotion == Emotion.Angry)
             {
-                if (chosenAbility.killed)
+                if (chosenAbility.killed || chosenAbility.fullHeal)
                 {
                     Log.instance.AddText($"{this.name} is Angry.", logged);
                     yield return Stun(1, logged + 1);
