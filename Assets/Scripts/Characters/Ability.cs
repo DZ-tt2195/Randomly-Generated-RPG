@@ -366,15 +366,15 @@ public class Ability : MonoBehaviour
 
                     case "SELFHEAL":
                         yield return self.GainHealth(data.healthRegain + self.CalculatePower(), logged);
-                        if (self.CalculateHealth() >= 1f) fullHeal = true;
+                        if (self.CalculateHealthPercent() >= 1f) fullHeal = true;
                         break;
                     case "TARGETSHEAL":
                         yield return target.GainHealth(data.healthRegain + self.CalculatePower(), logged);
-                        if (self.CalculateHealth() >= 1f) fullHeal = true;
+                        if (target.CalculateHealthPercent() >= 1f) fullHeal = true;
                         break;
                     case "HEALFROMDAMAGE":
                         yield return self.GainHealth(damageDealt, logged);
-                        if (self.CalculateHealth() >= 1f) fullHeal = true;
+                        if (self.CalculateHealthPercent() >= 1f) fullHeal = true;
                         break;
 
                     case "SELFSWAPPOSITION":
