@@ -56,9 +56,9 @@ public class TitleScreen : MonoBehaviour
             button.onClick.AddListener(ToggleInfoScreen);
 
         foreach (Toggle toggle in listOfCheats)
-            InitialToggle(toggle);
+            InitialToggle(toggle, true);
         foreach (Toggle toggle in listOfChallenges)
-            InitialToggle(toggle);
+            InitialToggle(toggle, false);
     }
 
     private void Update()
@@ -154,16 +154,25 @@ public class TitleScreen : MonoBehaviour
 
 #region Cheats/Challenges
 
-    void InitialToggle(Toggle toggle)
+    void InitialToggle(Toggle toggle, bool cheat)
     {
         toggle.isOn = PlayerPrefs.HasKey(toggle.name) && PlayerPrefs.GetInt(toggle.name) == 1;
-        toggle.onValueChanged.AddListener((bool isOn) => SetPref(isOn, toggle.name));
-        SetPref(toggle.isOn, toggle.name);
+        toggle.onValueChanged.AddListener((bool isOn) => SetPref(isOn, toggle.name, cheat));
+        SetPref(toggle.isOn, toggle.name, cheat);
     }
 
-    void SetPref(bool isOn, string name)
+    void SetPref(bool isOn, string name, bool cheat)
     {
         PlayerPrefs.SetInt(name, (isOn) ? 1 : 0);
+        if (cheat && isOn)
+            CarryVariables.instance.listOfCheats.Add(name);
+        else if (cheat && !isOn)
+            CarryVariables.instance.listOfCheats.Remove(name);
+
+        else if (!cheat && isOn)
+            CarryVariables.instance.listOfChallenges.Add(name);
+        else if (!cheat && !isOn)
+            CarryVariables.instance.listOfChallenges.Remove(name);
     }
 
     public void CheatChallengeMenu()
@@ -176,12 +185,12 @@ public class TitleScreen : MonoBehaviour
         foreach (Toggle cheat in listOfCheats)
         {
             cheat.isOn = false;
-            SetPref(false, cheat.name);
+            SetPref(false, cheat.name, true);
         }
         foreach (Toggle challenge in listOfChallenges)
         {
             challenge.isOn = false;
-            SetPref(false, challenge.name);
+            SetPref(false, challenge.name, false);
         }
     }
 

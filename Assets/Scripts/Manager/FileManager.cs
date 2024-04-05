@@ -15,16 +15,6 @@ public class FileManager : MonoBehaviour
 #region Variables
 
     public static FileManager instance;
-    public enum GameMode { Main, Tutorial, Other };
-
-    [Foldout("Misc info", true)]
-        public GameMode mode;
-        [ReadOnly] public Transform canvas;
-        [SerializeField] Canvas permanentCanvas;
-
-    [Foldout("Scene transition", true)]
-        [SerializeField] Image transitionImage;
-        [SerializeField] float transitionTime;
 
     [Foldout("Download", true)]
         public bool downloadOn = true;
@@ -46,7 +36,6 @@ public class FileManager : MonoBehaviour
     {
         if (instance == null)
         {
-            canvas = GameObject.Find("Canvas").transform;
             instance = this;
             DontDestroyOnLoad(this.gameObject);
         }
@@ -54,11 +43,6 @@ public class FileManager : MonoBehaviour
         {
             Destroy(this.gameObject);
         }
-    }
-
-    private void Start()
-    {
-        permanentCanvas.gameObject.SetActive(true);
     }
 
     internal IEnumerator DownloadFile(string range)
@@ -132,67 +116,6 @@ public class FileManager : MonoBehaviour
         return listOfBonusEnemies.FirstOrDefault(enemy => enemy.myName == target);
     }
 
-#endregion
-
-#region Scenes
-
-    private void OnEnable()
-    {
-        SceneManager.sceneLoaded += OnSceneLoaded;
-    }
-
-    private void OnDisable()
-    {
-        SceneManager.sceneLoaded -= OnSceneLoaded;
-    }
-
-    public IEnumerator UnloadObjects(string originalScene, string nextScene, GameMode mode)
-    {
-        yield return SceneTransitionEffect(0);
-
-        listOfPlayers.RemoveAll(item => item == null);
-        if (!originalScene.Equals("1. Battle"))
-        {
-            foreach (Character player in listOfPlayers)
-            {
-                player.gameObject.transform.SetParent(null);
-                DontDestroyOnLoad(player.gameObject);
-            }
-        }
-
-        this.mode = mode;
-        SceneManager.LoadScene(nextScene);
-    }
-
-    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
-    {
-        canvas = GameObject.Find("Canvas").transform;
-        StartCoroutine(BringBackObjects());
-    }
-
-    IEnumerator BringBackObjects()
-    {
-        yield return SceneTransitionEffect(1);
-        transitionImage.gameObject.SetActive(false);
-    }
-
-    IEnumerator SceneTransitionEffect(float begin)
-    {
-        transitionImage.gameObject.SetActive(true);
-        transitionImage.SetAlpha(begin);
-
-        float waitTime = 0f;
-        while (waitTime < transitionTime)
-        {
-            transitionImage.SetAlpha(Mathf.Abs(begin - (waitTime / transitionTime)));
-            waitTime += Time.deltaTime;
-            yield return null;
-        }
-
-        transitionImage.SetAlpha(Mathf.Abs(begin - 1));
-        transitionImage.gameObject.SetActive(true);
-    }
-    
 #endregion
 
 }

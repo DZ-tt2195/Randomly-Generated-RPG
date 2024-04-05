@@ -29,7 +29,7 @@ public class TutorialManager : MonoBehaviour
 
     private void Start()
     {
-        if (FileManager.instance.mode == FileManager.GameMode.Main)
+        if (CarryVariables.instance.mode == CarryVariables.GameMode.Main)
         {
             Destroy(this.gameObject);
         }

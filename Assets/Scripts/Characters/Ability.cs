@@ -53,7 +53,7 @@ public class Ability : MonoBehaviour
 
     bool RollAccuracy(float value)
     {
-        if (FileManager.instance.mode == FileManager.GameMode.Main)
+        if (CarryVariables.instance.mode == CarryVariables.GameMode.Main)
         {
             float roll = Random.Range(0f, 1f);
             return (roll <= value);
@@ -68,7 +68,7 @@ public class Ability : MonoBehaviour
     {
         float roll = Random.Range(0f, 1f);
         bool result = roll <= value;
-        if (result && FileManager.instance.mode == FileManager.GameMode.Main)
+        if (result && CarryVariables.instance.mode == CarryVariables.GameMode.Main)
         {
             Log.instance.AddText("Critical hit! (+2 Damage)", logged);
             return 2;
@@ -106,23 +106,31 @@ public class Ability : MonoBehaviour
 
         if (answer > 0)
             Log.instance.AddText("It's super effective! (+1 Damage)", logged);
+        else if (answer < 0 && CarryVariables.instance.ActiveChallenge("Ineffectives Miss") && self.myType == CharacterType.Player)
+            Log.instance.AddText("It was ineffective...(Ineffectives Miss)", logged);
         else if (answer < 0)
-            Log.instance.AddText("It wasn't very effective... (-1 Damage)", logged);
+            Log.instance.AddText("It was ineffective...(-1 Damage)", logged);
 
         return answer;
     }
 
     int CalculateDamage(Character user, Character target, int logged)
     {
+        int effectiveness = Effectiveness(user, target, logged);
+        if (effectiveness < 0 && CarryVariables.instance.ActiveChallenge("Ineffectives Miss") && self.myType == CharacterType.Player)
+        {
+            Log.instance.AddText($"{user.name}'s attack misses {target.name}.", logged);
+            TurnManager.instance.CreateVisual("MISS", target.transform.localPosition);
+            return 0;
+        }
+
         if (RollAccuracy(user.CalculateAccuracy()))
         {
-            int effectiveness = Effectiveness(user, target, logged);
-            int critical = RollCritical(user.CalculateLuck(), logged);
-            int attack = user.CalculatePower();
-            int defense = target.CalculateDefense();
-
-            int finalDamage = Mathf.Max(0, critical + effectiveness + attack + data.attackDamage - defense);
-            return finalDamage;
+            return Mathf.Max(0,
+                RollCritical(user.CalculateLuck(), logged)
+                + effectiveness + user.CalculatePower()
+                + data.attackDamage
+                - target.CalculateDefense());
         }
         else
         {
@@ -325,8 +333,11 @@ public class Ability : MonoBehaviour
     public IEnumerator ResolveInstructions(string[] listOfMethods, int logged)
     {
         Log.instance.AddText(Log.Substitute(this, self), logged-1);
-        killed = false;
         TurnManager.instance.instructions.transform.parent.gameObject.SetActive(false);
+
+        killed = false;
+        fullHeal = false;
+        damageDealt = 0;
 
         foreach (Character target in listOfTargets)
         {

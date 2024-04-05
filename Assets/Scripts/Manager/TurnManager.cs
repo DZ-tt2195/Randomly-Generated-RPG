@@ -68,16 +68,14 @@ public class TurnManager : MonoBehaviour
             enemyPositions.Add(new CharacterPositions(new Vector3(nextX, 300, 0)));
         }
 
-        if (FileManager.instance.mode == FileManager.GameMode.Main)
+        if (CarryVariables.instance.mode == CarryVariables.GameMode.Main)
         {
             Log.instance.AddText("Defeat 5 waves of enemies.");
 
-            if (PlayerPrefs.GetInt("Stronger Players") == 1)
-                Log.instance.AddText("Stronger Players Cheat");
-            if (PlayerPrefs.GetInt("Enemies Stunned") == 1)
-                Log.instance.AddText("Enemies Stunned Cheat");
-            if (PlayerPrefs.GetInt("Stronger Enemies") == 1)
-                Log.instance.AddText("Stronger Enemies Challenge");
+            foreach (string cheat in CarryVariables.instance.listOfCheats)
+                Log.instance.AddText($"Cheat: {cheat}", 1);
+            foreach (string challenge in CarryVariables.instance.listOfChallenges)
+                Log.instance.AddText($"Challenge: {challenge}", 1);
 
             Log.instance.AddText("");
             foreach (Character player in FileManager.instance.listOfPlayers)
@@ -109,11 +107,11 @@ public class TurnManager : MonoBehaviour
         {
             GameFinished("You won!", $"Survived 10 waves.");
         }
-        else if (FileManager.instance.mode == FileManager.GameMode.Main)
+        else if (CarryVariables.instance.mode == CarryVariables.GameMode.Main)
         {
             Log.instance.AddText($"WAVE {currentWave} / 5");
 
-            if (currentWave == 1 && PlayerPrefs.GetInt("Stronger Players") == 1)
+            if (currentWave == 1 && CarryVariables.instance.ActiveCheat("Stronger Players"))
             {
                 Log.instance.AddText($"Players get +1 to their stats. (Stronger Players)");
                 foreach (Character player in listOfPlayers)
@@ -127,7 +125,7 @@ public class TurnManager : MonoBehaviour
                 Log.instance.AddText("");
             }
 
-            if (PlayerPrefs.GetInt("Stronger Enemies") == 1)
+            if (CarryVariables.instance.ActiveChallenge("Stronger Enemies"))
                 Log.instance.AddText($"Enemies get +1 to their stats. (Stronger Enemies)");
 
             for (int i = 0; i < currentWave; i++)
@@ -176,7 +174,7 @@ public class TurnManager : MonoBehaviour
             }
             else if (listOfEnemies.Count == 0)
             {
-                if (FileManager.instance.mode == FileManager.GameMode.Main)
+                if (CarryVariables.instance.mode == CarryVariables.GameMode.Main)
                 {
                     Log.instance.AddText($"");
                     StartCoroutine(NewWave());
@@ -185,7 +183,7 @@ public class TurnManager : MonoBehaviour
             }
         }
 
-        if (isBattling && FileManager.instance.mode == FileManager.GameMode.Main)
+        if (isBattling && CarryVariables.instance.mode == CarryVariables.GameMode.Main)
             StartCoroutine(NewRound());
     }
 
@@ -269,7 +267,7 @@ public class TurnManager : MonoBehaviour
 
     public void CreateVisual(string text, Vector3 position)
     {
-        PointsVisual pv = Instantiate(pointsVisual, FileManager.instance.canvas);
+        PointsVisual pv = Instantiate(pointsVisual, CarryVariables.instance.sceneCanvas);
         pv.Setup(text, position);
     }
 
@@ -307,7 +305,7 @@ public class TurnManager : MonoBehaviour
         if (listOfEnemies.Count < 5)
         {
             EnemyCharacter nextCharacter = Instantiate(characterPrefab).AddComponent<EnemyCharacter>();
-            nextCharacter.transform.SetParent(FileManager.instance.canvas);
+            nextCharacter.transform.SetParent(CarryVariables.instance.sceneCanvas);
             nextCharacter.transform.SetAsFirstSibling();
             listOfEnemies.Add(nextCharacter);
 
@@ -327,7 +325,7 @@ public class TurnManager : MonoBehaviour
             nextCharacter.SetupCharacter(CharacterType.Enemy, dataFile, FileManager.instance.ConvertNumbersToAbilityData(dataFile.skillNumbers, false), startingEmotion, true);
             SaveManager.instance.SaveEnemy(dataFile);
 
-            if (FileManager.instance.mode == FileManager.GameMode.Main && PlayerPrefs.GetInt("Stronger Enemies") == 1)
+            if (CarryVariables.instance.ActiveChallenge("Stronger Enemies"))
             {
                 StartCoroutine(nextCharacter.ChangePower(1, -1));
                 StartCoroutine(nextCharacter.ChangeDefense(1, -1));
@@ -336,7 +334,7 @@ public class TurnManager : MonoBehaviour
                 StartCoroutine(nextCharacter.ChangeAccuracy(0.1f, -1));
             }
 
-            if (FileManager.instance.mode == FileManager.GameMode.Main && PlayerPrefs.GetInt("Enemies Stunned") == 1)
+            if (CarryVariables.instance.ActiveCheat("Enemies Stunned"))
                 StartCoroutine(nextCharacter.Stun(1, logged + 1));
         }
     }
@@ -344,7 +342,7 @@ public class TurnManager : MonoBehaviour
     public void AddPlayer(Character character)
     {
         listOfPlayers.Add(character);
-        character.transform.SetParent(FileManager.instance.canvas);
+        character.transform.SetParent(CarryVariables.instance.sceneCanvas);
         character.transform.SetAsFirstSibling();
 
         foreach (CharacterPositions position in teammatePositions)
