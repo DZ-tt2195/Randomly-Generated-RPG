@@ -14,7 +14,7 @@ public class EnemyCharacter : Character
 
         foreach (Ability ability in this.listOfRandomAbilities)
         {
-            if (ability.CanPlay(this))
+            if (ability.CanPlay())
             {
                 allAbilities.Add(ability);
                 if (ability.mainType == AbilityType.Attack)
@@ -43,11 +43,11 @@ public class EnemyCharacter : Character
         }
     }
 
-    public override IEnumerator ChooseTarget(Ability ability, TeamTarget target)
+    public override IEnumerator ChooseTarget(Ability ability, TeamTarget target, int index)
     {
         if (ability.singleTarget.Contains(target))
         {
-            List<Character> selectedTarget = ability.listOfTargets.Shuffle();
+            List<Character> selectedTarget = ability.listOfTargets[index].Shuffle();
 
             switch (data.aiTargeting)
             {
@@ -100,7 +100,7 @@ public class EnemyCharacter : Character
                     break;
             }
 
-            ability.listOfTargets = new() { selectedTarget[Random.Range(0, selectedTarget.Count)] };
+            ability.listOfTargets[index] = new() { selectedTarget[Random.Range(0, selectedTarget.Count)] };
         }
         yield return null;
     }

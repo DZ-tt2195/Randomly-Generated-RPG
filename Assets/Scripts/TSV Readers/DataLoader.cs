@@ -26,10 +26,10 @@ public class AbilityData
     public string myName;
     public string description;
     public string logDescription;
-    public string instructions;
+    public string[] instructions;
     public AbilityType typeOne;
     public AbilityType typeTwo;
-    public string playCondition;
+    public string[] playCondition;
     public int baseCooldown;
     public int attackDamage;
     public int healthRegain;
@@ -39,7 +39,7 @@ public class AbilityData
     public float modifyLuck;
     public float modifyAccuracy;
     public int miscNumber;
-    public TeamTarget defaultTargets;
+    public TeamTarget[] defaultTargets;
 }
 
 public class DataLoader
@@ -95,8 +95,8 @@ public class DataLoader
             newAbility.logDescription = line[3];
             newAbility.typeOne = StringToAbilityType(line[4]);
             newAbility.typeTwo = StringToAbilityType(line[5]);
-            newAbility.instructions = line[6];
-            newAbility.playCondition = line[7];
+            newAbility.instructions = (line[6].Equals("") ? new string[1] { "None" } : TurnManager.SpliceString(line[6], '-'));
+            newAbility.playCondition = (line[7].Equals("") ? new string[1] { "None" } : TurnManager.SpliceString(line[7], '-'));
             newAbility.baseCooldown = StringToInt(line[8]);
             newAbility.attackDamage = StringToInt(line[9]);
             newAbility.healthRegain = StringToInt(line[10]);
@@ -106,7 +106,12 @@ public class DataLoader
             newAbility.modifyLuck = StringToFloat(line[14]);
             newAbility.modifyAccuracy = StringToFloat(line[15]);
             newAbility.miscNumber = StringToInt(line[16]);
-            newAbility.defaultTargets = StringToTeamTarget(line[17]);
+
+            string[] listOfTargets = (line[17].Equals("") ? new string[1] { "None" } : TurnManager.SpliceString(line[17], '-'));
+            TeamTarget[] convertToTargets = new TeamTarget[listOfTargets.Length];
+            for (int j = 0; j < listOfTargets.Length; j++)
+                convertToTargets[j] = StringToTeamTarget(listOfTargets[j]);
+            newAbility.defaultTargets = convertToTargets;
         }
         return nextData;
     }
@@ -133,21 +138,21 @@ public class DataLoader
     static TeamTarget StringToTeamTarget(string line)
     {
         line = line.ToUpper().Trim();
-        if (line == "")
+        if (line.Equals(""))
         {
             Debug.LogError("missing team target");
         }
         return line switch
         {
-            "ANY ONE" => TeamTarget.AnyOne,
+            "ANYONE" => TeamTarget.AnyOne,
             "SELF" => TeamTarget.Self,
             "ALL" => TeamTarget.All,
-            "ONE PLAYER" => TeamTarget.OnePlayer,
-            "ONE ENEMY" => TeamTarget.OneEnemy,
-            "ALL ENEMIES" => TeamTarget.AllEnemies,
-            "ALL PLAYERS" => TeamTarget.AllPlayers,
-            "OTHER PLAYER" => TeamTarget.OtherPlayer,
-            "OTHER ENEMY" => TeamTarget.OtherEnemy,
+            "ONEPLAYER" => TeamTarget.OnePlayer,
+            "ONEENEMY" => TeamTarget.OneEnemy,
+            "ALLENEMIES" => TeamTarget.AllEnemies,
+            "ALLPLAYERS" => TeamTarget.AllPlayers,
+            "OTHERPLAYER" => TeamTarget.OtherPlayer,
+            "OTHERENEMY" => TeamTarget.OtherEnemy,
             "NONE" => TeamTarget.None,
             _ => TeamTarget.None,
         };
@@ -158,11 +163,11 @@ public class DataLoader
         line = line.Trim();
         try
         {
-            return (line == "") ? 0f : float.Parse(line);
+            return (line.Equals("")) ? 0f : float.Parse(line);
         }
         catch (FormatException)
         {
-            Debug.Log(line);
+            Debug.LogError(line);
             return -1f;
         }
     }
@@ -172,11 +177,11 @@ public class DataLoader
         line = line.Trim();
         try
         {
-            return (line == "") ? 0 : int.Parse(line);
+            return (line.Equals("")) ? 0 : int.Parse(line);
         }
         catch (FormatException)
         {
-            Debug.Log(line);
+            Debug.LogError(line);
             return -1;
         }
     }

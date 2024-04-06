@@ -27,11 +27,11 @@ public class Log : MonoBehaviour
         #endif
     }*/
 
-    public static string Substitute(Ability ability, Character user)
+    public static string Substitute(Ability ability, Character user, Character target)
     {
         string sentence = ability.data.logDescription;
-        sentence = sentence.Replace("THIS", user.name);
-        try{ sentence = sentence.Replace("TARGET", ability.listOfTargets[0].name);} catch{/*do nothing*/}
+        sentence = sentence.Replace("THIS", user.data.myName);
+        try{ sentence = sentence.Replace("TARGET", target.data.myName);} catch{/*do nothing*/}
         return sentence;
     }
 

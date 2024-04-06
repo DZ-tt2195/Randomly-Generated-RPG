@@ -29,7 +29,7 @@ public class PlayerCharacter : Character
         {
             AbilityBox box = TurnManager.instance.listOfBoxes[boxesFilled];
             box.gameObject.SetActive(true);
-            box.ReceiveAbility(listOfAutoAbilities[i].CanPlay(this), listOfAutoAbilities[i]);
+            box.ReceiveAbility(listOfAutoAbilities[i].CanPlay(), listOfAutoAbilities[i]);
 
             box.button.onClick.RemoveAllListeners();
             int buttonNum = boxesFilled;
@@ -42,7 +42,7 @@ public class PlayerCharacter : Character
         {
             AbilityBox box = TurnManager.instance.listOfBoxes[boxesFilled];
             box.gameObject.SetActive(true);
-            box.ReceiveAbility(listOfRandomAbilities[i].CanPlay(this), listOfRandomAbilities[i]);
+            box.ReceiveAbility(listOfRandomAbilities[i].CanPlay(), listOfRandomAbilities[i]);
 
             box.button.onClick.RemoveAllListeners();
             int buttonNum = boxesFilled;
@@ -60,29 +60,29 @@ public class PlayerCharacter : Character
         }
     }
 
-    public override IEnumerator ChooseTarget(Ability ability, TeamTarget target)
+    public override IEnumerator ChooseTarget(Ability ability, TeamTarget target, int index)
     {
         foreach (AbilityBox box in TurnManager.instance.listOfBoxes)
             box.gameObject.SetActive(false);
 
         if (ability.singleTarget.Contains(target))
         {
-            TurnManager.instance.instructions.text = $"Choose a character to target.";
+            TurnManager.instance.instructions.text = $"Choose a character to target. ({ability.data.myName})";
             TurnManager.instance.DisableCharacterButtons();
 
-            for (int i = 0; i < ability.listOfTargets.Count; i++)
+            for (int i = 0; i < ability.listOfTargets[index].Count; i++)
             {
-                Character character = ability.listOfTargets[i];
+                Character character = ability.listOfTargets[index][i];
                 character.border.gameObject.SetActive(true);
                 character.myButton.interactable = true;
+
                 character.myButton.onClick.RemoveAllListeners();
                 int buttonNum = i;
                 character.myButton.onClick.AddListener(() => ReceiveChoice(buttonNum));
             }
 
             yield return WaitForChoice();
-            List<Character> selectedTarget = new() { ability.listOfTargets[choice]};
-            ability.listOfTargets = selectedTarget;
+            ability.listOfTargets[index] = new() { ability.listOfTargets[index][choice] };
         }
     }
 

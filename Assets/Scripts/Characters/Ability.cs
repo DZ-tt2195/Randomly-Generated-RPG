@@ -18,7 +18,7 @@ public class Ability : MonoBehaviour
     [ReadOnly] public AbilityType mainType;
 
     [ReadOnly] public int currentCooldown;
-    [ReadOnly] public List<Character> listOfTargets;
+    [ReadOnly] public List<List<Character>> listOfTargets = new();
 
     [ReadOnly] public int damageDealt;
     [ReadOnly] public bool killed;
@@ -140,36 +140,37 @@ public class Ability : MonoBehaviour
         }
     }
 
-#endregion
+    #endregion
 
 #region Play Condition
 
-    public bool CanPlay(Character user)
+    public bool CanPlay()
     {
         if (data.myName.Equals("Skip Turn"))
             return true;
         if (currentCooldown > 0)
             return false;
 
-        string divide = data.playCondition.Replace(" ", "");
-        divide = divide.ToUpper();
-        string[] methodsInStrings = divide.Split('/');
+        listOfTargets.Clear();
 
-        if (methodsInStrings[0].Equals("TARGETSDEAD"))
+        for (int i = 0; i < data.playCondition.Length; i++)
         {
-            listOfTargets = TurnManager.instance.listOfDead;
-        }
-        else
-        {
-            listOfTargets = GetTargets(data.defaultTargets);
-            for (int i = listOfTargets.Count - 1; i >= 0; i--)
-            {
-                if (listOfTargets[i].CalculateHealth() <= 0)
-                    listOfTargets.RemoveAt(i);
-            }
+            string[] methodsInStrings = data.playCondition[i].Split('/');
+            if (methodsInStrings[0].Equals("TARGETSDEAD"))
+                listOfTargets.Add(TurnManager.instance.listOfDead);
+            else
+                listOfTargets.Add(GetTargets(data.defaultTargets[i]));
+
+            if (!CheckMethod(methodsInStrings, i))
+                return false;
         }
 
-        foreach (string methodName in methodsInStrings)
+        return true;
+    }
+
+    bool CheckMethod(string[] listOfMethods, int currentIndex)
+    { 
+        foreach (string methodName in listOfMethods)
         {
             switch (methodName)
             {
@@ -180,95 +181,95 @@ public class Ability : MonoBehaviour
                 case "TARGETSDEAD":
                     break;
                 case "SELFDEAD":
-                    if (user.CalculateHealth() > 0)
+                    if (self.CalculateHealth() > 0)
                         return false; break;
 
                 case "SELFMAXHEALTH":
-                    if (user.CalculateHealthPercent() < 1f)
+                    if (self.CalculateHealthPercent() < 1f)
                         return false; break;
 
                 case "SELFINJURED":
-                    if (user.CalculateHealthPercent() > 0.5f)
+                    if (self.CalculateHealthPercent() > 0.5f)
                         return false; break;
                 case "TARGETSINJURED":
-                    for (int i = listOfTargets.Count - 1; i >= 0; i--)
-                        if (listOfTargets[i].CalculateHealthPercent() > 0.5f) listOfTargets.RemoveAt(i);
+                    for (int i = listOfTargets[currentIndex].Count - 1; i >= 0; i--)
+                        if (listOfTargets[currentIndex][i].CalculateHealthPercent() > 0.5f) listOfTargets[currentIndex].RemoveAt(i);
                     break;
 
                 case "TARGETSNEUTRAL":
-                    for (int i = listOfTargets.Count - 1; i >= 0; i--)
-                        if (listOfTargets[i].CurrentEmotion != Emotion.Neutral) listOfTargets.RemoveAt(i);
+                    for (int i = listOfTargets[currentIndex].Count - 1; i >= 0; i--)
+                        if (listOfTargets[currentIndex][i].CurrentEmotion != Emotion.Neutral) listOfTargets[currentIndex].RemoveAt(i);
                     break;
                 case "SELFNEUTRAL":
-                    if (user.CurrentEmotion != Emotion.Neutral)
+                    if (self.CurrentEmotion != Emotion.Neutral)
                         return false; break;
                 case "TARGETSNOTNEUTRAL":
-                    for (int i = listOfTargets.Count - 1; i >= 0; i--)
-                        if (listOfTargets[i].CurrentEmotion == Emotion.Neutral) listOfTargets.RemoveAt(i);
+                    for (int i = listOfTargets[currentIndex].Count - 1; i >= 0; i--)
+                        if (listOfTargets[currentIndex][i].CurrentEmotion == Emotion.Neutral) listOfTargets[currentIndex].RemoveAt(i);
                     break;
                 case "SELFNOTNEUTRAL":
-                    if (user.CurrentEmotion == Emotion.Neutral)
+                    if (self.CurrentEmotion == Emotion.Neutral)
                         return false; break;
 
                 case "TARGETSHAPPY":
-                    for (int i = listOfTargets.Count - 1; i >= 0; i--)
-                        if (listOfTargets[i].CurrentEmotion != Emotion.Happy) listOfTargets.RemoveAt(i);
+                    for (int i = listOfTargets[currentIndex].Count - 1; i >= 0; i--)
+                        if (listOfTargets[currentIndex][i].CurrentEmotion != Emotion.Happy) listOfTargets[currentIndex].RemoveAt(i);
                     break;
                 case "SELFHAPPY":
-                    if (user.CurrentEmotion != Emotion.Happy)
+                    if (self.CurrentEmotion != Emotion.Happy)
                         return false; break;
                 case "TARGETSNOTHAPPY":
-                    for (int i = listOfTargets.Count - 1; i >= 0; i--)
-                        if (listOfTargets[i].CurrentEmotion == Emotion.Happy) listOfTargets.RemoveAt(i);
+                    for (int i = listOfTargets[currentIndex].Count - 1; i >= 0; i--)
+                        if (listOfTargets[currentIndex][i].CurrentEmotion == Emotion.Happy) listOfTargets[currentIndex].RemoveAt(i);
                     break;
                 case "SELFNOTHAPPY":
-                    if (user.CurrentEmotion == Emotion.Happy)
+                    if (self.CurrentEmotion == Emotion.Happy)
                         return false; break;
 
                 case "TARGETSANGRY":
-                    for (int i = listOfTargets.Count - 1; i >= 0; i--)
-                        if (listOfTargets[i].CurrentEmotion != Emotion.Angry) listOfTargets.RemoveAt(i);
+                    for (int i = listOfTargets[currentIndex].Count - 1; i >= 0; i--)
+                        if (listOfTargets[currentIndex][i].CurrentEmotion != Emotion.Angry) listOfTargets[currentIndex].RemoveAt(i);
                     break;
                 case "SELFANGRY":
-                    if (user.CurrentEmotion != Emotion.Angry)
+                    if (self.CurrentEmotion != Emotion.Angry)
                         return false; break;
                 case "TARGETSNOTANGRY":
-                    for (int i = listOfTargets.Count - 1; i >= 0; i--)
-                        if (listOfTargets[i].CurrentEmotion == Emotion.Angry) listOfTargets.RemoveAt(i);
+                    for (int i = listOfTargets[currentIndex].Count - 1; i >= 0; i--)
+                        if (listOfTargets[currentIndex][i].CurrentEmotion == Emotion.Angry) listOfTargets[currentIndex].RemoveAt(i);
                     break;
                 case "SELFNOTANGRY":
-                    if (user.CurrentEmotion == Emotion.Angry)
+                    if (self.CurrentEmotion == Emotion.Angry)
                         return false; break;
 
                 case "TARGETSSAD":
-                    for (int i = listOfTargets.Count - 1; i >= 0; i--)
-                        if (listOfTargets[i].CurrentEmotion != Emotion.Sad) listOfTargets.RemoveAt(i);
+                    for (int i = listOfTargets[currentIndex].Count - 1; i >= 0; i--)
+                        if (listOfTargets[currentIndex][i].CurrentEmotion != Emotion.Sad) listOfTargets[currentIndex].RemoveAt(i);
                     break;
                 case "SELFSAD":
-                    if (user.CurrentEmotion != Emotion.Sad)
+                    if (self.CurrentEmotion != Emotion.Sad)
                         return false; break;
                 case "TARGETSNOTSAD":
-                    for (int i = listOfTargets.Count - 1; i >= 0; i--)
-                        if (listOfTargets[i].CurrentEmotion == Emotion.Sad) listOfTargets.RemoveAt(i);
+                    for (int i = listOfTargets[currentIndex].Count - 1; i >= 0; i--)
+                        if (listOfTargets[currentIndex][i].CurrentEmotion == Emotion.Sad) listOfTargets[currentIndex].RemoveAt(i);
                     break;
                 case "SELFNOTSAD":
-                    if (user.CurrentEmotion == Emotion.Sad)
+                    if (self.CurrentEmotion == Emotion.Sad)
                         return false; break;
 
                 case "SELFGROUNDED":
-                    if (user.CurrentPosition != Position.Grounded)
+                    if (self.CurrentPosition != Position.Grounded)
                         return false; break;
                 case "TARGETSGROUNDED":
-                    for (int i = listOfTargets.Count - 1; i >= 0; i--)
-                        if (listOfTargets[i].CurrentPosition != Position.Grounded) listOfTargets.RemoveAt(i);
+                    for (int i = listOfTargets[currentIndex].Count - 1; i >= 0; i--)
+                        if (listOfTargets[currentIndex][i].CurrentPosition != Position.Grounded) listOfTargets[currentIndex].RemoveAt(i);
                     break;
 
                 case "SELFAIRBORNE":
-                    if (user.CurrentPosition != Position.Airborne)
+                    if (self.CurrentPosition != Position.Airborne)
                         return false; break;
                 case "TARGETSAIRBORNE":
-                    for (int i = listOfTargets.Count - 1; i >= 0; i--)
-                        if (listOfTargets[i].CurrentPosition != Position.Airborne) listOfTargets.RemoveAt(i);
+                    for (int i = listOfTargets[currentIndex].Count - 1; i >= 0; i--)
+                        if (listOfTargets[currentIndex][i].CurrentPosition != Position.Airborne) listOfTargets[currentIndex].RemoveAt(i);
                     break;
 
                 default:
@@ -277,10 +278,10 @@ public class Ability : MonoBehaviour
             }
         }
 
-        if (data.defaultTargets == TeamTarget.None)
+        if (data.defaultTargets[currentIndex] == TeamTarget.None)
             return true;
         else
-            return listOfTargets.Count > 0;
+            return listOfTargets[currentIndex].Count > 0;
     }
 
     List<Character> GetTargets(TeamTarget targets)
@@ -325,21 +326,34 @@ public class Ability : MonoBehaviour
         }
         return listOfTargets;
     }
+    /*
+    IEnumerator RechooseTargets(TeamTarget newTarget)
+    {
+        this.listOfTargets = null;
+        while (this.listOfTargets == null)
+        {
+            this.listOfTargets = GetTargets(newTarget);
+            yield return self.ChooseTarget(this, newTarget);
+
+            if (self.myType == CharacterType.Player && this.singleTarget.Contains(newTarget))
+            {
+                yield return TurnManager.instance.ConfirmUndo($"Choose {this.listOfTargets[0].data.myName}?", Vector3.zero);
+                if (TurnManager.instance.confirmChoice == 1)
+                    this.listOfTargets = null;
+            }
+        }
+    }
+    */
 
 #endregion
 
 #region Play Instructions
 
-    public IEnumerator ResolveInstructions(string[] listOfMethods, int logged)
+    public IEnumerator ResolveInstructions(string[] listOfMethods, int index, int logged)
     {
-        Log.instance.AddText(Log.Substitute(this, self), logged-1);
         TurnManager.instance.instructions.transform.parent.gameObject.SetActive(false);
 
-        killed = false;
-        fullHeal = false;
-        damageDealt = 0;
-
-        foreach (Character target in listOfTargets)
+        foreach (Character target in listOfTargets[index])
         {
             if (target == null)
                 continue;
@@ -511,40 +525,32 @@ public class Ability : MonoBehaviour
                         foreach (Ability ability in target.listOfRandomAbilities)
                             if (ability.currentCooldown > 0) ability.currentCooldown-=data.miscNumber;
                         break;
-
+                        /*
                     case "CHOOSEONEPLAYERTARGET":
-                        this.listOfTargets = GetTargets(TeamTarget.OnePlayer);
-                        yield return self.ChooseTarget(this, TeamTarget.OnePlayer);
+                        yield return RechooseTargets(TeamTarget.OnePlayer);
                         break;
                     case "CHOOSEOTHERPLAYERTARGET":
-                        this.listOfTargets = GetTargets(TeamTarget.OtherPlayer);
-                        yield return self.ChooseTarget(this, TeamTarget.OtherPlayer);
+                        yield return RechooseTargets(TeamTarget.OtherPlayer);
                         break;
                     case "CHOOSEALLPLAYERTARGETS":
-                        this.listOfTargets = GetTargets(TeamTarget.AllPlayers);
-                        yield return self.ChooseTarget(this, TeamTarget.AllPlayers);
+                        yield return RechooseTargets(TeamTarget.AllPlayers);
                         break;
                     case "CHOOSEONEENEMYTARGET":
-                        this.listOfTargets = GetTargets(TeamTarget.OneEnemy);
-                        yield return self.ChooseTarget(this, TeamTarget.OneEnemy);
+                        yield return RechooseTargets(TeamTarget.OneEnemy);
                         break;
                     case "CHOOSEOTHERENEMYTARGET":
-                        this.listOfTargets = GetTargets(TeamTarget.OtherEnemy);
-                        yield return self.ChooseTarget(this, TeamTarget.OtherEnemy);
+                        yield return RechooseTargets(TeamTarget.OtherEnemy);
                         break;
                     case "CHOOSEALLENEMYTARGETS":
-                        this.listOfTargets = GetTargets(TeamTarget.AllEnemies);
-                        yield return self.ChooseTarget(this, TeamTarget.AllEnemies);
+                        yield return RechooseTargets(TeamTarget.AllEnemies);
                         break;
                     case "CHOOSEANYTARGETS":
-                        this.listOfTargets = GetTargets(TeamTarget.AnyOne);
-                        yield return self.ChooseTarget(this, TeamTarget.AnyOne);
+                        yield return RechooseTargets(TeamTarget.AnyOne);
                         break;
                     case "CHOOSEALLTARGETS":
-                        this.listOfTargets = GetTargets(TeamTarget.All);
-                        yield return self.ChooseTarget(this, TeamTarget.All);
+                        yield return RechooseTargets(TeamTarget.All);
                         break;
-
+                        */
                     default:
                         Debug.LogError($"{self.name}: {methodName} isn't a method");
                         break;

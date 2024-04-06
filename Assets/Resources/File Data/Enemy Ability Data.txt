@@ -37,7 +37,7 @@
       "",
       "",
       "",
-      "OTHER PLAYER"
+      "OtherPlayer"
     ],
     [
       "Everyone",
@@ -57,7 +57,7 @@
       "",
       "",
       "",
-      "NONE"
+      "None"
     ],
     [
       "Archer",
@@ -77,7 +77,7 @@
       "",
       "",
       "",
-      "ONE PLAYER"
+      "OnePlayer"
     ],
     [
       "Archer",
@@ -87,7 +87,7 @@
       "Attack",
       "Misc",
       "Attack/DealtDamage/TargetsStun",
-      "",
+      "None",
       "1",
       "2",
       "",
@@ -97,7 +97,7 @@
       "",
       "",
       "1",
-      "ONE PLAYER"
+      "OnePlayer"
     ],
     [
       "Archer",
@@ -107,7 +107,7 @@
       "Attack",
       "",
       "Attack",
-      "",
+      "None",
       "",
       "1",
       "",
@@ -117,7 +117,7 @@
       "",
       "",
       "",
-      "ALL PLAYERS"
+      "AllPlayers"
     ],
     [
       "Archer",
@@ -137,7 +137,7 @@
       "0.15",
       "",
       "",
-      "SELF"
+      "Self"
     ],
     [
       "Bat",
@@ -147,7 +147,7 @@
       "Attack",
       "Healing",
       "Attack/SelfHeal",
-      "",
+      "None",
       "",
       "2",
       "2",
@@ -157,7 +157,7 @@
       "",
       "",
       "",
-      "ONE PLAYER"
+      "OnePlayer"
     ],
     [
       "Bat",
@@ -167,7 +167,7 @@
       "StatPlayer",
       "",
       "TargetsDefenseStat",
-      "",
+      "None",
       "1",
       "",
       "",
@@ -177,7 +177,7 @@
       "",
       "",
       "",
-      "ALL PLAYERS"
+      "AllPlayers"
     ],
     [
       "Bat",
@@ -197,7 +197,7 @@
       "",
       "",
       "",
-      "SELF"
+      "Self"
     ],
     [
       "Bat",
@@ -207,7 +207,7 @@
       "StatEnemy",
       "EmotionEnemy",
       "SelfHappy/SelfLuckStat",
-      "",
+      "None",
       "1",
       "",
       "",
@@ -217,7 +217,7 @@
       "",
       "0.1",
       "",
-      "SELF"
+      "Self"
     ],
     [
       "Bomb",
@@ -226,8 +226,8 @@
       "THIS explodes.",
       "Attack",
       "",
-      "Attack/SelfDestruct",
-      "",
+      "Attack-SelfDestruct",
+      "None-None",
       "2",
       "4",
       "",
@@ -237,7 +237,7 @@
       "",
       "",
       "",
-      "ALL PLAYERS"
+      "AllPlayers-Self"
     ],
     [
       "Crow",
@@ -247,7 +247,7 @@
       "Attack",
       "",
       "Attack",
-      "",
+      "None",
       "",
       "2",
       "",
@@ -257,7 +257,7 @@
       "",
       "",
       "",
-      "ONE PLAYER"
+      "OnePlayer"
     ],
     [
       "Dragon",
@@ -277,7 +277,7 @@
       "",
       "",
       "",
-      "SELF"
+      "Self"
     ],
     [
       "Dragon",
@@ -297,7 +297,7 @@
       "",
       "",
       "",
-      "SELF"
+      "Self"
     ],
     [
       "Dragon",
@@ -317,7 +317,7 @@
       "",
       "",
       "",
-      "ALL PLAYERS"
+      "AllPlayers"
     ],
     [
       "Dragon",
@@ -327,7 +327,7 @@
       "StatEnemy",
       "EmotionEnemy",
       "SelfAngry/SelfPowerStat",
-      "",
+      "None",
       "1",
       "",
       "",
@@ -337,7 +337,7 @@
       "",
       "",
       "",
-      "SELF"
+      "Self"
     ],
     [
       "Kitty",
@@ -357,7 +357,7 @@
       "",
       "",
       "",
-      "ALL ENEMIES"
+      "AllEnemies"
     ],
     [
       "Kitty",
@@ -377,7 +377,7 @@
       "",
       "",
       "",
-      "SELF"
+      "Self"
     ],
     [
       "Kitty",
@@ -397,7 +397,7 @@
       "",
       "",
       "",
-      "SELF"
+      "Self"
     ],
     [
       "Kitty",
@@ -417,7 +417,7 @@
       "",
       "",
       "",
-      "ONE PLAYER"
+      "OnePlayer"
     ],
     [
       "Page",
@@ -437,7 +437,7 @@
       "",
       "",
       "",
-      "ONE PLAYER"
+      "OnePlayer"
     ],
     [
       "Puppeteer",
@@ -457,7 +457,7 @@
       "",
       "",
       "",
-      "ALL PLAYERS"
+      "AllPlayers"
     ],
     [
       "Puppeteer",
@@ -477,7 +477,7 @@
       "",
       "",
       "",
-      "ALL PLAYERS"
+      "AllPlayers"
     ],
     [
       "Puppeteer",
@@ -497,7 +497,7 @@
       "",
       "",
       "",
-      "ALL ENEMIES"
+      "AllEnemies"
     ],
     [
       "Puppeteer",
@@ -517,7 +517,7 @@
       "",
       "",
       "",
-      "ALL PLAYERS"
+      "AllPlayers"
     ],
     [
       "Rats",
@@ -537,7 +537,7 @@
       "",
       "",
       "",
-      "ONE PLAYER"
+      "OnePlayer"
     ],
     [
       "Rats",
@@ -557,7 +557,7 @@
       "",
       "",
       "",
-      "SELF"
+      "Self"
     ],
     [
       "Wolf",
@@ -577,17 +577,16 @@
       "",
       "",
       "",
-      "ONE PLAYER"
+      "OnePlayer"
     ],
     [
       "Wolf",
       "Glare",
       "This becomes Angry, and all Players become Sad.",
       "THIS Glares at everyone.",
+      "EmotionPlayer",
       "EmotionEnemy",
-      "",
-      "SelfAngry/TargetsSad",
-      "",
+      "SelfAngry/ChooseAllPlayerTargets-TargetsSad",
       "",
       "",
       "",
@@ -597,7 +596,8 @@
       "",
       "",
       "",
-      "ALL PLAYERS"
+      "",
+      "Self"
     ],
     [
       "Wolf",
@@ -617,7 +617,7 @@
       "",
       "",
       "",
-      "SELF"
+      "Self"
     ],
     [
       "Wolf",
@@ -626,8 +626,8 @@
       "THIS lands on top of TARGET.",
       "Attack",
       "PositionEnemy",
-      "SelfGrounded/Attack",
-      "SelfAirborne/TargetsGrounded",
+      "SelfGrounded-Attack",
+      "SelfAirborne-TargetsGrounded",
       "",
       "3",
       "",
@@ -637,7 +637,7 @@
       "",
       "",
       "",
-      "ONE PLAYER"
+      "Self-OnePlayer"
     ]
   ]
 }

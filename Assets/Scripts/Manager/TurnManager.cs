@@ -74,9 +74,9 @@ public class TurnManager : MonoBehaviour
             Log.instance.AddText("Defeat 5 waves of enemies.");
 
             foreach (string cheat in CarryVariables.instance.listOfCheats)
-                Log.instance.AddText($"Cheat: {cheat}", 1);
+                Log.instance.AddText($"<color=#00FF00>Cheat: {cheat}</color>", 1);
             foreach (string challenge in CarryVariables.instance.listOfChallenges)
-                Log.instance.AddText($"Challenge: {challenge}", 1);
+                Log.instance.AddText($"<color=#FF0000>Challenge: {challenge}</color>", 1);
 
             Log.instance.AddText("");
             foreach (Character player in FileManager.instance.listOfPlayers)
@@ -368,13 +368,12 @@ public class TurnManager : MonoBehaviour
         return allTargets;
     }
 
-    public static string[] SpliceString(string text)
+    public static string[] SpliceString(string text, char splitUp)
     {
         if (!text.IsNullOrEmpty())
         {
-            string divide = text.Replace(" ", "");
-            divide = divide.ToUpper().Trim();
-            string[] splitIntoStrings = divide.Split('/');
+            string divide = text.Replace(" ", "").ToUpper().Trim();
+            string[] splitIntoStrings = divide.Split(splitUp);
             return splitIntoStrings;
         }
 

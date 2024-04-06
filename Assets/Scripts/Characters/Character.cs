@@ -15,72 +15,72 @@ public enum CharacterType { Player, Enemy }
 public class Character : MonoBehaviour
 {
 
-#region Variables
+    #region Variables
 
     public static float borderColor;
 
     [Foldout("Player info", true)]
-        protected Ability chosenAbility;
-        [ReadOnly] public string editedDescription { get; private set; }
-        [ReadOnly] public CharacterData data { get; private set; }
-        [ReadOnly] public List<Ability> listOfAutoAbilities = new();
-        [ReadOnly] public List<Ability> listOfRandomAbilities = new();
-        [ReadOnly] public CharacterType myType { get; private set; }
+    protected Ability chosenAbility;
+    [ReadOnly] public string editedDescription { get; private set; }
+    [ReadOnly] public CharacterData data { get; private set; }
+    [ReadOnly] public List<Ability> listOfAutoAbilities = new();
+    [ReadOnly] public List<Ability> listOfRandomAbilities = new();
+    [ReadOnly] public CharacterType myType { get; private set; }
 
     [Foldout("Base Stats", true)]
-        protected int baseHealth;
-        protected int baseSpeed;
-        protected float baseLuck;
-        protected float baseAccuracy;
+    protected int baseHealth;
+    protected int baseSpeed;
+    protected float baseLuck;
+    protected float baseAccuracy;
 
     [Foldout("Current Stats", true)]
-        private int _currentHealth;
-        [ReadOnly] public int CurrentHealth
-        {
-            get { return _currentHealth; }
-            private set { healthText.text = $"{value}/{baseHealth}"; _currentHealth = value; }
-        }
-        private Position _currentPosition;
-        [ReadOnly] public Position CurrentPosition
-        {
-            get { return _currentPosition; }
-            private set {
-            _currentPosition = value; CharacterUI();}
-        }
-        private Emotion _currentEmotion;
-        [ReadOnly] public Emotion CurrentEmotion
-        {
-            get { return _currentEmotion; }
-            private set{
-            _currentEmotion = value; CharacterUI();}
-        }
-        private int _turnsStunned;
-        [ReadOnly]
-        public int TurnsStunned
-        {
-            get { return _turnsStunned; }
-            private set { _turnsStunned = value; CharacterUI(); }
-        }
+    private int _currentHealth;
+    [ReadOnly] public int CurrentHealth
+    {
+        get { return _currentHealth; }
+        private set { healthText.text = $"{value}/{baseHealth}"; _currentHealth = value; }
+    }
+    private Position _currentPosition;
+    [ReadOnly] public Position CurrentPosition
+    {
+        get { return _currentPosition; }
+        private set {
+            _currentPosition = value; CharacterUI(); }
+    }
+    private Emotion _currentEmotion;
+    [ReadOnly] public Emotion CurrentEmotion
+    {
+        get { return _currentEmotion; }
+        private set {
+            _currentEmotion = value; CharacterUI(); }
+    }
+    private int _turnsStunned;
+    [ReadOnly]
+    public int TurnsStunned
+    {
+        get { return _turnsStunned; }
+        private set { _turnsStunned = value; CharacterUI(); }
+    }
 
-        protected int modifyPower;
-        protected int modifyDefense;
-        protected int modifySpeed;
-        protected float modifyLuck;
-        protected float modifyAccuracy;
+    protected int modifyPower;
+    protected int modifyDefense;
+    protected int modifySpeed;
+    protected float modifyLuck;
+    protected float modifyAccuracy;
 
     [Foldout("UI", true)]
-        [ReadOnly] public Image border;
-        [ReadOnly] public Button myButton;
-        [ReadOnly] public Image myImage;
-        Image statusImage;
-        TMP_Text statusText;
-        TMP_Text healthText;
-        TMP_Text nameText;
-        Sprite stunSprite;
+    [ReadOnly] public Image border;
+    [ReadOnly] public Button myButton;
+    [ReadOnly] public Image myImage;
+    Image statusImage;
+    TMP_Text statusText;
+    TMP_Text healthText;
+    TMP_Text nameText;
+    Sprite stunSprite;
 
-#endregion
+    #endregion
 
-#region Setup
+    #region Setup
 
     private void Awake()
     {
@@ -137,7 +137,7 @@ public class Character : MonoBehaviour
 
     #endregion
 
-#region Stats
+    #region Stats
 
     public int CalculateHealth()
     {
@@ -151,13 +151,7 @@ public class Character : MonoBehaviour
 
     public int CalculatePower()
     {
-        int emotionEffect = CurrentEmotion switch
-        {
-            Emotion.Angry => 2,
-            _ => 0,
-        };
-
-        return modifyPower + emotionEffect;
+        return modifyPower + (CurrentEmotion == Emotion.Angry ? 2 : 0);
     }
 
     public int CalculateDefense()
@@ -182,7 +176,7 @@ public class Character : MonoBehaviour
 
     #endregion
 
-#region Change Stats
+    #region Change Stats
 
     public IEnumerator Stun(int amount, int logged)
     {
@@ -262,8 +256,11 @@ public class Character : MonoBehaviour
         if (this == null || effect == 0) yield break;
 
         modifyPower = Math.Clamp(modifyPower += effect, -3, 3);
-        TurnManager.instance.CreateVisual($"{(effect > 0 ? '+' : '-')}{Math.Abs(effect)} POWER", this.transform.localPosition);
-        Log.instance.AddText($"{this.name} gets {(effect > 0 ? '+' : '-')}{Math.Abs(effect)} Power.");
+        if (logged >= 0)
+        {
+            TurnManager.instance.CreateVisual($"{(effect > 0 ? '+' : '-')}{Math.Abs(effect)} POWER", this.transform.localPosition);
+            Log.instance.AddText($"{this.name} gets {(effect > 0 ? '+' : '-')}{Math.Abs(effect)} Power.", logged);
+        }
     }
 
     public IEnumerator ChangeDefense(int effect, int logged)
@@ -271,8 +268,11 @@ public class Character : MonoBehaviour
         if (this == null || effect == 0) yield break;
 
         modifyDefense = Math.Clamp(modifyDefense += effect, -6, 3);
-        TurnManager.instance.CreateVisual($"{(effect > 0 ? '+' : '-')}{Math.Abs(effect)} DEFENSE", this.transform.localPosition);
-        Log.instance.AddText($"{this.name} gets {(effect > 0 ? '+' : '-')}{Math.Abs(effect)} Defense.");
+        if (logged >= 0)
+        {
+            TurnManager.instance.CreateVisual($"{(effect > 0 ? '+' : '-')}{Math.Abs(effect)} DEFENSE", this.transform.localPosition);
+            Log.instance.AddText($"{this.name} gets {(effect > 0 ? '+' : '-')}{Math.Abs(effect)} Defense.", logged);
+        }
     }
 
     public IEnumerator ChangeSpeed(int effect, int logged)
@@ -280,8 +280,11 @@ public class Character : MonoBehaviour
         if (this == null || effect == 0) yield break;
 
         modifySpeed = Math.Clamp(modifySpeed += effect, -5, 5);
-        TurnManager.instance.CreateVisual($"{(effect > 0 ? '+' : '-')}{Math.Abs(effect)} SPEED", this.transform.localPosition);
-        Log.instance.AddText($"{this.name} gets {(effect > 0 ? '+' : '-')}{Math.Abs(effect)} Speed.");
+        if (logged >= 0)
+        {
+            TurnManager.instance.CreateVisual($"{(effect > 0 ? '+' : '-')}{Math.Abs(effect)} SPEED", this.transform.localPosition);
+            Log.instance.AddText($"{this.name} gets {(effect > 0 ? '+' : '-')}{Math.Abs(effect)} Speed.", logged);
+        }
     }
 
     public IEnumerator ChangeLuck(float effect, int logged)
@@ -289,8 +292,11 @@ public class Character : MonoBehaviour
         if (this == null || effect == 0f) yield break;
 
         modifyLuck = Mathf.Clamp(modifyLuck += effect, -0.5f, 0.5f);
-        TurnManager.instance.CreateVisual($"{(effect > 0 ? '+' : '-')}{100*Math.Abs(effect)}% LUCK", this.transform.localPosition);
-        Log.instance.AddText($"{this.name} gets {(effect > 0 ? '+' : '-')}{100 * Math.Abs(effect)}% Luck.");
+        if (logged >= 0)
+        {
+            TurnManager.instance.CreateVisual($"{(effect > 0 ? '+' : '-')}{100 * Math.Abs(effect)}% LUCK", this.transform.localPosition);
+            Log.instance.AddText($"{this.name} gets {(effect > 0 ? '+' : '-')}{100 * Math.Abs(effect)}% Luck.", logged);
+        }
     }
 
     public IEnumerator ChangeAccuracy(float effect, int logged)
@@ -298,8 +304,11 @@ public class Character : MonoBehaviour
         if (this == null || effect == 0f) yield break;
 
         modifyAccuracy = Mathf.Clamp(modifyAccuracy += effect, -0.3f, 0.6f);
-        TurnManager.instance.CreateVisual($"{(effect > 0 ? '+' : '-')}{100*Math.Abs(effect)}% ACCURACY", this.transform.localPosition);
-        Log.instance.AddText($"{this.name} gets {(effect > 0 ? '+' : '-')}{100 * Math.Abs(effect)}% Accuracy.");
+        if (logged >= 0)
+        {
+            TurnManager.instance.CreateVisual($"{(effect > 0 ? '+' : '-')}{100 * Math.Abs(effect)}% ACCURACY", this.transform.localPosition);
+            Log.instance.AddText($"{this.name} gets {(effect > 0 ? '+' : '-')}{100 * Math.Abs(effect)}% Accuracy.", logged);
+        }
     }
 
     public IEnumerator ChangePosition(Position newPosition, int logged)
@@ -342,7 +351,6 @@ public class Character : MonoBehaviour
     internal IEnumerator MyTurn(int logged, bool extraTurn)
     {
         chosenAbility = null;
-        yield return StartOfTurn(logged);
         if (TurnsStunned > 0)
         {
             yield return TurnManager.instance.WaitTime();
@@ -353,27 +361,32 @@ public class Character : MonoBehaviour
         {
             yield return ResolveTurn(logged, extraTurn);
         }
-        yield return EndOfTurn(logged, extraTurn);
-    }
-
-    IEnumerator StartOfTurn(int logged)
-    {
-        yield return null;
+        yield return EmotionEffect(logged, extraTurn);
     }
 
     IEnumerator ResolveTurn(int logged, bool extraAbility)
     {
         chosenAbility = null;
+        Character targetCharacter = null;
         while (chosenAbility == null)
         {
             yield return ChooseAbility(logged);
-            yield return ChooseTarget(chosenAbility, chosenAbility.data.defaultTargets);
+            for (int i = 0; i < chosenAbility.data.defaultTargets.Length; i++)
+            {
+                yield return ChooseTarget(chosenAbility, chosenAbility.data.defaultTargets[i], i);
+                if (chosenAbility.singleTarget.Contains(chosenAbility.data.defaultTargets[i]))
+                    targetCharacter = chosenAbility.listOfTargets[i][0];
 
-            string part1 = $"{this.name}: Use {chosenAbility.data.myName}";
-            string part2 = chosenAbility.singleTarget.Contains(chosenAbility.data.defaultTargets) ? $" on {chosenAbility.listOfTargets[0].name}?" : "?";
-            yield return TurnManager.instance.ConfirmUndo(part1 + part2, Vector3.zero);
-            if (TurnManager.instance.confirmChoice == 1)
-                chosenAbility = null;
+                string part1 = $"{this.name}: Use {chosenAbility.data.myName}";
+                string part2 = targetCharacter != null ? $" on {targetCharacter.data.myName}?" : "?";
+
+                if (this.myType == CharacterType.Player)
+                {
+                    yield return TurnManager.instance.ConfirmUndo(part1 + part2, Vector3.zero);
+                    if (TurnManager.instance.confirmChoice == 1)
+                        chosenAbility = null;
+                }
+            }
         }
 
         if (!extraAbility)
@@ -390,23 +403,20 @@ public class Character : MonoBehaviour
             }
         }
 
-        if (chosenAbility.data.myName.Equals("Skip Turn"))
+        Log.instance.AddText(Log.Substitute(chosenAbility, this, targetCharacter), logged);
+        if (!chosenAbility.data.myName.Equals("Skip Turn"))
         {
-            Log.instance.AddText(Log.Substitute(chosenAbility, this), 0);
-            chosenAbility = null;
-        }
-        else
-        {
-            yield return TurnManager.instance.WaitTime();
-            yield return chosenAbility.ResolveInstructions(TurnManager.SpliceString(chosenAbility.data.instructions), logged + 1);
+            chosenAbility.killed = false;
+            chosenAbility.fullHeal = false;
+            chosenAbility.damageDealt = 0;
 
-            int happinessPenalty = CurrentEmotion switch
+            for (int i = 0; i < chosenAbility.data.instructions.Length; i++)
             {
-                Emotion.Happy => 1,
-                _ => 0,
-            };
-            chosenAbility.currentCooldown = chosenAbility.data.baseCooldown + happinessPenalty;
+                string[] splicedString = TurnManager.SpliceString(chosenAbility.data.instructions[i], '/');
+                yield return chosenAbility.ResolveInstructions(splicedString, i, logged + 1);
+            }
 
+            chosenAbility.currentCooldown = chosenAbility.data.baseCooldown + (CurrentEmotion == Emotion.Happy ? 1 : 0);
             if (CarryVariables.instance.mode == CarryVariables.GameMode.Tutorial && TutorialManager.instance.currentCharacter == this)
             {
                 TutorialManager.instance.currentCharacter = null;
@@ -420,14 +430,14 @@ public class Character : MonoBehaviour
         yield return null;
     }
 
-    public virtual IEnumerator ChooseTarget(Ability ability, TeamTarget target)
+    public virtual IEnumerator ChooseTarget(Ability ability, TeamTarget target, int index)
     {
         yield return null;
     }
 
-    IEnumerator EndOfTurn(int logged, bool extraTurn)
+    IEnumerator EmotionEffect(int logged, bool extraTurn)
     {
-        if (chosenAbility != null && chosenAbility.data.myName != "Skip Turn")
+        if (chosenAbility != null && !chosenAbility.data.myName.Equals("Skip Turn"))
         {
             if (this.CurrentEmotion == Emotion.Angry)
             {

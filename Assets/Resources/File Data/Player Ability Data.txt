@@ -37,7 +37,7 @@
       "",
       "",
       "",
-      "ONE ENEMY"
+      "OneEnemy"
     ],
     [
       "Knight",
@@ -57,7 +57,7 @@
       "",
       "",
       "1",
-      "ONE ENEMY"
+      "OneEnemy"
     ],
     [
       "Knight",
@@ -77,7 +77,7 @@
       "",
       "-0.05",
       "",
-      "ONE ENEMY"
+      "OneEnemy"
     ],
     [
       "Knight",
@@ -97,7 +97,7 @@
       "",
       "",
       "",
-      "ONE ENEMY"
+      "OneEnemy"
     ],
     [
       "Knight",
@@ -117,7 +117,7 @@
       "",
       "",
       "",
-      "ONE ENEMY"
+      "OneEnemy"
     ],
     [
       "Knight",
@@ -137,7 +137,7 @@
       "",
       "",
       "",
-      "ONE ENEMY"
+      "OneEnemy"
     ],
     [
       "Knight",
@@ -157,7 +157,7 @@
       "",
       "",
       "",
-      "ONE ENEMY"
+      "OneEnemy"
     ],
     [
       "Knight",
@@ -177,7 +177,7 @@
       "0.1",
       "",
       "",
-      "ONE ENEMY"
+      "OneEnemy"
     ],
     [
       "Knight",
@@ -187,7 +187,7 @@
       "StatPlayer",
       "EmotionPlayer",
       "SelfHappy/SelfLuckStat/TargetsHappy/TargetsLuckStat",
-      "",
+      "None",
       "1",
       "",
       "",
@@ -197,7 +197,7 @@
       "0.1",
       "",
       "",
-      "OTHER PLAYER"
+      "OtherPlayer"
     ],
     [
       "Knight",
@@ -207,7 +207,7 @@
       "StatPlayer",
       "EmotionPlayer",
       "SelfAngry/SelfPowerStat/TargetsAngry/TargetsPowerStat",
-      "",
+      "None",
       "1",
       "",
       "",
@@ -217,7 +217,7 @@
       "",
       "",
       "",
-      "OTHER PLAYER"
+      "OtherPlayer"
     ],
     [
       "Knight",
@@ -227,7 +227,7 @@
       "Healing",
       "EmotionPlayer",
       "SelfHappy/SelfHeal",
-      "",
+      "None",
       "1",
       "",
       "3",
@@ -237,7 +237,7 @@
       "",
       "",
       "",
-      "SELF"
+      "Self"
     ],
     [
       "Knight",
@@ -247,7 +247,7 @@
       "StatEnemy",
       "EmotionEnemy",
       "TargetsAngry/TargetsAccuracyStat",
-      "",
+      "None",
       "1",
       "",
       "",
@@ -257,7 +257,7 @@
       "",
       "-0.1",
       "",
-      "ALL ENEMIES"
+      "AllEnemies"
     ],
     [
       "Knight",
@@ -267,7 +267,7 @@
       "EmotionPlayer",
       "EmotionEnemy",
       "SelfSad/TargetsSad",
-      "",
+      "None",
       "0",
       "",
       "",
@@ -277,17 +277,17 @@
       "",
       "",
       "",
-      "ONE ENEMY"
+      "OneEnemy"
     ],
     [
       "Knight",
       "Delegate",
       "Another Player takes an extra turn.",
-      "THIS Delegates their turn away.",
+      "THIS Delegates their turn to TARGET.",
       "Misc",
       "",
       "PassTurn",
-      "",
+      "None",
       "2",
       "",
       "",
@@ -297,7 +297,7 @@
       "",
       "",
       "",
-      "OTHER PLAYER"
+      "OtherPlayer"
     ],
     [
       "Angel",
@@ -307,7 +307,7 @@
       "StatEnemy",
       "EmotionEnemy",
       "TargetsAngry/TargetsPowerStat",
-      "",
+      "None",
       "0",
       "",
       "",
@@ -317,7 +317,7 @@
       "",
       "",
       "",
-      "ONE ENEMY"
+      "OneEnemy"
     ],
     [
       "Angel",
@@ -327,7 +327,7 @@
       "StatEnemy",
       "EmotionEnemy",
       "TargetsHappy/TargetsAccuracyStat",
-      "",
+      "None",
       "0",
       "",
       "",
@@ -337,7 +337,7 @@
       "",
       "-0.15",
       "",
-      "ONE ENEMY"
+      "OneEnemy"
     ],
     [
       "Angel",
@@ -347,7 +347,7 @@
       "StatEnemy",
       "EmotionEnemy",
       "TargetsSad/TargetsDefenseStat",
-      "",
+      "None",
       "0",
       "",
       "",
@@ -357,7 +357,7 @@
       "",
       "",
       "",
-      "ONE ENEMY"
+      "OneEnemy"
     ],
     [
       "Angel",
@@ -367,7 +367,7 @@
       "PositionPlayer",
       "EmotionPlayer",
       "TargetsSad/TargetsAirborne",
-      "",
+      "None",
       "0",
       "",
       "",
@@ -377,7 +377,7 @@
       "",
       "",
       "",
-      "ONE PLAYER"
+      "OnePlayer"
     ],
     [
       "Angel",
@@ -387,7 +387,7 @@
       "PositionPlayer",
       "EmotionPlayer",
       "TargetsAirborne/TargetsHappy",
-      "",
+      "None",
       "0",
       "",
       "",
@@ -397,7 +397,7 @@
       "",
       "",
       "",
-      "ONE PLAYER"
+      "OnePlayer"
     ],
     [
       "Angel",
@@ -417,7 +417,7 @@
       "",
       "",
       "",
-      "ONE PLAYER"
+      "OnePlayer"
     ],
     [
       "Angel",
@@ -427,7 +427,7 @@
       "Healing",
       "StatPlayer",
       "TargetsHeal/TargetsDefenseStat",
-      "",
+      "None",
       "2",
       "",
       "2",
@@ -437,7 +437,7 @@
       "",
       "",
       "",
-      "ALL PLAYERS"
+      "AllPlayers"
     ],
     [
       "Angel",
@@ -457,7 +457,7 @@
       "",
       "",
       "",
-      "ONE PLAYER"
+      "OnePlayer"
     ],
     [
       "Angel",
@@ -467,7 +467,7 @@
       "Healing",
       "",
       "TargetsHeal/TargetsReduceActiveCooldown",
-      "",
+      "None",
       "1",
       "",
       "4",
@@ -477,7 +477,7 @@
       "",
       "",
       "1",
-      "OTHER PLAYER"
+      "OtherPlayer"
     ],
     [
       "Angel",
@@ -497,7 +497,7 @@
       "",
       "",
       "",
-      "ONE PLAYER"
+      "OnePlayer"
     ],
     [
       "Angel",
@@ -507,7 +507,7 @@
       "Healing",
       "StatPlayer",
       "TargetsHeal/TargetsLuckStat/TargetsSpeedStat",
-      "",
+      "None",
       "1",
       "",
       "3",
@@ -517,7 +517,7 @@
       "0.1",
       "",
       "",
-      "ONE PLAYER"
+      "OnePlayer"
     ],
     [
       "Angel",
@@ -527,7 +527,7 @@
       "Healing",
       "",
       "SelfHeal/TargetsHeal",
-      "",
+      "None",
       "1",
       "",
       "3",
@@ -537,7 +537,7 @@
       "",
       "",
       "",
-      "OTHER PLAYER"
+      "OtherPlayer"
     ],
     [
       "Angel",
@@ -557,17 +557,17 @@
       "",
       "",
       "",
-      "ALL PLAYERS"
+      "AllPlayers"
     ],
     [
       "Angel",
       "Delegate",
       "Another Player takes an extra turn.",
-      "THIS Delegates their turn away.",
+      "THIS Delegates their turn to TARGET.",
       "Misc",
       "",
       "PassTurn",
-      "",
+      "None",
       "2",
       "",
       "",
@@ -577,7 +577,7 @@
       "",
       "",
       "",
-      "OTHER PLAYER"
+      "OtherPlayer"
     ],
     [
       "Angel",
@@ -597,7 +597,7 @@
       "",
       "",
       "",
-      "ONE ENEMY"
+      "OneEnemy"
     ],
     [
       "Wizard",
@@ -617,7 +617,7 @@
       "",
       "",
       "",
-      "ALL ENEMIES"
+      "AllEnemies"
     ],
     [
       "Wizard",
@@ -637,7 +637,7 @@
       "",
       "",
       "",
-      "ONE ENEMY"
+      "OneEnemy"
     ],
     [
       "Wizard",
@@ -657,7 +657,7 @@
       "",
       "",
       "",
-      "ALL ENEMIES"
+      "AllEnemies"
     ],
     [
       "Wizard",
@@ -677,7 +677,7 @@
       "",
       "",
       "",
-      "ALL ENEMIES"
+      "AllEnemies"
     ],
     [
       "Wizard",
@@ -697,7 +697,7 @@
       "",
       "",
       "1",
-      "ONE ENEMY"
+      "OneEnemy"
     ],
     [
       "Wizard",
@@ -706,8 +706,8 @@
       "THIS casts Rough Air.",
       "Attack",
       "PositionPlayer",
-      "SelfGrounded/Attack",
-      "TargetsAirborne",
+      "SelfGrounded-Attack",
+      "None-TargetsAirborne",
       "0",
       "2",
       "",
@@ -717,7 +717,7 @@
       "",
       "",
       "",
-      "ALL ENEMIES"
+      "Self-AllEnemies"
     ],
     [
       "Wizard",
@@ -726,8 +726,8 @@
       "THIS brings the Hammer down.",
       "Attack",
       "PositionPlayer",
-      "SelfGrounded/Attack",
-      "TargetsGrounded/SelfAirborne",
+      "SelfGrounded-Attack",
+      "SelfAirborne-TargetsGrounded",
       "1",
       "3",
       "",
@@ -737,7 +737,7 @@
       "",
       "",
       "",
-      "ALL PLAYERS"
+      "Self-AllEnemies"
     ],
     [
       "Wizard",
@@ -757,17 +757,17 @@
       "",
       "",
       "",
-      "ALL ENEMIES"
+      "AllEnemies"
     ],
     [
       "Wizard",
       "Delegate",
       "Another Player takes an extra turn.",
-      "THIS Delegates their turn away.",
+      "THIS Delegates their turn to TARGET.",
       "Misc",
       "",
       "PassTurn",
-      "",
+      "None",
       "2",
       "",
       "",
@@ -777,7 +777,7 @@
       "",
       "",
       "",
-      "OTHER PLAYER"
+      "OtherPlayer"
     ],
     [
       "Wizard",
@@ -787,7 +787,7 @@
       "Misc",
       "",
       "TargetsStun",
-      "",
+      "None",
       "4",
       "",
       "",
@@ -797,7 +797,7 @@
       "",
       "",
       "1",
-      "ALL ENEMIES"
+      "AllEnemies"
     ],
     [
       "Wizard",
@@ -807,7 +807,7 @@
       "PositionPlayer",
       "PositionEnemy",
       "TargetsSwapPosition",
-      "",
+      "None",
       "1",
       "",
       "",
@@ -817,7 +817,7 @@
       "",
       "",
       "",
-      "ALL"
+      "All"
     ],
     [
       "Wizard",
@@ -827,7 +827,7 @@
       "StatEnemy",
       "PositionEnemy",
       "TargetsGrounded/TargetsDefenseStat",
-      "",
+      "None",
       "1",
       "",
       "",
@@ -837,7 +837,7 @@
       "",
       "",
       "",
-      "ALL ENEMIES"
+      "AllEnemies"
     ],
     [
       "Wizard",
@@ -847,7 +847,7 @@
       "StatEnemy",
       "PositionEnemy",
       "TargetsAirborne/TargetsSpeedStat",
-      "",
+      "None",
       "1",
       "",
       "",
@@ -857,7 +857,7 @@
       "",
       "",
       "",
-      "ALL ENEMIES"
+      "AllEnemies"
     ],
     [
       "Wizard",
@@ -867,7 +867,7 @@
       "StatEnemy",
       "",
       "TargetsPowerStat/TargetsDefenseStat",
-      "",
+      "None",
       "1",
       "",
       "",
@@ -877,7 +877,7 @@
       "",
       "",
       "",
-      "ALL ENEMIES"
+      "AllEnemies"
     ],
     [
       "Wizard",
@@ -887,7 +887,7 @@
       "StatEnemy",
       "",
       "TargetsAccuracyStat/TargetsSpeedStat/TargetsLuckStat",
-      "",
+      "None",
       "1",
       "",
       "",
@@ -897,7 +897,7 @@
       "-0.1",
       "-0.1",
       "",
-      "ALL ENEMIES"
+      "AllEnemies"
     ]
   ]
 }
