@@ -161,7 +161,7 @@ public class Ability : MonoBehaviour
         }
         else
         {
-            listOfTargets = GetTargets();
+            listOfTargets = GetTargets(data.defaultTargets);
             for (int i = listOfTargets.Count - 1; i >= 0; i--)
             {
                 if (listOfTargets[i].CalculateHealth() <= 0)
@@ -277,17 +277,17 @@ public class Ability : MonoBehaviour
             }
         }
 
-        if (data.teamTarget == TeamTarget.None)
+        if (data.defaultTargets == TeamTarget.None)
             return true;
         else
             return listOfTargets.Count > 0;
     }
 
-    List<Character> GetTargets()
+    List<Character> GetTargets(TeamTarget targets)
     {
         List<Character> listOfTargets = new List<Character>();
 
-        switch (data.teamTarget)
+        switch (targets)
         {
             case TeamTarget.None:
                 listOfTargets.Add(this.self);
@@ -510,6 +510,39 @@ public class Ability : MonoBehaviour
                             if (ability.currentCooldown > 0) ability.currentCooldown-=data.miscNumber;
                         foreach (Ability ability in target.listOfRandomAbilities)
                             if (ability.currentCooldown > 0) ability.currentCooldown-=data.miscNumber;
+                        break;
+
+                    case "CHOOSEONEPLAYERTARGET":
+                        this.listOfTargets = GetTargets(TeamTarget.OnePlayer);
+                        yield return self.ChooseTarget(this, TeamTarget.OnePlayer);
+                        break;
+                    case "CHOOSEOTHERPLAYERTARGET":
+                        this.listOfTargets = GetTargets(TeamTarget.OtherPlayer);
+                        yield return self.ChooseTarget(this, TeamTarget.OtherPlayer);
+                        break;
+                    case "CHOOSEALLPLAYERTARGETS":
+                        this.listOfTargets = GetTargets(TeamTarget.AllPlayers);
+                        yield return self.ChooseTarget(this, TeamTarget.AllPlayers);
+                        break;
+                    case "CHOOSEONEENEMYTARGET":
+                        this.listOfTargets = GetTargets(TeamTarget.OneEnemy);
+                        yield return self.ChooseTarget(this, TeamTarget.OneEnemy);
+                        break;
+                    case "CHOOSEOTHERENEMYTARGET":
+                        this.listOfTargets = GetTargets(TeamTarget.OtherEnemy);
+                        yield return self.ChooseTarget(this, TeamTarget.OtherEnemy);
+                        break;
+                    case "CHOOSEALLENEMYTARGETS":
+                        this.listOfTargets = GetTargets(TeamTarget.AllEnemies);
+                        yield return self.ChooseTarget(this, TeamTarget.AllEnemies);
+                        break;
+                    case "CHOOSEANYTARGETS":
+                        this.listOfTargets = GetTargets(TeamTarget.AnyOne);
+                        yield return self.ChooseTarget(this, TeamTarget.AnyOne);
+                        break;
+                    case "CHOOSEALLTARGETS":
+                        this.listOfTargets = GetTargets(TeamTarget.All);
+                        yield return self.ChooseTarget(this, TeamTarget.All);
                         break;
 
                     default:

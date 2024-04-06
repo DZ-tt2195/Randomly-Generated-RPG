@@ -196,7 +196,7 @@ public class TutorialManager : MonoBehaviour
 
             case 10: //introduce wizard
                 TurnManager.instance.AddPlayer(listOfPlayers[2]); //add wizard
-                listOfPlayers[2].AddAbility(FileManager.instance.FindPlayerAbility("Falling Rocks"), false, false);
+                listOfPlayers[2].AddAbility(FileManager.instance.FindPlayerAbility("Stalactites"), false, false);
 
                 TextCollector collector10 = TurnManager.instance.MakeTextCollector(
                     "And now, your 3rd party member. Right click on the Wizard to read what they do.",
@@ -213,7 +213,7 @@ public class TutorialManager : MonoBehaviour
 
             case 11: //introduce wizard Abilities
                 yield return ClickThroughDialogue(new List<string>()
-                { "Your Wizard has an Ability that forces all Airborne Enemies to be Grounded. When it’s their turn, use Falling Rocks against the 2 Crows." });
+                { "Your Wizard has an Ability that forces all Airborne Enemies to be Grounded. When it’s their turn, use Stalactites against the 2 Crows." });
 
                 currentCharacter = listOfPlayers[2]; //wait for wizard's next turn
                 currentStep = 12;

@@ -48,6 +48,7 @@ public class TurnManager : MonoBehaviour
         int currentWave;
         int currentRound;
         bool isBattling;
+        public int confirmChoice { get; private set; }
 
 #endregion
 
@@ -385,6 +386,23 @@ public class TurnManager : MonoBehaviour
         yield return new WaitForSeconds(PlayerPrefs.GetFloat("Animation Speed"));
     }
 
-#endregion
+    public IEnumerator ConfirmUndo(string header, Vector3 position)
+    {
+        confirmChoice = -1;
+        if (PlayerPrefs.GetInt("Confirm Choices") == 1)
+        {
+            instructions.text = "";
+            DisableCharacterButtons();
+
+            TextCollector confirmDecision = MakeTextCollector(header, position, new List<string>() { "Confirm", "Rechoose" });
+            yield return confirmDecision.WaitForChoice();
+
+            confirmChoice = confirmDecision.chosenButton;
+            Destroy(confirmDecision.gameObject);
+        }
+
+    }
+
+    #endregion
 
 }

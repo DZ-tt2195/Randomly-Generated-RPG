@@ -60,12 +60,12 @@ public class PlayerCharacter : Character
         }
     }
 
-    protected override IEnumerator ChooseTarget(Ability ability)
+    public override IEnumerator ChooseTarget(Ability ability, TeamTarget target)
     {
         foreach (AbilityBox box in TurnManager.instance.listOfBoxes)
             box.gameObject.SetActive(false);
 
-        if (ability.singleTarget.Contains(ability.data.teamTarget))
+        if (ability.singleTarget.Contains(target))
         {
             TurnManager.instance.instructions.text = $"Choose a character to target.";
             TurnManager.instance.DisableCharacterButtons();

@@ -14,7 +14,7 @@
     [
       "Bat",
       "Drains health from Grounded Players.",
-      "12",
+      "13",
       "5",
       "0.2",
       "0.85",
@@ -26,7 +26,7 @@
     [
       "Dragon",
       "Deals lots of damage to all Players when Airborne. Heals itself and becomes Grounded when low on health.",
-      "14",
+      "15",
       "6",
       "0.2",
       "0.85",
@@ -38,7 +38,7 @@
     [
       "Puppeteer",
       "Makes Players Airborne, then drops them down to deal damage.",
-      "13",
+      "14",
       "5",
       "0.2",
       "0.85",
@@ -50,7 +50,7 @@
     [
       "Archer",
       "Shoots down Airborne Players with a high chance of critical hits.",
-      "11",
+      "12",
       "4",
       "0.4",
       "0.85",
@@ -62,7 +62,7 @@
     [
       "Bomb",
       "Does nothing for 2 turns, and then explodes.",
-      "12",
+      "13",
       "0",
       "0",
       "1.2",
@@ -74,7 +74,7 @@
     [
       "Kitty",
       "Heals other Enemies and makes them Happy. Switches between Airborne and Grounded.",
-      "10",
+      "11",
       "5",
       "0",
       "1",
@@ -86,7 +86,7 @@
     [
       "Wolf",
       "Makes itself Angry and hunts down Players who are Sad and Grounded. Can also be dangerous when Airborne.",
-      "13",
+      "14",
       "5",
       "0.2",
       "0.85",
@@ -98,7 +98,7 @@
     [
       "Rats",
       "Defensive enemy that makes copies of itself.",
-      "8",
+      "9",
       "5",
       "0",
       "0.85",

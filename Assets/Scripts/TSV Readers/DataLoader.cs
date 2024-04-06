@@ -39,7 +39,7 @@ public class AbilityData
     public float modifyLuck;
     public float modifyAccuracy;
     public int miscNumber;
-    public TeamTarget teamTarget;
+    public TeamTarget defaultTargets;
 }
 
 public class DataLoader
@@ -106,7 +106,7 @@ public class DataLoader
             newAbility.modifyLuck = StringToFloat(line[14]);
             newAbility.modifyAccuracy = StringToFloat(line[15]);
             newAbility.miscNumber = StringToInt(line[16]);
-            newAbility.teamTarget = StringToTeamTarget(line[17]);
+            newAbility.defaultTargets = StringToTeamTarget(line[17]);
         }
         return nextData;
     }

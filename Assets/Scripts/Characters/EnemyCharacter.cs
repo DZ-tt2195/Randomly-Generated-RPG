@@ -43,9 +43,9 @@ public class EnemyCharacter : Character
         }
     }
 
-    protected override IEnumerator ChooseTarget(Ability ability)
+    public override IEnumerator ChooseTarget(Ability ability, TeamTarget target)
     {
-        if (ability.singleTarget.Contains(ability.data.teamTarget))
+        if (ability.singleTarget.Contains(target))
         {
             List<Character> selectedTarget = ability.listOfTargets.Shuffle();
 

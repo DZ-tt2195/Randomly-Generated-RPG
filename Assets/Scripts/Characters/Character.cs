@@ -261,26 +261,18 @@ public class Character : MonoBehaviour
     {
         if (this == null || effect == 0) yield break;
 
-        modifyPower = Math.Clamp(modifyPower += effect, -5, 5);
+        modifyPower = Math.Clamp(modifyPower += effect, -3, 3);
         TurnManager.instance.CreateVisual($"{(effect > 0 ? '+' : '-')}{Math.Abs(effect)} POWER", this.transform.localPosition);
-
-        if (effect < 0)
-            Log.instance.AddText($"{(this.name)} gets -{Math.Abs(effect)} Power.", logged);
-        if (effect > 0)
-            Log.instance.AddText($"{(this.name)}'s gets +{Math.Abs(effect)} Power.", logged);
+        Log.instance.AddText($"{this.name} gets {(effect > 0 ? '+' : '-')}{Math.Abs(effect)} Power.");
     }
 
     public IEnumerator ChangeDefense(int effect, int logged)
     {
         if (this == null || effect == 0) yield break;
 
-        modifyDefense = Math.Clamp(modifyDefense += effect, -5, 5);
+        modifyDefense = Math.Clamp(modifyDefense += effect, -6, 3);
         TurnManager.instance.CreateVisual($"{(effect > 0 ? '+' : '-')}{Math.Abs(effect)} DEFENSE", this.transform.localPosition);
-
-        if (effect < 0)
-            Log.instance.AddText($"{(this.name)} gets -{Math.Abs(effect)} Defense.", logged);
-        if (effect > 0)
-            Log.instance.AddText($"{(this.name)} gets +{Math.Abs(effect)} Defense.", logged);
+        Log.instance.AddText($"{this.name} gets {(effect > 0 ? '+' : '-')}{Math.Abs(effect)} Defense.");
     }
 
     public IEnumerator ChangeSpeed(int effect, int logged)
@@ -289,37 +281,25 @@ public class Character : MonoBehaviour
 
         modifySpeed = Math.Clamp(modifySpeed += effect, -5, 5);
         TurnManager.instance.CreateVisual($"{(effect > 0 ? '+' : '-')}{Math.Abs(effect)} SPEED", this.transform.localPosition);
-
-        if (effect < 0)
-            Log.instance.AddText($"{(this.name)} gets -{Math.Abs(effect)} Speed.", logged);
-        if (effect > 0)
-            Log.instance.AddText($"{(this.name)} gets +{Math.Abs(effect)} Speed.", logged);
+        Log.instance.AddText($"{this.name} gets {(effect > 0 ? '+' : '-')}{Math.Abs(effect)} Speed.");
     }
 
     public IEnumerator ChangeLuck(float effect, int logged)
     {
         if (this == null || effect == 0f) yield break;
 
-        modifyLuck = Mathf.Clamp(modifyLuck += effect, -0.75f, 0.75f);
+        modifyLuck = Mathf.Clamp(modifyLuck += effect, -0.5f, 0.5f);
         TurnManager.instance.CreateVisual($"{(effect > 0 ? '+' : '-')}{100*Math.Abs(effect)}% LUCK", this.transform.localPosition);
-
-        if (effect < 0)
-            Log.instance.AddText($"{(this.name)} gets -{100*Math.Abs(effect)}% Luck.", logged);
-        if (effect > 0)
-            Log.instance.AddText($"{(this.name)} gets +{100*Math.Abs(effect)}% Luck.", logged);
+        Log.instance.AddText($"{this.name} gets {(effect > 0 ? '+' : '-')}{100 * Math.Abs(effect)}% Luck.");
     }
 
     public IEnumerator ChangeAccuracy(float effect, int logged)
     {
         if (this == null || effect == 0f) yield break;
 
-        modifyAccuracy = Mathf.Clamp(modifyAccuracy += effect, -0.75f, 0.75f);
+        modifyAccuracy = Mathf.Clamp(modifyAccuracy += effect, -0.3f, 0.6f);
         TurnManager.instance.CreateVisual($"{(effect > 0 ? '+' : '-')}{100*Math.Abs(effect)}% ACCURACY", this.transform.localPosition);
-
-        if (effect < 0)
-            Log.instance.AddText($"{(this.name)} gets -{100*Math.Abs(effect)}% Accuracy.", logged);
-        if (effect > 0)
-            Log.instance.AddText($"{(this.name)} gets +{100*Math.Abs(effect)}% Accuracy.", logged);
+        Log.instance.AddText($"{this.name} gets {(effect > 0 ? '+' : '-')}{100 * Math.Abs(effect)}% Accuracy.");
     }
 
     public IEnumerator ChangePosition(Position newPosition, int logged)
@@ -327,19 +307,10 @@ public class Character : MonoBehaviour
         if (this == null || newPosition == Position.Dead || newPosition == CurrentPosition) yield break;
 
         CurrentPosition = newPosition;
-
         if (Log.instance != null && logged >= 0)
         {
-            if (newPosition == Position.Grounded)
-            {
-                Log.instance.AddText($"{(this.name)} is now Grounded.", logged);
-                TurnManager.instance.CreateVisual($"GROUNDED", this.transform.localPosition);
-            }
-            else if (newPosition == Position.Airborne)
-            {
-                Log.instance.AddText($"{(this.name)} is now Airborne.", logged);
-                TurnManager.instance.CreateVisual($"AIRBORNE", this.transform.localPosition);
-            }
+            Log.instance.AddText($"{(this.name)} is now {newPosition}.", logged);
+            TurnManager.instance.CreateVisual($"{newPosition.ToString().ToUpper()}", this.transform.localPosition);
         }
     }
 
@@ -348,13 +319,19 @@ public class Character : MonoBehaviour
         if (this == null || newEmotion == Emotion.Dead || newEmotion == CurrentEmotion) yield break;
 
         CurrentEmotion = newEmotion;
-        Color newColor = KeywordTooltip.instance.SearchForKeyword(CurrentEmotion.ToString()).color;
-        this.myImage.color = new Color(newColor.r, newColor.g, newColor.b);
-
+        if (newEmotion == Emotion.Neutral)
+        {
+            this.myImage.color = Color.white;
+        }
+        else
+        {
+            Color newColor = KeywordTooltip.instance.SearchForKeyword(CurrentEmotion.ToString()).color;
+            this.myImage.color = new Color(newColor.r, newColor.g, newColor.b);
+        }
         if (Log.instance != null && logged >= 0)
         {
             Log.instance.AddText($"{(this.name)} is now {CurrentEmotion}.", logged);
-            TurnManager.instance.CreateVisual($"{CurrentEmotion}", this.transform.localPosition);
+            TurnManager.instance.CreateVisual($"{CurrentEmotion.ToString().ToUpper()}", this.transform.localPosition);
         }
     }
 
@@ -390,9 +367,13 @@ public class Character : MonoBehaviour
         while (chosenAbility == null)
         {
             yield return ChooseAbility(logged);
-            yield return ChooseTarget(chosenAbility);
-            if (this.myType == CharacterType.Player && (PlayerPrefs.GetInt("Confirm Choices") == 1))
-                yield return ConfirmDecisions();
+            yield return ChooseTarget(chosenAbility, chosenAbility.data.defaultTargets);
+
+            string part1 = $"{this.name}: Use {chosenAbility.data.myName}";
+            string part2 = chosenAbility.singleTarget.Contains(chosenAbility.data.defaultTargets) ? $" on {chosenAbility.listOfTargets[0].name}?" : "?";
+            yield return TurnManager.instance.ConfirmUndo(part1 + part2, Vector3.zero);
+            if (TurnManager.instance.confirmChoice == 1)
+                chosenAbility = null;
         }
 
         if (!extraAbility)
@@ -439,31 +420,9 @@ public class Character : MonoBehaviour
         yield return null;
     }
 
-    protected virtual IEnumerator ChooseTarget(Ability ability)
+    public virtual IEnumerator ChooseTarget(Ability ability, TeamTarget target)
     {
         yield return null;
-    }
-
-    IEnumerator ConfirmDecisions()
-    {
-        TurnManager.instance.instructions.text = "";
-        TurnManager.instance.DisableCharacterButtons();
-
-        string part1 = $"{this.name}: Use {chosenAbility.data.myName}";
-        string part2 = chosenAbility.singleTarget.Contains(chosenAbility.data.teamTarget) ? $" on {chosenAbility.listOfTargets[0].name}?" : "?";
-
-        TextCollector confirmDecision = TurnManager.instance.MakeTextCollector
-            (part1 + part2, new Vector2(0, 0), new List<string>() { "Confirm", "Rechoose" });
-
-        yield return confirmDecision.WaitForChoice();
-        int decision = confirmDecision.chosenButton;
-        Destroy(confirmDecision.gameObject);
-
-        if (decision == 1)
-        {
-            chosenAbility = null;
-            yield break;
-        }
     }
 
     IEnumerator EndOfTurn(int logged, bool extraTurn)
@@ -497,7 +456,7 @@ public class Character : MonoBehaviour
         }
     }
 
-    #endregion
+#endregion
 
 #region UI
 
