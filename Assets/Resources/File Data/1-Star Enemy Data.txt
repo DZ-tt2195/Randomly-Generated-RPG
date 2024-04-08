@@ -1,0 +1,51 @@
+{
+    [
+      "Enemy Name",
+      "Description",
+      "Base Health",
+      "Base Speed",
+      "Base Luck",
+      "Base Accuracy",
+      "Start Position",
+      "Skills",
+      "AI Targeting",
+      "Art Credit"
+    ],
+    [
+      "Bomb",
+      "Does nothing for 2 turns, and then explodes.",
+      "12",
+      "0",
+      "0",
+      "1.2",
+      "GROUNDED",
+      "Explosion,",
+      "",
+      "DZ|All Shapes and Sizes|(Bomb)"
+    ],
+    [
+      "Kitty",
+      "Heals other Enemies and makes them Happy. Switches between Airborne and Grounded.",
+      "10",
+      "5",
+      "0",
+      "1",
+      "GROUNDED",
+      "Act Cute,Stuck in a Tree,Land Feet First,Scratch,",
+      "",
+      "Howard Lyon|Eldritch Moon|(Harmless Offering)"
+    ],
+    [
+      "Rats",
+      "Defensive enemy that makes copies of itself.",
+      "8",
+      "5",
+      "0",
+      "0.8",
+      "GROUNDED",
+      "Attack,Strength in Numbers,",
+      "",
+      "Ian Kirkpatrick|Dominion: Dark Ages|(Rats)"
+    ]
+  ]
+}

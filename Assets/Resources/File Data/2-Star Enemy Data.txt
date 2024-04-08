@@ -1,0 +1,51 @@
+{
+    [
+      "Enemy Name",
+      "Description",
+      "Base Health",
+      "Base Speed",
+      "Base Luck",
+      "Base Accuracy",
+      "Start Position",
+      "Skills",
+      "AI Targeting",
+      "Art Credit"
+    ],
+    [
+      "Bat",
+      "Drains health from Grounded Players.",
+      "12",
+      "5",
+      "0.15",
+      "0.8",
+      "AIRBORNE",
+      "Drain,Screech,On the Hunt,Bloodlust,",
+      "PrioritizeGrounded",
+      "Martin Hoffmann|Dominion: Nocturne|(Bat)"
+    ],
+    [
+      "Archer",
+      "Shoots down Airborne Players with a high chance of critical hits.",
+      "11",
+      "4",
+      "0.35",
+      "0.8",
+      "GROUNDED",
+      "Sharp Arrow,Frozen Arrow,Volley of Arrows,Focus,",
+      "PrioritizeAirborne",
+      "Harald Lieske|Dominion: Allies|(Archer)"
+    ],
+    [
+      "Wolf",
+      "Makes itself Angry and hunts down Players who are Sad and Grounded. Can also be dangerous when Airborne.",
+      "13",
+      "5",
+      "0.15",
+      "0.8",
+      "GROUNDED",
+      "Slash,Glare,On a Branch,Aerial Landing,",
+      "Effectiveness",
+      "Slawomir Maniak|Eldritch Moon|(Kessig Prowler)"
+    ]
+  ]
+}

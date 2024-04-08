@@ -17,9 +17,9 @@
       "10",
       "5",
       "0.2",
-      "0.85",
+      "0.9",
       "GROUNDED",
-      "1,2,3,4,5,6,7,8,9,10,11,12,13,",
+      "Impale,Joust,Rage,Shun,Skirmish,Neutralize,Stab,Carefree,Battle Cry,Meal,Taunt,Tragedy,Delegate,",
       "",
       "Michael Watson|Dominion: Cornucopia and Guilds|(Joust)"
     ],
@@ -29,9 +29,9 @@
       "10",
       "4",
       "0.2",
-      "0.85",
+      "0.9",
       "AIRBORNE",
-      "14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,",
+      "Induce Anger,Induce Happiness,Induce Sadness,Sorrowful Flight,Gift of Flight,Calm Down,Defensive Aura,Down to Earth,Invigorate,Lift Up,Perk Up,Share Healing,Wind to Wings,Delegate,Crash Landing,",
       "",
       "Magali Villeneuve|Oath of the Gatewatch|(Linvala, the Preserver)"
     ],
@@ -41,9 +41,9 @@
       "10",
       "3",
       "0.2",
-      "0.85",
+      "0.9",
       "GROUNDED",
-      "29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,",
+      "Blaze,Bounce,Stalactites,Flood,Lightning Strike,Rough Air,Sky Hammer,Sap Energy,Delegate,Ice Blast,Gravity Flip,Heavy Gravity,Light Gravity,Intimidation,Fog,",
       "",
       "Harald Lieske|Dominion: Allies|(Conjurer)"
     ]

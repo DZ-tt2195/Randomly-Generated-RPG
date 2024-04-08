@@ -43,8 +43,8 @@ public class Ability : MonoBehaviour
 
         currentCooldown = (startWithCooldown) ? data.baseCooldown : 0;
         mainType = (data.typeOne == AbilityType.Attack || data.typeTwo == AbilityType.Attack) ? AbilityType.Attack :
-                   (data.typeOne == AbilityType.Healing || data.typeTwo == AbilityType.Healing) ? AbilityType.Healing :
-                   AbilityType.Misc;
+            (data.typeOne == AbilityType.Healing || data.typeTwo == AbilityType.Healing) ? AbilityType.Healing :
+            AbilityType.Misc;
     }
 
 #endregion
@@ -390,15 +390,15 @@ public class Ability : MonoBehaviour
                         break;
 
                     case "SELFHEAL":
-                        yield return self.GainHealth(data.healthRegain + self.CalculatePower(), logged);
+                        yield return self.GainHealth(Mathf.Max(data.healthRegain + self.CalculatePower(), 0), logged);
                         if (self.CalculateHealthPercent() >= 1f) fullHeal = true;
                         break;
                     case "TARGETSHEAL":
-                        yield return target.GainHealth(data.healthRegain + self.CalculatePower(), logged);
+                        yield return target.GainHealth(Mathf.Max(data.healthRegain + self.CalculatePower(),0), logged);
                         if (target.CalculateHealthPercent() >= 1f) fullHeal = true;
                         break;
                     case "HEALFROMDAMAGE":
-                        yield return self.GainHealth(damageDealt, logged);
+                        yield return self.GainHealth(Mathf.Max(damageDealt,0), logged);
                         if (self.CalculateHealthPercent() >= 1f) fullHeal = true;
                         break;
 

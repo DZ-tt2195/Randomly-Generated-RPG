@@ -396,6 +396,12 @@ MonoBehaviour:
   characterPrefab: {fileID: 8345166759536211255, guid: 750995808170643f1b046855142825f7, type: 3}
   pointsVisual: {fileID: 8766781883395997160, guid: d817be641f2464bdaa47d0a4e0b6d381, type: 3}
   undoBox: {fileID: 7928303491963949573, guid: 0ce383b7ea8ca488c810cadf3b089e7e, type: 3}
+  listOfWaveSetup:
+  - enemyDifficultySpawn: 02000000
+  - enemyDifficultySpawn: 0100000002000000
+  - enemyDifficultySpawn: 010000000200000001000000
+  - enemyDifficultySpawn: 01000000020000000200000001000000
+  - enemyDifficultySpawn: 0100000002000000030000000200000001000000
   listOfBoxes:
   - {fileID: 616828573}
   - {fileID: 1440292326}
@@ -405,15 +411,6 @@ MonoBehaviour:
   - {fileID: 762667031}
   - {fileID: 519627456}
   - {fileID: 160430569}
-  listOfSpeed:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
   listOfSpeedImages:
   - {fileID: 1316353827}
   - {fileID: 832648298}
@@ -427,6 +424,7 @@ MonoBehaviour:
   quitButton: {fileID: 980028370}
   listOfPlayers: []
   listOfEnemies: []
+  listOfDead: []
   speedQueue: []
 --- !u!224 &146587604
 RectTransform:

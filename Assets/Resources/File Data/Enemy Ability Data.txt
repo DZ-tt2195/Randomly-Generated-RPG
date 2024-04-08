@@ -21,7 +21,7 @@
     ],
     [
       "Everyone",
-      "Resurrect",
+      "Revive",
       "Bring back a dead Player with REGAIN Health.",
       "THIS Resurrects TARGET.",
       "Healing",
@@ -30,7 +30,7 @@
       "TargetsDead",
       "1",
       "",
-      "4",
+      "5",
       "",
       "",
       "",
@@ -134,7 +134,7 @@
       "",
       "",
       "",
-      "0.15",
+      "0.2",
       "",
       "",
       "Self"
@@ -547,7 +547,7 @@
       "StatEnemy",
       "",
       "SelfDefenseStat/SelfCopy",
-      "",
+      "None",
       "",
       "",
       "",
@@ -586,7 +586,8 @@
       "THIS Glares at everyone.",
       "EmotionPlayer",
       "EmotionEnemy",
-      "SelfAngry/ChooseAllPlayerTargets-TargetsSad",
+      "SelfAngry-TargetsSad",
+      "None-None",
       "",
       "",
       "",
@@ -596,8 +597,7 @@
       "",
       "",
       "",
-      "",
-      "Self"
+      "Self-AllPlayers"
     ],
     [
       "Wolf",

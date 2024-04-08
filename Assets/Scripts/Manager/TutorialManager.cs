@@ -38,7 +38,7 @@ public class TutorialManager : MonoBehaviour
             ScreenOverlay.instance.SetAnimationSpeed(0.4f);
             ScreenOverlay.instance.SetUndo(true);
 
-            List<CharacterData> playerData = DataLoader.ReadCharacterData("Player Data");
+            List<CharacterData> playerData = DataLoader.ReadCharacterData("Player Data", 0);
             for (int i = 0; i < playerData.Count; i++)
             {
                 PlayerCharacter nextCharacter = Instantiate(characterPrefab).AddComponent<PlayerCharacter>();
@@ -79,7 +79,7 @@ public class TutorialManager : MonoBehaviour
                 listOfPlayers[0].AddAbility(FileManager.instance.FindPlayerAbility("Stab"), false, false);
 
                 TextCollector collector2 = TurnManager.instance.MakeTextCollector(
-                    "You have the same 3 party members. Right click on the Knight to see what they do.",
+                    "You always have the same 3 party members. Right click on the Knight to see what they do.",
                     Vector3.zero);
                 while (ScreenOverlay.instance.displayedScreen != CurrentScreen.Character)
                     yield return null;

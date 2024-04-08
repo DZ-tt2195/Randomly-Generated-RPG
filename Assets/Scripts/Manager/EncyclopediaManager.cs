@@ -6,6 +6,7 @@ using UnityEngine.UI;
 using System;
 using System.Linq;
 
+public enum TierSearch { All, Star1, Star2, Star3 };
 public enum PlayerSearch { All, Knight, Angel, Wizard };
 public class EncyclopediaManager : MonoBehaviour
 {
@@ -15,25 +16,26 @@ public class EncyclopediaManager : MonoBehaviour
     [SerializeField] TMP_Text searchResults;
 
     [Foldout("Changing searches", true)]
-    [SerializeField] List<Button> currentSearch = new();
-    [SerializeField] List<GameObject> masterGameObject = new();
+        [SerializeField] List<Button> currentSearch = new();
+        [SerializeField] List<GameObject> masterGameObject = new();
 
     [Foldout("Ability Search", true)]
-    List<AbilityBox> knightAbilities = new();
-    List<AbilityBox> angelAbilities = new();
-    List<AbilityBox> wizardAbilities = new();
-    [SerializeField] AbilityBox abilityBoxPrefab;
-    [SerializeField] RectTransform storeAbilityBoxes;
-    [SerializeField] TMP_InputField abilityInput;
-    [SerializeField] TMP_Dropdown characterDropdown;
-    [SerializeField] TMP_Dropdown type1Dropdown;
-    [SerializeField] TMP_Dropdown type2Dropdown;
+        List<AbilityBox> knightAbilities = new();
+        List<AbilityBox> angelAbilities = new();
+        List<AbilityBox> wizardAbilities = new();
+        [SerializeField] AbilityBox abilityBoxPrefab;
+        [SerializeField] RectTransform storeAbilityBoxes;
+        [SerializeField] TMP_InputField abilityInput;
+        [SerializeField] TMP_Dropdown characterDropdown;
+        [SerializeField] TMP_Dropdown type1Dropdown;
+        [SerializeField] TMP_Dropdown type2Dropdown;
 
     [Foldout("Enemy Search", true)]
-    List<Character> listOfEnemyBoxes = new();
-    [SerializeField] GameObject characterPrefab;
-    [SerializeField] RectTransform storeEnemyBoxes;
-    [SerializeField] TMP_InputField enemyInput;
+        List<Character> listOfEnemyBoxes = new();
+        [SerializeField] GameObject characterPrefab;
+        [SerializeField] RectTransform storeEnemyBoxes;
+        [SerializeField] TMP_InputField enemyInput;
+        [SerializeField] TMP_Dropdown tierDropdown;
 
     void ChangeMode(int n)
     {
@@ -80,15 +82,18 @@ public class EncyclopediaManager : MonoBehaviour
         angelAbilities = angelAbilities.OrderBy(box => box.ability.data.myName).ToList();
         wizardAbilities = wizardAbilities.OrderBy(box => box.ability.data.myName).ToList();
 
-        FileManager.instance.listOfEnemies = FileManager.instance.listOfEnemies.OrderBy(data => data.myName).ToList();
         enemyInput.onValueChanged.AddListener(ChangeEnemyInput);
-        foreach (CharacterData data in FileManager.instance.listOfEnemies)
+        tierDropdown.onValueChanged.AddListener(ChangeTierDropdown);
+        foreach (List<CharacterData> listOfData in FileManager.instance.listOfEnemies)
         {
-            Character nextEnemy = Instantiate(characterPrefab).AddComponent<Character>();
-            nextEnemy.SetupCharacter(CharacterType.Enemy, data, FileManager.instance.ConvertNumbersToAbilityData(data.skillNumbers, false), Emotion.Neutral, false);
-            listOfEnemyBoxes.Add(nextEnemy);
-            foreach (Transform child in nextEnemy.transform)
-                Destroy(child.gameObject);
+            foreach (CharacterData data in listOfData)
+            {
+                Character nextEnemy = Instantiate(characterPrefab).AddComponent<Character>();
+                nextEnemy.SetupCharacter(CharacterType.Enemy, data, FileManager.instance.ConvertToAbilityData(data.listOfSkills, false), Emotion.Neutral, false);
+                listOfEnemyBoxes.Add(nextEnemy);
+                foreach (Transform child in nextEnemy.transform)
+                    Destroy(child.gameObject);
+            }
         }
 
         SearchEnemy();
@@ -118,6 +123,18 @@ public class EncyclopediaManager : MonoBehaviour
         if (setting == AbilityType.None)
             return true;
         return (data.typeOne == setting || data.typeTwo == setting);
+    }
+
+    bool CompareTiers(TierSearch setting, int difficulty)
+    {
+        return setting switch
+        {
+            TierSearch.All => true,
+            TierSearch.Star1 => difficulty == 1,
+            TierSearch.Star2 => difficulty == 2,
+            TierSearch.Star3 => difficulty == 3,
+            _ => true,
+        };
     }
 
     AbilityType ConvertType(string text)
@@ -214,11 +231,33 @@ public class EncyclopediaManager : MonoBehaviour
         SearchEnemy();
     }
 
+    void ChangeTierDropdown(int n)
+    {
+        SearchEnemy();
+    }
+
     void SearchEnemy()
     {
+        TierSearch searchTier = TierSearch.All;
+        switch (tierDropdown.options[tierDropdown.value].text)
+        {
+            case "All":
+                searchTier = TierSearch.All;
+                break;
+            case "1-Star":
+                searchTier = TierSearch.Star1;
+                break;
+            case "2-Star":
+                searchTier = TierSearch.Star2;
+                break;
+            case "3-Star":
+                searchTier = TierSearch.Star3;
+                break;
+        }
+
         foreach (Character nextEnemy in listOfEnemyBoxes)
         {
-            if (CompareStrings(enemyInput.text, nextEnemy.data.myName) || CompareStrings(enemyInput.text, nextEnemy.data.description))
+            if (CompareStrings(enemyInput.text, nextEnemy.data.myName) && CompareTiers(searchTier, nextEnemy.data.difficulty))
                 nextEnemy.transform.SetParent(storeEnemyBoxes);
             else
                 nextEnemy.transform.SetParent(null);

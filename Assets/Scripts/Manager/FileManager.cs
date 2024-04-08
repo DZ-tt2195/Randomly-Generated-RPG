@@ -22,10 +22,10 @@ public class FileManager : MonoBehaviour
         private string apiKey = "AIzaSyCl_GqHd1-WROqf7i2YddE3zH6vSv3sNTA";
         private string baseUrl = "https://sheets.googleapis.com/v4/spreadsheets/";
 
-        [Tooltip("store all players")][ReadOnly] public List<Character> listOfPlayers = new List<Character>();
+        [Tooltip("store all players")][ReadOnly] public List<Character> listOfPlayers = new();
         [Tooltip("store all player ability data")][ReadOnly] public List<AbilityData> listOfPlayerAbilities;
         [Tooltip("store all enemy ability data")][ReadOnly] public List<AbilityData> listOfEnemyAbilities;
-        [Tooltip("store all enemy data")][ReadOnly] public List<CharacterData> listOfEnemies;
+        [Tooltip("store all enemy data")][ReadOnly] public List<List<CharacterData>> listOfEnemies = new();
         [Tooltip("store all bonus enemy data")][ReadOnly] public List<CharacterData> listOfBonusEnemies;
 
 #endregion
@@ -74,23 +74,27 @@ public class FileManager : MonoBehaviour
 
 #region Helper Methods
 
-    public List<AbilityData> ConvertNumbersToAbilityData(string list, bool player)
+    public List<AbilityData> ConvertToAbilityData(string list, bool player)
     {
         string[] divideIntoNumbers = list.Split(',');
         List<AbilityData> splitAbilities = new();
-        for (int j = 0; j < divideIntoNumbers.Length-1; j++)
+        for (int j = 0; j < divideIntoNumbers.Length; j++)
         {
             try
             {
-                string skillNumber = divideIntoNumbers[j];
-                skillNumber.Trim();
-
+                AbilityData nextData = null;
                 if (player)
-                    splitAbilities.Add(listOfPlayerAbilities[int.Parse(skillNumber)]);
+                {
+                    nextData = FindPlayerAbility(divideIntoNumbers[j].Trim());
+                }
                 else
-                    splitAbilities.Add(listOfEnemyAbilities[int.Parse(skillNumber)]);
+                {
+                    nextData = FindEnemyAbility(divideIntoNumbers[j].Trim());
+                }
+                Debug.Log($"{nextData.myName.Equals("")}");
+                splitAbilities.Add(nextData);
             }
-            catch (FormatException) { continue; }
+            catch (NullReferenceException) { continue; }
             catch (ArgumentOutOfRangeException) { break; }
         }
         return splitAbilities;
@@ -106,9 +110,9 @@ public class FileManager : MonoBehaviour
         return listOfEnemyAbilities.FirstOrDefault(ability => ability.myName == target);
     }
 
-    public CharacterData FindEnemy(string target)
+    public CharacterData FindEnemy(string target, int tier)
     {
-        return listOfEnemies.FirstOrDefault(enemy => enemy.myName == target);
+        return listOfEnemies[tier].FirstOrDefault(enemy => enemy.myName == target);
     }
 
     public CharacterData FindBonusEnemy(string target)

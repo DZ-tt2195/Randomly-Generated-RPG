@@ -14,9 +14,10 @@ public class CharacterData
     public float baseLuck;
     public float baseAccuracy;
     public Position startingPosition;
-    public string skillNumbers;
+    public string listOfSkills;
     public string aiTargeting;
     public string artCredit;
+    public int difficulty;
 }
 
 [Serializable]
@@ -44,7 +45,7 @@ public class AbilityData
 
 public class DataLoader
 {
-    public static List<CharacterData> ReadCharacterData(string fileToLoad)
+    public static List<CharacterData> ReadCharacterData(string fileToLoad, int difficulty)
     {
         List<CharacterData> nextData = new();
         var data = TSVReader.ReadFile(fileToLoad);
@@ -67,9 +68,10 @@ public class DataLoader
             newCharacter.baseLuck = StringToFloat(line[4]);
             newCharacter.baseAccuracy = StringToFloat(line[5]);
             newCharacter.startingPosition = (line[6] == "GROUNDED") ? Position.Grounded : Position.Airborne;
-            newCharacter.skillNumbers = line[7].Trim();
+            newCharacter.listOfSkills = line[7].Trim();
             newCharacter.aiTargeting = line[8].Trim();
             newCharacter.artCredit = line[9].Replace("|", "\n");
+            newCharacter.difficulty = difficulty;
         }
         return nextData;
     }

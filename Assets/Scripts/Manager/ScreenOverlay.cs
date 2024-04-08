@@ -26,6 +26,7 @@ public class ScreenOverlay : MonoBehaviour
         [SerializeField] TMP_Text stats1;
         [SerializeField] TMP_Text stats2;
         [SerializeField] List<AbilityBox> listOfBoxes = new();
+        [SerializeField] List<Image> listOfStars = new();
 
     [Foldout("Game settings", true)]
         [SerializeField] GameObject gameSettingsBackground;
@@ -75,37 +76,6 @@ public class ScreenOverlay : MonoBehaviour
         }
     }
 
-    public void DisplayCharacterInfo(Character character, string firstStat, string secondStat)
-    {
-        displayedScreen = CurrentScreen.Character;
-        blackBackground.SetActive(true);
-        characterDisplayBackground.transform.SetAsLastSibling();
-        characterDisplayBackground.SetActive(true);
-
-        characterImage.sprite = character.myImage.sprite;
-        characterName.text = character.name;
-        characterDescription.text = character.editedDescription;
-        characterArtCredit.text = character.data.artCredit;
-
-        emotionText.text = KeywordTooltip.instance.EditText($"{character.CurrentEmotion}");
-        stats1.text = firstStat;
-        stats2.text = secondStat;
-
-        int nextBox = 0;
-        for (int i = 0; i < character.listOfRandomAbilities.Count; i++)
-        {
-            Ability nextAbility = character.listOfRandomAbilities[i];
-            listOfBoxes[nextBox].gameObject.SetActive(true);
-            listOfBoxes[nextBox].ReceiveAbility(TurnManager.instance != null && nextAbility.CanPlay(), nextAbility);
-            nextBox++;
-        }
-
-        for (int i = nextBox; i < listOfBoxes.Count; i++)
-        {
-            listOfBoxes[i].ReceiveAbility(true, null);
-        }
-    }
-
     void SettingsScreen()
     {
         displayedScreen = CurrentScreen.Settings;
@@ -135,6 +105,47 @@ public class ScreenOverlay : MonoBehaviour
         emotionBackground.transform.SetAsLastSibling();
     }
 
-#endregion
+    #endregion
+
+    public void DisplayCharacterInfo(Character character, string firstStat, string secondStat)
+    {
+        displayedScreen = CurrentScreen.Character;
+        blackBackground.SetActive(true);
+        characterDisplayBackground.transform.SetAsLastSibling();
+        characterDisplayBackground.SetActive(true);
+
+        characterImage.sprite = character.myImage.sprite;
+        characterName.text = character.name;
+        characterDescription.text = character.editedDescription;
+        characterArtCredit.text = character.data.artCredit;
+
+        emotionText.text = KeywordTooltip.instance.EditText($"{character.CurrentEmotion}");
+        stats1.text = firstStat;
+        stats2.text = secondStat;
+
+        int nextBox = 0;
+        for (int i = 0; i < character.listOfRandomAbilities.Count; i++)
+        {
+            Ability nextAbility = character.listOfRandomAbilities[i];
+            listOfBoxes[nextBox].gameObject.SetActive(true);
+            listOfBoxes[nextBox].ReceiveAbility(TurnManager.instance != null && nextAbility.CanPlay(), nextAbility);
+            nextBox++;
+        }
+        for (int i = nextBox; i < listOfBoxes.Count; i++)
+        {
+            listOfBoxes[i].ReceiveAbility(true, null);
+        }
+
+        int nextStar = 0;
+        for (int i = 0; i<character.data.difficulty; i++)
+        {
+            listOfStars[i].gameObject.SetActive(true);
+            nextStar++;
+        }
+        for (int i = nextStar; i<listOfStars.Count; i++)
+        {
+            listOfStars[i].gameObject.SetActive(false);
+        }
+    }
 
 }

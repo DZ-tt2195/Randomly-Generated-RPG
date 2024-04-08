@@ -76,7 +76,9 @@ public class TitleScreen : MonoBehaviour
         if (Application.isEditor)
         {
             yield return FileManager.instance.DownloadFile("Player Data");
-            yield return FileManager.instance.DownloadFile("Enemy Data");
+            yield return FileManager.instance.DownloadFile("1-Star Enemy Data");
+            yield return FileManager.instance.DownloadFile("2-Star Enemy Data");
+            yield return FileManager.instance.DownloadFile("3-Star Enemy Data");
             yield return FileManager.instance.DownloadFile("Bonus Enemy Data");
             yield return FileManager.instance.DownloadFile("Player Ability Data");
             yield return FileManager.instance.DownloadFile("Enemy Ability Data");
@@ -84,10 +86,14 @@ public class TitleScreen : MonoBehaviour
             FileManager.instance.downloadOn = false;
         }
 
-        FileManager.instance.listOfEnemies = DataLoader.ReadCharacterData("Enemy Data");
-        FileManager.instance.listOfBonusEnemies = DataLoader.ReadCharacterData("Bonus Enemy Data");
-        FileManager.instance.listOfPlayerAbilities = DataLoader.ReadAbilityData("Player Ability Data");
-        FileManager.instance.listOfEnemyAbilities = DataLoader.ReadAbilityData("Enemy Ability Data");
+        FileManager.instance.listOfEnemies.Clear(); FileManager.instance.listOfEnemies.Add(new List<CharacterData>());
+        FileManager.instance.listOfEnemies.Add(DataLoader.ReadCharacterData("1-Star Enemy Data", 1).OrderBy(data => data.myName).ToList());
+        FileManager.instance.listOfEnemies.Add(DataLoader.ReadCharacterData("2-Star Enemy Data", 2).OrderBy(data => data.myName).ToList());
+        FileManager.instance.listOfEnemies.Add(DataLoader.ReadCharacterData("3-Star Enemy Data", 3).OrderBy(data => data.myName).ToList());
+
+        FileManager.instance.listOfBonusEnemies = DataLoader.ReadCharacterData("Bonus Enemy Data", 0);
+        FileManager.instance.listOfPlayerAbilities = DataLoader.ReadAbilityData("Player Ability Data").OrderBy(data => data.myName).ToList();
+        FileManager.instance.listOfEnemyAbilities = DataLoader.ReadAbilityData("Enemy Ability Data").OrderBy(data => data.myName).ToList();
 
         GeneratePlayers();
 
@@ -109,22 +115,23 @@ public class TitleScreen : MonoBehaviour
             //do nothing
         }
 
-        List<CharacterData> playerData = DataLoader.ReadCharacterData("Player Data");
+        List<CharacterData> playerData = DataLoader.ReadCharacterData("Player Data", 0);
         for (int i = 0; i < playerData.Count; i++)
         {
             PlayerCharacter nextCharacter = Instantiate(playerPrefab).AddComponent<PlayerCharacter>();
-            List<AbilityData> allAbilities = FileManager.instance.ConvertNumbersToAbilityData(playerData[i].skillNumbers, true).Shuffle();
-            List<AbilityData> usedAbilities = new();
+            List<AbilityData> allAbilities = FileManager.instance.ConvertToAbilityData(playerData[i].listOfSkills, true).Shuffle();
+            List<AbilityData> abilitiesToUse = new();
 
             int counter = -1;
-            while (usedAbilities.Count < 6)
+            while (abilitiesToUse.Count < 6)
             {
                 counter++;
                 try
                 {
-                    usedAbilities.Add(allAbilities[counter]);
+                    abilitiesToUse.Add(allAbilities[counter]);
+                    Debug.Log($"{allAbilities[counter].myName.Equals("")}");
                 }
-                catch (FormatException)
+                catch (NullReferenceException)
                 {
                     continue;
                 }
@@ -135,11 +142,10 @@ public class TitleScreen : MonoBehaviour
                 }
             }
 
-            nextCharacter.SetupCharacter(CharacterType.Player, playerData[i], usedAbilities, (Emotion)UnityEngine.Random.Range(1,5), false);
-            FileManager.instance.listOfPlayers.Add(nextCharacter);
-
-            nextCharacter.transform.SetParent(abilityBoxes[i*6].transform.parent);
+            nextCharacter.SetupCharacter(CharacterType.Player, playerData[i], abilitiesToUse, (Emotion)UnityEngine.Random.Range(1,5), false);
+            nextCharacter.transform.SetParent(abilityBoxes[i * 6].transform.parent);
             nextCharacter.transform.localPosition = new Vector3(-1050, 0, 0);
+            FileManager.instance.listOfPlayers.Add(nextCharacter);
             for (int j = 0; j<nextCharacter.listOfRandomAbilities.Count; j++)
                 abilityBoxes[i * 6 + j].ReceiveAbility(true, nextCharacter.listOfRandomAbilities[j]);
         }
@@ -150,7 +156,7 @@ public class TitleScreen : MonoBehaviour
         infoScreen.SetActive(!infoScreen.activeSelf);
     }
 
-    #endregion
+#endregion
 
 #region Cheats/Challenges
 

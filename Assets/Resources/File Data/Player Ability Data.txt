@@ -66,7 +66,7 @@
       "THIS uses Joust on TARGET.",
       "Attack",
       "StatPlayer",
-      "Attack/DealtDamage/SelfAccuracyStat",
+      "Attack-DealtDamage/SelfAccuracyStat",
       "TargetsGrounded",
       "1",
       "8",
@@ -77,7 +77,7 @@
       "",
       "-0.05",
       "",
-      "OneEnemy"
+      "OneEnemy-Self"
     ],
     [
       "Knight",

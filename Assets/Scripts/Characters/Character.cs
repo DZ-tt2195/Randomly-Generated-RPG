@@ -15,7 +15,7 @@ public enum CharacterType { Player, Enemy }
 public class Character : MonoBehaviour
 {
 
-    #region Variables
+#region Variables
 
     public static float borderColor;
 
@@ -80,7 +80,7 @@ public class Character : MonoBehaviour
 
     #endregion
 
-    #region Setup
+#region Setup
 
     private void Awake()
     {
@@ -110,7 +110,7 @@ public class Character : MonoBehaviour
         this.baseAccuracy = data.baseAccuracy;
 
         AddAbility(FileManager.instance.FindEnemyAbility("Skip Turn"), true, false);
-        AddAbility(FileManager.instance.FindEnemyAbility("Resurrect"), true, false);
+        AddAbility(FileManager.instance.FindEnemyAbility("Revive"), true, false);
         this.myImage.sprite = Resources.Load<Sprite>($"Characters/{this.name}");
 
         StartCoroutine(ChangePosition(data.startingPosition, -1));
@@ -137,7 +137,7 @@ public class Character : MonoBehaviour
 
     #endregion
 
-    #region Stats
+#region Stats
 
     public int CalculateHealth()
     {
@@ -176,7 +176,7 @@ public class Character : MonoBehaviour
 
     #endregion
 
-    #region Change Stats
+#region Change Stats
 
     public IEnumerator Stun(int amount, int logged)
     {
@@ -416,7 +416,7 @@ public class Character : MonoBehaviour
                 yield return chosenAbility.ResolveInstructions(splicedString, i, logged + 1);
             }
 
-            chosenAbility.currentCooldown = chosenAbility.data.baseCooldown + (CurrentEmotion == Emotion.Happy ? 1 : 0);
+            chosenAbility.currentCooldown = chosenAbility.data.baseCooldown + (CurrentEmotion == Emotion.Happy ? 1 : 0) + (extraAbility ? 1 : 0);
             if (CarryVariables.instance.mode == CarryVariables.GameMode.Tutorial && TutorialManager.instance.currentCharacter == this)
             {
                 TutorialManager.instance.currentCharacter = null;

@@ -1,0 +1,39 @@
+{
+    [
+      "Enemy Name",
+      "Description",
+      "Base Health",
+      "Base Speed",
+      "Base Luck",
+      "Base Accuracy",
+      "Start Position",
+      "Skills",
+      "AI Targeting",
+      "Art Credit"
+    ],
+    [
+      "Dragon",
+      "Deals lots of damage to all Players when Airborne. Heals itself and becomes Grounded when low on health.",
+      "14",
+      "6",
+      "0.15",
+      "0.8",
+      "AIRBORNE",
+      "Roost,Wing Flap,Firebreath,Roar,",
+      "",
+      "Josh Hass|Amonkhet Invocations|(Omniscience)"
+    ],
+    [
+      "Puppeteer",
+      "Makes Players Airborne, then drops them down to deal damage.",
+      "13",
+      "5",
+      "0.15",
+      "0.8",
+      "AIRBORNE",
+      "Dangle,Drop,Puppet Lift,Collision,",
+      "",
+      "James Ryman|Kaladesh|(Marionette Master)"
+    ]
+  ]
+}

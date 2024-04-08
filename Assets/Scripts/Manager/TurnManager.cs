@@ -18,6 +18,12 @@ class CharacterPositions
     }
 }
 
+[Serializable]
+class WaveSetup
+{
+    public List<int> enemyDifficultySpawn = new();
+}
+
 public class TurnManager : MonoBehaviour
 {
 
@@ -28,6 +34,7 @@ public class TurnManager : MonoBehaviour
         [SerializeField] GameObject characterPrefab;
         [SerializeField] PointsVisual pointsVisual;
         public TextCollector undoBox;
+        [SerializeField] List<WaveSetup> listOfWaveSetup = new();
 
     [Foldout("UI", true)]
         public List<AbilityBox> listOfBoxes = new();
@@ -129,9 +136,11 @@ public class TurnManager : MonoBehaviour
             if (CarryVariables.instance.ActiveChallenge("Stronger Enemies"))
                 Log.instance.AddText($"Enemies get +1 to their stats. (Stronger Enemies)");
 
-            for (int i = 0; i < currentWave; i++)
-                CreateEnemy(FileManager.instance.listOfEnemies[UnityEngine.Random.Range(0, FileManager.instance.listOfEnemies.Count)],
+            foreach (int nextTier in listOfWaveSetup[currentWave-1].enemyDifficultySpawn)
+            {
+                CreateEnemy(FileManager.instance.listOfEnemies[nextTier][UnityEngine.Random.Range(0, FileManager.instance.listOfEnemies[nextTier].Count)],
                     (Emotion)UnityEngine.Random.Range(1, 5), 0);
+            }
 
             StartCoroutine(NewRound());
         }
@@ -323,7 +332,7 @@ public class TurnManager : MonoBehaviour
             nextCharacter.name = dataFile.myName;
             Log.instance.AddText($"{Log.Article(nextCharacter.name)} entered the fight.", logged);
 
-            nextCharacter.SetupCharacter(CharacterType.Enemy, dataFile, FileManager.instance.ConvertNumbersToAbilityData(dataFile.skillNumbers, false), startingEmotion, true);
+            nextCharacter.SetupCharacter(CharacterType.Enemy, dataFile, FileManager.instance.ConvertToAbilityData(dataFile.listOfSkills, false), startingEmotion, true);
             SaveManager.instance.SaveEnemy(dataFile);
 
             if (CarryVariables.instance.ActiveChallenge("Stronger Enemies"))
@@ -336,7 +345,9 @@ public class TurnManager : MonoBehaviour
             }
 
             if (CarryVariables.instance.ActiveCheat("Enemies Stunned"))
+            {
                 StartCoroutine(nextCharacter.Stun(1, logged + 1));
+            }
         }
     }
 
