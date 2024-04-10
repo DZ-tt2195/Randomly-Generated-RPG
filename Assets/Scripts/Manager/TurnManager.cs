@@ -91,7 +91,7 @@ public class TurnManager : MonoBehaviour
 
             StartCoroutine(NewWave());
         }
-        else
+        else if (CarryVariables.instance.mode == CarryVariables.GameMode.Tutorial)
         {
             Log.instance.AddText("Tutorial mode - 3 waves.");
             Log.instance.AddText("");
@@ -138,13 +138,14 @@ public class TurnManager : MonoBehaviour
 
             foreach (int nextTier in listOfWaveSetup[currentWave-1].enemyDifficultySpawn)
             {
+                yield return WaitTime();
                 CreateEnemy(FileManager.instance.listOfEnemies[nextTier][UnityEngine.Random.Range(0, FileManager.instance.listOfEnemies[nextTier].Count)],
                     (Emotion)UnityEngine.Random.Range(1, 5), 0);
             }
 
             StartCoroutine(NewRound());
         }
-        else
+        else if (CarryVariables.instance.mode == CarryVariables.GameMode.Tutorial)
         {
             Log.instance.AddText($"WAVE {currentWave} / 3");
         }

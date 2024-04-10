@@ -129,7 +129,6 @@ public class TitleScreen : MonoBehaviour
                 try
                 {
                     abilitiesToUse.Add(allAbilities[counter]);
-                    Debug.Log($"{allAbilities[counter].myName.Equals("")}");
                 }
                 catch (NullReferenceException)
                 {

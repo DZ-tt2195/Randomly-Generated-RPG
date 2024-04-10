@@ -366,6 +366,20 @@ public class Character : MonoBehaviour
 
     IEnumerator ResolveTurn(int logged, bool extraAbility)
     {
+        if (extraAbility)
+        {
+            foreach (Ability ability in listOfAutoAbilities)
+            {
+                if (ability.currentCooldown > 0)
+                    ability.currentCooldown++;
+            }
+            foreach (Ability ability in listOfRandomAbilities)
+            {
+                if (ability.currentCooldown > 0)
+                    ability.currentCooldown++;
+            }
+        }
+
         chosenAbility = null;
         Character targetCharacter = null;
         while (chosenAbility == null)
@@ -375,32 +389,33 @@ public class Character : MonoBehaviour
             {
                 yield return ChooseTarget(chosenAbility, chosenAbility.data.defaultTargets[i], i);
                 if (chosenAbility.singleTarget.Contains(chosenAbility.data.defaultTargets[i]))
-                    targetCharacter = chosenAbility.listOfTargets[i][0];
-
-                string part1 = $"{this.name}: Use {chosenAbility.data.myName}";
-                string part2 = targetCharacter != null ? $" on {targetCharacter.data.myName}?" : "?";
-
-                if (this.myType == CharacterType.Player)
                 {
-                    yield return TurnManager.instance.ConfirmUndo(part1 + part2, Vector3.zero);
-                    if (TurnManager.instance.confirmChoice == 1)
-                        chosenAbility = null;
+                    targetCharacter = chosenAbility.listOfTargets[i][0];
+                    string part1 = $"{this.name}: Use {chosenAbility.data.myName}";
+                    string part2 = targetCharacter != null ? $" on {targetCharacter.data.myName}?" : "?";
+
+                    if (this.myType == CharacterType.Player)
+                    {
+                        yield return TurnManager.instance.ConfirmUndo(part1 + part2, Vector3.zero);
+                        if (TurnManager.instance.confirmChoice == 1)
+                        {
+                            chosenAbility = null;
+                            break;
+                        }
+                    }
                 }
             }
         }
 
-        if (!extraAbility)
+        foreach (Ability ability in listOfAutoAbilities)
         {
-            foreach (Ability ability in listOfAutoAbilities)
-            {
-                if (ability.currentCooldown > 0)
-                    ability.currentCooldown--;
-            }
-            foreach (Ability ability in listOfRandomAbilities)
-            {
-                if (ability.currentCooldown > 0)
-                    ability.currentCooldown--;
-            }
+            if (ability.currentCooldown > 0)
+                ability.currentCooldown--;
+        }
+        foreach (Ability ability in listOfRandomAbilities)
+        {
+            if (ability.currentCooldown > 0)
+                ability.currentCooldown--;
         }
 
         Log.instance.AddText(Log.Substitute(chosenAbility, this, targetCharacter), logged);
@@ -416,7 +431,7 @@ public class Character : MonoBehaviour
                 yield return chosenAbility.ResolveInstructions(splicedString, i, logged + 1);
             }
 
-            chosenAbility.currentCooldown = chosenAbility.data.baseCooldown + (CurrentEmotion == Emotion.Happy ? 1 : 0) + (extraAbility ? 1 : 0);
+            chosenAbility.currentCooldown = chosenAbility.data.baseCooldown + (CurrentEmotion == Emotion.Happy ? 1 : 0);
             if (CarryVariables.instance.mode == CarryVariables.GameMode.Tutorial && TutorialManager.instance.currentCharacter == this)
             {
                 TutorialManager.instance.currentCharacter = null;

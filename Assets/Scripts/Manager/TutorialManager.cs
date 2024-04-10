@@ -29,7 +29,7 @@ public class TutorialManager : MonoBehaviour
 
     private void Start()
     {
-        if (CarryVariables.instance.mode == CarryVariables.GameMode.Main)
+        if (CarryVariables.instance.mode != CarryVariables.GameMode.Tutorial)
         {
             Destroy(this.gameObject);
         }
@@ -149,8 +149,8 @@ public class TutorialManager : MonoBehaviour
 
                 yield return ClickThroughDialogue(new List<string>()
                 { "This Page is Happy. Happy is super effective against Angry, which puts your Knight at a disadvantage.",
-                "Your Knight would take their turn first (because they have the highest Speed), but they’re Stunned.",
-                "So instead your Angel will take their turn first. Use the Angel’s Ability to heal the Knight."});
+                "Your Knight has the higher Speed, so normally they'd take their turn before the Angel. But they're Stunned right now.",
+                "So instead, use the Angel’s Ability to heal the Knight."});
 
                 currentCharacter = listOfPlayers[1]; //wait for angel's next turn
                 currentStep = 8;
@@ -168,7 +168,7 @@ public class TutorialManager : MonoBehaviour
                 yield return ClickThroughDialogue(new List<string>()
                 { "Your Angel is Happy, which means they get an extra turn when they don't attack, but all their Abilities have 1 more turn of Cooldown.",
                 "Emotions also apply to Enemies. If you right click the Page, you'll see that their attack Ability got placed on Cooldown.",
-                "You Angel didn’t attack, so they get an extra turn. However, Invigorate is on an even longer Cooldown.",
+                "Your Angel didn’t attack, so they now get an extra turn. However, Invigorate is on Cooldown.",
                 "Instead, you can change the Page’s Emotion to Sad. That way, your Angry Knight will gain the advantage."});
                 break;
 
@@ -213,7 +213,7 @@ public class TutorialManager : MonoBehaviour
 
             case 11: //introduce wizard Abilities
                 yield return ClickThroughDialogue(new List<string>()
-                { "Your Wizard has an Ability that forces all Airborne Enemies to be Grounded. When it’s their turn, use Stalactites against the 2 Crows." });
+                { "Your Wizard has an Ability that forces all Airborne Enemies to be Grounded. Use Stalactites against the 2 Crows." });
 
                 currentCharacter = listOfPlayers[2]; //wait for wizard's next turn
                 currentStep = 12;

@@ -326,24 +326,6 @@ public class Ability : MonoBehaviour
         }
         return listOfTargets;
     }
-    /*
-    IEnumerator RechooseTargets(TeamTarget newTarget)
-    {
-        this.listOfTargets = null;
-        while (this.listOfTargets == null)
-        {
-            this.listOfTargets = GetTargets(newTarget);
-            yield return self.ChooseTarget(this, newTarget);
-
-            if (self.myType == CharacterType.Player && this.singleTarget.Contains(newTarget))
-            {
-                yield return TurnManager.instance.ConfirmUndo($"Choose {this.listOfTargets[0].data.myName}?", Vector3.zero);
-                if (TurnManager.instance.confirmChoice == 1)
-                    this.listOfTargets = null;
-            }
-        }
-    }
-    */
 
 #endregion
 
@@ -492,8 +474,8 @@ public class Ability : MonoBehaviour
                         yield return target.ChangeAccuracy(data.modifyAccuracy, logged);
                         break;
 
-                    case "LEAVEFIGHT":
-                        yield return self.HasDied(-1);
+                    case "INSTANTDEATH":
+                        yield return target.HasDied(-1);
                         break;
                     case "SELFDESTRUCT":
                         yield return self.HasDied(logged);
@@ -525,32 +507,7 @@ public class Ability : MonoBehaviour
                         foreach (Ability ability in target.listOfRandomAbilities)
                             if (ability.currentCooldown > 0) ability.currentCooldown-=data.miscNumber;
                         break;
-                        /*
-                    case "CHOOSEONEPLAYERTARGET":
-                        yield return RechooseTargets(TeamTarget.OnePlayer);
-                        break;
-                    case "CHOOSEOTHERPLAYERTARGET":
-                        yield return RechooseTargets(TeamTarget.OtherPlayer);
-                        break;
-                    case "CHOOSEALLPLAYERTARGETS":
-                        yield return RechooseTargets(TeamTarget.AllPlayers);
-                        break;
-                    case "CHOOSEONEENEMYTARGET":
-                        yield return RechooseTargets(TeamTarget.OneEnemy);
-                        break;
-                    case "CHOOSEOTHERENEMYTARGET":
-                        yield return RechooseTargets(TeamTarget.OtherEnemy);
-                        break;
-                    case "CHOOSEALLENEMYTARGETS":
-                        yield return RechooseTargets(TeamTarget.AllEnemies);
-                        break;
-                    case "CHOOSEANYTARGETS":
-                        yield return RechooseTargets(TeamTarget.AnyOne);
-                        break;
-                    case "CHOOSEALLTARGETS":
-                        yield return RechooseTargets(TeamTarget.All);
-                        break;
-                        */
+
                     default:
                         Debug.LogError($"{self.name}: {methodName} isn't a method");
                         break;

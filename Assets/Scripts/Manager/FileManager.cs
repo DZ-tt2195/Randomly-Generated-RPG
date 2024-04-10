@@ -80,44 +80,50 @@ public class FileManager : MonoBehaviour
         List<AbilityData> splitAbilities = new();
         for (int j = 0; j < divideIntoNumbers.Length; j++)
         {
-            try
+            if (!divideIntoNumbers[j].Trim().Equals(""))
             {
-                AbilityData nextData = null;
-                if (player)
+                try
                 {
-                    nextData = FindPlayerAbility(divideIntoNumbers[j].Trim());
+                    AbilityData nextData = (player) ? FindPlayerAbility(divideIntoNumbers[j]) : FindEnemyAbility(divideIntoNumbers[j]);
+                    splitAbilities.Add(nextData);
                 }
-                else
-                {
-                    nextData = FindEnemyAbility(divideIntoNumbers[j].Trim());
-                }
-                Debug.Log($"{nextData.myName.Equals("")}");
-                splitAbilities.Add(nextData);
+                catch (NullReferenceException) { continue; }
+                catch (ArgumentOutOfRangeException) { break; }
             }
-            catch (NullReferenceException) { continue; }
-            catch (ArgumentOutOfRangeException) { break; }
         }
         return splitAbilities;
     }
 
     public AbilityData FindPlayerAbility(string target)
     {
-        return listOfPlayerAbilities.FirstOrDefault(ability => ability.myName == target);
+        AbilityData foundData = listOfPlayerAbilities.FirstOrDefault(ability => ability.myName == target); 
+        if (foundData == null)
+            Debug.LogError($"failed to find player ability: {target}");
+        return foundData;
     }
 
     public AbilityData FindEnemyAbility(string target)
     {
-        return listOfEnemyAbilities.FirstOrDefault(ability => ability.myName == target);
+        AbilityData foundData = listOfEnemyAbilities.FirstOrDefault(ability => ability.myName == target); 
+        if (foundData == null)
+            Debug.LogError($"failed to find enemy ability: {target}");
+        return foundData;
     }
 
     public CharacterData FindEnemy(string target, int tier)
     {
-        return listOfEnemies[tier].FirstOrDefault(enemy => enemy.myName == target);
+        CharacterData foundData = listOfEnemies[tier].FirstOrDefault(character => character.myName == target); 
+        if (foundData == null)
+            Debug.LogError($"failed to find enemy in tier {tier}: {target}");
+        return foundData;
     }
 
     public CharacterData FindBonusEnemy(string target)
     {
-        return listOfBonusEnemies.FirstOrDefault(enemy => enemy.myName == target);
+        CharacterData foundData = listOfBonusEnemies.FirstOrDefault(character => character.myName == target); 
+        if (foundData == null)
+            Debug.LogError($"failed to find enemy in bonus enemies: {target}");
+        return foundData;
     }
 
 #endregion
