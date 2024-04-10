@@ -5,9 +5,9 @@ using UnityEngine;
 
 public class EnemyCharacter : Character
 {
+
     protected override IEnumerator ChooseAbility(int logged)
     {
-        yield return null;
         List<Ability> allAbilities = new();
         List<Ability> attackingAbilities = new();
         List<Ability> miscAbilities = new();
@@ -24,22 +24,29 @@ public class EnemyCharacter : Character
             }
         }
 
+        allAbilities.Shuffle();
+        attackingAbilities.Shuffle();
+        miscAbilities.Shuffle();
+
         if (allAbilities.Count == 0)
         {
             chosenAbility = listOfAutoAbilities[0];
+            yield break;
         }
-        else if (miscAbilities.Count != 0 && this.CurrentEmotion == Emotion.Happy)
+        switch (data.aiTargeting)
         {
-            chosenAbility = miscAbilities[Random.Range(0, miscAbilities.Count)];
-        }
-        else if (attackingAbilities.Count != 0 && (this.CurrentEmotion == Emotion.Angry ||
-            (this.CurrentEmotion == Emotion.Sad && CalculateHealthPercent() < 0.5f)))
-        {
-            chosenAbility = attackingAbilities[Random.Range(0, attackingAbilities.Count)];
-        }
-        else
-        {
-            chosenAbility = allAbilities[Random.Range(0, allAbilities.Count)];
+            case "MOSTTARGETS":
+                allAbilities = allAbilities.OrderByDescending(ability => CountTargets(ability)).ToList();
+                chosenAbility = allAbilities[0];
+                break;
+            default:
+                if (miscAbilities.Count != 0 && this.CurrentEmotion == Emotion.Happy)
+                    chosenAbility = miscAbilities[0];
+                else if (attackingAbilities.Count != 0 && (this.CurrentEmotion == Emotion.Angry || (this.CurrentEmotion == Emotion.Sad && CalculateHealthPercent() < 0.5f)))
+                    chosenAbility = attackingAbilities[0];
+                else
+                    chosenAbility = allAbilities[0];
+                break;
         }
     }
 
@@ -53,8 +60,15 @@ public class EnemyCharacter : Character
             {
                 case "":
                     break;
+                case "NONE":
+                    break;
 
-                case "PRIORITIZEAIRBORNE":
+                case "LASTATTACKER":
+                    if (lastToAttackThis != null && ability.listOfTargets[index].Contains(lastToAttackThis))
+                        selectedTarget = new List<Character>() { lastToAttackThis };
+                    break;
+
+                case "CHOOSEAIRBORNE":
                     List<Character> airborneTargets = new();
                     foreach (Character character in selectedTarget)
                     {
@@ -62,12 +76,10 @@ public class EnemyCharacter : Character
                             airborneTargets.Add(character);
                     }
                     if (airborneTargets.Count>0)
-                    {
                         selectedTarget = airborneTargets;
-                    }
                     break;
 
-                case "PRIORITIZEGROUNDED":
+                case "CHOOSEGROUNDED":
                     List<Character> groundedTargets = new();
                     foreach (Character character in selectedTarget)
                     {
@@ -75,9 +87,7 @@ public class EnemyCharacter : Character
                             groundedTargets.Add(character);
                     }
                     if (groundedTargets.Count > 0)
-                    {
                         selectedTarget = groundedTargets;
-                    }
                     break;
 
                 case "LEASTHEALTH":
@@ -103,5 +113,13 @@ public class EnemyCharacter : Character
             ability.listOfTargets[index] = new() { selectedTarget[Random.Range(0, selectedTarget.Count)] };
         }
         yield return null;
+    }
+
+    int CountTargets(Ability ability)
+    {
+        int answer = 0;
+        foreach (List<Character> list in ability.listOfTargets)
+            answer += list.Count;
+        return answer;
     }
 }

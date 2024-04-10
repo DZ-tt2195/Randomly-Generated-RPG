@@ -11,17 +11,17 @@ public class CarryVariables : MonoBehaviour
     public static CarryVariables instance;
 
     [Foldout("Cheats and Challenges", true)]
-    [ReadOnly] public List<string> listOfCheats = new();
-    [ReadOnly] public List<string> listOfChallenges = new();
+        [ReadOnly] public List<string> listOfCheats = new();
+        [ReadOnly] public List<string> listOfChallenges = new();
 
     [Foldout("Misc info", true)]
-    public GameMode mode;
-    [ReadOnly] public Transform sceneCanvas;
-    [SerializeField] Canvas permanentCanvas;
+        public GameMode mode;
+        [ReadOnly] public Transform sceneCanvas;
+        [SerializeField] Canvas permanentCanvas;
 
     [Foldout("Scene transition", true)]
-    [SerializeField] Image transitionImage;
-    [SerializeField] float transitionTime;
+        [SerializeField] Image transitionImage;
+        [SerializeField] float transitionTime;
 
     private void Awake()
     {

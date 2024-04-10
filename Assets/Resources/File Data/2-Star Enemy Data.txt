@@ -20,7 +20,7 @@
       "0.85",
       "AIRBORNE",
       "Drain,Screech,On the Hunt,Bloodlust,",
-      "PrioritizeGrounded",
+      "ChooseGrounded",
       "Martin Hoffmann|Dominion: Nocturne|(Bat)"
     ],
     [
@@ -32,12 +32,24 @@
       "0.85",
       "GROUNDED",
       "Sharp Arrow,Frozen Arrow,Volley of Arrows,Focus,",
-      "PrioritizeAirborne",
+      "ChooseAirborne",
       "Harald Lieske|Dominion: Allies|(Archer)"
     ],
     [
+      "Cow",
+      "Either attacks the Player who most recently damaged them, or makes itself stronger.",
+      "14",
+      "2",
+      "0.2",
+      "0.85",
+      "GROUNDED",
+      "Charge,Graze,",
+      "LastAttacker",
+      "Matthias Catrein|Dominion: Menagerie|Way of the Ox"
+    ],
+    [
       "Wolf",
-      "Makes itself Angry and hunts down Players who are Sad and Grounded. Can also be dangerous when Airborne.",
+      "Makes itself Angry and hunts down Players who are Sad and Grounded.",
       "14",
       "5",
       "0.2",

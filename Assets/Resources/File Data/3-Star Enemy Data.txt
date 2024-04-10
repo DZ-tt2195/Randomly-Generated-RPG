@@ -32,7 +32,7 @@
       "0.9",
       "AIRBORNE",
       "Dangle,Drop,Puppet Lift,Collision,",
-      "",
+      "MostTargets",
       "James Ryman|Kaladesh|(Marionette Master)"
     ]
   ]

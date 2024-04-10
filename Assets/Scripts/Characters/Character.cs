@@ -61,12 +61,13 @@ public class Character : MonoBehaviour
         get { return _turnsStunned; }
         private set { _turnsStunned = value; CharacterUI(); }
     }
+    [ReadOnly] public Character lastToAttackThis { get; private set; }
 
-    protected int modifyPower;
-    protected int modifyDefense;
-    protected int modifySpeed;
-    protected float modifyLuck;
-    protected float modifyAccuracy;
+    public int modifyPower { get; private set; }
+    public int modifyDefense { get; private set; }
+    public int modifySpeed { get; private set; }
+    public float modifyLuck { get; private set; }
+    public float modifyAccuracy { get; private set; }
 
     [Foldout("UI", true)]
     [ReadOnly] public Image border;
@@ -78,7 +79,7 @@ public class Character : MonoBehaviour
     TMP_Text nameText;
     Sprite stunSprite;
 
-    #endregion
+#endregion
 
 #region Setup
 
@@ -196,8 +197,10 @@ public class Character : MonoBehaviour
         Log.instance.AddText($"{(this.name)} regains {health} Health.", logged);
     }
 
-    public IEnumerator TakeDamage(int damage, int logged)
+    public IEnumerator TakeDamage(int damage, int logged, Character attacker = null)
     {
+        if (attacker != null)
+            lastToAttackThis = attacker;
         if (this == null || damage == 0) yield break;
 
         CurrentHealth -= damage;

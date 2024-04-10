@@ -156,10 +156,10 @@ public class Ability : MonoBehaviour
         for (int i = 0; i < data.playCondition.Length; i++)
         {
             string[] methodsInStrings = data.playCondition[i].Split('/');
-            if (methodsInStrings[0].Equals("TARGETSDEAD"))
+            if (methodsInStrings[0].Equals("TARGETDEAD"))
                 listOfTargets.Add(TurnManager.instance.listOfDead);
             else
-                listOfTargets.Add(GetTargets(data.defaultTargets[i]));
+                listOfTargets.Add(GetTARGET(data.defaultTargets[i]));
 
             if (!CheckMethod(methodsInStrings, i))
                 return false;
@@ -178,7 +178,7 @@ public class Ability : MonoBehaviour
                     break;
                 case "NONE":
                     break;
-                case "TARGETSDEAD":
+                case "TARGETDEAD":
                     break;
                 case "SELFDEAD":
                     if (self.CalculateHealth() > 0)
@@ -191,19 +191,19 @@ public class Ability : MonoBehaviour
                 case "SELFINJURED":
                     if (self.CalculateHealthPercent() > 0.5f)
                         return false; break;
-                case "TARGETSINJURED":
+                case "TARGETINJURED":
                     for (int i = listOfTargets[currentIndex].Count - 1; i >= 0; i--)
                         if (listOfTargets[currentIndex][i].CalculateHealthPercent() > 0.5f) listOfTargets[currentIndex].RemoveAt(i);
                     break;
 
-                case "TARGETSNEUTRAL":
+                case "TARGETNEUTRAL":
                     for (int i = listOfTargets[currentIndex].Count - 1; i >= 0; i--)
                         if (listOfTargets[currentIndex][i].CurrentEmotion != Emotion.Neutral) listOfTargets[currentIndex].RemoveAt(i);
                     break;
                 case "SELFNEUTRAL":
                     if (self.CurrentEmotion != Emotion.Neutral)
                         return false; break;
-                case "TARGETSNOTNEUTRAL":
+                case "TARGETNOTNEUTRAL":
                     for (int i = listOfTargets[currentIndex].Count - 1; i >= 0; i--)
                         if (listOfTargets[currentIndex][i].CurrentEmotion == Emotion.Neutral) listOfTargets[currentIndex].RemoveAt(i);
                     break;
@@ -211,14 +211,14 @@ public class Ability : MonoBehaviour
                     if (self.CurrentEmotion == Emotion.Neutral)
                         return false; break;
 
-                case "TARGETSHAPPY":
+                case "TARGETHAPPY":
                     for (int i = listOfTargets[currentIndex].Count - 1; i >= 0; i--)
                         if (listOfTargets[currentIndex][i].CurrentEmotion != Emotion.Happy) listOfTargets[currentIndex].RemoveAt(i);
                     break;
                 case "SELFHAPPY":
                     if (self.CurrentEmotion != Emotion.Happy)
                         return false; break;
-                case "TARGETSNOTHAPPY":
+                case "TARGETNOTHAPPY":
                     for (int i = listOfTargets[currentIndex].Count - 1; i >= 0; i--)
                         if (listOfTargets[currentIndex][i].CurrentEmotion == Emotion.Happy) listOfTargets[currentIndex].RemoveAt(i);
                     break;
@@ -226,14 +226,14 @@ public class Ability : MonoBehaviour
                     if (self.CurrentEmotion == Emotion.Happy)
                         return false; break;
 
-                case "TARGETSANGRY":
+                case "TARGETANGRY":
                     for (int i = listOfTargets[currentIndex].Count - 1; i >= 0; i--)
                         if (listOfTargets[currentIndex][i].CurrentEmotion != Emotion.Angry) listOfTargets[currentIndex].RemoveAt(i);
                     break;
                 case "SELFANGRY":
                     if (self.CurrentEmotion != Emotion.Angry)
                         return false; break;
-                case "TARGETSNOTANGRY":
+                case "TARGETNOTANGRY":
                     for (int i = listOfTargets[currentIndex].Count - 1; i >= 0; i--)
                         if (listOfTargets[currentIndex][i].CurrentEmotion == Emotion.Angry) listOfTargets[currentIndex].RemoveAt(i);
                     break;
@@ -241,14 +241,14 @@ public class Ability : MonoBehaviour
                     if (self.CurrentEmotion == Emotion.Angry)
                         return false; break;
 
-                case "TARGETSSAD":
+                case "TARGETSAD":
                     for (int i = listOfTargets[currentIndex].Count - 1; i >= 0; i--)
                         if (listOfTargets[currentIndex][i].CurrentEmotion != Emotion.Sad) listOfTargets[currentIndex].RemoveAt(i);
                     break;
                 case "SELFSAD":
                     if (self.CurrentEmotion != Emotion.Sad)
                         return false; break;
-                case "TARGETSNOTSAD":
+                case "TARGETNOTSAD":
                     for (int i = listOfTargets[currentIndex].Count - 1; i >= 0; i--)
                         if (listOfTargets[currentIndex][i].CurrentEmotion == Emotion.Sad) listOfTargets[currentIndex].RemoveAt(i);
                     break;
@@ -259,7 +259,7 @@ public class Ability : MonoBehaviour
                 case "SELFGROUNDED":
                     if (self.CurrentPosition != Position.Grounded)
                         return false; break;
-                case "TARGETSGROUNDED":
+                case "TARGETGROUNDED":
                     for (int i = listOfTargets[currentIndex].Count - 1; i >= 0; i--)
                         if (listOfTargets[currentIndex][i].CurrentPosition != Position.Grounded) listOfTargets[currentIndex].RemoveAt(i);
                     break;
@@ -267,10 +267,14 @@ public class Ability : MonoBehaviour
                 case "SELFAIRBORNE":
                     if (self.CurrentPosition != Position.Airborne)
                         return false; break;
-                case "TARGETSAIRBORNE":
+                case "TARGETAIRBORNE":
                     for (int i = listOfTargets[currentIndex].Count - 1; i >= 0; i--)
                         if (listOfTargets[currentIndex][i].CurrentPosition != Position.Airborne) listOfTargets[currentIndex].RemoveAt(i);
                     break;
+
+                case "LASTATTACKEREXISTS":
+                    if (self.lastToAttackThis == null)
+                        return false; break;
 
                 default:
                     Debug.LogError($"{self.name}: {methodName} isn't a method");
@@ -284,11 +288,11 @@ public class Ability : MonoBehaviour
             return listOfTargets[currentIndex].Count > 0;
     }
 
-    List<Character> GetTargets(TeamTarget targets)
+    List<Character> GetTARGET(TeamTarget TARGET)
     {
         List<Character> listOfTargets = new List<Character>();
 
-        switch (targets)
+        switch (TARGET)
         {
             case TeamTarget.None:
                 listOfTargets.Add(this.self);
@@ -359,7 +363,7 @@ public class Ability : MonoBehaviour
 
                     case "ATTACK":
                         damageDealt = CalculateDamage(self, target, logged);
-                        yield return target.TakeDamage(damageDealt, logged);
+                        yield return target.TakeDamage(damageDealt, logged, self);
                         if (target == null || target.CalculateHealth() <= 0) killed = true;
                         break;
 
@@ -375,7 +379,7 @@ public class Ability : MonoBehaviour
                         yield return self.GainHealth(Mathf.Max(data.healthRegain + self.CalculatePower(), 0), logged);
                         if (self.CalculateHealthPercent() >= 1f) fullHeal = true;
                         break;
-                    case "TARGETSHEAL":
+                    case "TARGETHEAL":
                         yield return target.GainHealth(Mathf.Max(data.healthRegain + self.CalculatePower(),0), logged);
                         if (target.CalculateHealthPercent() >= 1f) fullHeal = true;
                         break;
@@ -390,7 +394,7 @@ public class Ability : MonoBehaviour
                         else if (self.CurrentPosition == Position.Grounded)
                             yield return self.ChangePosition(Position.Airborne, logged);
                         break;
-                    case "TARGETSSWAPPOSITION":
+                    case "TARGETSWAPPOSITION":
                         if (target.CurrentPosition == Position.Airborne)
                             yield return target.ChangePosition(Position.Grounded, logged);
                         else if (target.CurrentPosition == Position.Grounded)
@@ -400,78 +404,100 @@ public class Ability : MonoBehaviour
                     case "SELFGROUNDED":
                         yield return self.ChangePosition(Position.Grounded, logged);
                         break;
-                    case "TARGETSGROUNDED":
+                    case "TARGETGROUNDED":
                         yield return target.ChangePosition(Position.Grounded, logged);
                         break;
 
                     case "SELFAIRBORNE":
                         yield return self.ChangePosition(Position.Airborne, logged);
                         break;
-                    case "TARGETSAIRBORNE":
+                    case "TARGETAIRBORNE":
                         yield return target.ChangePosition(Position.Airborne, logged);
                         break;
 
                     case "SELFHAPPY":
                         yield return self.ChangeEmotion(Emotion.Happy, logged);
                         break;
-                    case "TARGETSHAPPY":
+                    case "TARGETHAPPY":
                         yield return target.ChangeEmotion(Emotion.Happy, logged);
                         break;
 
                     case "SELFSAD":
                         yield return self.ChangeEmotion(Emotion.Sad, logged);
                         break;
-                    case "TARGETSSAD":
+                    case "TARGETSAD":
                         yield return target.ChangeEmotion(Emotion.Sad, logged);
                         break;
 
                     case "SELFANGRY":
                         yield return self.ChangeEmotion(Emotion.Angry, logged);
                         break;
-                    case "TARGETSANGRY":
+                    case "TARGETANGRY":
                         yield return target.ChangeEmotion(Emotion.Angry, logged);
                         break;
 
                     case "SELFNEUTRAL":
                         yield return self.ChangeEmotion(Emotion.Neutral, logged);
                         break;
-                    case "TARGETSNEUTRAL":
+                    case "TARGETNEUTRAL":
                         yield return target.ChangeEmotion(Emotion.Neutral, logged);
+                        break;
+
+                    case "SELFRANDOMEMOTION":
+                        yield return self.ChangeEmotion((Emotion)Random.Range(1,5), logged);
+                        break;
+                    case "TARGETRANDOMEMOTION":
+                        yield return target.ChangeEmotion((Emotion)Random.Range(1, 5), logged);
                         break;
 
                     case "SELFPOWERSTAT":
                         yield return self.ChangePower(data.modifyPower, logged);
                         break;
-                    case "TARGETSPOWERSTAT":
+                    case "TARGETPOWERSTAT":
                         yield return target.ChangePower(data.modifyPower, logged);
+                        break;
+                    case "TARGETINVERTPOWERSTAT":
+                        yield return target.ChangePower(target.modifyPower * -2, logged);
                         break;
 
                     case "SELFDEFENSESTAT":
                         yield return self.ChangeDefense(data.modifyDefense, logged);
                         break;
-                    case "TARGETSDEFENSESTAT":
+                    case "TARGETDEFENSESTAT":
                         yield return target.ChangeDefense(data.modifyDefense, logged);
+                        break;
+                    case "TARGETINVERTDEFENSESTAT":
+                        yield return target.ChangeDefense(target.modifyDefense * -2, logged);
                         break;
 
                     case "SELFSPEEDSTAT":
                         yield return self.ChangeSpeed(data.modifySpeed, logged);
                         break;
-                    case "TARGETSSPEEDSTAT":
+                    case "TARGETSPEEDSTAT":
                         yield return target.ChangeSpeed(data.modifySpeed, logged);
+                        break;
+                    case "TARGETINVERTSPEEDSTAT":
+                        yield return target.ChangeSpeed(target.modifySpeed * -2, logged);
                         break;
 
                     case "SELFLUCKSTAT":
                         yield return self.ChangeLuck(data.modifyLuck, logged);
                         break;
-                    case "TARGETSLUCKSTAT":
+                    case "TARGETLUCKSTAT":
                         yield return target.ChangeLuck(data.modifyLuck, logged);
+                        break;
+                    case "TARGETINVERTLUCKSTAT":
+                        yield return target.ChangeLuck(target.modifyLuck * -2, logged);
                         break;
 
                     case "SELFACCURACYSTAT":
                         yield return self.ChangeAccuracy(data.modifyAccuracy, logged);
                         break;
-                    case "TARGETSACCURACYSTAT":
+                    case "TARGETACCURACYSTAT":
                         yield return target.ChangeAccuracy(data.modifyAccuracy, logged);
+                        break;
+                    case "TARGETINVERTACCURACYSTAT":
+                        yield return target.ChangeAccuracy(target.modifyAccuracy * -2, logged);
                         break;
 
                     case "INSTANTDEATH":
@@ -484,24 +510,24 @@ public class Ability : MonoBehaviour
                     case "SELFREVIVE":
                         yield return self.Revive(data.healthRegain, logged);
                         break;
-                    case "TARGETSREVIVE":
+                    case "TARGETREVIVE":
                         yield return target.Revive(data.healthRegain, logged);
                         break;
 
                     case "SELFSTUN":
                         yield return self.Stun(data.miscNumber, logged);
                         break;
-                    case "TARGETSSTUN":
+                    case "TARGETSTUN":
                         yield return target.Stun(data.miscNumber, logged);
                         break;
 
-                    case "TARGETSINCREASEACTIVECOOLDOWN":
+                    case "TARGETINCREASEACTIVECOOLDOWN":
                         foreach (Ability ability in target.listOfAutoAbilities)
                             if (ability.currentCooldown > 0) ability.currentCooldown+=data.miscNumber;
                         foreach (Ability ability in target.listOfRandomAbilities)
                             if (ability.currentCooldown > 0) ability.currentCooldown+=data.miscNumber;
                         break;
-                    case "TARGETSREDUCEACTIVECOOLDOWN":
+                    case "TARGETREDUCEACTIVECOOLDOWN":
                         foreach (Ability ability in target.listOfAutoAbilities)
                             if (ability.currentCooldown > 0) ability.currentCooldown-=data.miscNumber;
                         foreach (Ability ability in target.listOfRandomAbilities)

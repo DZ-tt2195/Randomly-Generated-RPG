@@ -7,7 +7,7 @@ public class StartInTitleScreen : MonoBehaviour
 {
     void Awake()
     {
-        if (FileManager.instance == null)
+        if (SaveManager.instance == null)
             SceneManager.LoadScene(0);
     }
 

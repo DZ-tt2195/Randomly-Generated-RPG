@@ -25,7 +25,7 @@
     ],
     [
       "Kitty",
-      "Heals other Enemies and makes them Happy. Switches between Airborne and Grounded.",
+      "Heals other Enemies and makes them Happy.",
       "8",
       "5",
       "0",
