@@ -42,9 +42,21 @@ public class Ability : MonoBehaviour
         editedDescription = KeywordTooltip.instance.EditText(editedDescription);
 
         currentCooldown = (startWithCooldown) ? data.baseCooldown : 0;
-        mainType = (data.typeOne == AbilityType.Attack || data.typeTwo == AbilityType.Attack) ? AbilityType.Attack :
-            (data.typeOne == AbilityType.Healing || data.typeTwo == AbilityType.Healing) ? AbilityType.Healing :
-            AbilityType.Misc;
+
+        mainType = AbilityType.Misc;
+        foreach (AbilityType type in data.myTypes)
+        {
+            if (type == AbilityType.Attack)
+            {
+                mainType = AbilityType.Attack;
+                break;
+            }
+            else if (type == AbilityType.Healing)
+            {
+                mainType = AbilityType.Healing;
+                break;
+            }
+        }
     }
 
 #endregion
@@ -159,7 +171,7 @@ public class Ability : MonoBehaviour
             if (methodsInStrings[0].Equals("TARGETDEAD"))
                 listOfTargets.Add(TurnManager.instance.listOfDead);
             else
-                listOfTargets.Add(GetTARGET(data.defaultTargets[i]));
+                listOfTargets.Add(GetTarget(data.defaultTargets[i]));
 
             if (!CheckMethod(methodsInStrings, i))
                 return false;
@@ -272,12 +284,29 @@ public class Ability : MonoBehaviour
                         if (listOfTargets[currentIndex][i].CurrentPosition != Position.Airborne) listOfTargets[currentIndex].RemoveAt(i);
                     break;
 
+                case "SAMEPOSITION":
+                    for (int i = listOfTargets[currentIndex].Count - 1; i >= 0; i--)
+                        if (listOfTargets[currentIndex][i].CurrentPosition != self.CurrentPosition) listOfTargets[currentIndex].RemoveAt(i);
+                    break;
+                case "DIFFERENTPOSITION":
+                    for (int i = listOfTargets[currentIndex].Count - 1; i >= 0; i--)
+                        if (listOfTargets[currentIndex][i].CurrentPosition == self.CurrentPosition) listOfTargets[currentIndex].RemoveAt(i);
+                    break;
+                case "SAMEEMOTION":
+                    for (int i = listOfTargets[currentIndex].Count - 1; i >= 0; i--)
+                        if (listOfTargets[currentIndex][i].CurrentEmotion != self.CurrentEmotion) listOfTargets[currentIndex].RemoveAt(i);
+                    break;
+                case "DIFFERENTEMOTION":
+                    for (int i = listOfTargets[currentIndex].Count - 1; i >= 0; i--)
+                        if (listOfTargets[currentIndex][i].CurrentEmotion == self.CurrentEmotion) listOfTargets[currentIndex].RemoveAt(i);
+                    break;
+
                 case "LASTATTACKEREXISTS":
                     if (self.lastToAttackThis == null)
                         return false; break;
 
                 default:
-                    Debug.LogError($"{self.name}: {methodName} isn't a method");
+                    Debug.LogError($"{this.data.myName}: {methodName} isn't a condition");
                     break;
             }
         }
@@ -288,11 +317,11 @@ public class Ability : MonoBehaviour
             return listOfTargets[currentIndex].Count > 0;
     }
 
-    List<Character> GetTARGET(TeamTarget TARGET)
+    List<Character> GetTarget(TeamTarget target)
     {
-        List<Character> listOfTargets = new List<Character>();
+        List<Character> listOfTargets = new();
 
-        switch (TARGET)
+        switch (target)
         {
             case TeamTarget.None:
                 listOfTargets.Add(this.self);
@@ -500,8 +529,8 @@ public class Ability : MonoBehaviour
                         yield return target.ChangeAccuracy(target.modifyAccuracy * -2, logged);
                         break;
 
-                    case "INSTANTDEATH":
-                        yield return target.HasDied(-1);
+                    case "TARGETDEATH":
+                        yield return target.HasDied(logged);
                         break;
                     case "SELFDESTRUCT":
                         yield return self.HasDied(logged);
@@ -535,7 +564,7 @@ public class Ability : MonoBehaviour
                         break;
 
                     default:
-                        Debug.LogError($"{self.name}: {methodName} isn't a method");
+                        Debug.LogError($"{this.data.myName}: {methodName} isn't a method");
                         break;
                 }
 

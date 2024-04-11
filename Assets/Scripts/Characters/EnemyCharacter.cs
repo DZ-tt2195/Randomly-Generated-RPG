@@ -5,8 +5,7 @@ using UnityEngine;
 
 public class EnemyCharacter : Character
 {
-
-    protected override IEnumerator ChooseAbility(int logged)
+    protected override IEnumerator ChooseAbility(int logged, bool extraAbility)
     {
         List<Ability> allAbilities = new();
         List<Ability> attackingAbilities = new();
@@ -24,10 +23,11 @@ public class EnemyCharacter : Character
             }
         }
 
-        allAbilities.Shuffle();
-        attackingAbilities.Shuffle();
-        miscAbilities.Shuffle();
+        allAbilities = allAbilities.Shuffle();
+        attackingAbilities = attackingAbilities.Shuffle();
+        miscAbilities = miscAbilities.Shuffle();
 
+        Debug.Log($"All: {allAbilities.Count}; Attack: {attackingAbilities.Count}; Misc: {miscAbilities.Count}");
         if (allAbilities.Count == 0)
         {
             chosenAbility = listOfAutoAbilities[0];
@@ -40,10 +40,11 @@ public class EnemyCharacter : Character
                 chosenAbility = allAbilities[0];
                 break;
             default:
-                if (miscAbilities.Count != 0 && this.CurrentEmotion == Emotion.Happy)
-                    chosenAbility = miscAbilities[0];
-                else if (attackingAbilities.Count != 0 && (this.CurrentEmotion == Emotion.Angry || (this.CurrentEmotion == Emotion.Sad && CalculateHealthPercent() < 0.5f)))
+                if (attackingAbilities.Count != 0 && (data.aiTargeting.Equals("CHOOSEATTACK") ||
+                    this.CurrentEmotion == Emotion.Angry || (this.CurrentEmotion == Emotion.Sad && CalculateHealthPercent() < 0.5f)))
                     chosenAbility = attackingAbilities[0];
+                else if (miscAbilities.Count != 0 && !extraAbility && this.CurrentEmotion == Emotion.Happy)
+                    chosenAbility = miscAbilities[0];
                 else
                     chosenAbility = allAbilities[0];
                 break;

@@ -14,7 +14,7 @@
     [
       "Dragon",
       "Deals lots of damage to all Players when Airborne. Heals itself and becomes Grounded when low on health.",
-      "20",
+      "16",
       "6",
       "0.25",
       "0.9",
@@ -26,7 +26,7 @@
     [
       "Puppeteer",
       "Makes Players Airborne, then drops them down to deal damage.",
-      "20",
+      "16",
       "5",
       "0.25",
       "0.9",
@@ -34,6 +34,18 @@
       "Dangle,Drop,Puppet Lift,Collision,",
       "MostTargets",
       "James Ryman|Kaladesh|(Marionette Master)"
+    ],
+    [
+      "Taskmaster",
+      "Changes their Emotions, and kills any Player who doesn't have the same Emotion as this.",
+      "16",
+      "7",
+      "0",
+      "1.2",
+      "GROUNDED",
+      "Demand Neutral,Demand Happiness,Demand Anger,Demand Sadness,Punishment,",
+      "ChooseAttack",
+      "Claus Stephan|Dominion: Plunder|(Taskmaster)"
     ]
   ]
 }

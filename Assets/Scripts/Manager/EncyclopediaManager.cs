@@ -122,7 +122,9 @@ public class EncyclopediaManager : MonoBehaviour
     {
         if (setting == AbilityType.None)
             return true;
-        return (data.typeOne == setting || data.typeTwo == setting);
+        foreach (AbilityType type in data.myTypes)
+            if (type == setting) return true;
+        return false;
     }
 
     bool CompareTiers(TierSearch setting, int difficulty)

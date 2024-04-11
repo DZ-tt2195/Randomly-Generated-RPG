@@ -7,14 +7,15 @@ public class PlayerCharacter : Character
 {
     int choice;
 
-    protected override IEnumerator ChooseAbility(int logged)
+    protected override IEnumerator ChooseAbility(int logged, bool extraAbility)
     {
         List<Ability> allAbilities = new();
         allAbilities.AddRange(listOfAutoAbilities);
         allAbilities.AddRange(listOfRandomAbilities);
 
         EnableAbilityBoxes();
-        TurnManager.instance.instructions.text = $"{this.name}'s Turn: Choose an ability.";
+        TurnManager.instance.instructions.text = $"{this.name}'s Turn: Choose an ability. {(extraAbility ? "(Extra Turn)" : "")}";
+
         yield return WaitForChoice();
         chosenAbility = allAbilities[choice];
         this.border.gameObject.SetActive(false);

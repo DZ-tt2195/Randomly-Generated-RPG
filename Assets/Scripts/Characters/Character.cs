@@ -19,7 +19,7 @@ public class Character : MonoBehaviour
 
     public static float borderColor;
 
-    [Foldout("Player info", true)]
+    [Foldout("Character info", true)]
     protected Ability chosenAbility;
     [ReadOnly] public string editedDescription { get; private set; }
     [ReadOnly] public CharacterData data { get; private set; }
@@ -102,7 +102,6 @@ public class Character : MonoBehaviour
         myType = type;
         this.name = characterData.myName;
         editedDescription = KeywordTooltip.instance.EditText(data.description);
-        data.aiTargeting = data.aiTargeting.ToUpper().Trim();
 
         this.baseHealth = data.baseHealth;
         CurrentHealth = this.baseHealth;
@@ -387,7 +386,7 @@ public class Character : MonoBehaviour
         Character targetCharacter = null;
         while (chosenAbility == null)
         {
-            yield return ChooseAbility(logged);
+            yield return ChooseAbility(logged, extraAbility);
             for (int i = 0; i < chosenAbility.data.defaultTargets.Length; i++)
             {
                 yield return ChooseTarget(chosenAbility, chosenAbility.data.defaultTargets[i], i);
@@ -443,7 +442,7 @@ public class Character : MonoBehaviour
         }
     }
 
-    protected virtual IEnumerator ChooseAbility(int logged)
+    protected virtual IEnumerator ChooseAbility(int logged, bool extraAbility)
     {
         yield return null;
     }

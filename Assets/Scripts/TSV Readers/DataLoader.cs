@@ -28,8 +28,7 @@ public class AbilityData
     public string description;
     public string logDescription;
     public string[] instructions;
-    public AbilityType typeOne;
-    public AbilityType typeTwo;
+    public AbilityType[] myTypes;
     public string[] playCondition;
     public int baseCooldown;
     public int attackDamage;
@@ -69,7 +68,7 @@ public class DataLoader
             newCharacter.baseAccuracy = StringToFloat(line[5]);
             newCharacter.startingPosition = (line[6] == "GROUNDED") ? Position.Grounded : Position.Airborne;
             newCharacter.listOfSkills = line[7].Trim();
-            newCharacter.aiTargeting = line[8].Trim();
+            newCharacter.aiTargeting = line[8].Trim().ToUpper();
             newCharacter.artCredit = line[9].Replace("|", "\n");
             newCharacter.difficulty = difficulty;
         }
@@ -87,29 +86,32 @@ public class DataLoader
             nextData.Add(newAbility);
 
             for (int j = 0; j < line.Length; j++)
-            {
                 line[j] = line[j].Trim().Replace("\"", "").Replace("\\", "").Replace("]", "");
-            }
 
             newAbility.user = line[0];
             newAbility.myName = line[1];
             newAbility.description = line[2];
             newAbility.logDescription = line[3];
-            newAbility.typeOne = StringToAbilityType(line[4]);
-            newAbility.typeTwo = StringToAbilityType(line[5]);
-            newAbility.instructions = (line[6].Equals("") ? new string[1] { "None" } : TurnManager.SpliceString(line[6], '-'));
-            newAbility.playCondition = (line[7].Equals("") ? new string[1] { "None" } : TurnManager.SpliceString(line[7], '-'));
-            newAbility.baseCooldown = StringToInt(line[8]);
-            newAbility.attackDamage = StringToInt(line[9]);
-            newAbility.healthRegain = StringToInt(line[10]);
-            newAbility.modifyPower = StringToInt(line[11]);
-            newAbility.modifyDefense = StringToInt(line[12]);
-            newAbility.modifySpeed = StringToInt(line[13]);
-            newAbility.modifyLuck = StringToFloat(line[14]);
-            newAbility.modifyAccuracy = StringToFloat(line[15]);
-            newAbility.miscNumber = StringToInt(line[16]);
 
-            string[] listOfTargets = (line[17].Equals("") ? new string[1] { "None" } : TurnManager.SpliceString(line[17], '-'));
+            string[] listOfTypes = TurnManager.SpliceString(line[4].ToUpper().Trim(), '/');
+            AbilityType[] convertToTypes = new AbilityType[listOfTypes.Length];
+            for (int j = 0; j < listOfTypes.Length; j++)
+                convertToTypes[j] = StringToAbilityType(listOfTypes[j]);
+            newAbility.myTypes = convertToTypes;
+
+            newAbility.instructions = (line[5].Equals("") ? new string[1] { "None" } : TurnManager.SpliceString(line[5].ToUpper().Trim(), '-'));
+            newAbility.playCondition = (line[6].Equals("") ? new string[1] { "None" } : TurnManager.SpliceString(line[6].ToUpper().Trim(), '-'));
+            newAbility.baseCooldown = StringToInt(line[7]);
+            newAbility.attackDamage = StringToInt(line[8]);
+            newAbility.healthRegain = StringToInt(line[9]);
+            newAbility.modifyPower = StringToInt(line[10]);
+            newAbility.modifyDefense = StringToInt(line[11]);
+            newAbility.modifySpeed = StringToInt(line[12]);
+            newAbility.modifyLuck = StringToFloat(line[13]);
+            newAbility.modifyAccuracy = StringToFloat(line[14]);
+            newAbility.miscNumber = StringToInt(line[15]);
+
+            string[] listOfTargets = (line[16].Equals("") ? new string[1] { "None" } : TurnManager.SpliceString(line[16].ToUpper().Trim(), '-'));
             TeamTarget[] convertToTargets = new TeamTarget[listOfTargets.Length];
             for (int j = 0; j < listOfTargets.Length; j++)
                 convertToTargets[j] = StringToTeamTarget(listOfTargets[j]);
@@ -120,7 +122,6 @@ public class DataLoader
 
     static AbilityType StringToAbilityType(string line)
     {
-        line = line.ToUpper().Trim();
         return line switch
         {
             "ATTACK" => AbilityType.Attack,
@@ -139,7 +140,6 @@ public class DataLoader
 
     static TeamTarget StringToTeamTarget(string line)
     {
-        line = line.ToUpper().Trim();
         if (line.Equals(""))
         {
             Debug.LogError("missing team target");

@@ -24,7 +24,7 @@
       "DZ|All Shapes and Sizes|(Bomb)"
     ],
     [
-      "Kitty",
+      "Kitty!",
       "Heals other Enemies and makes them Happy.",
       "8",
       "5",
@@ -43,7 +43,7 @@
       "0",
       "0.8",
       "GROUNDED",
-      "Attack,Strength in Numbers,",
+      "Bite,Strength in Numbers,",
       "",
       "Ian Kirkpatrick|Dominion: Dark Ages|(Rats)"
     ]
