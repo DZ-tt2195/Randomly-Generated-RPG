@@ -14,19 +14,19 @@
     [
       "Bomb",
       "Increases its Defense for 2 turns, then explodes.",
-      "8",
+      "6",
       "0",
       "0",
       "1.2",
       "GROUNDED",
       "Toughen,Explosion,",
-      "",
+      "ChooseAttack",
       "DZ|All Shapes and Sizes|(Bomb)"
     ],
     [
       "Kitty!",
       "Heals other Enemies and makes them Happy.",
-      "8",
+      "6",
       "5",
       "0",
       "0",
@@ -38,7 +38,7 @@
     [
       "Rats",
       "Defensive enemy that makes copies of itself.",
-      "8",
+      "6",
       "5",
       "0",
       "0.8",
@@ -46,6 +46,18 @@
       "Bite,Strength in Numbers,",
       "",
       "Ian Kirkpatrick|Dominion: Dark Ages|(Rats)"
+    ],
+    [
+      "Bees",
+      "Stuns Players and makes their Cooldowns last longer.",
+      "6",
+      "6",
+      "0",
+      "1",
+      "AIRBORNE",
+      "Sting,Delay,Paralyze,",
+      "",
+      "Tom Wänerstrand|Time Spiral|(Unyaro Bees)"
     ]
   ]
 }

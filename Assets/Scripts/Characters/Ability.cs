@@ -138,7 +138,7 @@ public class Ability : MonoBehaviour
 
         if (RollAccuracy(user.CalculateAccuracy()))
         {
-            return Mathf.Max(0,
+            return Mathf.Max(1,
                 RollCritical(user.CalculateLuck(), logged)
                 + effectiveness + user.CalculatePower()
                 + data.attackDamage
@@ -405,16 +405,12 @@ public class Ability : MonoBehaviour
                         break;
 
                     case "SELFHEAL":
-                        yield return self.GainHealth(Mathf.Max(data.healthRegain + self.CalculatePower(), 0), logged);
+                        yield return self.GainHealth(Mathf.Max(data.healthRegain + self.CalculatePower(), 1), logged);
                         if (self.CalculateHealthPercent() >= 1f) fullHeal = true;
                         break;
                     case "TARGETHEAL":
-                        yield return target.GainHealth(Mathf.Max(data.healthRegain + self.CalculatePower(),0), logged);
+                        yield return target.GainHealth(Mathf.Max(data.healthRegain + self.CalculatePower(), 1), logged);
                         if (target.CalculateHealthPercent() >= 1f) fullHeal = true;
-                        break;
-                    case "HEALFROMDAMAGE":
-                        yield return self.GainHealth(Mathf.Max(damageDealt,0), logged);
-                        if (self.CalculateHealthPercent() >= 1f) fullHeal = true;
                         break;
 
                     case "SELFSWAPPOSITION":

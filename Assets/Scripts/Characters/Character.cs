@@ -192,7 +192,7 @@ public class Character : MonoBehaviour
         if (this == null) yield break;
 
         CurrentHealth = Mathf.Clamp(CurrentHealth += health, 0, this.baseHealth);
-        TurnManager.instance.CreateVisual($"+{health} HEALTH", this.transform.localPosition);
+        TurnManager.instance.CreateVisual($"+{health} Health", this.transform.localPosition);
         Log.instance.AddText($"{(this.name)} regains {health} Health.", logged);
     }
 
@@ -203,7 +203,7 @@ public class Character : MonoBehaviour
         if (this == null || damage == 0) yield break;
 
         CurrentHealth -= damage;
-        TurnManager.instance.CreateVisual($"-{damage} HEALTH", this.transform.localPosition);
+        TurnManager.instance.CreateVisual($"-{damage} Health", this.transform.localPosition);
         Log.instance.AddText($"{(this.name)} takes {damage} damage.", logged);
 
         if (CurrentHealth <= 0)
@@ -217,6 +217,7 @@ public class Character : MonoBehaviour
         CurrentHealth = 0;
         TurnsStunned = 0;
         CurrentPosition = Position.Dead;
+        CurrentEmotion = Emotion.Dead;
 
         Log.instance.AddText($"{this.name} has died.", logged);
         TurnManager.instance.speedQueue.Remove(this);
@@ -260,7 +261,7 @@ public class Character : MonoBehaviour
         modifyPower = Math.Clamp(modifyPower += effect, -3, 3);
         if (logged >= 0)
         {
-            TurnManager.instance.CreateVisual($"{(effect > 0 ? '+' : '-')}{Math.Abs(effect)} POWER", this.transform.localPosition);
+            TurnManager.instance.CreateVisual($"{(effect > 0 ? '+' : '-')}{Math.Abs(effect)} Power", this.transform.localPosition);
             Log.instance.AddText($"{this.name} gets {(effect > 0 ? '+' : '-')}{Math.Abs(effect)} Power.", logged);
         }
     }
@@ -272,7 +273,7 @@ public class Character : MonoBehaviour
         modifyDefense = Math.Clamp(modifyDefense += effect, -6, 3);
         if (logged >= 0)
         {
-            TurnManager.instance.CreateVisual($"{(effect > 0 ? '+' : '-')}{Math.Abs(effect)} DEFENSE", this.transform.localPosition);
+            TurnManager.instance.CreateVisual($"{(effect > 0 ? '+' : '-')}{Math.Abs(effect)} Defense", this.transform.localPosition);
             Log.instance.AddText($"{this.name} gets {(effect > 0 ? '+' : '-')}{Math.Abs(effect)} Defense.", logged);
         }
     }
@@ -284,7 +285,7 @@ public class Character : MonoBehaviour
         modifySpeed = Math.Clamp(modifySpeed += effect, -5, 5);
         if (logged >= 0)
         {
-            TurnManager.instance.CreateVisual($"{(effect > 0 ? '+' : '-')}{Math.Abs(effect)} SPEED", this.transform.localPosition);
+            TurnManager.instance.CreateVisual($"{(effect > 0 ? '+' : '-')}{Math.Abs(effect)} Speed", this.transform.localPosition);
             Log.instance.AddText($"{this.name} gets {(effect > 0 ? '+' : '-')}{Math.Abs(effect)} Speed.", logged);
         }
     }
@@ -296,7 +297,7 @@ public class Character : MonoBehaviour
         modifyLuck = Mathf.Clamp(modifyLuck += effect, -0.5f, 0.5f);
         if (logged >= 0)
         {
-            TurnManager.instance.CreateVisual($"{(effect > 0 ? '+' : '-')}{100 * Math.Abs(effect)}% LUCK", this.transform.localPosition);
+            TurnManager.instance.CreateVisual($"{(effect > 0 ? '+' : '-')}{100 * Math.Abs(effect)}% Luck", this.transform.localPosition);
             Log.instance.AddText($"{this.name} gets {(effect > 0 ? '+' : '-')}{100 * Math.Abs(effect)}% Luck.", logged);
         }
     }
@@ -308,7 +309,7 @@ public class Character : MonoBehaviour
         modifyAccuracy = Mathf.Clamp(modifyAccuracy += effect, -0.3f, 0.6f);
         if (logged >= 0)
         {
-            TurnManager.instance.CreateVisual($"{(effect > 0 ? '+' : '-')}{100 * Math.Abs(effect)}% ACCURACY", this.transform.localPosition);
+            TurnManager.instance.CreateVisual($"{(effect > 0 ? '+' : '-')}{100 * Math.Abs(effect)}% Accuracy", this.transform.localPosition);
             Log.instance.AddText($"{this.name} gets {(effect > 0 ? '+' : '-')}{100 * Math.Abs(effect)}% Accuracy.", logged);
         }
     }
@@ -520,9 +521,9 @@ public class Character : MonoBehaviour
 
     void CharacterUI()
     {
-        statusText.text = KeywordTooltip.instance.EditText($"{CurrentEmotion}\n{CurrentPosition}");
-        statusImage.gameObject.SetActive(true);
+        statusText.text = (CurrentPosition == Position.Dead || CurrentEmotion == Emotion.Dead) ? "Dead" : KeywordTooltip.instance.EditText($"{CurrentEmotion}\n{CurrentPosition}");
 
+        statusImage.gameObject.SetActive(true);
         if (TurnsStunned > 0)
         {
             statusImage.sprite = stunSprite;

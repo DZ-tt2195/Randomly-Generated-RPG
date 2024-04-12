@@ -39,6 +39,10 @@ public class EnemyCharacter : Character
                 allAbilities = allAbilities.OrderByDescending(ability => CountTargets(ability)).ToList();
                 chosenAbility = allAbilities[0];
                 break;
+            case "CAMEOFFCOOLDOWN":
+                allAbilities = allAbilities.OrderByDescending(ability => ability.data.baseCooldown).ToList();
+                chosenAbility = allAbilities[0];
+                break;
             default:
                 if (attackingAbilities.Count != 0 && (data.aiTargeting.Equals("CHOOSEATTACK") ||
                     this.CurrentEmotion == Emotion.Angry || (this.CurrentEmotion == Emotion.Sad && CalculateHealthPercent() < 0.5f)))

@@ -15,7 +15,7 @@ public class TitleScreen : MonoBehaviour
     public static TitleScreen instance;
     float generationTime = 0f;
     bool _stillGenerating;
-    bool stillGenerating { get { return _stillGenerating; } set { { _stillGenerating = value; } Debug.Log(generationTime); } }
+    bool stillGenerating { get { return _stillGenerating; } set { { _stillGenerating = value; } if (generationTime>0f) Debug.Log(generationTime); } }
     [SerializeField] GameObject playerPrefab;
 
     [Foldout("RNG", true)]

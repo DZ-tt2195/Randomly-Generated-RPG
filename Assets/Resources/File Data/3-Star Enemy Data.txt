@@ -14,7 +14,7 @@
     [
       "Dragon",
       "Deals lots of damage to all Players when Airborne. Heals itself and becomes Grounded when low on health.",
-      "16",
+      "18",
       "6",
       "0.25",
       "0.9",
@@ -26,7 +26,7 @@
     [
       "Puppeteer",
       "Makes Players Airborne, then drops them down to deal damage.",
-      "16",
+      "18",
       "5",
       "0.25",
       "0.9",
@@ -38,7 +38,7 @@
     [
       "Taskmaster",
       "Changes their Emotions, and kills any Player who doesn't have the same Emotion as this.",
-      "16",
+      "18",
       "7",
       "0",
       "1.2",

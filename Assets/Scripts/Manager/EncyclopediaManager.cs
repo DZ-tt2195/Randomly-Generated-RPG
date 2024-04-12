@@ -36,6 +36,7 @@ public class EncyclopediaManager : MonoBehaviour
         [SerializeField] RectTransform storeEnemyBoxes;
         [SerializeField] TMP_InputField enemyInput;
         [SerializeField] TMP_Dropdown tierDropdown;
+        [SerializeField] TMP_Dropdown positionDropdown;
 
     void ChangeMode(int n)
     {
@@ -84,6 +85,7 @@ public class EncyclopediaManager : MonoBehaviour
 
         enemyInput.onValueChanged.AddListener(ChangeEnemyInput);
         tierDropdown.onValueChanged.AddListener(ChangeTierDropdown);
+        positionDropdown.onValueChanged.AddListener(ChangeTierDropdown);
         foreach (List<CharacterData> listOfData in FileManager.instance.listOfEnemies)
         {
             foreach (CharacterData data in listOfData)
@@ -137,6 +139,14 @@ public class EncyclopediaManager : MonoBehaviour
             TierSearch.Star3 => difficulty == 3,
             _ => true,
         };
+    }
+
+    bool ComparePositions(Position setting, CharacterData data)
+    {
+        if (setting == Position.Dead)
+            return true;
+        else
+            return setting == data.startingPosition;
     }
 
     AbilityType ConvertType(string text)
@@ -241,6 +251,8 @@ public class EncyclopediaManager : MonoBehaviour
     void SearchEnemy()
     {
         TierSearch searchTier = TierSearch.All;
+        Position searchPosition = Position.Dead;
+
         switch (tierDropdown.options[tierDropdown.value].text)
         {
             case "All":
@@ -256,15 +268,27 @@ public class EncyclopediaManager : MonoBehaviour
                 searchTier = TierSearch.Star3;
                 break;
         }
+        switch (positionDropdown.options[positionDropdown.value].text)
+        {
+            case "Any":
+                searchPosition = Position.Dead;
+                break;
+            case "Grounded":
+                searchPosition = Position.Grounded;
+                break;
+            case "Airborne":
+                searchPosition = Position.Airborne;
+                break;
+        }
 
         foreach (Character nextEnemy in listOfEnemyBoxes)
         {
-            if (CompareStrings(enemyInput.text, nextEnemy.data.myName) && CompareTiers(searchTier, nextEnemy.data.difficulty))
+            if (CompareStrings(enemyInput.text, nextEnemy.data.myName) && ComparePositions(searchPosition, nextEnemy.data) && CompareTiers(searchTier, nextEnemy.data.difficulty))
                 nextEnemy.transform.SetParent(storeEnemyBoxes);
             else
                 nextEnemy.transform.SetParent(null);
         }
-        storeEnemyBoxes.sizeDelta = new Vector3(2560, Math.Max(875, 175 * (1 + (storeEnemyBoxes.childCount / 6))));
+        storeEnemyBoxes.sizeDelta = new Vector3(2560, Math.Max(875, 350 * (1 + (storeEnemyBoxes.childCount / 5))));
         searchResults.text = $"Found {storeEnemyBoxes.childCount} Enemies";
     }
 

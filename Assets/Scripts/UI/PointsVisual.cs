@@ -16,7 +16,7 @@ public class PointsVisual : MonoBehaviour
     {
         //initial information 
         this.transform.localPosition = position + new Vector3(0, 0, -1);
-        textbox.text = text;
+        textbox.text = KeywordTooltip.instance.EditText(text);
         StartCoroutine(ExpandContract());
     }
 
