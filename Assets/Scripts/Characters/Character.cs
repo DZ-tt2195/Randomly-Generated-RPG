@@ -388,24 +388,27 @@ public class Character : MonoBehaviour
         while (chosenAbility == null)
         {
             yield return ChooseAbility(logged, extraAbility);
+
             for (int i = 0; i < chosenAbility.data.defaultTargets.Length; i++)
             {
                 yield return ChooseTarget(chosenAbility, chosenAbility.data.defaultTargets[i], i);
-                if (chosenAbility.singleTarget.Contains(chosenAbility.data.defaultTargets[i]))
+                if (this.myType == CharacterType.Player)
                 {
-                    targetCharacter = chosenAbility.listOfTargets[i][0];
-                    string part1 = $"{this.name}: Use {chosenAbility.data.myName}";
-                    string part2 = targetCharacter != null ? $" on {targetCharacter.data.myName}?" : "?";
+                    if (chosenAbility.singleTarget.Contains(chosenAbility.data.defaultTargets[i]))
+                        targetCharacter = chosenAbility.listOfTargets[i][0];
+                }
+            }
 
-                    if (this.myType == CharacterType.Player)
-                    {
-                        yield return TurnManager.instance.ConfirmUndo(part1 + part2, Vector3.zero);
-                        if (TurnManager.instance.confirmChoice == 1)
-                        {
-                            chosenAbility = null;
-                            break;
-                        }
-                    }
+            if (this.myType == CharacterType.Player)
+            {
+                string part1 = $"{this.name}: Use {chosenAbility.data.myName}";
+                string part2 = targetCharacter != null ? $" on {targetCharacter.data.myName}?" : "?";
+
+                yield return TurnManager.instance.ConfirmUndo(part1 + part2, Vector3.zero);
+                if (TurnManager.instance.confirmChoice == 1)
+                {
+                    chosenAbility = null;
+                    break;
                 }
             }
         }
@@ -433,8 +436,8 @@ public class Character : MonoBehaviour
                 string[] splicedString = TurnManager.SpliceString(chosenAbility.data.instructions[i], '/');
                 yield return chosenAbility.ResolveInstructions(splicedString, i, logged + 1);
             }
-
             chosenAbility.currentCooldown = chosenAbility.data.baseCooldown + (CurrentEmotion == Emotion.Happy ? 1 : 0);
+
             if (CarryVariables.instance.mode == CarryVariables.GameMode.Tutorial && TutorialManager.instance.currentCharacter == this)
             {
                 TutorialManager.instance.currentCharacter = null;
@@ -476,10 +479,7 @@ public class Character : MonoBehaviour
             else if (this.CurrentEmotion == Emotion.Sad)
             {
                 Log.instance.AddText($"{this.name} is Sad.", logged);
-                if (chosenAbility.mainType == AbilityType.Attack)
-                    yield return GainHealth(2, logged + 1);
-                else
-                    yield return TakeDamage(2, logged + 1);
+                yield return (chosenAbility.mainType == AbilityType.Attack) ? GainHealth(2, logged + 1) : TakeDamage(2, logged + 1);
             }
         }
     }

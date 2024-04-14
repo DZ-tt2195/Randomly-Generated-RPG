@@ -24,12 +24,12 @@
       "DZ|All Shapes and Sizes|(Bomb)"
     ],
     [
-      "Kitty!",
+      "KITTY!!!",
       "Heals other Enemies and makes them Happy.",
       "6",
       "5",
       "0",
-      "0",
+      "0.8",
       "GROUNDED",
       "Act Cute,Stuck in a Tree,Land Feet First,Scratch,",
       "",
@@ -53,11 +53,47 @@
       "6",
       "6",
       "0",
-      "1",
+      "0.8",
       "AIRBORNE",
       "Sting,Delay,Paralyze,",
       "",
       "Tom Wänerstrand|Time Spiral|(Unyaro Bees)"
+    ],
+    [
+      "Spirit",
+      "Changes Player Emotions.",
+      "6",
+      "6",
+      "0",
+      "0.8",
+      "AIRBORNE",
+      "Cast Happiness,Cast Sadness,Cast Anger,Will-o'-Wisp,",
+      "Effectiveness",
+      "Julien Delval|Dominion: Nocturne|(Will-o'-Wisp)"
+    ],
+    [
+      "PUPPY!!!",
+      "Nerfs Player stats and can attacks Grounded and Airborne Players..",
+      "6",
+      "5",
+      "0",
+      "0.8",
+      "GROUNDED",
+      "Bark,On a Walk,Show Hostility,Catch Frisbee,",
+      "",
+      "Claus Stephan|Dominion: Menagerie|(Sheepdog)"
+    ],
+    [
+      "Leprechaun",
+      "If this is at full health, it gives Players buffs; otherwise it deals lots of damage. Runs away afterwards.",
+      "6",
+      "3",
+      "0",
+      "1",
+      "GROUNDED",
+      "Caught at a Good Time,Prank,",
+      "",
+      "Brian Brinlee|Dominion: Nocturne|(Leprechaun)"
     ]
   ]
 }

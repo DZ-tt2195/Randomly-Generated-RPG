@@ -235,8 +235,12 @@ public class TutorialManager : MonoBehaviour
                 break;
 
             case 13: //emotions guide
+                GameObject emotionButton = GameObject.Find("Emotion Button");
+                Vector3 originalPos = emotionButton.transform.localPosition;
+                emotionButton.transform.localPosition = new Vector2(0, -150);
+
                 TextCollector collector13 = TurnManager.instance.MakeTextCollector(
-                    "You can always remind yourself of what each Emotion does by opening the Emotion Guide in the bottom right corner.",
+                    "You can always remind yourself of what each Emotion does by opening the Emotion Guide (sitting in the bottom right of the screen).",
                     Vector3.zero);
                 while (ScreenOverlay.instance.displayedScreen != CurrentScreen.Emotion)
                     yield return null;
@@ -244,6 +248,7 @@ public class TutorialManager : MonoBehaviour
                     yield return null;
                 Destroy(collector13.gameObject);
 
+                emotionButton.transform.localPosition = originalPos;
                 currentStep = 14;
                 yield return NextStep();
                 break;

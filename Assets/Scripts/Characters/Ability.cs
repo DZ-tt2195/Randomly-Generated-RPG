@@ -199,6 +199,9 @@ public class Ability : MonoBehaviour
                 case "SELFMAXHEALTH":
                     if (self.CalculateHealthPercent() < 1f)
                         return false; break;
+                case "SELFNOTMAXHEALTH":
+                    if (self.CalculateHealthPercent() >= 1f)
+                        return false; break;
 
                 case "SELFINJURED":
                     if (self.CalculateHealthPercent() > 0.5f)
