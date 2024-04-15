@@ -69,8 +69,7 @@ public class EnemyCharacter : Character
                     break;
 
                 case "LASTATTACKER":
-                    if (lastToAttackThis != null && ability.listOfTargets[index].Contains(lastToAttackThis))
-                        selectedTarget = new List<Character>() { lastToAttackThis };
+                    selectedTarget = new List<Character>() { lastToAttackThis };
                     break;
 
                 case "CHOOSEAIRBORNE":
@@ -106,7 +105,7 @@ public class EnemyCharacter : Character
                     break;
 
                 case "EFFECTIVENESS":
-                    List<Character> effectiveTargets = selectedTarget.OrderBy(o => ability.Effectiveness(this, o, -1)).ToList();
+                    List<Character> effectiveTargets = selectedTarget.OrderBy(o => ability.Effectiveness(this, o)).ToList();
                     selectedTarget = new() { effectiveTargets[0] };
                     break;
 

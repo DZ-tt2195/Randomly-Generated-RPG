@@ -99,8 +99,8 @@ public class DataLoader
                 convertToTypes[j] = StringToAbilityType(listOfTypes[j]);
             newAbility.myTypes = convertToTypes;
 
-            newAbility.instructions = (line[5].Equals("") ? new string[1] { "None" } : TurnManager.SpliceString(line[5].ToUpper().Trim(), '-'));
-            newAbility.playCondition = (line[6].Equals("") ? new string[1] { "None" } : TurnManager.SpliceString(line[6].ToUpper().Trim(), '-'));
+            newAbility.instructions = (line[5].Equals("") ? new string[1] { "NONE" } : TurnManager.SpliceString(line[5].ToUpper().Trim(), '-'));
+            newAbility.playCondition = (line[6].Equals("") ? new string[1] { "NONE" } : TurnManager.SpliceString(line[6].ToUpper().Trim(), '-'));
             newAbility.baseCooldown = StringToInt(line[7]);
             newAbility.attackDamage = StringToInt(line[8]);
             newAbility.healthRegain = StringToInt(line[9]);
@@ -111,7 +111,7 @@ public class DataLoader
             newAbility.modifyAccuracy = StringToFloat(line[14]);
             newAbility.miscNumber = StringToInt(line[15]);
 
-            string[] listOfTargets = (line[16].Equals("") ? new string[1] { "None" } : TurnManager.SpliceString(line[16].ToUpper().Trim(), '-'));
+            string[] listOfTargets = (line[16].Equals("") ? new string[1] { "NONE" } : TurnManager.SpliceString(line[16].ToUpper().Trim(), '-'));
             TeamTarget[] convertToTargets = new TeamTarget[listOfTargets.Length];
             for (int j = 0; j < listOfTargets.Length; j++)
                 convertToTargets[j] = StringToTeamTarget(listOfTargets[j]);

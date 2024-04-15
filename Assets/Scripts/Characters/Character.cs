@@ -392,11 +392,8 @@ public class Character : MonoBehaviour
             for (int i = 0; i < chosenAbility.data.defaultTargets.Length; i++)
             {
                 yield return ChooseTarget(chosenAbility, chosenAbility.data.defaultTargets[i], i);
-                if (this.myType == CharacterType.Player)
-                {
-                    if (chosenAbility.singleTarget.Contains(chosenAbility.data.defaultTargets[i]))
-                        targetCharacter = chosenAbility.listOfTargets[i][0];
-                }
+                if (chosenAbility.singleTarget.Contains(chosenAbility.data.defaultTargets[i]))
+                    targetCharacter = chosenAbility.listOfTargets[i][0];
             }
 
             if (this.myType == CharacterType.Player)
@@ -406,10 +403,7 @@ public class Character : MonoBehaviour
 
                 yield return TurnManager.instance.ConfirmUndo(part1 + part2, Vector3.zero);
                 if (TurnManager.instance.confirmChoice == 1)
-                {
                     chosenAbility = null;
-                    break;
-                }
             }
         }
 

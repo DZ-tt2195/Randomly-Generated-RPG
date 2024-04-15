@@ -73,7 +73,7 @@
     ],
     [
       "PUPPY!!!",
-      "Nerfs Player stats and can attacks Grounded and Airborne Players..",
+      "Nerfs Player stats and can attacks Grounded and Airborne Players.",
       "6",
       "5",
       "0",

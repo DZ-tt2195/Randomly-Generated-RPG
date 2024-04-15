@@ -61,7 +61,7 @@ public class Log : MonoBehaviour
         for (int i = 0; i < indent; i++)
             newText.text += "     ";
         newText.text += string.IsNullOrEmpty(logText) ? "" : char.ToUpper(logText[0]) + logText[1..];
-
+        /*
         foreach (Character teammate in TurnManager.instance.listOfPlayers)
         {
             string pattern = $@"\b{Regex.Escape(teammate.name)}\b";
@@ -71,7 +71,7 @@ public class Log : MonoBehaviour
         {
             string pattern = $@"\b{Regex.Escape(enemy.name)}\b";
             newText.text = Regex.Replace(newText.text, pattern, $"<color=#FF0000>{enemy.name}</color>");
-        }
+        }*/
         newText.text = KeywordTooltip.instance.EditText(newText.text);
 
         if (RT.transform.childCount >= 23)

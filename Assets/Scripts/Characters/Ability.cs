@@ -76,13 +76,12 @@ public class Ability : MonoBehaviour
         }
     }
 
-    int RollCritical(float value, int logged)
+    int RollCritical(float value)
     {
         float roll = Random.Range(0f, 1f);
         bool result = roll <= value;
         if (result && CarryVariables.instance.mode == CarryVariables.GameMode.Main)
         {
-            Log.instance.AddText("Critical hit! (+2 Damage)", logged);
             return 2;
         }
         else
@@ -91,7 +90,7 @@ public class Ability : MonoBehaviour
         }
     }
 
-    public int Effectiveness(Character user, Character target, int logged)
+    public int Effectiveness(Character user, Character target)
     {
         int answer = user.CurrentEmotion switch
         {
@@ -116,33 +115,34 @@ public class Ability : MonoBehaviour
             _ => 0
         };
 
-        if (answer > 0)
-            Log.instance.AddText("It's super effective! (+1 Damage)", logged);
-        else if (answer < 0 && CarryVariables.instance.ActiveChallenge("Ineffectives Miss") && self.myType == CharacterType.Player)
-            Log.instance.AddText("It was ineffective...(Ineffectives Miss)", logged);
-        else if (answer < 0)
-            Log.instance.AddText("It was ineffective...(-1 Damage)", logged);
-
         return answer;
     }
 
     int CalculateDamage(Character user, Character target, int logged)
     {
-        int effectiveness = Effectiveness(user, target, logged);
+        int effectiveness = Effectiveness(user, target);
+
         if (effectiveness < 0 && CarryVariables.instance.ActiveChallenge("Ineffectives Miss") && self.myType == CharacterType.Player)
         {
-            Log.instance.AddText($"{user.name}'s attack misses {target.name}.", logged);
+            Log.instance.AddText($"{user.name}'s attack misses {target.name} (Ineffectives Miss).", logged);
             TurnManager.instance.CreateVisual("MISS", target.transform.localPosition);
             return 0;
         }
 
         if (RollAccuracy(user.CalculateAccuracy()))
         {
-            return Mathf.Max(1,
-                RollCritical(user.CalculateLuck(), logged)
-                + effectiveness + user.CalculatePower()
-                + data.attackDamage
-                - target.CalculateDefense());
+            int critical = RollCritical(user.CalculateLuck());
+            int damage = critical + effectiveness + user.CalculatePower() + data.attackDamage - target.CalculateDefense();
+
+            if (effectiveness > 0)
+                Log.instance.AddText($"It's super effective! (+{effectiveness} Damage)", logged);
+            else if (effectiveness < 0)
+                Log.instance.AddText($"It was ineffective...({effectiveness} Damage)", logged);
+
+            if (damage <= 1 && critical > 0)
+                Log.instance.AddText($"Critical hit! (+{critical} Damage)", logged);
+
+            return Mathf.Max(1, damage);
         }
         else
         {
@@ -305,9 +305,19 @@ public class Ability : MonoBehaviour
                     break;
 
                 case "LASTATTACKEREXISTS":
-                    if (self.lastToAttackThis == null)
-                        return false; break;
-
+                    /*
+                    bool foundLastAttacker = false;
+                    for (int i = 0; i<listOfTargets[currentIndex].Count; i++)
+                    {
+                        if (listOfTargets[currentIndex][i] == self.lastToAttackThis)
+                            foundLastAttacker = true;
+                    }
+                    if (!foundLastAttacker) return false;
+                    break;
+                    */
+                    if (!listOfTargets[currentIndex].Contains(self.lastToAttackThis))
+                        return false;
+                    break;
                 default:
                     Debug.LogError($"{this.data.myName}: {methodName} isn't a condition");
                     break;
