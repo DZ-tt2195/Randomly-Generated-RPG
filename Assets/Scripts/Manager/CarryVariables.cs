@@ -25,8 +25,6 @@ public class CarryVariables : MonoBehaviour
 
     private void Awake()
     {
-        sceneCanvas = GameObject.Find("Canvas").transform;
-
         if (instance == null)
         {
             instance = this;

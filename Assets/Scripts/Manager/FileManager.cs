@@ -5,9 +5,7 @@ using MyBox;
 using System.Linq;
 using UnityEngine.Networking;
 using System.IO;
-using UnityEngine.SceneManagement;
 using System;
-using UnityEngine.UI;
 
 public class FileManager : MonoBehaviour
 {
@@ -16,17 +14,16 @@ public class FileManager : MonoBehaviour
 
     public static FileManager instance;
 
-    [Foldout("Download", true)]
-        public bool downloadOn = true;
-        private string ID = "1x5vKp4X4HPKyRix3w0n9aldY6Dh3B0eBegUM0WtfXFY";
-        private string apiKey = "AIzaSyCl_GqHd1-WROqf7i2YddE3zH6vSv3sNTA";
-        private string baseUrl = "https://sheets.googleapis.com/v4/spreadsheets/";
+    public bool downloadOn = true;
+    private string ID = "1x5vKp4X4HPKyRix3w0n9aldY6Dh3B0eBegUM0WtfXFY";
+    private string apiKey = "AIzaSyCl_GqHd1-WROqf7i2YddE3zH6vSv3sNTA";
+    private string baseUrl = "https://sheets.googleapis.com/v4/spreadsheets/";
 
-        [Tooltip("store all players")][ReadOnly] public List<Character> listOfPlayers = new();
-        [Tooltip("store all player ability data")][ReadOnly] public List<AbilityData> listOfPlayerAbilities;
-        [Tooltip("store all enemy ability data")][ReadOnly] public List<AbilityData> listOfEnemyAbilities;
-        [Tooltip("store all enemy data")][ReadOnly] public List<List<CharacterData>> listOfEnemies = new();
-        [Tooltip("store all bonus enemy data")][ReadOnly] public List<CharacterData> listOfBonusEnemies;
+    [Tooltip("store all players")][ReadOnly] public List<Character> listOfPlayers = new();
+    [Tooltip("store all player ability data")][ReadOnly] public List<AbilityData> listOfPlayerAbilities;
+    [Tooltip("store all enemy ability data")][ReadOnly] public List<AbilityData> listOfEnemyAbilities;
+    [Tooltip("store all enemy data")][ReadOnly] public List<List<CharacterData>> listOfEnemies = new();
+    [Tooltip("store all bonus enemy data")][ReadOnly] public List<CharacterData> listOfBonusEnemies;
 
 #endregion
 
@@ -70,7 +67,7 @@ public class FileManager : MonoBehaviour
         }
     }
 
-    #endregion
+#endregion
 
 #region Helper Methods
 

@@ -11,13 +11,18 @@ public class Log : MonoBehaviour
     public static Log instance;
     Scrollbar scroll;
     [SerializeField] RectTransform RT;
+    GridLayoutGroup gridGroup;
+    float startingHeight;
     [SerializeField] TMP_Text textBoxClone;
 
     private void Awake()
     {
+        gridGroup = RT.GetComponent<GridLayoutGroup>();
+        startingHeight = RT.sizeDelta.y;
         scroll = this.transform.GetChild(1).GetComponent<Scrollbar>();
         instance = this;
     }
+
     /*
     void Update()
     {
@@ -25,7 +30,8 @@ public class Log : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.Space))
                 AddText($"Test {RT.transform.childCount+1}");
         #endif
-    }*/
+    }
+    */
 
     public static string Substitute(Ability ability, Character user, Character target)
     {
@@ -61,27 +67,32 @@ public class Log : MonoBehaviour
         for (int i = 0; i < indent; i++)
             newText.text += "     ";
         newText.text += string.IsNullOrEmpty(logText) ? "" : char.ToUpper(logText[0]) + logText[1..];
+
         /*
         foreach (Character teammate in TurnManager.instance.listOfPlayers)
         {
-            string pattern = $@"\b{Regex.Escape(teammate.name)}\b";
+            string escapedName = Regex.Escape(teammate.name);
+            string pattern = $@"\b{escapedName}(?=\W!$)";
             newText.text = Regex.Replace(newText.text, pattern, $"<color=#00FF00>{teammate.name}</color>");
         }
         foreach (Character enemy in TurnManager.instance.listOfEnemies)
         {
-            string pattern = $@"\b{Regex.Escape(enemy.name)}\b";
+            string escapedName = Regex.Escape(enemy.name);
+            string pattern = $@"\b{escapedName}(?=\W!$)";
             newText.text = Regex.Replace(newText.text, pattern, $"<color=#FF0000>{enemy.name}</color>");
-        }*/
+        }
+        */
+
         newText.text = KeywordTooltip.instance.EditText(newText.text);
 
-        if (RT.transform.childCount >= 23)
+        if (RT.transform.childCount >= (startingHeight / gridGroup.cellSize.y)-1)
         {
-            RT.sizeDelta = new Vector2(640, RT.sizeDelta.y+60);
+            RT.sizeDelta = new Vector2(RT.sizeDelta.x, RT.sizeDelta.y + gridGroup.cellSize.y);
 
             if (scroll.value <= 0.2f)
             {
                 scroll.value = 0;
-                RT.transform.localPosition = new Vector3(-30, RT.transform.localPosition.y + 25, 0);
+                RT.transform.localPosition = new Vector3(RT.transform.localPosition.x, RT.transform.localPosition.y + gridGroup.cellSize.y/2, 0);
             }
         }
     }

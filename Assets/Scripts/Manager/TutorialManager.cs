@@ -240,7 +240,7 @@ public class TutorialManager : MonoBehaviour
                 emotionButton.transform.localPosition = new Vector2(0, -150);
 
                 TextCollector collector13 = TurnManager.instance.MakeTextCollector(
-                    "You can always remind yourself of what each Emotion does by opening the Emotion Guide (sitting in the bottom right of the screen).",
+                    "You can always remind yourself of what each Emotion does by opening the Emotion Guide (usually it's at the bottom right of the screen).",
                     Vector3.zero);
                 while (ScreenOverlay.instance.displayedScreen != CurrentScreen.Emotion)
                     yield return null;
@@ -263,10 +263,10 @@ public class TutorialManager : MonoBehaviour
                 break;
 
             case 15: //tutorial over
+                yield return ClickThroughDialogue(new List<string>()
+                { "You’ve completed the tutorial. In the main game, your 3 party members get 6 random Abilities.",
+                "During the game, you'll fight off 5 waves of random Enemies, with more powerful ones later on. Glhf!"});
                 TurnManager.instance.GameFinished("Tutorial finished.", "");
-                TextCollector collector15 = TurnManager.instance.MakeTextCollector(
-                    "You’ve completed the tutorial. In the main game, each character gets 6 random Abilities to fight 5 waves of Enemies. Glhf.",
-                    Vector3.zero);
                 break;
         }
     }

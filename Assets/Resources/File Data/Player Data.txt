@@ -19,7 +19,7 @@
       "0.15",
       "0.9",
       "GROUNDED",
-      "Carefree,Delegate,Embarass,Impale,Joust,Meal,Neutralize,Shun,Skirmish,Stab,Taunt,Tragedy,Unleash Rage,",
+      "Carefree,Delegate,Embarass,Impale,Joust,Meal,Neutralize,Shun,Skirmish,Stab,Taunt,Tragedy,Tricked,Unleash Rage,",
       "",
       "Michael Watson|Dominion: Cornucopia and Guilds|(Joust)"
     ],
@@ -31,7 +31,7 @@
       "0.15",
       "0.9",
       "AIRBORNE",
-      "Calm Down,Crash Landing,Defensive Aura,Delegate,Down to Earth,Enrage,Gift of Flight,Grow Tree,Induce Anger,Induce Happiness,Induce Sadness,Inert,Invigorate,Lift Up,Perk Up,Share Healing,Skyward Sword,Sorrowful Flight,Wind to Wings,",
+      "Calm Down,Crash Landing,Defensive Aura,Delegate,Down to Earth,Enrage,Gift of Flight,Grow Tree,Induce Anger,Induce Happiness,Induce Sadness,Invigorate,Lift Up,Perk Up,Protective Barrier,Purify,Share Healing,Skyward Sword,Sorrowful Flight,Wind to Wings,",
       "",
       "Magali Villeneuve|Oath of the Gatewatch|(Linvala, the Preserver)"
     ],

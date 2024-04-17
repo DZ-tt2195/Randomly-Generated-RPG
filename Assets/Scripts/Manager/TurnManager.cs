@@ -372,12 +372,12 @@ public class TurnManager : MonoBehaviour
             SaveManager.instance.SaveAbility(character.name, ability.data);
     }
 
-    public List<Character> AllCharacters()
+    List<Character> AllCharacters()
     {
         List<Character> allTargets = new();
         allTargets.AddRange(listOfPlayers);
         allTargets.AddRange(listOfEnemies);
-        return allTargets;
+        return allTargets.Shuffle();
     }
 
     public static string[] SpliceString(string text, char splitUp)

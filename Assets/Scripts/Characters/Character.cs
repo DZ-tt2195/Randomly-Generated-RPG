@@ -61,6 +61,13 @@ public class Character : MonoBehaviour
         get { return _turnsStunned; }
         private set { _turnsStunned = value; CharacterUI(); }
     }
+    private int _turnsProtected;
+    [ReadOnly]
+    public int TurnsProtected
+    {
+        get { return _turnsProtected; }
+        private set { _turnsProtected = value; CharacterUI(); }
+    }
     [ReadOnly] public Character lastToAttackThis { get; private set; }
 
     public int modifyPower { get; private set; }
@@ -78,8 +85,9 @@ public class Character : MonoBehaviour
     TMP_Text healthText;
     TMP_Text nameText;
     Sprite stunSprite;
+    Sprite protectedSprite;
 
-#endregion
+    #endregion
 
 #region Setup
 
@@ -93,6 +101,7 @@ public class Character : MonoBehaviour
         nameText = transform.Find("Name Text").GetChild(0).GetComponent<TMP_Text>();
         statusImage = transform.Find("Status Image").GetComponent<Image>();
         stunSprite = Resources.Load<Sprite>("Art/Stun");
+        protectedSprite = Resources.Load<Sprite>("Art/Protected");
     }
 
     public void SetupCharacter(CharacterType type, CharacterData characterData,
@@ -178,15 +187,6 @@ public class Character : MonoBehaviour
 
 #region Change Stats
 
-    public IEnumerator Stun(int amount, int logged)
-    {
-        if (this == null) yield break;
-
-        TurnsStunned += amount;
-        TurnManager.instance.CreateVisual($"STUNNED", this.transform.localPosition);
-        Log.instance.AddText($"{this.name} is Stunned for {TurnsStunned} turn{(TurnsStunned == 1 ? "" : "s")}.", logged);
-    }
-
     public IEnumerator GainHealth(int health, int logged)
     {
         if (this == null) yield break;
@@ -202,12 +202,21 @@ public class Character : MonoBehaviour
             lastToAttackThis = attacker;
         if (this == null || damage == 0) yield break;
 
-        CurrentHealth -= damage;
-        TurnManager.instance.CreateVisual($"-{damage} Health", this.transform.localPosition);
-        Log.instance.AddText($"{(this.name)} takes {damage} damage.", logged);
+        if (TurnsProtected > 0 && attacker != null)
+        {
+            TurnsProtected--;
+            TurnManager.instance.CreateVisual($"BLOCKED", this.transform.localPosition);
+            Log.instance.AddText($"{(this.name)} is Protected from {damage} damage.", logged);
+        }
+        else
+        {
+            CurrentHealth -= damage;
+            TurnManager.instance.CreateVisual($"-{damage} Health", this.transform.localPosition);
+            Log.instance.AddText($"{(this.name)} takes {damage} damage.", logged);
 
-        if (CurrentHealth <= 0)
-            yield return HasDied(logged);
+            if (CurrentHealth <= 0)
+                yield return HasDied(logged);
+        }
     }
 
     public IEnumerator HasDied(int logged)
@@ -216,6 +225,7 @@ public class Character : MonoBehaviour
 
         CurrentHealth = 0;
         TurnsStunned = 0;
+        TurnsProtected = 0;
         CurrentPosition = Position.Dead;
         CurrentEmotion = Emotion.Dead;
 
@@ -314,6 +324,10 @@ public class Character : MonoBehaviour
         }
     }
 
+    #endregion
+
+#region Other Stats
+
     public IEnumerator ChangePosition(Position newPosition, int logged)
     {
         if (this == null || newPosition == Position.Dead || newPosition == CurrentPosition) yield break;
@@ -347,7 +361,33 @@ public class Character : MonoBehaviour
         }
     }
 
-#endregion
+    public IEnumerator Stun(int amount, int logged)
+    {
+        if (this == null) yield break;
+
+        TurnsStunned += amount;
+        TurnManager.instance.CreateVisual($"STUNNED", this.transform.localPosition);
+        Log.instance.AddText($"{this.name} is Stunned for {TurnsStunned} turn{(TurnsStunned == 1 ? "" : "s")}.", logged);
+    }
+
+    public IEnumerator NoStun(int logged)
+    {
+        if (this == null && TurnsStunned > 0) yield break;
+
+        TurnsStunned = 0;
+        Log.instance.AddText($"{this.name} is no longer Stunned.", logged);
+    }
+
+    public IEnumerator Protected(int amount, int logged)
+    {
+        if (this == null) yield break;
+
+        TurnsProtected += amount;
+        TurnManager.instance.CreateVisual($"PROTECTED", this.transform.localPosition);
+        Log.instance.AddText($"{this.name} is Protected for {TurnsProtected} turn{(TurnsProtected == 1 ? "" : "s")}.", logged);
+    }
+
+    #endregion
 
 #region Turns
 
@@ -521,6 +561,10 @@ public class Character : MonoBehaviour
         if (TurnsStunned > 0)
         {
             statusImage.sprite = stunSprite;
+        }
+        else if (TurnsProtected > 0)
+        {
+            statusImage.sprite = protectedSprite;
         }
         else
         {

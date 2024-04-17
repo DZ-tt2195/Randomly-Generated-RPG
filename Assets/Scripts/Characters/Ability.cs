@@ -160,6 +160,8 @@ public class Ability : MonoBehaviour
     {
         if (data.myName.Equals("Skip Turn"))
             return true;
+        if (data.myName.Equals("Revive") && CarryVariables.instance.ActiveChallenge("No Revives"))
+            return false;
         if (currentCooldown > 0)
             return false;
 
@@ -557,6 +559,16 @@ public class Ability : MonoBehaviour
                         break;
                     case "TARGETSTUN":
                         yield return target.Stun(data.miscNumber, logged);
+                        break;
+                    case "TARGETNOSTUN":
+                        yield return target.NoStun(logged);
+                        break;
+
+                    case "SELFPROTECTED":
+                        yield return self.Protected(data.miscNumber, logged);
+                        break;
+                    case "TARGETPROTECTED":
+                        yield return target.Protected(data.miscNumber, logged);
                         break;
 
                     case "TARGETINCREASEACTIVECOOLDOWN":
