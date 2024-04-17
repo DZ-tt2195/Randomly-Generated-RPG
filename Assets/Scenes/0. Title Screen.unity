@@ -3937,7 +3937,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 5d91aaaefd8914b3abecf76e0b0a7fbf, type: 3}
+  m_Sprite: {fileID: 11666886, guid: d648d600dbc994698910ae0b632b59ea, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -4073,6 +4073,10 @@ MonoBehaviour:
   - keywordVariations:
     - Accuracy
     description: Lower Accuracy = Attacks are more likely to miss.
+    color: {r: 0, g: 0, b: 0, a: 0}
+  - keywordVariations:
+    - Star
+    description: More Star = Higher tier enemy that's stronger.
     color: {r: 0, g: 0, b: 0, a: 0}
   tooltipText: {fileID: 235444215}
 --- !u!114 &623227979
@@ -5497,7 +5501,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 5d91aaaefd8914b3abecf76e0b0a7fbf, type: 3}
+  m_Sprite: {fileID: 11666886, guid: d648d600dbc994698910ae0b632b59ea, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -8086,7 +8090,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 5d91aaaefd8914b3abecf76e0b0a7fbf, type: 3}
+  m_Sprite: {fileID: 11666886, guid: d648d600dbc994698910ae0b632b59ea, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -8679,7 +8683,8 @@ MonoBehaviour:
     name="Cooldown"></link> <link="Power"><sprite="Symbols" name="Power"></link>
     <link="Defense"><sprite="Symbols" name="Defense"></link> <link="Luck"><sprite="Symbols"
     name="Luck"></link> <link="Accuracy"><sprite="Symbols" name="Accuracy"></link>
-    <link="Speed"><sprite="Symbols" name="Speed"></link> Amazing'
+    <link="Speed"><sprite="Symbols" name="Speed"></link> <link="Star"><sprite="Symbols"
+    name="Star"></link>'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8c64c47af7c1c4fb5b88d184433c6c44, type: 2}
   m_sharedMaterial: {fileID: -3852492252101762229, guid: 8c64c47af7c1c4fb5b88d184433c6c44, type: 2}
@@ -9368,7 +9373,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1349390237
 RectTransform:
   m_ObjectHideFlags: 0

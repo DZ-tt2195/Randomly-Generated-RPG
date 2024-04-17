@@ -192,10 +192,9 @@ public class Ability : MonoBehaviour
                     break;
                 case "NONE":
                     break;
-                case "TARGETDEAD":
-                    break;
-                case "SELFDEAD":
-                    if (self.CalculateHealth() > 0)
+
+                case "CANSUMMON":
+                    if (TurnManager.instance.listOfEnemies.Count >= 5)
                         return false; break;
 
                 case "SELFMAXHEALTH":
@@ -307,19 +306,10 @@ public class Ability : MonoBehaviour
                     break;
 
                 case "LASTATTACKEREXISTS":
-                    /*
-                    bool foundLastAttacker = false;
-                    for (int i = 0; i<listOfTargets[currentIndex].Count; i++)
-                    {
-                        if (listOfTargets[currentIndex][i] == self.lastToAttackThis)
-                            foundLastAttacker = true;
-                    }
-                    if (!foundLastAttacker) return false;
-                    break;
-                    */
                     if (!listOfTargets[currentIndex].Contains(self.lastToAttackThis))
                         return false;
                     break;
+
                 default:
                     Debug.LogError($"{this.data.myName}: {methodName} isn't a condition");
                     break;
@@ -417,6 +407,15 @@ public class Ability : MonoBehaviour
 
                     case "SELFCOPY":
                         TurnManager.instance.CreateEnemy(self.data, (Emotion)Random.Range(1, 5), logged);
+                        break;
+                    case "SUMMON1STAR":
+                        TurnManager.instance.CreateEnemy(FileManager.instance.listOfEnemies[0][Random.Range(0, FileManager.instance.listOfEnemies[0].Count)], (Emotion)Random.Range(1, 5), logged);
+                        break;
+                    case "SUMMON2STAR":
+                        TurnManager.instance.CreateEnemy(FileManager.instance.listOfEnemies[1][Random.Range(0, FileManager.instance.listOfEnemies[1].Count)], (Emotion)Random.Range(1, 5), logged);
+                        break;
+                    case "SUMMON3STAR":
+                        TurnManager.instance.CreateEnemy(FileManager.instance.listOfEnemies[2][Random.Range(0, FileManager.instance.listOfEnemies[2].Count)], (Emotion)Random.Range(1, 5), logged);
                         break;
 
                     case "SELFHEAL":

@@ -94,6 +94,18 @@
       "Caught at a Good Time,Prank,",
       "",
       "Brian Brinlee|Dominion: Nocturne|(Leprechaun)"
+    ],
+    [
+      "Flag Bearer",
+      "Buffs Enemy stats. Eventually summons a 3 Star Enemy and leaves.",
+      "6",
+      "4",
+      "0",
+      "0.8",
+      "GROUNDED",
+      "Flag Whack,Inspiration,Replaced,",
+      "CameOffCooldown",
+      "Grant Hansen|Dominion: Renaissance|(Flag Bearer)"
     ]
   ]
 }

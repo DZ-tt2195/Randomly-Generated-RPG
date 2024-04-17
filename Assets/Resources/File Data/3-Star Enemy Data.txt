@@ -46,6 +46,18 @@
       "Demand Neutral,Demand Happiness,Demand Anger,Demand Sadness,Punishment,",
       "ChooseAttack",
       "Claus Stephan|Dominion: Plunder|(Taskmaster)"
+    ],
+    [
+      "Royalty",
+      "Summons more 1 Star and 2 Star Enemies. Buffs Enemy stats and reduces Player stats.",
+      "18",
+      "3",
+      "0",
+      "1",
+      "GROUNDED",
+      "Call for Help,Call for Guards,Procession,Identify Targets,",
+      "",
+      "Kieran Yanner|Throne of Eldraine|(Kenrith, the Returned King)"
     ]
   ]
 }
