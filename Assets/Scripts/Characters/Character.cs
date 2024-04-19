@@ -183,7 +183,12 @@ public class Character : MonoBehaviour
         return this.baseAccuracy + modifyAccuracy;
     }
 
-    #endregion
+    public float CalculateStatTotals()
+    {
+        return (float)(CalculatePower() + CalculateDefense() + CalculateSpeed() + CalculateLuck() + CalculateAccuracy());
+    }
+
+#endregion
 
 #region Change Stats
 

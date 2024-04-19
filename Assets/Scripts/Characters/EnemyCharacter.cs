@@ -109,6 +109,16 @@ public class EnemyCharacter : Character
                     selectedTarget = new() { effectiveTargets[0] };
                     break;
 
+                case "STRONGEST":
+                    List<Character> strongestTargets = selectedTarget.OrderByDescending(o => o.CalculateStatTotals()).ToList();
+                    selectedTarget = new() { strongestTargets[0] };
+                    break;
+
+                case "WEAKEST":
+                    List<Character> weakestTargets = selectedTarget.OrderBy(o => o.CalculateStatTotals()).ToList();
+                    selectedTarget = new() { weakestTargets[0] };
+                    break;
+
                 default:
                     Debug.Log($"not programmed: {data.aiTargeting}");
                     break;

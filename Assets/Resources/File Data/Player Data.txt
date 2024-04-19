@@ -14,19 +14,19 @@
     [
       "Knight",
       "Does lots of damage against individual Grounded Enemies.",
-      "10",
+      "12",
       "4",
       "0.15",
       "0.9",
       "GROUNDED",
-      "Carefree,Delegate,Embarass,Impale,Joust,Meal,Neutralize,Shun,Skirmish,Stab,Taunt,Tragedy,Tricked,Unleash Rage,",
+      "Carefree,Delegate,Embarass,Impale,Joust,Meal,Neutralize,Shields Up,Shun,Skirmish,Stab,Taunt,Tragedy,Tricked,Unleash Rage,",
       "",
       "Michael Watson|Dominion: Cornucopia and Guilds|(Joust)"
     ],
     [
       "Angel",
       "Starts off Airborne and focuses on healing Players.",
-      "10",
+      "12",
       "3",
       "0.15",
       "0.9",
@@ -38,7 +38,7 @@
     [
       "Wizard",
       "Does damage against groups and Airborne Enemies.",
-      "10",
+      "12",
       "5",
       "0.15",
       "0.9",

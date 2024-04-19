@@ -58,6 +58,18 @@
       "Slash,Glare,On a Branch,Aerial Landing,",
       "Effectiveness",
       "Slawomir Maniak|Eldritch Moon|(Kessig Prowler)"
+    ],
+    [
+      "Assassin",
+      "Goes after Grounded Players with the least amount of Health. Tries to make everyone Grounded.",
+      "12",
+      "6",
+      "0.15",
+      "0.85",
+      "GROUNDED",
+      "Sneak Attack,Weaken,No Hiding,Hidden from View,",
+      "LeastHealth",
+      "Eric J. Carter|Dominion: Allies|(Highwayman)"
     ]
   ]
 }
