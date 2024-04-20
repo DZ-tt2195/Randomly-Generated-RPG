@@ -115,7 +115,7 @@ public class Character : MonoBehaviour
         this.baseHealth = data.baseHealth;
         CurrentHealth = this.baseHealth;
         this.baseSpeed = data.baseSpeed;
-        this.baseLuck = data.baseLuck;
+        this.baseLuck = (CarryVariables.instance.ActiveChallenge("No Luck") && myType == CharacterType.Enemy) ? 0 : data.baseLuck;
         this.baseAccuracy = data.baseAccuracy;
 
         AddAbility(FileManager.instance.FindEnemyAbility("Skip Turn"), true, false);

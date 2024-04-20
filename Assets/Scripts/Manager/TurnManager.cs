@@ -315,39 +315,39 @@ public class TurnManager : MonoBehaviour
     {
         if (listOfEnemies.Count < 5)
         {
-            EnemyCharacter nextCharacter = Instantiate(characterPrefab).AddComponent<EnemyCharacter>();
-            nextCharacter.transform.SetParent(CarryVariables.instance.sceneCanvas);
-            nextCharacter.transform.SetAsFirstSibling();
-            listOfEnemies.Add(nextCharacter);
+            EnemyCharacter nextEnemy = Instantiate(characterPrefab).AddComponent<EnemyCharacter>();
+            nextEnemy.transform.SetParent(CarryVariables.instance.sceneCanvas);
+            nextEnemy.transform.SetAsFirstSibling();
+            listOfEnemies.Add(nextEnemy);
 
             foreach (CharacterPositions position in enemyPositions)
             {
                 if (position.character == null)
                 {
-                    nextCharacter.transform.localPosition = position.position;
-                    position.character = nextCharacter;
+                    nextEnemy.transform.localPosition = position.position;
+                    position.character = nextEnemy;
                     break;
                 }
             }
 
-            nextCharacter.name = dataFile.myName;
-            Log.instance.AddText($"{Log.Article(nextCharacter.name)} entered the fight.", logged);
+            nextEnemy.name = dataFile.myName;
+            Log.instance.AddText($"{Log.Article(nextEnemy.name)} entered the fight.", logged);
 
-            nextCharacter.SetupCharacter(CharacterType.Enemy, dataFile, FileManager.instance.ConvertToAbilityData(dataFile.listOfSkills, false), startingEmotion, true);
+            nextEnemy.SetupCharacter(CharacterType.Enemy, dataFile, FileManager.instance.ConvertToAbilityData(dataFile.listOfSkills, false), startingEmotion, true);
             SaveManager.instance.SaveEnemy(dataFile);
 
             if (CarryVariables.instance.ActiveChallenge("Stronger Enemies"))
             {
-                StartCoroutine(nextCharacter.ChangePower(1, -1));
-                StartCoroutine(nextCharacter.ChangeDefense(1, -1));
-                StartCoroutine(nextCharacter.ChangeSpeed(1, -1));
-                StartCoroutine(nextCharacter.ChangeLuck(0.1f, -1));
-                StartCoroutine(nextCharacter.ChangeAccuracy(0.1f, -1));
+                StartCoroutine(nextEnemy.ChangePower(1, -1));
+                StartCoroutine(nextEnemy.ChangeDefense(1, -1));
+                StartCoroutine(nextEnemy.ChangeSpeed(1, -1));
+                StartCoroutine(nextEnemy.ChangeLuck(0.1f, -1));
+                StartCoroutine(nextEnemy.ChangeAccuracy(0.1f, -1));
             }
 
             if (CarryVariables.instance.ActiveCheat("Enemies Stunned"))
             {
-                StartCoroutine(nextCharacter.Stun(1, logged + 1));
+                StartCoroutine(nextEnemy.Stun(1, logged + 1));
             }
         }
     }

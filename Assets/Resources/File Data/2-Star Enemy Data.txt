@@ -70,6 +70,18 @@
       "Sneak Attack,Weaken,No Hiding,Hidden from View,",
       "LeastHealth",
       "Eric J. Carter|Dominion: Allies|(Highwayman)"
+    ],
+    [
+      "Astronaut",
+      "Makes Players Airborne and Happy, and then Stuns them while Sad.",
+      "12",
+      "4",
+      "0.15",
+      "0.85",
+      "AIRBORNE",
+      "Rocket Launch,Laser Ray,Lonely in Space,",
+      "Effectiveness",
+      "Tyler Jacobson|Unfinity|(Space Beleren)"
     ]
   ]
 }
