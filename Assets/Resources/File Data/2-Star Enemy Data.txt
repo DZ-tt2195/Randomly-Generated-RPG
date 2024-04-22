@@ -61,7 +61,7 @@
     ],
     [
       "Assassin",
-      "Goes after Grounded Players with the least amount of Health. Tries to make everyone Grounded.",
+      "Tries to make everyone Grounded so that it can kill the Player with the least amount of Health.",
       "12",
       "6",
       "0.15",
@@ -73,7 +73,7 @@
     ],
     [
       "Astronaut",
-      "Makes Players Airborne and Happy, and then Stuns them while Sad.",
+      "Makes Players Airborne and Happy, and then Stuns them while it's Sad.",
       "12",
       "4",
       "0.15",

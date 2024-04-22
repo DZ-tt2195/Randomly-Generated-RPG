@@ -142,6 +142,9 @@ public class Ability : MonoBehaviour
             if (damage <= 1 && critical > 0)
                 Log.instance.AddText($"Critical hit! (+{critical} Damage)", logged);
 
+            if (self.myType == CharacterType.Enemy && CarryVariables.instance.ActiveCheat("Damage Cap"))
+                damage = Mathf.Min(damage, 5);
+
             return Mathf.Max(1, damage);
         }
         else
@@ -191,6 +194,8 @@ public class Ability : MonoBehaviour
                 case "":
                     break;
                 case "NONE":
+                    break;
+                case "TARGETDEAD":
                     break;
 
                 case "CANSUMMON":

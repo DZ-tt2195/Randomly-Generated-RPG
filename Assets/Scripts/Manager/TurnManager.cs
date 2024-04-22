@@ -113,7 +113,7 @@ public class TurnManager : MonoBehaviour
 
         if (currentWave > 5)
         {
-            GameFinished("You won!", $"Survived 10 waves.");
+            GameFinished("You won!", $"Survived 5 waves.");
         }
         else if (CarryVariables.instance.mode == CarryVariables.GameMode.Main)
         {

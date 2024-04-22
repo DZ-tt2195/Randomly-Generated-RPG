@@ -45,7 +45,7 @@ public class EnemyCharacter : Character
                 break;
             default:
                 if (attackingAbilities.Count != 0 && (data.aiTargeting.Equals("CHOOSEATTACK") ||
-                    this.CurrentEmotion == Emotion.Angry || (this.CurrentEmotion == Emotion.Sad && CalculateHealthPercent() < 0.5f)))
+                    this.CurrentEmotion == Emotion.Angry || (this.CurrentEmotion == Emotion.Sad && CalculateHealthPercent() <= 0.6f)))
                     chosenAbility = attackingAbilities[0];
                 else if (miscAbilities.Count != 0 && !extraAbility && this.CurrentEmotion == Emotion.Happy)
                     chosenAbility = miscAbilities[0];

@@ -273,7 +273,7 @@ public class Character : MonoBehaviour
     {
         if (this == null || effect == 0) yield break;
 
-        modifyPower = Math.Clamp(modifyPower += effect, -3, 3);
+        modifyPower = Math.Clamp(modifyPower += effect, -2, 2);
         if (logged >= 0)
         {
             TurnManager.instance.CreateVisual($"{(effect > 0 ? '+' : '-')}{Math.Abs(effect)} Power", this.transform.localPosition);
@@ -285,7 +285,7 @@ public class Character : MonoBehaviour
     {
         if (this == null || effect == 0) yield break;
 
-        modifyDefense = Math.Clamp(modifyDefense += effect, -6, 3);
+        modifyDefense = Math.Clamp(modifyDefense += effect, -6, 2);
         if (logged >= 0)
         {
             TurnManager.instance.CreateVisual($"{(effect > 0 ? '+' : '-')}{Math.Abs(effect)} Defense", this.transform.localPosition);
@@ -377,7 +377,7 @@ public class Character : MonoBehaviour
 
     public IEnumerator NoStun(int logged)
     {
-        if (this == null && TurnsStunned > 0) yield break;
+        if (this == null || TurnsStunned == 0) yield break;
 
         TurnsStunned = 0;
         Log.instance.AddText($"{this.name} is no longer Stunned.", logged);

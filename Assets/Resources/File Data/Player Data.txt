@@ -19,13 +19,13 @@
       "0.15",
       "0.9",
       "GROUNDED",
-      "Carefree,Delegate,Embarass,Impale,Joust,Meal,Neutralize,Shields Up,Shun,Skirmish,Stab,Taunt,Tragedy,Tricked,Unleash Rage,",
+      "Carefree,Delegate,Embarass,Impale,Joust,Meal,Neutralize,Shields Up,Shun,Skirmish,Stab,Taunt,Tragedy,Trick,Unleash Rage,",
       "",
       "Michael Watson|Dominion: Cornucopia and Guilds|(Joust)"
     ],
     [
       "Angel",
-      "Starts off Airborne and focuses on healing Players.",
+      "Begins the fight Airborne and focuses on healing Players.",
       "12",
       "3",
       "0.15",
@@ -43,7 +43,7 @@
       "0.15",
       "0.9",
       "GROUNDED",
-      "Blaze,Bounce,Delegate,Flood,Fog,Gravity Flip,Heavy Gravity,Ice Blast,Intimidation,Light Gravity,Lightning Strike,Rough Air,Sap Energy,Sky Hammer,Stalactites,",
+      "Blaze,Bounce,Delegate,Flood,Fog,Gravity Flip,Heavy Gravity,Ice Blast,Intimidation,Light Gravity,Lightning Strike,Rough Air,Sap Energy,Sky Hammer,Stalactites,Throw Dice,",
       "",
       "Harald Lieske|Dominion: Allies|(Conjurer)"
     ]

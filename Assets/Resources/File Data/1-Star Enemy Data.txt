@@ -14,10 +14,10 @@
     [
       "Bomb",
       "Increases its Defense for 2 turns, then explodes.",
-      "6",
+      "7",
       "0",
       "0",
-      "1.2",
+      "0.8",
       "GROUNDED",
       "Toughen,Explosion,",
       "ChooseAttack",
@@ -26,7 +26,7 @@
     [
       "KITTY!!!",
       "Heals other Enemies and makes them Happy.",
-      "6",
+      "7",
       "5",
       "0",
       "0.8",
@@ -38,7 +38,7 @@
     [
       "Rats",
       "Defensive enemy that makes copies of itself.",
-      "6",
+      "7",
       "5",
       "0",
       "0.8",
@@ -50,7 +50,7 @@
     [
       "Bees",
       "Stuns Players and makes their Cooldowns last longer.",
-      "6",
+      "7",
       "6",
       "0",
       "0.8",
@@ -62,7 +62,7 @@
     [
       "Spirit",
       "Changes Player Emotions.",
-      "6",
+      "7",
       "6",
       "0",
       "0.8",
@@ -74,7 +74,7 @@
     [
       "PUPPY!!!",
       "Nerfs Player stats and can attacks Grounded and Airborne Players.",
-      "6",
+      "7",
       "5",
       "0",
       "0.8",
@@ -86,7 +86,7 @@
     [
       "Leprechaun",
       "If this is at full health, it gives Players buffs; otherwise it deals lots of damage. Runs away afterwards.",
-      "6",
+      "7",
       "3",
       "0",
       "1",
@@ -98,7 +98,7 @@
     [
       "Flag Bearer",
       "Buffs Enemy stats. Eventually summons a 3 Star Enemy and leaves.",
-      "6",
+      "7",
       "4",
       "0",
       "0.8",
