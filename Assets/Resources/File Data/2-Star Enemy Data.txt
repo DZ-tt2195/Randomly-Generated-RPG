@@ -14,9 +14,9 @@
     [
       "Bat",
       "Drains health from Grounded Players.",
-      "12",
+      "10",
       "5",
-      "0.15",
+      "0.2",
       "0.85",
       "AIRBORNE",
       "Drain,Screech,On the Hunt,Bloodlust,",
@@ -26,9 +26,9 @@
     [
       "Archer",
       "Shoots down Airborne Players with a high chance of critical hits.",
-      "12",
+      "10",
       "4",
-      "0.3",
+      "0.2",
       "0.85",
       "GROUNDED",
       "Sharp Arrow,Frozen Arrow,Volley of Arrows,Focus,",
@@ -38,9 +38,9 @@
     [
       "Cow",
       "Either attacks the Player who most recently damaged them, or makes itself stronger.",
-      "12",
+      "10",
       "2",
-      "0.15",
+      "0.2",
       "0.85",
       "GROUNDED",
       "Charge,Graze,Produce Milk,",
@@ -50,9 +50,9 @@
     [
       "Wolf",
       "Makes itself Angry and hunts down Players who are Sad and Grounded.",
-      "12",
+      "10",
       "5",
-      "0.15",
+      "0.2",
       "0.85",
       "GROUNDED",
       "Slash,Glare,On a Branch,Aerial Landing,",
@@ -62,9 +62,9 @@
     [
       "Assassin",
       "Tries to make everyone Grounded so that it can kill the Player with the least amount of Health.",
-      "12",
+      "10",
       "6",
-      "0.15",
+      "0.2",
       "0.85",
       "GROUNDED",
       "Sneak Attack,Weaken,No Hiding,Hidden from View,",
@@ -74,14 +74,26 @@
     [
       "Astronaut",
       "Makes Players Airborne and Happy, and then Stuns them while it's Sad.",
-      "12",
+      "10",
       "4",
-      "0.15",
+      "0.2",
       "0.85",
       "AIRBORNE",
       "Rocket Launch,Laser Ray,Lonely in Space,",
       "Effectiveness",
       "Tyler Jacobson|Unfinity|(Space Beleren)"
+    ],
+    [
+      "Spider",
+      "Makes Players Airborne and lowers their stats.",
+      "10",
+      "5",
+      "0.2",
+      "0.85",
+      "AIRBORNE",
+      "Trapped,Spin Web,Jump Down,Stab Prey,",
+      "ChooseAirborne",
+      "Livia Prima|Guilds of Ravnica|(Hatchery Spider)"
     ]
   ]
 }

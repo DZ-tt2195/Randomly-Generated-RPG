@@ -207,27 +207,43 @@ public class EncyclopediaManager : MonoBehaviour
             if (CompareCharacters(searchPlayer, PlayerSearch.Knight)
                 && (CompareStrings(abilityInput.text, box.ability.data.myName) || CompareStrings(abilityInput.text, box.ability.editedDescription))
                 && CompareTypes(searchType1, box.ability.data) && CompareTypes(searchType2, box.ability.data))
+            {
                 box.transform.SetParent(storeAbilityBoxes);
+                box.transform.SetAsLastSibling();
+            }
             else
+            {
                 box.transform.SetParent(null);
+            }
         }
         foreach (AbilityBox box in angelAbilities)
         {
             if (CompareCharacters(searchPlayer, PlayerSearch.Angel)
                 && (CompareStrings(abilityInput.text, box.ability.data.myName) || CompareStrings(abilityInput.text, box.ability.editedDescription))
                 && CompareTypes(searchType1, box.ability.data) && CompareTypes(searchType2, box.ability.data))
+
+            {
                 box.transform.SetParent(storeAbilityBoxes);
+                box.transform.SetAsLastSibling();
+            }
             else
+            {
                 box.transform.SetParent(null);
+            }
         }
         foreach (AbilityBox box in wizardAbilities)
         {
             if (CompareCharacters(searchPlayer, PlayerSearch.Wizard)
                 && (CompareStrings(abilityInput.text, box.ability.data.myName) || CompareStrings(abilityInput.text, box.ability.editedDescription))
                 && CompareTypes(searchType1, box.ability.data) && CompareTypes(searchType2, box.ability.data))
+            {
                 box.transform.SetParent(storeAbilityBoxes);
+                box.transform.SetAsLastSibling();
+            }
             else
+            {
                 box.transform.SetParent(null);
+            }
         }
 
         storeAbilityBoxes.sizeDelta = new Vector3(2560, Math.Max(875, 175 * (1+(storeAbilityBoxes.childCount / 6))));
@@ -284,9 +300,14 @@ public class EncyclopediaManager : MonoBehaviour
         foreach (Character nextEnemy in listOfEnemyBoxes)
         {
             if (CompareStrings(enemyInput.text, nextEnemy.data.myName) && ComparePositions(searchPosition, nextEnemy.data) && CompareTiers(searchTier, nextEnemy.data.difficulty))
+            {
                 nextEnemy.transform.SetParent(storeEnemyBoxes);
+                nextEnemy.transform.SetAsLastSibling();
+            }
             else
+            {
                 nextEnemy.transform.SetParent(null);
+            }
         }
         storeEnemyBoxes.sizeDelta = new Vector3(2560, Math.Max(875, 350 * (1 + (storeEnemyBoxes.childCount / 5))));
         searchResults.text = $"Found {storeEnemyBoxes.childCount} Enemies";
