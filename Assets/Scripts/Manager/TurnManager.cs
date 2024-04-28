@@ -40,6 +40,7 @@ public class TurnManager : MonoBehaviour
         public List<AbilityBox> listOfBoxes = new();
         [SerializeField] List<RightClickMe> listOfSpeedImages = new();
         public TMP_Text instructions;
+        public TMP_Text timerText;
         bool borderDecrease = true;
         [SerializeField] Button quitButton;
         List<CharacterPositions> teammatePositions = new();
@@ -421,12 +422,17 @@ public class TurnManager : MonoBehaviour
             DisableCharacterButtons();
 
             TextCollector confirmDecision = MakeTextCollector(header, position, new List<string>() { "Confirm", "Rechoose" });
-            yield return confirmDecision.WaitForChoice();
+            CoroutineGroup group = new(this);
+            group.StartCoroutine(confirmDecision.WaitForChoice());
+            while (confirmDecision != null && group.AnyProcessing)
+                yield return null;
 
-            confirmChoice = confirmDecision.chosenButton;
-            Destroy(confirmDecision.gameObject);
+            if (confirmDecision != null)
+            {
+                confirmChoice = confirmDecision.chosenButton;
+                Destroy(confirmDecision.gameObject);
+            }
         }
-
     }
 
     #endregion

@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using MyBox;
 
 public class PlayerCharacter : Character
 {
@@ -17,7 +18,9 @@ public class PlayerCharacter : Character
         TurnManager.instance.instructions.text = $"{this.name}'s Turn: Choose an ability. {(extraAbility ? "(Extra Turn)" : "")}";
 
         yield return WaitForChoice();
-        chosenAbility = allAbilities[choice];
+        if (choice != -1)
+            chosenAbility = allAbilities[choice];
+
         this.border.gameObject.SetActive(false);
     }
 
@@ -83,14 +86,15 @@ public class PlayerCharacter : Character
             }
 
             yield return WaitForChoice();
-            ability.listOfTargets[index] = new() { ability.listOfTargets[index][choice] };
+            if (choice != -1)
+                ability.listOfTargets[index] = new() { ability.listOfTargets[index][choice] };
         }
     }
 
     IEnumerator WaitForChoice()
     {
         choice = -1;
-        while (choice == -1)
+        while (choice == -1 && timer > 0f)
             yield return null;
     }
 

@@ -22,6 +22,7 @@ public class Character : MonoBehaviour
     [Foldout("Character info", true)]
         protected Ability chosenAbility;
         protected Character chosenTarget;
+        protected float timer;
         [ReadOnly] public Character lastToAttackThis { get; private set; }
         [ReadOnly] public string editedDescription { get; private set; }
         [ReadOnly] public CharacterData data { get; private set; }
@@ -281,7 +282,7 @@ public class Character : MonoBehaviour
     {
         if (this == null || effect == 0) yield break;
 
-        modifyPower = Math.Clamp(modifyPower += effect, -2, 2);
+        modifyPower = Math.Clamp(modifyPower += effect, -3, 3);
         if (logged >= 0)
         {
             TurnManager.instance.CreateVisual($"{(effect > 0 ? '+' : '-')}{Math.Abs(effect)} Power", this.transform.localPosition);
@@ -293,7 +294,7 @@ public class Character : MonoBehaviour
     {
         if (this == null || effect == 0) yield break;
 
-        modifyDefense = Math.Clamp(modifyDefense += effect, -6, 2);
+        modifyDefense = Math.Clamp(modifyDefense += effect, -6, 3);
         if (logged >= 0)
         {
             TurnManager.instance.CreateVisual($"{(effect > 0 ? '+' : '-')}{Math.Abs(effect)} Defense", this.transform.localPosition);
@@ -422,8 +423,35 @@ public class Character : MonoBehaviour
         yield return EmotionEffect(logged, extraTurn);
     }
 
+    IEnumerator Timer()
+    {
+        timer = 10f;
+        if (this.myType == CharacterType.Player && CarryVariables.instance.ActiveChallenge("Player Timer"))
+        {
+            TurnManager.instance.timerText.gameObject.SetActive(true);
+            while (timer > 0f)
+            {
+                yield return null;
+                timer -= Time.deltaTime;
+                TurnManager.instance.timerText.text = $"Timer: {timer:F1}";
+            }
+
+            TextCollector[] allCollectors = FindObjectsOfType<TextCollector>();
+            foreach (TextCollector collector in allCollectors)
+                Destroy(collector.gameObject);
+
+            Log.instance.AddText($"{this.name} runs out of time. (Player Timer)");
+            Log.instance.AddText($"{this.name} skips their turn.");
+        }
+        else
+        {
+            TurnManager.instance.timerText.gameObject.SetActive(false);
+        }
+    }
+
     IEnumerator ResolveTurn(int logged, bool extraAbility)
     {
+        StartCoroutine(nameof(Timer));
         if (extraAbility)
         {
             foreach (Ability ability in listOfAutoAbilities)
@@ -443,7 +471,13 @@ public class Character : MonoBehaviour
 
         while (chosenAbility == null)
         {
+            if (timer < 0f)
+                yield break;
+
             yield return ChooseAbility(logged, extraAbility);
+
+            if (timer < 0f)
+                yield break;
 
             for (int i = 0; i < chosenAbility.data.defaultTargets.Length; i++)
             {
@@ -451,6 +485,9 @@ public class Character : MonoBehaviour
                 if (chosenAbility.singleTarget.Contains(chosenAbility.data.defaultTargets[i]))
                     chosenTarget = chosenAbility.listOfTargets[i][0];
             }
+
+            if (timer < 0f)
+                yield break;
 
             if (this.myType == CharacterType.Player)
             {
@@ -460,14 +497,12 @@ public class Character : MonoBehaviour
                 yield return TurnManager.instance.ConfirmUndo(part1 + part2, Vector3.zero);
                 if (TurnManager.instance.confirmChoice == 1)
                     chosenAbility = null;
+                if (timer < 0f)
+                    yield break;
             }
         }
 
-        yield return ResolveAbility(logged, extraAbility);
-    }
-
-    IEnumerator ResolveAbility(int logged, bool extraAbility)
-    {
+        StopCoroutine(nameof(Timer));
         foreach (Ability ability in listOfAutoAbilities)
         {
             if (ability.currentCooldown > 0)
@@ -513,7 +548,7 @@ public class Character : MonoBehaviour
 
     IEnumerator EmotionEffect(int logged, bool extraTurn)
     {
-        if (chosenAbility != null && !chosenAbility.data.myName.Equals("Skip Turn"))
+        if (timer > 0f && chosenAbility != null && !chosenAbility.data.myName.Equals("Skip Turn"))
         {
             if (this.CurrentEmotion == Emotion.Angry)
             {

@@ -19,7 +19,7 @@
       "0.15",
       "0.9",
       "GROUNDED",
-      "Carefree,Delegate,Embarass,Exercise,Impale,Joust,Meal,Neutralize,Rollout,Shields Up,Shun,Skirmish,Stab,Taunt,Tragedy,Trick,Unleash Rage,",
+      "Carefree,Delegate,Embarass,Exercise,Impale,Joust,Meal,Mock,Neutralize,Rollout,Shields Up,Shun,Skirmish,Stab,Taunt,Tragedy,Trick,Unleash Rage,",
       "",
       "Michael Watson|Dominion: Cornucopia and Guilds|(Joust)"
     ],
