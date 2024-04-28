@@ -100,7 +100,7 @@ public class TurnManager : MonoBehaviour
 
 #endregion
 
-#region Gameplay
+#region Gameplay Loop
 
     public IEnumerator NewWave()
     {
@@ -129,6 +129,21 @@ public class TurnManager : MonoBehaviour
                     yield return player.ChangeSpeed(1, -1);
                     yield return player.ChangeLuck(0.1f, -1);
                     yield return player.ChangeAccuracy(0.1f, -1);
+                }
+                Log.instance.AddText("");
+            }
+
+            if (currentWave >= 2 && CarryVariables.instance.ActiveChallenge("New Abilities"))
+            {
+                Log.instance.AddText($"Players have new abilities.");
+                foreach (Character player in listOfPlayers)
+                {
+                    for (int i = player.listOfRandomAbilities.Count - 1; i >= 0; i--)
+                        player.DropAbility(player.listOfRandomAbilities[i]);
+
+                    List<AbilityData> newAbilties = FileManager.instance.GenerateRandomPlayerAbilities(6, player.data.listOfSkills);
+                    foreach (AbilityData data in newAbilties)
+                        player.AddAbility(data, false, false);
                 }
                 Log.instance.AddText("");
             }

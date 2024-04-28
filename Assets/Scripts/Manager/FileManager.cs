@@ -123,6 +123,33 @@ public class FileManager : MonoBehaviour
         return foundData;
     }
 
-#endregion
+    public List<AbilityData> GenerateRandomPlayerAbilities(int number, string stringList)
+    {
+        List<AbilityData> allAbilities = ConvertToAbilityData(stringList, true).Shuffle();
+        List<AbilityData> abilitiesToUse = new();
+
+        int counter = -1;
+        while (abilitiesToUse.Count < number)
+        {
+            counter++;
+            try
+            {
+                abilitiesToUse.Add(allAbilities[counter]);
+            }
+            catch (NullReferenceException)
+            {
+                continue;
+            }
+            catch (ArgumentOutOfRangeException)
+            {
+                Debug.Log($"ran out of skills");
+                break;
+            }
+        }
+
+        return abilitiesToUse;
+    }
+
+    #endregion
 
 }

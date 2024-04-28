@@ -20,72 +20,73 @@ public class Character : MonoBehaviour
     public static float borderColor;
 
     [Foldout("Character info", true)]
-    protected Ability chosenAbility;
-    [ReadOnly] public string editedDescription { get; private set; }
-    [ReadOnly] public CharacterData data { get; private set; }
-    [ReadOnly] public List<Ability> listOfAutoAbilities = new();
-    [ReadOnly] public List<Ability> listOfRandomAbilities = new();
-    [ReadOnly] public CharacterType myType { get; private set; }
+        protected Ability chosenAbility;
+        protected Character chosenTarget;
+        [ReadOnly] public Character lastToAttackThis { get; private set; }
+        [ReadOnly] public string editedDescription { get; private set; }
+        [ReadOnly] public CharacterData data { get; private set; }
+        [ReadOnly] public List<Ability> listOfAutoAbilities = new();
+        [ReadOnly] public List<Ability> listOfRandomAbilities = new();
+        [ReadOnly] public CharacterType myType { get; private set; }
 
     [Foldout("Base Stats", true)]
-    protected int baseHealth;
-    protected int baseSpeed;
-    protected float baseLuck;
-    protected float baseAccuracy;
+        protected int baseHealth;
+        protected int baseSpeed;
+        protected float baseLuck;
+        protected float baseAccuracy;
 
     [Foldout("Current Stats", true)]
-    private int _currentHealth;
-    [ReadOnly] public int CurrentHealth
-    {
-        get { return _currentHealth; }
-        private set { healthText.text = $"{value}/{baseHealth}"; _currentHealth = value; }
-    }
-    private Position _currentPosition;
-    [ReadOnly] public Position CurrentPosition
-    {
-        get { return _currentPosition; }
-        private set {
-            _currentPosition = value; CharacterUI(); }
-    }
-    private Emotion _currentEmotion;
-    [ReadOnly] public Emotion CurrentEmotion
-    {
-        get { return _currentEmotion; }
-        private set {
-            _currentEmotion = value; CharacterUI(); }
-    }
-    private int _turnsStunned;
-    [ReadOnly]
-    public int TurnsStunned
-    {
-        get { return _turnsStunned; }
-        private set { _turnsStunned = value; CharacterUI(); }
-    }
-    private int _turnsProtected;
-    [ReadOnly]
-    public int TurnsProtected
-    {
-        get { return _turnsProtected; }
-        private set { _turnsProtected = value; CharacterUI(); }
-    }
-    [ReadOnly] public Character lastToAttackThis { get; private set; }
+        private int _currentHealth;
+        [ReadOnly] public int CurrentHealth
+        {
+            get { return _currentHealth; }
+            private set { healthText.text = $"{value}/{baseHealth}"; _currentHealth = value; }
+        }
+        public int modifyPower { get; private set; }
+        public int modifyDefense { get; private set; }
+        public int modifySpeed { get; private set; }
+        public float modifyLuck { get; private set; }
+        public float modifyAccuracy { get; private set; }
 
-    public int modifyPower { get; private set; }
-    public int modifyDefense { get; private set; }
-    public int modifySpeed { get; private set; }
-    public float modifyLuck { get; private set; }
-    public float modifyAccuracy { get; private set; }
+        private Position _currentPosition;
+        [ReadOnly] public Position CurrentPosition
+        {
+            get { return _currentPosition; }
+            private set {
+               _currentPosition = value; CharacterUI(); }
+        }
+        private Emotion _currentEmotion;
+        [ReadOnly] public Emotion CurrentEmotion
+        {
+            get { return _currentEmotion; }
+            private set {
+                _currentEmotion = value; CharacterUI(); }
+        }
+        private int _turnsStunned;
+        [ReadOnly]
+        public int TurnsStunned
+        {
+            get { return _turnsStunned; }
+            private set { _turnsStunned = value; CharacterUI(); }
+        }
+        private int _turnsProtected;
+        [ReadOnly]
+        public int TurnsProtected
+        {
+            get { return _turnsProtected; }
+            private set { _turnsProtected = value; CharacterUI(); }
+        }
 
     [Foldout("UI", true)]
-    [ReadOnly] public Image border;
-    [ReadOnly] public Button myButton;
-    [ReadOnly] public Image myImage;
-    Image statusImage;
-    TMP_Text statusText;
-    TMP_Text healthText;
-    TMP_Text nameText;
-    Sprite stunSprite;
-    Sprite protectedSprite;
+        [ReadOnly] public Image border;
+        [ReadOnly] public Button myButton;
+        [ReadOnly] public Image myImage;
+        Image statusImage;
+        TMP_Text statusText;
+        TMP_Text healthText;
+        TMP_Text nameText;
+        Sprite stunSprite;
+        Sprite protectedSprite;
 
     #endregion
 
@@ -142,6 +143,13 @@ public class Character : MonoBehaviour
         Ability newAbility = this.gameObject.AddComponent<Ability>();
         newAbility.SetupAbility(ability, startWithCooldown);
         (auto ? listOfAutoAbilities : listOfRandomAbilities).Add(newAbility);
+    }
+
+    internal void DropAbility(Ability ability)
+    {
+        listOfAutoAbilities.Remove(ability);
+        listOfRandomAbilities.Remove(ability);
+        Destroy(ability);
     }
 
     #endregion
@@ -399,6 +407,8 @@ public class Character : MonoBehaviour
     internal IEnumerator MyTurn(int logged, bool extraTurn)
     {
         chosenAbility = null;
+        chosenTarget = null;
+
         if (TurnsStunned > 0)
         {
             yield return TurnManager.instance.WaitTime();
@@ -429,7 +439,8 @@ public class Character : MonoBehaviour
         }
 
         chosenAbility = null;
-        Character targetCharacter = null;
+        chosenTarget = null;
+
         while (chosenAbility == null)
         {
             yield return ChooseAbility(logged, extraAbility);
@@ -438,13 +449,13 @@ public class Character : MonoBehaviour
             {
                 yield return ChooseTarget(chosenAbility, chosenAbility.data.defaultTargets[i], i);
                 if (chosenAbility.singleTarget.Contains(chosenAbility.data.defaultTargets[i]))
-                    targetCharacter = chosenAbility.listOfTargets[i][0];
+                    chosenTarget = chosenAbility.listOfTargets[i][0];
             }
 
             if (this.myType == CharacterType.Player)
             {
                 string part1 = $"{this.name}: Use {chosenAbility.data.myName}";
-                string part2 = targetCharacter != null ? $" on {targetCharacter.data.myName}?" : "?";
+                string part2 = chosenTarget != null ? $" on {chosenTarget.data.myName}?" : "?";
 
                 yield return TurnManager.instance.ConfirmUndo(part1 + part2, Vector3.zero);
                 if (TurnManager.instance.confirmChoice == 1)
@@ -452,6 +463,11 @@ public class Character : MonoBehaviour
             }
         }
 
+        yield return ResolveAbility(logged, extraAbility);
+    }
+
+    IEnumerator ResolveAbility(int logged, bool extraAbility)
+    {
         foreach (Ability ability in listOfAutoAbilities)
         {
             if (ability.currentCooldown > 0)
@@ -463,7 +479,7 @@ public class Character : MonoBehaviour
                 ability.currentCooldown--;
         }
 
-        Log.instance.AddText(Log.Substitute(chosenAbility, this, targetCharacter), logged);
+        Log.instance.AddText(Log.Substitute(chosenAbility, this, chosenTarget), logged);
         if (!chosenAbility.data.myName.Equals("Skip Turn"))
         {
             chosenAbility.killed = false;
@@ -490,7 +506,7 @@ public class Character : MonoBehaviour
         yield return null;
     }
 
-    public virtual IEnumerator ChooseTarget(Ability ability, TeamTarget target, int index)
+    protected virtual IEnumerator ChooseTarget(Ability ability, TeamTarget target, int index)
     {
         yield return null;
     }
@@ -577,6 +593,6 @@ public class Character : MonoBehaviour
         }
     }
 
-#endregion
+    #endregion
 
 }

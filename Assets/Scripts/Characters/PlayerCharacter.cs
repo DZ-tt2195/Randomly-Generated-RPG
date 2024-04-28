@@ -61,7 +61,7 @@ public class PlayerCharacter : Character
         }
     }
 
-    public override IEnumerator ChooseTarget(Ability ability, TeamTarget target, int index)
+    protected override IEnumerator ChooseTarget(Ability ability, TeamTarget target, int index)
     {
         foreach (AbilityBox box in TurnManager.instance.listOfBoxes)
             box.gameObject.SetActive(false);

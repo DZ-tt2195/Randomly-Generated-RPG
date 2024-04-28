@@ -34,6 +34,7 @@ public class ScreenOverlay : MonoBehaviour
         [SerializeField] Slider animationSlider;
         [SerializeField] TMP_Text animationText;
         [SerializeField] Toggle undoToggle;
+        [SerializeField] Toggle tooltipToggle;
 
     [Foldout("Emotion triangle", true)]
         [SerializeField] Button emotionButton;
@@ -50,30 +51,18 @@ public class ScreenOverlay : MonoBehaviour
         settingsButton.onClick.AddListener(SettingsScreen);
         animationSlider.onValueChanged.AddListener(SetAnimationSpeed);
         undoToggle.onValueChanged.AddListener(SetUndo);
+        tooltipToggle.onValueChanged.AddListener(SetTooltip);
+        emotionButton.onClick.AddListener(SeeEmotions);
     }
 
     private void Start()
     {
         SetAnimationSpeed(PlayerPrefs.HasKey("Animation Speed") ? PlayerPrefs.GetFloat("Animation Speed") : 0.5f);
         SetUndo(!PlayerPrefs.HasKey("Confirm Choices") || PlayerPrefs.GetInt("Confirm Choices") == 1);
+        SetTooltip(!PlayerPrefs.HasKey("Keyword Tooltip") || PlayerPrefs.GetInt("Keyword Tooltip") == 1);
 
-        emotionButton.onClick.AddListener(SeeEmotions);
         foreach (TMP_Text description in listOfDescriptions)
             description.text = KeywordTooltip.instance.EditText(description.text);
-    }
-
-    private void Update()
-    {
-        this.transform.SetAsLastSibling();
-        if ((Input.anyKey && !Input.GetMouseButton(0) && !Input.GetMouseButton(1)) ||
-            (!gameSettingsBackground.activeInHierarchy && Input.GetMouseButton(0) || Input.GetMouseButton(1)))
-        {
-            blackBackground.SetActive(false);
-            characterDisplayBackground.SetActive(false);
-            gameSettingsBackground.SetActive(false);
-            emotionBackground.SetActive(false);
-            displayedScreen = CurrentScreen.None;
-        }
     }
 
     void SettingsScreen()
@@ -97,6 +86,12 @@ public class ScreenOverlay : MonoBehaviour
         PlayerPrefs.SetInt("Confirm Choices", value ? 1 : 0);
     }
 
+    public void SetTooltip(bool value)
+    {
+        tooltipToggle.isOn = value;
+        PlayerPrefs.SetInt("Keyword Tooltip", value ? 1 : 0);
+    }
+
     void SeeEmotions()
     {
         displayedScreen = CurrentScreen.Emotion;
@@ -106,6 +101,22 @@ public class ScreenOverlay : MonoBehaviour
     }
 
     #endregion
+
+#region Gameplay
+
+    private void Update()
+    {
+        this.transform.SetAsLastSibling();
+        if ((Input.anyKey && !Input.GetMouseButton(0) && !Input.GetMouseButton(1)) ||
+            (!gameSettingsBackground.activeInHierarchy && Input.GetMouseButton(0) || Input.GetMouseButton(1)))
+        {
+            blackBackground.SetActive(false);
+            characterDisplayBackground.SetActive(false);
+            gameSettingsBackground.SetActive(false);
+            emotionBackground.SetActive(false);
+            displayedScreen = CurrentScreen.None;
+        }
+    }
 
     public void DisplayCharacterInfo(Character character, string firstStat, string secondStat)
     {
@@ -148,5 +159,7 @@ public class ScreenOverlay : MonoBehaviour
             listOfStars[i].gameObject.SetActive(false);
         }
     }
+
+    #endregion
 
 }

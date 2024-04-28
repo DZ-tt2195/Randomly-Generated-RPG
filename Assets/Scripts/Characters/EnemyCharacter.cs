@@ -55,7 +55,7 @@ public class EnemyCharacter : Character
         }
     }
 
-    public override IEnumerator ChooseTarget(Ability ability, TeamTarget target, int index)
+    protected override IEnumerator ChooseTarget(Ability ability, TeamTarget target, int index)
     {
         if (ability.singleTarget.Contains(target))
         {

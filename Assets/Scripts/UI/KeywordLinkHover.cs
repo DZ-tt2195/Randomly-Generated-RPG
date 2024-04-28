@@ -20,7 +20,7 @@ public class KeywordLinkHover : MonoBehaviour
         this.transform.SetAsLastSibling();
         Vector3 mousePosition = new(Input.mousePosition.x, Input.mousePosition.y, 0);
 
-        if (TMP_TextUtilities.IsIntersectingRectTransform(rectTrans, mousePosition, null))
+        if (PlayerPrefs.GetInt("Keyword Tooltip") == 1 && TMP_TextUtilities.IsIntersectingRectTransform(rectTrans, mousePosition, null))
         {
             int intersectingLink = TMP_TextUtilities.FindIntersectingLink(myText, mousePosition, null);
             try{KeywordTooltip.instance.ActivateTextBox(myText.textInfo.linkInfo[intersectingLink].GetLinkID(), mousePosition);}

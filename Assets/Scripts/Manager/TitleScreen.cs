@@ -24,8 +24,8 @@ public class TitleScreen : MonoBehaviour
 
     [Foldout("Cheats/Challenges", true)]
     [SerializeField] GameObject cheatChallengeObject;
-    [SerializeField] List<Toggle> listOfCheats = new();
-    [SerializeField] List<Toggle> listOfChallenges = new();
+    List<Toggle> listOfCheats = new();
+    List<Toggle> listOfChallenges = new();
 
     [Foldout("Info Screen", true)]
     [SerializeField] List<Button> infoScreenToggles = new();
@@ -55,10 +55,20 @@ public class TitleScreen : MonoBehaviour
         foreach (Button button in infoScreenToggles)
             button.onClick.AddListener(ToggleInfoScreen);
 
-        foreach (Toggle toggle in listOfCheats)
-            InitialToggle(toggle, true);
-        foreach (Toggle toggle in listOfChallenges)
-            InitialToggle(toggle, false);
+        Toggle[] allToggles = FindObjectsOfType<Toggle>(includeInactive: true);
+        foreach (Toggle toggle in allToggles)
+        {
+            if (toggle.transform.parent.name.Equals("Cheats"))
+            {
+                listOfCheats.Add(toggle);
+                InitialToggle(toggle, true);
+            }
+            else if (toggle.transform.parent.name.Equals("Challenges"))
+            {
+                listOfChallenges.Add(toggle);
+                InitialToggle(toggle, false);
+            }
+        }
     }
 
     private void Update()
@@ -119,31 +129,13 @@ public class TitleScreen : MonoBehaviour
         for (int i = 0; i < playerData.Count; i++)
         {
             PlayerCharacter nextCharacter = Instantiate(playerPrefab).AddComponent<PlayerCharacter>();
-            List<AbilityData> allAbilities = FileManager.instance.ConvertToAbilityData(playerData[i].listOfSkills, true).Shuffle();
-            List<AbilityData> abilitiesToUse = new();
+            nextCharacter.SetupCharacter(CharacterType.Player, playerData[i],
+                FileManager.instance.GenerateRandomPlayerAbilities(6, playerData[i].listOfSkills),
+                (Emotion)UnityEngine.Random.Range(1,5), false);
 
-            int counter = -1;
-            while (abilitiesToUse.Count < 6)
-            {
-                counter++;
-                try
-                {
-                    abilitiesToUse.Add(allAbilities[counter]);
-                }
-                catch (NullReferenceException)
-                {
-                    continue;
-                }
-                catch (ArgumentOutOfRangeException)
-                {
-                    Debug.Log($"ran out of skills");
-                    break;
-                }
-            }
-
-            nextCharacter.SetupCharacter(CharacterType.Player, playerData[i], abilitiesToUse, (Emotion)UnityEngine.Random.Range(1,5), false);
             nextCharacter.transform.SetParent(abilityBoxes[i * 6].transform.parent);
             nextCharacter.transform.localPosition = new Vector3(-1050, 0, 0);
+
             FileManager.instance.listOfPlayers.Add(nextCharacter);
             for (int j = 0; j<nextCharacter.listOfRandomAbilities.Count; j++)
                 abilityBoxes[i * 6 + j].ReceiveAbility(true, nextCharacter.listOfRandomAbilities[j]);
