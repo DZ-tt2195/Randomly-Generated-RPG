@@ -201,6 +201,15 @@ public class Character : MonoBehaviour
 
 #region Change Stats
 
+    public IEnumerator MaxHealth(int health, int logged)
+    {
+        if (this == null) yield break;
+        baseHealth += health;
+        healthText.text = $"{CurrentHealth}/{baseHealth}";
+        TurnManager.instance.CreateVisual($"+{health} MAX Health", this.transform.localPosition);
+        Log.instance.AddText($"{(this.name)} has {health} more max Health.", logged);
+    }
+
     public IEnumerator GainHealth(int health, int logged)
     {
         if (this == null) yield break;
@@ -526,7 +535,10 @@ public class Character : MonoBehaviour
                 string[] splicedString = TurnManager.SpliceString(chosenAbility.data.instructions[i], '/');
                 yield return chosenAbility.ResolveInstructions(splicedString, i, logged + 1);
             }
-            chosenAbility.currentCooldown = chosenAbility.data.baseCooldown + (CurrentEmotion == Emotion.Happy ? 1 : 0);
+
+            chosenAbility.currentCooldown = chosenAbility.data.baseCooldown +
+                (CurrentEmotion == Emotion.Happy ? 1 : 0)
+                + (CarryVariables.instance.ActiveCheat("Faster Cooldowns") && this.myType == CharacterType.Player ? -1 : 0);
 
             if (CarryVariables.instance.mode == CarryVariables.GameMode.Tutorial && TutorialManager.instance.currentCharacter == this)
             {

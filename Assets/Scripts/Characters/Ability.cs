@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using MyBox;
+using System.Linq;
 
 public enum TeamTarget { None, Self, AnyOne, All, OnePlayer, OtherPlayer, OneEnemy, OtherEnemy, AllPlayers, AllEnemies };
 public enum AbilityType { None, Attack, StatPlayer, StatEnemy, EmotionPlayer, EmotionEnemy, PositionPlayer, PositionEnemy, Healing, Misc };
@@ -124,8 +125,8 @@ public class Ability : MonoBehaviour
 
         if (effectiveness < 0 && CarryVariables.instance.ActiveChallenge("Ineffectives Miss") && self.myType == CharacterType.Player)
         {
-            Log.instance.AddText($"{user.name}'s attack misses {target.name} (Ineffectives Miss).", logged);
-            TurnManager.instance.CreateVisual("MISS", target.transform.localPosition);
+            Log.instance.AddText($"{user.name}'s attack does nothing (Ineffectives Miss).", logged);
+            TurnManager.instance.CreateVisual("0", target.transform.localPosition);
             return 0;
         }
 
@@ -186,7 +187,7 @@ public class Ability : MonoBehaviour
     }
 
     bool CheckMethod(string[] listOfMethods, int currentIndex)
-    { 
+    {
         foreach (string methodName in listOfMethods)
         {
             switch (methodName)
@@ -213,65 +214,56 @@ public class Ability : MonoBehaviour
                     if (self.CalculateHealthPercent() > 0.5f)
                         return false; break;
                 case "TARGETINJURED":
-                    for (int i = listOfTargets[currentIndex].Count - 1; i >= 0; i--)
-                        if (listOfTargets[currentIndex][i].CalculateHealthPercent() > 0.5f) listOfTargets[currentIndex].RemoveAt(i);
+                    listOfTargets[currentIndex].RemoveAll(target => target.CalculateHealthPercent() > 0.5f);
                     break;
 
                 case "TARGETNEUTRAL":
-                    for (int i = listOfTargets[currentIndex].Count - 1; i >= 0; i--)
-                        if (listOfTargets[currentIndex][i].CurrentEmotion != Emotion.Neutral) listOfTargets[currentIndex].RemoveAt(i);
+                    listOfTargets[currentIndex].RemoveAll(target => target.CurrentEmotion != Emotion.Neutral);
                     break;
                 case "SELFNEUTRAL":
                     if (self.CurrentEmotion != Emotion.Neutral)
                         return false; break;
                 case "TARGETNOTNEUTRAL":
-                    for (int i = listOfTargets[currentIndex].Count - 1; i >= 0; i--)
-                        if (listOfTargets[currentIndex][i].CurrentEmotion == Emotion.Neutral) listOfTargets[currentIndex].RemoveAt(i);
+                    listOfTargets[currentIndex].RemoveAll(target => target.CurrentEmotion == Emotion.Neutral);
                     break;
                 case "SELFNOTNEUTRAL":
                     if (self.CurrentEmotion == Emotion.Neutral)
                         return false; break;
 
                 case "TARGETHAPPY":
-                    for (int i = listOfTargets[currentIndex].Count - 1; i >= 0; i--)
-                        if (listOfTargets[currentIndex][i].CurrentEmotion != Emotion.Happy) listOfTargets[currentIndex].RemoveAt(i);
+                    listOfTargets[currentIndex].RemoveAll(target => target.CurrentEmotion != Emotion.Happy);
                     break;
                 case "SELFHAPPY":
                     if (self.CurrentEmotion != Emotion.Happy)
                         return false; break;
                 case "TARGETNOTHAPPY":
-                    for (int i = listOfTargets[currentIndex].Count - 1; i >= 0; i--)
-                        if (listOfTargets[currentIndex][i].CurrentEmotion == Emotion.Happy) listOfTargets[currentIndex].RemoveAt(i);
+                    listOfTargets[currentIndex].RemoveAll(target => target.CurrentEmotion == Emotion.Happy);
                     break;
                 case "SELFNOTHAPPY":
                     if (self.CurrentEmotion == Emotion.Happy)
                         return false; break;
 
                 case "TARGETANGRY":
-                    for (int i = listOfTargets[currentIndex].Count - 1; i >= 0; i--)
-                        if (listOfTargets[currentIndex][i].CurrentEmotion != Emotion.Angry) listOfTargets[currentIndex].RemoveAt(i);
+                    listOfTargets[currentIndex].RemoveAll(target => target.CurrentEmotion != Emotion.Angry);
                     break;
                 case "SELFANGRY":
                     if (self.CurrentEmotion != Emotion.Angry)
                         return false; break;
                 case "TARGETNOTANGRY":
-                    for (int i = listOfTargets[currentIndex].Count - 1; i >= 0; i--)
-                        if (listOfTargets[currentIndex][i].CurrentEmotion == Emotion.Angry) listOfTargets[currentIndex].RemoveAt(i);
+                    listOfTargets[currentIndex].RemoveAll(target => target.CurrentEmotion == Emotion.Angry);
                     break;
                 case "SELFNOTANGRY":
                     if (self.CurrentEmotion == Emotion.Angry)
                         return false; break;
 
                 case "TARGETSAD":
-                    for (int i = listOfTargets[currentIndex].Count - 1; i >= 0; i--)
-                        if (listOfTargets[currentIndex][i].CurrentEmotion != Emotion.Sad) listOfTargets[currentIndex].RemoveAt(i);
+                    listOfTargets[currentIndex].RemoveAll(target => target.CurrentEmotion != Emotion.Sad);
                     break;
                 case "SELFSAD":
                     if (self.CurrentEmotion != Emotion.Sad)
                         return false; break;
                 case "TARGETNOTSAD":
-                    for (int i = listOfTargets[currentIndex].Count - 1; i >= 0; i--)
-                        if (listOfTargets[currentIndex][i].CurrentEmotion == Emotion.Sad) listOfTargets[currentIndex].RemoveAt(i);
+                    listOfTargets[currentIndex].RemoveAll(target => target.CurrentEmotion == Emotion.Neutral);
                     break;
                 case "SELFNOTSAD":
                     if (self.CurrentEmotion == Emotion.Sad)
@@ -281,33 +273,37 @@ public class Ability : MonoBehaviour
                     if (self.CurrentPosition != Position.Grounded)
                         return false; break;
                 case "TARGETGROUNDED":
-                    for (int i = listOfTargets[currentIndex].Count - 1; i >= 0; i--)
-                        if (listOfTargets[currentIndex][i].CurrentPosition != Position.Grounded) listOfTargets[currentIndex].RemoveAt(i);
+                    listOfTargets[currentIndex].RemoveAll(target => target.CurrentPosition != Position.Grounded);
                     break;
+                case "ALLGROUNDED":
+                    int numberGrounded = data.defaultTargets[currentIndex] == TeamTarget.AllPlayers ? TurnManager.instance.listOfPlayers.Count + TurnManager.instance.listOfEnemies.Count : TurnManager.instance.listOfEnemies.Count;
+                    listOfTargets[currentIndex].RemoveAll(target => target.CurrentPosition != Position.Grounded);
+                    if (listOfTargets[currentIndex].Count != numberGrounded)
+                        return false; break;
 
                 case "SELFAIRBORNE":
                     if (self.CurrentPosition != Position.Airborne)
                         return false; break;
                 case "TARGETAIRBORNE":
-                    for (int i = listOfTargets[currentIndex].Count - 1; i >= 0; i--)
-                        if (listOfTargets[currentIndex][i].CurrentPosition != Position.Airborne) listOfTargets[currentIndex].RemoveAt(i);
+                    listOfTargets[currentIndex].RemoveAll(target => target.CurrentPosition != Position.Airborne);
                     break;
+                case "ALLAIRBORNE":
+                    int numberAirborne = data.defaultTargets[currentIndex] == TeamTarget.AllPlayers ? TurnManager.instance.listOfPlayers.Count + TurnManager.instance.listOfEnemies.Count : TurnManager.instance.listOfEnemies.Count;
+                    listOfTargets[currentIndex].RemoveAll(target => target.CurrentPosition != Position.Airborne);
+                    if (listOfTargets[currentIndex].Count != numberAirborne)
+                        return false; break;
 
                 case "SAMEPOSITION":
-                    for (int i = listOfTargets[currentIndex].Count - 1; i >= 0; i--)
-                        if (listOfTargets[currentIndex][i].CurrentPosition != self.CurrentPosition) listOfTargets[currentIndex].RemoveAt(i);
+                    listOfTargets[currentIndex].RemoveAll(target => target.CurrentPosition != self.CurrentPosition);
                     break;
                 case "DIFFERENTPOSITION":
-                    for (int i = listOfTargets[currentIndex].Count - 1; i >= 0; i--)
-                        if (listOfTargets[currentIndex][i].CurrentPosition == self.CurrentPosition) listOfTargets[currentIndex].RemoveAt(i);
+                    listOfTargets[currentIndex].RemoveAll(target => target.CurrentPosition == self.CurrentPosition);
                     break;
                 case "SAMEEMOTION":
-                    for (int i = listOfTargets[currentIndex].Count - 1; i >= 0; i--)
-                        if (listOfTargets[currentIndex][i].CurrentEmotion != self.CurrentEmotion) listOfTargets[currentIndex].RemoveAt(i);
+                    listOfTargets[currentIndex].RemoveAll(target => target.CurrentEmotion != self.CurrentEmotion);
                     break;
                 case "DIFFERENTEMOTION":
-                    for (int i = listOfTargets[currentIndex].Count - 1; i >= 0; i--)
-                        if (listOfTargets[currentIndex][i].CurrentEmotion == self.CurrentEmotion) listOfTargets[currentIndex].RemoveAt(i);
+                    listOfTargets[currentIndex].RemoveAll(target => target.CurrentEmotion == self.CurrentEmotion);
                     break;
 
                 case "LASTATTACKEREXISTS":
@@ -430,6 +426,9 @@ public class Ability : MonoBehaviour
                     case "TARGETHEAL":
                         yield return target.GainHealth(Mathf.Max(data.healthRegain + self.CalculatePower(), 1), logged);
                         if (target.CalculateHealthPercent() >= 1f) fullHeal = true;
+                        break;
+                    case "TARGETMAXHEALTH":
+                        yield return target.MaxHealth(Mathf.Max(data.healthRegain + self.CalculatePower(), 1), logged);
                         break;
 
                     case "SELFSWAPPOSITION":
@@ -586,6 +585,11 @@ public class Ability : MonoBehaviour
                             if (ability.currentCooldown > 0) ability.currentCooldown-=data.miscNumber;
                         foreach (Ability ability in target.listOfRandomAbilities)
                             if (ability.currentCooldown > 0) ability.currentCooldown-=data.miscNumber;
+                        break;
+
+                    case "TARGETINCREASERANDOMCOOLDOWN":
+                        List<Ability> hasNoCooldown = target.listOfRandomAbilities.Where(ability => ability.currentCooldown == 0).ToList();
+                        if (hasNoCooldown.Count > 0) hasNoCooldown[Random.Range(0, hasNoCooldown.Count)].currentCooldown += data.miscNumber;
                         break;
 
                     default:

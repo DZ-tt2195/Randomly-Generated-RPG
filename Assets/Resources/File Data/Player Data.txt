@@ -43,7 +43,7 @@
       "0.15",
       "0.9",
       "GROUNDED",
-      "Blaze,Bounce,Delegate,Flood,Fog,Gravity Flip,Heavy Gravity,Ice Blast,Intimidation,Light Gravity,Lightning Strike,Rough Air,Sap Energy,Sky Hammer,Stalactites,Throw Dice,Turbulence,",
+      "Blaze,Bounce,Delegate,Flood,Fog,Gravity Flip,Heavy Gravity,Ice Blast,Intimidation,Light Gravity,Lightning Strike,Rough Air,Sap Energy,Sky Hammer,Stalactites,Throw Dice,Turbulence,Team Attack,",
       "",
       "Harald Lieske|Dominion: Allies|(Conjurer)"
     ]

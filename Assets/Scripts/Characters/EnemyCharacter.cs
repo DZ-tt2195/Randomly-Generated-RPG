@@ -57,10 +57,10 @@ public class EnemyCharacter : Character
 
     protected override IEnumerator ChooseTarget(Ability ability, TeamTarget target, int index)
     {
+        ability.listOfTargets[index] = ability.listOfTargets[index].Shuffle();
+
         if (ability.singleTarget.Contains(target))
         {
-            List<Character> selectedTarget = ability.listOfTargets[index].Shuffle();
-
             switch (data.aiTargeting)
             {
                 case "":
@@ -69,62 +69,41 @@ public class EnemyCharacter : Character
                     break;
 
                 case "LASTATTACKER":
-                    selectedTarget = new List<Character>() { lastToAttackThis };
+                    ability.listOfTargets[index].RemoveAll(target => target != lastToAttackThis);
                     break;
 
                 case "CHOOSEAIRBORNE":
-                    List<Character> airborneTargets = new();
-                    foreach (Character character in selectedTarget)
-                    {
-                        if (character.CurrentPosition == Position.Airborne)
-                            airborneTargets.Add(character);
-                    }
-                    if (airborneTargets.Count>0)
-                        selectedTarget = airborneTargets;
+                    ability.listOfTargets[index].RemoveAll(target => target.CurrentPosition != Position.Airborne);
+                    ability.listOfTargets[index] = new() { ability.listOfTargets[index][Random.Range(0, ability.listOfTargets[index].Count)] };
                     break;
-
                 case "CHOOSEGROUNDED":
-                    List<Character> groundedTargets = new();
-                    foreach (Character character in selectedTarget)
-                    {
-                        if (character.CurrentPosition == Position.Grounded)
-                            groundedTargets.Add(character);
-                    }
-                    if (groundedTargets.Count > 0)
-                        selectedTarget = groundedTargets;
+                    ability.listOfTargets[index].RemoveAll(target => target.CurrentPosition != Position.Grounded);
+                    ability.listOfTargets[index] = new() { ability.listOfTargets[index][Random.Range(0, ability.listOfTargets[index].Count)] };
                     break;
 
                 case "LEASTHEALTH":
-                    List<Character> ascendingHealth = selectedTarget.OrderBy(o => o.CalculateHealth()).ToList();
-                    selectedTarget = new() { ascendingHealth[0] };
+                    ability.listOfTargets[index].OrderBy(o => o.CalculateHealth()).ToList();
+                    ability.listOfTargets[index] = new() { ability.listOfTargets[index][0] };
                     break;
-
                 case "MOSTHEALTH":
-                    List<Character> descendingHealth = selectedTarget.OrderByDescending(o => o.CalculateHealth()).ToList();
-                    selectedTarget = new() { descendingHealth[0] };
+                    ability.listOfTargets[index].OrderByDescending(o => o.CalculateHealth()).ToList();
+                    ability.listOfTargets[index] = new() { ability.listOfTargets[index][0] };
                     break;
 
                 case "EFFECTIVENESS":
-                    List<Character> effectiveTargets = selectedTarget.OrderBy(o => ability.Effectiveness(this, o)).ToList();
-                    selectedTarget = new() { effectiveTargets[0] };
+                    ability.listOfTargets[index].OrderBy(o => ability.Effectiveness(this, o)).ToList();
+                    ability.listOfTargets[index] = new() { ability.listOfTargets[index][0] };
                     break;
 
                 case "STRONGEST":
-                    List<Character> strongestTargets = selectedTarget.OrderByDescending(o => o.CalculateStatTotals()).ToList();
-                    selectedTarget = new() { strongestTargets[0] };
+                    ability.listOfTargets[index].OrderByDescending(o => o.CalculateStatTotals()).ToList();
+                    ability.listOfTargets[index] = new() { ability.listOfTargets[index][0] };
                     break;
-
                 case "WEAKEST":
-                    List<Character> weakestTargets = selectedTarget.OrderBy(o => o.CalculateStatTotals()).ToList();
-                    selectedTarget = new() { weakestTargets[0] };
-                    break;
-
-                default:
-                    Debug.Log($"not programmed: {data.aiTargeting}");
+                    ability.listOfTargets[index].OrderBy(o => o.CalculateStatTotals()).ToList();
+                    ability.listOfTargets[index] = new() { ability.listOfTargets[index][0] };
                     break;
             }
-
-            ability.listOfTargets[index] = new() { selectedTarget[Random.Range(0, selectedTarget.Count)] };
         }
         yield return null;
     }

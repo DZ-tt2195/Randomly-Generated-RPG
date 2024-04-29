@@ -94,6 +94,30 @@
       "Trapped,Spin Web,Jump Down,Stab Prey,",
       "ChooseAirborne",
       "Livia Prima|Guilds of Ravnica|(Hatchery Spider)"
+    ],
+    [
+      "Barbarian",
+      "Makes itself Angry and goes after the Grounded Player with the most Health.",
+      "10",
+      "4",
+      "0.2",
+      "0.85",
+      "GROUNDED",
+      "Fury,Locked On,Ambush,",
+      "MostHealth",
+      "Julien Delval|Dominion: Allies|(Barbarian)"
+    ],
+    [
+      "Trickster",
+      "Manipiles Player Emotions and Positions, and applies Cooldown to their Abilities that have no Cooldown.",
+      "10",
+      "4",
+      "0.2",
+      "0.85",
+      "AIRBORNE",
+      "Mischief,",
+      "",
+      "Mila Pesic|Throne of Eldraine|(Bog Naughty)"
     ]
   ]
 }

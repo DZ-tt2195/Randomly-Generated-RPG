@@ -55,7 +55,7 @@
       "0",
       "0.9",
       "GROUNDED",
-      "Call for Help,Call for Guards,Procession,Identify Targets,",
+      "Recruit,Call for Guards,Procession,Identify Targets,",
       "",
       "Kieran Yanner|Throne of Eldraine|(Kenrith, the Returned King)"
     ]

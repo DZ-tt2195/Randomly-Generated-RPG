@@ -40,6 +40,7 @@ public class EncyclopediaManager : MonoBehaviour
 
     void ChangeMode(int n)
     {
+        searchResults.text = "";
         for (int i = 0; i < currentSearch.Count; i++)
         {
             masterGameObject[i].SetActive(i == n);
@@ -94,7 +95,10 @@ public class EncyclopediaManager : MonoBehaviour
                 nextEnemy.SetupCharacter(CharacterType.Enemy, data, FileManager.instance.ConvertToAbilityData(data.listOfSkills, false), Emotion.Neutral, false);
                 listOfEnemyBoxes.Add(nextEnemy);
                 foreach (Transform child in nextEnemy.transform)
-                    Destroy(child.gameObject);
+                {
+                    if (!child.name.Equals("Name Text"))
+                        Destroy(child.gameObject);
+                }
             }
         }
 

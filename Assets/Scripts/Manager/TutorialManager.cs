@@ -187,7 +187,7 @@ public class TutorialManager : MonoBehaviour
                 TurnManager.instance.CreateEnemy(FileManager.instance.FindBonusEnemy("Crow"), Emotion.Neutral, 0);
 
                 yield return ClickThroughDialogue(new List<string>()
-                { "Everyone is either Grounded or Airborne. Your Knight always starts Grounded, and Angel always starts Airborne.",
+                { "Everyone has a Position; they're either Grounded or Airborne. Your Knight always starts Grounded, and Angel always starts Airborne.",
                   "One of the Knight's big weaknesses is that they have no way to attack Airborne Enemies." });
 
                 currentStep = 10;

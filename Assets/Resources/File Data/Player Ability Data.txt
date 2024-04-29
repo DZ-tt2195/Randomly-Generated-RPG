@@ -1138,6 +1138,25 @@
       "-0.05",
       "",
       "AllEnemies"
+    ],
+    [
+      "Wizard",
+      "Team Attack",
+      "If all 3 Players are Airborne, deal ATK damage to all Enemies.",
+      "THIS uses a team attack.",
+      "Attack",
+      "Attack",
+      "AllAirborne-None",
+      "1",
+      "4",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "AllPlayers-AllEnemies"
     ]
   ]
 }
