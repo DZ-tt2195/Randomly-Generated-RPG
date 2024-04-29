@@ -45,7 +45,7 @@
       "GROUNDED",
       "Charge,Graze,Produce Milk,",
       "LastAttacker",
-      "Matthias Catrein|Dominion: Menagerie|Way of the Ox"
+      "Matthias Catrein|Dominion: Menagerie|(Way of the Ox)"
     ],
     [
       "Wolf",

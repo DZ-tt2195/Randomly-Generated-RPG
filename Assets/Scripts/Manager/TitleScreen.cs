@@ -156,6 +156,10 @@ public class TitleScreen : MonoBehaviour
         toggle.isOn = PlayerPrefs.HasKey(toggle.name) && PlayerPrefs.GetInt(toggle.name) == 1;
         toggle.onValueChanged.AddListener((bool isOn) => SetPref(isOn, toggle.name, cheat));
         SetPref(toggle.isOn, toggle.name, cheat);
+
+        TMP_Text textLabel = toggle.transform.GetChild(0).GetComponent<TMP_Text>();
+        textLabel.text = KeywordTooltip.instance.EditText(textLabel.text);
+        textLabel.gameObject.AddComponent<KeywordLinkHover>();
     }
 
     void SetPref(bool isOn, string name, bool cheat)
