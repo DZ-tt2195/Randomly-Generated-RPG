@@ -118,6 +118,18 @@
       "Homework,Party,Oversleep,Bully,",
       "",
       "Harald Lieske|Dominion: Allies|(Student)"
+    ],
+    [
+      "Drone",
+      "Always makes itself Neutral. Can damage multiple Players at once.",
+      "6",
+      "6",
+      "0.1",
+      "0.8",
+      "AIRBORNE",
+      "Intruder Alert,Analysis,",
+      "",
+      "James Paick|Guilds of Ravnica|(Dimir Spybug)"
     ]
   ]
 }

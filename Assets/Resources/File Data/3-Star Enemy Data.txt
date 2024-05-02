@@ -37,7 +37,7 @@
     ],
     [
       "Taskmaster",
-      "Changes their Emotions, and deals heavy damage to any Player who doesn't have the same Emotion as this.",
+      "Changes its own Emotion, and deals heavy damage to any Player who doesn't have the same Emotion as this.",
       "20",
       "6",
       "0",

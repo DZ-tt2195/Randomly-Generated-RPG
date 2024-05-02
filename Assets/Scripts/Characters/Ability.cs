@@ -133,18 +133,18 @@ public class Ability : MonoBehaviour
         if (RollAccuracy(user.CalculateAccuracy()))
         {
             int critical = RollCritical(user.CalculateLuck());
-            int damage = critical + effectiveness + user.CalculatePower() + data.attackDamage - target.CalculateDefense();
+            int damage = (critical + effectiveness + user.CalculatePower() + data.attackDamage) - target.CalculateDefense();
 
             if (effectiveness > 0)
                 Log.instance.AddText($"It's super effective! (+{effectiveness} Damage)", logged);
             else if (effectiveness < 0)
                 Log.instance.AddText($"It was ineffective...({effectiveness} Damage)", logged);
 
-            if (damage <= 1 && critical > 0)
+            if (damage > 1 && critical > 0)
                 Log.instance.AddText($"Critical hit! (+{critical} Damage)", logged);
 
             if (self.myType == CharacterType.Enemy && CarryVariables.instance.ActiveCheat("Damage Cap"))
-                damage = Mathf.Min(damage, 5);
+                damage = Mathf.Min(damage, 4);
 
             return Mathf.Max(1, damage);
         }
@@ -589,7 +589,12 @@ public class Ability : MonoBehaviour
 
                     case "TARGETINCREASERANDOMCOOLDOWN":
                         List<Ability> hasNoCooldown = target.listOfRandomAbilities.Where(ability => ability.currentCooldown == 0).ToList();
-                        if (hasNoCooldown.Count > 0) hasNoCooldown[Random.Range(0, hasNoCooldown.Count)].currentCooldown += data.miscNumber;
+                        if (hasNoCooldown.Count > 0)
+                        {
+                            Ability chosenAbility = hasNoCooldown[Random.Range(0, hasNoCooldown.Count)];
+                            chosenAbility.currentCooldown += data.miscNumber;
+                            Log.instance.AddText($"{chosenAbility.data.myName} is placed on Cooldown.", logged);
+                        }
                         break;
 
                     default:

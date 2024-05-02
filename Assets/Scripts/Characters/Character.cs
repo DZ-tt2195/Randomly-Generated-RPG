@@ -303,7 +303,7 @@ public class Character : MonoBehaviour
     {
         if (this == null || effect == 0) yield break;
 
-        modifyDefense = Math.Clamp(modifyDefense += effect, -6, 3);
+        modifyDefense = Math.Clamp(modifyDefense += effect, -4, 4);
         if (logged >= 0)
         {
             TurnManager.instance.CreateVisual($"{(effect > 0 ? '+' : '-')}{Math.Abs(effect)} Defense", this.transform.localPosition);
@@ -339,7 +339,7 @@ public class Character : MonoBehaviour
     {
         if (this == null || effect == 0f) yield break;
 
-        modifyAccuracy = Mathf.Clamp(modifyAccuracy += effect, -0.3f, 0.6f);
+        modifyAccuracy = Mathf.Clamp(modifyAccuracy += effect, -0.3f, 0.5f);
         if (logged >= 0)
         {
             TurnManager.instance.CreateVisual($"{(effect > 0 ? '+' : '-')}{100 * Math.Abs(effect)}% Accuracy", this.transform.localPosition);

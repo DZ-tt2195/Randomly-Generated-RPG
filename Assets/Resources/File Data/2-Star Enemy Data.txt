@@ -109,13 +109,13 @@
     ],
     [
       "Trickster",
-      "Manipiles Player Emotions and Positions, and applies Cooldown to their Abilities that have no Cooldown.",
+      "Messes with Players and applies Cooldown to their Abilities that have no Cooldown.",
       "10",
       "4",
       "0.2",
       "0.85",
       "AIRBORNE",
-      "Mischief,",
+      "Mischief,Pluck,Blind,",
       "",
       "Mila Pesic|Throne of Eldraine|(Bog Naughty)"
     ]
