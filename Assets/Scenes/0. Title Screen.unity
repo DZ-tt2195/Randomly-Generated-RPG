@@ -1404,7 +1404,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &167539418
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1422,8 +1422,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 200, y: 500}
-  m_SizeDelta: {x: 1600, y: 750}
+  m_AnchoredPosition: {x: -200, y: 500}
+  m_SizeDelta: {x: 1700, y: 800}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &167539419
 MonoBehaviour:
@@ -1844,7 +1844,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -600}
+  m_AnchoredPosition: {x: 200, y: -400}
   m_SizeDelta: {x: 350, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &236091008
@@ -3014,7 +3014,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Player Cooldowns recover 1 turn faster
+  m_text: Player Cooldowns are 1 turn faster
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8c64c47af7c1c4fb5b88d184433c6c44, type: 2}
   m_sharedMaterial: {fileID: -3852492252101762229, guid: 8c64c47af7c1c4fb5b88d184433c6c44, type: 2}
@@ -3041,7 +3041,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 75.65
+  m_fontSize: 85.95
   m_fontSizeBase: 24
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -4777,11 +4777,11 @@ MonoBehaviour:
   - keywordVariations:
     - Neutral
     description: Default Emotion.
-    color: {r: 0.7, g: 0.7, b: 0.7, a: 0}
+    color: {r: 0.85, g: 0.85, b: 0.85, a: 0}
   - keywordVariations:
     - Happy
     description: Effective against Angry. Gets an extra turn when it doesn't attack;
-      abilities have longer Cooldowns.
+      Abilities have longer Cooldowns.
     color: {r: 0.4, g: 1, b: 0, a: 0}
   - keywordVariations:
     - Angry
@@ -4804,6 +4804,10 @@ MonoBehaviour:
     - Protect
     description: Takes 0 damage the next time they get attacked.
     color: {r: 0.6886792, g: 0.6886792, b: 0.6886792, a: 0}
+  - keywordVariations:
+    - Targeted
+    description: All single-target Abilities must target them if possible.
+    color: {r: 1, g: 1, b: 1, a: 0}
   - keywordVariations:
     - Grounded
     description: Can't be targeted by abilities that only affect Airborne targets.
@@ -4857,6 +4861,19 @@ MonoBehaviour:
     - Star
     description: More Star = Higher tier Enemy, which is stronger.
     color: {r: 0, g: 0, b: 0, a: 0}
+  spriteKeywordStatuses:
+  - keywordVariations:
+    - StunImage
+    description: This skips their next turn.
+    color: {r: 0, g: 0, b: 0, a: 0}
+  - keywordVariations:
+    - ProtectedImage
+    description: Takes 0 damage the next time this gets attacked.
+    color: {r: 0, g: 0, b: 0, a: 0}
+  - keywordVariations:
+    - TargetedImage
+    description: All single-target Abilities must target this if possible.
+    color: {r: 0, g: 0, b: 0, a: 0}
   tooltipText: {fileID: 235444215}
 --- !u!114 &623227979
 MonoBehaviour:
@@ -4908,7 +4925,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 200, y: -200}
+  m_AnchoredPosition: {x: -200, y: -400}
   m_SizeDelta: {x: 350, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &633117427
@@ -6788,7 +6805,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 1600, y: 750}
+  m_SizeDelta: {x: 1650, y: 750}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &856297924
 MonoBehaviour:
@@ -6810,15 +6827,16 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "You are a Knight, an Angel, and a Wizard, but not all at the same time.
-    You didn't have the EXP or connections to get into other RPGs, so you're starting
-    out at this one. The costumes are hand-me-downs and the work is unpaid. And worst
-    of all, it\u2019s a virtual setting.\n\nYour quest is to beat up enemies that
-    look at you the wrong way. They gave you a turnip to start with, but you didn\u2019t
-    remember that fact. Turns out they put all the budget into the gameplay, so nothing
-    makes any cents. \n\nRegardless, your epic threesome must improvise a strategy
-    with the tools you have, And if it starts uphill backwards, just blame it on
-    lag and bad luck."
+  m_text: "You are a Knight, an Angel, and a Wizard, but not at the same time. You
+    didn't have the EXP or connections to get into the good RPGs, so you're starting
+    at this one. The costumes are obvious hand-me-downs and the work is unpaid. Worst
+    of all, it\u2019s a virtual setting, and they didn't give you someone to co-star
+    with.\n\nYour quest is to beat up enemies for simply looking at you the wrong
+    way. That NPC gave you a rock and a turnip to start with, but you didn\u2019t
+    remember that fact. Turns out, all the budget went into the gameplay, so nothing
+    makes any cents. \n\nAnyways, you must roll with the punches and work with whatever
+    they gave you. And if all else fails, you can blame it on lag, your parents,
+    and that really cute cat."
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8c64c47af7c1c4fb5b88d184433c6c44, type: 2}
   m_sharedMaterial: {fileID: -3852492252101762229, guid: 8c64c47af7c1c4fb5b88d184433c6c44, type: 2}
@@ -10141,7 +10159,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -732, y: -650}
+  m_AnchoredPosition: {x: -732, y: -635}
   m_SizeDelta: {x: 950, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1273847449
@@ -10169,7 +10187,9 @@ MonoBehaviour:
     <link="Defense"><sprite="Symbols" name="Defense"></link> <link="Luck"><sprite="Symbols"
     name="Luck"></link> <link="Accuracy"><sprite="Symbols" name="Accuracy"></link>
     <link="Speed"><sprite="Symbols" name="Speed"></link> <link="Star"><sprite="Symbols"
-    name="Star"></link>'
+    name="Star"></link><link="StunImage"><sprite="Statuses" name="StunImage"></link>
+    <link="ProtectedImage"><sprite="Statuses" name="ProtectedImage"></link> <link="TargetedImage"><sprite="Statuses"
+    name="TargetedImage"></link>'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8c64c47af7c1c4fb5b88d184433c6c44, type: 2}
   m_sharedMaterial: {fileID: -3852492252101762229, guid: 8c64c47af7c1c4fb5b88d184433c6c44, type: 2}
@@ -10196,12 +10216,12 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 100
-  m_fontSizeBase: 100
+  m_fontSize: 91.7
+  m_fontSizeBase: 238.19
   m_fontWeight: 400
-  m_enableAutoSizing: 0
+  m_enableAutoSizing: 1
   m_fontSizeMin: 18
-  m_fontSizeMax: 100
+  m_fontSizeMax: 1000
   m_fontStyle: 0
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 256
@@ -11085,7 +11105,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1349390237
 RectTransform:
   m_ObjectHideFlags: 0
@@ -11105,7 +11125,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 600}
+  m_AnchoredPosition: {x: -200, y: 600}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1354744590
@@ -11467,7 +11487,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Cheats and Challenges
+  m_text: Cheats & Challenges
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8c64c47af7c1c4fb5b88d184433c6c44, type: 2}
   m_sharedMaterial: {fileID: -3852492252101762229, guid: 8c64c47af7c1c4fb5b88d184433c6c44, type: 2}
@@ -13015,12 +13035,12 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'by Thomas Tang
+  m_text: 'by Thomas "DZ" Tang
 
     Inspired by OMORI (OMOCAT) and
 
-    Epic Battle Fantasy
-    5 (Kupo Games)  '
+    Epic Battle
+    Fantasy 5 (Kupo Games)  '
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8c64c47af7c1c4fb5b88d184433c6c44, type: 2}
   m_sharedMaterial: {fileID: -3852492252101762229, guid: 8c64c47af7c1c4fb5b88d184433c6c44, type: 2}
@@ -13134,7 +13154,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -200, y: -400}
+  m_AnchoredPosition: {x: 200, y: -200}
   m_SizeDelta: {x: 350, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1632401099
@@ -14468,7 +14488,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: First play the tutorial and read the "story"
+  m_text: First play the tutorial and read the uh story
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8c64c47af7c1c4fb5b88d184433c6c44, type: 2}
   m_sharedMaterial: {fileID: -3852492252101762229, guid: 8c64c47af7c1c4fb5b88d184433c6c44, type: 2}
@@ -16363,7 +16383,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 200, y: -400}
+  m_AnchoredPosition: {x: 0, y: -600}
   m_SizeDelta: {x: 350, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2092453227

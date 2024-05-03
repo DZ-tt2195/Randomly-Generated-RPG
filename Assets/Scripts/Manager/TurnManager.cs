@@ -56,6 +56,10 @@ public class TurnManager : MonoBehaviour
         int currentWave;
         int currentRound;
         bool isBattling;
+        Character _targetedPlayer;
+        [ReadOnly] public Character targetedPlayer { get { return _targetedPlayer; } set { ResetTargetedPlayer(value); } }
+        Character _targetedEnemy;
+        [ReadOnly] public Character targetedEnemy { get { return _targetedEnemy; } set { ResetTargetedEnemy(value); } }
         public int confirmChoice { get; private set; }
 
 #endregion
@@ -418,7 +422,7 @@ public class TurnManager : MonoBehaviour
         confirmChoice = -1;
         if (PlayerPrefs.GetInt("Confirm Choices") == 1)
         {
-            instructions.text = "";
+            //instructions.text = "";
             DisableCharacterButtons();
 
             TextCollector confirmDecision = MakeTextCollector(header, position, new List<string>() { "Confirm", "Rechoose" });
@@ -433,6 +437,32 @@ public class TurnManager : MonoBehaviour
                 Destroy(confirmDecision.gameObject);
             }
         }
+    }
+
+    public bool CheckForTargeted(List<Character> possibleTargets)
+    {
+        if (targetedPlayer != null && possibleTargets.Contains(targetedPlayer))
+            return true;
+
+        return (targetedEnemy != null && possibleTargets.Contains(targetedEnemy));
+    }
+
+    void ResetTargetedPlayer(Character newTarget)
+    {
+        Character storePlayer = targetedPlayer;
+        _targetedPlayer = newTarget;
+        newTarget.CharacterUI();
+        if (storePlayer != null)
+            storePlayer.CharacterUI();
+    }
+
+    void ResetTargetedEnemy(Character newTarget)
+    {
+        Character storePlayer = targetedEnemy;
+        _targetedEnemy = newTarget;
+        newTarget.CharacterUI();
+        if (storePlayer != null)
+            storePlayer.CharacterUI();
     }
 
     #endregion

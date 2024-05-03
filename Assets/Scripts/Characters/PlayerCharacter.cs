@@ -71,23 +71,31 @@ public class PlayerCharacter : Character
 
         if (ability.singleTarget.Contains(target))
         {
-            TurnManager.instance.instructions.text = $"Choose a character to target. ({ability.data.myName})";
-            TurnManager.instance.DisableCharacterButtons();
-
-            for (int i = 0; i < ability.listOfTargets[index].Count; i++)
+            if (TurnManager.instance.CheckForTargeted(ability.listOfTargets[index]))
             {
-                Character character = ability.listOfTargets[index][i];
-                character.border.gameObject.SetActive(true);
-                character.myButton.interactable = true;
-
-                character.myButton.onClick.RemoveAllListeners();
-                int buttonNum = i;
-                character.myButton.onClick.AddListener(() => ReceiveChoice(buttonNum));
+                TurnManager.instance.instructions.text = $"{TurnManager.instance.targetedEnemy.data.myName} is Targeted.";
+                ability.listOfTargets[index] = new() { TurnManager.instance.targetedEnemy };
             }
+            else
+            {
+                TurnManager.instance.instructions.text = $"Choose someone to target. ({ability.data.myName})";
+                TurnManager.instance.DisableCharacterButtons();
 
-            yield return WaitForChoice();
-            if (choice != -1)
-                ability.listOfTargets[index] = new() { ability.listOfTargets[index][choice] };
+                for (int i = 0; i < ability.listOfTargets[index].Count; i++)
+                {
+                    Character character = ability.listOfTargets[index][i];
+                    character.border.gameObject.SetActive(true);
+                    character.myButton.interactable = true;
+
+                    character.myButton.onClick.RemoveAllListeners();
+                    int buttonNum = i;
+                    character.myButton.onClick.AddListener(() => ReceiveChoice(buttonNum));
+                }
+
+                yield return WaitForChoice();
+                if (choice != -1)
+                    ability.listOfTargets[index] = new() { ability.listOfTargets[index][choice] };
+            }
         }
     }
 

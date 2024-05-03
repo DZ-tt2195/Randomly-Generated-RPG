@@ -76,7 +76,7 @@ public class TutorialManager : MonoBehaviour
 
             case 2: //right click on knight
                 TurnManager.instance.AddPlayer(listOfPlayers[0]); //add knight
-                listOfPlayers[0].AddAbility(FileManager.instance.FindPlayerAbility("Stab"), false, false);
+                listOfPlayers[0].AddAbility(FileManager.instance.FindPlayerAbility("Rollout"), false, false);
 
                 TextCollector collector2 = TurnManager.instance.MakeTextCollector(
                     "You always have the same 3 party members. Right click on the Knight to see what they do.",
@@ -108,7 +108,8 @@ public class TutorialManager : MonoBehaviour
                 yield return ClickThroughDialogue(new List<string>()
                 { "The Ability you used has a cooldown (Cooldown), so you can't use it again this round. Instead use the other Ability." });
 
-                yield return TurnManager.instance.NewRound();
+                while (TurnManager.instance.listOfEnemies.Count > 0)
+                    yield return TurnManager.instance.NewRound();
                 currentStep = 5;
                 StartCoroutine(NextStep());
                 break;
@@ -177,7 +178,7 @@ public class TutorialManager : MonoBehaviour
                 yield return TurnManager.instance.NewWave();
 
                 listOfPlayers[0].AddAbility(FileManager.instance.FindPlayerAbility("Shun"), false, false);
-                listOfPlayers[0].AddAbility(FileManager.instance.FindPlayerAbility("Meal"), false, false);
+                listOfPlayers[0].AddAbility(FileManager.instance.FindPlayerAbility("Intimidation"), false, false);
 
                 listOfPlayers[1].AddAbility(FileManager.instance.FindPlayerAbility("Share Healing"), false, false);
                 listOfPlayers[1].AddAbility(FileManager.instance.FindPlayerAbility("Delegate"), false, false);
@@ -256,7 +257,7 @@ public class TutorialManager : MonoBehaviour
             case 14: //finish off the enemies
                 listOfPlayers[2].AddAbility(FileManager.instance.FindPlayerAbility("Blaze"), false, false);
                 listOfPlayers[2].AddAbility(FileManager.instance.FindPlayerAbility("Ice Blast"), false, false);
-                listOfPlayers[2].AddAbility(FileManager.instance.FindPlayerAbility("Intimidation"), false, false);
+                listOfPlayers[2].AddAbility(FileManager.instance.FindPlayerAbility("Bad Omens"), false, false);
 
                 yield return ClickThroughDialogue(new List<string>()
                 { "Anyways, now that all the Enemies are Grounded, your Knight is capable of hitting them, so finish them off."});

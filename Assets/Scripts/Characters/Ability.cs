@@ -162,8 +162,6 @@ public class Ability : MonoBehaviour
 
     public bool CanPlay()
     {
-        if (data.myName.Equals("Skip Turn"))
-            return true;
         if (data.myName.Equals("Revive") && CarryVariables.instance.ActiveChallenge("No Revives"))
             return false;
         if (currentCooldown > 0)
@@ -307,9 +305,8 @@ public class Ability : MonoBehaviour
                     break;
 
                 case "LASTATTACKEREXISTS":
-                    if (!listOfTargets[currentIndex].Contains(self.lastToAttackThis))
-                        return false;
-                    break;
+                    if (!listOfTargets[currentIndex].Contains(self.lastToAttackThis) && self.lastToAttackThis.CalculateHealth() > 0)
+                        return false; break;
 
                 default:
                     Debug.LogError($"{this.data.myName}: {methodName} isn't a condition");

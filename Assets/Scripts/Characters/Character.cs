@@ -82,12 +82,10 @@ public class Character : MonoBehaviour
         [ReadOnly] public Image border;
         [ReadOnly] public Button myButton;
         [ReadOnly] public Image myImage;
-        Image statusImage;
-        TMP_Text statusText;
+        TMP_Text topText;
         TMP_Text healthText;
         TMP_Text nameText;
-        Sprite stunSprite;
-        Sprite protectedSprite;
+        TMP_Text statusText;
 
     #endregion
 
@@ -101,9 +99,7 @@ public class Character : MonoBehaviour
         statusText = transform.Find("Status Text").GetComponent<TMP_Text>();
         healthText = transform.Find("Health Text").GetChild(0).GetComponent<TMP_Text>();
         nameText = transform.Find("Name Text").GetChild(0).GetComponent<TMP_Text>();
-        statusImage = transform.Find("Status Image").GetComponent<Image>();
-        stunSprite = Resources.Load<Sprite>("Art/Stun");
-        protectedSprite = Resources.Load<Sprite>("Art/Protected");
+        topText = transform.Find("Top Text").GetComponent<TMP_Text>();
     }
 
     public void SetupCharacter(CharacterType type, CharacterData characterData,
@@ -245,6 +241,11 @@ public class Character : MonoBehaviour
     public IEnumerator HasDied(int logged)
     {
         if (this == null) yield break;
+
+        if (this == TurnManager.instance.targetedPlayer)
+            TurnManager.instance.targetedPlayer = null;
+        if (this == TurnManager.instance.targetedEnemy)
+            TurnManager.instance.targetedEnemy = null;
 
         CurrentHealth = 0;
         TurnsStunned = 0;
@@ -410,6 +411,18 @@ public class Character : MonoBehaviour
         Log.instance.AddText($"{this.name} is Protected for {TurnsProtected} turn{(TurnsProtected == 1 ? "" : "s")}.", logged);
     }
 
+    public IEnumerator Targeted(int logged)
+    {
+        if (this == null) yield break;
+
+        TurnManager.instance.CreateVisual($"TARGETED", this.transform.localPosition);
+        Log.instance.AddText($"{this.name} is Targeted.", logged);
+        if (this.myType == CharacterType.Player)
+            TurnManager.instance.targetedPlayer = this;
+        if (this.myType == CharacterType.Enemy)
+            TurnManager.instance.targetedEnemy = this;
+    }
+
     #endregion
 
 #region Turns
@@ -460,90 +473,93 @@ public class Character : MonoBehaviour
 
     IEnumerator ResolveTurn(int logged, bool extraAbility)
     {
-        StartCoroutine(nameof(Timer));
-        if (extraAbility)
+        if (TurnManager.instance.listOfEnemies.Count > 0)
         {
+            StartCoroutine(nameof(Timer));
+            if (extraAbility)
+            {
+                foreach (Ability ability in listOfAutoAbilities)
+                {
+                    if (ability.currentCooldown > 0)
+                        ability.currentCooldown++;
+                }
+                foreach (Ability ability in listOfRandomAbilities)
+                {
+                    if (ability.currentCooldown > 0)
+                        ability.currentCooldown++;
+                }
+            }
+
+            chosenAbility = null;
+            chosenTarget = null;
+
+            while (chosenAbility == null)
+            {
+                if (timer < 0f)
+                    yield break;
+
+                yield return ChooseAbility(logged, extraAbility);
+
+                if (timer < 0f)
+                    yield break;
+
+                for (int i = 0; i < chosenAbility.data.defaultTargets.Length; i++)
+                {
+                    yield return ChooseTarget(chosenAbility, chosenAbility.data.defaultTargets[i], i);
+                    if (chosenAbility.singleTarget.Contains(chosenAbility.data.defaultTargets[i]))
+                        chosenTarget = chosenAbility.listOfTargets[i][0];
+                }
+
+                if (timer < 0f)
+                    yield break;
+
+                if (this.myType == CharacterType.Player)
+                {
+                    string part1 = $"{this.name}: Use {chosenAbility.data.myName}";
+                    string part2 = chosenTarget != null ? $" on {chosenTarget.data.myName}?" : "?";
+
+                    yield return TurnManager.instance.ConfirmUndo(part1 + part2, new Vector3(0, 400));
+                    if (TurnManager.instance.confirmChoice == 1)
+                        chosenAbility = null;
+                    if (timer < 0f)
+                        yield break;
+                }
+            }
+
+            StopCoroutine(nameof(Timer));
             foreach (Ability ability in listOfAutoAbilities)
             {
                 if (ability.currentCooldown > 0)
-                    ability.currentCooldown++;
+                    ability.currentCooldown--;
             }
             foreach (Ability ability in listOfRandomAbilities)
             {
                 if (ability.currentCooldown > 0)
-                    ability.currentCooldown++;
-            }
-        }
-
-        chosenAbility = null;
-        chosenTarget = null;
-
-        while (chosenAbility == null)
-        {
-            if (timer < 0f)
-                yield break;
-
-            yield return ChooseAbility(logged, extraAbility);
-
-            if (timer < 0f)
-                yield break;
-
-            for (int i = 0; i < chosenAbility.data.defaultTargets.Length; i++)
-            {
-                yield return ChooseTarget(chosenAbility, chosenAbility.data.defaultTargets[i], i);
-                if (chosenAbility.singleTarget.Contains(chosenAbility.data.defaultTargets[i]))
-                    chosenTarget = chosenAbility.listOfTargets[i][0];
+                    ability.currentCooldown--;
             }
 
-            if (timer < 0f)
-                yield break;
-
-            if (this.myType == CharacterType.Player)
+            Log.instance.AddText(Log.Substitute(chosenAbility, this, chosenTarget), logged);
+            if (!chosenAbility.data.myName.Equals("Skip Turn"))
             {
-                string part1 = $"{this.name}: Use {chosenAbility.data.myName}";
-                string part2 = chosenTarget != null ? $" on {chosenTarget.data.myName}?" : "?";
+                chosenAbility.killed = false;
+                chosenAbility.fullHeal = false;
+                chosenAbility.damageDealt = 0;
 
-                yield return TurnManager.instance.ConfirmUndo(part1 + part2, Vector3.zero);
-                if (TurnManager.instance.confirmChoice == 1)
-                    chosenAbility = null;
-                if (timer < 0f)
-                    yield break;
-            }
-        }
+                for (int i = 0; i < chosenAbility.data.instructions.Length; i++)
+                {
+                    string[] splicedString = TurnManager.SpliceString(chosenAbility.data.instructions[i], '/');
+                    yield return chosenAbility.ResolveInstructions(splicedString, i, logged + 1);
+                }
 
-        StopCoroutine(nameof(Timer));
-        foreach (Ability ability in listOfAutoAbilities)
-        {
-            if (ability.currentCooldown > 0)
-                ability.currentCooldown--;
-        }
-        foreach (Ability ability in listOfRandomAbilities)
-        {
-            if (ability.currentCooldown > 0)
-                ability.currentCooldown--;
-        }
+                chosenAbility.currentCooldown = chosenAbility.data.baseCooldown +
+                    (CurrentEmotion == Emotion.Happy ? 1 : 0)
+                    + (CarryVariables.instance.ActiveCheat("Faster Cooldowns") && this.myType == CharacterType.Player ? -1 : 0);
 
-        Log.instance.AddText(Log.Substitute(chosenAbility, this, chosenTarget), logged);
-        if (!chosenAbility.data.myName.Equals("Skip Turn"))
-        {
-            chosenAbility.killed = false;
-            chosenAbility.fullHeal = false;
-            chosenAbility.damageDealt = 0;
-
-            for (int i = 0; i < chosenAbility.data.instructions.Length; i++)
-            {
-                string[] splicedString = TurnManager.SpliceString(chosenAbility.data.instructions[i], '/');
-                yield return chosenAbility.ResolveInstructions(splicedString, i, logged + 1);
-            }
-
-            chosenAbility.currentCooldown = chosenAbility.data.baseCooldown +
-                (CurrentEmotion == Emotion.Happy ? 1 : 0)
-                + (CarryVariables.instance.ActiveCheat("Faster Cooldowns") && this.myType == CharacterType.Player ? -1 : 0);
-
-            if (CarryVariables.instance.mode == CarryVariables.GameMode.Tutorial && TutorialManager.instance.currentCharacter == this)
-            {
-                TutorialManager.instance.currentCharacter = null;
-                yield return TutorialManager.instance.NextStep();
+                if (CarryVariables.instance.mode == CarryVariables.GameMode.Tutorial && TutorialManager.instance.currentCharacter == this)
+                {
+                    TutorialManager.instance.currentCharacter = null;
+                    yield return TutorialManager.instance.NextStep();
+                }
             }
         }
     }
@@ -621,23 +637,16 @@ public class Character : MonoBehaviour
         }
     }
 
-    void CharacterUI()
+    public void CharacterUI()
     {
-        statusText.text = (CurrentPosition == Position.Dead || CurrentEmotion == Emotion.Dead) ? "Dead" : KeywordTooltip.instance.EditText($"{CurrentEmotion}\n{CurrentPosition}");
-
-        statusImage.gameObject.SetActive(true);
-        if (TurnsStunned > 0)
-        {
-            statusImage.sprite = stunSprite;
-        }
-        else if (TurnsProtected > 0)
-        {
-            statusImage.sprite = protectedSprite;
-        }
-        else
-        {
-            statusImage.gameObject.SetActive(false);
-        }
+        topText.text = (CurrentPosition == Position.Dead || CurrentEmotion == Emotion.Dead) ? "Dead" : KeywordTooltip.instance.EditText($"{CurrentEmotion}\n{CurrentPosition}");
+        statusText.text = "";
+        for (int i = 0; i < TurnsStunned; i++)
+            statusText.text += "<link=\"StunImage\"><sprite=\"Statuses\" name=\"StunImage\"></link>";
+        for (int i = 0; i < TurnsProtected; i++)
+            statusText.text += "<link=\"ProtectedImage\"><sprite=\"Statuses\" name=\"ProtectedImage\"></link>";
+        if (TurnManager.instance != null && (TurnManager.instance.targetedPlayer == this || TurnManager.instance.targetedEnemy == this))
+            statusText.text += "<link=\"TargetedImage\"><sprite=\"Statuses\" name=\"TargetedImage\"></link>";
     }
 
     #endregion

@@ -57,55 +57,72 @@ public class EnemyCharacter : Character
 
     protected override IEnumerator ChooseTarget(Ability ability, TeamTarget target, int index)
     {
-        ability.listOfTargets[index] = ability.listOfTargets[index].Shuffle();
-
-        if (ability.singleTarget.Contains(target))
+        if (!ability.data.myName.Equals("Skip Turn"))
         {
-            switch (data.aiTargeting)
+            ability.listOfTargets[index] = ability.listOfTargets[index].Shuffle();
+
+            if (ability.singleTarget.Contains(target))
             {
-                case "":
-                    break;
-                case "NONE":
-                    break;
+                if (TurnManager.instance.CheckForTargeted(ability.listOfTargets[index]))
+                {
+                    ability.listOfTargets[index] = new List<Character> { TurnManager.instance.targetedPlayer };
+                }
+                else
+                {
+                    switch (data.aiTargeting)
+                    {
+                        case "":
+                            ability.listOfTargets[index] = new List<Character> { ability.listOfTargets[index][0] };
+                            break;
+                        case "NONE":
+                            ability.listOfTargets[index] = new List<Character> { ability.listOfTargets[index][0] };
+                            break;
 
-                case "LASTATTACKER":
-                    ability.listOfTargets[index].RemoveAll(target => target != lastToAttackThis);
-                    break;
+                        case "LASTATTACKER":
+                            ability.listOfTargets[index].RemoveAll(target => target != lastToAttackThis);
+                            break;
 
-                case "CHOOSEAIRBORNE":
-                    ability.listOfTargets[index].RemoveAll(target => target.CurrentPosition != Position.Airborne);
-                    ability.listOfTargets[index] = new() { ability.listOfTargets[index][Random.Range(0, ability.listOfTargets[index].Count)] };
-                    break;
-                case "CHOOSEGROUNDED":
-                    ability.listOfTargets[index].RemoveAll(target => target.CurrentPosition != Position.Grounded);
-                    ability.listOfTargets[index] = new() { ability.listOfTargets[index][Random.Range(0, ability.listOfTargets[index].Count)] };
-                    break;
+                        case "CHOOSEAIRBORNE":
+                            int numberAirborne = ability.listOfTargets[index].Count(target => target.CurrentPosition != Position.Airborne);
+                            if (numberAirborne > 0) ability.listOfTargets[index].RemoveAll(target => target.CurrentPosition != Position.Airborne);
+                            ability.listOfTargets[index] = new() { ability.listOfTargets[index][Random.Range(0, ability.listOfTargets[index].Count)] };
+                            break;
+                        case "CHOOSEGROUNDED":
+                            int numberGrounded = ability.listOfTargets[index].Count(target => target.CurrentPosition != Position.Grounded);
+                            if (numberGrounded > 0) ability.listOfTargets[index].RemoveAll(target => target.CurrentPosition != Position.Grounded);
+                            ability.listOfTargets[index] = new() { ability.listOfTargets[index][Random.Range(0, ability.listOfTargets[index].Count)] };
+                            break;
 
-                case "LEASTHEALTH":
-                    ability.listOfTargets[index].OrderBy(o => o.CalculateHealth()).ToList();
-                    ability.listOfTargets[index] = new() { ability.listOfTargets[index][0] };
-                    break;
-                case "MOSTHEALTH":
-                    ability.listOfTargets[index].OrderByDescending(o => o.CalculateHealth()).ToList();
-                    ability.listOfTargets[index] = new() { ability.listOfTargets[index][0] };
-                    break;
+                        case "LEASTHEALTH":
+                            ability.listOfTargets[index].OrderBy(o => o.CalculateHealth()).ToList();
+                            ability.listOfTargets[index] = new() { ability.listOfTargets[index][0] };
+                            break;
+                        case "MOSTHEALTH":
+                            ability.listOfTargets[index].OrderByDescending(o => o.CalculateHealth()).ToList();
+                            ability.listOfTargets[index] = new() { ability.listOfTargets[index][0] };
+                            break;
 
-                case "EFFECTIVENESS":
-                    ability.listOfTargets[index].OrderBy(o => ability.Effectiveness(this, o)).ToList();
-                    ability.listOfTargets[index] = new() { ability.listOfTargets[index][0] };
-                    break;
+                        case "EFFECTIVENESS":
+                            ability.listOfTargets[index].OrderBy(o => ability.Effectiveness(this, o)).ToList();
+                            ability.listOfTargets[index] = new() { ability.listOfTargets[index][0] };
+                            break;
 
-                case "STRONGEST":
-                    ability.listOfTargets[index].OrderByDescending(o => o.CalculateStatTotals()).ToList();
-                    ability.listOfTargets[index] = new() { ability.listOfTargets[index][0] };
-                    break;
-                case "WEAKEST":
-                    ability.listOfTargets[index].OrderBy(o => o.CalculateStatTotals()).ToList();
-                    ability.listOfTargets[index] = new() { ability.listOfTargets[index][0] };
-                    break;
+                        case "STRONGEST":
+                            ability.listOfTargets[index].OrderByDescending(o => o.CalculateStatTotals()).ToList();
+                            ability.listOfTargets[index] = new() { ability.listOfTargets[index][0] };
+                            break;
+                        case "WEAKEST":
+                            ability.listOfTargets[index].OrderBy(o => o.CalculateStatTotals()).ToList();
+                            ability.listOfTargets[index] = new() { ability.listOfTargets[index][0] };
+                            break;
+                    }
+                }
             }
         }
-        yield return null;
+        else
+        {
+            yield return null;
+        }
     }
 
     int CountTargets(Ability ability)
