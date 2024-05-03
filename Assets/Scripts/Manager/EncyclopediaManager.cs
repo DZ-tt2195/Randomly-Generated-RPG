@@ -250,7 +250,7 @@ public class EncyclopediaManager : MonoBehaviour
             }
         }
 
-        storeAbilityBoxes.sizeDelta = new Vector3(2560, Math.Max(875, 175 * (1+(storeAbilityBoxes.childCount / 6))));
+        storeAbilityBoxes.sizeDelta = new Vector3(2560, Math.Max(875, 175 * (2+(storeAbilityBoxes.childCount / 6))));
         searchResults.text = $"Found {storeAbilityBoxes.childCount} Abilities";
     }
 

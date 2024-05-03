@@ -115,7 +115,7 @@
       "0.2",
       "0.85",
       "AIRBORNE",
-      "Mischief,Pluck,Blind,",
+      "Mischief,Pluck,Blind,Distract,",
       "",
       "Mila Pesic|Throne of Eldraine|(Bog Naughty)"
     ]

@@ -26,7 +26,7 @@
     [
       "Crow",
       "Basic Enemy who attacks Grounded and Airborne Players.",
-      "7",
+      "6",
       "8",
       "0",
       "1",

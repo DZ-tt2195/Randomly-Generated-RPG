@@ -4798,16 +4798,16 @@ MonoBehaviour:
     - Stuns
     - Stun
     description: Skips their next turn.
-    color: {r: 1, g: 0.64893615, b: 0, a: 0}
+    color: {r: 1, g: 0.15, b: 0.15, a: 0}
   - keywordVariations:
     - Protected
     - Protect
     description: Takes 0 damage the next time they get attacked.
-    color: {r: 0.6886792, g: 0.6886792, b: 0.6886792, a: 0}
+    color: {r: 0.735849, g: 0.735849, b: 0.735849, a: 0}
   - keywordVariations:
     - Targeted
     description: All single-target Abilities must target them if possible.
-    color: {r: 1, g: 1, b: 1, a: 0}
+    color: {r: 0.5, g: 0.75, b: 0, a: 0}
   - keywordVariations:
     - Grounded
     description: Can't be targeted by abilities that only affect Airborne targets.
@@ -4850,16 +4850,16 @@ MonoBehaviour:
     color: {r: 0, g: 0, b: 0, a: 0}
   - keywordVariations:
     - Luck
-    description: Higher Luck = Higher chance of dealing Critical Hits when attacking
-      (2 more damage).
+    description: Higher Luck = Higher chance of getting a bonus +2 on attack and
+      healing abilities.
     color: {r: 0, g: 0, b: 0, a: 0}
   - keywordVariations:
     - Accuracy
-    description: Lower Accuracy = Attacks are more likely to miss.
+    description: Lower Accuracy = Attacks are more likely to miss and do 0 damage.
     color: {r: 0, g: 0, b: 0, a: 0}
   - keywordVariations:
     - Star
-    description: More Star = Higher tier Enemy, which is stronger.
+    description: More Star = Stronger enemy type.
     color: {r: 0, g: 0, b: 0, a: 0}
   spriteKeywordStatuses:
   - keywordVariations:
@@ -5620,7 +5620,7 @@ MonoBehaviour:
   playerPrefab: {fileID: 8345166759536211255, guid: 750995808170643f1b046855142825f7, type: 3}
   storyObject: {fileID: 167539417}
   randomSeed: 1
-  chosenSeed: 160868104
+  chosenSeed: -1514484788
   cheatChallengeObject: {fileID: 1349390236}
   infoScreenToggles:
   - {fileID: 633117427}
@@ -6830,9 +6830,9 @@ MonoBehaviour:
   m_text: "You are a Knight, an Angel, and a Wizard, but not at the same time. You
     didn't have the EXP or connections to get into the good RPGs, so you're starting
     at this one. The costumes are obvious hand-me-downs and the work is unpaid. Worst
-    of all, it\u2019s a virtual setting, and they didn't give you someone to co-star
-    with.\n\nYour quest is to beat up enemies for simply looking at you the wrong
-    way. That NPC gave you a rock and a turnip to start with, but you didn\u2019t
+    of all, it\u2019s a virtual setting, and they didn't even give you anyone to
+    co-star with.\n\nYour quest is to beat up enemies for simply looking at you the
+    wrong way. That NPC gave you a rock and a turnip to start with, but you didn\u2019t
     remember that fact. Turns out, all the budget went into the gameplay, so nothing
     makes any cents. \n\nAnyways, you must roll with the punches and work with whatever
     they gave you. And if all else fails, you can blame it on lag, your parents,

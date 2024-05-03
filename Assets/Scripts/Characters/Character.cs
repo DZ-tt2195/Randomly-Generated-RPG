@@ -77,6 +77,13 @@ public class Character : MonoBehaviour
             get { return _turnsProtected; }
             private set { _turnsProtected = value; CharacterUI(); }
         }
+        private int _turnsTargeted;
+        [ReadOnly]
+        public int TurnsTargeted
+        {
+            get { return _turnsTargeted; }
+            private set { _turnsTargeted = value; CharacterUI(); }
+        }
 
     [Foldout("UI", true)]
         [ReadOnly] public Image border;
@@ -411,19 +418,21 @@ public class Character : MonoBehaviour
         Log.instance.AddText($"{this.name} is Protected for {TurnsProtected} turn{(TurnsProtected == 1 ? "" : "s")}.", logged);
     }
 
-    public IEnumerator Targeted(int logged)
+    public IEnumerator Targeted(int amount, int logged)
     {
         if (this == null) yield break;
 
-        TurnManager.instance.CreateVisual($"TARGETED", this.transform.localPosition);
-        Log.instance.AddText($"{this.name} is Targeted.", logged);
         if (this.myType == CharacterType.Player)
             TurnManager.instance.targetedPlayer = this;
         if (this.myType == CharacterType.Enemy)
             TurnManager.instance.targetedEnemy = this;
+
+        TurnsTargeted += amount;
+        TurnManager.instance.CreateVisual($"TARGETED", this.transform.localPosition);
+        Log.instance.AddText($"{this.name} is Targeted for {amount} turn{(TurnsProtected == 1 ? "" : "s")}.", logged);
     }
 
-    #endregion
+#endregion
 
 #region Turns
 
@@ -431,6 +440,11 @@ public class Character : MonoBehaviour
     {
         chosenAbility = null;
         chosenTarget = null;
+
+        if (TurnsTargeted > 0)
+        {
+            TurnsTargeted--;
+        }
 
         if (TurnsStunned > 0)
         {
@@ -641,12 +655,18 @@ public class Character : MonoBehaviour
     {
         topText.text = (CurrentPosition == Position.Dead || CurrentEmotion == Emotion.Dead) ? "Dead" : KeywordTooltip.instance.EditText($"{CurrentEmotion}\n{CurrentPosition}");
         statusText.text = "";
+
         for (int i = 0; i < TurnsStunned; i++)
             statusText.text += "<link=\"StunImage\"><sprite=\"Statuses\" name=\"StunImage\"></link>";
         for (int i = 0; i < TurnsProtected; i++)
             statusText.text += "<link=\"ProtectedImage\"><sprite=\"Statuses\" name=\"ProtectedImage\"></link>";
         if (TurnManager.instance != null && (TurnManager.instance.targetedPlayer == this || TurnManager.instance.targetedEnemy == this))
-            statusText.text += "<link=\"TargetedImage\"><sprite=\"Statuses\" name=\"TargetedImage\"></link>";
+        {
+            for (int i =0; i<TurnsTargeted; i++)
+                statusText.text += "<link=\"TargetedImage\"><sprite=\"Statuses\" name=\"TargetedImage\"></link>";
+        }
+        else
+            _turnsTargeted = 0;
     }
 
     #endregion

@@ -105,7 +105,7 @@ MonoBehaviour:
       m_Width: 357
       m_Height: 357
       m_HorizontalBearingX: 5
-      m_HorizontalBearingY: 330
+      m_HorizontalBearingY: 335
       m_HorizontalAdvance: 357
     m_GlyphRect:
       m_X: 0
@@ -121,7 +121,7 @@ MonoBehaviour:
       m_Width: 363
       m_Height: 363
       m_HorizontalBearingX: 5
-      m_HorizontalBearingY: 330
+      m_HorizontalBearingY: 335
       m_HorizontalAdvance: 363
     m_GlyphRect:
       m_X: 943
@@ -137,7 +137,7 @@ MonoBehaviour:
       m_Width: 385
       m_Height: 385
       m_HorizontalBearingX: 5
-      m_HorizontalBearingY: 350
+      m_HorizontalBearingY: 355
       m_HorizontalAdvance: 385
     m_GlyphRect:
       m_X: 440

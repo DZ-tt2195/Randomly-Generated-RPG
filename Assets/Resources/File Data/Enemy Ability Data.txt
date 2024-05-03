@@ -1558,6 +1558,25 @@
       "OnePlayer"
     ],
     [
+      "Trickster",
+      "Distract",
+      "Another Enemy becomes Targeted for MISC turns.",
+      "THIS distracts everyone with TARGET.",
+      "Misc",
+      "TargetIsTargeted",
+      "NotTargeted",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "2",
+      "OtherEnemy"
+    ],
+    [
       "Drone",
       "Intruder Alert",
       "This becomes Neutral and Airborne, then it deals ATK damage to all Players.",

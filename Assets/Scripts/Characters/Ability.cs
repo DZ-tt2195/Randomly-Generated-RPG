@@ -119,6 +119,17 @@ public class Ability : MonoBehaviour
         return answer;
     }
 
+    int CalculateHealing(Character user, int logged)
+    {
+        int critical = RollCritical(user.CalculateLuck());
+        int health = critical + user.CalculatePower() + data.healthRegain;
+
+        if (health > 1 && critical > 0)
+            Log.instance.AddText($"{user.data.myName} has good luck! (+{critical} Health)", logged);
+
+        return Mathf.Max(1, health);
+    }
+
     int CalculateDamage(Character user, Character target, int logged)
     {
         int effectiveness = Effectiveness(user, target);
@@ -141,7 +152,7 @@ public class Ability : MonoBehaviour
                 Log.instance.AddText($"It was ineffective...({effectiveness} Damage)", logged);
 
             if (damage > 1 && critical > 0)
-                Log.instance.AddText($"Critical hit! (+{critical} Damage)", logged);
+                Log.instance.AddText($"{user.data.myName} has good luck! (+{critical} Damage)", logged);
 
             if (self.myType == CharacterType.Enemy && CarryVariables.instance.ActiveCheat("Damage Cap"))
                 damage = Mathf.Min(damage, 4);
@@ -304,6 +315,11 @@ public class Ability : MonoBehaviour
                     listOfTargets[currentIndex].RemoveAll(target => target.CurrentEmotion == self.CurrentEmotion);
                     break;
 
+                case "NOTTARGETED":
+                    listOfTargets[currentIndex].Remove(TurnManager.instance.targetedPlayer);
+                    listOfTargets[currentIndex].Remove(TurnManager.instance.targetedEnemy);
+                    break;
+
                 case "LASTATTACKEREXISTS":
                     if (!listOfTargets[currentIndex].Contains(self.lastToAttackThis) && self.lastToAttackThis.CalculateHealth() > 0)
                         return false; break;
@@ -417,15 +433,15 @@ public class Ability : MonoBehaviour
                         break;
 
                     case "SELFHEAL":
-                        yield return self.GainHealth(Mathf.Max(data.healthRegain + self.CalculatePower(), 1), logged);
+                        yield return self.GainHealth(CalculateHealing(self, logged), logged);
                         if (self.CalculateHealthPercent() >= 1f) fullHeal = true;
                         break;
                     case "TARGETHEAL":
-                        yield return target.GainHealth(Mathf.Max(data.healthRegain + self.CalculatePower(), 1), logged);
+                        yield return target.GainHealth(CalculateHealing(self, logged), logged);
                         if (target.CalculateHealthPercent() >= 1f) fullHeal = true;
                         break;
                     case "TARGETMAXHEALTH":
-                        yield return target.MaxHealth(Mathf.Max(data.healthRegain + self.CalculatePower(), 1), logged);
+                        yield return target.MaxHealth(data.healthRegain, logged);
                         break;
 
                     case "SELFSWAPPOSITION":
@@ -569,6 +585,10 @@ public class Ability : MonoBehaviour
                         break;
                     case "TARGETPROTECTED":
                         yield return target.Protected(data.miscNumber, logged);
+                        break;
+
+                    case "TARGETISTARGETED":
+                        yield return target.Targeted(data.miscNumber, logged);
                         break;
 
                     case "TARGETINCREASEACTIVECOOLDOWN":

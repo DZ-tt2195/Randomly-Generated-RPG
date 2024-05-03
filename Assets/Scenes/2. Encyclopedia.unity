@@ -2724,13 +2724,13 @@ MonoBehaviour:
     name=\"Speed\"></link>): Higher <link=\"Speed\"><sprite=\"Symbols\" name=\"Speed\"></link>
     = Takes their turn earlier in the turn order.\nLuck (<link=\"Luck\"><sprite=\"Symbols\"
     name=\"Luck\"></link>): Higher <link=\"Luck\"><sprite=\"Symbols\" name=\"Luck\"></link>
-    = Higher chance of dealing Critical Hits when attacking (2 more damage).\nAccuracy
+    = Higher chance of getting a bonus +2 on attack / healing abilities.\nAccuracy
     (<link=\"Accuracy\"><sprite=\"Symbols\" name=\"Accuracy\"></link>): Lower <link=\"Accuracy\"><sprite=\"Symbols\"
-    name=\"Accuracy\"></link> = Attacks are more likely to miss.\n\nMisc: \nCooldown
-    (<link=\"Cooldown\"><sprite=\"Symbols\" name=\"Cooldown\"></link>): Ability can't
-    be used again until enough turns have passed.\nStar (<link=\"Star\"><sprite=\"Symbols\"
+    name=\"Accuracy\"></link> = Attacks are more likely to miss and do 0 damage.\n\nMisc:
+    \nCooldown (<link=\"Cooldown\"><sprite=\"Symbols\" name=\"Cooldown\"></link>):
+    Ability can't be used again until enough turns have passed.\nStar (<link=\"Star\"><sprite=\"Symbols\"
     name=\"Star\"></link>): More <link=\"Star\"><sprite=\"Symbols\" name=\"Star\"></link>
-    = Higher tier Enemy, which is stronger."
+    = Stronger enemy type."
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8c64c47af7c1c4fb5b88d184433c6c44, type: 2}
   m_sharedMaterial: {fileID: -3852492252101762229, guid: 8c64c47af7c1c4fb5b88d184433c6c44, type: 2}
@@ -2757,7 +2757,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 78.8
+  m_fontSize: 76.05
   m_fontSizeBase: 14
   m_fontWeight: 400
   m_enableAutoSizing: 1

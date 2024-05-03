@@ -19,7 +19,7 @@
       "0.15",
       "0.9",
       "GROUNDED",
-      "Carefree,Daze,Delegate,Embarass,Impale,Intimidation,Joust,Mock,Neutralize,Rollout,Sap Energy,Shields Up,Shun,Skirmish,Tragedy,Trick,Unleash Rage,",
+      "Carefree,Daze,Delegate,Dejection,Embarass,Impale,Intimidation,Joust,Mock,Neutralize,Rollout,Sap Energy,Shields Up,Shun,Skirmish,Tragedy,Trick,Unleash Rage,",
       "",
       "Michael Watson|Dominion: Cornucopia and Guilds|(Joust)"
     ],
@@ -43,7 +43,7 @@
       "0.15",
       "0.9",
       "GROUNDED",
-      "Bad Omens,Blaze,Bounce,Delegate,Flood,Fog,Gravity Flip,Heavy Gravity,Ice Blast,Light Gravity,Lightning Strike,Quick Aim,Rough Air,Safe Above,Sky Hammer,Stalactites,Throw Dice,Turbulence,Team Attack,",
+      "Air Lasers,Bad Omens,Bounce,Delegate,Flood,Fog,Gravity Flip,Headwinds,Heavy Gravity,Ice Blast,Light Gravity,Lightning Strike,Quick Aim,Rough Air,Safe Above,Sky Hammer,Sink,Stalactites,Throw Dice,Team Attack,",
       "",
       "Harald Lieske|Dominion: Allies|(Conjurer)"
     ]
