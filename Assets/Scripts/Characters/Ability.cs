@@ -321,7 +321,7 @@ public class Ability : MonoBehaviour
                     break;
 
                 case "LASTATTACKEREXISTS":
-                    if (!listOfTargets[currentIndex].Contains(self.lastToAttackThis) && self.lastToAttackThis.CalculateHealth() > 0)
+                    if (self.lastToAttackThis != null && !listOfTargets[currentIndex].Contains(self.lastToAttackThis) && self.lastToAttackThis.CalculateHealth() > 0)
                         return false; break;
 
                 default:

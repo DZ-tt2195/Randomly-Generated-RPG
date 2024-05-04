@@ -354,7 +354,7 @@ public class TurnManager : MonoBehaviour
             Log.instance.AddText($"{Log.Article(nextEnemy.name)} entered the fight.", logged);
 
             nextEnemy.SetupCharacter(CharacterType.Enemy, dataFile, FileManager.instance.ConvertToAbilityData(dataFile.listOfSkills, false), startingEmotion, true);
-            SaveManager.instance.SaveEnemy(dataFile);
+            //SaveManager.instance.SaveEnemy(dataFile);
 
             if (CarryVariables.instance.ActiveChallenge("Stronger Enemies"))
             {
@@ -388,8 +388,8 @@ public class TurnManager : MonoBehaviour
             }
         }
 
-        foreach (Ability ability in character.listOfRandomAbilities)
-            SaveManager.instance.SaveAbility(character.name, ability.data);
+        //foreach (Ability ability in character.listOfRandomAbilities)
+            //SaveManager.instance.SaveAbility(character.name, ability.data);
     }
 
     List<Character> AllCharacters()

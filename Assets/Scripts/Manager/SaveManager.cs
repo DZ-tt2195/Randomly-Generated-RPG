@@ -1,3 +1,4 @@
+/*
 using System.Collections.Generic;
 using UnityEngine;
 using MyBox;
@@ -83,3 +84,4 @@ public class SaveManager : MonoBehaviour
         ES3.Save("Random RPG", currentSaveData, $"{Application.persistentDataPath}/Random RPG.es3");
     }
 }
+*/

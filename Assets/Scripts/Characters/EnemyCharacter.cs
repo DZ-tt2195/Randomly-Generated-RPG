@@ -83,12 +83,12 @@ public class EnemyCharacter : Character
                             break;
 
                         case "CHOOSEAIRBORNE":
-                            int numberAirborne = ability.listOfTargets[index].Count(target => target.CurrentPosition != Position.Airborne);
+                            int numberAirborne = ability.listOfTargets[index].Count(target => target.CurrentPosition == Position.Airborne);
                             if (numberAirborne > 0) ability.listOfTargets[index].RemoveAll(target => target.CurrentPosition != Position.Airborne);
                             ability.listOfTargets[index] = new() { ability.listOfTargets[index][Random.Range(0, ability.listOfTargets[index].Count)] };
                             break;
                         case "CHOOSEGROUNDED":
-                            int numberGrounded = ability.listOfTargets[index].Count(target => target.CurrentPosition != Position.Grounded);
+                            int numberGrounded = ability.listOfTargets[index].Count(target => target.CurrentPosition == Position.Grounded);
                             if (numberGrounded > 0) ability.listOfTargets[index].RemoveAll(target => target.CurrentPosition != Position.Grounded);
                             ability.listOfTargets[index] = new() { ability.listOfTargets[index][Random.Range(0, ability.listOfTargets[index].Count)] };
                             break;

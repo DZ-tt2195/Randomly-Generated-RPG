@@ -1354,7 +1354,7 @@
       "Deal ATK damage to an Airborne Player. They lose POWERSTAT Power and LUCKSTAT% Luck.",
       "THIS stabs TARGET.",
       "Attack/StatPlayer",
-      "Atttack/DealtDamage/TargetPowerStat/TargetLuckStat",
+      "Attack/DealtDamage/TargetPowerStat/TargetLuckStat",
       "TargetAirborne",
       "1",
       "3",
