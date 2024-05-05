@@ -311,7 +311,7 @@ public class Character : MonoBehaviour
     {
         if (this == null || effect == 0) yield break;
 
-        modifyDefense = Math.Clamp(modifyDefense += effect, -4, 4);
+        modifyDefense = Math.Clamp(modifyDefense += effect, -3, 3);
         if (logged >= 0)
         {
             TurnManager.instance.CreateVisual($"{(effect > 0 ? '+' : '-')}{Math.Abs(effect)} Defense", this.transform.localPosition);
@@ -442,20 +442,9 @@ public class Character : MonoBehaviour
         chosenTarget = null;
 
         if (TurnsTargeted > 0)
-        {
             TurnsTargeted--;
-        }
 
-        if (TurnsStunned > 0)
-        {
-            yield return TurnManager.instance.WaitTime();
-            TurnsStunned--;
-            Log.instance.AddText($"{this.name} is Stunned.", 0);
-        }
-        else
-        {
-            yield return ResolveTurn(logged, extraTurn);
-        }
+        yield return ResolveTurn(logged, extraTurn);
         yield return EmotionEffect(logged, extraTurn);
     }
 
@@ -487,6 +476,14 @@ public class Character : MonoBehaviour
 
     IEnumerator ResolveTurn(int logged, bool extraAbility)
     {
+        if (TurnsStunned > 0)
+        {
+            yield return TurnManager.instance.WaitTime();
+            TurnsStunned--;
+            Log.instance.AddText($"{this.name} is Stunned.", 0);
+            yield break;
+        }
+
         if (TurnManager.instance.listOfEnemies.Count > 0)
         {
             StartCoroutine(nameof(Timer));

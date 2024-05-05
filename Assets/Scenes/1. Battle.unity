@@ -397,9 +397,9 @@ MonoBehaviour:
   pointsVisual: {fileID: 8766781883395997160, guid: d817be641f2464bdaa47d0a4e0b6d381, type: 3}
   undoBox: {fileID: 7928303491963949573, guid: 0ce383b7ea8ca488c810cadf3b089e7e, type: 3}
   listOfWaveSetup:
-  - enemyDifficultySpawn: 02000000
   - enemyDifficultySpawn: 0100000002000000
   - enemyDifficultySpawn: 010000000200000001000000
+  - enemyDifficultySpawn: 020000000100000002000000
   - enemyDifficultySpawn: 01000000020000000200000001000000
   - enemyDifficultySpawn: 0100000002000000030000000200000001000000
   listOfBoxes:

@@ -285,7 +285,7 @@ public class Ability : MonoBehaviour
                     listOfTargets[currentIndex].RemoveAll(target => target.CurrentPosition != Position.Grounded);
                     break;
                 case "ALLGROUNDED":
-                    int numberGrounded = data.defaultTargets[currentIndex] == TeamTarget.AllPlayers ? TurnManager.instance.listOfPlayers.Count + TurnManager.instance.listOfEnemies.Count : TurnManager.instance.listOfEnemies.Count;
+                    int numberGrounded = data.defaultTargets[currentIndex] == TeamTarget.AllPlayers ? TurnManager.instance.listOfPlayers.Count + TurnManager.instance.listOfDead.Count : TurnManager.instance.listOfEnemies.Count;
                     listOfTargets[currentIndex].RemoveAll(target => target.CurrentPosition != Position.Grounded);
                     if (listOfTargets[currentIndex].Count != numberGrounded)
                         return false; break;
@@ -297,7 +297,7 @@ public class Ability : MonoBehaviour
                     listOfTargets[currentIndex].RemoveAll(target => target.CurrentPosition != Position.Airborne);
                     break;
                 case "ALLAIRBORNE":
-                    int numberAirborne = data.defaultTargets[currentIndex] == TeamTarget.AllPlayers ? TurnManager.instance.listOfPlayers.Count + TurnManager.instance.listOfEnemies.Count : TurnManager.instance.listOfEnemies.Count;
+                    int numberAirborne = data.defaultTargets[currentIndex] == TeamTarget.AllPlayers ? TurnManager.instance.listOfPlayers.Count + TurnManager.instance.listOfDead.Count : TurnManager.instance.listOfEnemies.Count;
                     listOfTargets[currentIndex].RemoveAll(target => target.CurrentPosition != Position.Airborne);
                     if (listOfTargets[currentIndex].Count != numberAirborne)
                         return false; break;

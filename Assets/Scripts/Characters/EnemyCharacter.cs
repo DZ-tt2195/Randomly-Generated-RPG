@@ -44,13 +44,11 @@ public class EnemyCharacter : Character
                 chosenAbility = allAbilities[0];
                 break;
             default:
-                if (attackingAbilities.Count != 0 && (data.aiTargeting.Equals("CHOOSEATTACK") ||
-                    this.CurrentEmotion == Emotion.Angry || (this.CurrentEmotion == Emotion.Sad && CalculateHealthPercent() <= 0.6f)))
-                    chosenAbility = attackingAbilities[0];
-                else if (miscAbilities.Count != 0 && !extraAbility && this.CurrentEmotion == Emotion.Happy)
-                    chosenAbility = miscAbilities[0];
-                else
-                    chosenAbility = allAbilities[0];
+                if (attackingAbilities.Count == 0) chosenAbility = miscAbilities[0];
+                else if (miscAbilities.Count == 0) chosenAbility = attackingAbilities[0];
+                else if (this.CurrentEmotion == Emotion.Happy && !extraAbility) chosenAbility = miscAbilities[0];
+                else if (data.aiTargeting.Equals("CHOOSEATTACK") || this.CurrentEmotion == Emotion.Angry || this.CurrentEmotion == Emotion.Sad) chosenAbility = attackingAbilities[0];
+                else chosenAbility = Random.Range(0, 2) == 1 ? miscAbilities[0] : attackingAbilities[0];
                 break;
         }
     }
@@ -71,15 +69,8 @@ public class EnemyCharacter : Character
                 {
                     switch (data.aiTargeting)
                     {
-                        case "":
-                            ability.listOfTargets[index] = new List<Character> { ability.listOfTargets[index][0] };
-                            break;
-                        case "NONE":
-                            ability.listOfTargets[index] = new List<Character> { ability.listOfTargets[index][0] };
-                            break;
-
                         case "LASTATTACKER":
-                            ability.listOfTargets[index].RemoveAll(target => target != lastToAttackThis);
+                            ability.listOfTargets[index] = new() { lastToAttackThis };
                             break;
 
                         case "CHOOSEAIRBORNE":
@@ -114,6 +105,10 @@ public class EnemyCharacter : Character
                         case "WEAKEST":
                             ability.listOfTargets[index].OrderBy(o => o.CalculateStatTotals()).ToList();
                             ability.listOfTargets[index] = new() { ability.listOfTargets[index][0] };
+                            break;
+
+                        default:
+                            ability.listOfTargets[index] = new List<Character> { ability.listOfTargets[index][0] };
                             break;
                     }
                 }

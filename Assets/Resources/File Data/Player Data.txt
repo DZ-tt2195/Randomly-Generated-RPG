@@ -14,19 +14,19 @@
     [
       "Knight",
       "Deals lots of damage to individual Enemies, but can't hit Airborne ones. Has control over Emotions.",
-      "12",
+      "10",
       "0",
       "0.15",
       "0.9",
       "GROUNDED",
-      "Carefree,Daze,Delegate,Dejection,Embarass,Impale,Intimidation,Joust,Mock,Neutralize,Rollout,Sap Energy,Shields Up,Shun,Skirmish,Tragedy,Trick,Unleash Rage,",
+      "Carefree,Daze,Delegate,Dejection,Embarass,Impale,Intimidation,Joust,Mock,Neutralize,Rollout,Sap Energy,Shun,Skirmish,Steal,Tragedy,Trick,Unleash Rage,",
       "",
       "Michael Watson|Dominion: Cornucopia and Guilds|(Joust)"
     ],
     [
       "Angel",
       "Heals Players while Airborne. Can do everything but attack.",
-      "12",
+      "10",
       "-1",
       "0.15",
       "0.9",
@@ -38,7 +38,7 @@
     [
       "Wizard",
       "Deals damage to multiple Enemies at once, and can hit Airborne ones. Has control over Positions.",
-      "12",
+      "10",
       "1",
       "0.15",
       "0.9",

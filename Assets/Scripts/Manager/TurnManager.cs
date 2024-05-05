@@ -126,14 +126,14 @@ public class TurnManager : MonoBehaviour
 
             if (currentWave == 1 && CarryVariables.instance.ActiveCheat("Stronger Players"))
             {
-                Log.instance.AddText($"Players get +1 to their stats. (Stronger Players)");
+                Log.instance.AddText($"Players have higher stats stats. (Stronger Players)");
                 foreach (Character player in listOfPlayers)
                 {
                     yield return player.ChangePower(1, -1);
                     yield return player.ChangeDefense(1, -1);
                     yield return player.ChangeSpeed(1, -1);
-                    yield return player.ChangeLuck(0.1f, -1);
-                    yield return player.ChangeAccuracy(0.1f, -1);
+                    yield return player.ChangeLuck(0.05f, -1);
+                    yield return player.ChangeAccuracy(0.05f, -1);
                 }
                 Log.instance.AddText("");
             }
@@ -154,7 +154,7 @@ public class TurnManager : MonoBehaviour
             }
 
             if (CarryVariables.instance.ActiveChallenge("Stronger Enemies"))
-                Log.instance.AddText($"Enemies get +1 to their stats. (Stronger Enemies)");
+                Log.instance.AddText($"Enemies have higher stats. (Stronger Enemies)");
 
             foreach (int nextTier in listOfWaveSetup[currentWave-1].enemyDifficultySpawn)
             {
@@ -360,8 +360,8 @@ public class TurnManager : MonoBehaviour
                 StartCoroutine(nextEnemy.ChangePower(1, -1));
                 StartCoroutine(nextEnemy.ChangeDefense(1, -1));
                 StartCoroutine(nextEnemy.ChangeSpeed(1, -1));
-                StartCoroutine(nextEnemy.ChangeLuck(0.1f, -1));
-                StartCoroutine(nextEnemy.ChangeAccuracy(0.1f, -1));
+                StartCoroutine(nextEnemy.ChangeLuck(0.05f, -1));
+                StartCoroutine(nextEnemy.ChangeAccuracy(0.05f, -1));
             }
 
             if (CarryVariables.instance.ActiveCheat("Enemies Stunned"))
