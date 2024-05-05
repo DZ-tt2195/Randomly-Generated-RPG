@@ -321,8 +321,9 @@ public class Ability : MonoBehaviour
                     break;
 
                 case "LASTATTACKEREXISTS":
-                    if (self.lastToAttackThis != null && !listOfTargets[currentIndex].Contains(self.lastToAttackThis) && self.lastToAttackThis.CalculateHealth() > 0)
-                        return false; break;
+                    if (self.lastToAttackThis == null) return false;
+                    if (self.lastToAttackThis.CalculateHealth() == 0) return false;
+                    return listOfTargets[currentIndex].Contains(self.lastToAttackThis);
 
                 default:
                     Debug.LogError($"{this.data.myName}: {methodName} isn't a condition");
@@ -394,7 +395,6 @@ public class Ability : MonoBehaviour
 
             foreach (string methodName in listOfMethods)
             {
-                yield return TurnManager.instance.WaitTime();
                 bool runNextMethod = true;
 
                 switch (methodName)
@@ -422,14 +422,9 @@ public class Ability : MonoBehaviour
                     case "SELFCOPY":
                         TurnManager.instance.CreateEnemy(self.data, (Emotion)Random.Range(1, 5), logged);
                         break;
-                    case "SUMMON1STAR":
-                        TurnManager.instance.CreateEnemy(FileManager.instance.listOfEnemies[0][Random.Range(0, FileManager.instance.listOfEnemies[0].Count)], (Emotion)Random.Range(1, 5), logged);
-                        break;
-                    case "SUMMON2STAR":
-                        TurnManager.instance.CreateEnemy(FileManager.instance.listOfEnemies[1][Random.Range(0, FileManager.instance.listOfEnemies[1].Count)], (Emotion)Random.Range(1, 5), logged);
-                        break;
-                    case "SUMMON3STAR":
-                        TurnManager.instance.CreateEnemy(FileManager.instance.listOfEnemies[2][Random.Range(0, FileManager.instance.listOfEnemies[2].Count)], (Emotion)Random.Range(1, 5), logged);
+                    case "SUMMONSTAR":
+                        TurnManager.instance.CreateEnemy(FileManager.instance.RandomEnemy(data.miscNumber),
+                            (Emotion)Random.Range(1, 5), logged);
                         break;
 
                     case "SELFHEAL":
@@ -621,6 +616,7 @@ public class Ability : MonoBehaviour
 
                 if (!runNextMethod)
                     break;
+                yield return TurnManager.instance.WaitTime();
             }
         }
     }

@@ -4,9 +4,9 @@
       "Ability Name",
       "Description",
       "Log Description",
-      "Ability Types",
-      "Instructions",
+      "Target",
       "Play condition",
+      "Instructions",
       "Cooldown",
       "Attack damage",
       "Health regain",
@@ -16,16 +16,16 @@
       "Luck Stat",
       "Accuracy Stat",
       "Misc number",
-      "Target"
+      "Ability Types"
     ],
     [
       "Knight",
       "Back At It",
       "This becomes Happy and its active Cooldowns are decreased by MISC.",
       "THIS is back at it.",
-      "EmotionPlayer",
-      "SelfHappy/TargetReduceActiveCooldown",
+      "Self",
       "None",
+      "SelfHappy/TargetReduceActiveCooldown",
       "1",
       "",
       "",
@@ -35,16 +35,16 @@
       "",
       "",
       "1",
-      "Self"
+      "EmotionPlayer"
     ],
     [
       "Knight",
       "Battle Cry",
       "This and another Player gains POWERSTAT Power and becomes Angry.",
       "THIS uses battle cry along with TARGET.",
-      "StatPlayer/EmotionPlayer",
-      "SelfAngry/SelfPowerStat/TargetAngry/TargetPowerStat",
+      "OtherPlayer",
       "None",
+      "SelfAngry/SelfPowerStat/TargetAngry/TargetPowerStat",
       "1",
       "",
       "",
@@ -54,16 +54,16 @@
       "",
       "",
       "",
-      "OtherPlayer"
+      "StatPlayer/EmotionPlayer"
     ],
     [
       "Knight",
       "Carefree",
       "This and another Player gains DEFENSESTAT Defense and becomes Happy.",
       "THIS casts carefree.",
-      "StatPlayer/EmotionPlayer",
-      "SelfHappy/SelfDefenseStat/TargetHappy/TargetDefenseStat",
+      "OtherPlayer",
       "None",
+      "SelfHappy/SelfDefenseStat/TargetHappy/TargetDefenseStat",
       "1",
       "",
       "",
@@ -73,16 +73,16 @@
       "",
       "",
       "",
-      "OtherPlayer"
+      "StatPlayer/EmotionPlayer"
     ],
     [
       "Knight",
       "Daze",
       "A Grounded Enemy becomes Happy. One of their Abilities that has no Cooldown is on Cooldown for MISC turn.",
       "THIS dazes TARGET.",
-      "EmotionEnemy",
-      "TargetHappy/TargetIncreaseRandomCooldown",
+      "OneEnemy",
       "TargetGrounded",
+      "TargetHappy/TargetIncreaseRandomCooldown",
       "1",
       "",
       "",
@@ -92,16 +92,16 @@
       "",
       "",
       "1",
-      "OneEnemy"
+      "EmotionEnemy"
     ],
     [
       "Knight",
       "Delegate",
       "Another Player takes an extra turn.",
       "THIS delegates their turn to TARGET.",
-      "Misc",
-      "PassTurn",
+      "OtherPlayer",
       "None",
+      "PassTurn",
       "2",
       "",
       "",
@@ -111,16 +111,16 @@
       "",
       "",
       "",
-      "OtherPlayer"
+      "Misc"
     ],
     [
       "Knight",
       "Dejection",
       "A Grounded Enemy becomes Sad and loses DEFENSESTAT Defense.",
       "THIS dejects TARGET.",
-      "StatEnemy/EmotionEnemy",
-      "TargetSad/TargetDefenseStat",
+      "OneEnemy",
       "None",
+      "TargetSad/TargetDefenseStat",
       "1",
       "",
       "",
@@ -130,16 +130,16 @@
       "",
       "",
       "",
-      "OneEnemy"
+      "StatEnemy/EmotionEnemy"
     ],
     [
       "Knight",
       "Embarass",
       "A Grounded Enemy becomes Sad. Then deal ATK damage to them.",
       "THIS embarasses TARGET.",
-      "Attack/EmotionEnemy",
-      "TargetSad/Attack",
+      "OneEnemy",
       "TargetGrounded",
+      "TargetSad/Attack",
       "",
       "4",
       "",
@@ -149,16 +149,16 @@
       "",
       "",
       "",
-      "OneEnemy"
+      "Attack/EmotionEnemy"
     ],
     [
       "Knight",
       "Impale",
       "Deal ATK damage to a Grounded Enemy. It gets Stunned for MISC turn.",
       "THIS impales TARGET.",
-      "Attack",
-      "Attack/Dealtdamage/TargetStun",
+      "OneEnemy",
       "TargetGrounded",
+      "Attack/Dealtdamage/TargetStun",
       "1",
       "4",
       "",
@@ -168,16 +168,16 @@
       "",
       "",
       "1",
-      "OneEnemy"
+      "Attack"
     ],
     [
       "Knight",
       "Intimidation",
       "All Enemies lose POWERSTAT Power and DEFENSESTAT Defense.",
       "THIS uses intimidation.",
-      "StatEnemy",
-      "TargetPowerStat/TargetDefenseStat",
+      "AllEnemies",
       "None",
+      "TargetPowerStat/TargetDefenseStat",
       "1",
       "",
       "",
@@ -187,16 +187,16 @@
       "",
       "",
       "",
-      "AllEnemies"
+      "StatEnemy"
     ],
     [
       "Knight",
       "Joust",
       "Deal ATK damage to a Grounded Enemy. This loses ACCURACYSTAT% Accuracy.",
       "THIS uses joust on TARGET.",
-      "Attack/StatPlayer",
-      "Attack-Dealtdamage/SelfAccuracyStat",
+      "OneEnemy-Self",
       "TargetGrounded-None",
+      "Attack-Dealtdamage/SelfAccuracyStat",
       "",
       "5",
       "",
@@ -206,16 +206,16 @@
       "",
       "-0.1",
       "",
-      "OneEnemy-Self"
+      "Attack/StatPlayer"
     ],
     [
       "Knight",
       "Mock",
       "A Grounded Enemy becomes Angry. Then deal ATK damage to them.",
       "THIS mocks TARGET.",
-      "Attack/EmotionEnemy",
-      "TargetAngry/Attack",
+      "OneEnemy",
       "TargetGrounded",
+      "TargetAngry/Attack",
       "",
       "4",
       "",
@@ -225,16 +225,16 @@
       "",
       "",
       "",
-      "OneEnemy"
+      "Attack/EmotionEnemy"
     ],
     [
       "Knight",
       "Neutralize",
       "Deal ATK damage to a Grounded Enemy. They become Neutral.",
       "THIS neutralizes TARGET.",
-      "Attack/EmotionEnemy",
-      "Attack/Dealtdamage/TargetNeutral",
+      "OneEnemy",
       "TargetGrounded",
+      "Attack/Dealtdamage/TargetNeutral",
       "",
       "4",
       "",
@@ -244,16 +244,16 @@
       "",
       "",
       "",
-      "OneEnemy"
+      "Attack/EmotionEnemy"
     ],
     [
       "Knight",
       "Rollout",
       "This gains POWERSTAT Power, then deals ATK damage to a Grounded Enemy.",
       "THIS casts rollout on TARGET.",
-      "Attack/StatPlayer",
-      "SelfPowerStat/Attack",
+      "OneEnemy",
       "TargetGrounded",
+      "SelfPowerStat/Attack",
       "1",
       "3",
       "",
@@ -263,16 +263,16 @@
       "",
       "",
       "",
-      "OneEnemy"
+      "Attack/StatPlayer"
     ],
     [
       "Knight",
       "Sap Energy",
       "Deal ATK damage to a Grounded Enemy. They lose POWERSTAT Power.",
       "THIS casts sap energy.",
-      "Attack/StatEnemy",
-      "Attack/Dealtdamage/TargetPowerStat",
+      "OneEnemy",
       "TargetGrounded",
+      "Attack/Dealtdamage/TargetPowerStat",
       "1",
       "5",
       "",
@@ -282,16 +282,16 @@
       "",
       "",
       "",
-      "OneEnemy"
+      "Attack/StatEnemy"
     ],
     [
       "Knight",
       "Shields Up",
       "All Players gain DEFENSESTAT Defense.",
       "THIS casts shields up.",
-      "StatPlayer",
-      "TargetDefenseStat",
+      "AllPlayers",
       "",
+      "TargetDefenseStat",
       "1",
       "",
       "",
@@ -301,16 +301,16 @@
       "",
       "0.1",
       "",
-      "AllPlayers"
+      "StatPlayer"
     ],
     [
       "Knight",
       "Shun",
       "Deal ATK damage to an Enemy who's Grounded and Sad.",
       "THIS shuns TARGET.",
-      "Attack",
-      "Attack",
+      "OneEnemy",
       "TargetGrounded/TargetSad",
+      "Attack",
       "0",
       "6",
       "",
@@ -320,16 +320,16 @@
       "",
       "",
       "",
-      "OneEnemy"
+      "Attack"
     ],
     [
       "Knight",
       "Skirmish",
       "This becomes Angry and deals ATK damage to a Grounded Enemy.",
       "THIS starts a skirmish with TARGET.",
-      "Attack/EmotionPlayer",
-      "SelfAngry/Attack",
+      "OneEnemy",
       "TargetGrounded",
+      "SelfAngry/Attack",
       "1",
       "4",
       "",
@@ -339,16 +339,16 @@
       "",
       "",
       "",
-      "OneEnemy"
+      "Attack/EmotionPlayer"
     ],
     [
       "Knight",
       "Tragedy",
       "This becomes Sad and deals ATK damage to a Grounded Enemy.",
       "THIS casts tragedy on TARGET.",
-      "Attack/EmotionPlayer",
-      "SelfSad/Attack",
+      "OneEnemy",
       "TargetGrounded",
+      "SelfSad/Attack",
       "1",
       "4",
       "",
@@ -358,16 +358,16 @@
       "",
       "",
       "",
-      "OneEnemy"
+      "Attack/EmotionPlayer"
     ],
     [
       "Knight",
       "Trick",
       "A Grounded Enemy becomes Happy. Then deal ATK damage to them.",
       "This tricks TARGET.",
-      "Attack/EmotionEnemy",
-      "TargetHappy/Attack",
+      "OneEnemy",
       "TargetGrounded",
+      "TargetHappy/Attack",
       "",
       "4",
       "",
@@ -377,16 +377,16 @@
       "",
       "",
       "",
-      "OneEnemy"
+      "Attack/EmotionEnemy"
     ],
     [
       "Knight",
       "Unleash Rage",
       "If this is Angry, deal ATK damage to a Grounded Enemy.",
       "THIS unleashes its rage.",
-      "Attack",
-      "Attack",
+      "OneEnemy",
       "TargetGrounded/SelfAngry",
+      "Attack",
       "0",
       "6",
       "",
@@ -396,16 +396,16 @@
       "",
       "",
       "",
-      "OneEnemy"
+      "Attack"
     ],
     [
       "Angel",
       "Calm Down",
       "A non-Neutral Player gains REGAIN Health. They become Neutral.",
       "THIS helps TARGET calm down.",
-      "Healing/EmotionPlayer",
-      "TargetHeal/TargetNeutral",
+      "OnePlayer",
       "TargetNotNeutral",
+      "TargetHeal/TargetNeutral",
       "0",
       "",
       "4",
@@ -415,16 +415,16 @@
       "",
       "",
       "",
-      "OnePlayer"
+      "Healing/EmotionPlayer"
     ],
     [
       "Angel",
       "Catch Out of Air",
       "An Airborne Enemy becomes Grounded. All Players gain REGAIN Health.",
       "THIS catches TARGET out of the air.",
-      "Healing/PositionEnemy",
-      "TargetGrounded-TargetHeal",
+      "OneEnemy-AllPlayers",
       "TargetAirborne-None",
+      "TargetGrounded-TargetHeal",
       "0",
       "",
       "1",
@@ -434,16 +434,16 @@
       "",
       "",
       "",
-      "OneEnemy-AllPlayers"
+      "Healing/PositionEnemy"
     ],
     [
       "Angel",
       "Crash Landing",
       "An Airborne Enemy becomes Grounded and loses LUCKSTAT% Luck.",
       "THIS makes TARGET crash land.",
-      "StatEnemy/PositionEnemy",
-      "TargetGrounded/TargetLuckStat",
+      "OneEnemy",
       "TargetAirborne",
+      "TargetGrounded/TargetLuckStat",
       "0",
       "",
       "",
@@ -453,16 +453,16 @@
       "-0.1",
       "",
       "",
-      "OneEnemy"
+      "StatEnemy/PositionEnemy"
     ],
     [
       "Angel",
       "Defensive Aura",
       "All Players gain REGAIN Health and DEFENSESTAT Defense.",
       "THIS casts a defensive aura.",
-      "Healing/StatPlayer",
-      "TargetHeal/TargetDefenseStat",
+      "AllPlayers",
       "None",
+      "TargetHeal/TargetDefenseStat",
       "2",
       "",
       "2",
@@ -472,16 +472,16 @@
       "",
       "",
       "",
-      "AllPlayers"
+      "Healing/StatPlayer"
     ],
     [
       "Angel",
       "Delegate",
       "Another Player takes an extra turn.",
       "THIS delegates their turn to TARGET.",
-      "Misc",
-      "PassTurn",
+      "OtherPlayer",
       "None",
+      "PassTurn",
       "2",
       "",
       "",
@@ -491,16 +491,16 @@
       "",
       "",
       "",
-      "OtherPlayer"
+      "Misc"
     ],
     [
       "Angel",
       "Down to Earth",
       "An Airborne Player gains REGAIN Health and becomes Grounded.",
       "THIS brings TARGET down to earth.",
-      "Healing/PositionPlayer",
-      "TargetHeal/TargetGrounded",
+      "OnePlayer",
       "TargetAirborne",
+      "TargetHeal/TargetGrounded",
       "0",
       "",
       "4",
@@ -510,16 +510,16 @@
       "",
       "",
       "",
-      "OnePlayer"
+      "Healing/PositionPlayer"
     ],
     [
       "Angel",
       "Enrage",
       "A Player gains REGAIN Health and becomes Angry.",
       "THIS enrages TARGET.",
-      "Healing/EmotionPlayer",
-      "TargetHeal/TargetAngry",
+      "OnePlayer",
       "",
+      "TargetHeal/TargetAngry",
       "1",
       "",
       "5",
@@ -529,35 +529,35 @@
       "",
       "",
       "",
-      "OnePlayer"
+      "Healing/EmotionPlayer"
     ],
     [
       "Angel",
       "Exercise",
       "All Players become Sad and gain LUCKSTAT% Luck.",
       "THIS makes everyone excercise.",
-      "StatPlayer/EmotionPlayer",
-      "TargetSad/TargetLuckStat",
+      "AllPlayers",
       "",
+      "TargetSad/TargetLuckStat",
       "0",
       "",
       "",
       "",
       "",
       "",
-      "0.1",
+      "0.05",
       "",
       "",
-      "AllPlayers"
+      "StatPlayer/EmotionPlayer"
     ],
     [
       "Angel",
       "Gift of Flight",
       "A Grounded Player becomes Airborne and Happy.",
       "THIS gives TARGET the gift of flight.",
-      "PositionPlayer/EmotionPlayer",
-      "TargetAirborne/TargetHappy",
+      "OnePlayer",
       "TargetGrounded",
+      "TargetAirborne/TargetHappy",
       "0",
       "",
       "",
@@ -567,16 +567,16 @@
       "",
       "",
       "",
-      "OnePlayer"
+      "PositionPlayer/EmotionPlayer"
     ],
     [
       "Angel",
       "Grow Tree",
       "A Grounded Enemy becomes Airborne. All Players gain REGAIN Health.",
       "THIS grows a tree underneath TARGET.",
-      "Healing/PositionEnemy",
-      "TargetAirborne-TargetHeal",
+      "OneEnemy-AllPlayers",
       "TargetGrounded-None",
+      "TargetAirborne-TargetHeal",
       "0",
       "",
       "1",
@@ -586,16 +586,16 @@
       "",
       "",
       "",
-      "OneEnemy-AllPlayers"
+      "Healing/PositionEnemy"
     ],
     [
       "Angel",
       "Induce Anger",
       "An Enemy becomes Angry and loses POWERSTAT Power.",
       "THIS induces anger in TARGET.",
-      "StatEnemy/EmotionEnemy",
-      "TargetAngry/TargetPowerStat",
+      "OneEnemy",
       "None",
+      "TargetAngry/TargetPowerStat",
       "0",
       "",
       "",
@@ -605,16 +605,16 @@
       "",
       "",
       "",
-      "OneEnemy"
+      "StatEnemy/EmotionEnemy"
     ],
     [
       "Angel",
       "Induce Happiness",
       "An Enemy becomes Happy and loses ACCURACYSTAT% Accuracy.",
       "THIS induces happiness in TARGET.",
-      "StatEnemy/EmotionEnemy",
-      "TargetHappy/TargetAccuracyStat",
+      "OneEnemy",
       "None",
+      "TargetHappy/TargetAccuracyStat",
       "0",
       "",
       "",
@@ -624,16 +624,16 @@
       "",
       "-0.1",
       "",
-      "OneEnemy"
+      "StatEnemy/EmotionEnemy"
     ],
     [
       "Angel",
       "Induce Sadness",
       "An Enemy becomes Sad and loses DEFENSESTAT Defense.",
       "THIS induces sadness in TARGET.",
-      "StatEnemy/EmotionEnemy",
-      "TargetSad/TargetDefenseStat",
+      "OneEnemy",
       "None",
+      "TargetSad/TargetDefenseStat",
       "0",
       "",
       "",
@@ -643,16 +643,16 @@
       "",
       "",
       "",
-      "OneEnemy"
+      "StatEnemy/EmotionEnemy"
     ],
     [
       "Angel",
       "Invigorate",
       "A Player gains REGAIN Health and their active Cooldowns are reduced by MISC.",
       "THIS invigorates TARGET.",
-      "Healing",
-      "TargetHeal/TargetReduceActiveCooldown",
+      "OnePlayer",
       "None",
+      "TargetHeal/TargetReduceActiveCooldown",
       "1",
       "",
       "4",
@@ -662,16 +662,16 @@
       "",
       "",
       "1",
-      "OnePlayer"
+      "Healing"
     ],
     [
       "Angel",
       "Lift Up",
       "A Grounded Player gains REGAIN Health and becomes Airborne.",
       "THIS lifts up TARGET.",
-      "Healing/PositionPlayer",
-      "TargetHeal/TargetAirborne",
+      "OnePlayer",
       "TargetGrounded",
+      "TargetHeal/TargetAirborne",
       "0",
       "",
       "4",
@@ -681,16 +681,16 @@
       "",
       "",
       "",
-      "OnePlayer"
+      "Healing/PositionPlayer"
     ],
     [
       "Angel",
       "Overexert",
       "A Player gains REGAIN Health. This gets Stunned for MISC turn.",
       "THIS overexerts itself healing TARGET.",
-      "Healing",
-      "TargetHeal-SelfStun",
+      "OnePlayer-Self",
       "None-None",
+      "TargetHeal-SelfStun",
       "0",
       "",
       "7",
@@ -700,16 +700,16 @@
       "",
       "",
       "1",
-      "OnePlayer-Self"
+      "Healing"
     ],
     [
       "Angel",
       "Perk Up",
       "A Player gains REGAIN Health, SPEEDSTAT Speed, and LUCKSTAT% Luck.",
       "THIS perks up TARGET.",
-      "Healing/StatPlayer",
-      "TargetHeal/TargetLuckStat/TargetSpeedStat",
+      "OnePlayer",
       "None",
+      "TargetHeal/TargetLuckStat/TargetSpeedStat",
       "1",
       "",
       "4",
@@ -719,16 +719,16 @@
       "0.1",
       "",
       "",
-      "OnePlayer"
+      "Healing/StatPlayer"
     ],
     [
       "Angel",
       "Protective Barrier",
       "A Player gains REGAIN Health and is Protected.",
       "THIS casts a protective barrier on TARGET.",
-      "Healing",
-      "TargetHeal/TargetProtected",
+      "OnePlayer",
       "",
+      "TargetHeal/TargetProtected",
       "1",
       "",
       "3",
@@ -738,16 +738,16 @@
       "",
       "",
       "1",
-      "OnePlayer"
+      "Healing"
     ],
     [
       "Angel",
       "Purify",
       "All Players and Enemies become Neutral, and are no longer Stunned.",
       "THIS purifies everyone.",
-      "EmotionPlayer/EmotionEnemy",
-      "TargetNeutral/TargetNoStun",
+      "All",
       "",
+      "TargetNeutral/TargetNoStun",
       "1",
       "",
       "",
@@ -757,16 +757,16 @@
       "",
       "",
       "",
-      "All"
+      "EmotionPlayer/EmotionEnemy"
     ],
     [
       "Angel",
       "Share Healing",
       "This and another Player gains REGAIN Health.",
       "THIS and TARGET regains health.",
-      "Healing",
-      "SelfHeal/TargetHeal",
+      "OtherPlayer",
       "None",
+      "SelfHeal/TargetHeal",
       "1",
       "",
       "3",
@@ -776,16 +776,16 @@
       "",
       "",
       "",
-      "OtherPlayer"
+      "Healing"
     ],
     [
       "Angel",
       "Skyward Sword",
-      "All Airborne Players gain POWERSTAT Power. An Enemy becomes Airborne.",
+      "All Airborne Players gain POWERSTAT Power. A Grounded Enemy becomes Airborne.",
       "THIS casts skyward sword.",
-      "StatPlayer/PositionEnemy",
-      "TargetPowerStat/TargetAirborne",
-      "TargetAirborne-None",
+      "AllPlayers-OneEnemy",
+      "TargetAirborne-TargetGrounded",
+      "TargetPowerStat-TargetAirborne",
       "1",
       "",
       "",
@@ -795,16 +795,16 @@
       "",
       "",
       "",
-      "AllPlayers-OneEnemy"
+      "StatPlayer/PositionEnemy"
     ],
     [
       "Angel",
       "Stand Your Ground",
       "All Players become Grounded and gain ACCURACYSTAT% Accuracy.",
       "THIS makes everyone stand their ground.",
-      "StatPlayer/PositionPlayer",
-      "TargetGrounded/TargetAccuracyStat",
+      "AllPlayers",
       "",
+      "TargetGrounded/TargetAccuracyStat",
       "0",
       "",
       "",
@@ -814,16 +814,16 @@
       "",
       "0.05",
       "",
-      "AllPlayers"
+      "StatPlayer/PositionPlayer"
     ],
     [
       "Angel",
       "Taunt",
       "All Enemies become Angry and lose ACCURACYSTAT% Accuracy.",
       "THIS taunts the enemies.",
-      "StatEnemy/EmotionEnemy",
-      "TargetAngry/TargetAccuracyStat",
+      "AllEnemies",
       "None",
+      "TargetAngry/TargetAccuracyStat",
       "1",
       "",
       "",
@@ -833,16 +833,16 @@
       "",
       "-0.15",
       "",
-      "AllEnemies"
+      "StatEnemy/EmotionEnemy"
     ],
     [
       "Angel",
       "Too Slow",
       "All Enemies lose SPEEDSTAT Speed.",
       "THIS slows down the enemies.",
-      "StatEnemy",
-      "TargetSpeedStat",
+      "AllEnemies",
       "",
+      "TargetSpeedStat",
       "0",
       "",
       "",
@@ -852,16 +852,16 @@
       "",
       "",
       "",
-      "AllEnemies"
+      "StatEnemy"
     ],
     [
       "Angel",
       "Wind to Wings",
       "All Airborne Players gain REGAIN Health and SPEEDSTAT Speed.",
       "THIS casts wind to wings.",
-      "Healing/StatPlayer",
-      "TargetHeal/TargetSpeedStat",
+      "AllPlayers",
       "TargetAirborne",
+      "TargetHeal/TargetSpeedStat",
       "1",
       "",
       "4",
@@ -871,16 +871,16 @@
       "",
       "",
       "",
-      "AllPlayers"
+      "Healing/StatPlayer"
     ],
     [
       "Wizard",
       "Air Lasers",
       "This becomes Airborne and it deals ATK damage to all Grounded Enemies.",
       "THIS fires air lasers.",
-      "Attack/PositionPlayer",
-      "SelfAirborne/Attack",
+      "AllEnemies",
       "TargetGrounded",
+      "SelfAirborne/Attack",
       "0",
       "2",
       "",
@@ -890,16 +890,16 @@
       "",
       "",
       "",
-      "AllEnemies"
+      "Attack/PositionPlayer"
     ],
     [
       "Wizard",
       "Bad Omens",
       "Deal ATK damage to all enemies. They lose LUCKSTAT% Luck.",
       "THIS predicts bad omens.",
-      "Attack/StatEnemy",
-      "Attack/DealtDamage/TargetLuckStat",
+      "AllEnemies",
       "",
+      "Attack/DealtDamage/TargetLuckStat",
       "1",
       "2",
       "",
@@ -909,16 +909,16 @@
       "-0.1",
       "",
       "",
-      "AllEnemies"
+      "Attack/StatEnemy"
     ],
     [
       "Wizard",
       "Bounce",
       "Deal ATK damage to a Grounded Enemy. They become Airborne.",
       "THIS bounces TARGET.",
-      "Attack/PositionEnemy",
-      "Attack/Dealtdamage/TargetAirborne",
+      "OneEnemy",
       "TargetGrounded",
+      "Attack/Dealtdamage/TargetAirborne",
       "0",
       "3",
       "",
@@ -928,16 +928,16 @@
       "",
       "",
       "",
-      "OneEnemy"
+      "Attack/PositionEnemy"
     ],
     [
       "Wizard",
       "Delegate",
       "Another Player takes an extra turn.",
       "THIS delegates their turn to TARGET.",
-      "Misc",
-      "PassTurn",
+      "OtherPlayer",
       "None",
+      "PassTurn",
       "2",
       "",
       "",
@@ -947,16 +947,16 @@
       "",
       "",
       "",
-      "OtherPlayer"
+      "Misc"
     ],
     [
       "Wizard",
       "Flood",
       "Deal ATK damage to all Grounded Enemies.",
       "THIS casts flood.",
-      "Attack",
-      "Attack",
+      "AllEnemies",
       "TargetGrounded",
+      "Attack",
       "1",
       "4",
       "",
@@ -966,16 +966,16 @@
       "",
       "",
       "",
-      "AllEnemies"
+      "Attack"
     ],
     [
       "Wizard",
       "Fog",
       "All Enemies lose ACCURACYSTAT% Accuracy, SPEEDSTAT Speed, and LUCKSTAT% Luck.",
       "THIS casts fog.",
-      "StatEnemy",
-      "TargetAccuracyStat/TargetSpeedStat/TargetLuckStat",
+      "AllEnemies",
       "None",
+      "TargetAccuracyStat/TargetSpeedStat/TargetLuckStat",
       "1",
       "",
       "",
@@ -985,16 +985,16 @@
       "-0.1",
       "-0.1",
       "",
-      "AllEnemies"
+      "StatEnemy"
     ],
     [
       "Wizard",
       "Gravity Flip",
       "Everyone who's Airborne becomes Grounded, and vice versa.",
       "THIS flips the gravity.",
-      "PositionPlayer/PositionEnemy",
-      "TargetSwapPosition",
+      "All",
       "None",
+      "TargetSwapPosition",
       "0",
       "",
       "",
@@ -1004,16 +1004,16 @@
       "",
       "",
       "",
-      "All"
+      "PositionPlayer/PositionEnemy"
     ],
     [
       "Wizard",
       "Headwinds",
       "Deal ATK damage to all Airborne Enemies. All Players gain SPEEDSTAT Speed.",
       "THIS casts headwinds.",
-      "Attack/StatPlayer",
-      "Attack-TargetSpeedStat",
+      "AllEnemies-AllPlayers",
       "TargetAirborne-None",
+      "Attack-TargetSpeedStat",
       "0",
       "2",
       "",
@@ -1023,16 +1023,16 @@
       "",
       "",
       "",
-      "AllEnemies-AllPlayers"
+      "Attack/StatPlayer"
     ],
     [
       "Wizard",
       "Heavy Gravity",
       "All Airborne Enemies become Grounded and lose ACCURACYSTAT% Accuracy.",
       "THIS makes gravity heavy.",
-      "StatEnemy/PositionEnemy",
-      "TargetGrounded/TargetAccuracyStat",
+      "AllEnemies",
       "TargetAirborne",
+      "TargetGrounded/TargetAccuracyStat",
       "1",
       "",
       "",
@@ -1042,16 +1042,16 @@
       "",
       "-0.1",
       "",
-      "AllEnemies"
+      "StatEnemy/PositionEnemy"
     ],
     [
       "Wizard",
       "Ice Blast",
       "All Enemies become Stunned for MISC turn.",
       "THIS unleashes an ice blast.",
-      "Misc",
-      "TargetStun",
+      "AllEnemies",
       "None",
+      "TargetStun",
       "4",
       "",
       "",
@@ -1061,16 +1061,16 @@
       "",
       "",
       "1",
-      "AllEnemies"
+      "Misc"
     ],
     [
       "Wizard",
       "Light Gravity",
       "All Grounded Enemies become Airborne and lose SPEEDSTAT Speed.",
       "THIS makes gravity lighter.",
-      "StatEnemy/PositionEnemy",
-      "TargetAirborne/TargetSpeedStat",
+      "AllEnemies",
       "TargetGrounded",
+      "TargetAirborne/TargetSpeedStat",
       "1",
       "",
       "",
@@ -1080,16 +1080,16 @@
       "",
       "",
       "",
-      "AllEnemies"
+      "StatEnemy/PositionEnemy"
     ],
     [
       "Wizard",
       "Lightning Strike",
       "Deal ATK damage to an Airborne Enemy. They become Stunned for MISC turn.",
       "THIS casts lightning strike on TARGET.",
-      "Attack",
-      "Attack/DealtDamage/TargetStun",
+      "OneEnemy",
       "TargetAirborne",
+      "Attack/DealtDamage/TargetStun",
       "1",
       "4",
       "",
@@ -1099,16 +1099,16 @@
       "",
       "",
       "1",
-      "OneEnemy"
+      "Attack"
     ],
     [
       "Wizard",
       "Quick Aim",
       "All Players gain SPEEDSTAT Speed and ACCURACYSTAT% Accuracy.",
       "THIS casts quick aim.",
-      "StatPlayer",
-      "TargetSpeedStat/TargetAccuracyStat",
+      "AllPlayers",
       "",
+      "TargetSpeedStat/TargetAccuracyStat",
       "1",
       "",
       "",
@@ -1118,16 +1118,16 @@
       "",
       "0.1",
       "",
-      "AllPlayers"
+      "StatPlayer"
     ],
     [
       "Wizard",
       "Rough Air",
       "This becomes Grounded and it deals ATK damage to all Airborne Enemies.",
       "THIS casts rough air.",
-      "Attack/PositionPlayer",
-      "SelfGrounded-Attack",
+      "Self-AllEnemies",
       "None-TargetAirborne",
+      "SelfGrounded-Attack",
       "0",
       "2",
       "",
@@ -1137,16 +1137,16 @@
       "",
       "",
       "",
-      "Self-AllEnemies"
+      "Attack/PositionPlayer"
     ],
     [
       "Wizard",
       "Safe Above",
       "A Grounded Player becomes Airborne and Protected.",
       "THIS lets TARGET be safe above.",
-      "PositionPlayer",
-      "TargetAirborne/TargetProtected",
+      "OnePlayer",
       "TargetGrounded",
+      "TargetAirborne/TargetProtected",
       "1",
       "",
       "",
@@ -1155,17 +1155,17 @@
       "",
       "",
       "",
-      "",
-      "OnePlayer"
+      "1",
+      "PositionPlayer"
     ],
     [
       "Wizard",
       "Sky Hammer",
       "If this is Airborne, it becomes Grounded and deals ATK damage to all Grounded Enemies.",
       "THIS brings the hammer down.",
-      "Attack/PositionPlayer",
-      "SelfGrounded-Attack",
+      "Self-AllEnemies",
       "SelfAirborne-TargetGrounded",
+      "SelfGrounded-Attack",
       "1",
       "3",
       "",
@@ -1175,16 +1175,16 @@
       "",
       "",
       "",
-      "Self-AllEnemies"
+      "Attack/PositionPlayer"
     ],
     [
       "Wizard",
       "Sink",
       "An Airborne Enemy becomes Grounded and Targeted for MISC turns.",
       "THIS sinks TARGET.",
-      "PositionEnemy",
-      "TargetGrounded/TargetIsTargeted",
+      "OneEnemy",
       "TargetAirborne",
+      "TargetGrounded/TargetIsTargeted",
       "",
       "",
       "",
@@ -1194,16 +1194,16 @@
       "",
       "",
       "2",
-      "OneEnemy"
+      "PositionEnemy"
     ],
     [
       "Wizard",
       "Stalactites",
       "Deal ATK damage to all Airborne Enemies. They become Grounded.",
       "THIS drops stalactites.",
-      "Attack/PositionEnemy",
-      "Attack/Dealtdamage/TargetGrounded",
+      "AllEnemies",
       "TargetAirborne",
+      "Attack/Dealtdamage/TargetGrounded",
       "1",
       "3",
       "",
@@ -1213,16 +1213,16 @@
       "",
       "",
       "",
-      "AllEnemies"
+      "Attack/PositionEnemy"
     ],
     [
       "Wizard",
       "Throw Dice",
       "This gains LUCKSTAT% Luck, then deals ATK damage to all Enemies.",
       "THIS throws dice.",
-      "Attack/StatPlayer",
-      "SelfLuckStat-Attack",
+      "Self-AllEnemies",
       "None-None",
+      "SelfLuckStat-Attack",
       "2",
       "3",
       "",
@@ -1232,16 +1232,16 @@
       "0.1",
       "",
       "",
-      "Self-AllEnemies"
+      "Attack/StatPlayer"
     ],
     [
       "Wizard",
       "Team Attack",
       "If all 3 Players are Airborne, deal ATK damage to all Enemies.",
       "THIS uses a team attack.",
-      "Attack",
-      "Attack",
+      "AllPlayers-AllEnemies",
       "AllAirborne-None",
+      "None-Attack",
       "1",
       "4",
       "",
@@ -1251,7 +1251,7 @@
       "",
       "",
       "",
-      "AllPlayers-AllEnemies"
+      "Attack"
     ]
   ]
 }

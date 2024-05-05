@@ -415,7 +415,7 @@ public class Character : MonoBehaviour
 
         TurnsProtected += amount;
         TurnManager.instance.CreateVisual($"PROTECTED", this.transform.localPosition);
-        Log.instance.AddText($"{this.name} is Protected for {TurnsProtected} turn{(TurnsProtected == 1 ? "" : "s")}.", logged);
+        Log.instance.AddText($"{this.name} is Protected.", logged);
     }
 
     public IEnumerator Targeted(int amount, int logged)

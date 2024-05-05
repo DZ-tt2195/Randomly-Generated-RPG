@@ -93,17 +93,19 @@ public class DataLoader
             newAbility.description = line[2];
             newAbility.logDescription = line[3];
 
-            string[] listOfTypes = TurnManager.SpliceString(line[4].ToUpper().Trim(), '/');
-            AbilityType[] convertToTypes = new AbilityType[listOfTypes.Length];
-            for (int j = 0; j < listOfTypes.Length; j++)
-                convertToTypes[j] = StringToAbilityType(listOfTypes[j]);
-            newAbility.myTypes = convertToTypes;
+            string[] listOfTargets = (line[4].Equals("") ? new string[1] { "NONE" } : TurnManager.SpliceString(line[4].ToUpper().Trim(), '-'));
+            TeamTarget[] convertToTargets = new TeamTarget[listOfTargets.Length];
+            for (int j = 0; j < listOfTargets.Length; j++)
+                convertToTargets[j] = StringToTeamTarget(listOfTargets[j]);
+            newAbility.defaultTargets = convertToTargets;
 
-            newAbility.instructions = (line[5].Equals("") ? new string[1] { "NONE" } : TurnManager.SpliceString(line[5].ToUpper().Trim(), '-'));
-            newAbility.playCondition = (line[6].Equals("") ? new string[1] { "NONE" } : TurnManager.SpliceString(line[6].ToUpper().Trim(), '-'));
+            newAbility.playCondition = (line[5].Equals("") ? new string[1] { "NONE" } : TurnManager.SpliceString(line[5].ToUpper().Trim(), '-'));
+            newAbility.instructions = (line[6].Equals("") ? new string[1] { "NONE" } : TurnManager.SpliceString(line[6].ToUpper().Trim(), '-'));
+
             newAbility.baseCooldown = StringToInt(line[7]);
             newAbility.attackDamage = StringToInt(line[8]);
             newAbility.healthRegain = StringToInt(line[9]);
+
             newAbility.modifyPower = StringToInt(line[10]);
             newAbility.modifyDefense = StringToInt(line[11]);
             newAbility.modifySpeed = StringToInt(line[12]);
@@ -111,11 +113,15 @@ public class DataLoader
             newAbility.modifyAccuracy = StringToFloat(line[14]);
             newAbility.miscNumber = StringToInt(line[15]);
 
-            string[] listOfTargets = (line[16].Equals("") ? new string[1] { "NONE" } : TurnManager.SpliceString(line[16].ToUpper().Trim(), '-'));
-            TeamTarget[] convertToTargets = new TeamTarget[listOfTargets.Length];
-            for (int j = 0; j < listOfTargets.Length; j++)
-                convertToTargets[j] = StringToTeamTarget(listOfTargets[j]);
-            newAbility.defaultTargets = convertToTargets;
+            string[] listOfTypes = TurnManager.SpliceString(line[16].ToUpper().Trim(), '/');
+            AbilityType[] convertToTypes = new AbilityType[listOfTypes.Length];
+            for (int j = 0; j < listOfTypes.Length; j++)
+                convertToTypes[j] = StringToAbilityType(listOfTypes[j]);
+            newAbility.myTypes = convertToTypes;
+
+            if (!(newAbility.defaultTargets.Length == newAbility.playCondition.Length &&
+                newAbility.playCondition.Length == newAbility.instructions.Length))
+                Debug.LogError($"{newAbility.user}: {newAbility.myName} has inconsistent targets / instructions / conditions");
         }
         return nextData;
     }

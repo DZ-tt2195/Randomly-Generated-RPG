@@ -107,6 +107,11 @@ public class FileManager : MonoBehaviour
         return foundData;
     }
 
+    public CharacterData RandomEnemy(int stars)
+    {
+        return listOfEnemies[stars][UnityEngine.Random.Range(0, listOfEnemies[stars].Count)];
+    }
+
     public CharacterData FindEnemy(string target, int tier)
     {
         CharacterData foundData = listOfEnemies[tier].FirstOrDefault(character => character.myName == target); 
