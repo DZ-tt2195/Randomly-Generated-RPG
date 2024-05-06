@@ -16,8 +16,11 @@ public class TitleScreen : MonoBehaviour
     float generationTime = 0f;
     bool _stillGenerating;
     bool stillGenerating { get { return _stillGenerating; } set { { _stillGenerating = value; } if (generationTime>0f) Debug.Log(generationTime); } }
+
+    [Foldout("Misc", true)]
     [SerializeField] GameObject playerPrefab;
     [SerializeField] GameObject storyObject;
+    [SerializeField] GameObject specialThanksObject;
 
     [Foldout("RNG", true)]
     [SerializeField] bool randomSeed;
@@ -152,11 +155,6 @@ public class TitleScreen : MonoBehaviour
 
 #region Cheats/Challenges
 
-    public void StoryMenu()
-    {
-        storyObject.SetActive(!storyObject.activeSelf);
-    }
-
     void InitialToggle(Toggle toggle, bool cheat)
     {
         toggle.isOn = PlayerPrefs.HasKey(toggle.name) && PlayerPrefs.GetInt(toggle.name) == 1;
@@ -202,5 +200,19 @@ public class TitleScreen : MonoBehaviour
     }
 
     #endregion
+
+#region Misc
+
+    public void StoryMenu()
+    {
+        storyObject.SetActive(!storyObject.activeSelf);
+    }
+
+    public void SpecialThanksMenu()
+    {
+        specialThanksObject.SetActive(!specialThanksObject.activeSelf);
+    }
+
+#endregion
 
 }

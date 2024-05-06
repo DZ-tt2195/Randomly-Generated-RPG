@@ -123,9 +123,10 @@ public class Character : MonoBehaviour
         this.baseLuck = (CarryVariables.instance.ActiveCheat("No Luck") && myType == CharacterType.Enemy) ? 0 : data.baseLuck;
         this.baseAccuracy = data.baseAccuracy;
 
-        AddAbility(FileManager.instance.FindEnemyAbility("Skip Turn"), true, false);
-        AddAbility(FileManager.instance.FindEnemyAbility("Revive"), true, false);
         this.myImage.sprite = Resources.Load<Sprite>($"Characters/{this.name}");
+        AddAbility(FileManager.instance.FindEnemyAbility("Skip Turn"), true, false);
+        if (this.myType == CharacterType.Player)
+            AddAbility(FileManager.instance.FindEnemyAbility("Revive"), true, false);
 
         StartCoroutine(ChangePosition(data.startingPosition, -1));
         StartCoroutine(ChangeEmotion(startingEmotion, -1));

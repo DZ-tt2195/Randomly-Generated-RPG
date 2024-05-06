@@ -85,7 +85,7 @@
     ],
     [
       "Leprechaun",
-      "If this is at full health, it gives Players buffs; otherwise it deals lots of damage. Runs away afterwards.",
+      "If this is at full health, it gives Players buffs; otherwise it deals lots of damage.",
       "5",
       "-2",
       "0.1",

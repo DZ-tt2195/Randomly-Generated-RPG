@@ -31,7 +31,7 @@
       "0.15",
       "0.9",
       "AIRBORNE",
-      "Calm Down,Catch Out of Air,Crash Landing,Defensive Aura,Delegate,Down to Earth,Enrage,Exercise,Gift of Flight,Grow Tree,Induce Anger,Induce Happiness,Induce Sadness,Invigorate,Lift Up,Overexert,Perk Up,Protective Barrier,Purify,Share Healing,Skyward Sword,Stand Your Ground,Taunt,Too Slow,Wind to Wings,",
+      "Calm Down,Catch Out of Air,Crash Landing,Defensive Aura,Delegate,Down to Earth,Enrage,Exercise,Flaunt,Gift of Flight,Grow Tree,Induce Anger,Induce Happiness,Induce Sadness,Invigorate,Lift Up,Overexert,Perk Up,Protective Barrier,Share Healing,Skyward Sword,Stand Your Ground,Taunt,Too Slow,Wind to Wings,",
       "",
       "Magali Villeneuve|Oath of the Gatewatch|(Linvala, the Preserver)"
     ],
