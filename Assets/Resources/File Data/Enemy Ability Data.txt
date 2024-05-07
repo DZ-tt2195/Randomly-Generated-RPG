@@ -209,42 +209,42 @@
       "StatEnemy/EmotionEnemy"
     ],
     [
-      "Bomb",
+      "Wall",
       "Toughen",
-      "This gains DEFENSESTAT Defense.",
+      "This regains REGAIN Health and gains DEFENSESTAT Defense.",
       "THIS toughens up.",
       "Self",
       "",
-      "SelfDefenseStat",
+      "SelfDefenseStat/SelfHeal",
+      "1",
+      "",
+      "2",
+      "",
+      "1",
+      "",
+      "",
+      "",
+      "",
+      "StatEnemy/Healing"
+    ],
+    [
+      "Wall",
+      "In the Way",
+      "This becomes Targeted for MISC turn.",
+      "THIS is in the way.",
+      "Self",
+      "NotTargeted",
+      "SelfIsTargeted",
       "0",
       "",
       "",
       "",
+      "",
+      "",
+      "",
+      "",
       "1",
-      "",
-      "",
-      "",
-      "",
-      "StatEnemy"
-    ],
-    [
-      "Bomb",
-      "Explosion",
-      "Deal ATK damage to all Players, then this dies.",
-      "THIS explodes.",
-      "AllPlayers-Self",
-      "None-None",
-      "Attack-SelfDestruct",
-      "1",
-      "4",
-      "",
-      "",
-      "",
-      "",
-      "",
-      "",
-      "",
-      "Attack"
+      "Misc"
     ],
     [
       "Cow",
@@ -836,7 +836,7 @@
       "Misc"
     ],
     [
-      "Spirit",
+      "Pixie",
       "Cast Happiness",
       "A Player becomes Happy.",
       "THIS casts happiness on TARGET.",
@@ -855,7 +855,7 @@
       "EmotionPlayer"
     ],
     [
-      "Spirit",
+      "Pixie",
       "Cast Sadness",
       "A Player becomes Sad.",
       "THIS casts sadness on TARGET.",
@@ -874,7 +874,7 @@
       "EmotionPlayer"
     ],
     [
-      "Spirit",
+      "Pixie",
       "Cast Anger",
       "A Player becomes Angry.",
       "THIS casts anger on TARGET.",
@@ -893,7 +893,7 @@
       "EmotionPlayer"
     ],
     [
-      "Spirit",
+      "Pixie",
       "Will-o'-Wisp",
       "Deal ATK damage to an Airborne Player.",
       "THIS casts will-o'-wisp on TARGET.",
@@ -1565,7 +1565,7 @@
       "OtherEnemy",
       "NotTargeted",
       "TargetIsTargeted",
-      "",
+      "0",
       "",
       "",
       "",
@@ -1613,6 +1613,44 @@
       "",
       "",
       "EmotionEnemy/PositionEnemy/EmotionPlayer/PositionPlayer"
+    ],
+    [
+      "Demon",
+      "Sacrifice",
+      "Deal ATK damage to another Enemy. This gains REGAIN more max Health, REGAIN Health, and POWERSTAT Power.",
+      "THIS sacrifices TARGET.",
+      "OtherPlayer-Self",
+      "None-None",
+      "Attack-SelfMaxHealth/SelfHeal/SelfPowerStat",
+      "1",
+      "2",
+      "4",
+      "2",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "Healing/StatEnemy"
+    ],
+    [
+      "Demon",
+      "Fear",
+      "Deal ATK damage to a Player.",
+      "THIS strikes fear in TARGET.",
+      "OnePlayer",
+      "",
+      "Attack",
+      "0",
+      "3",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "Attack"
     ]
   ]
 }

@@ -12,16 +12,16 @@
       "Art Credit"
     ],
     [
-      "Bomb",
-      "Increases its Defense, then explodes after 1 turn.",
+      "Wall",
+      "Makes itself Targeted and increases its Defense.",
       "5",
-      "-2",
+      "2",
       "0.1",
       "0.8",
       "GROUNDED",
-      "Toughen,Explosion,",
-      "ChooseAttack",
-      "DZ|All Shapes and Sizes|(Bomb)"
+      "Toughen,In the Way,",
+      "",
+      "Joshua Stewart|Dominion: Empires|(Wall)"
     ],
     [
       "KITTY!!!",
@@ -60,7 +60,7 @@
       "Tom Wänerstrand|Time Spiral|(Unyaro Bees)"
     ],
     [
-      "Spirit",
+      "Pixie",
       "Changes Player Emotions.",
       "5",
       "0",
@@ -69,7 +69,7 @@
       "AIRBORNE",
       "Cast Happiness,Cast Sadness,Cast Anger,Will-o'-Wisp,",
       "Effectiveness",
-      "Julien Delval|Dominion: Nocturne|(Will-o'-Wisp)"
+      "Claus Stephan|Dominion: Nocturne|(Pixie)"
     ],
     [
       "PUPPY!!!",

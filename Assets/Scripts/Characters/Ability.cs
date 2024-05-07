@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using MyBox;
 using System.Linq;
+using System.Text.RegularExpressions;
+using System;
 
 public enum TeamTarget { None, Self, AnyOne, All, OnePlayer, OtherPlayer, OneEnemy, OtherEnemy, AllPlayers, AllEnemies };
 public enum AbilityType { None, Attack, StatPlayer, StatEnemy, EmotionPlayer, EmotionEnemy, PositionPlayer, PositionEnemy, Healing, Misc };
@@ -29,6 +31,7 @@ public class Ability : MonoBehaviour
     {
         self = GetComponent<Character>();
         this.data = data;
+        currentCooldown = (startWithCooldown) ? data.baseCooldown : 0;
 
         editedDescription = data.description
             .Replace("ATK", data.attackDamage.ToString())
@@ -36,13 +39,10 @@ public class Ability : MonoBehaviour
             .Replace("POWERSTAT", Mathf.Abs(data.modifyPower).ToString())
             .Replace("SPEEDSTAT", Mathf.Abs(data.modifySpeed).ToString())
             .Replace("DEFENSESTAT", Mathf.Abs(data.modifyDefense).ToString())
-            .Replace("ACCURACYSTAT", Mathf.Abs(data.modifyAccuracy*100).ToString())
-            .Replace("LUCKSTAT", Mathf.Abs(data.modifyLuck*100).ToString())
-            .Replace("MISC", data.miscNumber.ToString())
-        ;
+            .Replace("ACCURACYSTAT", Mathf.Abs(data.modifyAccuracy * 100).ToString())
+            .Replace("LUCKSTAT", Mathf.Abs(data.modifyLuck * 100).ToString())
+            .Replace("MISC", data.miscNumber.ToString());
         editedDescription = KeywordTooltip.instance.EditText(editedDescription);
-
-        currentCooldown = (startWithCooldown) ? data.baseCooldown : 0;
 
         mainType = AbilityType.Misc;
         foreach (AbilityType type in data.myTypes)
@@ -60,7 +60,8 @@ public class Ability : MonoBehaviour
         }
     }
 
-#endregion
+
+    #endregion
 
 #region Calculations
 
@@ -68,8 +69,7 @@ public class Ability : MonoBehaviour
     {
         if (CarryVariables.instance.mode == CarryVariables.GameMode.Main)
         {
-            float roll = Random.Range(0f, 1f);
-            return (roll <= value);
+            return (UnityEngine.Random.Range(0f, 1f) <= value);
         }
         else
         {
@@ -79,16 +79,9 @@ public class Ability : MonoBehaviour
 
     int RollCritical(float value)
     {
-        float roll = Random.Range(0f, 1f);
+        float roll = UnityEngine.Random.Range(0f, 1f);
         bool result = roll <= value;
-        if (result && CarryVariables.instance.mode == CarryVariables.GameMode.Main)
-        {
-            return 2;
-        }
-        else
-        {
-            return 0;
-        }
+        return (result && CarryVariables.instance.mode == CarryVariables.GameMode.Main) ? 2 : 0;
     }
 
     public int Effectiveness(Character user, Character target)
@@ -420,11 +413,11 @@ public class Ability : MonoBehaviour
                         break;
 
                     case "SELFCOPY":
-                        TurnManager.instance.CreateEnemy(self.data, (Emotion)Random.Range(1, 5), logged);
+                        TurnManager.instance.CreateEnemy(self.data, (Emotion)UnityEngine.Random.Range(1, 5), logged);
                         break;
                     case "SUMMONSTAR":
                         TurnManager.instance.CreateEnemy(FileManager.instance.RandomEnemy(data.miscNumber),
-                            (Emotion)Random.Range(1, 5), logged);
+                            (Emotion)UnityEngine.Random.Range(1, 5), logged);
                         break;
 
                     case "SELFHEAL":
@@ -434,6 +427,10 @@ public class Ability : MonoBehaviour
                     case "TARGETHEAL":
                         yield return target.GainHealth(CalculateHealing(self, logged), logged);
                         if (target.CalculateHealthPercent() >= 1f) fullHeal = true;
+                        break;
+
+                    case "SELFMAXHEALTH":
+                        yield return self.MaxHealth(data.healthRegain, logged);
                         break;
                     case "TARGETMAXHEALTH":
                         yield return target.MaxHealth(data.healthRegain, logged);
@@ -495,10 +492,10 @@ public class Ability : MonoBehaviour
                         break;
 
                     case "SELFRANDOMEMOTION":
-                        yield return self.ChangeEmotion((Emotion)Random.Range(1,5), logged);
+                        yield return self.ChangeEmotion((Emotion)UnityEngine.Random.Range(1,5), logged);
                         break;
                     case "TARGETRANDOMEMOTION":
-                        yield return target.ChangeEmotion((Emotion)Random.Range(1, 5), logged);
+                        yield return target.ChangeEmotion((Emotion)UnityEngine.Random.Range(1, 5), logged);
                         break;
 
                     case "SELFPOWERSTAT":
@@ -571,9 +568,6 @@ public class Ability : MonoBehaviour
                     case "TARGETSTUN":
                         yield return target.Stun(data.miscNumber, logged);
                         break;
-                    case "TARGETNOSTUN":
-                        yield return target.NoStun(logged);
-                        break;
 
                     case "SELFPROTECTED":
                         yield return self.Protected(data.miscNumber, logged);
@@ -584,6 +578,9 @@ public class Ability : MonoBehaviour
 
                     case "TARGETISTARGETED":
                         yield return target.Targeted(data.miscNumber, logged);
+                        break;
+                    case "SELFISTARGETED":
+                        yield return self.Targeted(data.miscNumber, logged);
                         break;
 
                     case "TARGETINCREASEACTIVECOOLDOWN":
@@ -603,7 +600,7 @@ public class Ability : MonoBehaviour
                         List<Ability> hasNoCooldown = target.listOfRandomAbilities.Where(ability => ability.currentCooldown == 0).ToList();
                         if (hasNoCooldown.Count > 0)
                         {
-                            Ability chosenAbility = hasNoCooldown[Random.Range(0, hasNoCooldown.Count)];
+                            Ability chosenAbility = hasNoCooldown[UnityEngine.Random.Range(0, hasNoCooldown.Count)];
                             chosenAbility.currentCooldown += data.miscNumber;
                             Log.instance.AddText($"{chosenAbility.data.myName} is placed on Cooldown.", logged);
                         }

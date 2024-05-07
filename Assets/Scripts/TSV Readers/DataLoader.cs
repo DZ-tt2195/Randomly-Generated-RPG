@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using MyBox;
+using System.Text.RegularExpressions;
 
 [Serializable]
 public class CharacterData
@@ -103,15 +104,15 @@ public class DataLoader
             newAbility.instructions = (line[6].Equals("") ? new string[1] { "NONE" } : TurnManager.SpliceString(line[6].ToUpper().Trim(), '-'));
 
             newAbility.baseCooldown = StringToInt(line[7]);
-            newAbility.attackDamage = StringToInt(line[8]);
-            newAbility.healthRegain = StringToInt(line[9]);
+            newAbility.attackDamage = StringToInt(line[8]); VerifyNumbers(newAbility, "ATK", newAbility.attackDamage.ToString());
+            newAbility.healthRegain = StringToInt(line[9]); VerifyNumbers(newAbility, "REGAIN", newAbility.healthRegain.ToString());
 
-            newAbility.modifyPower = StringToInt(line[10]);
-            newAbility.modifyDefense = StringToInt(line[11]);
-            newAbility.modifySpeed = StringToInt(line[12]);
-            newAbility.modifyLuck = StringToFloat(line[13]);
-            newAbility.modifyAccuracy = StringToFloat(line[14]);
-            newAbility.miscNumber = StringToInt(line[15]);
+            newAbility.modifyPower = StringToInt(line[10]); VerifyNumbers(newAbility, "POWERSTAT", newAbility.modifyPower.ToString());
+            newAbility.modifyDefense = StringToInt(line[11]); VerifyNumbers(newAbility, "DEFENSESTAT", newAbility.modifyDefense.ToString());
+            newAbility.modifySpeed = StringToInt(line[12]); VerifyNumbers(newAbility, "SPEEDSTAT", newAbility.modifySpeed.ToString());
+            newAbility.modifyLuck = StringToFloat(line[13]); VerifyNumbers(newAbility, "LUCKSTAT", newAbility.modifyLuck.ToString());
+            newAbility.modifyAccuracy = StringToFloat(line[14]); VerifyNumbers(newAbility, "ACCURACYSTAT", newAbility.modifyAccuracy.ToString());
+            newAbility.miscNumber = StringToInt(line[15]); VerifyNumbers(newAbility, "MISC", newAbility.miscNumber.ToString());
 
             string[] listOfTypes = TurnManager.SpliceString(line[16].ToUpper().Trim(), '/');
             AbilityType[] convertToTypes = new AbilityType[listOfTypes.Length];
@@ -191,6 +192,24 @@ public class DataLoader
         {
             Debug.LogError(line);
             return -1;
+        }
+    }
+
+    static void VerifyNumbers(AbilityData data, string toReplace, string newText)
+    {
+        int count = Regex.Matches(data.description, toReplace).Count;
+        if (count > 0)
+        {
+            try
+            {
+                if (int.Parse(newText) == 0)
+                    Debug.LogError($"{data.user}: {data.myName} has wrong {toReplace}");
+            }
+            catch (FormatException)
+            {
+                if (float.Parse(newText) == 0f)
+                    Debug.LogError($"{data.user}: {data.myName} has wrong {toReplace}");
+            }
         }
     }
 }

@@ -401,15 +401,7 @@ public class Character : MonoBehaviour
         TurnManager.instance.CreateVisual($"STUNNED", this.transform.localPosition);
         Log.instance.AddText($"{this.name} is Stunned for {TurnsStunned} turn{(TurnsStunned == 1 ? "" : "s")}.", logged);
     }
-
-    public IEnumerator NoStun(int logged)
-    {
-        if (this == null || TurnsStunned == 0) yield break;
-
-        TurnsStunned = 0;
-        Log.instance.AddText($"{this.name} is no longer Stunned.", logged);
-    }
-
+     
     public IEnumerator Protected(int amount, int logged)
     {
         if (this == null) yield break;

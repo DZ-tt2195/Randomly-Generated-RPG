@@ -58,6 +58,18 @@
       "Recruit,Call for Guards,Procession,Identify Targets,",
       "",
       "Kieran Yanner|Throne of Eldraine|(Kenrith, the Returned King)"
+    ],
+    [
+      "Demon",
+      "Deals heavy damage and makes other Enemies to heal itself and become stronger.",
+      "15",
+      "2",
+      "0",
+      "0.9",
+      "AIRBORNE",
+      "Sacrifice,Fear,",
+      "",
+      "Vincent Proce|Guilds of Ravnica|(Doom Whisperer)"
     ]
   ]
 }
