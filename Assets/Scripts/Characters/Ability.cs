@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using MyBox;
 using System.Linq;
-using System.Text.RegularExpressions;
-using System;
 
 public enum TeamTarget { None, Self, AnyOne, All, OnePlayer, OtherPlayer, OneEnemy, OtherEnemy, AllPlayers, AllEnemies };
 public enum AbilityType { None, Attack, StatPlayer, StatEnemy, EmotionPlayer, EmotionEnemy, PositionPlayer, PositionEnemy, Healing, Misc };
@@ -160,7 +158,7 @@ public class Ability : MonoBehaviour
         }
     }
 
-    #endregion
+#endregion
 
 #region Play Condition
 
@@ -210,6 +208,10 @@ public class Ability : MonoBehaviour
                         return false; break;
                 case "SELFNOTMAXHEALTH":
                     if (self.CalculateHealthPercent() >= 1f)
+                        return false; break;
+
+                case "SETGROUNDEDPLAYERS":
+                    if (SetValues(listOfTargets[currentIndex].Count(target => target.CurrentPosition == Position.Grounded)) == 0)
                         return false; break;
 
                 case "SELFINJURED":
@@ -308,6 +310,41 @@ public class Ability : MonoBehaviour
                     listOfTargets[currentIndex].RemoveAll(target => target.CurrentEmotion == self.CurrentEmotion);
                     break;
 
+                case "TARGETHIGHPOWER":
+                    listOfTargets[currentIndex].RemoveAll(target => target.modifyPower < 0);
+                    break;
+                case "TARGETLOWPOWER":
+                    listOfTargets[currentIndex].RemoveAll(target => target.modifyPower > 0);
+                    break;
+
+                case "TARGETHIGHDEFENSE":
+                    listOfTargets[currentIndex].RemoveAll(target => target.modifyDefense < 0);
+                    break;
+                case "TARGETLOWDEFENSE":
+                    listOfTargets[currentIndex].RemoveAll(target => target.modifyDefense > 0);
+                    break;
+
+                case "TARGETHIGHSPEED":
+                    listOfTargets[currentIndex].RemoveAll(target => target.modifySpeed < 0);
+                    break;
+                case "TARGETLOWSPEED":
+                    listOfTargets[currentIndex].RemoveAll(target => target.modifySpeed > 0);
+                    break;
+
+                case "TARGETHIGHLUCK":
+                    listOfTargets[currentIndex].RemoveAll(target => target.modifyLuck < 0f);
+                    break;
+                case "TARGETLOWLUCK":
+                    listOfTargets[currentIndex].RemoveAll(target => target.modifyLuck > 0f);
+                    break;
+
+                case "TARGETHIGHACCURACY":
+                    listOfTargets[currentIndex].RemoveAll(target => target.modifyAccuracy < 0f);
+                    break;
+                case "TARGETLOWACCURACY":
+                    listOfTargets[currentIndex].RemoveAll(target => target.modifyAccuracy > 0f);
+                    break;
+
                 case "NOTTARGETED":
                     listOfTargets[currentIndex].Remove(TurnManager.instance.targetedPlayer);
                     listOfTargets[currentIndex].Remove(TurnManager.instance.targetedEnemy);
@@ -373,6 +410,13 @@ public class Ability : MonoBehaviour
         return listOfTargets;
     }
 
+    int SetValues(int number)
+    {
+        data.attackDamage = number;
+        data.healthRegain = number;
+        return number;
+    }
+
 #endregion
 
 #region Play Instructions
@@ -398,8 +442,7 @@ public class Ability : MonoBehaviour
                         break;
 
                     case "DEALTDAMAGE":
-                        if (damageDealt == 0)
-                            runNextMethod = false;
+                        if (damageDealt == 0) runNextMethod = false;
                         break;
 
                     case "ATTACK":
@@ -611,8 +654,7 @@ public class Ability : MonoBehaviour
                         break;
                 }
 
-                if (!runNextMethod)
-                    break;
+                if (!runNextMethod) break;
                 yield return TurnManager.instance.WaitTime();
             }
         }

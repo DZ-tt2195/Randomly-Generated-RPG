@@ -49,13 +49,13 @@
     ],
     [
       "Bees",
-      "Stuns Players and makes their active Cooldowns last longer.",
+      "Weakens Players by Stunning them and increasing their active Cooldowns.",
       "5",
       "0",
       "0.1",
       "0.8",
       "AIRBORNE",
-      "Sting,Delay,Paralyze,",
+      "Sting,Delay,Paralyze,Protect the Queen,",
       "",
       "Tom Wänerstrand|Time Spiral|(Unyaro Bees)"
     ],
@@ -109,7 +109,7 @@
     ],
     [
       "Student",
-      "Gives other Enemies random Emotions and more Health.",
+      "Gives Enemies random Emotions and more Health.",
       "5",
       "0",
       "0.1",

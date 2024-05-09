@@ -100,10 +100,13 @@ public class TitleScreen : MonoBehaviour
             FileManager.instance.downloadOn = false;
         }
 
-        FileManager.instance.listOfEnemies.Clear(); FileManager.instance.listOfEnemies.Add(new List<CharacterData>());
-        FileManager.instance.listOfEnemies.Add(DataLoader.ReadCharacterData("1-Star Enemy Data", 1).OrderBy(data => data.myName).ToList());
-        FileManager.instance.listOfEnemies.Add(DataLoader.ReadCharacterData("2-Star Enemy Data", 2).OrderBy(data => data.myName).ToList());
-        FileManager.instance.listOfEnemies.Add(DataLoader.ReadCharacterData("3-Star Enemy Data", 3).OrderBy(data => data.myName).ToList());
+        FileManager.instance.listOfEnemies = new()
+        {
+            new List<CharacterData>(),
+            DataLoader.ReadCharacterData("1-Star Enemy Data", 1).OrderBy(data => data.myName).ToList(),
+            DataLoader.ReadCharacterData("2-Star Enemy Data", 2).OrderBy(data => data.myName).ToList(),
+            DataLoader.ReadCharacterData("3-Star Enemy Data", 3).OrderBy(data => data.myName).ToList()
+        };
 
         FileManager.instance.listOfBonusEnemies = DataLoader.ReadCharacterData("Bonus Enemy Data", 0);
         FileManager.instance.listOfPlayerAbilities = DataLoader.ReadAbilityData("Player Ability Data").OrderBy(data => data.myName).ToList();
@@ -111,8 +114,9 @@ public class TitleScreen : MonoBehaviour
 
         GeneratePlayers();
 
-        GameObject.Find("Loading Text").SetActive(false);
         loadButtons.SetActive(true);
+        GameObject.Find("Loading Text").SetActive(false);
+        if (!Application.isEditor) GameObject.Find("Play the tutorial").SetActive(false);
         stillGenerating = false;
     }
 

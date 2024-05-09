@@ -73,7 +73,7 @@
     ],
     [
       "Astronaut",
-      "Makes Players Airborne and Happy, and then Stuns them while it's Sad.",
+      "Makes Players Airborne and Happy, and then Stuns them while Sad.",
       "10",
       "0",
       "0.2",
@@ -109,7 +109,7 @@
     ],
     [
       "Trickster",
-      "Messes with Players and applies Cooldown to their Abilities that have no Cooldown.",
+      "Targets Grounded Players and applies Cooldown to their Abilities that have no Cooldown.",
       "10",
       "-1",
       "0.2",

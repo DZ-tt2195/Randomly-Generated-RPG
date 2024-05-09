@@ -450,7 +450,8 @@ public class TurnManager : MonoBehaviour
     {
         Character storePlayer = targetedPlayer;
         _targetedPlayer = newTarget;
-        newTarget.CharacterUI();
+        if (newTarget != null)
+            newTarget.CharacterUI();
         if (storePlayer != null)
             storePlayer.CharacterUI();
     }

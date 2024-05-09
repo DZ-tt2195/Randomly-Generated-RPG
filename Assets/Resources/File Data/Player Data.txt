@@ -31,7 +31,7 @@
       "0.15",
       "0.9",
       "AIRBORNE",
-      "Calm Down,Catch Out of Air,Crash Landing,Defensive Aura,Delegate,Down to Earth,Enrage,Exercise,Flaunt,Gift of Flight,Grow Tree,Induce Anger,Induce Happiness,Induce Sadness,Invigorate,Lift Up,Overexert,Perk Up,Protective Barrier,Share Healing,Skyward Sword,Stand Your Ground,Taunt,Too Slow,Wind to Wings,",
+      "Calm Down,Catch Out of Air,Crash Landing,Defensive Aura,Delegate,Down to Earth,Enrage,Exercise,Flaunt,Gift of Flight,Grow Tree,Induce Anger,Induce Happiness,Induce Sadness,Invigorate,Lift Up,Overexert,Perk Up,Protective Barrier,Share Healing,Skyward Sword,Stand Your Ground,Taunt,Wind to Wings,",
       "",
       "Magali Villeneuve|Oath of the Gatewatch|(Linvala, the Preserver)"
     ],
@@ -43,7 +43,7 @@
       "0.15",
       "0.9",
       "GROUNDED",
-      "Air Lasers,Bad Omens,Bounce,Delegate,Flood,Fog,Gravity Flip,Headwinds,Heavy Gravity,Ice Blast,Light Gravity,Lightning Strike,Quick Aim,Rough Air,Safe Above,Sky Hammer,Sink,Stalactites,Throw Dice,Team Attack,",
+      "Air Lasers,Bad Omens,Bounce,Clone Army,Delegate,Flood,Fog,Gravity Flip,Headwinds,Heavy Gravity,Light Gravity,Lightning Strike,Quick Aim,Rough Air,Safe Above,Sky Hammer,Sink,Stalactites,Throw Dice,Team Attack,",
       "",
       "Harald Lieske|Dominion: Allies|(Conjurer)"
     ]

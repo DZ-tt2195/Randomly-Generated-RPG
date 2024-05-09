@@ -21,7 +21,7 @@
       "AIRBORNE",
       "Roost,Wing Flap,Firebreath,Roar,",
       "",
-      "Josh Hass|Amonkhet Invocations|(Omniscience)"
+      "Josh Hass|Amonkhet: Invocations|(Omniscience)"
     ],
     [
       "Puppeteer",
@@ -43,7 +43,7 @@
       "0",
       "0.9",
       "GROUNDED",
-      "Demand Neutral,Demand Happiness,Demand Anger,Demand Sadness,Punishment,",
+      "Demand Happiness,Demand Anger,Demand Sadness,Punishment,",
       "ChooseAttack",
       "Claus Stephan|Dominion: Plunder|(Taskmaster)"
     ],
@@ -61,7 +61,7 @@
     ],
     [
       "Demon",
-      "Deals heavy damage and makes other Enemies to heal itself and become stronger.",
+      "Damages other Enemies to heal itself and become stronger.",
       "15",
       "2",
       "0",
