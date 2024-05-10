@@ -12,18 +12,6 @@
       "Art Credit"
     ],
     [
-      "Bat",
-      "Drains health from Grounded Players.",
-      "10",
-      "1",
-      "0.2",
-      "0.85",
-      "AIRBORNE",
-      "Drain,Screech,On the Hunt,Bloodlust,",
-      "ChooseGrounded",
-      "Martin Hoffmann|Dominion: Nocturne|(Bat)"
-    ],
-    [
       "Archer",
       "Shoots down Airborne Players with a high chance of critical hits.",
       "10",
@@ -34,30 +22,6 @@
       "Sharp Arrow,Frozen Arrow,Volley of Arrows,Focus,",
       "ChooseAirborne",
       "Harald Lieske|Dominion: Allies|(Archer)"
-    ],
-    [
-      "Cow",
-      "Either attacks the Player who most recently damaged them, or makes itself stronger.",
-      "10",
-      "-2",
-      "0.2",
-      "0.85",
-      "GROUNDED",
-      "Charge,Graze,Produce Milk,",
-      "LastAttacker",
-      "Matthias Catrein|Dominion: Menagerie|(Way of the Ox)"
-    ],
-    [
-      "Wolf",
-      "Makes itself Angry and hunts down Players who are Sad and Grounded.",
-      "10",
-      "1",
-      "0.2",
-      "0.85",
-      "GROUNDED",
-      "Slash,Glare,On a Branch,Aerial Landing,",
-      "Effectiveness",
-      "Slawomir Maniak|Eldritch Moon|(Kessig Prowler)"
     ],
     [
       "Assassin",
@@ -84,18 +48,6 @@
       "Tyler Jacobson|Unfinity|(Space Beleren)"
     ],
     [
-      "Spider",
-      "Makes Players Airborne and lowers their stats.",
-      "10",
-      "1",
-      "0.2",
-      "0.85",
-      "AIRBORNE",
-      "Trapped,Spin Web,Jump Down,Stab Prey,",
-      "ChooseAirborne",
-      "Livia Prima|Guilds of Ravnica|(Hatchery Spider)"
-    ],
-    [
       "Barbarian",
       "Makes itself Angry, goes after the Grounded Player with the most Health, and lowers Players' max Health.",
       "10",
@@ -106,6 +58,54 @@
       "Fury,Savagery,Locked On,",
       "MostHealth",
       "Julien Delval|Dominion: Allies|(Barbarian)"
+    ],
+    [
+      "Bat",
+      "Drains health from Grounded Players.",
+      "10",
+      "1",
+      "0.2",
+      "0.85",
+      "AIRBORNE",
+      "Drain,Screech,On the Hunt,Bloodlust,",
+      "ChooseGrounded",
+      "Martin Hoffmann|Dominion: Nocturne|(Bat)"
+    ],
+    [
+      "Cow",
+      "Either attacks the Player who most recently damaged them, or makes itself stronger.",
+      "10",
+      "-2",
+      "0.2",
+      "0.85",
+      "GROUNDED",
+      "Charge,Graze,Produce Milk,",
+      "LastAttacker",
+      "Matthias Catrein|Dominion: Menagerie|(Way of the Ox)"
+    ],
+    [
+      "Siren",
+      "Makes itself Targeted and deals heavy damage to Stunned Players.",
+      "10",
+      "0",
+      "0.2",
+      "0.85",
+      "GROUNDED",
+      "Alluring Song,Temptation,Drown,",
+      "",
+      "Claus Stephan|Dominion: Plunder|(Siren)"
+    ],
+    [
+      "Spider",
+      "Makes Players Airborne and lowers their stats.",
+      "10",
+      "1",
+      "0.2",
+      "0.85",
+      "AIRBORNE",
+      "Trapped,Spin Web,Jump Down,Stab Prey,",
+      "ChooseAirborne",
+      "Livia Prima|Guilds of Ravnica|(Hatchery Spider)"
     ],
     [
       "Trickster",
@@ -120,16 +120,16 @@
       "Mila Pesic|Throne of Eldraine|(Bog Naughty)"
     ],
     [
-      "Siren",
-      "Makes itself Targeted and deals heavy damage to Stunned Players.",
+      "Wolf",
+      "Makes itself Angry and hunts down Players who are Sad and Grounded.",
       "10",
-      "0",
+      "1",
       "0.2",
       "0.85",
       "GROUNDED",
-      "Alluring Song,Temptation,Drown,",
-      "",
-      "Claus Stephan|Dominion: Plunder|(Siren)"
+      "Slash,Glare,On a Branch,Aerial Landing,",
+      "Effectiveness",
+      "Slawomir Maniak|Eldritch Moon|(Kessig Prowler)"
     ]
   ]
 }

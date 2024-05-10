@@ -12,6 +12,18 @@
       "Art Credit"
     ],
     [
+      "Demon",
+      "Damages other Enemies to heal itself and become stronger.",
+      "15",
+      "2",
+      "0",
+      "0.9",
+      "AIRBORNE",
+      "Sacrifice,Fear,",
+      "",
+      "Vincent Proce|Guilds of Ravnica|(Doom Whisperer)"
+    ],
+    [
       "Dragon",
       "Deals lots of damage to all Players when Airborne. Heals itself and becomes Grounded when low on health.",
       "15",
@@ -36,18 +48,6 @@
       "James Ryman|Kaladesh|(Marionette Master)"
     ],
     [
-      "Taskmaster",
-      "Changes its own Emotion, and deals heavy damage to any Player who doesn't have the same Emotion as this.",
-      "15",
-      "2",
-      "0",
-      "0.9",
-      "GROUNDED",
-      "Demand Happiness,Demand Anger,Demand Sadness,Punishment,",
-      "ChooseAttack",
-      "Claus Stephan|Dominion: Plunder|(Taskmaster)"
-    ],
-    [
       "Royalty",
       "Summons more 1 Star and 2 Star Enemies. Buffs Enemy stats and reduces Player stats.",
       "15",
@@ -60,16 +60,16 @@
       "Kieran Yanner|Throne of Eldraine|(Kenrith, the Returned King)"
     ],
     [
-      "Demon",
-      "Damages other Enemies to heal itself and become stronger.",
+      "Taskmaster",
+      "Changes its own Emotion, and deals heavy damage to any Player who doesn't have the same Emotion as this.",
       "15",
       "2",
       "0",
       "0.9",
-      "AIRBORNE",
-      "Sacrifice,Fear,",
-      "",
-      "Vincent Proce|Guilds of Ravnica|(Doom Whisperer)"
+      "GROUNDED",
+      "Demand Happiness,Demand Anger,Demand Sadness,Punishment,",
+      "ChooseAttack",
+      "Claus Stephan|Dominion: Plunder|(Taskmaster)"
     ]
   ]
 }

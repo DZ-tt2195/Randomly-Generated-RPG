@@ -98,7 +98,7 @@ public class TutorialManager : MonoBehaviour
                 yield return ClickThroughDialogue(new List<string>()
                 { "Here's your first Enemy. Use the Knight's Ability against them." });
 
-                yield return TurnManager.instance.NewRound();
+                yield return TurnManager.instance.NewRound(false);
                 currentStep = 4;
                 StartCoroutine(NextStep());
                 break;
@@ -108,8 +108,9 @@ public class TutorialManager : MonoBehaviour
                 yield return ClickThroughDialogue(new List<string>()
                 { "The Ability you used has a cooldown (Cooldown), so you can't use it again this round. Instead use the other Ability." });
 
+                yield return TurnManager.instance.NewRound(true);
                 while (TurnManager.instance.listOfEnemies.Count > 0)
-                    yield return TurnManager.instance.NewRound();
+                    yield return TurnManager.instance.NewRound(true);
                 currentStep = 5;
                 StartCoroutine(NextStep());
                 break;
@@ -156,8 +157,9 @@ public class TutorialManager : MonoBehaviour
                 currentCharacter = listOfPlayers[1]; //wait for angel's next turn
                 currentStep = 8;
 
+                yield return TurnManager.instance.NewRound(false);
                 while (TurnManager.instance.listOfEnemies.Count>0)
-                    yield return TurnManager.instance.NewRound();
+                    yield return TurnManager.instance.NewRound(true);
 
                 currentStep = 9;
                 StartCoroutine(NextStep());
@@ -219,8 +221,9 @@ public class TutorialManager : MonoBehaviour
                 currentCharacter = listOfPlayers[2]; //wait for wizard's next turn
                 currentStep = 12;
 
+                yield return TurnManager.instance.NewRound(false);
                 while (TurnManager.instance.listOfEnemies.Count > 0)
-                    yield return TurnManager.instance.NewRound();
+                    yield return TurnManager.instance.NewRound(true);
 
                 currentStep = 15;
                 StartCoroutine(NextStep());
@@ -255,8 +258,8 @@ public class TutorialManager : MonoBehaviour
                 break;
 
             case 14: //finish off the enemies
-                listOfPlayers[2].AddAbility(FileManager.instance.FindPlayerAbility("Blaze"), false, false);
-                listOfPlayers[2].AddAbility(FileManager.instance.FindPlayerAbility("Ice Blast"), false, false);
+                listOfPlayers[2].AddAbility(FileManager.instance.FindPlayerAbility("Air Lasers"), false, false);
+                listOfPlayers[2].AddAbility(FileManager.instance.FindPlayerAbility("Gravity Flip"), false, false);
                 listOfPlayers[2].AddAbility(FileManager.instance.FindPlayerAbility("Bad Omens"), false, false);
 
                 yield return ClickThroughDialogue(new List<string>()

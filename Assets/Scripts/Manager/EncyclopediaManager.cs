@@ -29,6 +29,7 @@ public class EncyclopediaManager : MonoBehaviour
         [SerializeField] TMP_Dropdown characterDropdown;
         [SerializeField] TMP_Dropdown type1Dropdown;
         [SerializeField] TMP_Dropdown type2Dropdown;
+        [SerializeField] Scrollbar abilityScroll;
 
     [Foldout("Enemy Search", true)]
         List<Character> listOfEnemyBoxes = new();
@@ -37,6 +38,7 @@ public class EncyclopediaManager : MonoBehaviour
         [SerializeField] TMP_InputField enemyInput;
         [SerializeField] TMP_Dropdown tierDropdown;
         [SerializeField] TMP_Dropdown positionDropdown;
+        [SerializeField] Scrollbar enemyScroll;
 
     void ChangeMode(int n)
     {
@@ -96,7 +98,7 @@ public class EncyclopediaManager : MonoBehaviour
                 listOfEnemyBoxes.Add(nextEnemy);
                 foreach (Transform child in nextEnemy.transform)
                 {
-                    if (!child.name.Equals("Name Text"))
+                    if (!(child.name.Equals("Name Text") || child.name.Equals("Health Text")))
                         Destroy(child.gameObject);
                 }
             }
@@ -250,6 +252,7 @@ public class EncyclopediaManager : MonoBehaviour
             }
         }
 
+        storeAbilityBoxes.transform.localPosition = new Vector3(0, -1050, 0);
         storeAbilityBoxes.sizeDelta = new Vector3(2560, Math.Max(875, 175 * (2+(storeAbilityBoxes.childCount / 6))));
         searchResults.text = $"Found {storeAbilityBoxes.childCount} Abilities";
     }
@@ -313,6 +316,7 @@ public class EncyclopediaManager : MonoBehaviour
                 nextEnemy.transform.SetParent(null);
             }
         }
+        storeEnemyBoxes.transform.localPosition = new Vector3(0, -1050, 0);
         storeEnemyBoxes.sizeDelta = new Vector3(2560, Math.Max(875, 350 * ((storeEnemyBoxes.childCount / 5))));
         searchResults.text = $"Found {storeEnemyBoxes.childCount} Enemies";
     }

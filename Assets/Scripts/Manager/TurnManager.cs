@@ -45,6 +45,8 @@ public class TurnManager : MonoBehaviour
         [SerializeField] Button quitButton;
         List<CharacterPositions> teammatePositions = new();
         List<CharacterPositions> enemyPositions = new();
+        [SerializeField] TMP_Text waveText;
+        [SerializeField] TMP_Text roundText;
 
     [Foldout("Character lists", true)]
         [ReadOnly] public List<Character> listOfPlayers = new();
@@ -74,6 +76,8 @@ public class TurnManager : MonoBehaviour
     private void Start()
     {
         isBattling = true;
+        waveText.transform.parent.localPosition = new Vector3(0, 1200, 0);
+
         for (int i = 0; i<5; i++)
         {
             int nextX = -1050 + (350 * i);
@@ -113,15 +117,13 @@ public class TurnManager : MonoBehaviour
         instructions.transform.parent.gameObject.SetActive(false);
         DisableCharacterButtons();
 
-        yield return WaitTime();
-        currentWave++;
-
         if (currentWave > 5)
         {
             GameFinished("You won!", $"Survived 5 waves.");
         }
         else if (CarryVariables.instance.mode == CarryVariables.GameMode.Main)
         {
+            yield return NewAnimation(true);
             Log.instance.AddText($"WAVE {currentWave} / 5");
 
             if (currentWave == 1 && CarryVariables.instance.ActiveCheat("Stronger Players"))
@@ -162,17 +164,20 @@ public class TurnManager : MonoBehaviour
                 CreateEnemy(FileManager.instance.RandomEnemy(nextTier), (Emotion)UnityEngine.Random.Range(1, 5), 0);
             }
 
-            StartCoroutine(NewRound());
+            StartCoroutine(NewRound(false));
         }
         else if (CarryVariables.instance.mode == CarryVariables.GameMode.Tutorial)
         {
+            yield return NewAnimation(true);
             Log.instance.AddText($"WAVE {currentWave} / 3");
         }
     }
 
-    public IEnumerator NewRound()
+    public IEnumerator NewRound(bool playAnimation)
     {
-        currentRound++;
+        if (playAnimation)
+            yield return NewAnimation(false);
+
         Log.instance.AddText($"");
         Log.instance.AddText($"ROUND {currentRound}");
 
@@ -214,7 +219,48 @@ public class TurnManager : MonoBehaviour
         }
 
         if (isBattling && CarryVariables.instance.mode == CarryVariables.GameMode.Main)
-            StartCoroutine(NewRound());
+            StartCoroutine(NewRound(true));
+    }
+
+    IEnumerator NewAnimation(bool increaseWave)
+    {
+        Vector3 originalPos = new Vector3(0, 1200, 0);
+        Vector3 finalPos = new Vector3(0, -1200, 0);
+
+        waveText.transform.parent.localPosition = originalPos;
+        waveText.text = $"WAVE {currentWave} / {(CarryVariables.instance.mode == CarryVariables.GameMode.Main ? "5" : "3")}";
+        roundText.text = $"ROUND {currentRound}";
+
+        float elapsedTime = 0f;
+        float totalTime = PlayerPrefs.GetFloat("Animation Speed");
+
+        while (elapsedTime < totalTime)
+        {
+            waveText.transform.parent.localPosition = Vector3.Lerp(originalPos, Vector3.zero, elapsedTime / totalTime);
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+
+        waveText.transform.parent.localPosition = Vector3.zero;
+        yield return WaitTime();
+
+        currentRound++;
+        roundText.text = $"ROUND {currentRound}";
+        if (increaseWave)
+        {
+            currentWave++;
+            waveText.text = $"WAVE {currentWave} / {(CarryVariables.instance.mode == CarryVariables.GameMode.Main ? "5" : "3")}";
+        }
+
+        yield return WaitTime();
+
+        elapsedTime = 0f;
+        while (elapsedTime < totalTime)
+        {
+            waveText.transform.parent.localPosition = Vector3.Lerp(Vector3.zero, finalPos, elapsedTime / totalTime);
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
     }
 
     public void GameFinished(string message1, string message2)
