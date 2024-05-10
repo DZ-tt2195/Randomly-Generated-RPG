@@ -313,7 +313,7 @@ public class EncyclopediaManager : MonoBehaviour
                 nextEnemy.transform.SetParent(null);
             }
         }
-        storeEnemyBoxes.sizeDelta = new Vector3(2560, Math.Max(875, 350 * (1 + (storeEnemyBoxes.childCount / 5))));
+        storeEnemyBoxes.sizeDelta = new Vector3(2560, Math.Max(875, 350 * ((storeEnemyBoxes.childCount / 5))));
         searchResults.text = $"Found {storeEnemyBoxes.childCount} Enemies";
     }
 

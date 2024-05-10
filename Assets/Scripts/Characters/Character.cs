@@ -205,13 +205,24 @@ public class Character : MonoBehaviour
 
 #region Change Stats
 
-    public IEnumerator MaxHealth(int health, int logged)
+    public IEnumerator ChangeMaxHealth(int effect, int logged)
     {
         if (this == null) yield break;
-        baseHealth += health;
+        baseHealth += effect;
+
+        if (effect > 0)
+        {
+            TurnManager.instance.CreateVisual($"+{effect} MAX HEALTH", this.transform.localPosition);
+            Log.instance.AddText($"{this.name} has {effect} more max Health.", logged);
+        }
+        else
+        {
+            TurnManager.instance.CreateVisual($"{effect} MAX HEALTH", this.transform.localPosition);
+            Log.instance.AddText($"{this.name} has {Mathf.Abs(effect)} less max Health.", logged);
+            if (baseHealth > CurrentHealth)
+                _currentHealth = baseHealth;
+        }
         healthText.text = $"{CurrentHealth}/{baseHealth}";
-        TurnManager.instance.CreateVisual($"+{health} MAX Health", this.transform.localPosition);
-        Log.instance.AddText($"{(this.name)} has {health} more max Health.", logged);
     }
 
     public IEnumerator GainHealth(int health, int logged)
@@ -225,8 +236,7 @@ public class Character : MonoBehaviour
 
     public IEnumerator TakeDamage(int damage, int logged, Character attacker = null)
     {
-        if (attacker != null)
-            lastToAttackThis = attacker;
+        if (attacker != null) lastToAttackThis = attacker;
         if (this == null || damage == 0) yield break;
 
         if (TurnsProtected > 0 && attacker != null)
@@ -255,6 +265,7 @@ public class Character : MonoBehaviour
         if (this == TurnManager.instance.targetedEnemy)
             TurnManager.instance.targetedEnemy = null;
 
+        baseHealth = data.baseHealth;
         CurrentHealth = 0;
         TurnsStunned = 0;
         TurnsProtected = 0;
@@ -275,25 +286,6 @@ public class Character : MonoBehaviour
             TurnManager.instance.listOfEnemies.Remove(this);
             Destroy(this.gameObject);
         }
-    }
-
-    public IEnumerator Revive(int health, int logged)
-    {
-        if (this == null || this.CalculateHealth() > 0) yield break;
-
-        Log.instance.AddText($"{(this.name)} comes back to life.", logged);
-        TurnManager.instance.listOfPlayers.Add(this);
-        TurnManager.instance.listOfDead.Remove(this);
-
-        yield return GainHealth(health, logged);
-        yield return ChangePosition(data.startingPosition, -1);
-        yield return ChangeEmotion((Emotion)UnityEngine.Random.Range(1, 5), -1);
-
-        modifyPower = 0;
-        modifyDefense = 0;
-        modifySpeed = 0;
-        modifyLuck = 0f;
-        modifyAccuracy = 0f;
     }
 
     public IEnumerator ChangePower(int effect, int logged)
@@ -425,7 +417,26 @@ public class Character : MonoBehaviour
         Log.instance.AddText($"{this.name} is Targeted for {amount} turn{(TurnsProtected == 1 ? "" : "s")}.", logged);
     }
 
-#endregion
+    public IEnumerator Revive(int health, int logged)
+    {
+        if (this == null || this.CalculateHealth() > 0) yield break;
+
+        Log.instance.AddText($"{(this.name)} comes back to life.", logged);
+        TurnManager.instance.listOfPlayers.Add(this);
+        TurnManager.instance.listOfDead.Remove(this);
+
+        yield return GainHealth(health, logged);
+        yield return ChangePosition(data.startingPosition, -1);
+        yield return ChangeEmotion((Emotion)UnityEngine.Random.Range(1, 5), -1);
+
+        modifyPower = 0;
+        modifyDefense = 0;
+        modifySpeed = 0;
+        modifyLuck = 0f;
+        modifyAccuracy = 0f;
+    }
+
+    #endregion
 
 #region Turns
 

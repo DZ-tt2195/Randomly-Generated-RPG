@@ -32,8 +32,8 @@ public class Ability : MonoBehaviour
         currentCooldown = (startWithCooldown) ? data.baseCooldown : 0;
 
         editedDescription = data.description
-            .Replace("ATK", data.attackDamage.ToString())
-            .Replace("REGAIN", data.healthRegain.ToString())
+            .Replace("ATK", Mathf.Abs(data.attackDamage).ToString())
+            .Replace("REGAIN", Mathf.Abs(data.healthRegain).ToString())
             .Replace("POWERSTAT", Mathf.Abs(data.modifyPower).ToString())
             .Replace("SPEEDSTAT", Mathf.Abs(data.modifySpeed).ToString())
             .Replace("DEFENSESTAT", Mathf.Abs(data.modifyDefense).ToString())
@@ -345,6 +345,13 @@ public class Ability : MonoBehaviour
                     listOfTargets[currentIndex].RemoveAll(target => target.modifyAccuracy > 0f);
                     break;
 
+                case "TARGETISSTUNNED":
+                    listOfTargets[currentIndex].RemoveAll(target => target.TurnsStunned <= 0);
+                    break;
+                case "TARGETNOTSTUNNED":
+                    listOfTargets[currentIndex].RemoveAll(target => target.TurnsStunned >= 0);
+                    break;
+
                 case "NOTTARGETED":
                     listOfTargets[currentIndex].Remove(TurnManager.instance.targetedPlayer);
                     listOfTargets[currentIndex].Remove(TurnManager.instance.targetedEnemy);
@@ -472,11 +479,11 @@ public class Ability : MonoBehaviour
                         if (target.CalculateHealthPercent() >= 1f) fullHeal = true;
                         break;
 
-                    case "SELFMAXHEALTH":
-                        yield return self.MaxHealth(data.healthRegain, logged);
+                    case "SELFMAXHEALTHSTAT":
+                        yield return self.ChangeMaxHealth(data.healthRegain, logged);
                         break;
-                    case "TARGETMAXHEALTH":
-                        yield return target.MaxHealth(data.healthRegain, logged);
+                    case "TARGETMAXHEALTHSTAT":
+                        yield return target.ChangeMaxHealth(data.healthRegain, logged);
                         break;
 
                     case "SELFSWAPPOSITION":

@@ -61,7 +61,7 @@
     ],
     [
       "Assassin",
-      "Tries to make everyone Grounded so that it can kill the Player with the least amount of Health.",
+      "Makes everyone Grounded so that it can kill the Player with the least amount of Health.",
       "10",
       "1",
       "0.2",
@@ -97,13 +97,13 @@
     ],
     [
       "Barbarian",
-      "Makes itself Angry and goes after the Grounded Player with the most Health.",
+      "Makes itself Angry, goes after the Grounded Player with the most Health, and lowers Players' max Health.",
       "10",
       "0",
       "0.2",
       "0.85",
       "GROUNDED",
-      "Fury,Locked On,Ambush,",
+      "Fury,Savagery,Locked On,",
       "MostHealth",
       "Julien Delval|Dominion: Allies|(Barbarian)"
     ],
@@ -118,6 +118,18 @@
       "Mischief,Pluck,Blind,Distract,",
       "",
       "Mila Pesic|Throne of Eldraine|(Bog Naughty)"
+    ],
+    [
+      "Siren",
+      "Makes itself Targeted and deals heavy damage to Stunned Players.",
+      "10",
+      "0",
+      "0.2",
+      "0.85",
+      "GROUNDED",
+      "Alluring Song,Temptation,Drown,",
+      "",
+      "Claus Stephan|Dominion: Plunder|(Siren)"
     ]
   ]
 }

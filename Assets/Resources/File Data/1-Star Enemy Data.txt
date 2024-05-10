@@ -109,7 +109,7 @@
     ],
     [
       "Student",
-      "Gives Enemies random Emotions and more Health.",
+      "Gives Enemies random Emotions and increases their max Health.",
       "5",
       "0",
       "0.1",
