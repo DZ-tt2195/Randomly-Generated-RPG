@@ -38,7 +38,7 @@ public class TutorialManager : MonoBehaviour
             ScreenOverlay.instance.SetAnimationSpeed(0.4f);
             ScreenOverlay.instance.SetUndo(true);
 
-            List<CharacterData> playerData = DataLoader.ReadCharacterData("Player Data", 0);
+            List<CharacterData> playerData = DataLoader.ReadCharacterData("Player Data");
             for (int i = 0; i < playerData.Count; i++)
             {
                 PlayerCharacter nextCharacter = Instantiate(characterPrefab).AddComponent<PlayerCharacter>();

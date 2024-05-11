@@ -90,25 +90,23 @@ public class TitleScreen : MonoBehaviour
         if (Application.isEditor)
         {
             yield return FileManager.instance.DownloadFile("Player Data");
-            yield return FileManager.instance.DownloadFile("1-Star Enemy Data");
-            yield return FileManager.instance.DownloadFile("2-Star Enemy Data");
-            yield return FileManager.instance.DownloadFile("3-Star Enemy Data");
+            yield return FileManager.instance.DownloadFile("Enemy Data");
             yield return FileManager.instance.DownloadFile("Bonus Enemy Data");
             yield return FileManager.instance.DownloadFile("Player Ability Data");
             yield return FileManager.instance.DownloadFile("Enemy Ability Data");
-            yield return FileManager.instance.DownloadFile("Weapon Data");
             FileManager.instance.downloadOn = false;
         }
 
+        List<CharacterData> allEnemies = DataLoader.ReadCharacterData("Enemy Data").OrderBy(data => data.myName).ToList();
         FileManager.instance.listOfEnemies = new()
         {
             new List<CharacterData>(),
-            DataLoader.ReadCharacterData("1-Star Enemy Data", 1).OrderBy(data => data.myName).ToList(),
-            DataLoader.ReadCharacterData("2-Star Enemy Data", 2).OrderBy(data => data.myName).ToList(),
-            DataLoader.ReadCharacterData("3-Star Enemy Data", 3).OrderBy(data => data.myName).ToList()
+            allEnemies.Where(data => data.difficulty == 1).ToList(),
+            allEnemies.Where(data => data.difficulty == 2).ToList(),
+            allEnemies.Where(data => data.difficulty == 3).ToList(),
         };
 
-        FileManager.instance.listOfBonusEnemies = DataLoader.ReadCharacterData("Bonus Enemy Data", 0);
+        FileManager.instance.listOfBonusEnemies = DataLoader.ReadCharacterData("Bonus Enemy Data");
         FileManager.instance.listOfPlayerAbilities = DataLoader.ReadAbilityData("Player Ability Data").OrderBy(data => data.myName).ToList();
         FileManager.instance.listOfEnemyAbilities = DataLoader.ReadAbilityData("Enemy Ability Data").OrderBy(data => data.myName).ToList();
 
@@ -133,7 +131,7 @@ public class TitleScreen : MonoBehaviour
             //do nothing
         }
 
-        List<CharacterData> playerData = DataLoader.ReadCharacterData("Player Data", 0);
+        List<CharacterData> playerData = DataLoader.ReadCharacterData("Player Data");
         for (int i = 0; i < playerData.Count; i++)
         {
             PlayerCharacter nextCharacter = Instantiate(playerPrefab).AddComponent<PlayerCharacter>();

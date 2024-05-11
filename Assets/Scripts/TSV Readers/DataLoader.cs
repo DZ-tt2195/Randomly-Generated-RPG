@@ -45,7 +45,7 @@ public class AbilityData
 
 public class DataLoader
 {
-    public static List<CharacterData> ReadCharacterData(string fileToLoad, int difficulty)
+    public static List<CharacterData> ReadCharacterData(string fileToLoad)
     {
         List<CharacterData> nextData = new();
         var data = TSVReader.ReadFile(fileToLoad);
@@ -71,7 +71,7 @@ public class DataLoader
             newCharacter.listOfSkills = line[7].Trim();
             newCharacter.aiTargeting = line[8].Trim().ToUpper();
             newCharacter.artCredit = line[9].Replace("|", "\n");
-            newCharacter.difficulty = difficulty;
+            try { newCharacter.difficulty = StringToInt(line[10]); } catch { newCharacter.difficulty = 0; }
         }
         return nextData;
     }
