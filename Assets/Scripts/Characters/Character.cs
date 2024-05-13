@@ -219,7 +219,7 @@ public class Character : MonoBehaviour
         {
             TurnManager.instance.CreateVisual($"{effect} MAX HEALTH", this.transform.localPosition);
             Log.instance.AddText($"{this.name} has {Mathf.Abs(effect)} less max Health.", logged);
-            if (baseHealth > CurrentHealth)
+            if (baseHealth < _currentHealth)
                 _currentHealth = baseHealth;
         }
         healthText.text = $"{CurrentHealth}/{baseHealth}";

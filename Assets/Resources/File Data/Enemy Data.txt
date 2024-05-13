@@ -261,7 +261,7 @@
     ],
     [
       "Wolf",
-      "Makes itself Angry and hunts down Players who are Sad and Grounded.",
+      "Makes itself Angry and goes after Sad and Grounded Players.",
       "10",
       "1",
       "0.2",
@@ -287,7 +287,7 @@
     ],
     [
       "Dragon",
-      "Deals lots of damage to all Players when Airborne. Heals itself and becomes Grounded when low on health.",
+      "Deals lots of damage to all Players when Airborne. Heals itself and becomes Grounded when damaged.",
       "15",
       "2",
       "0.3",
@@ -300,7 +300,7 @@
     ],
     [
       "Puppeteer",
-      "Makes Players Airborne, then drops them down to deal damage.",
+      "Makes Players Airborne, then makes them Grounded again to deal damage.",
       "15",
       "2",
       "0.3",

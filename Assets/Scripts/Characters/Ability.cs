@@ -203,7 +203,7 @@ public class Ability : MonoBehaviour
                     if (TurnManager.instance.listOfEnemies.Count >= 5)
                         return false; break;
 
-                case "SELFMAXHEALTH":
+                case "SELFATMAXHEALTH":
                     if (self.CalculateHealthPercent() < 1f)
                         return false; break;
                 case "SELFNOTMAXHEALTH":
@@ -212,6 +212,9 @@ public class Ability : MonoBehaviour
 
                 case "SETGROUNDEDPLAYERS":
                     if (SetValues(listOfTargets[currentIndex].Count(target => target.CurrentPosition == Position.Grounded)) == 0)
+                        return false; break;
+                case "SETAIRBORNEPLAYERS":
+                    if (SetValues(listOfTargets[currentIndex].Count(target => target.CurrentPosition == Position.Airborne)) == 0)
                         return false; break;
 
                 case "SELFINJURED":
@@ -612,10 +615,10 @@ public class Ability : MonoBehaviour
                         yield return target.Revive(data.healthRegain, logged);
                         break;
 
-                    case "SELFSTUN":
+                    case "SELFSTUNNED":
                         yield return self.Stun(data.miscNumber, logged);
                         break;
-                    case "TARGETSTUN":
+                    case "TARGETSTUNNED":
                         yield return target.Stun(data.miscNumber, logged);
                         break;
 
