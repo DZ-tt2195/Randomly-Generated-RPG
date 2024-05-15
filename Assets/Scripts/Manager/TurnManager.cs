@@ -449,7 +449,7 @@ public class TurnManager : MonoBehaviour
     {
         if (!text.IsNullOrEmpty())
         {
-            string divide = text.Replace(" ", "").ToUpper().Trim();
+            string divide = text.Replace(" ", "").Trim();
             string[] splitIntoStrings = divide.Split(splitUp);
             return splitIntoStrings;
         }

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using MyBox;
+using System.Reflection;
 using System.Linq;
 
 public enum TeamTarget { None, Self, AnyOne, All, OnePlayer, OtherPlayer, OneEnemy, OtherEnemy, AllPlayers, AllEnemies };
@@ -24,6 +25,10 @@ public class Ability : MonoBehaviour
     [ReadOnly] public int damageDealt;
     [ReadOnly] public bool killed;
     [ReadOnly] public bool fullHeal;
+    bool runNextMethod;
+
+    public Dictionary<string, MethodInfo> boolDictionary = new();
+    public Dictionary<string, MethodInfo> enumeratorDictionary = new();
 
     public void SetupAbility(AbilityData data, bool startWithCooldown)
     {
@@ -56,8 +61,49 @@ public class Ability : MonoBehaviour
                 break;
             }
         }
-    }
 
+        foreach (string nextSection in data.playCondition)
+        {
+            string[] nextSplit = TurnManager.SpliceString(nextSection.Trim(), '/');
+            foreach (string small in nextSplit)
+            {
+                if (small.Equals("None") || small.Equals("") || boolDictionary.ContainsKey(small))
+                    continue;
+
+                MethodInfo method = typeof(Ability).GetMethod(small, BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
+                if (method != null)
+                {
+                    if (method.ReturnType == typeof(bool))
+                        boolDictionary.Add(small, method);
+                }
+                else
+                {
+                    Debug.LogError($"{data.myName}: play condition: {small} doesn't exist");
+                }
+            }
+        }
+
+        foreach (string nextSection in data.instructions)
+        {
+            string[] nextSplit = TurnManager.SpliceString(nextSection.Trim(), '/');
+            foreach (string small in nextSplit)
+            {
+                if (small.Equals("None") || small.Equals("") || enumeratorDictionary.ContainsKey(small))
+                    continue;
+
+                MethodInfo method = typeof(Ability).GetMethod(small, BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
+                if (method != null)
+                {
+                    if (method.ReturnType == typeof(IEnumerator))
+                        enumeratorDictionary.Add(small, method);
+                }
+                else
+                {
+                    Debug.LogError($"{data.myName}: instructions: {small} doesn't exist");
+                }
+            }
+        }
+    }
 
     #endregion
 
@@ -158,7 +204,7 @@ public class Ability : MonoBehaviour
         }
     }
 
-#endregion
+    #endregion
 
 #region Play Condition
 
@@ -174,207 +220,171 @@ public class Ability : MonoBehaviour
         for (int i = 0; i < data.playCondition.Length; i++)
         {
             string[] methodsInStrings = data.playCondition[i].Split('/');
-            if (methodsInStrings[0].Equals("TARGETDEAD"))
+            if (methodsInStrings[0].Equals("TargetIsDead"))
                 listOfTargets.Add(TurnManager.instance.listOfDead);
             else
                 listOfTargets.Add(GetTarget(data.defaultTargets[i]));
 
-            if (!CheckMethod(methodsInStrings, i))
-                return false;
+            for (int j = 0; j < methodsInStrings.Length; j++)
+            {
+                if (methodsInStrings[j].Equals("None") || methodsInStrings[j].Equals(""))
+                    continue;
+                if (!(bool)boolDictionary[methodsInStrings[j]].Invoke(this, new object[1] { i }))
+                    return false;
+            }
         }
 
         return true;
     }
 
-    bool CheckMethod(string[] listOfMethods, int currentIndex)
+    bool TargetIsDead(int currentIndex)
     {
-        foreach (string methodName in listOfMethods)
-        {
-            switch (methodName)
-            {
-                case "":
-                    break;
-                case "NONE":
-                    break;
-                case "TARGETDEAD":
-                    break;
+        return true;
+    }
 
-                case "CANSUMMON":
-                    if (TurnManager.instance.listOfEnemies.Count >= 5)
-                        return false; break;
+    bool CanSummon(int currentIndex)
+    {
+        return TurnManager.instance.listOfEnemies.Count < 5;
+    }
 
-                case "SELFATMAXHEALTH":
-                    if (self.CalculateHealthPercent() < 1f)
-                        return false; break;
-                case "SELFNOTMAXHEALTH":
-                    if (self.CalculateHealthPercent() >= 1f)
-                        return false; break;
+    bool TargetAtMaxHealth(int currentIndex)
+    {
+        listOfTargets[currentIndex].RemoveAll(target => target.CalculateHealthPercent() < 1f);
+        return listOfTargets[currentIndex].Count > 0;
+    }
 
-                case "SETGROUNDEDPLAYERS":
-                    if (SetValues(listOfTargets[currentIndex].Count(target => target.CurrentPosition == Position.Grounded)) == 0)
-                        return false; break;
-                case "SETAIRBORNEPLAYERS":
-                    if (SetValues(listOfTargets[currentIndex].Count(target => target.CurrentPosition == Position.Airborne)) == 0)
-                        return false; break;
+    bool TargetNotMaxHealth(int currentIndex)
+    {
+        listOfTargets[currentIndex].RemoveAll(target => target.CalculateHealthPercent() >= 1f);
+        return listOfTargets[currentIndex].Count > 0;
+    }
 
-                case "SELFINJURED":
-                    if (self.CalculateHealthPercent() > 0.5f)
-                        return false; break;
-                case "TARGETINJURED":
-                    listOfTargets[currentIndex].RemoveAll(target => target.CalculateHealthPercent() > 0.5f);
-                    break;
+    bool SetGroundedPlayers(int currentIndex)
+    {
+        return (SetValues(listOfTargets[currentIndex].Count(target => target.CurrentPosition == Position.Grounded)) > 0);
+    }
 
-                case "TARGETNEUTRAL":
-                    listOfTargets[currentIndex].RemoveAll(target => target.CurrentEmotion != Emotion.Neutral);
-                    break;
-                case "SELFNEUTRAL":
-                    if (self.CurrentEmotion != Emotion.Neutral)
-                        return false; break;
-                case "TARGETNOTNEUTRAL":
-                    listOfTargets[currentIndex].RemoveAll(target => target.CurrentEmotion == Emotion.Neutral);
-                    break;
-                case "SELFNOTNEUTRAL":
-                    if (self.CurrentEmotion == Emotion.Neutral)
-                        return false; break;
+    bool SetAirbornePlayers(int currentIndex)
+    {
+        return (SetValues(listOfTargets[currentIndex].Count(target => target.CurrentPosition == Position.Airborne)) > 0);
+    }
 
-                case "TARGETHAPPY":
-                    listOfTargets[currentIndex].RemoveAll(target => target.CurrentEmotion != Emotion.Happy);
-                    break;
-                case "SELFHAPPY":
-                    if (self.CurrentEmotion != Emotion.Happy)
-                        return false; break;
-                case "TARGETNOTHAPPY":
-                    listOfTargets[currentIndex].RemoveAll(target => target.CurrentEmotion == Emotion.Happy);
-                    break;
-                case "SELFNOTHAPPY":
-                    if (self.CurrentEmotion == Emotion.Happy)
-                        return false; break;
+    bool TargetInjured(int currentIndex)
+    {
+        listOfTargets[currentIndex].RemoveAll(target => target.CalculateHealthPercent() > 0.5f);
+        return listOfTargets[currentIndex].Count > 0;
+    }
 
-                case "TARGETANGRY":
-                    listOfTargets[currentIndex].RemoveAll(target => target.CurrentEmotion != Emotion.Angry);
-                    break;
-                case "SELFANGRY":
-                    if (self.CurrentEmotion != Emotion.Angry)
-                        return false; break;
-                case "TARGETNOTANGRY":
-                    listOfTargets[currentIndex].RemoveAll(target => target.CurrentEmotion == Emotion.Angry);
-                    break;
-                case "SELFNOTANGRY":
-                    if (self.CurrentEmotion == Emotion.Angry)
-                        return false; break;
+    bool TargetIsNeutral(int currentIndex)
+    {
+        listOfTargets[currentIndex].RemoveAll(target => target.CurrentEmotion != Emotion.Neutral);
+        return listOfTargets[currentIndex].Count > 0;
+    }
 
-                case "TARGETSAD":
-                    listOfTargets[currentIndex].RemoveAll(target => target.CurrentEmotion != Emotion.Sad);
-                    break;
-                case "SELFSAD":
-                    if (self.CurrentEmotion != Emotion.Sad)
-                        return false; break;
-                case "TARGETNOTSAD":
-                    listOfTargets[currentIndex].RemoveAll(target => target.CurrentEmotion == Emotion.Neutral);
-                    break;
-                case "SELFNOTSAD":
-                    if (self.CurrentEmotion == Emotion.Sad)
-                        return false; break;
+    bool TargetNotNeutral(int currentIndex)
+    {
+        listOfTargets[currentIndex].RemoveAll(target => target.CurrentEmotion == Emotion.Neutral);
+        return listOfTargets[currentIndex].Count > 0;
+    }
 
-                case "SELFGROUNDED":
-                    if (self.CurrentPosition != Position.Grounded)
-                        return false; break;
-                case "TARGETGROUNDED":
-                    listOfTargets[currentIndex].RemoveAll(target => target.CurrentPosition != Position.Grounded);
-                    break;
-                case "ALLGROUNDED":
-                    int numberGrounded = data.defaultTargets[currentIndex] == TeamTarget.AllPlayers ? TurnManager.instance.listOfPlayers.Count + TurnManager.instance.listOfDead.Count : TurnManager.instance.listOfEnemies.Count;
-                    listOfTargets[currentIndex].RemoveAll(target => target.CurrentPosition != Position.Grounded);
-                    if (listOfTargets[currentIndex].Count != numberGrounded)
-                        return false; break;
+    bool TargetIsHappy(int currentIndex)
+    {
+        listOfTargets[currentIndex].RemoveAll(target => target.CurrentEmotion != Emotion.Happy);
+        return listOfTargets[currentIndex].Count > 0;
+    }
 
-                case "SELFAIRBORNE":
-                    if (self.CurrentPosition != Position.Airborne)
-                        return false; break;
-                case "TARGETAIRBORNE":
-                    listOfTargets[currentIndex].RemoveAll(target => target.CurrentPosition != Position.Airborne);
-                    break;
-                case "ALLAIRBORNE":
-                    int numberAirborne = data.defaultTargets[currentIndex] == TeamTarget.AllPlayers ? TurnManager.instance.listOfPlayers.Count + TurnManager.instance.listOfDead.Count : TurnManager.instance.listOfEnemies.Count;
-                    listOfTargets[currentIndex].RemoveAll(target => target.CurrentPosition != Position.Airborne);
-                    if (listOfTargets[currentIndex].Count != numberAirborne)
-                        return false; break;
+    bool TargetNotHappy(int currentIndex)
+    {
+        listOfTargets[currentIndex].RemoveAll(target => target.CurrentEmotion == Emotion.Happy);
+        return listOfTargets[currentIndex].Count > 0;
+    }
 
-                case "SAMEPOSITION":
-                    listOfTargets[currentIndex].RemoveAll(target => target.CurrentPosition != self.CurrentPosition);
-                    break;
-                case "DIFFERENTPOSITION":
-                    listOfTargets[currentIndex].RemoveAll(target => target.CurrentPosition == self.CurrentPosition);
-                    break;
-                case "SAMEEMOTION":
-                    listOfTargets[currentIndex].RemoveAll(target => target.CurrentEmotion != self.CurrentEmotion);
-                    break;
-                case "DIFFERENTEMOTION":
-                    listOfTargets[currentIndex].RemoveAll(target => target.CurrentEmotion == self.CurrentEmotion);
-                    break;
+    bool TargetIsAngry(int currentIndex)
+    {
+        listOfTargets[currentIndex].RemoveAll(target => target.CurrentEmotion != Emotion.Angry);
+        return listOfTargets[currentIndex].Count > 0;
+    }
 
-                case "TARGETHIGHPOWER":
-                    listOfTargets[currentIndex].RemoveAll(target => target.modifyPower < 0);
-                    break;
-                case "TARGETLOWPOWER":
-                    listOfTargets[currentIndex].RemoveAll(target => target.modifyPower > 0);
-                    break;
+    bool TargetNotAngry(int currentIndex)
+    {
+        listOfTargets[currentIndex].RemoveAll(target => target.CurrentEmotion == Emotion.Angry);
+        return listOfTargets[currentIndex].Count > 0;
+    }
 
-                case "TARGETHIGHDEFENSE":
-                    listOfTargets[currentIndex].RemoveAll(target => target.modifyDefense < 0);
-                    break;
-                case "TARGETLOWDEFENSE":
-                    listOfTargets[currentIndex].RemoveAll(target => target.modifyDefense > 0);
-                    break;
+    bool TargetIsSad(int currentIndex)
+    {
+        listOfTargets[currentIndex].RemoveAll(target => target.CurrentEmotion != Emotion.Sad);
+        return listOfTargets[currentIndex].Count > 0;
+    }
 
-                case "TARGETHIGHSPEED":
-                    listOfTargets[currentIndex].RemoveAll(target => target.modifySpeed < 0);
-                    break;
-                case "TARGETLOWSPEED":
-                    listOfTargets[currentIndex].RemoveAll(target => target.modifySpeed > 0);
-                    break;
+    bool TargetNotSad(int currentIndex)
+    {
+        listOfTargets[currentIndex].RemoveAll(target => target.CurrentEmotion == Emotion.Sad);
+        return listOfTargets[currentIndex].Count > 0;
+    }
 
-                case "TARGETHIGHLUCK":
-                    listOfTargets[currentIndex].RemoveAll(target => target.modifyLuck < 0f);
-                    break;
-                case "TARGETLOWLUCK":
-                    listOfTargets[currentIndex].RemoveAll(target => target.modifyLuck > 0f);
-                    break;
+    bool TargetIsGrounded(int currentIndex)
+    {
+        listOfTargets[currentIndex].RemoveAll(target => target.CurrentPosition != Position.Grounded);
+        return listOfTargets[currentIndex].Count > 0;
+    }
 
-                case "TARGETHIGHACCURACY":
-                    listOfTargets[currentIndex].RemoveAll(target => target.modifyAccuracy < 0f);
-                    break;
-                case "TARGETLOWACCURACY":
-                    listOfTargets[currentIndex].RemoveAll(target => target.modifyAccuracy > 0f);
-                    break;
+    bool AllGrounded(int currentIndex)
+    {
+        int numberGrounded = (data.defaultTargets[currentIndex] == TeamTarget.AllPlayers) ? TurnManager.instance.listOfPlayers.Count + TurnManager.instance.listOfDead.Count : TurnManager.instance.listOfEnemies.Count;
+        listOfTargets[currentIndex].RemoveAll(target => target.CurrentPosition != Position.Grounded);
+        return (listOfTargets[currentIndex].Count == numberGrounded);
+    }
 
-                case "TARGETISSTUNNED":
-                    listOfTargets[currentIndex].RemoveAll(target => target.TurnsStunned <= 0);
-                    break;
-                case "TARGETNOTSTUNNED":
-                    listOfTargets[currentIndex].RemoveAll(target => target.TurnsStunned >= 0);
-                    break;
+    bool TargetIsAirborne(int currentIndex)
+    {
+        listOfTargets[currentIndex].RemoveAll(target => target.CurrentPosition != Position.Airborne);
+        return listOfTargets[currentIndex].Count > 0;
+    }
 
-                case "NOTTARGETED":
-                    listOfTargets[currentIndex].Remove(TurnManager.instance.targetedPlayer);
-                    listOfTargets[currentIndex].Remove(TurnManager.instance.targetedEnemy);
-                    break;
+    bool AllAirborne(int currentIndex)
+    {
+        int numberGrounded = (data.defaultTargets[currentIndex] == TeamTarget.AllPlayers) ? TurnManager.instance.listOfPlayers.Count + TurnManager.instance.listOfDead.Count : TurnManager.instance.listOfEnemies.Count;
+        listOfTargets[currentIndex].RemoveAll(target => target.CurrentPosition != Position.Airborne);
+        return (listOfTargets[currentIndex].Count == numberGrounded);
+    }
 
-                case "LASTATTACKEREXISTS":
-                    if (self.lastToAttackThis == null) return false;
-                    if (self.lastToAttackThis.CalculateHealth() == 0) return false;
-                    return listOfTargets[currentIndex].Contains(self.lastToAttackThis);
+    bool TargetSameEmotion(int currentIndex)
+    {
+        listOfTargets[currentIndex].RemoveAll(target => target.CurrentEmotion != self.CurrentEmotion);
+        return listOfTargets[currentIndex].Count > 0;
+    }
 
-                default:
-                    Debug.LogError($"{this.data.myName}: {methodName} isn't a condition");
-                    break;
-            }
-        }
+    bool TargetDifferentEmotion(int currentIndex)
+    {
+        listOfTargets[currentIndex].RemoveAll(target => target.CurrentEmotion == self.CurrentEmotion);
+        return listOfTargets[currentIndex].Count > 0;
+    }
 
-        if (data.defaultTargets[currentIndex] == TeamTarget.None)
-            return true;
-        else
-            return listOfTargets[currentIndex].Count > 0;
+    bool TargetIsStunned(int currentIndex)
+    {
+        listOfTargets[currentIndex].RemoveAll(target => target.TurnsStunned <= 0);
+        return listOfTargets[currentIndex].Count > 0;
+    }
+
+    bool TargetNotStunned(int currentIndex)
+    {
+        listOfTargets[currentIndex].RemoveAll(target => target.TurnsStunned >= 1);
+        return listOfTargets[currentIndex].Count > 0;
+    }
+
+    bool NotTargeted(int currentIndex)
+    {
+        listOfTargets[currentIndex].Remove(TurnManager.instance.targetedPlayer);
+        listOfTargets[currentIndex].Remove(TurnManager.instance.targetedEnemy);
+        return listOfTargets[currentIndex].Count > 0;
+    }
+
+    bool LastAttackerExists(int currentIndex)
+    {
+        if (self.lastToAttackThis == null) return false;
+        if (self.lastToAttackThis.CalculateHealth() == 0) return false;
+        return listOfTargets[currentIndex].Contains(self.lastToAttackThis);
     }
 
     List<Character> GetTarget(TeamTarget target)
@@ -427,12 +437,13 @@ public class Ability : MonoBehaviour
         return number;
     }
 
-#endregion
+    #endregion
 
 #region Play Instructions
 
     public IEnumerator ResolveInstructions(string[] listOfMethods, int index, int logged)
     {
+        runNextMethod = true;
         TurnManager.instance.instructions.transform.parent.gameObject.SetActive(false);
 
         foreach (Character target in listOfTargets[index])
@@ -442,232 +453,176 @@ public class Ability : MonoBehaviour
 
             foreach (string methodName in listOfMethods)
             {
-                bool runNextMethod = true;
-
-                switch (methodName)
-                {
-                    case "":
-                        break;
-                    case "NONE":
-                        break;
-
-                    case "DEALTDAMAGE":
-                        if (damageDealt == 0) runNextMethod = false;
-                        break;
-
-                    case "ATTACK":
-                        damageDealt = CalculateDamage(self, target, logged);
-                        yield return target.TakeDamage(damageDealt, logged, self);
-                        if (target == null || target.CalculateHealth() <= 0) killed = true;
-                        break;
-
-                    case "PASSTURN":
-                        yield return target.MyTurn(logged, true);
-                        break;
-
-                    case "SELFCOPY":
-                        TurnManager.instance.CreateEnemy(self.data, (Emotion)UnityEngine.Random.Range(1, 5), logged);
-                        break;
-                    case "SUMMONSTAR":
-                        TurnManager.instance.CreateEnemy(FileManager.instance.RandomEnemy(data.miscNumber),
-                            (Emotion)UnityEngine.Random.Range(1, 5), logged);
-                        break;
-
-                    case "SELFHEAL":
-                        yield return self.GainHealth(CalculateHealing(self, logged), logged);
-                        if (self.CalculateHealthPercent() >= 1f) fullHeal = true;
-                        break;
-                    case "TARGETHEAL":
-                        yield return target.GainHealth(CalculateHealing(self, logged), logged);
-                        if (target.CalculateHealthPercent() >= 1f) fullHeal = true;
-                        break;
-
-                    case "SELFMAXHEALTHSTAT":
-                        yield return self.ChangeMaxHealth(data.healthRegain, logged);
-                        break;
-                    case "TARGETMAXHEALTHSTAT":
-                        yield return target.ChangeMaxHealth(data.healthRegain, logged);
-                        break;
-
-                    case "SELFSWAPPOSITION":
-                        if (self.CurrentPosition == Position.Airborne)
-                            yield return self.ChangePosition(Position.Grounded, logged);
-                        else if (self.CurrentPosition == Position.Grounded)
-                            yield return self.ChangePosition(Position.Airborne, logged);
-                        break;
-                    case "TARGETSWAPPOSITION":
-                        if (target.CurrentPosition == Position.Airborne)
-                            yield return target.ChangePosition(Position.Grounded, logged);
-                        else if (target.CurrentPosition == Position.Grounded)
-                            yield return target.ChangePosition(Position.Airborne, logged);
-                        break;
-
-                    case "SELFGROUNDED":
-                        yield return self.ChangePosition(Position.Grounded, logged);
-                        break;
-                    case "TARGETGROUNDED":
-                        yield return target.ChangePosition(Position.Grounded, logged);
-                        break;
-
-                    case "SELFAIRBORNE":
-                        yield return self.ChangePosition(Position.Airborne, logged);
-                        break;
-                    case "TARGETAIRBORNE":
-                        yield return target.ChangePosition(Position.Airborne, logged);
-                        break;
-
-                    case "SELFHAPPY":
-                        yield return self.ChangeEmotion(Emotion.Happy, logged);
-                        break;
-                    case "TARGETHAPPY":
-                        yield return target.ChangeEmotion(Emotion.Happy, logged);
-                        break;
-
-                    case "SELFSAD":
-                        yield return self.ChangeEmotion(Emotion.Sad, logged);
-                        break;
-                    case "TARGETSAD":
-                        yield return target.ChangeEmotion(Emotion.Sad, logged);
-                        break;
-
-                    case "SELFANGRY":
-                        yield return self.ChangeEmotion(Emotion.Angry, logged);
-                        break;
-                    case "TARGETANGRY":
-                        yield return target.ChangeEmotion(Emotion.Angry, logged);
-                        break;
-
-                    case "SELFNEUTRAL":
-                        yield return self.ChangeEmotion(Emotion.Neutral, logged);
-                        break;
-                    case "TARGETNEUTRAL":
-                        yield return target.ChangeEmotion(Emotion.Neutral, logged);
-                        break;
-
-                    case "SELFRANDOMEMOTION":
-                        yield return self.ChangeEmotion((Emotion)UnityEngine.Random.Range(1,5), logged);
-                        break;
-                    case "TARGETRANDOMEMOTION":
-                        yield return target.ChangeEmotion((Emotion)UnityEngine.Random.Range(1, 5), logged);
-                        break;
-
-                    case "SELFPOWERSTAT":
-                        yield return self.ChangePower(data.modifyPower, logged);
-                        break;
-                    case "TARGETPOWERSTAT":
-                        yield return target.ChangePower(data.modifyPower, logged);
-                        break;
-                    case "TARGETINVERTPOWERSTAT":
-                        yield return target.ChangePower(target.modifyPower * -2, logged);
-                        break;
-
-                    case "SELFDEFENSESTAT":
-                        yield return self.ChangeDefense(data.modifyDefense, logged);
-                        break;
-                    case "TARGETDEFENSESTAT":
-                        yield return target.ChangeDefense(data.modifyDefense, logged);
-                        break;
-                    case "TARGETINVERTDEFENSESTAT":
-                        yield return target.ChangeDefense(target.modifyDefense * -2, logged);
-                        break;
-
-                    case "SELFSPEEDSTAT":
-                        yield return self.ChangeSpeed(data.modifySpeed, logged);
-                        break;
-                    case "TARGETSPEEDSTAT":
-                        yield return target.ChangeSpeed(data.modifySpeed, logged);
-                        break;
-                    case "TARGETINVERTSPEEDSTAT":
-                        yield return target.ChangeSpeed(target.modifySpeed * -2, logged);
-                        break;
-
-                    case "SELFLUCKSTAT":
-                        yield return self.ChangeLuck(data.modifyLuck, logged);
-                        break;
-                    case "TARGETLUCKSTAT":
-                        yield return target.ChangeLuck(data.modifyLuck, logged);
-                        break;
-                    case "TARGETINVERTLUCKSTAT":
-                        yield return target.ChangeLuck(target.modifyLuck * -2, logged);
-                        break;
-
-                    case "SELFACCURACYSTAT":
-                        yield return self.ChangeAccuracy(data.modifyAccuracy, logged);
-                        break;
-                    case "TARGETACCURACYSTAT":
-                        yield return target.ChangeAccuracy(data.modifyAccuracy, logged);
-                        break;
-                    case "TARGETINVERTACCURACYSTAT":
-                        yield return target.ChangeAccuracy(target.modifyAccuracy * -2, logged);
-                        break;
-
-                    case "TARGETDEATH":
-                        yield return target.HasDied(logged);
-                        break;
-                    case "SELFDESTRUCT":
-                        yield return self.HasDied(logged);
-                        break;
-
-                    case "SELFREVIVE":
-                        yield return self.Revive(data.healthRegain, logged);
-                        break;
-                    case "TARGETREVIVE":
-                        yield return target.Revive(data.healthRegain, logged);
-                        break;
-
-                    case "SELFSTUNNED":
-                        yield return self.Stun(data.miscNumber, logged);
-                        break;
-                    case "TARGETSTUNNED":
-                        yield return target.Stun(data.miscNumber, logged);
-                        break;
-
-                    case "SELFPROTECTED":
-                        yield return self.Protected(data.miscNumber, logged);
-                        break;
-                    case "TARGETPROTECTED":
-                        yield return target.Protected(data.miscNumber, logged);
-                        break;
-
-                    case "TARGETISTARGETED":
-                        yield return target.Targeted(data.miscNumber, logged);
-                        break;
-                    case "SELFISTARGETED":
-                        yield return self.Targeted(data.miscNumber, logged);
-                        break;
-
-                    case "TARGETINCREASEACTIVECOOLDOWN":
-                        foreach (Ability ability in target.listOfAutoAbilities)
-                            if (ability.currentCooldown > 0) ability.currentCooldown+=data.miscNumber;
-                        foreach (Ability ability in target.listOfRandomAbilities)
-                            if (ability.currentCooldown > 0) ability.currentCooldown+=data.miscNumber;
-                        break;
-                    case "TARGETREDUCEACTIVECOOLDOWN":
-                        foreach (Ability ability in target.listOfAutoAbilities)
-                            if (ability.currentCooldown > 0) ability.currentCooldown-=data.miscNumber;
-                        foreach (Ability ability in target.listOfRandomAbilities)
-                            if (ability.currentCooldown > 0) ability.currentCooldown-=data.miscNumber;
-                        break;
-
-                    case "TARGETINCREASERANDOMCOOLDOWN":
-                        List<Ability> hasNoCooldown = target.listOfRandomAbilities.Where(ability => ability.currentCooldown == 0).ToList();
-                        if (hasNoCooldown.Count > 0)
-                        {
-                            Ability chosenAbility = hasNoCooldown[UnityEngine.Random.Range(0, hasNoCooldown.Count)];
-                            chosenAbility.currentCooldown += data.miscNumber;
-                            Log.instance.AddText($"{chosenAbility.data.myName} is placed on Cooldown.", logged);
-                        }
-                        break;
-
-                    default:
-                        Debug.LogError($"{this.data.myName}: {methodName} isn't a method");
-                        break;
-                }
-
+                yield return ((IEnumerator)enumeratorDictionary[methodName].Invoke(this, new object[2] { target, logged }));
                 if (!runNextMethod) break;
                 yield return TurnManager.instance.WaitTime();
             }
         }
+    }
+
+    IEnumerator DealtDamage(Character target, int logged)
+    {
+        if (damageDealt == 0)
+            runNextMethod = false;
+        yield return null;
+    }
+
+    IEnumerator TargetAttack(Character target, int logged)
+    {
+        damageDealt = CalculateDamage(self, target, logged);
+        yield return target.TakeDamage(damageDealt, logged, self);
+        if (target == null || target.CalculateHealth() <= 0) killed = true;
+    }
+
+    IEnumerator TargetHeal(Character target, int logged)
+    {
+        yield return target.GainHealth(CalculateHealing(self, logged), logged);
+        if (target.CalculateHealthPercent() >= 1f) fullHeal = true;
+    }
+
+    IEnumerator TargetMaxHealth(Character target, int logged)
+    {
+        yield return target.ChangeMaxHealth(data.healthRegain, logged);
+    }
+
+    IEnumerator PassTurn(Character target, int logged)
+    {
+        yield return target.MyTurn(logged, true);
+    }
+
+    IEnumerator TargetCopy(Character target, int logged)
+    {
+        TurnManager.instance.CreateEnemy(target.data, (Emotion)UnityEngine.Random.Range(1, 5), logged);
+        yield return null;
+    }
+
+    IEnumerator SummonStar(Character target, int logged)
+    {
+        TurnManager.instance.CreateEnemy(FileManager.instance.RandomEnemy(data.miscNumber), (Emotion)UnityEngine.Random.Range(1, 5), logged);
+        yield return null;
+    }
+
+    IEnumerator TargetSwapPosition(Character target, int logged)
+    {
+        if (target.CurrentPosition == Position.Airborne)
+            yield return target.ChangePosition(Position.Grounded, logged);
+        else if (target.CurrentPosition == Position.Grounded)
+            yield return target.ChangePosition(Position.Airborne, logged);
+    }
+
+    IEnumerator TargetBecomeGrounded(Character target, int logged)
+    {
+        yield return target.ChangePosition(Position.Grounded, logged);
+    }
+
+    IEnumerator TargetBecomeAirborne(Character target, int logged)
+    {
+        yield return target.ChangePosition(Position.Airborne, logged);
+    }
+
+    IEnumerator TargetBecomeHappy(Character target, int logged)
+    {
+        yield return target.ChangeEmotion(Emotion.Happy, logged);
+    }
+
+    IEnumerator TargetBecomeAngry(Character target, int logged)
+    {
+        yield return target.ChangeEmotion(Emotion.Angry, logged);
+    }
+
+    IEnumerator TargetBecomeSad(Character target, int logged)
+    {
+        yield return target.ChangeEmotion(Emotion.Sad, logged);
+    }
+
+    IEnumerator TargetBecomeNeutral(Character target, int logged)
+    {
+        yield return target.ChangeEmotion(Emotion.Neutral, logged);
+    }
+
+    IEnumerator TargetRandomEmotion(Character target, int logged)
+    {
+        yield return target.ChangeEmotion((Emotion)UnityEngine.Random.Range(1, 5), logged);
+    }
+
+    IEnumerator TargetPowerStat(Character target, int logged)
+    {
+        yield return target.ChangePower(data.modifyPower, logged);
+    }
+
+    IEnumerator TargetDefenseStat(Character target, int logged)
+    {
+        yield return target.ChangeDefense(data.modifyDefense, logged);
+    }
+
+    IEnumerator TargetSpeedStat(Character target, int logged)
+    {
+        yield return target.ChangeSpeed(data.modifySpeed, logged);
+    }
+
+    IEnumerator TargetLuckStat(Character target, int logged)
+    {
+        yield return target.ChangeLuck(data.modifyLuck, logged);
+    }
+
+    IEnumerator TargetAccuracyStat(Character target, int logged)
+    {
+        yield return target.ChangeAccuracy(data.modifyAccuracy, logged);
+    }
+
+    IEnumerator TargetDeath(Character target, int logged)
+    {
+        yield return target.HasDied(logged);
+    }
+
+    IEnumerator TargetRevive(Character target, int logged)
+    {
+        yield return target.Revive(data.healthRegain, logged);
+    }
+
+    IEnumerator TargetBecomeStunned(Character target, int logged)
+    {
+        yield return target.Stun(data.miscNumber, logged);
+    }
+
+    IEnumerator TargetBecomeProtected(Character target, int logged)
+    {
+        yield return target.Protected(data.miscNumber, logged);
+    }
+
+    IEnumerator TargetBecomeTargeted(Character target, int logged)
+    {
+        yield return target.Targeted(data.miscNumber, logged);
+    }
+
+    IEnumerator TargetIncreaseCooldown(Character target, int logged)
+    {
+        foreach (Ability ability in target.listOfAutoAbilities)
+            if (ability.currentCooldown > 0) ability.currentCooldown += data.miscNumber;
+        foreach (Ability ability in target.listOfRandomAbilities)
+            if (ability.currentCooldown > 0) ability.currentCooldown += data.miscNumber;
+        yield return null;
+    }
+
+    IEnumerator TargetDecreaseCooldown(Character target, int logged)
+    {
+        foreach (Ability ability in target.listOfAutoAbilities)
+            if (ability.currentCooldown > 0) ability.currentCooldown -= data.miscNumber;
+        foreach (Ability ability in target.listOfRandomAbilities)
+            if (ability.currentCooldown > 0) ability.currentCooldown -= data.miscNumber;
+        yield return null;
+    }
+
+    IEnumerator TargetIncreaseRandomCooldown(Character target, int logged)
+    {
+        List<Ability> hasNoCooldown = target.listOfRandomAbilities.Where(ability => ability.currentCooldown == 0).ToList();
+        if (hasNoCooldown.Count > 0)
+        {
+            Ability chosenAbility = hasNoCooldown[UnityEngine.Random.Range(0, hasNoCooldown.Count)];
+            chosenAbility.currentCooldown += data.miscNumber;
+            Log.instance.AddText($"{chosenAbility.data.myName} is placed on Cooldown.", logged);
+        }
+        yield return null;
     }
 
 #endregion

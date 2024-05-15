@@ -4,6 +4,7 @@ using UnityEngine;
 using System;
 using MyBox;
 using System.Text.RegularExpressions;
+using System.Reflection;
 
 [Serializable]
 public class CharacterData
@@ -94,14 +95,14 @@ public class DataLoader
             newAbility.description = line[2];
             newAbility.logDescription = line[3];
 
-            string[] listOfTargets = (line[4].Equals("") ? new string[1] { "NONE" } : TurnManager.SpliceString(line[4].ToUpper().Trim(), '-'));
+            string[] listOfTargets = (line[4].Equals("") ? new string[1] { "None" } : TurnManager.SpliceString(line[4].Trim().ToUpper(), '-'));
             TeamTarget[] convertToTargets = new TeamTarget[listOfTargets.Length];
             for (int j = 0; j < listOfTargets.Length; j++)
                 convertToTargets[j] = StringToTeamTarget(listOfTargets[j]);
             newAbility.defaultTargets = convertToTargets;
 
-            newAbility.playCondition = (line[5].Equals("") ? new string[1] { "NONE" } : TurnManager.SpliceString(line[5].ToUpper().Trim(), '-'));
-            newAbility.instructions = (line[6].Equals("") ? new string[1] { "NONE" } : TurnManager.SpliceString(line[6].ToUpper().Trim(), '-'));
+            newAbility.playCondition = (line[5].Equals("") ? new string[1] { "None" } : TurnManager.SpliceString(line[5].Trim(), '-'));
+            newAbility.instructions = (line[6].Equals("") ? new string[1] { "None" } : TurnManager.SpliceString(line[6].Trim(), '-'));
 
             newAbility.baseCooldown = StringToInt(line[7]);
             newAbility.attackDamage = StringToInt(line[8]); VerifyNumbers(newAbility, "ATK", newAbility.attackDamage.ToString());
