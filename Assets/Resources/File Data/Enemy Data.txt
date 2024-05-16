@@ -92,7 +92,7 @@
     ],
     [
       "PUPPY!!!",
-      "Nerfs Player stats and can attacks Grounded and Airborne Players.",
+      "Nerfs Player Stats and can attacks Grounded and Airborne Players.",
       "5",
       "0",
       "0.1",
@@ -235,7 +235,7 @@
     ],
     [
       "Spider",
-      "Makes Players Airborne and lowers their stats.",
+      "Makes Players Airborne and lowers their Stats.",
       "10",
       "1",
       "0.2",
@@ -313,7 +313,7 @@
     ],
     [
       "Royalty",
-      "Doesn't attack, but summons more 1 Star and 2 Star Enemies. Buffs Enemy stats and reduces Player stats.",
+      "Doesn't attack, but summons more 1 Star and 2 Star Enemies. Buffs Enemy Stats and reduces Player Stats.",
       "15",
       "-2",
       "0",

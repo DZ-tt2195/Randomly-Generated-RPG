@@ -5110,6 +5110,11 @@ MonoBehaviour:
     - Emotion
     description: Neutral / Happy / Angry / Sad
     color: {r: 1, g: 1, b: 1, a: 0}
+  - keywordVariations:
+    - Stats
+    - Stat
+    description: Power / Defense / Speed / Luck / Accuracy
+    color: {r: 1, g: 1, b: 1, a: 0}
   spriteKeywords:
   - keywordVariations:
     - Health

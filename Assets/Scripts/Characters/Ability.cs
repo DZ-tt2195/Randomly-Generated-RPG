@@ -71,15 +71,10 @@ public class Ability : MonoBehaviour
                     continue;
 
                 MethodInfo method = typeof(Ability).GetMethod(small, BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
-                if (method != null)
-                {
-                    if (method.ReturnType == typeof(bool))
-                        boolDictionary.Add(small, method);
-                }
+                if (method != null && method.ReturnType == typeof(bool))
+                    boolDictionary.Add(small, method);
                 else
-                {
                     Debug.LogError($"{data.myName}: play condition: {small} doesn't exist");
-                }
             }
         }
 
@@ -92,15 +87,10 @@ public class Ability : MonoBehaviour
                     continue;
 
                 MethodInfo method = typeof(Ability).GetMethod(small, BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
-                if (method != null)
-                {
-                    if (method.ReturnType == typeof(IEnumerator))
-                        enumeratorDictionary.Add(small, method);
-                }
+                if (method != null && method.ReturnType == typeof(IEnumerator))
+                    enumeratorDictionary.Add(small, method);
                 else
-                {
                     Debug.LogError($"{data.myName}: instructions: {small} doesn't exist");
-                }
             }
         }
     }

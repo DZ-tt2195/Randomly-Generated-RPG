@@ -261,6 +261,7 @@ public class TurnManager : MonoBehaviour
             elapsedTime += Time.deltaTime;
             yield return null;
         }
+        waveText.transform.parent.localPosition = finalPos;
     }
 
     public void GameFinished(string message1, string message2)

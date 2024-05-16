@@ -1145,7 +1145,7 @@
       "If this is Airborne, it becomes Grounded and deals ATK damage to all Grounded Enemies.",
       "THIS brings the hammer down.",
       "Self-AllEnemies",
-      "TargetBecomeAirborne-TargetBecomeGrounded",
+      "TargetIsAirborne-TargetIsGrounded",
       "TargetBecomeGrounded-TargetAttack",
       "2",
       "4",
