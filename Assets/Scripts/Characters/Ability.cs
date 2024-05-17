@@ -229,7 +229,7 @@ public class Ability : MonoBehaviour
 
     bool TargetIsDead(int currentIndex)
     {
-        return true;
+        return listOfTargets[currentIndex].Count > 0;
     }
 
     bool CanSummon(int currentIndex)
@@ -441,8 +441,13 @@ public class Ability : MonoBehaviour
             if (target == null)
                 continue;
 
-            foreach (string methodName in listOfMethods)
+            for (int i = 0; i<listOfMethods.Count(); i++)
             {
+                string methodName = listOfMethods[i];
+
+                if (methodName.Equals("None") || methodName.Equals(""))
+                    continue;
+
                 yield return ((IEnumerator)enumeratorDictionary[methodName].Invoke(this, new object[2] { target, logged }));
                 if (!runNextMethod) break;
                 yield return TurnManager.instance.WaitTime();

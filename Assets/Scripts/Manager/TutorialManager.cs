@@ -37,6 +37,7 @@ public class TutorialManager : MonoBehaviour
         {
             ScreenOverlay.instance.SetAnimationSpeed(0.4f);
             ScreenOverlay.instance.SetUndo(true);
+            ScreenOverlay.instance.SetTooltip(true);
 
             List<CharacterData> playerData = DataLoader.ReadCharacterData("Player Data");
             for (int i = 0; i < playerData.Count; i++)
