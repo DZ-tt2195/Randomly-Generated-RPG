@@ -2692,8 +2692,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -650, y: -50}
-  m_SizeDelta: {x: -1400, y: -300}
+  m_AnchoredPosition: {x: -625, y: -100}
+  m_SizeDelta: {x: -1350, y: -200}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &608539619
 MonoBehaviour:
@@ -2757,7 +2757,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 75.8
+  m_fontSize: 79.05
   m_fontSizeBase: 14
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -6855,8 +6855,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 542.5, y: -50}
-  m_SizeDelta: {x: -1515, y: -300}
+  m_AnchoredPosition: {x: 625, y: -100}
+  m_SizeDelta: {x: -1350, y: -200}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1410552182
 MonoBehaviour:
@@ -6883,15 +6883,16 @@ MonoBehaviour:
     Neutral: Default Emotion.
 
     Happy: Effective against
-    Angry. Gets an extra turn when it doesn''t attack; Abilities have longer <link="Cooldown"><sprite="Symbols"
-    name="Cooldown"></link>.
+    Angry. Gets an extra turn when it doesn''t attack on their turn; Abilities have
+    longer <link="Cooldown"><sprite="Symbols" name="Cooldown"></link>.
 
-    Angry: Effective against Sad. +2 <link="Power"><sprite="Symbols"
-    name="Power"></link>; gets Stunned when killing or healing someone to full <link="Health"><sprite="Symbols"
+    Angry:
+    Effective against Sad. +2 <link="Power"><sprite="Symbols" name="Power"></link>;
+    gets Stunned when killing or healing someone to full <link="Health"><sprite="Symbols"
     name="Health"></link>.
 
-    Sad: Effective against Happy. Gains <link="Health"><sprite="Symbols"
-    name="Health"></link> when attacking; loses <link="Health"><sprite="Symbols"
+    Sad: Effective against Happy. Gains 2 <link="Health"><sprite="Symbols"
+    name="Health"></link> when attacking; loses 2 <link="Health"><sprite="Symbols"
     name="Health"></link> otherwise.
 
 
@@ -6909,7 +6910,10 @@ MonoBehaviour:
 
     Targeted
     (<link="TargetedImage"><sprite="Statuses" name="TargetedImage"></link>): Any
-    single-target Abilities must target them if possible.'
+    single-target Abilities must target them if possible.
+
+    Extra (<link="ExtraImage"><sprite="Statuses"
+    name="ExtraImage"></link>): Can use another Ability on their turn.'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8c64c47af7c1c4fb5b88d184433c6c44, type: 2}
   m_sharedMaterial: {fileID: -3852492252101762229, guid: 8c64c47af7c1c4fb5b88d184433c6c44, type: 2}
@@ -6936,7 +6940,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 76.05
+  m_fontSize: 78.1
   m_fontSizeBase: 14
   m_fontWeight: 400
   m_enableAutoSizing: 1

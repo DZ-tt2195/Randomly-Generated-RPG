@@ -127,18 +127,18 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 28
-        width: 357
-        height: 357
+        y: 0
+        width: 415
+        height: 414
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8fb468cd84ce74f8c86ecf161136b9d8
-      internalID: 2068589949
+      spriteID: 912351a86cfa248069a90989687716b6
+      internalID: -1634237573
       vertices: []
       indices: 
       edges: []
@@ -147,19 +147,19 @@ TextureImporter:
       name: Statuses_1
       rect:
         serializedVersion: 2
-        x: 440
+        x: 460
         y: 0
-        width: 385
-        height: 385
+        width: 415
+        height: 414
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 40e6fc5d2f71d4878ba8a2b288176557
-      internalID: -670256202
+      spriteID: 30b13791701ac4db9b4520cf198643f4
+      internalID: -1973201964
       vertices: []
       indices: 
       edges: []
@@ -168,19 +168,40 @@ TextureImporter:
       name: Statuses_2
       rect:
         serializedVersion: 2
-        x: 943
-        y: 15
-        width: 363
-        height: 363
+        x: 962
+        y: 0
+        width: 415
+        height: 414
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0c9a50d03137a4cfd8d5eaa42399a540
-      internalID: 1302736960
+      spriteID: bc5563231a1564943b9ebcc68c185736
+      internalID: 1198328745
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Statuses_3
+      rect:
+        serializedVersion: 2
+        x: 1482
+        y: 0
+        width: 415
+        height: 414
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 80d79fb75b8764555a2d0637aab58bca
+      internalID: 1185513414
       vertices: []
       indices: 
       edges: []
@@ -196,9 +217,10 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Statuses_0: 2068589949
-      Statuses_1: -670256202
-      Statuses_2: 1302736960
+      Statuses_0: -1634237573
+      Statuses_1: -1973201964
+      Statuses_2: 1198328745
+      Statuses_3: 1185513414
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

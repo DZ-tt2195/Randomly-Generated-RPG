@@ -480,9 +480,9 @@ public class Ability : MonoBehaviour
         yield return target.ChangeMaxHealth(data.healthRegain, logged);
     }
 
-    IEnumerator PassTurn(Character target, int logged)
+    IEnumerator TargetExtraTurn(Character target, int logged)
     {
-        yield return target.MyTurn(logged, true);
+        yield return target.Extra(data.miscNumber, logged);
     }
 
     IEnumerator TargetCopy(Character target, int logged)

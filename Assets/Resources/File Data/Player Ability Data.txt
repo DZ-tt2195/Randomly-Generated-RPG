@@ -97,11 +97,11 @@
     [
       "Knight",
       "Delegate",
-      "Another Player takes an extra turn.",
+      "Another Player gets an Extra turn.",
       "THIS delegates their turn to TARGET.",
       "OtherPlayer",
-      "None",
-      "PassTurn",
+      "",
+      "TargetExtraTurn",
       "2",
       "",
       "",
@@ -110,7 +110,7 @@
       "",
       "",
       "",
-      "",
+      "1",
       "Misc"
     ],
     [
@@ -477,11 +477,11 @@
     [
       "Angel",
       "Delegate",
-      "Another Player takes an extra turn.",
+      "Another Player gets an Extra turn.",
       "THIS delegates their turn to TARGET.",
       "OtherPlayer",
-      "None",
-      "PassTurn",
+      "",
+      "TargetExtraTurn",
       "2",
       "",
       "",
@@ -490,7 +490,7 @@
       "",
       "",
       "",
-      "",
+      "1",
       "Misc"
     ],
     [
@@ -933,11 +933,11 @@
     [
       "Wizard",
       "Delegate",
-      "Another Player takes an extra turn.",
+      "Another Player gets an Extra turn.",
       "THIS delegates their turn to TARGET.",
       "OtherPlayer",
       "",
-      "PassTurn",
+      "TargetExtraTurn",
       "2",
       "",
       "",
@@ -946,7 +946,7 @@
       "",
       "",
       "",
-      "",
+      "1",
       "Misc"
     ],
     [

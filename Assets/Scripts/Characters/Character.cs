@@ -84,6 +84,13 @@ public class Character : MonoBehaviour
             get { return _turnsTargeted; }
             private set { _turnsTargeted = value; CharacterUI(); }
         }
+    private int _extraTurns;
+    [ReadOnly]
+    public int ExtraTurns
+    {
+        get { return _extraTurns; }
+        private set { _extraTurns = value; CharacterUI(); }
+    }
 
     [Foldout("UI", true)]
         [ReadOnly] public Image border;
@@ -400,7 +407,7 @@ public class Character : MonoBehaviour
 
         TurnsProtected += amount;
         TurnManager.instance.CreateVisual($"PROTECTED", this.transform.localPosition);
-        Log.instance.AddText($"{this.name} is Protected.", logged);
+        Log.instance.AddText($"{this.name} is Protected for the next {TurnsProtected} attack{(TurnsProtected == 1 ? "" : "s")}..", logged);
     }
 
     public IEnumerator Targeted(int amount, int logged)
@@ -414,7 +421,15 @@ public class Character : MonoBehaviour
 
         TurnsTargeted += amount;
         TurnManager.instance.CreateVisual($"TARGETED", this.transform.localPosition);
-        Log.instance.AddText($"{this.name} is Targeted for {amount} turn{(TurnsProtected == 1 ? "" : "s")}.", logged);
+        Log.instance.AddText($"{this.name} is Targeted for {TurnsTargeted} turn{(TurnsTargeted == 1 ? "" : "s")}.", logged);
+    }
+
+    public IEnumerator Extra(int amount, int logged)
+    {
+        if (this == null) yield break;
+        ExtraTurns += amount;
+        TurnManager.instance.CreateVisual($"EXTRA TURN", this.transform.localPosition);
+        Log.instance.AddText($"{this.name} will get {ExtraTurns} Extra turn{(ExtraTurns == 1 ? "" : "s")}.", logged);
     }
 
     public IEnumerator Revive(int health, int logged)
@@ -440,7 +455,7 @@ public class Character : MonoBehaviour
 
 #region Turns
 
-    internal IEnumerator MyTurn(int logged, bool extraTurn)
+    internal IEnumerator MyTurn(int logged)
     {
         chosenAbility = null;
         chosenTarget = null;
@@ -448,8 +463,14 @@ public class Character : MonoBehaviour
         if (TurnsTargeted > 0)
             TurnsTargeted--;
 
-        yield return ResolveTurn(logged, extraTurn);
-        yield return EmotionEffect(logged, extraTurn);
+        yield return ResolveTurn(logged, false);
+        yield return EmotionEffect(logged, false);
+
+        while (ExtraTurns > 0)
+        {
+            yield return ResolveTurn(logged, true);
+            yield return EmotionEffect(logged, true);
+        }
     }
 
     IEnumerator Timer()
@@ -493,6 +514,7 @@ public class Character : MonoBehaviour
             StartCoroutine(nameof(Timer));
             if (extraAbility)
             {
+                ExtraTurns--;
                 foreach (Ability ability in listOfAutoAbilities)
                 {
                     if (ability.currentCooldown > 0)
@@ -606,7 +628,7 @@ public class Character : MonoBehaviour
                 if (!extraTurn && chosenAbility.mainType != AbilityType.Attack)
                 {
                     Log.instance.AddText($"{this.name} is Happy.", logged);
-                    yield return ResolveTurn(logged + 1, true);
+                    yield return Extra(1, logged+1);
                 }
             }
             else if (this.CurrentEmotion == Emotion.Sad)
@@ -661,6 +683,8 @@ public class Character : MonoBehaviour
             statusText.text += "<link=\"StunImage\"><sprite=\"Statuses\" name=\"StunImage\"></link>";
         for (int i = 0; i < TurnsProtected; i++)
             statusText.text += "<link=\"ProtectedImage\"><sprite=\"Statuses\" name=\"ProtectedImage\"></link>";
+        for (int i = 0; i < ExtraTurns; i++)
+            statusText.text += "<link=\"ExtraImage\"><sprite=\"Statuses\" name=\"ExtraImage\"></link>";
         if (TurnManager.instance != null && (TurnManager.instance.targetedPlayer == this || TurnManager.instance.targetedEnemy == this))
         {
             for (int i =0; i<TurnsTargeted; i++)

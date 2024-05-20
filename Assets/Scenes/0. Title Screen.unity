@@ -3468,8 +3468,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "When this uses a non-attacking Ability, \nit gets an extra turn.\nAbilities
-    have 1 extra turn of Cooldown."
+  m_text: 'When this uses a non-attacking Ability on its turn, it gets an Extra turn.
+
+    Abilities
+    have 1 extra turn of Cooldown.'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8c64c47af7c1c4fb5b88d184433c6c44, type: 2}
   m_sharedMaterial: {fileID: -3852492252101762229, guid: 8c64c47af7c1c4fb5b88d184433c6c44, type: 2}
@@ -5093,9 +5095,14 @@ MonoBehaviour:
     description: All single-target Abilities must target them if possible.
     color: {r: 0.5, g: 0.75, b: 0, a: 0}
   - keywordVariations:
-    - Grounded
-    description: Can't be targeted by abilities that only affect Airborne targets.
-    color: {r: 1, g: 0.5, b: 0, a: 0}
+    - Extra
+    description: They can use another ability during their turn.
+    color: {r: 1, g: 1, b: 1, a: 0}
+  - keywordVariations:
+    - Stats
+    - Stat
+    description: Power / Defense / Speed / Luck / Accuracy
+    color: {r: 1, g: 1, b: 1, a: 0}
   - keywordVariations:
     - Airborne
     description: Can't be targeted by abilities that only affect Grounded targets.
@@ -5162,6 +5169,10 @@ MonoBehaviour:
   - keywordVariations:
     - TargetedImage
     description: All single-target Abilities must target this if possible.
+    color: {r: 0, g: 0, b: 0, a: 0}
+  - keywordVariations:
+    - ExtraImage
+    description: This can use another ability during their turn.
     color: {r: 0, g: 0, b: 0, a: 0}
   tooltipText: {fileID: 235444215}
 --- !u!114 &623227979
@@ -10616,8 +10627,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -732, y: -635}
-  m_SizeDelta: {x: 950, y: 150}
+  m_AnchoredPosition: {x: 842, y: -284}
+  m_SizeDelta: {x: 607.0076, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1273847449
 MonoBehaviour:
@@ -10646,7 +10657,7 @@ MonoBehaviour:
     <link="Speed"><sprite="Symbols" name="Speed"></link> <link="Star"><sprite="Symbols"
     name="Star"></link><link="StunImage"><sprite="Statuses" name="StunImage"></link>
     <link="ProtectedImage"><sprite="Statuses" name="ProtectedImage"></link> <link="TargetedImage"><sprite="Statuses"
-    name="TargetedImage"></link>'
+    name="TargetedImage"></link> <link="ExtraImage"><sprite="Statuses" name="ExtraImage"></link>'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8c64c47af7c1c4fb5b88d184433c6c44, type: 2}
   m_sharedMaterial: {fileID: -3852492252101762229, guid: 8c64c47af7c1c4fb5b88d184433c6c44, type: 2}
@@ -10673,7 +10684,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 91.7
+  m_fontSize: 89.05
   m_fontSizeBase: 238.19
   m_fontWeight: 400
   m_enableAutoSizing: 1

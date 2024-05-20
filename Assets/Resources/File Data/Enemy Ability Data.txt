@@ -1294,7 +1294,7 @@
     [
       "Siren",
       "Temptation",
-      "A Player becomes Happy and Stunned for MISC turn.",
+      "A Player becomes Happy and Stunned for MISC turns.",
       "THIS tempts TARGET.",
       "OnePlayer",
       "TargetNotStunned",
@@ -1307,7 +1307,7 @@
       "",
       "",
       "",
-      "1",
+      "2",
       "EmotionPlayer"
     ],
     [

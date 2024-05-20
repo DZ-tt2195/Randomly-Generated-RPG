@@ -170,9 +170,9 @@ public class TutorialManager : MonoBehaviour
                 listOfPlayers[1].AddAbility(FileManager.instance.FindPlayerAbility("Induce Sadness"), false, false);
 
                 yield return ClickThroughDialogue(new List<string>()
-                { "Your Angel is Happy, which means they get an extra turn when they don't attack, but all their Abilities have 1 more turn of Cooldown.",
+                { "Your Angel is Happy, which means they get an Extra turn when they don't attack, but all their Abilities have 1 more turn of Cooldown.",
                 "Emotions also apply to Enemies. If you right click the Page, you'll see that their attack Ability got placed on Cooldown.",
-                "Your Angel didn’t attack, so they now get an extra turn. However, Invigorate is on Cooldown.",
+                "Your Angel didn’t attack, so they now get an Extra turn. However, Invigorate is on Cooldown.",
                 "Instead, you can change the Page’s Emotion to Sad. That way, your Angry Knight will gain the advantage."});
                 break;
 

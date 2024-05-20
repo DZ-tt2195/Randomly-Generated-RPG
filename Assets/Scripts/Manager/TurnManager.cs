@@ -198,7 +198,7 @@ public class TurnManager : MonoBehaviour
                 Log.instance.AddText($"");
                 nextInLine.border.gameObject.SetActive(true);
 
-                yield return nextInLine.MyTurn(0, false);
+                yield return nextInLine.MyTurn(0);
                 try { nextInLine.border.gameObject.SetActive(false); } catch { /*do nothing*/}
             }
 
