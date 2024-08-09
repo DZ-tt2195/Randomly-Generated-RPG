@@ -2692,8 +2692,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -625, y: -100}
-  m_SizeDelta: {x: -1350, y: -200}
+  m_AnchoredPosition: {x: -625, y: -60}
+  m_SizeDelta: {x: -1350, y: -280}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &608539619
 MonoBehaviour:
@@ -2757,7 +2757,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 79.05
+  m_fontSize: 77.35
   m_fontSizeBase: 14
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -6855,8 +6855,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 625, y: -100}
-  m_SizeDelta: {x: -1350, y: -200}
+  m_AnchoredPosition: {x: 625, y: -60}
+  m_SizeDelta: {x: -1350, y: -280}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1410552182
 MonoBehaviour:
@@ -6878,13 +6878,13 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Emotions:
+  m_text: 'Character Emotions:
 
     Neutral: Default Emotion.
 
-    Happy: Effective against
-    Angry. Gets an extra turn when it doesn''t attack on their turn; Abilities have
-    longer <link="Cooldown"><sprite="Symbols" name="Cooldown"></link>.
+    Happy: Effective
+    against Angry. Gets an extra turn when it doesn''t attack on their turn; Abilities
+    have longer <link="Cooldown"><sprite="Symbols" name="Cooldown"></link>.
 
     Angry:
     Effective against Sad. +2 <link="Power"><sprite="Symbols" name="Power"></link>;
@@ -6896,11 +6896,11 @@ MonoBehaviour:
     name="Health"></link> otherwise.
 
 
-    Positions: Grounded & Airborne
+    Character Positions: Grounded & Airborne
 
 
-    Status
-    Effects:
+    Character
+    Status Effects:
 
     Stunned (<link="StunImage"><sprite="Statuses" name="StunImage"></link>):
     Skips their next turn.
@@ -6940,7 +6940,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 78.1
+  m_fontSize: 73.05
   m_fontSizeBase: 14
   m_fontWeight: 400
   m_enableAutoSizing: 1

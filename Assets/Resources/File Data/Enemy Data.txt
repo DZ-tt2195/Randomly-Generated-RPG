@@ -156,16 +156,16 @@
       "2"
     ],
     [
-      "Assassin",
+      "Ninja",
       "Makes everyone Grounded so that it can kill the Player with the least amount of Health.",
       "10",
       "1",
       "0.2",
       "0.85",
-      "GROUNDED",
-      "Sneak Attack,Weaken,No Hiding,Hidden from View,",
+      "AIRBORNE",
+      "Assassinate,Shuriken,No Hiding,Flip,",
       "LeastHealth",
-      "Eric J. Carter|Dominion: Allies|(Highwayman)",
+      "Elisa Cella|Dominion: Rising Sun|(Ninja)",
       "2"
     ],
     [
@@ -176,7 +176,7 @@
       "0.2",
       "0.85",
       "AIRBORNE",
-      "Rocket Launch,Laser Ray,Lonely in Space,",
+      "Rocket Launch,Laser Ray,Lonely in Space,Space Food,",
       "Effectiveness",
       "Tyler Jacobson|Unfinity|(Space Beleren)",
       "2"
@@ -208,14 +208,14 @@
       "2"
     ],
     [
-      "Cow",
+      "Bull",
       "Either attacks the Player who most recently damaged them, or does healing.",
       "10",
       "-2",
       "0.2",
       "0.85",
       "GROUNDED",
-      "Charge,Graze,Produce Milk,",
+      "Charge,Graze,Produce Milk,Offer Ride,",
       "LastAttacker",
       "Matthias Catrein|Dominion: Menagerie|(Way of the Ox)",
       "2"
@@ -228,7 +228,7 @@
       "0.2",
       "0.85",
       "GROUNDED",
-      "Alluring Song,Temptation,Drown,",
+      "Somber Song,Temptation,Drown,",
       "ChooseAttack",
       "Claus Stephan|Dominion: Plunder|(Siren)",
       "2"
@@ -274,7 +274,7 @@
     ],
     [
       "Demon",
-      "Damages other Enemies to make itself stronger.",
+      "Damages and weakens other Enemies to make itself stronger.",
       "15",
       "2",
       "0",

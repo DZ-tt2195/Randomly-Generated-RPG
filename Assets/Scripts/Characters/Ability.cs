@@ -163,8 +163,8 @@ public class Ability : MonoBehaviour
 
         if (effectiveness < 0 && CarryVariables.instance.ActiveChallenge("Ineffectives Miss") && self.myType == CharacterType.Player)
         {
-            Log.instance.AddText($"{user.name}'s attack does nothing (Ineffectives Miss).", logged);
-            TurnManager.instance.CreateVisual("0", target.transform.localPosition);
+            Log.instance.AddText($"{user.name}'s misses (Ineffectives Miss).", logged);
+            TurnManager.instance.CreateVisual("MISS", target.transform.localPosition);
             return 0;
         }
 
@@ -455,6 +455,13 @@ public class Ability : MonoBehaviour
         }
     }
 
+    IEnumerator DealtKill(Character target, int logged)
+    {
+        if (!killed)
+            runNextMethod = false;
+        yield return null;
+    }
+
     IEnumerator DealtDamage(Character target, int logged)
     {
         if (damageDealt == 0)
@@ -466,7 +473,8 @@ public class Ability : MonoBehaviour
     {
         damageDealt = CalculateDamage(self, target, logged);
         yield return target.TakeDamage(damageDealt, logged, self);
-        if (target == null || target.CalculateHealth() <= 0) killed = true;
+        if (target == null || target.CalculateHealth() <= 0)
+            killed = true;
     }
 
     IEnumerator TargetHeal(Character target, int logged)
