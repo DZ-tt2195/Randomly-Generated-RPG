@@ -1311,7 +1311,7 @@
       "StatPlayer"
     ],
     [
-      "1",
+      "Siren",
       "Alluring Song",
       "This becomes Targeted for MISC turns, and all Players lose POWERSTAT Power.",
       "THIS sings an alluring song.",

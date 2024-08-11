@@ -228,7 +228,7 @@
       "0.2",
       "0.85",
       "GROUNDED",
-      "Somber Song,Temptation,Drown,",
+      "Alluring Song,Somber Song,Temptation,Drown,",
       "ChooseAttack",
       "Claus Stephan|Dominion: Plunder|(Siren)",
       "2"
