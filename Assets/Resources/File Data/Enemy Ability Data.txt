@@ -496,7 +496,7 @@
     [
       "Bull",
       "Offer Ride",
-      "Another Player gets an Extra turn.",
+      "Another Enemy gets an Extra turn.",
       "THIS offers a ride to TARGET.",
       "OtherEnemy",
       "",
