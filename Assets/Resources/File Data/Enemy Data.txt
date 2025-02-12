@@ -22,7 +22,7 @@
       "AIRBORNE",
       "Sting,Delay,Paralyze,Protect the Queen,",
       "",
-      "Tom Wänerstrand|Time Spiral|(Unyaro Bees)",
+      "Tom Wanerstrand|Time Spiral|(Unyaro Bees)",
       "1"
     ],
     [
@@ -66,7 +66,7 @@
     ],
     [
       "Leprechaun",
-      "If this is at full health, it gives Players buffs; otherwise it deals lots of damage.",
+      "If this is at full Health, it increases Players Stats; otherwise it deals lots of damage.",
       "5",
       "-2",
       "0.1",
@@ -92,7 +92,7 @@
     ],
     [
       "PUPPY!!!",
-      "Attacks both Grounded and Airborne Players and lowers their stats.",
+      "Attacks both Grounded and Airborne Players and lowers their Stats.",
       "5",
       "0",
       "0.1",
@@ -235,7 +235,7 @@
     ],
     [
       "Spider",
-      "Makes Players Airborne and lowers their stats.",
+      "Makes Players Airborne and lowers their Stats.",
       "10",
       "1",
       "0.2",
@@ -313,7 +313,7 @@
     ],
     [
       "Royalty",
-      "Doesn't attack, but summons more 1 Star and 2 Star Enemies. Buffs Enemy stats and reduces Player stats.",
+      "Doesn't attack, but summons more 1 Star and 2 Star Enemies. Buffs Enemy Stats and reduces Player Stats.",
       "15",
       "-2",
       "0",

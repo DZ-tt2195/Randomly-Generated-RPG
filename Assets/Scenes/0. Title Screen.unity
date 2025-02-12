@@ -2868,7 +2868,7 @@ MonoBehaviour:
   m_linkedTextComponent: {fileID: 0}
   parentLinkedComponent: {fileID: 0}
   m_enableKerning: 1
-  m_ActiveFontFeatures: 00000000
+  m_ActiveFontFeatures: 6e72656b
   m_enableExtraPadding: 0
   checkPaddingRequired: 0
   m_isRichText: 1
@@ -4306,7 +4306,7 @@ MonoBehaviour:
   m_linkedTextComponent: {fileID: 0}
   parentLinkedComponent: {fileID: 0}
   m_enableKerning: 1
-  m_ActiveFontFeatures: 00000000
+  m_ActiveFontFeatures: 6e72656b
   m_enableExtraPadding: 0
   checkPaddingRequired: 0
   m_isRichText: 1
@@ -5023,7 +5023,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 11666886, guid: d648d600dbc994698910ae0b632b59ea, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 782321086d9324328b136af5b2f609c2, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -5114,6 +5114,7 @@ MonoBehaviour:
   - keywordVariations:
     - Stunned
     - Stuns
+    - Stunning
     - Stun
     description: Skips their next turn.
     color: {r: 1, g: 0.15, b: 0.15, a: 0}
@@ -5127,14 +5128,14 @@ MonoBehaviour:
     description: All single-target Abilities must target them if possible.
     color: {r: 0.5, g: 0.75, b: 0, a: 0}
   - keywordVariations:
-    - Extra
-    description: They can use another ability during their turn.
+    - Locked
+    - Lock
+    description: Emotion and Position can't change until their next turn.
     color: {r: 1, g: 1, b: 1, a: 0}
   - keywordVariations:
-    - Stats
-    - Stat
-    description: Power / Defense / Speed / Luck / Accuracy
-    color: {r: 1, g: 1, b: 1, a: 0}
+    - Grounded
+    description: Can't be targeted by abilities that only affect Airborne targets.
+    color: {r: 1, g: 0.5779401, b: 0, a: 0}
   - keywordVariations:
     - Airborne
     description: Can't be targeted by abilities that only affect Grounded targets.
@@ -5205,6 +5206,10 @@ MonoBehaviour:
   - keywordVariations:
     - ExtraImage
     description: This can use another ability during their turn.
+    color: {r: 0, g: 0, b: 0, a: 0}
+  - keywordVariations:
+    - LockImage
+    description: This can't change Position or Emotion until their next turn.
     color: {r: 0, g: 0, b: 0, a: 0}
   tooltipText: {fileID: 235444215}
 --- !u!114 &623227979
@@ -6919,7 +6924,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 11666886, guid: d648d600dbc994698910ae0b632b59ea, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 782321086d9324328b136af5b2f609c2, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -7489,7 +7494,7 @@ MonoBehaviour:
   m_linkedTextComponent: {fileID: 0}
   parentLinkedComponent: {fileID: 0}
   m_enableKerning: 1
-  m_ActiveFontFeatures: 00000000
+  m_ActiveFontFeatures: 6e72656b
   m_enableExtraPadding: 0
   checkPaddingRequired: 0
   m_isRichText: 1
@@ -10027,7 +10032,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 11666886, guid: d648d600dbc994698910ae0b632b59ea, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 782321086d9324328b136af5b2f609c2, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -10156,7 +10161,7 @@ MonoBehaviour:
   m_linkedTextComponent: {fileID: 0}
   parentLinkedComponent: {fileID: 0}
   m_enableKerning: 1
-  m_ActiveFontFeatures: 00000000
+  m_ActiveFontFeatures: 6e72656b
   m_enableExtraPadding: 0
   checkPaddingRequired: 0
   m_isRichText: 1
@@ -10706,14 +10711,14 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Icons: <link="Health"><sprite="Symbols" name="Health"></link> <link="Cooldown"><sprite="Symbols"
-    name="Cooldown"></link> <link="Power"><sprite="Symbols" name="Power"></link>
-    <link="Defense"><sprite="Symbols" name="Defense"></link> <link="Luck"><sprite="Symbols"
-    name="Luck"></link> <link="Accuracy"><sprite="Symbols" name="Accuracy"></link>
-    <link="Speed"><sprite="Symbols" name="Speed"></link> <link="Star"><sprite="Symbols"
-    name="Star"></link><link="StunImage"><sprite="Statuses" name="StunImage"></link>
-    <link="ProtectedImage"><sprite="Statuses" name="ProtectedImage"></link> <link="TargetedImage"><sprite="Statuses"
-    name="TargetedImage"></link> <link="ExtraImage"><sprite="Statuses" name="ExtraImage"></link>'
+  m_text: 'Icons: <link="Health"><sprite="Health" name="Health"></link> <link="Cooldown"><sprite="Cooldown"
+    name="Cooldown"></link> <link="Power"><sprite="Power" name="Power"></link> <link="Defense"><sprite="Defense"
+    name="Defense"></link> <link="Luck"><sprite="Luck" name="Luck"></link> <link="Accuracy"><sprite="Accuracy"
+    name="Accuracy"></link> <link="Speed"><sprite="Speed" name="Speed"></link> <link="Star"><sprite="Star"
+    name="Star"></link><link="StunImage"><sprite="StunImage" name="StunImage"></link>
+    <link="ProtectedImage"><sprite="ProtectedImage" name="ProtectedImage"></link>
+    <link="TargetedImage"><sprite="TargetedImage" name="TargetedImage"></link> <link="ExtraImage"><sprite="ExtraImage"
+    name="ExtraImage"></link><link="LockImage"><sprite="LockImage" name="LockImage"></link>'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8c64c47af7c1c4fb5b88d184433c6c44, type: 2}
   m_sharedMaterial: {fileID: -3852492252101762229, guid: 8c64c47af7c1c4fb5b88d184433c6c44, type: 2}
@@ -10861,7 +10866,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Players begin with higher stats
+  m_text: Players begin with higher Stats
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8c64c47af7c1c4fb5b88d184433c6c44, type: 2}
   m_sharedMaterial: {fileID: -3852492252101762229, guid: 8c64c47af7c1c4fb5b88d184433c6c44, type: 2}
@@ -11846,7 +11851,7 @@ MonoBehaviour:
   m_linkedTextComponent: {fileID: 0}
   parentLinkedComponent: {fileID: 0}
   m_enableKerning: 1
-  m_ActiveFontFeatures: 00000000
+  m_ActiveFontFeatures: 6e72656b
   m_enableExtraPadding: 0
   checkPaddingRequired: 0
   m_isRichText: 1
@@ -13257,7 +13262,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Enemies begin with higher stats
+  m_text: Enemies begin with higher Stats
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8c64c47af7c1c4fb5b88d184433c6c44, type: 2}
   m_sharedMaterial: {fileID: -3852492252101762229, guid: 8c64c47af7c1c4fb5b88d184433c6c44, type: 2}
@@ -14313,7 +14318,7 @@ MonoBehaviour:
   m_linkedTextComponent: {fileID: 0}
   parentLinkedComponent: {fileID: 0}
   m_enableKerning: 1
-  m_ActiveFontFeatures: 00000000
+  m_ActiveFontFeatures: 6e72656b
   m_enableExtraPadding: 0
   checkPaddingRequired: 0
   m_isRichText: 1

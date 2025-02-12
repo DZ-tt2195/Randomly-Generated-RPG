@@ -161,7 +161,7 @@ public class Ability : MonoBehaviour
     {
         int effectiveness = Effectiveness(user, target);
 
-        if (effectiveness < 0 && CarryVariables.instance.ActiveChallenge("Ineffectives Miss") && self.myType == CharacterType.Player)
+        if (effectiveness < 0 && CarryVariables.instance.ActiveChallenge("Ineffectives Miss") && user is PlayerCharacter)
         {
             Log.instance.AddText($"{user.name}'s misses (Ineffectives Miss).", logged);
             TurnManager.instance.CreateVisual("MISS", target.transform.localPosition);
@@ -181,7 +181,7 @@ public class Ability : MonoBehaviour
             if (damage > 1 && critical > 0)
                 Log.instance.AddText($"{user.data.myName} has good luck! (+{critical} Damage)", logged);
 
-            if (self.myType == CharacterType.Enemy && CarryVariables.instance.ActiveCheat("Damage Cap"))
+            if (self is EnemyCharacter && CarryVariables.instance.ActiveCheat("Damage Cap"))
                 damage = Mathf.Min(damage, 4);
 
             return Mathf.Max(1, damage);
@@ -596,6 +596,11 @@ public class Ability : MonoBehaviour
     IEnumerator TargetBecomeTargeted(Character target, int logged)
     {
         yield return target.Targeted(data.miscNumber, logged);
+    }
+
+    IEnumerator TargetBecomeLocked(Character target, int logged)
+    {
+        yield return target.Locked(data.miscNumber, logged);
     }
 
     IEnumerator TargetIncreaseCooldown(Character target, int logged)

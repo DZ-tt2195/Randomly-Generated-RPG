@@ -94,7 +94,7 @@ public class EncyclopediaManager : MonoBehaviour
             foreach (CharacterData data in listOfData)
             {
                 Character nextEnemy = Instantiate(characterPrefab).AddComponent<Character>();
-                nextEnemy.SetupCharacter(CharacterType.Enemy, data, FileManager.instance.ConvertToAbilityData(data.listOfSkills, false), Emotion.Neutral, false);
+                nextEnemy.SetupCharacter(data, FileManager.instance.ConvertToAbilityData(data.listOfSkills, false), Emotion.Neutral, false);
                 listOfEnemyBoxes.Add(nextEnemy);
                 foreach (Transform child in nextEnemy.transform)
                 {

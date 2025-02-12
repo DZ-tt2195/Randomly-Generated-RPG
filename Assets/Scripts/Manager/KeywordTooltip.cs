@@ -53,11 +53,13 @@ public class KeywordTooltip : MonoBehaviour
         }
         foreach (KeywordHover link in spriteKeywords)
         {
-            answer = answer.Replace(link.keywordVariations[0], $"<link=\"{link.keywordVariations[0]}\"><sprite=\"Symbols\" name=\"{link.keywordVariations[0]}\"></link>");
+            string toReplace = link.keywordVariations[0];
+            answer = answer.Replace(toReplace, $"<link=\"{toReplace}\"><sprite=\"{toReplace}\" name=\"{toReplace}\"></link>");
         }
         foreach (KeywordHover link in spriteKeywordStatuses)
         {
-            answer = answer.Replace(link.keywordVariations[0], $"<link=\"{link.keywordVariations[0]}\"><sprite=\"Statuses\" name=\"{link.keywordVariations[0]}\"></link>");
+            string toReplace = link.keywordVariations[0];
+            answer = answer.Replace(toReplace, $"<link=\"{toReplace}\"><sprite=\"{toReplace}\" name=\"{toReplace}\"></link>");
         }
         return answer;
     }

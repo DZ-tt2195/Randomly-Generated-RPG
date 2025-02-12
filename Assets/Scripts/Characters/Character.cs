@@ -9,7 +9,6 @@ using System.Linq;
 
 public enum Position { Grounded, Airborne, Dead };
 public enum Emotion { Dead, Neutral, Happy, Angry, Sad };
-public enum CharacterType { Player, Enemy }
 
 [RequireComponent(typeof(Button))][RequireComponent(typeof(Image))]
 public class Character : MonoBehaviour
@@ -28,7 +27,6 @@ public class Character : MonoBehaviour
         [ReadOnly] public CharacterData data { get; private set; }
         [ReadOnly] public List<Ability> listOfAutoAbilities = new();
         [ReadOnly] public List<Ability> listOfRandomAbilities = new();
-        [ReadOnly] public CharacterType myType { get; private set; }
 
     [Foldout("Base Stats", true)]
         protected int baseHealth;
@@ -41,7 +39,7 @@ public class Character : MonoBehaviour
         [ReadOnly] public int CurrentHealth
         {
             get { return _currentHealth; }
-            private set { healthText.text = $"{value}/{baseHealth}"; _currentHealth = value; }
+            private set { healthText.text = KeywordTooltip.instance.EditText($"{value}/{baseHealth}Health"); _currentHealth = value; }
         }
         public int modifyPower { get; private set; }
         public int modifyDefense { get; private set; }
@@ -84,13 +82,18 @@ public class Character : MonoBehaviour
             get { return _turnsTargeted; }
             private set { _turnsTargeted = value; CharacterUI(); }
         }
-    private int _extraTurns;
-    [ReadOnly]
-    public int ExtraTurns
-    {
-        get { return _extraTurns; }
-        private set { _extraTurns = value; CharacterUI(); }
-    }
+        private int _extraTurns;
+        [ReadOnly] public int ExtraTurns
+        {
+            get { return _extraTurns; }
+            private set { _extraTurns = value; CharacterUI(); }
+        }
+        private int _turnsLocked;
+        [ReadOnly] public int TurnsLocked
+        {
+            get { return _turnsLocked; }
+            private set { _turnsLocked = value; CharacterUI(); }
+        }
 
     [Foldout("UI", true)]
         [ReadOnly] public Image border;
@@ -116,23 +119,21 @@ public class Character : MonoBehaviour
         topText = transform.Find("Top Text").GetComponent<TMP_Text>();
     }
 
-    public void SetupCharacter(CharacterType type, CharacterData characterData,
-        List<AbilityData> listOfAbilityData, Emotion startingEmotion, bool abilitiesBeginWithCooldown)
+    public void SetupCharacter(CharacterData characterData, List<AbilityData> listOfAbilityData, Emotion startingEmotion, bool abilitiesBeginWithCooldown)
     {
         data = characterData;
-        myType = type;
         this.name = characterData.myName;
         editedDescription = KeywordTooltip.instance.EditText(data.description);
 
         this.baseHealth = data.baseHealth;
         CurrentHealth = this.baseHealth;
         this.baseSpeed = data.baseSpeed;
-        this.baseLuck = (CarryVariables.instance.ActiveCheat("No Luck") && myType == CharacterType.Enemy) ? 0 : data.baseLuck;
+        this.baseLuck = (CarryVariables.instance.ActiveCheat("No Luck") && this is EnemyCharacter) ? 0 : data.baseLuck;
         this.baseAccuracy = data.baseAccuracy;
 
         this.myImage.sprite = Resources.Load<Sprite>($"Characters/{this.name}");
         AddAbility(FileManager.instance.FindEnemyAbility("Skip Turn"), true, false);
-        if (this.myType == CharacterType.Player)
+        if (this is PlayerCharacter)
             AddAbility(FileManager.instance.FindEnemyAbility("Revive"), true, false);
 
         StartCoroutine(ChangePosition(data.startingPosition, -1));
@@ -229,7 +230,7 @@ public class Character : MonoBehaviour
             if (baseHealth < _currentHealth)
                 _currentHealth = baseHealth;
         }
-        healthText.text = $"{CurrentHealth}/{baseHealth}";
+        healthText.text = $"{CurrentHealth}/{baseHealth}Health";
     }
 
     public IEnumerator GainHealth(int health, int logged)
@@ -282,7 +283,7 @@ public class Character : MonoBehaviour
         Log.instance.AddText($"{this.name} has died.", logged);
         TurnManager.instance.speedQueue.Remove(this);
 
-        if (this.myType == CharacterType.Player)
+        if (this is PlayerCharacter)
         {
             TurnManager.instance.listOfPlayers.Remove(this);
             TurnManager.instance.listOfDead.Add(this);
@@ -324,6 +325,7 @@ public class Character : MonoBehaviour
         if (this == null || effect == 0) yield break;
 
         modifySpeed = Math.Clamp(modifySpeed += effect, -5, 5);
+
         if (logged >= 0)
         {
             TurnManager.instance.CreateVisual($"{(effect > 0 ? '+' : '-')}{Math.Abs(effect)} Speed", this.transform.localPosition);
@@ -363,11 +365,18 @@ public class Character : MonoBehaviour
     {
         if (this == null || newPosition == Position.Dead || newPosition == CurrentPosition) yield break;
 
-        CurrentPosition = newPosition;
-        if (Log.instance != null && logged >= 0)
+        if (TurnsLocked > 0)
         {
-            Log.instance.AddText($"{(this.name)} is now {newPosition}.", logged);
-            TurnManager.instance.CreateVisual($"{newPosition.ToString().ToUpper()}", this.transform.localPosition);
+            Log.instance.AddText($"{(this.name)}'s Position can't change.", logged);
+        }
+        else
+        {
+            CurrentPosition = newPosition;
+            if (Log.instance != null && logged >= 0)
+            {
+                Log.instance.AddText($"{(this.name)} is now {newPosition}.", logged);
+                TurnManager.instance.CreateVisual($"{newPosition.ToString().ToUpper()}", this.transform.localPosition);
+            }
         }
     }
 
@@ -375,7 +384,20 @@ public class Character : MonoBehaviour
     {
         if (this == null || newEmotion == Emotion.Dead || newEmotion == CurrentEmotion) yield break;
 
-        CurrentEmotion = newEmotion;
+        if (TurnsLocked > 0)
+        {
+            Log.instance.AddText($"{(this.name)}'s Emotion can't change.", logged);
+        }
+        else
+        {
+            CurrentEmotion = newEmotion;
+            if (Log.instance != null && logged >= 0)
+            {
+                Log.instance.AddText($"{(this.name)} is now {CurrentEmotion}.", logged);
+                TurnManager.instance.CreateVisual($"{CurrentEmotion.ToString().ToUpper()}", this.transform.localPosition);
+            }
+        }
+
         if (newEmotion == Emotion.Neutral)
         {
             this.myImage.color = Color.white;
@@ -384,11 +406,6 @@ public class Character : MonoBehaviour
         {
             Color newColor = KeywordTooltip.instance.SearchForKeyword(CurrentEmotion.ToString()).color;
             this.myImage.color = new Color(newColor.r, newColor.g, newColor.b);
-        }
-        if (Log.instance != null && logged >= 0)
-        {
-            Log.instance.AddText($"{(this.name)} is now {CurrentEmotion}.", logged);
-            TurnManager.instance.CreateVisual($"{CurrentEmotion.ToString().ToUpper()}", this.transform.localPosition);
         }
     }
 
@@ -414,9 +431,9 @@ public class Character : MonoBehaviour
     {
         if (this == null) yield break;
 
-        if (this.myType == CharacterType.Player)
+        if (this is PlayerCharacter)
             TurnManager.instance.targetedPlayer = this;
-        if (this.myType == CharacterType.Enemy)
+        else if (this is EnemyCharacter)
             TurnManager.instance.targetedEnemy = this;
 
         TurnsTargeted += amount;
@@ -430,6 +447,14 @@ public class Character : MonoBehaviour
         ExtraTurns += amount;
         TurnManager.instance.CreateVisual($"EXTRA TURN", this.transform.localPosition);
         Log.instance.AddText($"{this.name} will get {ExtraTurns} Extra turn{(ExtraTurns == 1 ? "" : "s")}.", logged);
+    }
+
+    public IEnumerator Locked(int amount, int logged)
+    {
+        if (this == null) yield break;
+        ExtraTurns += amount;
+        TurnManager.instance.CreateVisual($"LOCKED", this.transform.localPosition);
+        Log.instance.AddText($"{this.name}'s Position / Emotion are locked for {ExtraTurns} turn{(ExtraTurns == 1 ? "" : "s")}.", logged);
     }
 
     public IEnumerator Revive(int health, int logged)
@@ -462,6 +487,8 @@ public class Character : MonoBehaviour
 
         if (TurnsTargeted > 0)
             TurnsTargeted--;
+        if (TurnsLocked > 0)
+            TurnsLocked--;
 
         yield return ResolveTurn(logged, false);
         yield return EmotionEffect(logged, false);
@@ -476,7 +503,7 @@ public class Character : MonoBehaviour
     IEnumerator Timer()
     {
         timer = 10f;
-        if (this.myType == CharacterType.Player && CarryVariables.instance.ActiveChallenge("Player Timer"))
+        if (this is PlayerCharacter && CarryVariables.instance.ActiveChallenge("Player Timer"))
         {
             TurnManager.instance.timerText.gameObject.SetActive(true);
             while (timer > 0f)
@@ -486,7 +513,7 @@ public class Character : MonoBehaviour
                 TurnManager.instance.timerText.text = $"Timer: {timer:F1}";
             }
 
-            TextCollector[] allCollectors = FindObjectsOfType<TextCollector>();
+            TextCollector[] allCollectors = FindObjectsByType<TextCollector>(FindObjectsSortMode.None);
             foreach (TextCollector collector in allCollectors)
                 Destroy(collector.gameObject);
 
@@ -550,7 +577,7 @@ public class Character : MonoBehaviour
                 if (timer < 0f)
                     yield break;
 
-                if (this.myType == CharacterType.Player)
+                if (this is PlayerCharacter)
                 {
                     string part1 = $"{this.name}: Use {chosenAbility.data.myName}";
                     string part2 = chosenTarget != null ? $" on {chosenTarget.data.myName}?" : "?";
@@ -588,9 +615,8 @@ public class Character : MonoBehaviour
                     yield return chosenAbility.ResolveInstructions(splicedString, i, logged + 1);
                 }
 
-                chosenAbility.currentCooldown = chosenAbility.data.baseCooldown +
-                    (CurrentEmotion == Emotion.Happy ? 1 : 0)
-                    + (CarryVariables.instance.ActiveCheat("Faster Cooldowns") && this.myType == CharacterType.Player ? -1 : 0);
+                chosenAbility.currentCooldown = chosenAbility.data.baseCooldown + (CurrentEmotion == Emotion.Happy ? 1 : 0)
+                    + (CarryVariables.instance.ActiveCheat("Faster Cooldowns") && this is PlayerCharacter ? -1 : 0);
 
                 if (CarryVariables.instance.mode == CarryVariables.GameMode.Tutorial && TutorialManager.instance.currentCharacter == this)
                 {
@@ -661,14 +687,14 @@ public class Character : MonoBehaviour
         if (CurrentPosition == Position.Airborne)
         {
             Vector3 newPosition = transform.localPosition;
-            int startingPosition = (myType == CharacterType.Enemy) ? 375 : -500;
+            int startingPosition = (this is EnemyCharacter) ? 375 : -500;
             newPosition.y = startingPosition + (25 * Mathf.Cos(Time.time * 3f));
             transform.localPosition = newPosition;
         }
         else
         {
             Vector3 newPosition = transform.localPosition;
-            int startingPosition = (myType == CharacterType.Enemy) ? 300 : -570;
+            int startingPosition = (this is EnemyCharacter) ? 300 : -570;
             newPosition.y = startingPosition;
             transform.localPosition = newPosition;
         }
@@ -680,18 +706,24 @@ public class Character : MonoBehaviour
         statusText.text = "";
 
         for (int i = 0; i < TurnsStunned; i++)
-            statusText.text += "<link=\"StunImage\"><sprite=\"Statuses\" name=\"StunImage\"></link>";
+            statusText.text += "StunImage";
         for (int i = 0; i < TurnsProtected; i++)
-            statusText.text += "<link=\"ProtectedImage\"><sprite=\"Statuses\" name=\"ProtectedImage\"></link>";
+            statusText.text += "ProtectedImage";
         for (int i = 0; i < ExtraTurns; i++)
-            statusText.text += "<link=\"ExtraImage\"><sprite=\"Statuses\" name=\"ExtraImage\"></link>";
+            statusText.text += "ExtraImage";
+        for (int i = 0; i < TurnsLocked; i++)
+            statusText.text += "LockedImage";
+
         if (TurnManager.instance != null && (TurnManager.instance.targetedPlayer == this || TurnManager.instance.targetedEnemy == this))
         {
-            for (int i =0; i<TurnsTargeted; i++)
-                statusText.text += "<link=\"TargetedImage\"><sprite=\"Statuses\" name=\"TargetedImage\"></link>";
+            for (int i = 0; i < TurnsTargeted; i++)
+                statusText.text += "TargetedImage";
         }
         else
+        {
             _turnsTargeted = 0;
+        }
+        statusText.text = KeywordTooltip.instance.EditText(statusText.text);
     }
 
     #endregion

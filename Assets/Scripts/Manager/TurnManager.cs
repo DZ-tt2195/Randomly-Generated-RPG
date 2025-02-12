@@ -399,7 +399,7 @@ public class TurnManager : MonoBehaviour
             nextEnemy.name = dataFile.myName;
             Log.instance.AddText($"{Log.Article(nextEnemy.name)} entered the fight.", logged);
 
-            nextEnemy.SetupCharacter(CharacterType.Enemy, dataFile, FileManager.instance.ConvertToAbilityData(dataFile.listOfSkills, false), startingEmotion, true);
+            nextEnemy.SetupCharacter(dataFile, FileManager.instance.ConvertToAbilityData(dataFile.listOfSkills, false), startingEmotion, true);
             //SaveManager.instance.SaveEnemy(dataFile);
 
             if (CarryVariables.instance.ActiveChallenge("Stronger Enemies"))

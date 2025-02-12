@@ -135,9 +135,7 @@ public class TitleScreen : MonoBehaviour
         for (int i = 0; i < playerData.Count; i++)
         {
             PlayerCharacter nextCharacter = Instantiate(playerPrefab).AddComponent<PlayerCharacter>();
-            nextCharacter.SetupCharacter(CharacterType.Player, playerData[i],
-                FileManager.instance.GenerateRandomPlayerAbilities(6, playerData[i].listOfSkills),
-                (Emotion)UnityEngine.Random.Range(1,5), false);
+            nextCharacter.SetupCharacter(playerData[i], FileManager.instance.GenerateRandomPlayerAbilities(6, playerData[i].listOfSkills), (Emotion)UnityEngine.Random.Range(1,5), false);
 
             nextCharacter.transform.SetParent(abilityBoxes[i * 6].transform.parent);
             nextCharacter.transform.localPosition = new Vector3(-1050, 0, 0);
