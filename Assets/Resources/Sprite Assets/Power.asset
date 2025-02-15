@@ -49,8 +49,8 @@ MonoBehaviour:
       m_Width: 394
       m_Height: 394
       m_HorizontalBearingX: 0
-      m_HorizontalBearingY: 360
-      m_HorizontalAdvance: 394
+      m_HorizontalBearingY: 375
+      m_HorizontalAdvance: 400
     m_GlyphRect:
       m_X: 0
       m_Y: 0

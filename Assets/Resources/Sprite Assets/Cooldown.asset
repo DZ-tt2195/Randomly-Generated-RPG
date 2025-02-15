@@ -88,11 +88,11 @@ MonoBehaviour:
   m_GlyphTable:
   - m_Index: 0
     m_Metrics:
-      m_Width: 403
+      m_Width: 400
       m_Height: 403
-      m_HorizontalBearingX: 0
-      m_HorizontalBearingY: 360
-      m_HorizontalAdvance: 403
+      m_HorizontalBearingX: -30
+      m_HorizontalBearingY: 375
+      m_HorizontalAdvance: 375
     m_GlyphRect:
       m_X: 0
       m_Y: 0

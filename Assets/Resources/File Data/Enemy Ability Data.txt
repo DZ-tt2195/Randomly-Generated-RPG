@@ -1389,11 +1389,11 @@
     [
       "Spider",
       "Trapped",
-      "A Grounded Player becomes Airborne and loses SPEEDSTAT Speed.",
+      "A Grounded Player becomes Airborne and Locked for MISC turns.",
       "THIS traps TARGET in a web.",
       "OnePlayer",
       "TargetIsGrounded",
-      "TargetBecomeAirborne/TargetSpeedStat",
+      "TargetBecomeAirborne/TargetBecomeLocked",
       "0",
       "",
       "",
@@ -1402,8 +1402,8 @@
       "-1",
       "",
       "",
-      "",
-      "StatPlayer/PositionPlayer"
+      "2",
+      "PositionPlayer"
     ],
     [
       "Spider",

@@ -149,12 +149,14 @@ public class Ability : MonoBehaviour
     int CalculateHealing(Character user, int logged)
     {
         int critical = RollCritical(user.CalculateLuck());
-        int health = critical + user.CalculatePower() + data.healthRegain;
+        int extraHealth = critical + user.CalculatePower() + data.healthRegain;
 
-        if (health > 1 && critical > 0)
+        if (extraHealth > 1 && critical > 0)
             Log.instance.AddText($"{user.data.myName} has good luck! (+{critical} Health)", logged);
+        if (self is EnemyCharacter && CarryVariables.instance.ActiveCheat("Number Cap"))
+            extraHealth = Mathf.Min(extraHealth, 4);
 
-        return Mathf.Max(1, health);
+        return Mathf.Max(1, extraHealth);
     }
 
     int CalculateDamage(Character user, Character target, int logged)
@@ -163,7 +165,7 @@ public class Ability : MonoBehaviour
 
         if (effectiveness < 0 && CarryVariables.instance.ActiveChallenge("Ineffectives Miss") && user is PlayerCharacter)
         {
-            Log.instance.AddText($"{user.name}'s misses (Ineffectives Miss).", logged);
+            Log.instance.AddText($"{user.name}'s attack misses (Ineffectives Miss).", logged);
             TurnManager.instance.CreateVisual("MISS", target.transform.localPosition);
             return 0;
         }
@@ -181,7 +183,7 @@ public class Ability : MonoBehaviour
             if (damage > 1 && critical > 0)
                 Log.instance.AddText($"{user.data.myName} has good luck! (+{critical} Damage)", logged);
 
-            if (self is EnemyCharacter && CarryVariables.instance.ActiveCheat("Damage Cap"))
+            if (self is EnemyCharacter && CarryVariables.instance.ActiveCheat("Number Cap"))
                 damage = Mathf.Min(damage, 4);
 
             return Mathf.Max(1, damage);
@@ -315,7 +317,8 @@ public class Ability : MonoBehaviour
 
     bool TargetIsGrounded(int currentIndex)
     {
-        listOfTargets[currentIndex].RemoveAll(target => target.CurrentPosition != Position.Grounded);
+        if (!(self.name.Equals("Knight") && CarryVariables.instance.ActiveCheat("Knight Reach")))
+            listOfTargets[currentIndex].RemoveAll(target => target.CurrentPosition != Position.Grounded);
         return listOfTargets[currentIndex].Count > 0;
     }
 
@@ -507,10 +510,7 @@ public class Ability : MonoBehaviour
 
     IEnumerator TargetSwapPosition(Character target, int logged)
     {
-        if (target.CurrentPosition == Position.Airborne)
-            yield return target.ChangePosition(Position.Grounded, logged);
-        else if (target.CurrentPosition == Position.Grounded)
-            yield return target.ChangePosition(Position.Airborne, logged);
+        yield return target.ChangePosition((target.CurrentPosition == Position.Grounded) ? Position.Airborne : Position.Grounded, logged);
     }
 
     IEnumerator TargetBecomeGrounded(Character target, int logged)
@@ -585,7 +585,7 @@ public class Ability : MonoBehaviour
 
     IEnumerator TargetBecomeStunned(Character target, int logged)
     {
-        yield return target.Stun(data.miscNumber, logged);
+        yield return target.Stunned(data.miscNumber, logged);
     }
 
     IEnumerator TargetBecomeProtected(Character target, int logged)

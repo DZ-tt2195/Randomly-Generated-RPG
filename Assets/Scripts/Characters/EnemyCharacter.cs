@@ -27,7 +27,7 @@ public class EnemyCharacter : Character
         attackingAbilities = attackingAbilities.Shuffle();
         miscAbilities = miscAbilities.Shuffle();
 
-        Debug.Log($"All: {allAbilities.Count}; Attack: {attackingAbilities.Count}; Misc: {miscAbilities.Count}");
+        //Debug.Log($"All: {allAbilities.Count}; Attack: {attackingAbilities.Count}; Misc: {miscAbilities.Count}");
         if (allAbilities.Count == 0)
         {
             chosenAbility = listOfAutoAbilities[0];

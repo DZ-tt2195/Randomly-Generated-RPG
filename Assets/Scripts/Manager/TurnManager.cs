@@ -126,23 +126,9 @@ public class TurnManager : MonoBehaviour
             yield return NewAnimation(true);
             Log.instance.AddText($"WAVE {currentWave} / 5");
 
-            if (currentWave == 1 && CarryVariables.instance.ActiveCheat("Stronger Players"))
+            if (currentWave >= 2 && CarryVariables.instance.ActiveCheat("New Abilities"))
             {
-                Log.instance.AddText($"Players have higher stats stats. (Stronger Players)");
-                foreach (Character player in listOfPlayers)
-                {
-                    yield return player.ChangePower(1, -1);
-                    yield return player.ChangeDefense(1, -1);
-                    yield return player.ChangeSpeed(1, -1);
-                    yield return player.ChangeLuck(0.05f, -1);
-                    yield return player.ChangeAccuracy(0.05f, -1);
-                }
-                Log.instance.AddText("");
-            }
-
-            if (currentWave >= 2 && CarryVariables.instance.ActiveChallenge("New Abilities"))
-            {
-                Log.instance.AddText($"Players have new abilities.");
+                Log.instance.AddText($"Players have new abilities. (New Abilities)");
                 foreach (Character player in listOfPlayers)
                 {
                     for (int i = player.listOfRandomAbilities.Count - 1; i >= 0; i--)
@@ -155,13 +141,15 @@ public class TurnManager : MonoBehaviour
                 Log.instance.AddText("");
             }
 
-            if (CarryVariables.instance.ActiveChallenge("Stronger Enemies"))
-                Log.instance.AddText($"Enemies have higher stats. (Stronger Enemies)");
-
             foreach (int nextTier in listOfWaveSetup[currentWave-1].enemyDifficultySpawn)
             {
                 yield return WaitTime();
                 CreateEnemy(FileManager.instance.RandomEnemy(nextTier), (Emotion)UnityEngine.Random.Range(1, 5), 0);
+            }
+            if (currentWave <= 4 && CarryVariables.instance.ActiveChallenge("More Enemies"))
+            {
+                yield return WaitTime();
+                CreateEnemy(FileManager.instance.RandomEnemy(1), (Emotion)UnityEngine.Random.Range(1, 5), 0);
             }
 
             StartCoroutine(NewRound(false));
@@ -402,19 +390,11 @@ public class TurnManager : MonoBehaviour
             nextEnemy.SetupCharacter(dataFile, FileManager.instance.ConvertToAbilityData(dataFile.listOfSkills, false), startingEmotion, true);
             //SaveManager.instance.SaveEnemy(dataFile);
 
-            if (CarryVariables.instance.ActiveChallenge("Stronger Enemies"))
-            {
-                StartCoroutine(nextEnemy.ChangePower(1, -1));
-                StartCoroutine(nextEnemy.ChangeDefense(1, -1));
-                StartCoroutine(nextEnemy.ChangeSpeed(1, -1));
-                StartCoroutine(nextEnemy.ChangeLuck(0.05f, -1));
-                StartCoroutine(nextEnemy.ChangeAccuracy(0.05f, -1));
-            }
+            if (CarryVariables.instance.ActiveCheat("Weaker Enemies"))
+                StartCoroutine(nextEnemy.ChangeMaxHealth(-2, logged + 1));
 
-            if (CarryVariables.instance.ActiveCheat("Enemies Stunned"))
-            {
-                StartCoroutine(nextEnemy.Stun(1, logged + 1));
-            }
+            if (CarryVariables.instance.ActiveChallenge("Extra Enemy Turns"))
+                StartCoroutine(nextEnemy.Extra(1, logged+1));
         }
     }
 

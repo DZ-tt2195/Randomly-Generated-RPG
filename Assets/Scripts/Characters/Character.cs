@@ -35,12 +35,7 @@ public class Character : MonoBehaviour
         protected float baseAccuracy;
 
     [Foldout("Current Stats", true)]
-        private int _currentHealth;
-        [ReadOnly] public int CurrentHealth
-        {
-            get { return _currentHealth; }
-            private set { healthText.text = KeywordTooltip.instance.EditText($"{value}/{baseHealth}Health"); _currentHealth = value; }
-        }
+        private int currentHealth;
         public int modifyPower { get; private set; }
         public int modifyDefense { get; private set; }
         public int modifySpeed { get; private set; }
@@ -126,9 +121,9 @@ public class Character : MonoBehaviour
         editedDescription = KeywordTooltip.instance.EditText(data.description);
 
         this.baseHealth = data.baseHealth;
-        CurrentHealth = this.baseHealth;
+        this.currentHealth = this.baseHealth;
         this.baseSpeed = data.baseSpeed;
-        this.baseLuck = (CarryVariables.instance.ActiveCheat("No Luck") && this is EnemyCharacter) ? 0 : data.baseLuck;
+        this.baseLuck = data.baseLuck;
         this.baseAccuracy = data.baseAccuracy;
 
         this.myImage.sprite = Resources.Load<Sprite>($"Characters/{this.name}");
@@ -171,12 +166,12 @@ public class Character : MonoBehaviour
 
     public int CalculateHealth()
     {
-        return CurrentHealth;
+        return this.currentHealth;
     }
 
     public float CalculateHealthPercent()
     {
-        return (float)CurrentHealth / this.baseHealth;
+        return (float)currentHealth / this.baseHealth;
     }
 
     public int CalculatePower()
@@ -221,25 +216,26 @@ public class Character : MonoBehaviour
         if (effect > 0)
         {
             TurnManager.instance.CreateVisual($"+{effect} MAX HEALTH", this.transform.localPosition);
-            Log.instance.AddText($"{this.name} has {effect} more max Health.", logged);
+            Log.instance.AddText($"{this.name} has {effect} more Max Health.", logged);
         }
         else
         {
             TurnManager.instance.CreateVisual($"{effect} MAX HEALTH", this.transform.localPosition);
-            Log.instance.AddText($"{this.name} has {Mathf.Abs(effect)} less max Health.", logged);
-            if (baseHealth < _currentHealth)
-                _currentHealth = baseHealth;
+            Log.instance.AddText($"{this.name} has {Mathf.Abs(effect)} less Max Health.", logged);
+            if (baseHealth < currentHealth)
+                currentHealth = baseHealth;
         }
-        healthText.text = $"{CurrentHealth}/{baseHealth}Health";
+        healthText.text = KeywordTooltip.instance.EditText($"{currentHealth}/{baseHealth}Health");
     }
 
     public IEnumerator GainHealth(int health, int logged)
     {
         if (this == null) yield break;
 
-        CurrentHealth = Mathf.Clamp(CurrentHealth += health, 0, this.baseHealth);
+        currentHealth = Mathf.Clamp(currentHealth += health, 0, this.baseHealth);
         TurnManager.instance.CreateVisual($"+{health} Health", this.transform.localPosition);
         Log.instance.AddText($"{(this.name)} regains {health} Health.", logged);
+        healthText.text = KeywordTooltip.instance.EditText($"{currentHealth}/{baseHealth}Health");
     }
 
     public IEnumerator TakeDamage(int damage, int logged, Character attacker = null)
@@ -255,11 +251,11 @@ public class Character : MonoBehaviour
         }
         else
         {
-            CurrentHealth -= damage;
+            currentHealth -= damage;
             TurnManager.instance.CreateVisual($"-{damage} Health", this.transform.localPosition);
             Log.instance.AddText($"{(this.name)} takes {damage} damage.", logged);
 
-            if (CurrentHealth <= 0)
+            if (currentHealth <= 0)
                 yield return HasDied(logged);
         }
     }
@@ -274,7 +270,7 @@ public class Character : MonoBehaviour
             TurnManager.instance.targetedEnemy = null;
 
         baseHealth = data.baseHealth;
-        CurrentHealth = 0;
+        currentHealth = 0;
         TurnsStunned = 0;
         TurnsProtected = 0;
         CurrentPosition = Position.Dead;
@@ -409,7 +405,7 @@ public class Character : MonoBehaviour
         }
     }
 
-    public IEnumerator Stun(int amount, int logged)
+    public IEnumerator Stunned(int amount, int logged)
     {
         if (this == null) yield break;
 
@@ -646,7 +642,7 @@ public class Character : MonoBehaviour
                 if (chosenAbility.killed || chosenAbility.fullHeal)
                 {
                     Log.instance.AddText($"{this.name} is Angry.", logged);
-                    yield return Stun(1, logged + 1);
+                    yield return Stunned(1, logged + 1);
                 }
             }
             else if (this.CurrentEmotion == Emotion.Happy)
