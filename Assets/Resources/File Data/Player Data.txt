@@ -19,7 +19,7 @@
       "0.2",
       "0.9",
       "GROUNDED",
-      "Carefree,Daze,Delegate,Dejection,Embarass,Flaunt,Impale,Intimidation,Joust,Killing Spree,Mock,Neutralize,Rollout,Sap Energy,Shun,Skirmish,Steal,Tragedy,Trick,Unleash Rage,",
+      "Daze,Delegate,Dejection,Embarass,Flaunt,Impale,Innocence,Joust,Killing Spree,Mock,Neutralize,Redirect,Rollout,Sap Energy,Shun,Skirmish,Steal,Tragedy,Trick,Unleash Rage,",
       "",
       "Michael Watson|Dominion: Cornucopia and Guilds|(Joust)"
     ],
@@ -31,7 +31,7 @@
       "0.2",
       "0.9",
       "AIRBORNE",
-      "Calm Down,Catch Out of Air,Crash Landing,Defensive Aura,Delegate,Down to Earth,Enrage,Exercise,Gift of Flight,Grow Tree,Induce Anger,Induce Happiness,Induce Sadness,Invigorate,Lift Up,Overexert,Perk Up,Protective Barrier,Redirect,Share Healing,Skyward Sword,Stand Your Ground,Taunt,Wind to Wings,",
+      "Calm Down,Catch Out of Air,Crash Landing,Defensive Aura,Delegate,Down to Earth,Enrage,Exercise,Gift of Flight,Grow Tree,Induce Happiness,Induce Sadness,Invigorate,Lift Up,Overexert,Overheal,Perk Up,Protective Barrier,Share Healing,Skyward Sword,Taunt,Wind to Wings,",
       "",
       "Magali Villeneuve|Oath of the Gatewatch|(Linvala, the Preserver)"
     ],
@@ -43,7 +43,7 @@
       "0.2",
       "0.9",
       "GROUNDED",
-      "Air Lasers,Bad Omens,Beacon,Clone Army,Delegate,Flood,Fog,Gravity Flip,Headwinds,Heavy Gravity,Light Gravity,Quick Aim,Rough Air,Safe Above,Sky Hammer,Sink,Stalactites,Throw Dice,Team Attack,",
+      "Bad Omens,Beacon,Bounce,Blizzard,Clone Army,Delegate,Flood,Fog,Gravity Flip,Headwinds,Heavy Gravity,Light Gravity,Quick Aim,Safe Above,Sky Hammer,Sink,Stalactites,Stand Your Ground,Throw Dice,Team Attack,",
       "",
       "Harald Lieske|Dominion: Allies|(Conjurer)"
     ]

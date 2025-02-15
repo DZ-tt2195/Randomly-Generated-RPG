@@ -251,16 +251,6 @@ public class Ability : MonoBehaviour
         return listOfTargets[currentIndex].Count > 0;
     }
 
-    bool SetGroundedPlayers(int currentIndex)
-    {
-        return (SetValues(listOfTargets[currentIndex].Count(target => target.CurrentPosition == Position.Grounded)) > 0);
-    }
-
-    bool SetAirbornePlayers(int currentIndex)
-    {
-        return (SetValues(listOfTargets[currentIndex].Count(target => target.CurrentPosition == Position.Airborne)) > 0);
-    }
-
     bool TargetInjured(int currentIndex)
     {
         listOfTargets[currentIndex].RemoveAll(target => target.CalculateHealthPercent() > 0.5f);
@@ -423,11 +413,24 @@ public class Ability : MonoBehaviour
         return listOfTargets;
     }
 
+    bool SetGroundedPlayers(int currentIndex)
+    {
+        return (SetValues(listOfTargets[currentIndex].Count(target => target.CurrentPosition == Position.Grounded)) > 0);
+    }
+
+    bool SetAirbornePlayers(int currentIndex)
+    {
+        return (SetValues(listOfTargets[currentIndex].Count(target => target.CurrentPosition == Position.Airborne)) > 0);
+    }
+
     int SetValues(int number)
     {
-        data.attackDamage = number;
-        data.healthRegain = number;
-        return number;
+        float multiplier = (data.miscNumber > 0) ? data.miscNumber : -1f / data.miscNumber;
+        int actualNumber = (int)Mathf.Floor(number * multiplier);
+
+        data.attackDamage = actualNumber;
+        data.healthRegain = actualNumber;
+        return actualNumber;
     }
 
     #endregion

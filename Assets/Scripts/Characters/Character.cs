@@ -122,6 +122,8 @@ public class Character : MonoBehaviour
 
         this.baseHealth = data.baseHealth;
         this.currentHealth = this.baseHealth;
+        healthText.text = KeywordTooltip.instance.EditText($"{currentHealth}/{baseHealth}Health");
+
         this.baseSpeed = data.baseSpeed;
         this.baseLuck = data.baseLuck;
         this.baseAccuracy = data.baseAccuracy;
@@ -448,9 +450,9 @@ public class Character : MonoBehaviour
     public IEnumerator Locked(int amount, int logged)
     {
         if (this == null) yield break;
-        ExtraTurns += amount;
+        TurnsLocked += amount;
         TurnManager.instance.CreateVisual($"LOCKED", this.transform.localPosition);
-        Log.instance.AddText($"{this.name}'s Position / Emotion are locked for {ExtraTurns} turn{(ExtraTurns == 1 ? "" : "s")}.", logged);
+        Log.instance.AddText($"{this.name}'s Position / Emotion are Locked for {TurnsLocked} turn{(TurnsLocked == 1 ? "" : "s")}.", logged);
     }
 
     public IEnumerator Revive(int health, int logged)

@@ -241,7 +241,7 @@
       "0.2",
       "0.85",
       "AIRBORNE",
-      "Trapped,Spin Web,Jump Down,Stab Prey,",
+      "Trapped,Spin Web,Stab Prey,",
       "ChooseAirborne",
       "Livia Prima|Guilds of Ravnica|(Hatchery Spider)",
       "2"
