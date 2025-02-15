@@ -275,6 +275,7 @@ public class Character : MonoBehaviour
         currentHealth = 0;
         TurnsStunned = 0;
         TurnsProtected = 0;
+        TurnsLocked = 0;
         CurrentPosition = Position.Dead;
         CurrentEmotion = Emotion.Dead;
 

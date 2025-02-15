@@ -146,10 +146,10 @@ public class Ability : MonoBehaviour
         return answer;
     }
 
-    int CalculateHealing(Character user, int logged)
+    int CalculateHealing(Character user, int number, int logged)
     {
         int critical = RollCritical(user.CalculateLuck());
-        int extraHealth = critical + user.CalculatePower() + data.healthRegain;
+        int extraHealth = critical + user.CalculatePower() + number;
 
         if (extraHealth > 1 && critical > 0)
             Log.instance.AddText($"{user.data.myName} has good luck! (+{critical} Health)", logged);
@@ -159,7 +159,7 @@ public class Ability : MonoBehaviour
         return Mathf.Max(1, extraHealth);
     }
 
-    int CalculateDamage(Character user, Character target, int logged)
+    int CalculateDamage(Character user, Character target, int number, int logged)
     {
         int effectiveness = Effectiveness(user, target);
 
@@ -173,7 +173,7 @@ public class Ability : MonoBehaviour
         if (RollAccuracy(user.CalculateAccuracy()))
         {
             int critical = RollCritical(user.CalculateLuck());
-            int damage = (critical + effectiveness + user.CalculatePower() + data.attackDamage) - target.CalculateDefense();
+            int damage = (critical + effectiveness + user.CalculatePower() + number) - target.CalculateDefense();
 
             if (effectiveness > 0)
                 Log.instance.AddText($"It's super effective! (+{effectiveness} Damage)", logged);
@@ -477,7 +477,15 @@ public class Ability : MonoBehaviour
 
     IEnumerator TargetAttack(Character target, int logged)
     {
-        damageDealt = CalculateDamage(self, target, logged);
+        damageDealt = CalculateDamage(self, target, data.attackDamage, logged);
+        yield return target.TakeDamage(damageDealt, logged, self);
+        if (target == null || target.CalculateHealth() <= 0)
+            killed = true;
+    }
+
+    IEnumerator TargetAttackMisc(Character target, int logged)
+    {
+        damageDealt = CalculateDamage(self, target, data.miscNumber, logged);
         yield return target.TakeDamage(damageDealt, logged, self);
         if (target == null || target.CalculateHealth() <= 0)
             killed = true;
@@ -485,8 +493,16 @@ public class Ability : MonoBehaviour
 
     IEnumerator TargetHeal(Character target, int logged)
     {
-        yield return target.GainHealth(CalculateHealing(self, logged), logged);
-        if (target.CalculateHealthPercent() >= 1f) fullHeal = true;
+        yield return target.GainHealth(CalculateHealing(self, data.healthRegain, logged), logged);
+        if (target.CalculateHealthPercent() >= 1f)
+            fullHeal = true;
+    }
+
+    IEnumerator TargetHealMisc(Character target, int logged)
+    {
+        yield return target.GainHealth(CalculateHealing(self, data.miscNumber, logged), logged);
+        if (target.CalculateHealthPercent() >= 1f)
+            fullHeal = true;
     }
 
     IEnumerator TargetMaxHealth(Character target, int logged)

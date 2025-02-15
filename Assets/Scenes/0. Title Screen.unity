@@ -5097,8 +5097,8 @@ MonoBehaviour:
     color: {r: 0.85, g: 0.85, b: 0.85, a: 0}
   - keywordVariations:
     - Happy
-    description: Effective against Angry. Gets an extra turn when it doesn't attack;
-      Abilities have longer Cooldowns.
+    description: Effective against Angry. Gets an Extra turn when it doesn't attack;
+      Abilities have 1 more turn of Cooldown.
     color: {r: 0.4, g: 1, b: 0, a: 0}
   - keywordVariations:
     - Angry

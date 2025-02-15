@@ -27,13 +27,13 @@
     ],
     [
       "Drone",
-      "Always makes itself Neutral. Can damage multiple Players at once.",
+      "Makes itself Neutral and Airborne, then attacks multiple Players at once.",
       "5",
       "0",
       "0.1",
       "0.8",
       "AIRBORNE",
-      "Intruder Alert,Analysis,",
+      "Intruder Alert,Sound Waves,",
       "",
       "James Paick|Guilds of Ravnica|(Dimir Spybug)",
       "1"
@@ -46,7 +46,7 @@
       "0.1",
       "0.8",
       "GROUNDED",
-      "Flag Whack,Replaced,",
+      "Flag Whack,Replacement,",
       "CameOffCooldown",
       "Grant Hansen|Dominion: Renaissance|(Flag Bearer)",
       "1"
@@ -170,7 +170,7 @@
     ],
     [
       "Astronaut",
-      "Makes Players Airborne and Happy, and then Stuns them while Sad.",
+      "Makes Players Airborne and Happy, and then attacks them while Sad.",
       "10",
       "0",
       "0.2",
@@ -183,7 +183,7 @@
     ],
     [
       "Barbarian",
-      "Makes itself Angry, goes after the Grounded Player with the most Health, and lowers Players' max Health.",
+      "Makes itself Angry, goes after the Grounded Player with the most Health, and lowers their Max Health.",
       "10",
       "0",
       "0.2",
@@ -241,7 +241,7 @@
       "0.2",
       "0.85",
       "AIRBORNE",
-      "Trapped,Spin Web,Stab Prey,",
+      "Trapped,Spin Web,Stab Prey,Regenerate,",
       "ChooseAirborne",
       "Livia Prima|Guilds of Ravnica|(Hatchery Spider)",
       "2"
