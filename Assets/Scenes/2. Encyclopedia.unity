@@ -6940,7 +6940,7 @@ MonoBehaviour:
     name="Health"></link> otherwise.
 
 
-    Character Positions: Grounded & Airborne
+    Character Positions: Elevated & Grounded
 
 
     Character
@@ -9557,7 +9557,7 @@ MonoBehaviour:
     - m_Text: Grounded
       m_Image: {fileID: 0}
       m_Color: {r: 1, g: 1, b: 1, a: 1}
-    - m_Text: Airborne
+    - m_Text: Elevated
       m_Image: {fileID: 0}
       m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_OnValueChanged:

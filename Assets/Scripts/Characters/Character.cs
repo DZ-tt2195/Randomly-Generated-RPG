@@ -7,7 +7,7 @@ using MyBox;
 using System;
 using System.Linq;
 
-public enum Position { Grounded, Airborne, Dead };
+public enum Position { Grounded, Elevated, Dead };
 public enum Emotion { Dead, Neutral, Happy, Angry, Sad };
 
 [RequireComponent(typeof(Button))][RequireComponent(typeof(Image))]
@@ -683,7 +683,7 @@ public class Character : MonoBehaviour
 
     void ScreenPosition()
     {
-        if (CurrentPosition == Position.Airborne)
+        if (CurrentPosition == Position.Elevated)
         {
             Vector3 newPosition = transform.localPosition;
             int startingPosition = (this is EnemyCharacter) ? 375 : -500;

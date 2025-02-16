@@ -73,9 +73,9 @@ public class EnemyCharacter : Character
                             ability.listOfTargets[index] = new() { lastToAttackThis };
                             break;
 
-                        case "CHOOSEAIRBORNE":
-                            int numberAirborne = ability.listOfTargets[index].Count(target => target.CurrentPosition == Position.Airborne);
-                            if (numberAirborne > 0) ability.listOfTargets[index].RemoveAll(target => target.CurrentPosition != Position.Airborne);
+                        case "CHOOSEELEVATED":
+                            int numberAirborne = ability.listOfTargets[index].Count(target => target.CurrentPosition == Position.Elevated);
+                            if (numberAirborne > 0) ability.listOfTargets[index].RemoveAll(target => target.CurrentPosition != Position.Elevated);
                             ability.listOfTargets[index] = new() { ability.listOfTargets[index][Random.Range(0, ability.listOfTargets[index].Count)] };
                             break;
                         case "CHOOSEGROUNDED":

@@ -68,7 +68,7 @@ public class DataLoader
             newCharacter.baseSpeed = StringToInt(line[3]);
             newCharacter.baseLuck = StringToFloat(line[4]);
             newCharacter.baseAccuracy = StringToFloat(line[5]);
-            newCharacter.startingPosition = line[6].Equals("GROUNDED") ? Position.Grounded : Position.Airborne;
+            newCharacter.startingPosition = line[6].Equals("GROUNDED") ? Position.Grounded : Position.Elevated;
             newCharacter.listOfSkills = line[7].Trim();
             newCharacter.aiTargeting = line[8].Trim().ToUpper();
             newCharacter.artCredit = line[9].Replace("|", "\n");

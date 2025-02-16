@@ -25,12 +25,12 @@
     ],
     [
       "Crow",
-      "Basic Enemy who attacks Grounded and Airborne Players.",
+      "Basic Enemy who attacks Grounded and Elevated Players.",
       "5",
       "2",
       "0",
       "1",
-      "AIRBORNE",
+      "Elevated",
       "Peck,",
       "",
       "Una Fricker|Classic Sixth Edition|(Storm Crow)"

@@ -176,7 +176,7 @@ public class TutorialManager : MonoBehaviour
                 "Instead, you can change the Page’s Emotion to Sad. That way, your Angry Knight will gain the advantage."});
                 break;
 
-            case 9: //introduce grounded and airborne
+            case 9: //introduce grounded and Elevated
                 Log.instance.AddText("");
                 yield return TurnManager.instance.NewWave();
 
@@ -191,8 +191,8 @@ public class TutorialManager : MonoBehaviour
                 TurnManager.instance.CreateEnemy(FileManager.instance.FindBonusEnemy("Crow"), Emotion.Neutral, 0);
 
                 yield return ClickThroughDialogue(new List<string>()
-                { "Everyone has a Position; they're either Grounded or Airborne. Your Knight always starts Grounded, and Angel always starts Airborne.",
-                  "One of the Knight's big weaknesses is that they have no way to attack Airborne Enemies." });
+                { "Everyone has a Position; they're either Grounded or Elevated. Your Knight always starts Grounded, and Angel always starts Elevated.",
+                  "One of the Knight's big weaknesses is that they have no way to attack Elevated Enemies." });
 
                 currentStep = 10;
                 StartCoroutine(NextStep());
@@ -217,7 +217,7 @@ public class TutorialManager : MonoBehaviour
 
             case 11: //introduce wizard Abilities
                 yield return ClickThroughDialogue(new List<string>()
-                { "Your Wizard has an Ability that forces all Airborne Enemies to be Grounded. Use Stalactites against the 2 Crows." });
+                { "Your Wizard has an Ability that forces all Elevated Enemies to be Grounded. Use Stalactites against the 2 Crows." });
 
                 currentCharacter = listOfPlayers[2]; //wait for wizard's next turn
                 currentStep = 12;

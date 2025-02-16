@@ -299,8 +299,8 @@ public class EncyclopediaManager : MonoBehaviour
             case "Grounded":
                 searchPosition = Position.Grounded;
                 break;
-            case "Airborne":
-                searchPosition = Position.Airborne;
+            case "Elevated":
+                searchPosition = Position.Elevated;
                 break;
         }
 

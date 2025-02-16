@@ -305,6 +305,18 @@ public class Ability : MonoBehaviour
         return listOfTargets[currentIndex].Count > 0;
     }
 
+    bool TargetSameEmotion(int currentIndex)
+    {
+        listOfTargets[currentIndex].RemoveAll(target => target.CurrentEmotion != self.CurrentEmotion);
+        return listOfTargets[currentIndex].Count > 0;
+    }
+
+    bool TargetDifferentEmotion(int currentIndex)
+    {
+        listOfTargets[currentIndex].RemoveAll(target => target.CurrentEmotion == self.CurrentEmotion);
+        return listOfTargets[currentIndex].Count > 0;
+    }
+
     bool TargetIsGrounded(int currentIndex)
     {
         if (!(self.name.Equals("Knight") && CarryVariables.instance.ActiveCheat("Knight Reach")))
@@ -319,29 +331,17 @@ public class Ability : MonoBehaviour
         return (listOfTargets[currentIndex].Count == numberGrounded);
     }
 
-    bool TargetIsAirborne(int currentIndex)
+    bool TargetIsElevated(int currentIndex)
     {
-        listOfTargets[currentIndex].RemoveAll(target => target.CurrentPosition != Position.Airborne);
+        listOfTargets[currentIndex].RemoveAll(target => target.CurrentPosition != Position.Elevated);
         return listOfTargets[currentIndex].Count > 0;
     }
 
-    bool AllAirborne(int currentIndex)
+    bool AllElevated(int currentIndex)
     {
         int numberGrounded = (data.defaultTargets[currentIndex] == TeamTarget.AllPlayers) ? TurnManager.instance.listOfPlayers.Count + TurnManager.instance.listOfDead.Count : TurnManager.instance.listOfEnemies.Count;
-        listOfTargets[currentIndex].RemoveAll(target => target.CurrentPosition != Position.Airborne);
+        listOfTargets[currentIndex].RemoveAll(target => target.CurrentPosition != Position.Elevated);
         return (listOfTargets[currentIndex].Count == numberGrounded);
-    }
-
-    bool TargetSameEmotion(int currentIndex)
-    {
-        listOfTargets[currentIndex].RemoveAll(target => target.CurrentEmotion != self.CurrentEmotion);
-        return listOfTargets[currentIndex].Count > 0;
-    }
-
-    bool TargetDifferentEmotion(int currentIndex)
-    {
-        listOfTargets[currentIndex].RemoveAll(target => target.CurrentEmotion == self.CurrentEmotion);
-        return listOfTargets[currentIndex].Count > 0;
     }
 
     bool TargetIsStunned(int currentIndex)
@@ -418,9 +418,9 @@ public class Ability : MonoBehaviour
         return (SetValues(listOfTargets[currentIndex].Count(target => target.CurrentPosition == Position.Grounded)) > 0);
     }
 
-    bool SetAirbornePlayers(int currentIndex)
+    bool SetElevatedPlayers(int currentIndex)
     {
-        return (SetValues(listOfTargets[currentIndex].Count(target => target.CurrentPosition == Position.Airborne)) > 0);
+        return (SetValues(listOfTargets[currentIndex].Count(target => target.CurrentPosition == Position.Elevated)) > 0);
     }
 
     int SetValues(int number)
@@ -529,7 +529,7 @@ public class Ability : MonoBehaviour
 
     IEnumerator TargetSwapPosition(Character target, int logged)
     {
-        yield return target.ChangePosition((target.CurrentPosition == Position.Grounded) ? Position.Airborne : Position.Grounded, logged);
+        yield return target.ChangePosition((target.CurrentPosition == Position.Grounded) ? Position.Elevated : Position.Grounded, logged);
     }
 
     IEnumerator TargetBecomeGrounded(Character target, int logged)
@@ -537,9 +537,9 @@ public class Ability : MonoBehaviour
         yield return target.ChangePosition(Position.Grounded, logged);
     }
 
-    IEnumerator TargetBecomeAirborne(Character target, int logged)
+    IEnumerator TargetBecomeElevated(Character target, int logged)
     {
-        yield return target.ChangePosition(Position.Airborne, logged);
+        yield return target.ChangePosition(Position.Elevated, logged);
     }
 
     IEnumerator TargetBecomeHappy(Character target, int logged)
