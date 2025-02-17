@@ -2729,10 +2729,8 @@ MonoBehaviour:
     = Take less damage from opposing attacks.\nSpeed (<link=\"Speed\"><sprite=\"Speed\"
     name=\"Speed\"></link>): Higher <link=\"Speed\"><sprite=\"Speed\" name=\"Speed\"></link>
     = Takes their turn earlier in the turn order.\nLuck (<link=\"Luck\"><sprite=\"Luck\"
-    name=\"Luck\"></link>): Higher <link=\"Luck\"><sprite=\"Luck\" name=\"Luck\"></link>
-    = Higher chance of getting a bonus +2 on attack / healing abilities.\nAccuracy
-    (<link=\"Accuracy\"><sprite=\"Accuracy\" name=\"Accuracy\"></link>): Lower <link=\"Accuracy\"><sprite=\"Accuracy\"
-    name=\"Accuracy\"></link> = Attacks are more likely to miss and do 0 damage.\n\nMisc:
+    name=\"Luck\"></link>): 33% chance of getting a bonus on attack and healing abilities.
+    Higher <link=\"Luck\"><sprite=\"Luck\" name=\"Luck\"></link> gets a higher bonus.\n\nMisc:
     \nCooldown (<link=\"Cooldown\"><sprite=\"Cooldown\" name=\"Cooldown\"></link>):
     Ability can't be used again until enough turns have passed.\nStar (<link=\"Star\"><sprite=\"Star\"
     name=\"Star\"></link>): More <link=\"Star\"><sprite=\"Star\" name=\"Star\"></link>
@@ -2763,7 +2761,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 77.35
+  m_fontSize: 80
   m_fontSizeBase: 14
   m_fontWeight: 400
   m_enableAutoSizing: 1

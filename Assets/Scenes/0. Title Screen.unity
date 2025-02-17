@@ -5178,8 +5178,8 @@ MonoBehaviour:
     color: {r: 0, g: 0, b: 0, a: 0}
   - keywordVariations:
     - Luck
-    description: Higher Luck = Higher chance of getting a bonus +2 on attack and
-      healing abilities.
+    description: Luck = 33% chance to get a bonus on attack and healing abilities.
+      Higher Luck gets a higher bonus.
     color: {r: 0, g: 0, b: 0, a: 0}
   - keywordVariations:
     - Accuracy

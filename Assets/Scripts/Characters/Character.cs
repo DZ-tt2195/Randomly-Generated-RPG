@@ -31,16 +31,13 @@ public class Character : MonoBehaviour
     [Foldout("Base Stats", true)]
         protected int baseHealth;
         protected int baseSpeed;
-        protected float baseLuck;
-        protected float baseAccuracy;
 
     [Foldout("Current Stats", true)]
         private int currentHealth;
         public int modifyPower { get; private set; }
         public int modifyDefense { get; private set; }
         public int modifySpeed { get; private set; }
-        public float modifyLuck { get; private set; }
-        public float modifyAccuracy { get; private set; }
+        public int modifyLuck { get; private set; }
 
         private Position _currentPosition;
         [ReadOnly] public Position CurrentPosition
@@ -123,10 +120,7 @@ public class Character : MonoBehaviour
         this.baseHealth = data.baseHealth;
         this.currentHealth = this.baseHealth;
         healthText.text = KeywordTooltip.instance.EditText($"{currentHealth}/{baseHealth}Health");
-
         this.baseSpeed = data.baseSpeed;
-        this.baseLuck = data.baseLuck;
-        this.baseAccuracy = data.baseAccuracy;
 
         this.myImage.sprite = Resources.Load<Sprite>($"Characters/{this.name}");
         AddAbility(FileManager.instance.FindEnemyAbility("Skip Turn"), true, false);
@@ -144,8 +138,7 @@ public class Character : MonoBehaviour
         modifyPower = 0;
         modifyDefense = 0;
         modifySpeed = 0;
-        modifyLuck = 0f;
-        modifyAccuracy = 0f;
+        modifyLuck = 0;
     }
 
     internal void AddAbility(AbilityData ability, bool auto, bool startWithCooldown)
@@ -181,29 +174,14 @@ public class Character : MonoBehaviour
         return modifyPower + (CurrentEmotion == Emotion.Angry ? 2 : 0);
     }
 
-    public int CalculateDefense()
-    {
-        return modifyDefense;
-    }
-
     public int CalculateSpeed()
     {
         return this.baseSpeed + modifySpeed;
     }
 
-    public float CalculateLuck()
-    {
-        return this.baseLuck + modifyLuck;
-    }
-
-    public float CalculateAccuracy()
-    {
-        return this.baseAccuracy + modifyAccuracy;
-    }
-
     public float CalculateStatTotals()
     {
-        return (float)(CalculatePower() + CalculateDefense() + CalculateSpeed() + CalculateLuck() + CalculateAccuracy());
+        return (float)(CalculatePower() + modifyDefense + CalculateSpeed() + modifyLuck);
     }
 
 #endregion
@@ -332,27 +310,15 @@ public class Character : MonoBehaviour
         }
     }
 
-    public IEnumerator ChangeLuck(float effect, int logged)
+    public IEnumerator ChangeLuck(int effect, int logged)
     {
         if (this == null || effect == 0f) yield break;
 
-        modifyLuck = Mathf.Clamp(modifyLuck += effect, -0.5f, 0.5f);
+        modifyLuck = Mathf.Clamp(modifyLuck += effect, -3, 3);
         if (logged >= 0)
         {
             TurnManager.instance.CreateVisual($"{(effect > 0 ? '+' : '-')}{100 * Math.Abs(effect)}% Luck", this.transform.localPosition);
             Log.instance.AddText($"{this.name} gets {(effect > 0 ? '+' : '-')}{100 * Math.Abs(effect)}% Luck.", logged);
-        }
-    }
-
-    public IEnumerator ChangeAccuracy(float effect, int logged)
-    {
-        if (this == null || effect == 0f) yield break;
-
-        modifyAccuracy = Mathf.Clamp(modifyAccuracy += effect, -0.3f, 0.5f);
-        if (logged >= 0)
-        {
-            TurnManager.instance.CreateVisual($"{(effect > 0 ? '+' : '-')}{100 * Math.Abs(effect)}% Accuracy", this.transform.localPosition);
-            Log.instance.AddText($"{this.name} gets {(effect > 0 ? '+' : '-')}{100 * Math.Abs(effect)}% Accuracy.", logged);
         }
     }
 
@@ -471,8 +437,7 @@ public class Character : MonoBehaviour
         modifyPower = 0;
         modifyDefense = 0;
         modifySpeed = 0;
-        modifyLuck = 0f;
-        modifyAccuracy = 0f;
+        modifyLuck = 0;
     }
 
     #endregion

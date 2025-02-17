@@ -42,7 +42,6 @@ public class Ability : MonoBehaviour
             .Replace("POWERSTAT", Mathf.Abs(data.modifyPower).ToString())
             .Replace("SPEEDSTAT", Mathf.Abs(data.modifySpeed).ToString())
             .Replace("DEFENSESTAT", Mathf.Abs(data.modifyDefense).ToString())
-            .Replace("ACCURACYSTAT", Mathf.Abs(data.modifyAccuracy * 100).ToString())
             .Replace("LUCKSTAT", Mathf.Abs(data.modifyLuck * 100).ToString())
             .Replace("MISC", data.miscNumber.ToString());
         editedDescription = KeywordTooltip.instance.EditText(editedDescription);
@@ -99,23 +98,11 @@ public class Ability : MonoBehaviour
 
 #region Calculations
 
-    bool RollAccuracy(float value)
-    {
-        if (CarryVariables.instance.mode == CarryVariables.GameMode.Main)
-        {
-            return (UnityEngine.Random.Range(0f, 1f) <= value);
-        }
-        else
-        {
-            return true;
-        }
-    }
-
-    int RollCritical(float value)
+    int RollLuck()
     {
         float roll = UnityEngine.Random.Range(0f, 1f);
-        bool result = roll <= value;
-        return (result && CarryVariables.instance.mode == CarryVariables.GameMode.Main) ? 2 : 0;
+        bool result = roll >= (2f/3);
+        return (result && CarryVariables.instance.mode == CarryVariables.GameMode.Main) ? self.modifyLuck : 0;
     }
 
     public int Effectiveness(Character user, Character target)
@@ -148,11 +135,14 @@ public class Ability : MonoBehaviour
 
     int CalculateHealing(Character user, int number, int logged)
     {
-        int critical = RollCritical(user.CalculateLuck());
+        int critical = RollLuck();
         int extraHealth = critical + user.CalculatePower() + number;
 
         if (extraHealth > 1 && critical > 0)
             Log.instance.AddText($"{user.data.myName} has good luck! (+{critical} Health)", logged);
+        if (extraHealth > 1 && critical < 0)
+            Log.instance.AddText($"{user.data.myName} has bad luck... (-{critical} Health)", logged);
+
         if (self is EnemyCharacter && CarryVariables.instance.ActiveCheat("Number Cap"))
             extraHealth = Mathf.Min(extraHealth, 4);
 
@@ -163,37 +153,30 @@ public class Ability : MonoBehaviour
     {
         int effectiveness = Effectiveness(user, target);
 
-        if (effectiveness < 0 && CarryVariables.instance.ActiveChallenge("Ineffectives Miss") && user is PlayerCharacter)
+        if (effectiveness < 0 && CarryVariables.instance.ActiveChallenge("Ineffectives Fail") && user is PlayerCharacter)
         {
-            Log.instance.AddText($"{user.name}'s attack misses (Ineffectives Miss).", logged);
-            TurnManager.instance.CreateVisual("MISS", target.transform.localPosition);
+            Log.instance.AddText($"{user.name}'s attack fails (Ineffectives Fail).", logged);
+            TurnManager.instance.CreateVisual("FAILED", target.transform.localPosition);
             return 0;
         }
 
-        if (RollAccuracy(user.CalculateAccuracy()))
-        {
-            int critical = RollCritical(user.CalculateLuck());
-            int damage = (critical + effectiveness + user.CalculatePower() + number) - target.CalculateDefense();
+        int critical = RollLuck();
+        int damage = (critical + effectiveness + user.CalculatePower() + number) - target.modifyDefense;
 
-            if (effectiveness > 0)
-                Log.instance.AddText($"It's super effective! (+{effectiveness} Damage)", logged);
-            else if (effectiveness < 0)
-                Log.instance.AddText($"It was ineffective...({effectiveness} Damage)", logged);
+        if (effectiveness > 0)
+            Log.instance.AddText($"It's super effective! (+{effectiveness} Damage)", logged);
+        else if (effectiveness < 0)
+            Log.instance.AddText($"It was ineffective...({effectiveness} Damage)", logged);
 
-            if (damage > 1 && critical > 0)
-                Log.instance.AddText($"{user.data.myName} has good luck! (+{critical} Damage)", logged);
+        if (damage > 1 && critical > 0)
+            Log.instance.AddText($"{user.data.myName} has good luck! (+{critical} Damage)", logged);
+        if (damage > 1 && critical < 0)
+            Log.instance.AddText($"{user.data.myName} has bad luck... (-{critical} Damage)", logged);
 
-            if (self is EnemyCharacter && CarryVariables.instance.ActiveCheat("Number Cap"))
-                damage = Mathf.Min(damage, 4);
+        if (self is EnemyCharacter && CarryVariables.instance.ActiveCheat("Number Cap"))
+            damage = Mathf.Min(damage, 4);
 
-            return Mathf.Max(1, damage);
-        }
-        else
-        {
-            Log.instance.AddText($"{user.name}'s attack misses {target.name}.", logged);
-            TurnManager.instance.CreateVisual("MISS", target.transform.localPosition);
-            return 0;
-        }
+        return Mathf.Max(1, damage);
     }
 
     #endregion
@@ -580,11 +563,6 @@ public class Ability : MonoBehaviour
     IEnumerator TargetLuckStat(Character target, int logged)
     {
         yield return target.ChangeLuck(data.modifyLuck, logged);
-    }
-
-    IEnumerator TargetAccuracyStat(Character target, int logged)
-    {
-        yield return target.ChangeAccuracy(data.modifyAccuracy, logged);
     }
 
     IEnumerator TargetDeath(Character target, int logged)

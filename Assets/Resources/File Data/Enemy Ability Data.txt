@@ -14,7 +14,6 @@
       "Defense Stat",
       "Speed Stat",
       "Luck Stat",
-      "Accuracy Stat",
       "Misc number",
       "Ability Types"
     ],
@@ -34,7 +33,6 @@
       "",
       "",
       "",
-      "",
       "Healing"
     ],
     [
@@ -46,7 +44,6 @@
       "",
       "",
       "0",
-      "",
       "",
       "",
       "",
@@ -72,7 +69,6 @@
       "",
       "",
       "",
-      "",
       "Attack/PositionPlayer"
     ],
     [
@@ -85,7 +81,6 @@
       "TargetAttack/DealtDamage/TargetBecomeStunned",
       "1",
       "2",
-      "",
       "",
       "",
       "",
@@ -110,25 +105,23 @@
       "",
       "",
       "",
-      "",
       "Attack"
     ],
     [
       "Archer",
       "Focus",
-      "This becomes Happy and gains LUCKSTAT% Luck and ACCURACYSTAT% Accuracy.",
+      "This becomes Happy and gains LUCKSTAT Luck.",
       "THIS focuses its aim.",
       "Self",
       "TargetNotHappy",
-      "TargetBecomeHappy/TargetLuckStat/TargetAccuracyStat",
+      "TargetBecomeHappy/TargetLuckStat",
       "0",
       "",
       "",
       "",
       "",
       "",
-      "0.1",
-      "0.1",
+      "1",
       "",
       "StatEnemy/EmotionEnemy"
     ],
@@ -142,7 +135,6 @@
       "TargetAttack",
       "0",
       "3",
-      "",
       "",
       "",
       "",
@@ -167,7 +159,6 @@
       "",
       "",
       "",
-      "",
       "PositionPlayer/EmotionPlayer/PositionEnemy/EmotionEnemy"
     ],
     [
@@ -185,7 +176,6 @@
       "",
       "",
       "",
-      "",
       "1",
       "EmotionEnemy"
     ],
@@ -197,9 +187,8 @@
       "Self-OnePlayer",
       "None-TargetIsGrounded",
       "TargetBecomeAngry-TargetAttack",
-      "",
-      "2",
-      "",
+      "0",
+      "1",
       "",
       "",
       "",
@@ -224,7 +213,6 @@
       "",
       "",
       "",
-      "",
       "Misc"
     ],
     [
@@ -242,7 +230,6 @@
       "",
       "",
       "",
-      "",
       "1",
       "Misc"
     ],
@@ -254,13 +241,12 @@
       "OnePlayer",
       "TargetIsGrounded",
       "TargetBecomeTargeted/TargetSpeedStat",
-      "",
+      "0",
       "",
       "",
       "",
       "",
       "-1",
-      "",
       "",
       "2",
       "StatPlayer"
@@ -274,9 +260,8 @@
       "None-None",
       "TargetAttack-DealtDamage/TargetHeal",
       "1",
-      "3",
-      "3",
-      "",
+      "2",
+      "2",
       "",
       "",
       "",
@@ -300,7 +285,6 @@
       "",
       "",
       "",
-      "",
       "StatPlayer"
     ],
     [
@@ -319,27 +303,7 @@
       "",
       "",
       "",
-      "",
       "StatEnemy/PositionEnemy"
-    ],
-    [
-      "Bat",
-      "Bloodlust",
-      "This becomes Happy and gains ACCURACYSTAT% Accuracy.",
-      "THIS casts bloodlust.",
-      "Self",
-      "TargetNotHappy",
-      "TargetBecomeHappy/TargetAccuracyStat",
-      "0",
-      "",
-      "",
-      "",
-      "",
-      "",
-      "",
-      "0.1",
-      "",
-      "StatEnemy/EmotionEnemy"
     ],
     [
       "Bees",
@@ -351,7 +315,6 @@
       "TargetAttack-TargetBecomeTargeted",
       "0",
       "2",
-      "",
       "",
       "",
       "",
@@ -376,7 +339,6 @@
       "",
       "",
       "",
-      "",
       "Healing"
     ],
     [
@@ -388,7 +350,6 @@
       "TargetIsElevated",
       "TargetBecomeProtected",
       "1",
-      "",
       "",
       "",
       "",
@@ -413,7 +374,6 @@
       "",
       "",
       "",
-      "",
       "1",
       "Misc"
     ],
@@ -425,9 +385,8 @@
       "OnePlayer",
       "LastAttackerExists",
       "TargetAttack",
-      "",
+      "0",
       "4",
-      "",
       "",
       "",
       "",
@@ -439,29 +398,10 @@
     [
       "Bull",
       "Graze",
-      "This gains REGAIN Health and gains ACCURACYSTAT% Accuracy.",
+      "An Enemy gains REGAIN Health and gains LUCKSTAT Luck.",
       "THIS grazes.",
-      "Self",
+      "OneEnemy",
       "",
-      "TargetHeal/TargetAccuracyStat",
-      "0",
-      "",
-      "2",
-      "",
-      "",
-      "",
-      "",
-      "0.1",
-      "",
-      "Healing/StatEnemy"
-    ],
-    [
-      "Bull",
-      "Produce Milk",
-      "Another Enemy gains REGAIN Health and gains LUCKSTAT% Luck.",
-      "THIS gives TARGET some milk.",
-      "OtherEnemy",
-      "TargetInjured",
       "TargetHeal/TargetLuckStat",
       "0",
       "",
@@ -469,8 +409,7 @@
       "",
       "",
       "",
-      "0.05",
-      "",
+      "1",
       "",
       "Healing/StatEnemy"
     ],
@@ -482,8 +421,7 @@
       "Self",
       "NotTargeted",
       "TargetBecomeAngry/TargetBecomeTargeted",
-      "",
-      "",
+      "0",
       "",
       "",
       "",
@@ -509,7 +447,6 @@
       "",
       "",
       "",
-      "",
       "Attack"
     ],
     [
@@ -522,7 +459,6 @@
       "TargetAttack",
       "0",
       "3",
-      "",
       "",
       "",
       "",
@@ -547,7 +483,6 @@
       "",
       "",
       "",
-      "",
       "Healing/StatEnemy"
     ],
     [
@@ -566,7 +501,6 @@
       "",
       "",
       "",
-      "",
       "StatPlayer/EmotionPlayer"
     ],
     [
@@ -578,7 +512,6 @@
       "None-None",
       "TargetBecomeStunned-TargetBecomeProtected",
       "1",
-      "",
       "",
       "",
       "",
@@ -604,7 +537,6 @@
       "",
       "",
       "",
-      "",
       "Attack"
     ],
     [
@@ -618,7 +550,6 @@
       "1",
       "",
       "4",
-      "",
       "",
       "",
       "",
@@ -642,7 +573,6 @@
       "1",
       "",
       "",
-      "",
       "StatEnemy/PositionEnemy"
     ],
     [
@@ -657,7 +587,6 @@
       "",
       "",
       "1",
-      "",
       "",
       "",
       "",
@@ -680,7 +609,6 @@
       "",
       "",
       "",
-      "",
       "Attack/EmotionEnemy/PositionEnemy"
     ],
     [
@@ -692,7 +620,6 @@
       "None-None",
       "TargetBecomeNeutral/TargetBecomeElevated-TargetAttack",
       "0",
-      "",
       "",
       "",
       "",
@@ -718,7 +645,6 @@
       "",
       "",
       "",
-      "",
       "Attack"
     ],
     [
@@ -730,7 +656,6 @@
       "CanSummon",
       "SummonStar/TargetDeath",
       "1",
-      "",
       "",
       "",
       "",
@@ -756,7 +681,6 @@
       "",
       "",
       "",
-      "",
       "Attack"
     ],
     [
@@ -768,7 +692,6 @@
       "TargetIsGrounded",
       "TargetBecomeElevated/TargetBecomeSad",
       "0",
-      "",
       "",
       "",
       "",
@@ -794,7 +717,6 @@
       "",
       "",
       "",
-      "",
       "PositionEnemy"
     ],
     [
@@ -806,7 +728,6 @@
       "None-None",
       "TargetSwitchPosition-TargetExtraTurn",
       "1",
-      "",
       "",
       "",
       "",
@@ -832,25 +753,23 @@
       "",
       "",
       "",
-      "",
       "Attack"
     ],
     [
       "Leprechaun",
       "Caught at a Good Time",
-      "If this is at full Health, all Players gain SPEEDSTAT Speed, LUCKSTAT% Luck, and ACCURACYSTAT% Accuracy.",
+      "If this is at full Health, all Players gain SPEEDSTAT Speed and LUCKSTAT Luck.",
       "THIS gives everyone gold.",
       "Self-AllPlayers",
       "TargetAtMaxHealth-None",
-      "None-TargetSpeedStat/TargetLuckStat/TargetAccuracyStat",
+      "None-TargetSpeedStat/TargetLuckStat",
       "1",
       "",
       "",
       "",
       "",
       "1",
-      "0.05",
-      "0.05",
+      "1",
       "",
       "StatPlayer"
     ],
@@ -870,7 +789,6 @@
       "",
       "",
       "",
-      "",
       "Attack"
     ],
     [
@@ -882,7 +800,6 @@
       "TargetIsElevated",
       "TargetBecomeGrounded/TargetBecomeLocked",
       "0",
-      "",
       "",
       "",
       "",
@@ -908,7 +825,6 @@
       "",
       "",
       "",
-      "",
       "StatPlayer"
     ],
     [
@@ -920,7 +836,6 @@
       "TargetIsElevated",
       "TargetBecomeGrounded/TargetBecomeProtected",
       "0",
-      "",
       "",
       "",
       "",
@@ -946,7 +861,6 @@
       "",
       "",
       "",
-      "",
       "Attack"
     ],
     [
@@ -965,7 +879,6 @@
       "",
       "",
       "",
-      "",
       "Attack"
     ],
     [
@@ -977,7 +890,6 @@
       "TargetNotHappy",
       "TargetBecomeHappy",
       "0",
-      "",
       "",
       "",
       "",
@@ -1003,7 +915,6 @@
       "",
       "",
       "",
-      "",
       "EmotionPlayer"
     ],
     [
@@ -1015,7 +926,6 @@
       "TargetNotAngry",
       "TargetBecomeAngry",
       "0",
-      "",
       "",
       "",
       "",
@@ -1041,7 +951,6 @@
       "",
       "",
       "",
-      "",
       "Attack"
     ],
     [
@@ -1054,7 +963,6 @@
       "TargetAttack/DealtDamage/TargetBecomeGrounded",
       "1",
       "4",
-      "",
       "",
       "",
       "",
@@ -1079,7 +987,6 @@
       "-1",
       "",
       "",
-      "",
       "StatPlayer/PositionPlayer"
     ],
     [
@@ -1089,10 +996,9 @@
       "THIS shows hostility to TARGET.",
       "OnePlayer",
       "TargetIsGrounded",
-      "TargetAttack/TargetLuckStat",
+      "TargetAttack",
       "1",
       "3",
-      "",
       "",
       "",
       "",
@@ -1117,7 +1023,6 @@
       "",
       "",
       "",
-      "",
       "Attack/PositionPlayer"
     ],
     [
@@ -1133,7 +1038,6 @@
       "",
       "",
       "-1",
-      "",
       "",
       "",
       "",
@@ -1155,7 +1059,6 @@
       "",
       "",
       "",
-      "",
       "Attack"
     ],
     [
@@ -1167,7 +1070,6 @@
       "CanSummon",
       "TargetCopy",
       "1",
-      "",
       "",
       "",
       "",
@@ -1192,7 +1094,6 @@
       "",
       "",
       "",
-      "",
       "1",
       "Misc"
     ],
@@ -1211,14 +1112,13 @@
       "",
       "",
       "",
-      "",
       "2",
       "Misc"
     ],
     [
       "Royalty",
       "Procession",
-      "All Enemies gain SPEEDSTAT Speed and LUCKSTAT% Luck.",
+      "All Enemies gain SPEEDSTAT Speed and LUCKSTAT Luck.",
       "THIS calls for a procession.",
       "AllEnemies",
       "",
@@ -1229,27 +1129,25 @@
       "",
       "",
       "1",
-      "0.1",
-      "",
+      "1",
       "",
       "StatEnemy"
     ],
     [
       "Royalty",
       "Identify Targets",
-      "All Players lose DEFENSESTAT Defense and ACCURACYSTAT% Accuracy.",
+      "All Players lose DEFENSESTAT Defense and SPEEDSTAT Speed.",
       "THIS identifies targets.",
       "AllPlayers",
       "",
-      "TargetDefenseStat/TargetAccuracyStat",
+      "TargetDefenseStat/TargetSpeedStat",
       "0",
       "",
       "",
       "",
       "-1",
+      "-1",
       "",
-      "",
-      "-0.05",
       "",
       "StatPlayer"
     ],
@@ -1269,7 +1167,6 @@
       "",
       "",
       "",
-      "",
       "Attack"
     ],
     [
@@ -1281,7 +1178,6 @@
       "TargetNotStunned",
       "TargetBecomeStunned/TargetBecomeHappy",
       "1",
-      "",
       "",
       "",
       "",
@@ -1306,26 +1202,24 @@
       "",
       "",
       "",
-      "",
       "2",
       "StatPlayer"
     ],
     [
       "Siren",
       "Somber Song",
-      "All Enemies become Sad and gain ACCURACYSTAT% Accuracy.",
+      "All Enemies become Sad and gain LUCKSTAT Luck.",
       "THIS sings a somber song.",
       "AllEnemies",
       "",
-      "TargetBecomeSad/TargetAccuracyStat",
+      "TargetBecomeSad/TargetLuckStat",
       "0",
       "",
       "",
       "",
       "",
       "",
-      "",
-      "0.1",
+      "1",
       "",
       "StatEnemy/EmotionEnemy"
     ],
@@ -1339,7 +1233,6 @@
       "None-TargetAttack",
       "0",
       "3",
-      "",
       "",
       "",
       "",
@@ -1363,14 +1256,13 @@
       "",
       "-1",
       "",
-      "",
       "2",
       "PositionPlayer"
     ],
     [
       "Spider",
       "Silk Wrap",
-      "An Elevated Player lose POWERSTAT Power and LUCKSTAT% Luck.",
+      "An Elevated Player lose POWERSTAT Power and LUCKSTAT Luck.",
       "THIS wraps TARGET in silk.",
       "OnePlayer",
       "TargetIsElevated",
@@ -1381,8 +1273,7 @@
       "-1",
       "",
       "",
-      "-0.1",
-      "",
+      "-1",
       "",
       "StatPlayer"
     ],
@@ -1402,7 +1293,6 @@
       "",
       "",
       "",
-      "",
       "StatEnemy"
     ],
     [
@@ -1415,7 +1305,6 @@
       "TargetAttack",
       "0",
       "2",
-      "",
       "",
       "",
       "",
@@ -1440,25 +1329,23 @@
       "",
       "",
       "",
-      "",
       "Misc"
     ],
     [
       "Student",
       "Homework",
-      "A Player becomes Sad and loses ACCURACY% Accuracy.",
+      "A Player becomes Sad and loses LUCKSTAT Luck.",
       "THIS gives their homework to TARGET.",
       "OnePlayer",
       "",
-      "TargetBecomeSad/TargetAccuracyStat",
+      "TargetBecomeSad/TargetLuckStat",
       "0",
       "",
       "",
       "",
       "",
       "",
-      "",
-      "-0.05",
+      "-1",
       "",
       "StatPlayer/EmotionPlayer"
     ],
@@ -1473,7 +1360,6 @@
       "1",
       "",
       "2",
-      "",
       "",
       "",
       "",
@@ -1497,7 +1383,6 @@
       "",
       "",
       "",
-      "",
       "Attack/EmotionEnemy"
     ],
     [
@@ -1509,7 +1394,6 @@
       "TargetNotHappy",
       "TargetBecomeHappy",
       "0",
-      "",
       "",
       "",
       "",
@@ -1535,7 +1419,6 @@
       "",
       "",
       "",
-      "",
       "EmotionEnemy"
     ],
     [
@@ -1547,7 +1430,6 @@
       "TargetNotSad",
       "TargetBecomeSad",
       "0",
-      "",
       "",
       "",
       "",
@@ -1572,7 +1454,6 @@
       "",
       "",
       "",
-      "",
       "1",
       "Attack"
     ],
@@ -1584,8 +1465,7 @@
       "OnePlayer",
       "TargetIsGrounded",
       "TargetBecomeHappy/TargetBecomeLocked",
-      "",
-      "",
+      "0",
       "",
       "",
       "",
@@ -1604,7 +1484,6 @@
       "None",
       "TargetIncreaseCooldown",
       "1",
-      "",
       "",
       "",
       "",
@@ -1630,7 +1509,6 @@
       "",
       "",
       "",
-      "",
       "StatEnemy/Healing"
     ],
     [
@@ -1642,7 +1520,6 @@
       "None",
       "TargetBecomeGrounded/TargetBecomeTargeted",
       "0",
-      "",
       "",
       "",
       "",
@@ -1668,7 +1545,6 @@
       "",
       "",
       "",
-      "",
       "Attack"
     ],
     [
@@ -1681,7 +1557,6 @@
       "TargetBecomeGrounded-TargetAttack",
       "0",
       "3",
-      "",
       "",
       "",
       "",
@@ -1706,7 +1581,6 @@
       "",
       "",
       "",
-      "",
       "EmotionPlayer/EmotionEnemy"
     ],
     [
@@ -1723,7 +1597,6 @@
       "",
       "",
       "1",
-      "",
       "",
       "",
       "StatEnemy/PositionEnemy"

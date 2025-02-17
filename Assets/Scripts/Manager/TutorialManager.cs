@@ -182,9 +182,7 @@ public class TutorialManager : MonoBehaviour
 
                 listOfPlayers[0].AddAbility(FileManager.instance.FindPlayerAbility("Shun"), false, false);
                 listOfPlayers[0].AddAbility(FileManager.instance.FindPlayerAbility("Intimidation"), false, false);
-
                 listOfPlayers[1].AddAbility(FileManager.instance.FindPlayerAbility("Share Healing"), false, false);
-                listOfPlayers[1].AddAbility(FileManager.instance.FindPlayerAbility("Delegate"), false, false);
 
                 TurnManager.instance.CreateEnemy(FileManager.instance.FindBonusEnemy("Page"), Emotion.Neutral, 0);
                 TurnManager.instance.CreateEnemy(FileManager.instance.FindBonusEnemy("Crow"), Emotion.Neutral, 0);
@@ -259,7 +257,6 @@ public class TutorialManager : MonoBehaviour
                 break;
 
             case 14: //finish off the enemies
-                listOfPlayers[2].AddAbility(FileManager.instance.FindPlayerAbility("Air Lasers"), false, false);
                 listOfPlayers[2].AddAbility(FileManager.instance.FindPlayerAbility("Gravity Flip"), false, false);
                 listOfPlayers[2].AddAbility(FileManager.instance.FindPlayerAbility("Bad Omens"), false, false);
 
