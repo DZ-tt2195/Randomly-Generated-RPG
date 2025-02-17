@@ -344,6 +344,18 @@ public class Ability : MonoBehaviour
         return (listOfTargets[currentIndex].Count == numberGrounded);
     }
 
+    bool TargetSamePosition(int currentIndex)
+    {
+        listOfTargets[currentIndex].RemoveAll(target => target.CurrentPosition != self.CurrentPosition);
+        return listOfTargets[currentIndex].Count > 0;
+    }
+
+    bool TargetDifferentPosition(int currentIndex)
+    {
+        listOfTargets[currentIndex].RemoveAll(target => target.CurrentPosition == self.CurrentPosition);
+        return listOfTargets[currentIndex].Count > 0;
+    }
+
     bool TargetIsStunned(int currentIndex)
     {
         listOfTargets[currentIndex].RemoveAll(target => target.TurnsStunned <= 0);
@@ -413,12 +425,12 @@ public class Ability : MonoBehaviour
         return listOfTargets;
     }
 
-    bool SetGroundedPlayers(int currentIndex)
+    bool SetToGrounded(int currentIndex)
     {
         return (SetValues(listOfTargets[currentIndex].Count(target => target.CurrentPosition == Position.Grounded)) > 0);
     }
 
-    bool SetElevatedPlayers(int currentIndex)
+    bool SetToElevated(int currentIndex)
     {
         return (SetValues(listOfTargets[currentIndex].Count(target => target.CurrentPosition == Position.Elevated)) > 0);
     }
@@ -510,24 +522,7 @@ public class Ability : MonoBehaviour
         yield return target.ChangeMaxHealth(data.healthRegain, logged);
     }
 
-    IEnumerator TargetExtraTurn(Character target, int logged)
-    {
-        yield return target.Extra(data.miscNumber, logged);
-    }
-
-    IEnumerator TargetCopy(Character target, int logged)
-    {
-        TurnManager.instance.CreateEnemy(target.data, (Emotion)UnityEngine.Random.Range(1, 5), logged);
-        yield return null;
-    }
-
-    IEnumerator SummonStar(Character target, int logged)
-    {
-        TurnManager.instance.CreateEnemy(FileManager.instance.RandomEnemy(data.miscNumber), (Emotion)UnityEngine.Random.Range(1, 5), logged);
-        yield return null;
-    }
-
-    IEnumerator TargetSwapPosition(Character target, int logged)
+    IEnumerator TargetSwitchPosition(Character target, int logged)
     {
         yield return target.ChangePosition((target.CurrentPosition == Position.Grounded) ? Position.Elevated : Position.Grounded, logged);
     }
@@ -622,6 +617,11 @@ public class Ability : MonoBehaviour
         yield return target.Locked(data.miscNumber, logged);
     }
 
+    IEnumerator TargetExtraTurn(Character target, int logged)
+    {
+        yield return target.Extra(data.miscNumber, logged);
+    }
+
     IEnumerator TargetIncreaseCooldown(Character target, int logged)
     {
         foreach (Ability ability in target.listOfAutoAbilities)
@@ -652,6 +652,18 @@ public class Ability : MonoBehaviour
         yield return null;
     }
 
-#endregion
+    IEnumerator TargetCopy(Character target, int logged)
+    {
+        TurnManager.instance.CreateEnemy(target.data, (Emotion)UnityEngine.Random.Range(1, 5), logged);
+        yield return null;
+    }
+
+    IEnumerator SummonStar(Character target, int logged)
+    {
+        TurnManager.instance.CreateEnemy(FileManager.instance.RandomEnemy(data.miscNumber), (Emotion)UnityEngine.Random.Range(1, 5), logged);
+        yield return null;
+    }
+
+    #endregion
 
 }
