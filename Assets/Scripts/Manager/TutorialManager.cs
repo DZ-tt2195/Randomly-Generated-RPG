@@ -167,11 +167,11 @@ public class TutorialManager : MonoBehaviour
                 break;
 
             case 8: //introduce happy
-                listOfPlayers[1].AddAbility(FileManager.instance.FindPlayerAbility("Induce Sadness"), false, false);
+                listOfPlayers[1].AddAbility(FileManager.instance.FindPlayerAbility("Poor Gamble"), false, false);
 
                 yield return ClickThroughDialogue(new List<string>()
                 { "Your Angel is Happy, which means they get an Extra turn when they don't attack, but all their Abilities have 1 more turn of Cooldown.",
-                "Emotions also apply to Enemies. If you right click the Page, you'll see that their attack Ability got placed on Cooldown.",
+                "Emotions also apply to Enemies. If you right click the Page, you'll see that their Ability got placed on Cooldown.",
                 "Your Angel didn’t attack, so they now get an Extra turn. However, Invigorate is on Cooldown.",
                 "Instead, you can change the Page’s Emotion to Sad. That way, your Angry Knight will gain the advantage."});
                 break;
@@ -180,9 +180,11 @@ public class TutorialManager : MonoBehaviour
                 Log.instance.AddText("");
                 yield return TurnManager.instance.NewWave();
 
-                listOfPlayers[0].AddAbility(FileManager.instance.FindPlayerAbility("Shun"), false, false);
-                listOfPlayers[0].AddAbility(FileManager.instance.FindPlayerAbility("Intimidation"), false, false);
+                listOfPlayers[0].AddAbility(FileManager.instance.FindPlayerAbility("Embarass"), false, false);
+                listOfPlayers[0].AddAbility(FileManager.instance.FindPlayerAbility("Cheer"), false, false);
+
                 listOfPlayers[1].AddAbility(FileManager.instance.FindPlayerAbility("Share Healing"), false, false);
+                listOfPlayers[1].AddAbility(FileManager.instance.FindPlayerAbility("Submerge"), false, false);
 
                 TurnManager.instance.CreateEnemy(FileManager.instance.FindBonusEnemy("Page"), Emotion.Neutral, 0);
                 TurnManager.instance.CreateEnemy(FileManager.instance.FindBonusEnemy("Crow"), Emotion.Neutral, 0);
@@ -259,6 +261,7 @@ public class TutorialManager : MonoBehaviour
             case 14: //finish off the enemies
                 listOfPlayers[2].AddAbility(FileManager.instance.FindPlayerAbility("Gravity Flip"), false, false);
                 listOfPlayers[2].AddAbility(FileManager.instance.FindPlayerAbility("Bad Omens"), false, false);
+                listOfPlayers[2].AddAbility(FileManager.instance.FindPlayerAbility("Shockwave"), false, false);
 
                 yield return ClickThroughDialogue(new List<string>()
                 { "Anyways, now that all the Enemies are Grounded, your Knight is capable of hitting them, so finish them off."});

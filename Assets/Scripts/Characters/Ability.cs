@@ -42,7 +42,7 @@ public class Ability : MonoBehaviour
             .Replace("POWERSTAT", Mathf.Abs(data.modifyPower).ToString())
             .Replace("SPEEDSTAT", Mathf.Abs(data.modifySpeed).ToString())
             .Replace("DEFENSESTAT", Mathf.Abs(data.modifyDefense).ToString())
-            .Replace("LUCKSTAT", Mathf.Abs(data.modifyLuck * 100).ToString())
+            .Replace("LUCKSTAT", Mathf.Abs(data.modifyLuck).ToString())
             .Replace("MISC", data.miscNumber.ToString());
         editedDescription = KeywordTooltip.instance.EditText(editedDescription);
 
@@ -100,9 +100,12 @@ public class Ability : MonoBehaviour
 
     int RollLuck()
     {
-        float roll = UnityEngine.Random.Range(0f, 1f);
-        bool result = roll >= (2f/3);
-        return (result && CarryVariables.instance.mode == CarryVariables.GameMode.Main) ? self.modifyLuck : 0;
+        bool chance = Random.Range(0f, 1f) <= Mathf.Abs(self.modifyLuck)/4f;
+
+        if (CarryVariables.instance.mode == CarryVariables.GameMode.Main && self.modifyLuck != 0 && chance)
+            return self.modifyLuck > 0 ? 2 : -2;
+        else
+            return 0;
     }
 
     public int Effectiveness(Character user, Character target)
@@ -361,7 +364,7 @@ public class Ability : MonoBehaviour
     bool LastAttackerExists(int currentIndex)
     {
         if (self.lastToAttackThis == null) return false;
-        if (self.lastToAttackThis.CalculateHealth() == 0) return false;
+        if (self.lastToAttackThis.currentHealth == 0) return false;
         return listOfTargets[currentIndex].Contains(self.lastToAttackThis);
     }
 
@@ -474,7 +477,7 @@ public class Ability : MonoBehaviour
     {
         damageDealt = CalculateDamage(self, target, data.attackDamage, logged);
         yield return target.TakeDamage(damageDealt, logged, self);
-        if (target == null || target.CalculateHealth() <= 0)
+        if (target == null || target.currentHealth <= 0)
             killed = true;
     }
 
@@ -482,7 +485,7 @@ public class Ability : MonoBehaviour
     {
         damageDealt = CalculateDamage(self, target, data.miscNumber, logged);
         yield return target.TakeDamage(damageDealt, logged, self);
-        if (target == null || target.CalculateHealth() <= 0)
+        if (target == null || target.currentHealth <= 0)
             killed = true;
     }
 

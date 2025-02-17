@@ -33,7 +33,7 @@ public class Character : MonoBehaviour
         protected int baseSpeed;
 
     [Foldout("Current Stats", true)]
-        private int currentHealth;
+        public int currentHealth { get; private set; }
         public int modifyPower { get; private set; }
         public int modifyDefense { get; private set; }
         public int modifySpeed { get; private set; }
@@ -159,11 +159,6 @@ public class Character : MonoBehaviour
 
 #region Stats
 
-    public int CalculateHealth()
-    {
-        return this.currentHealth;
-    }
-
     public float CalculateHealthPercent()
     {
         return (float)currentHealth / this.baseHealth;
@@ -238,6 +233,7 @@ public class Character : MonoBehaviour
             if (currentHealth <= 0)
                 yield return HasDied(logged);
         }
+        healthText.text = KeywordTooltip.instance.EditText($"{currentHealth}/{baseHealth}Health");
     }
 
     public IEnumerator HasDied(int logged)
@@ -317,8 +313,8 @@ public class Character : MonoBehaviour
         modifyLuck = Mathf.Clamp(modifyLuck += effect, -3, 3);
         if (logged >= 0)
         {
-            TurnManager.instance.CreateVisual($"{(effect > 0 ? '+' : '-')}{100 * Math.Abs(effect)}% Luck", this.transform.localPosition);
-            Log.instance.AddText($"{this.name} gets {(effect > 0 ? '+' : '-')}{100 * Math.Abs(effect)}% Luck.", logged);
+            TurnManager.instance.CreateVisual($"{(effect > 0 ? '+' : '-')}{Math.Abs(effect)} Luck", this.transform.localPosition);
+            Log.instance.AddText($"{this.name} gets {(effect > 0 ? '+' : '-')}{Math.Abs(effect)} Luck.", logged);
         }
     }
 
@@ -424,7 +420,7 @@ public class Character : MonoBehaviour
 
     public IEnumerator Revive(int health, int logged)
     {
-        if (this == null || this.CalculateHealth() > 0) yield break;
+        if (this == null || this.currentHealth > 0) yield break;
 
         Log.instance.AddText($"{(this.name)} comes back to life.", logged);
         TurnManager.instance.listOfPlayers.Add(this);
@@ -459,6 +455,7 @@ public class Character : MonoBehaviour
 
         while (ExtraTurns > 0)
         {
+            ExtraTurns--;
             yield return ResolveTurn(logged, true);
             yield return EmotionEffect(logged, true);
         }
@@ -505,7 +502,6 @@ public class Character : MonoBehaviour
             StartCoroutine(nameof(Timer));
             if (extraAbility)
             {
-                ExtraTurns--;
                 foreach (Ability ability in listOfAutoAbilities)
                 {
                     if (ability.currentCooldown > 0)

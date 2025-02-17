@@ -28,7 +28,7 @@ public class RightClickMe : MonoBehaviour, IPointerClickHandler
         string stats1 = "";
         string stats2 = "";
 
-        stats1 += $"Health: {character.CalculateHealth()} / {character.data.baseHealth}\n";
+        stats1 += $"Health: {character.currentHealth} / {character.data.baseHealth}\n";
         stats1 += $"Power: {character.CalculatePower()}\n";
         stats1 += $"Defense: {character.modifyDefense}\n";
 

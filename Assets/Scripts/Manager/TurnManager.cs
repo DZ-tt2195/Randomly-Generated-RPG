@@ -180,7 +180,7 @@ public class TurnManager : MonoBehaviour
             Character nextInLine = speedQueue[0];
             speedQueue.RemoveAt(0);
 
-            if (nextInLine != null && nextInLine.CalculateHealth() > 0)
+            if (nextInLine != null && nextInLine.currentHealth > 0)
             {
                 instructions.text = "";
                 Log.instance.AddText($"");
@@ -281,7 +281,7 @@ public class TurnManager : MonoBehaviour
     {
         foreach (Character character in listOfPlayers)
         {
-            if (character.CalculateHealth() > 0)
+            if (character.currentHealth > 0)
                 return false;
         }
 

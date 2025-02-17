@@ -12,7 +12,7 @@
     [
       "Page",
       "Basic Enemy who attacks Grounded Players.",
-      "9",
+      "8",
       "2",
       "GROUNDED",
       "Attack,",

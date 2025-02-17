@@ -85,11 +85,11 @@ public class EnemyCharacter : Character
                             break;
 
                         case "LEASTHEALTH":
-                            ability.listOfTargets[index].OrderBy(o => o.CalculateHealth()).ToList();
+                            ability.listOfTargets[index].OrderBy(o => o.currentHealth).ToList();
                             ability.listOfTargets[index] = new() { ability.listOfTargets[index][0] };
                             break;
                         case "MOSTHEALTH":
-                            ability.listOfTargets[index].OrderByDescending(o => o.CalculateHealth()).ToList();
+                            ability.listOfTargets[index].OrderByDescending(o => o.currentHealth).ToList();
                             ability.listOfTargets[index] = new() { ability.listOfTargets[index][0] };
                             break;
 

@@ -553,7 +553,7 @@
       "",
       "",
       "",
-      "1",
+      "-1",
       "",
       "StatEnemy/EmotionEnemy"
     ],
