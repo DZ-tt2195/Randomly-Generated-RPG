@@ -128,7 +128,7 @@ public class TurnManager : MonoBehaviour
 
             if (currentWave >= 2 && CarryVariables.instance.ActiveCheat("New Abilities"))
             {
-                Log.instance.AddText($"Players have new abilities. (New Abilities)");
+                Log.instance.AddText($"Players have new abilities.");
                 foreach (Character player in listOfPlayers)
                 {
                     for (int i = player.listOfRandomAbilities.Count - 1; i >= 0; i--)

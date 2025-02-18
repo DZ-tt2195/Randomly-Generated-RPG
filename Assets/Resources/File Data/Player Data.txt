@@ -25,7 +25,7 @@
       "10",
       "-1",
       "ELEVATED",
-      "Air Defense,Assist,Calm Down,Crash Landing,Depress,Enrage,Gift of Flight,Natural Barrier,Performance,Poor Gamble,Invigorate,Launch,Lift Up,Overheal,Security,Share Healing,Snare,Submerge,Tailwinds,",
+      "Air Defense,Assist,Calm Down,Crash Landing,Enrage,Gift of Flight,Invigorate,Launch,Lift Up,Natural Barrier,Overheal,Performance,Poor Gamble,Retreat,Security,Share Healing,Snare,Submerge,Tailwinds,",
       "",
       "Magali Villeneuve|Oath of the Gatewatch|(Linvala, the Preserver)"
     ],

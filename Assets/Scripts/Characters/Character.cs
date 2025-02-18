@@ -195,7 +195,7 @@ public class Character : MonoBehaviour
         }
         else
         {
-            TurnManager.instance.CreateVisual($"{effect} MAX HEALTH", this.transform.localPosition);
+            TurnManager.instance.CreateVisual($"{effect} MAX Health", this.transform.localPosition);
             Log.instance.AddText($"{this.name} has {Mathf.Abs(effect)} less Max Health.", logged);
             if (baseHealth < currentHealth)
                 currentHealth = baseHealth;
@@ -575,8 +575,8 @@ public class Character : MonoBehaviour
                     yield return chosenAbility.ResolveInstructions(splicedString, i, logged + 1);
                 }
 
-                chosenAbility.currentCooldown = chosenAbility.data.baseCooldown + (CurrentEmotion == Emotion.Happy ? 1 : 0)
-                    + (CarryVariables.instance.ActiveCheat("Faster Cooldowns") && this is PlayerCharacter ? -1 : 0);
+                chosenAbility.currentCooldown = chosenAbility.data.baseCooldown + (CurrentEmotion == Emotion.Happy ? 1 : 0) +
+                    (CarryVariables.instance.ActiveCheat("Slower Enemy Cooldowns") && this is EnemyCharacter ? 1 : 0);
 
                 if (CarryVariables.instance.mode == CarryVariables.GameMode.Tutorial && TutorialManager.instance.currentCharacter == this)
                 {

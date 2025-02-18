@@ -67,7 +67,7 @@
     ],
     [
       "Pixie",
-      "Changes Player Emotions and attacks Elevated Players.",
+      "Changes all Player Emotions at the same time, and attacks Elevated Players.",
       "5",
       "0",
       "ELEVATED",
@@ -148,19 +148,19 @@
       "10",
       "0",
       "GROUNDED",
-      "Fury,Savagery,Camp,Locked On,",
+      "Fury,Savagery,Brawl,Camp,",
       "MostHealth",
       "Julien Delval|Dominion: Allies|(Barbarian)",
       "2"
     ],
     [
       "Bat",
-      "Damages Grounded Players and then heals at the same time.",
+      "Makes itself Sad, then it attacks Grounded Players and heals at the same time.",
       "10",
       "1",
       "ELEVATED",
-      "Drain,Screech,Hunting Season,",
-      "ChooseGrounded",
+      "Drain,Screech,Hunting Season,Desperation,",
+      "",
       "Martin Hoffmann|Dominion: Nocturne|(Bat)",
       "2"
     ],
@@ -232,12 +232,12 @@
     ],
     [
       "Demon",
-      "Damages and weakens other Enemies to make itself stronger.",
+      "Damages other Enemies to make itself stronger. Then it'll unleash a powerful attack on all Players.",
       "15",
       "2",
       "ELEVATED",
-      "Curse,Betrayal,Ritual,",
-      "",
+      "Dark Energy,Betrayal,Ritual,",
+      "CameOffCooldown",
       "Vincent Proce|Guilds of Ravnica|(Doom Whisperer)",
       "3"
     ],

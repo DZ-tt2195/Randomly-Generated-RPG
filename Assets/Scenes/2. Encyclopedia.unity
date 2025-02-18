@@ -6927,7 +6927,7 @@ MonoBehaviour:
 
     Happy: Effective
     against Angry. Gets an extra turn when it doesn''t attack on their turn; Abilities
-    have longer <link="Cooldown"><sprite="Cooldown" name="Cooldown"></link>.
+    have 1 more turn of <link="Cooldown"><sprite="Cooldown" name="Cooldown"></link>.
 
     Angry:
     Effective against Sad. +2 <link="Power"><sprite="Power" name="Power"></link>;
