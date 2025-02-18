@@ -132,17 +132,6 @@
       "2"
     ],
     [
-      "Ninja",
-      "Makes everyone Grounded so that it can kill the Player with the least amount of Health.",
-      "10",
-      "1",
-      "ELEVATED",
-      "Assassinate,No Hiding,Shuriken,Flip,",
-      "LeastHealth",
-      "Elisa Cella|Dominion: Rising Sun|(Ninja)",
-      "2"
-    ],
-    [
       "Astronaut",
       "Makes Players Elevated and Happy, and then attacks them while Sad.",
       "10",
@@ -166,11 +155,11 @@
     ],
     [
       "Bat",
-      "Drains health from Grounded Players.",
+      "Damages Grounded Players and then heals at the same time.",
       "10",
       "1",
       "ELEVATED",
-      "Drain,Screech,On the Hunt,",
+      "Drain,Screech,Hunting Season,",
       "ChooseGrounded",
       "Martin Hoffmann|Dominion: Nocturne|(Bat)",
       "2"
@@ -181,9 +170,20 @@
       "10",
       "-2",
       "GROUNDED",
-      "Charge,Graze,Grunt,",
+      "Charge,Milk,Grunt,",
       "LastAttacker",
       "Matthias Catrein|Dominion: Menagerie|(Way of the Ox)",
+      "2"
+    ],
+    [
+      "Ninja",
+      "Makes everyone Grounded so that it can kill the Player with the least amount of Health.",
+      "10",
+      "1",
+      "ELEVATED",
+      "Assassinate,No Hiding,Shuriken,Flip,",
+      "LeastHealth",
+      "Elisa Cella|Dominion: Rising Sun|(Ninja)",
       "2"
     ],
     [
@@ -236,7 +236,7 @@
       "15",
       "2",
       "ELEVATED",
-      "Curse,Betrayal,Fear,Ritual,",
+      "Curse,Betrayal,Ritual,",
       "",
       "Vincent Proce|Guilds of Ravnica|(Doom Whisperer)",
       "3"
@@ -258,14 +258,14 @@
       "15",
       "2",
       "ELEVATED",
-      "Collision,Drop,Dangle,",
+      "Collision,Drop,Dangle,Rewrite Rules,",
       "MostTargets",
       "James Ryman|Kaladesh|(Marionette Master)",
       "3"
     ],
     [
       "Royalty",
-      "Doesn't attack, but summons more 1 Star and 2 Star Enemies. Buffs Enemy Stats and reduces Player Stats.",
+      "Doesn't attack, but summons more 1 Star and 2 Star Enemies. Buffs Enemy Stats and lowers Player Stats.",
       "15",
       "-2",
       "GROUNDED",

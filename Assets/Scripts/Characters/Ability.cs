@@ -102,7 +102,7 @@ public class Ability : MonoBehaviour
     {
         bool chance = Random.Range(0f, 1f) <= Mathf.Abs(self.modifyLuck)/4f;
 
-        if (CarryVariables.instance.mode == CarryVariables.GameMode.Main && self.modifyLuck != 0 && chance)
+        if (self.modifyLuck != 0 && chance)
             return self.modifyLuck > 0 ? 2 : -2;
         else
             return 0;
@@ -342,6 +342,54 @@ public class Ability : MonoBehaviour
         return listOfTargets[currentIndex].Count > 0;
     }
 
+    bool TargetPowerOrMore(int currentIndex)
+    {
+        listOfTargets[currentIndex].RemoveAll(target => target.modifyPower <= data.miscNumber);
+        return listOfTargets[currentIndex].Count > 0;
+    }
+
+    bool TargetPowerOrLess(int currentIndex)
+    {
+        listOfTargets[currentIndex].RemoveAll(target => target.modifyPower >= data.miscNumber);
+        return listOfTargets[currentIndex].Count > 0;
+    }
+
+    bool TargetDefenseOrMore(int currentIndex)
+    {
+        listOfTargets[currentIndex].RemoveAll(target => target.modifyDefense <= data.miscNumber);
+        return listOfTargets[currentIndex].Count > 0;
+    }
+
+    bool TargetDefenseOrLess(int currentIndex)
+    {
+        listOfTargets[currentIndex].RemoveAll(target => target.modifyDefense >= data.miscNumber);
+        return listOfTargets[currentIndex].Count > 0;
+    }
+
+    bool TargetSpeedOrMore(int currentIndex)
+    {
+        listOfTargets[currentIndex].RemoveAll(target => target.modifySpeed <= data.miscNumber);
+        return listOfTargets[currentIndex].Count > 0;
+    }
+
+    bool TargetSpeedOrLess(int currentIndex)
+    {
+        listOfTargets[currentIndex].RemoveAll(target => target.modifySpeed >= data.miscNumber);
+        return listOfTargets[currentIndex].Count > 0;
+    }
+
+    bool TargetLuckOrMore(int currentIndex)
+    {
+        listOfTargets[currentIndex].RemoveAll(target => target.modifyLuck <= data.miscNumber);
+        return listOfTargets[currentIndex].Count > 0;
+    }
+
+    bool TargetLuckOrLess(int currentIndex)
+    {
+        listOfTargets[currentIndex].RemoveAll(target => target.modifyLuck >= data.miscNumber);
+        return listOfTargets[currentIndex].Count > 0;
+    }
+
     bool TargetIsStunned(int currentIndex)
     {
         listOfTargets[currentIndex].RemoveAll(target => target.TurnsStunned <= 0);
@@ -548,24 +596,44 @@ public class Ability : MonoBehaviour
         yield return target.ChangeEmotion((Emotion)UnityEngine.Random.Range(1, 5), logged);
     }
 
-    IEnumerator TargetPowerStat(Character target, int logged)
+    IEnumerator TargetGainPower(Character target, int logged)
     {
         yield return target.ChangePower(data.modifyPower, logged);
     }
 
-    IEnumerator TargetDefenseStat(Character target, int logged)
+    IEnumerator TargetLosePower(Character target, int logged)
+    {
+        yield return target.ChangePower(-1*data.modifyPower, logged);
+    }
+
+    IEnumerator TargetGainDefense(Character target, int logged)
     {
         yield return target.ChangeDefense(data.modifyDefense, logged);
     }
 
-    IEnumerator TargetSpeedStat(Character target, int logged)
+    IEnumerator TargetLoseDefense(Character target, int logged)
+    {
+        yield return target.ChangeDefense(-1*data.modifyDefense, logged);
+    }
+
+    IEnumerator TargetGainSpeed(Character target, int logged)
     {
         yield return target.ChangeSpeed(data.modifySpeed, logged);
     }
 
-    IEnumerator TargetLuckStat(Character target, int logged)
+    IEnumerator TargetLoseSpeed(Character target, int logged)
+    {
+        yield return target.ChangeSpeed(-1*data.modifySpeed, logged);
+    }
+
+    IEnumerator TargetGainLuck(Character target, int logged)
     {
         yield return target.ChangeLuck(data.modifyLuck, logged);
+    }
+
+    IEnumerator TargetLoseLuck(Character target, int logged)
+    {
+        yield return target.ChangeLuck(-1*data.modifyLuck, logged);
     }
 
     IEnumerator TargetDeath(Character target, int logged)

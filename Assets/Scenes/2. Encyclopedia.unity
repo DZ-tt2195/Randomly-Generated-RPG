@@ -2731,10 +2731,11 @@ MonoBehaviour:
     = Takes their turn earlier in the turn order.\nLuck (<link=\"Luck\"><sprite=\"Luck\"
     name=\"Luck\"></link>): Positive <link=\"Luck\"><sprite=\"Luck\" name=\"Luck\"></link>
     = More likely to get +2 on attack and healing abilities. Negative <link=\"Luck\"><sprite=\"Luck\"
-    name=\"Luck\"></link> = More likely to get -2.\n\nMisc: \nCooldown (<link=\"Cooldown\"><sprite=\"Cooldown\"
-    name=\"Cooldown\"></link>): Ability can't be used again until enough turns have
-    passed.\nStar (<link=\"Star\"><sprite=\"Star\" name=\"Star\"></link>): More <link=\"Star\"><sprite=\"Star\"
-    name=\"Star\"></link> = Stronger enemy type."
+    name=\"Luck\"></link> = More likely to get -2.\n\nCharacter Positions: Elevated
+    & Grounded\n\nMisc: \nCooldown (<link=\"Cooldown\"><sprite=\"Cooldown\" name=\"Cooldown\"></link>):
+    Ability can't be used again until enough turns have passed.\nStar (<link=\"Star\"><sprite=\"Star\"
+    name=\"Star\"></link>): More <link=\"Star\"><sprite=\"Star\" name=\"Star\"></link>
+    = Stronger enemy type."
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8c64c47af7c1c4fb5b88d184433c6c44, type: 2}
   m_sharedMaterial: {fileID: -3852492252101762229, guid: 8c64c47af7c1c4fb5b88d184433c6c44, type: 2}
@@ -2761,7 +2762,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 80
+  m_fontSize: 77.35
   m_fontSizeBase: 14
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -6938,28 +6939,25 @@ MonoBehaviour:
     name="Health"></link> otherwise.
 
 
-    Character Positions: Elevated & Grounded
+    Character Status Effects:
 
+    Protected
+    (<link="ProtectedImage"><sprite="ProtectedImage" name="ProtectedImage"></link>):
+    Takes 0 damage the next time they get attacked.
 
-    Character
-    Status Effects:
+    Extra (<link="ExtraImage"><sprite="ExtraImage"
+    name="ExtraImage"></link>): Can use another Ability on their turn.
 
-    Protected (<link="ProtectedImage"><sprite="ProtectedImage"
-    name="ProtectedImage"></link>): Takes 0 damage the next time they get attacked.
+    Targeted
+    (<link="TargetedImage"><sprite="TargetedImage" name="TargetedImage"></link>):
+    Any single-target Abilities must target them if possible.
 
-    Extra
-    (<link="ExtraImage"><sprite="ExtraImage" name="ExtraImage"></link>): Can use
-    another Ability on their turn.
+    Locked (<link="LockImage"><sprite="LockImage"
+    name="LockImage"></link>): Can''t change Positions or Emotions until their next
+    turn.
 
-    Targeted (<link="TargetedImage"><sprite="TargetedImage"
-    name="TargetedImage"></link>): Any single-target Abilities must target them if
-    possible.
-
-    Locked (<link="LockImage"><sprite="LockImage" name="LockImage"></link>):
-    Can''t change Positions or Emotions until their next turn.
-
-    Stunned (<link="StunImage"><sprite="StunImage"
-    name="StunImage"></link>): Skips their next turn.'
+    Stunned (<link="StunImage"><sprite="StunImage" name="StunImage"></link>):
+    Skips their next turn.'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8c64c47af7c1c4fb5b88d184433c6c44, type: 2}
   m_sharedMaterial: {fileID: -3852492252101762229, guid: 8c64c47af7c1c4fb5b88d184433c6c44, type: 2}
@@ -6986,7 +6984,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 69.2
+  m_fontSize: 73.05
   m_fontSizeBase: 14
   m_fontWeight: 400
   m_enableAutoSizing: 1

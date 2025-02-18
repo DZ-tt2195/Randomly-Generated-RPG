@@ -25,17 +25,17 @@
       "10",
       "-1",
       "ELEVATED",
-      "Air Defense,Barrier,Calm Down,Crash Landing,Down to Earth,Depress,Enrage,Expose,Gift of Flight,Poor Gamble,Invigorate,Launch,Lift Up,Overheal,Security,Share Healing,Submerge,Tailwinds,",
+      "Air Defense,Assist,Calm Down,Crash Landing,Depress,Enrage,Gift of Flight,Natural Barrier,Performance,Poor Gamble,Invigorate,Launch,Lift Up,Overheal,Security,Share Healing,Snare,Submerge,Tailwinds,",
       "",
       "Magali Villeneuve|Oath of the Gatewatch|(Linvala, the Preserver)"
     ],
     [
       "Wizard",
-      "Deals damage to multiple Enemies at once, and can hit Elevated ones. Has control over Positions.",
+      "Deals damage to multiple Enemies at once. Has control over Positions.",
       "10",
       "1",
       "GROUNDED",
-      "Bad Omens,Beacon,Bounce,Blizzard,Roll Dice,Fog,Gravity Flip,Headwinds,Manipulate Time,Quick Aim,Safe Above,Shockwave,Sink,Sky Hammer,Stalactites,Team Attack,",
+      "Agility,Bad Omens,Beacon,Bounce,Blizzard,Dash Down,Gravity Flip,Headwinds,Manipulate Time,Roll Dice,Safe Above,Shockwave,Sink,Sky Hammer,Stalactites,Team Attack,",
       "",
       "Harald Lieske|Dominion: Allies|(Conjurer)"
     ]
