@@ -170,7 +170,7 @@
       "10",
       "-2",
       "GROUNDED",
-      "Charge,Milk,Grunt,",
+      "Charge,Milk,Grunt,Graze,",
       "LastAttacker",
       "Matthias Catrein|Dominion: Menagerie|(Way of the Ox)",
       "2"

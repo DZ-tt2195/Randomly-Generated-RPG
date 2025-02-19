@@ -666,7 +666,7 @@ public class Ability : MonoBehaviour
         yield return target.Locked(data.miscNumber, logged);
     }
 
-    IEnumerator TargetExtraTurn(Character target, int logged)
+    IEnumerator TargetGetExtraTurn(Character target, int logged)
     {
         yield return target.Extra(data.miscNumber, logged);
     }

@@ -5120,7 +5120,7 @@ MonoBehaviour:
   - keywordVariations:
     - Protected
     - Protect
-    description: Takes 0 damage the next time they get attacked.
+    description: Can't lose Stats or Health until their next turn.
     color: {r: 0.735849, g: 0.735849, b: 0.735849, a: 0}
   - keywordVariations:
     - Targeted
@@ -5192,23 +5192,24 @@ MonoBehaviour:
   spriteKeywordStatuses:
   - keywordVariations:
     - StunImage
-    description: This skips their next turn.
+    description: 'Stunned: This skips their next turn.'
     color: {r: 0, g: 0, b: 0, a: 0}
   - keywordVariations:
     - ProtectedImage
-    description: Takes 0 damage the next time this gets attacked.
+    description: 'Protected: This can''t lose Stats or Health until their next turn.'
     color: {r: 0, g: 0, b: 0, a: 0}
   - keywordVariations:
     - TargetedImage
-    description: All single-target Abilities must target this if possible.
+    description: 'Targeted: All single-target Abilities must target this if possible.'
     color: {r: 0, g: 0, b: 0, a: 0}
   - keywordVariations:
     - ExtraImage
-    description: This can use another ability during their turn.
+    description: 'Extra Turn: This can use another Ability during their turn.'
     color: {r: 0, g: 0, b: 0, a: 0}
   - keywordVariations:
     - LockImage
-    description: This can't change Position or Emotion until their next turn.
+    description: 'Locked: This can''t change Position or Emotion until their next
+      turn.'
     color: {r: 0, g: 0, b: 0, a: 0}
   tooltipText: {fileID: 235444215}
 --- !u!114 &623227979

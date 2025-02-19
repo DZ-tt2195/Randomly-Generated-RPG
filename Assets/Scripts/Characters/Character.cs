@@ -218,9 +218,8 @@ public class Character : MonoBehaviour
         if (attacker != null) lastToAttackThis = attacker;
         if (this == null || damage == 0) yield break;
 
-        if (TurnsProtected > 0 && attacker != null)
+        if (TurnsProtected > 0)
         {
-            TurnsProtected--;
             TurnManager.instance.CreateVisual($"BLOCKED", this.transform.localPosition);
             Log.instance.AddText($"{(this.name)} is Protected from {damage} damage.", logged);
         }
@@ -273,11 +272,19 @@ public class Character : MonoBehaviour
     {
         if (this == null || effect == 0) yield break;
 
-        modifyPower = Math.Clamp(modifyPower += effect, -3, 3);
-        if (logged >= 0)
+        if (TurnsProtected > 0 && effect < 0)
         {
-            TurnManager.instance.CreateVisual($"{(effect > 0 ? '+' : '-')}{Math.Abs(effect)} Power", this.transform.localPosition);
-            Log.instance.AddText($"{this.name} gets {(effect > 0 ? '+' : '-')}{Math.Abs(effect)} Power.", logged);
+            TurnManager.instance.CreateVisual($"BLOCKED", this.transform.localPosition);
+            Log.instance.AddText($"{(this.name)} is Protected from losing {Mathf.Abs(effect)} Power.", logged);
+        }
+        else
+        {
+            modifyPower = Math.Clamp(modifyPower += effect, -3, 3);
+            if (logged >= 0)
+            {
+                TurnManager.instance.CreateVisual($"{(effect > 0 ? '+' : '-')}{Math.Abs(effect)} Power", this.transform.localPosition);
+                Log.instance.AddText($"{this.name} gets {(effect > 0 ? '+' : '-')}{Math.Abs(effect)} Power.", logged);
+            }
         }
     }
 
@@ -285,11 +292,19 @@ public class Character : MonoBehaviour
     {
         if (this == null || effect == 0) yield break;
 
-        modifyDefense = Math.Clamp(modifyDefense += effect, -3, 3);
-        if (logged >= 0)
+        if (TurnsProtected > 0 && effect < 0)
         {
-            TurnManager.instance.CreateVisual($"{(effect > 0 ? '+' : '-')}{Math.Abs(effect)} Defense", this.transform.localPosition);
-            Log.instance.AddText($"{this.name} gets {(effect > 0 ? '+' : '-')}{Math.Abs(effect)} Defense.", logged);
+            TurnManager.instance.CreateVisual($"BLOCKED", this.transform.localPosition);
+            Log.instance.AddText($"{(this.name)} is Protected from losing {Mathf.Abs(effect)} Defense.", logged);
+        }
+        else
+        {
+            modifyDefense = Math.Clamp(modifyDefense += effect, -3, 3);
+            if (logged >= 0)
+            {
+                TurnManager.instance.CreateVisual($"{(effect > 0 ? '+' : '-')}{Math.Abs(effect)} Defense", this.transform.localPosition);
+                Log.instance.AddText($"{this.name} gets {(effect > 0 ? '+' : '-')}{Math.Abs(effect)} Defense.", logged);
+            }
         }
     }
 
@@ -297,12 +312,20 @@ public class Character : MonoBehaviour
     {
         if (this == null || effect == 0) yield break;
 
-        modifySpeed = Math.Clamp(modifySpeed += effect, -5, 5);
-
-        if (logged >= 0)
+        if (TurnsProtected > 0 && effect < 0)
         {
-            TurnManager.instance.CreateVisual($"{(effect > 0 ? '+' : '-')}{Math.Abs(effect)} Speed", this.transform.localPosition);
-            Log.instance.AddText($"{this.name} gets {(effect > 0 ? '+' : '-')}{Math.Abs(effect)} Speed.", logged);
+            TurnManager.instance.CreateVisual($"BLOCKED", this.transform.localPosition);
+            Log.instance.AddText($"{(this.name)} is Protected from losing {Mathf.Abs(effect)} Speed.", logged);
+        }
+        else
+        {
+            modifySpeed = Math.Clamp(modifySpeed += effect, -5, 5);
+
+            if (logged >= 0)
+            {
+                TurnManager.instance.CreateVisual($"{(effect > 0 ? '+' : '-')}{Math.Abs(effect)} Speed", this.transform.localPosition);
+                Log.instance.AddText($"{this.name} gets {(effect > 0 ? '+' : '-')}{Math.Abs(effect)} Speed.", logged);
+            }
         }
     }
 
@@ -310,11 +333,19 @@ public class Character : MonoBehaviour
     {
         if (this == null || effect == 0f) yield break;
 
-        modifyLuck = Mathf.Clamp(modifyLuck += effect, -3, 3);
-        if (logged >= 0)
+        if (TurnsProtected > 0 && effect < 0)
         {
-            TurnManager.instance.CreateVisual($"{(effect > 0 ? '+' : '-')}{Math.Abs(effect)} Luck", this.transform.localPosition);
-            Log.instance.AddText($"{this.name} gets {(effect > 0 ? '+' : '-')}{Math.Abs(effect)} Luck.", logged);
+            TurnManager.instance.CreateVisual($"BLOCKED", this.transform.localPosition);
+            Log.instance.AddText($"{(this.name)} is Protected from losing {Mathf.Abs(effect)} Luck.", logged);
+        }
+        else
+        {
+            modifyLuck = Mathf.Clamp(modifyLuck += effect, -3, 3);
+            if (logged >= 0)
+            {
+                TurnManager.instance.CreateVisual($"{(effect > 0 ? '+' : '-')}{Math.Abs(effect)} Luck", this.transform.localPosition);
+                Log.instance.AddText($"{this.name} gets {(effect > 0 ? '+' : '-')}{Math.Abs(effect)} Luck.", logged);
+            }
         }
     }
 
@@ -445,6 +476,8 @@ public class Character : MonoBehaviour
         chosenAbility = null;
         chosenTarget = null;
 
+        if (TurnsProtected > 0)
+            TurnsProtected--;
         if (TurnsTargeted > 0)
             TurnsTargeted--;
         if (TurnsLocked > 0)
