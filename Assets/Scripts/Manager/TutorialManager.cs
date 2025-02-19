@@ -232,7 +232,7 @@ public class TutorialManager : MonoBehaviour
 
             case 12: //introduce sad
                 yield return ClickThroughDialogue(new List<string>()
-                { "Your Wizard is Sad, which means everytime they attack, they gain 2 Health. But if they don't attack, they lose 2 Health.",
+                { "Your Wizard is Sad, which means every time they attack, they gain 2 Health. But if they don't attack, they lose 2 Health.",
                 "For your convenience, attacking Abilities are colored red, healing Abilities are colored green, the others are colored blue."});
 
                 currentStep = 13;
@@ -259,8 +259,8 @@ public class TutorialManager : MonoBehaviour
                 break;
 
             case 14: //finish off the enemies
-                listOfPlayers[2].AddAbility(FileManager.instance.FindPlayerAbility("Gravity Flip"), false, false);
-                listOfPlayers[2].AddAbility(FileManager.instance.FindPlayerAbility("Bad Omens"), false, false);
+                listOfPlayers[2].AddAbility(FileManager.instance.FindPlayerAbility("Readjust"), false, false);
+                listOfPlayers[2].AddAbility(FileManager.instance.FindPlayerAbility("Blizzard"), false, false);
                 listOfPlayers[2].AddAbility(FileManager.instance.FindPlayerAbility("Shockwave"), false, false);
 
                 yield return ClickThroughDialogue(new List<string>()

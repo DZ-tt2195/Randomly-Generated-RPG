@@ -388,13 +388,10 @@ public class TurnManager : MonoBehaviour
             Log.instance.AddText($"{Log.Article(nextEnemy.name)} entered the fight.", logged);
 
             nextEnemy.SetupCharacter(dataFile, FileManager.instance.ConvertToAbilityData(dataFile.listOfSkills, false), startingEmotion, true);
-            //SaveManager.instance.SaveEnemy(dataFile);
-
             if (CarryVariables.instance.ActiveCheat("Weaker Enemies"))
                 StartCoroutine(nextEnemy.ChangeMaxHealth(-2, logged + 1));
-
             if (CarryVariables.instance.ActiveChallenge("Extra Enemy Turns"))
-                StartCoroutine(nextEnemy.Extra(1, logged+1));
+                StartCoroutine(nextEnemy.ChangeEffect(StatusEffect.Extra, 1, logged+1));
         }
     }
 

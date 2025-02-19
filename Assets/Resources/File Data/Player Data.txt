@@ -35,7 +35,7 @@
       "10",
       "1",
       "GROUNDED",
-      "Agility,Bad Omens,Beacon,Bounce,Blizzard,Dash Down,Gravity Flip,Headwinds,Manipulate Time,Raven Flight,Roll Dice,Shockwave,Sink,Sky Hammer,Stalactites,Team Attack,",
+      "Agility,Bad Omens,Beacon,Bounce,Blizzard,Dash Down,Headwinds,Manipulate Time,Raven Flight,Readjust,Roll Dice,Shockwave,Sink,Sky Hammer,Stalactites,Team Attack,Warp,",
       "",
       "Harald Lieske|Dominion: Allies|(Conjurer)"
     ]

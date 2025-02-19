@@ -123,7 +123,7 @@
       "",
       "1",
       "2",
-      "StatEnemy/EmotionEnemy"
+      "EmotionEnemy/StatEnemy"
     ],
     [
       "Astronaut",
@@ -159,7 +159,7 @@
       "",
       "",
       "",
-      "PositionPlayer/EmotionPlayer/PositionEnemy/EmotionEnemy"
+      "EmotionPlayer/EmotionEnemy/PositionPlayer/PositionEnemy"
     ],
     [
       "Astronaut",
@@ -303,7 +303,7 @@
       "",
       "",
       "2",
-      "StatEnemy/PositionEnemy"
+      "PositionEnemy/StatEnemy"
     ],
     [
       "Bat",
@@ -591,7 +591,7 @@
       "1",
       "",
       "",
-      "StatEnemy/PositionEnemy"
+      "PositionEnemy/StatEnemy"
     ],
     [
       "Dragon",
@@ -609,7 +609,7 @@
       "",
       "",
       "",
-      "StatEnemy/EmotionEnemy"
+      "EmotionEnemy/StatEnemy"
     ],
     [
       "Drone",
@@ -627,7 +627,7 @@
       "",
       "",
       "",
-      "Attack/EmotionEnemy/PositionEnemy"
+      "Attack"
     ],
     [
       "Drone",
@@ -735,7 +735,7 @@
       "",
       "",
       "",
-      "PositionEnemy"
+      "Healing/PositionEnemy"
     ],
     [
       "KITTY!!!",
@@ -789,7 +789,7 @@
       "1",
       "1",
       "",
-      "StatPlayer"
+      "Misc"
     ],
     [
       "Ninja",
@@ -1005,7 +1005,7 @@
       "1",
       "",
       "",
-      "StatPlayer/PositionPlayer"
+      "PositionPlayer/StatPlayer"
     ],
     [
       "Puppeteer",
@@ -1275,7 +1275,7 @@
       "",
       "",
       "",
-      "Attack/StatPlayer"
+      "Attack"
     ],
     [
       "Spider",
@@ -1329,7 +1329,7 @@
       "",
       "",
       "2",
-      "StatEnemy"
+      "PositionEnemy/StatEnemy"
     ],
     [
       "Student",
@@ -1383,7 +1383,7 @@
       "",
       "1",
       "-2",
-      "StatPlayer/EmotionPlayer"
+      "EmotionPlayer/StatPlayer"
     ],
     [
       "Student",
@@ -1545,7 +1545,7 @@
       "",
       "",
       "2",
-      "StatEnemy/Healing"
+      "Healing/StatEnemy"
     ],
     [
       "Wall",
@@ -1635,7 +1635,7 @@
       "1",
       "",
       "",
-      "StatEnemy/PositionEnemy"
+      "PositionEnemy/StatEnemy"
     ]
   ]
 }

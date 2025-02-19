@@ -7,6 +7,8 @@ using MyBox;
 using System;
 using System.Linq;
 
+public enum Stats { Power, Defense, Speed, Luck };
+public enum StatusEffect { Stunned, Targeted, Locked, Protected, Extra };
 public enum Position { Grounded, Elevated, Dead };
 public enum Emotion { Dead, Neutral, Happy, Angry, Sad };
 
@@ -28,64 +30,18 @@ public class Character : MonoBehaviour
         [ReadOnly] public List<Ability> listOfAutoAbilities = new();
         [ReadOnly] public List<Ability> listOfRandomAbilities = new();
 
-    [Foldout("Base Stats", true)]
+    [Foldout("Stats", true)]
         protected int baseHealth;
+        public int currentHealth { get; private set; }
         protected int baseSpeed;
 
-    [Foldout("Current Stats", true)]
-        public int currentHealth { get; private set; }
-        public int modifyPower { get; private set; }
-        public int modifyDefense { get; private set; }
-        public int modifySpeed { get; private set; }
-        public int modifyLuck { get; private set; }
+        private Dictionary<StatusEffect, int> _privStatEffect = new();
+        public IReadOnlyDictionary<StatusEffect, int> statEffectDict => _privStatEffect;
+        private Dictionary<Stats, int> _privStatMod = new();
+        public IReadOnlyDictionary<Stats, int> statModDict => _privStatMod;
 
-        private Position _currentPosition;
-        [ReadOnly] public Position CurrentPosition
-        {
-            get { return _currentPosition; }
-            private set {
-               _currentPosition = value; CharacterUI(); }
-        }
-        private Emotion _currentEmotion;
-        [ReadOnly] public Emotion CurrentEmotion
-        {
-            get { return _currentEmotion; }
-            private set {
-                _currentEmotion = value; CharacterUI(); }
-        }
-        private int _turnsStunned;
-        [ReadOnly]
-        public int TurnsStunned
-        {
-            get { return _turnsStunned; }
-            private set { _turnsStunned = value; CharacterUI(); }
-        }
-        private int _turnsProtected;
-        [ReadOnly]
-        public int TurnsProtected
-        {
-            get { return _turnsProtected; }
-            private set { _turnsProtected = value; CharacterUI(); }
-        }
-        private int _turnsTargeted;
-        [ReadOnly]
-        public int TurnsTargeted
-        {
-            get { return _turnsTargeted; }
-            private set { _turnsTargeted = value; CharacterUI(); }
-        }
-        private int _extraTurns;
-        [ReadOnly] public int ExtraTurns
-        {
-            get { return _extraTurns; }
-            private set { _extraTurns = value; CharacterUI(); }
-        }
-        private int _turnsLocked;
-        [ReadOnly] public int TurnsLocked
-        {
-            get { return _turnsLocked; }
-            private set { _turnsLocked = value; CharacterUI(); }
-        }
+        public Position CurrentPosition { get; private set; }
+        public Emotion CurrentEmotion { get; private set; }
 
     [Foldout("UI", true)]
         [ReadOnly] public Image border;
@@ -109,6 +65,11 @@ public class Character : MonoBehaviour
         healthText = transform.Find("Health Text").GetChild(0).GetComponent<TMP_Text>();
         nameText = transform.Find("Name Text").GetChild(0).GetComponent<TMP_Text>();
         topText = transform.Find("Top Text").GetComponent<TMP_Text>();
+
+        foreach (StatusEffect value in Enum.GetValues(typeof(StatusEffect)))
+            _privStatEffect.Add(value, 0);
+        foreach (Stats value in Enum.GetValues(typeof(Stats)))
+            _privStatMod.Add(value, 0);
     }
 
     public void SetupCharacter(CharacterData characterData, List<AbilityData> listOfAbilityData, Emotion startingEmotion, bool abilitiesBeginWithCooldown)
@@ -134,11 +95,6 @@ public class Character : MonoBehaviour
         foreach (AbilityData data in listOfAbilityData)
             AddAbility(data, false, abilitiesBeginWithCooldown);
         listOfRandomAbilities = listOfRandomAbilities.OrderBy(o => o.mainType).ToList();
-
-        modifyPower = 0;
-        modifyDefense = 0;
-        modifySpeed = 0;
-        modifyLuck = 0;
     }
 
     internal void AddAbility(AbilityData ability, bool auto, bool startWithCooldown)
@@ -166,28 +122,31 @@ public class Character : MonoBehaviour
 
     public int CalculatePower()
     {
-        return modifyPower + (CurrentEmotion == Emotion.Angry ? 2 : 0);
+        return statModDict[Stats.Power] + (CurrentEmotion == Emotion.Angry ? 2 : 0);
     }
 
     public int CalculateSpeed()
     {
-        return this.baseSpeed + modifySpeed;
+        return this.baseSpeed + statModDict[Stats.Speed];
     }
 
-    public float CalculateStatTotals()
+    public int CalculateStatTotals()
     {
-        return (float)(CalculatePower() + modifyDefense + CalculateSpeed() + modifyLuck);
+        return (CalculatePower() + statModDict[Stats.Defense] + CalculateSpeed() + statModDict[Stats.Luck]);
     }
-
-#endregion
-
-#region Change Stats
 
     public IEnumerator ChangeMaxHealth(int effect, int logged)
     {
-        if (this == null) yield break;
-        baseHealth += effect;
+        if (this == null || effect == 0) yield break;
 
+        if (statEffectDict[StatusEffect.Protected] > 0 && effect < 0)
+        {
+            TurnManager.instance.CreateVisual($"BLOCKED", this.transform.localPosition);
+            Log.instance.AddText($"{(this.name)} is Protected from losing {Mathf.Abs(effect)} Max Health.", logged);
+            yield break;
+        }
+
+        baseHealth += effect;
         if (effect > 0)
         {
             TurnManager.instance.CreateVisual($"+{effect} MAX HEALTH", this.transform.localPosition);
@@ -218,7 +177,7 @@ public class Character : MonoBehaviour
         if (attacker != null) lastToAttackThis = attacker;
         if (this == null || damage == 0) yield break;
 
-        if (TurnsProtected > 0)
+        if (statEffectDict[StatusEffect.Protected] > 0)
         {
             TurnManager.instance.CreateVisual($"BLOCKED", this.transform.localPosition);
             Log.instance.AddText($"{(this.name)} is Protected from {damage} damage.", logged);
@@ -235,135 +194,71 @@ public class Character : MonoBehaviour
         healthText.text = KeywordTooltip.instance.EditText($"{currentHealth}/{baseHealth}Health");
     }
 
-    public IEnumerator HasDied(int logged)
+    public IEnumerator ChangeStat(Stats stat, int change, int logged)
     {
-        if (this == null) yield break;
+        if (this == null || change == 0) yield break;
 
-        if (this == TurnManager.instance.targetedPlayer)
-            TurnManager.instance.targetedPlayer = null;
-        if (this == TurnManager.instance.targetedEnemy)
-            TurnManager.instance.targetedEnemy = null;
-
-        baseHealth = data.baseHealth;
-        currentHealth = 0;
-        TurnsStunned = 0;
-        TurnsProtected = 0;
-        TurnsLocked = 0;
-        CurrentPosition = Position.Dead;
-        CurrentEmotion = Emotion.Dead;
-
-        Log.instance.AddText($"{this.name} has died.", logged);
-        TurnManager.instance.speedQueue.Remove(this);
-
-        if (this is PlayerCharacter)
-        {
-            TurnManager.instance.listOfPlayers.Remove(this);
-            TurnManager.instance.listOfDead.Add(this);
-            myImage.color = Color.gray;
-        }
-        else
-        {
-            TurnManager.instance.listOfEnemies.Remove(this);
-            Destroy(this.gameObject);
-        }
-    }
-
-    public IEnumerator ChangePower(int effect, int logged)
-    {
-        if (this == null || effect == 0) yield break;
-
-        if (TurnsProtected > 0 && effect < 0)
+        if (statEffectDict[StatusEffect.Protected] > 0 && change < 0)
         {
             TurnManager.instance.CreateVisual($"BLOCKED", this.transform.localPosition);
-            Log.instance.AddText($"{(this.name)} is Protected from losing {Mathf.Abs(effect)} Power.", logged);
+            Log.instance.AddText($"{(this.name)} is Protected from losing {Mathf.Abs(change)} {stat}.", logged);
+            yield break;
         }
-        else
+
+        _privStatMod[stat] = Math.Clamp(_privStatMod[stat] += change, -3, 3);
+        if (logged >= 0)
         {
-            modifyPower = Math.Clamp(modifyPower += effect, -3, 3);
-            if (logged >= 0)
-            {
-                TurnManager.instance.CreateVisual($"{(effect > 0 ? '+' : '-')}{Math.Abs(effect)} Power", this.transform.localPosition);
-                Log.instance.AddText($"{this.name} gets {(effect > 0 ? '+' : '-')}{Math.Abs(effect)} Power.", logged);
-            }
+            TurnManager.instance.CreateVisual($"{(change > 0 ? '+' : '-')}{Math.Abs(change)} {stat}", this.transform.localPosition);
+            Log.instance.AddText($"{this.name} gets {(change > 0 ? '+' : '-')}{Math.Abs(change)} {stat}.", logged);
         }
     }
 
-    public IEnumerator ChangeDefense(int effect, int logged)
+    public IEnumerator ChangeEffect(StatusEffect statusEffect, int change, int logged)
     {
-        if (this == null || effect == 0) yield break;
+        if (this == null || change == 0) yield break;
 
-        if (TurnsProtected > 0 && effect < 0)
-        {
-            TurnManager.instance.CreateVisual($"BLOCKED", this.transform.localPosition);
-            Log.instance.AddText($"{(this.name)} is Protected from losing {Mathf.Abs(effect)} Defense.", logged);
-        }
-        else
-        {
-            modifyDefense = Math.Clamp(modifyDefense += effect, -3, 3);
-            if (logged >= 0)
-            {
-                TurnManager.instance.CreateVisual($"{(effect > 0 ? '+' : '-')}{Math.Abs(effect)} Defense", this.transform.localPosition);
-                Log.instance.AddText($"{this.name} gets {(effect > 0 ? '+' : '-')}{Math.Abs(effect)} Defense.", logged);
-            }
-        }
-    }
+        _privStatEffect[statusEffect] += change;
+        CharacterUI();
+        TurnManager.instance.CreateVisual(statusEffect == StatusEffect.Extra ? "EXTRA TURN" : statusEffect.ToString().ToUpper(), this.transform.localPosition);
+        string pluralSuffix = _privStatEffect[statusEffect] == 1 ? "" : "s";
 
-    public IEnumerator ChangeSpeed(int effect, int logged)
-    {
-        if (this == null || effect == 0) yield break;
-
-        if (TurnsProtected > 0 && effect < 0)
+        switch (statusEffect)
         {
-            TurnManager.instance.CreateVisual($"BLOCKED", this.transform.localPosition);
-            Log.instance.AddText($"{(this.name)} is Protected from losing {Mathf.Abs(effect)} Speed.", logged);
-        }
-        else
-        {
-            modifySpeed = Math.Clamp(modifySpeed += effect, -5, 5);
-
-            if (logged >= 0)
-            {
-                TurnManager.instance.CreateVisual($"{(effect > 0 ? '+' : '-')}{Math.Abs(effect)} Speed", this.transform.localPosition);
-                Log.instance.AddText($"{this.name} gets {(effect > 0 ? '+' : '-')}{Math.Abs(effect)} Speed.", logged);
-            }
+            case StatusEffect.Stunned:
+                Log.instance.AddText($"{this.name} is Stunned for {_privStatEffect[statusEffect]} turn{pluralSuffix}.", logged);
+                break;
+            case StatusEffect.Locked:
+                Log.instance.AddText($"{this.name} is Locked for {_privStatEffect[statusEffect]} turn{pluralSuffix}.", logged);
+                break;
+            case StatusEffect.Targeted:
+                if (this is PlayerCharacter)
+                    TurnManager.instance.targetedPlayer = this;
+                else
+                    TurnManager.instance.targetedEnemy = this;
+                Log.instance.AddText($"{this.name} is Targeted for {_privStatEffect[statusEffect]} turn{pluralSuffix}.", logged);
+                break;
+            case StatusEffect.Extra:
+                Log.instance.AddText($"{this.name} will get {_privStatEffect[statusEffect]} Extra turn{pluralSuffix}.", logged);
+                break;
+            case StatusEffect.Protected:
+                Log.instance.AddText($"{this.name} is Protected for the next {_privStatEffect[statusEffect]} attack{pluralSuffix}.", logged);
+                break;
         }
     }
-
-    public IEnumerator ChangeLuck(int effect, int logged)
-    {
-        if (this == null || effect == 0f) yield break;
-
-        if (TurnsProtected > 0 && effect < 0)
-        {
-            TurnManager.instance.CreateVisual($"BLOCKED", this.transform.localPosition);
-            Log.instance.AddText($"{(this.name)} is Protected from losing {Mathf.Abs(effect)} Luck.", logged);
-        }
-        else
-        {
-            modifyLuck = Mathf.Clamp(modifyLuck += effect, -3, 3);
-            if (logged >= 0)
-            {
-                TurnManager.instance.CreateVisual($"{(effect > 0 ? '+' : '-')}{Math.Abs(effect)} Luck", this.transform.localPosition);
-                Log.instance.AddText($"{this.name} gets {(effect > 0 ? '+' : '-')}{Math.Abs(effect)} Luck.", logged);
-            }
-        }
-    }
-
-    #endregion
-
-#region Other Stats
 
     public IEnumerator ChangePosition(Position newPosition, int logged)
     {
         if (this == null || newPosition == Position.Dead || newPosition == CurrentPosition) yield break;
 
-        if (TurnsLocked > 0)
+        if (statEffectDict[StatusEffect.Locked] > 0)
         {
             Log.instance.AddText($"{(this.name)}'s Position can't change.", logged);
         }
         else
         {
             CurrentPosition = newPosition;
+            CharacterUI();
+
             if (Log.instance != null && logged >= 0)
             {
                 Log.instance.AddText($"{(this.name)} is now {newPosition}.", logged);
@@ -376,77 +271,58 @@ public class Character : MonoBehaviour
     {
         if (this == null || newEmotion == Emotion.Dead || newEmotion == CurrentEmotion) yield break;
 
-        if (TurnsLocked > 0)
+        if (statEffectDict[StatusEffect.Locked] > 0)
         {
             Log.instance.AddText($"{(this.name)}'s Emotion can't change.", logged);
+            yield break;
         }
         else
         {
             CurrentEmotion = newEmotion;
+            CharacterUI();
+
             if (Log.instance != null && logged >= 0)
             {
                 Log.instance.AddText($"{(this.name)} is now {CurrentEmotion}.", logged);
                 TurnManager.instance.CreateVisual($"{CurrentEmotion.ToString().ToUpper()}", this.transform.localPosition);
             }
         }
+    }
 
-        if (newEmotion == Emotion.Neutral)
+    public IEnumerator HasDied(int logged)
+    {
+        if (this == null) yield break;
+
+        if (this == TurnManager.instance.targetedPlayer)
+            TurnManager.instance.targetedPlayer = null;
+        if (this == TurnManager.instance.targetedEnemy)
+            TurnManager.instance.targetedEnemy = null;
+
+        baseHealth = data.baseHealth;
+        currentHealth = 0;
+
+        foreach (StatusEffect value in Enum.GetValues(typeof(StatusEffect)))
+            _privStatEffect[value] = 0;
+        foreach (Stats value in Enum.GetValues(typeof(Stats)))
+            _privStatMod[value] = 0;
+
+        CurrentPosition = Position.Dead;
+        CurrentEmotion = Emotion.Dead;
+        CharacterUI();
+
+        Log.instance.AddText($"{this.name} has died.", logged);
+        TurnManager.instance.speedQueue.Remove(this);
+
+        if (this is PlayerCharacter)
         {
-            this.myImage.color = Color.white;
+            TurnManager.instance.listOfPlayers.Remove(this);
+            TurnManager.instance.listOfDead.Add(this);
         }
         else
         {
-            Color newColor = KeywordTooltip.instance.SearchForKeyword(CurrentEmotion.ToString()).color;
-            this.myImage.color = new Color(newColor.r, newColor.g, newColor.b);
+            TurnManager.instance.listOfEnemies.Remove(this);
+            Destroy(this.gameObject);
         }
-    }
-
-    public IEnumerator Stunned(int amount, int logged)
-    {
-        if (this == null) yield break;
-
-        TurnsStunned += amount;
-        TurnManager.instance.CreateVisual($"STUNNED", this.transform.localPosition);
-        Log.instance.AddText($"{this.name} is Stunned for {TurnsStunned} turn{(TurnsStunned == 1 ? "" : "s")}.", logged);
-    }
-     
-    public IEnumerator Protected(int amount, int logged)
-    {
-        if (this == null) yield break;
-
-        TurnsProtected += amount;
-        TurnManager.instance.CreateVisual($"PROTECTED", this.transform.localPosition);
-        Log.instance.AddText($"{this.name} is Protected for the next {TurnsProtected} attack{(TurnsProtected == 1 ? "" : "s")}..", logged);
-    }
-
-    public IEnumerator Targeted(int amount, int logged)
-    {
-        if (this == null) yield break;
-
-        if (this is PlayerCharacter)
-            TurnManager.instance.targetedPlayer = this;
-        else if (this is EnemyCharacter)
-            TurnManager.instance.targetedEnemy = this;
-
-        TurnsTargeted += amount;
-        TurnManager.instance.CreateVisual($"TARGETED", this.transform.localPosition);
-        Log.instance.AddText($"{this.name} is Targeted for {TurnsTargeted} turn{(TurnsTargeted == 1 ? "" : "s")}.", logged);
-    }
-
-    public IEnumerator Extra(int amount, int logged)
-    {
-        if (this == null) yield break;
-        ExtraTurns += amount;
-        TurnManager.instance.CreateVisual($"EXTRA TURN", this.transform.localPosition);
-        Log.instance.AddText($"{this.name} will get {ExtraTurns} Extra turn{(ExtraTurns == 1 ? "" : "s")}.", logged);
-    }
-
-    public IEnumerator Locked(int amount, int logged)
-    {
-        if (this == null) yield break;
-        TurnsLocked += amount;
-        TurnManager.instance.CreateVisual($"LOCKED", this.transform.localPosition);
-        Log.instance.AddText($"{this.name}'s Position / Emotion are Locked for {TurnsLocked} turn{(TurnsLocked == 1 ? "" : "s")}.", logged);
     }
 
     public IEnumerator Revive(int health, int logged)
@@ -460,37 +336,31 @@ public class Character : MonoBehaviour
         yield return GainHealth(health, logged);
         yield return ChangePosition(data.startingPosition, -1);
         yield return ChangeEmotion((Emotion)UnityEngine.Random.Range(1, 5), -1);
-
-        modifyPower = 0;
-        modifyDefense = 0;
-        modifySpeed = 0;
-        modifyLuck = 0;
     }
 
     #endregion
 
-#region Turns
+#region Take Turn
 
     internal IEnumerator MyTurn(int logged)
     {
         chosenAbility = null;
         chosenTarget = null;
 
-        if (TurnsProtected > 0)
-            TurnsProtected--;
-        if (TurnsTargeted > 0)
-            TurnsTargeted--;
-        if (TurnsLocked > 0)
-            TurnsLocked--;
+        if (_privStatEffect[StatusEffect.Protected] > 0)
+            _privStatEffect[StatusEffect.Protected]--;
+        if (_privStatEffect[StatusEffect.Targeted] > 0)
+            _privStatEffect[StatusEffect.Targeted]--;
+        if (_privStatEffect[StatusEffect.Locked] > 0)
+            _privStatEffect[StatusEffect.Locked]--;
+        CharacterUI();
 
         yield return ResolveTurn(logged, false);
-        yield return EmotionEffect(logged, false);
-
-        while (ExtraTurns > 0)
+        while (statEffectDict[StatusEffect.Extra] > 0)
         {
-            ExtraTurns--;
+            _privStatEffect[StatusEffect.Extra]--;
+            CharacterUI();
             yield return ResolveTurn(logged, true);
-            yield return EmotionEffect(logged, true);
         }
     }
 
@@ -522,10 +392,11 @@ public class Character : MonoBehaviour
 
     IEnumerator ResolveTurn(int logged, bool extraAbility)
     {
-        if (TurnsStunned > 0)
+        if (statEffectDict[StatusEffect.Stunned] > 0)
         {
             yield return TurnManager.instance.WaitTime();
-            TurnsStunned--;
+            _privStatEffect[StatusEffect.Stunned]--;
+            CharacterUI();
             Log.instance.AddText($"{this.name} is Stunned.", 0);
             yield break;
         }
@@ -583,40 +454,7 @@ public class Character : MonoBehaviour
                 }
             }
 
-            StopCoroutine(nameof(Timer));
-            foreach (Ability ability in listOfAutoAbilities)
-            {
-                if (ability.currentCooldown > 0)
-                    ability.currentCooldown--;
-            }
-            foreach (Ability ability in listOfRandomAbilities)
-            {
-                if (ability.currentCooldown > 0)
-                    ability.currentCooldown--;
-            }
-
-            Log.instance.AddText(Log.Substitute(chosenAbility, this, chosenTarget), logged);
-            if (!chosenAbility.data.myName.Equals("Skip Turn"))
-            {
-                chosenAbility.killed = false;
-                chosenAbility.fullHeal = false;
-                chosenAbility.damageDealt = 0;
-
-                for (int i = 0; i < chosenAbility.data.instructions.Length; i++)
-                {
-                    string[] splicedString = TurnManager.SpliceString(chosenAbility.data.instructions[i], '/');
-                    yield return chosenAbility.ResolveInstructions(splicedString, i, logged + 1);
-                }
-
-                chosenAbility.currentCooldown = chosenAbility.data.baseCooldown + (CurrentEmotion == Emotion.Happy ? 1 : 0) +
-                    (CarryVariables.instance.ActiveCheat("Slower Enemy Cooldowns") && this is EnemyCharacter ? 1 : 0);
-
-                if (CarryVariables.instance.mode == CarryVariables.GameMode.Tutorial && TutorialManager.instance.currentCharacter == this)
-                {
-                    TutorialManager.instance.currentCharacter = null;
-                    yield return TutorialManager.instance.NextStep();
-                }
-            }
+            yield return AbilityUse(logged, extraAbility);
         }
     }
 
@@ -630,7 +468,46 @@ public class Character : MonoBehaviour
         yield return null;
     }
 
-    IEnumerator EmotionEffect(int logged, bool extraTurn)
+    IEnumerator AbilityUse(int logged, bool extraAbility)
+    {
+        StopCoroutine(nameof(Timer));
+        foreach (Ability ability in listOfAutoAbilities)
+        {
+            if (ability.currentCooldown > 0)
+                ability.currentCooldown--;
+        }
+        foreach (Ability ability in listOfRandomAbilities)
+        {
+            if (ability.currentCooldown > 0)
+                ability.currentCooldown--;
+        }
+
+        Log.instance.AddText(Log.Substitute(chosenAbility, this, chosenTarget), logged);
+        if (!chosenAbility.data.myName.Equals("Skip Turn"))
+        {
+            chosenAbility.killed = false;
+            chosenAbility.fullHeal = false;
+            chosenAbility.damageDealt = 0;
+
+            for (int i = 0; i < chosenAbility.data.instructions.Length; i++)
+            {
+                string[] splicedString = TurnManager.SpliceString(chosenAbility.data.instructions[i], '/');
+                yield return chosenAbility.ResolveInstructions(splicedString, i, logged + 1);
+            }
+
+            chosenAbility.currentCooldown = chosenAbility.data.baseCooldown + (CurrentEmotion == Emotion.Happy ? 1 : 0) +
+                (CarryVariables.instance.ActiveCheat("Slower Enemy Cooldowns") && this is EnemyCharacter ? 1 : 0);
+
+            if (CarryVariables.instance.mode == CarryVariables.GameMode.Tutorial && TutorialManager.instance.currentCharacter == this)
+            {
+                TutorialManager.instance.currentCharacter = null;
+                yield return TutorialManager.instance.NextStep();
+            }
+        }
+        yield return EmotionEffect(logged, extraAbility);
+    }
+
+    IEnumerator EmotionEffect(int logged, bool extraAbility)
     {
         if (timer > 0f && chosenAbility != null && !chosenAbility.data.myName.Equals("Skip Turn"))
         {
@@ -639,15 +516,15 @@ public class Character : MonoBehaviour
                 if (chosenAbility.killed || chosenAbility.fullHeal)
                 {
                     Log.instance.AddText($"{this.name} is Angry.", logged);
-                    yield return Stunned(1, logged + 1);
+                    yield return ChangeEffect(StatusEffect.Stunned, 1, logged + 1);
                 }
             }
             else if (this.CurrentEmotion == Emotion.Happy)
             {
-                if (!extraTurn && chosenAbility.mainType != AbilityType.Attack)
+                if (!extraAbility && chosenAbility.mainType != AbilityType.Attack)
                 {
                     Log.instance.AddText($"{this.name} is Happy.", logged);
-                    yield return Extra(1, logged+1);
+                    yield return ChangeEffect(StatusEffect.Extra, 1, logged+1);
                 }
             }
             else if (this.CurrentEmotion == Emotion.Sad)
@@ -696,26 +573,42 @@ public class Character : MonoBehaviour
     public void CharacterUI()
     {
         topText.text = (CurrentPosition == Position.Dead || CurrentEmotion == Emotion.Dead) ? "Dead" : KeywordTooltip.instance.EditText($"{CurrentEmotion}\n{CurrentPosition}");
+        if (CurrentEmotion == Emotion.Neutral)
+        {
+            this.myImage.color = Color.white;
+        }
+        else if (CurrentEmotion == Emotion.Dead)
+        {
+            this.myImage.color = Color.gray;
+        }
+        else
+        {
+            Color newColor = KeywordTooltip.instance.SearchForKeyword(CurrentEmotion.ToString()).color;
+            this.myImage.color = new Color(newColor.r, newColor.g, newColor.b);
+        }
+
         statusText.text = "";
 
-        for (int i = 0; i < TurnsStunned; i++)
-            statusText.text += "StunImage";
-        for (int i = 0; i < TurnsProtected; i++)
-            statusText.text += "ProtectedImage";
-        for (int i = 0; i < ExtraTurns; i++)
+        for (int i = 0; i < statEffectDict[StatusEffect.Extra]; i++)
             statusText.text += "ExtraImage";
-        for (int i = 0; i < TurnsLocked; i++)
+        for (int i = 0; i < statEffectDict[StatusEffect.Protected]; i++)
+            statusText.text += "ProtectedImage";
+        for (int i = 0; i < statEffectDict[StatusEffect.Locked]; i++)
             statusText.text += "LockedImage";
 
         if (TurnManager.instance != null && (TurnManager.instance.targetedPlayer == this || TurnManager.instance.targetedEnemy == this))
         {
-            for (int i = 0; i < TurnsTargeted; i++)
+            for (int i = 0; i < statEffectDict[StatusEffect.Targeted]; i++)
                 statusText.text += "TargetedImage";
         }
         else
         {
-            _turnsTargeted = 0;
+            _privStatEffect[StatusEffect.Targeted] = 0;
         }
+
+        for (int i = 0; i < statEffectDict[StatusEffect.Stunned]; i++)
+            statusText.text += "StunImage";
+
         statusText.text = KeywordTooltip.instance.EditText(statusText.text);
     }
 

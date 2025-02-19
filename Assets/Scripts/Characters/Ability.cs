@@ -100,10 +100,10 @@ public class Ability : MonoBehaviour
 
     int RollLuck()
     {
-        bool chance = Random.Range(0f, 1f) <= Mathf.Abs(self.modifyLuck)/4f;
+        bool chance = Random.Range(0f, 1f) <= Mathf.Abs(self.statModDict[Stats.Luck])/4f;
 
-        if (self.modifyLuck != 0 && chance)
-            return self.modifyLuck > 0 ? 2 : -2;
+        if (self.statModDict[Stats.Luck] != 0 && chance)
+            return self.statModDict[Stats.Luck] > 0 ? 2 : -2;
         else
             return 0;
     }
@@ -164,7 +164,7 @@ public class Ability : MonoBehaviour
         }
 
         int critical = RollLuck();
-        int damage = (critical + effectiveness + user.CalculatePower() + number) - target.modifyDefense;
+        int damage = (critical + effectiveness + user.CalculatePower() + number) - target.statModDict[Stats.Defense];
 
         if (effectiveness > 0)
             Log.instance.AddText($"It's super effective! (+{effectiveness} Damage)", logged);
@@ -344,61 +344,61 @@ public class Ability : MonoBehaviour
 
     bool TargetPowerOrMore(int currentIndex)
     {
-        listOfTargets[currentIndex].RemoveAll(target => target.modifyPower <= data.miscNumber);
+        listOfTargets[currentIndex].RemoveAll(target => target.statModDict[Stats.Power] <= data.miscNumber);
         return listOfTargets[currentIndex].Count > 0;
     }
 
     bool TargetPowerOrLess(int currentIndex)
     {
-        listOfTargets[currentIndex].RemoveAll(target => target.modifyPower >= data.miscNumber);
+        listOfTargets[currentIndex].RemoveAll(target => target.statModDict[Stats.Power] >= data.miscNumber);
         return listOfTargets[currentIndex].Count > 0;
     }
 
     bool TargetDefenseOrMore(int currentIndex)
     {
-        listOfTargets[currentIndex].RemoveAll(target => target.modifyDefense <= data.miscNumber);
+        listOfTargets[currentIndex].RemoveAll(target => target.statModDict[Stats.Defense] <= data.miscNumber);
         return listOfTargets[currentIndex].Count > 0;
     }
 
     bool TargetDefenseOrLess(int currentIndex)
     {
-        listOfTargets[currentIndex].RemoveAll(target => target.modifyDefense >= data.miscNumber);
+        listOfTargets[currentIndex].RemoveAll(target => target.statModDict[Stats.Defense] >= data.miscNumber);
         return listOfTargets[currentIndex].Count > 0;
     }
 
     bool TargetSpeedOrMore(int currentIndex)
     {
-        listOfTargets[currentIndex].RemoveAll(target => target.modifySpeed <= data.miscNumber);
+        listOfTargets[currentIndex].RemoveAll(target => target.statModDict[Stats.Speed] <= data.miscNumber);
         return listOfTargets[currentIndex].Count > 0;
     }
 
     bool TargetSpeedOrLess(int currentIndex)
     {
-        listOfTargets[currentIndex].RemoveAll(target => target.modifySpeed >= data.miscNumber);
+        listOfTargets[currentIndex].RemoveAll(target => target.statModDict[Stats.Speed] >= data.miscNumber);
         return listOfTargets[currentIndex].Count > 0;
     }
 
     bool TargetLuckOrMore(int currentIndex)
     {
-        listOfTargets[currentIndex].RemoveAll(target => target.modifyLuck <= data.miscNumber);
+        listOfTargets[currentIndex].RemoveAll(target => target.statModDict[Stats.Luck] <= data.miscNumber);
         return listOfTargets[currentIndex].Count > 0;
     }
 
     bool TargetLuckOrLess(int currentIndex)
     {
-        listOfTargets[currentIndex].RemoveAll(target => target.modifyLuck >= data.miscNumber);
+        listOfTargets[currentIndex].RemoveAll(target => target.statModDict[Stats.Luck] >= data.miscNumber);
         return listOfTargets[currentIndex].Count > 0;
     }
 
     bool TargetIsStunned(int currentIndex)
     {
-        listOfTargets[currentIndex].RemoveAll(target => target.TurnsStunned <= 0);
+        listOfTargets[currentIndex].RemoveAll(target => target.statEffectDict[StatusEffect.Stunned] <= 0);
         return listOfTargets[currentIndex].Count > 0;
     }
 
     bool TargetNotStunned(int currentIndex)
     {
-        listOfTargets[currentIndex].RemoveAll(target => target.TurnsStunned >= 1);
+        listOfTargets[currentIndex].RemoveAll(target => target.statEffectDict[StatusEffect.Stunned] >= 1);
         return listOfTargets[currentIndex].Count > 0;
     }
 
@@ -598,42 +598,42 @@ public class Ability : MonoBehaviour
 
     IEnumerator TargetGainPower(Character target, int logged)
     {
-        yield return target.ChangePower(data.modifyPower, logged);
+        yield return target.ChangeStat(Stats.Power, data.modifyPower, logged);
     }
 
     IEnumerator TargetLosePower(Character target, int logged)
     {
-        yield return target.ChangePower(-1*data.modifyPower, logged);
+        yield return target.ChangeStat(Stats.Power, -1*data.modifyPower, logged);
     }
 
     IEnumerator TargetGainDefense(Character target, int logged)
     {
-        yield return target.ChangeDefense(data.modifyDefense, logged);
+        yield return target.ChangeStat(Stats.Defense, data.modifyDefense, logged);
     }
 
     IEnumerator TargetLoseDefense(Character target, int logged)
     {
-        yield return target.ChangeDefense(-1*data.modifyDefense, logged);
+        yield return target.ChangeStat(Stats.Defense, -1*data.modifyDefense, logged);
     }
 
     IEnumerator TargetGainSpeed(Character target, int logged)
     {
-        yield return target.ChangeSpeed(data.modifySpeed, logged);
+        yield return target.ChangeStat(Stats.Speed, data.modifySpeed, logged);
     }
 
     IEnumerator TargetLoseSpeed(Character target, int logged)
     {
-        yield return target.ChangeSpeed(-1*data.modifySpeed, logged);
+        yield return target.ChangeStat(Stats.Speed, -1*data.modifySpeed, logged);
     }
 
     IEnumerator TargetGainLuck(Character target, int logged)
     {
-        yield return target.ChangeLuck(data.modifyLuck, logged);
+        yield return target.ChangeStat(Stats.Luck, data.modifyLuck, logged);
     }
 
     IEnumerator TargetLoseLuck(Character target, int logged)
     {
-        yield return target.ChangeLuck(-1*data.modifyLuck, logged);
+        yield return target.ChangeStat(Stats.Luck, -1*data.modifyLuck, logged);
     }
 
     IEnumerator TargetDeath(Character target, int logged)
@@ -648,27 +648,27 @@ public class Ability : MonoBehaviour
 
     IEnumerator TargetBecomeStunned(Character target, int logged)
     {
-        yield return target.Stunned(data.miscNumber, logged);
+        yield return target.ChangeEffect(StatusEffect.Stunned, data.miscNumber, logged);
     }
 
     IEnumerator TargetBecomeProtected(Character target, int logged)
     {
-        yield return target.Protected(data.miscNumber, logged);
+        yield return target.ChangeEffect(StatusEffect.Protected, data.miscNumber, logged);
     }
 
     IEnumerator TargetBecomeTargeted(Character target, int logged)
     {
-        yield return target.Targeted(data.miscNumber, logged);
+        yield return target.ChangeEffect(StatusEffect.Targeted, data.miscNumber, logged);
     }
 
     IEnumerator TargetBecomeLocked(Character target, int logged)
     {
-        yield return target.Locked(data.miscNumber, logged);
+        yield return target.ChangeEffect(StatusEffect.Locked, data.miscNumber, logged);
     }
 
     IEnumerator TargetGetExtraTurn(Character target, int logged)
     {
-        yield return target.Extra(data.miscNumber, logged);
+        yield return target.ChangeEffect(StatusEffect.Extra, data.miscNumber, logged);
     }
 
     IEnumerator TargetIncreaseCooldown(Character target, int logged)
