@@ -4,7 +4,6 @@ using UnityEngine;
 using MyBox;
 using System.Reflection;
 using System.Linq;
-using static UnityEngine.GraphicsBuffer;
 
 public enum TeamTarget { None, Self, AnyOne, All, OnePlayer, OtherPlayer, OneEnemy, OtherEnemy, AllPlayers, AllEnemies };
 public enum AbilityType { None, Attack, StatPlayer, StatEnemy, EmotionPlayer, EmotionEnemy, PositionPlayer, PositionEnemy, Healing, Misc };
@@ -543,13 +542,6 @@ public class Ability : MonoBehaviour
         yield return null;
     }
 
-    IEnumerator DealtDamage(Character target, int logged)
-    {
-        if (damageDealt == 0)
-            runNextMethod = false;
-        yield return null;
-    }
-
     IEnumerator TargetAttack(Character target, int logged)
     {
         damageDealt = CalculateDamage(self, target, data.attackDamage, logged);
@@ -695,7 +687,7 @@ public class Ability : MonoBehaviour
         yield return target.ChangeEffect(StatusEffect.Locked, data.miscNumber, logged);
     }
 
-    IEnumerator TargetGetExtraTurn(Character target, int logged)
+    IEnumerator TargetGetExtraAbility(Character target, int logged)
     {
         yield return target.ChangeEffect(StatusEffect.Extra, data.miscNumber, logged);
     }

@@ -734,7 +734,7 @@ MonoBehaviour:
   m_linkedTextComponent: {fileID: 0}
   parentLinkedComponent: {fileID: 0}
   m_enableKerning: 1
-  m_ActiveFontFeatures: 00000000
+  m_ActiveFontFeatures: 6e72656b
   m_enableExtraPadding: 0
   checkPaddingRequired: 0
   m_isRichText: 1
@@ -1241,8 +1241,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "When this uses an attacking Ability, \nit regains 2 Health; otherwise
-    it loses 2 Health."
+  m_text: "Gains 2 Health when it attacks; \nloses 2 Health otherwise."
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8c64c47af7c1c4fb5b88d184433c6c44, type: 2}
   m_sharedMaterial: {fileID: -3852492252101762229, guid: 8c64c47af7c1c4fb5b88d184433c6c44, type: 2}
@@ -1291,7 +1290,7 @@ MonoBehaviour:
   m_linkedTextComponent: {fileID: 0}
   parentLinkedComponent: {fileID: 0}
   m_enableKerning: 1
-  m_ActiveFontFeatures: 00000000
+  m_ActiveFontFeatures: 6e72656b
   m_enableExtraPadding: 0
   checkPaddingRequired: 0
   m_isRichText: 1
@@ -1889,7 +1888,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Extra effective against Angry. Even more speed/luck, even longer cooldowns.
+  m_text: Hi
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8c64c47af7c1c4fb5b88d184433c6c44, type: 2}
   m_sharedMaterial: {fileID: -3852492252101762229, guid: 8c64c47af7c1c4fb5b88d184433c6c44, type: 2}
@@ -1916,7 +1915,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 76.5
+  m_fontSize: 100
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -3490,10 +3489,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'When this uses a non-attacking Ability on its turn, it gets an Extra turn.
-
-    Abilities
-    have 1 more turn of Cooldown.'
+  m_text: "Gets an extra Ability if they don't attack; \nall Abilities have 1 more
+    turn of Cooldown."
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8c64c47af7c1c4fb5b88d184433c6c44, type: 2}
   m_sharedMaterial: {fileID: -3852492252101762229, guid: 8c64c47af7c1c4fb5b88d184433c6c44, type: 2}
@@ -3542,7 +3539,7 @@ MonoBehaviour:
   m_linkedTextComponent: {fileID: 0}
   parentLinkedComponent: {fileID: 0}
   m_enableKerning: 1
-  m_ActiveFontFeatures: 00000000
+  m_ActiveFontFeatures: 6e72656b
   m_enableExtraPadding: 0
   checkPaddingRequired: 0
   m_isRichText: 1
@@ -5097,13 +5094,13 @@ MonoBehaviour:
     color: {r: 0.85, g: 0.85, b: 0.85, a: 0}
   - keywordVariations:
     - Happy
-    description: Effective against Angry. Gets an Extra turn when it doesn't attack;
-      Abilities have 1 more turn of Cooldown.
+    description: Effective against Angry. Gets an extra Ability if they don't attack;
+      all Abilities have 1 more turn of Cooldown.
     color: {r: 0.4, g: 1, b: 0, a: 0}
   - keywordVariations:
     - Angry
-    description: Effective against Sad. +2 Power; gets Stunned when killing or healing
-      someone to full Health.
+    description: Effective against Sad. +2 Power; becomes Stunned when killing or
+      healing someone to full Health.
     color: {r: 1, g: 0.5, b: 0.5, a: 0}
   - keywordVariations:
     - Sad
@@ -5182,10 +5179,6 @@ MonoBehaviour:
       \nNegative Luck = More likely to get -3."
     color: {r: 0, g: 0, b: 0, a: 0}
   - keywordVariations:
-    - Accuracy
-    description: Lower Accuracy = Attacks are more likely to miss and do 0 damage.
-    color: {r: 0, g: 0, b: 0, a: 0}
-  - keywordVariations:
     - Star
     description: More Star = Stronger enemy type.
     color: {r: 0, g: 0, b: 0, a: 0}
@@ -5204,7 +5197,7 @@ MonoBehaviour:
     color: {r: 0, g: 0, b: 0, a: 0}
   - keywordVariations:
     - ExtraImage
-    description: 'Extra Turn: This can use another Ability during their turn.'
+    description: 'Extra Ability: This can use another Ability on their turn.'
     color: {r: 0, g: 0, b: 0, a: 0}
   - keywordVariations:
     - LockImage
@@ -5455,7 +5448,7 @@ MonoBehaviour:
   m_linkedTextComponent: {fileID: 0}
   parentLinkedComponent: {fileID: 0}
   m_enableKerning: 1
-  m_ActiveFontFeatures: 00000000
+  m_ActiveFontFeatures: 6e72656b
   m_enableExtraPadding: 0
   checkPaddingRequired: 0
   m_isRichText: 1
@@ -7644,7 +7637,7 @@ MonoBehaviour:
   m_linkedTextComponent: {fileID: 0}
   parentLinkedComponent: {fileID: 0}
   m_enableKerning: 1
-  m_ActiveFontFeatures: 00000000
+  m_ActiveFontFeatures: 6e72656b
   m_enableExtraPadding: 0
   checkPaddingRequired: 0
   m_isRichText: 1
@@ -10592,7 +10585,7 @@ MonoBehaviour:
   m_linkedTextComponent: {fileID: 0}
   parentLinkedComponent: {fileID: 0}
   m_enableKerning: 1
-  m_ActiveFontFeatures: 00000000
+  m_ActiveFontFeatures: 6e72656b
   m_enableExtraPadding: 0
   checkPaddingRequired: 0
   m_isRichText: 1
@@ -16181,8 +16174,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "+2 Power. When this kills another character, \nor heals another character
-    to full Health, \nthis gets Stunned for 1 turn."
+  m_text: +2 Power; becomes Stunned when killing or healing someone to full Health.
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8c64c47af7c1c4fb5b88d184433c6c44, type: 2}
   m_sharedMaterial: {fileID: -3852492252101762229, guid: 8c64c47af7c1c4fb5b88d184433c6c44, type: 2}
@@ -16231,7 +16223,7 @@ MonoBehaviour:
   m_linkedTextComponent: {fileID: 0}
   parentLinkedComponent: {fileID: 0}
   m_enableKerning: 1
-  m_ActiveFontFeatures: 00000000
+  m_ActiveFontFeatures: 6e72656b
   m_enableExtraPadding: 0
   checkPaddingRequired: 0
   m_isRichText: 1

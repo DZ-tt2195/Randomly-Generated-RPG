@@ -34,11 +34,11 @@
     ],
     [
       "Flag Bearer",
-      "If not killed in time, will summon a 3 Star Enemy in its place.",
+      "If not killed in time, will summon a 3 Star Enemy.",
       "5",
       "0",
       "GROUNDED",
-      "Flag Whack,Replacement,",
+      "Flag Whack,Summon,",
       "CameOffCooldown",
       "Grant Hansen|Dominion: Renaissance|(Flag Bearer)",
       "1"
@@ -78,7 +78,7 @@
     ],
     [
       "PUPPY!!!",
-      "Deals high damage to Grounded Players and will force Elevated Players to be Grounded.",
+      "Attacks Players after they're Grounded and their Defense has been reduced.",
       "5",
       "0",
       "GROUNDED",
@@ -93,7 +93,7 @@
       "5",
       "0",
       "GROUNDED",
-      "Nibble,Strength in Numbers,",
+      "Swarm,Strength in Numbers,",
       "",
       "Ian Kirkpatrick|Dominion: Dark Ages|(Rats)",
       "1"
@@ -144,7 +144,7 @@
     ],
     [
       "Barbarian",
-      "Makes itself Angry, goes after the Grounded Player with the most Health, and lowers their Max Health.",
+      "Makes itself Angry, goes after the Grounded Player with the most Health, and lowers Max Health.",
       "10",
       "0",
       "GROUNDED",
@@ -155,7 +155,7 @@
     ],
     [
       "Bat",
-      "Makes itself Sad, then it attacks Grounded Players and heals at the same time.",
+      "Makes itself Sad, then it attacks Players and heals at the same time.",
       "10",
       "1",
       "ELEVATED",
@@ -177,11 +177,11 @@
     ],
     [
       "Ninja",
-      "Makes everyone Grounded so that it can kill the Player with the least amount of Health.",
+      "Makes all Players Grounded so that it can kill whoever has the least Health.",
       "10",
       "1",
       "ELEVATED",
-      "Assassinate,No Hiding,Shuriken,Flip,",
+      "Sneak Attack,No Hiding,Shuriken,Flip,",
       "LeastHealth",
       "Elisa Cella|Dominion: Rising Sun|(Ninja)",
       "2"
@@ -210,7 +210,7 @@
     ],
     [
       "Trickster",
-      "Makes Grounded Players Happy, and then makes their Ability Cooldown take longer.",
+      "Makes a Grounded Player Happy, and then makes their Ability Cooldown take longer.",
       "10",
       "-1",
       "ELEVATED",
@@ -265,18 +265,18 @@
     ],
     [
       "Royalty",
-      "Doesn't attack, but summons more 1 Star and 2 Star Enemies. Buffs Enemy Stats and lowers Player Stats.",
+      "Summons more 1 Star and 2 Star Enemies, then buffs Enemy Stats and lowers Player Stats.",
       "15",
       "-2",
       "GROUNDED",
-      "Recruit,Call for Guards,Procession,Identify Targets,",
+      "Call,Alert,Procession,Identify Targets,",
       "",
       "Kieran Yanner|Throne of Eldraine|(Kenrith, the Returned King)",
       "3"
     ],
     [
       "Taskmaster",
-      "Changes its own Emotion, and deals heavy damage to any Player who doesn't have the same Emotion as this.",
+      "Keeps changing its own Emotion, and then deals heavy damage to any Player with a different Emotion.",
       "15",
       "2",
       "GROUNDED",

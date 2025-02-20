@@ -121,8 +121,8 @@ public class TutorialManager : MonoBehaviour
                 { "You killed your first Enemy! Now you may have noticed your Knight is \"Angry\".",
                 "Everyone begins with a random Emotion. Emotions are effective against other Emotions, and have their own side effects.",
                 "Happy beats Angry, which beats Sad, which beats Happy. Neutral is neutral against everything else.",
-                "This game, your Knight started off Angry, which means they get +2 Power (attacks and healing abilities are stronger).",
-                "However, if they kill an Enemy (like they just did right now), or heal someone to full Health, they get Stunned and miss their next turn."});
+                "This game, your Knight started off Angry, which means they get +2 Power (attacks and healing abilities are stronger by 2 points).",
+                "However, if they kill someone (like they just did right now), or heal someone to full Health, they get Stunned and miss their next turn."});
 
                 currentStep = 6;
                 StartCoroutine(NextStep());
@@ -170,9 +170,9 @@ public class TutorialManager : MonoBehaviour
                 listOfPlayers[1].AddAbility(FileManager.instance.FindPlayerAbility("Poor Gamble"), false, false);
 
                 yield return ClickThroughDialogue(new List<string>()
-                { "Your Angel is Happy, which means they get an Extra turn when they don't attack, but all their Abilities have 1 more turn of Cooldown.",
+                { "Your Angel is Happy, which means they can use another Ability when they don't attack, but all their Abilities have 1 more turn of Cooldown.",
                 "Emotions also apply to Enemies. If you right click the Page, you'll see that their Ability got placed on Cooldown.",
-                "Your Angel didn’t attack, so they now get an Extra turn. However, Invigorate is on Cooldown.",
+                "Your Angel didn’t attack, so they now can use another Ability. However, Invigorate is on Cooldown for 2 turns.",
                 "Instead, you can change the Page’s Emotion to Sad. That way, your Angry Knight will gain the advantage."});
                 break;
 
@@ -184,7 +184,7 @@ public class TutorialManager : MonoBehaviour
                 listOfPlayers[0].AddAbility(FileManager.instance.FindPlayerAbility("Cheer"), false, false);
 
                 listOfPlayers[1].AddAbility(FileManager.instance.FindPlayerAbility("Share Healing"), false, false);
-                listOfPlayers[1].AddAbility(FileManager.instance.FindPlayerAbility("Submerge"), false, false);
+                listOfPlayers[1].AddAbility(FileManager.instance.FindPlayerAbility("Assist"), false, false);
 
                 TurnManager.instance.CreateEnemy(FileManager.instance.FindBonusEnemy("Page"), Emotion.Neutral, 0);
                 TurnManager.instance.CreateEnemy(FileManager.instance.FindBonusEnemy("Crow"), Emotion.Neutral, 0);
@@ -260,7 +260,7 @@ public class TutorialManager : MonoBehaviour
 
             case 14: //finish off the enemies
                 listOfPlayers[2].AddAbility(FileManager.instance.FindPlayerAbility("Readjust"), false, false);
-                listOfPlayers[2].AddAbility(FileManager.instance.FindPlayerAbility("Blizzard"), false, false);
+                listOfPlayers[2].AddAbility(FileManager.instance.FindPlayerAbility("Flood"), false, false);
                 listOfPlayers[2].AddAbility(FileManager.instance.FindPlayerAbility("Shockwave"), false, false);
 
                 yield return ClickThroughDialogue(new List<string>()

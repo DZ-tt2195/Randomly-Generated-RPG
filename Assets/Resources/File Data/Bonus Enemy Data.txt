@@ -12,7 +12,7 @@
     [
       "Page",
       "Basic Enemy who attacks Grounded Players.",
-      "8",
+      "6",
       "2",
       "GROUNDED",
       "Swing,",
@@ -22,7 +22,7 @@
     [
       "Crow",
       "Basic Enemy who attacks Grounded and Elevated Players.",
-      "5",
+      "4",
       "2",
       "ELEVATED",
       "Peck,",

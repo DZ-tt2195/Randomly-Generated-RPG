@@ -168,7 +168,7 @@ public class Character : MonoBehaviour
 
         currentHealth = Mathf.Clamp(currentHealth += health, 0, this.baseHealth);
         TurnManager.instance.CreateVisual($"+{health} Health", this.transform.localPosition);
-        Log.instance.AddText($"{(this.name)} regains {health} Health.", logged);
+        Log.instance.AddText($"{(this.name)} gains {health} Health.", logged);
         healthText.text = KeywordTooltip.instance.EditText($"{currentHealth}/{baseHealth}Health");
     }
 
@@ -219,7 +219,7 @@ public class Character : MonoBehaviour
 
         _privStatEffect[statusEffect] += change;
         CharacterUI();
-        TurnManager.instance.CreateVisual(statusEffect == StatusEffect.Extra ? "EXTRA TURN" : statusEffect.ToString().ToUpper(), this.transform.localPosition);
+        TurnManager.instance.CreateVisual(statusEffect == StatusEffect.Extra ? "EXTRA ABILITY" : statusEffect.ToString().ToUpper(), this.transform.localPosition);
         string pluralSuffix = _privStatEffect[statusEffect] == 1 ? "" : "s";
 
         switch (statusEffect)
@@ -238,7 +238,8 @@ public class Character : MonoBehaviour
                 Log.instance.AddText($"{this.name} is Targeted for {_privStatEffect[statusEffect]} turn{pluralSuffix}.", logged);
                 break;
             case StatusEffect.Extra:
-                Log.instance.AddText($"{this.name} will get {_privStatEffect[statusEffect]} Extra turn{pluralSuffix}.", logged);
+                string plural = _privStatEffect[statusEffect] == 1 ? "Ability" : "Abilities";
+                Log.instance.AddText($"{this.name} gets {_privStatEffect[statusEffect]} Extra {plural}.", logged);
                 break;
             case StatusEffect.Protected:
                 Log.instance.AddText($"{this.name} is Protected for the next {_privStatEffect[statusEffect]} attack{pluralSuffix}.", logged);
@@ -356,9 +357,11 @@ public class Character : MonoBehaviour
         CharacterUI();
 
         yield return ResolveTurn(logged, false);
-        while (statEffectDict[StatusEffect.Extra] > 0)
+        while (statEffectDict[StatusEffect.Extra] > 0 && TurnManager.instance.listOfEnemies.Count > 0)
         {
             _privStatEffect[StatusEffect.Extra]--;
+            Log.instance.AddText($"{(this.name)} uses another Ability.", logged);
+
             CharacterUI();
             yield return ResolveTurn(logged, true);
         }
@@ -397,65 +400,48 @@ public class Character : MonoBehaviour
             yield return TurnManager.instance.WaitTime();
             _privStatEffect[StatusEffect.Stunned]--;
             CharacterUI();
-            Log.instance.AddText($"{this.name} is Stunned.", 0);
+            Log.instance.AddText($"{this.name} is Stunned and misses a turn.", 0);
             yield break;
         }
 
-        if (TurnManager.instance.listOfEnemies.Count > 0)
+        StartCoroutine(nameof(Timer));
+        chosenAbility = null;
+        chosenTarget = null;
+
+        while (chosenAbility == null)
         {
-            StartCoroutine(nameof(Timer));
-            if (extraAbility)
+            if (timer < 0f)
+                yield break;
+
+            yield return ChooseAbility(logged, extraAbility);
+
+            if (timer < 0f)
+                yield break;
+
+            for (int i = 0; i < chosenAbility.data.defaultTargets.Length; i++)
             {
-                foreach (Ability ability in listOfAutoAbilities)
-                {
-                    if (ability.currentCooldown > 0)
-                        ability.currentCooldown++;
-                }
-                foreach (Ability ability in listOfRandomAbilities)
-                {
-                    if (ability.currentCooldown > 0)
-                        ability.currentCooldown++;
-                }
+                yield return ChooseTarget(chosenAbility, chosenAbility.data.defaultTargets[i], i);
+                if (chosenAbility.singleTarget.Contains(chosenAbility.data.defaultTargets[i]))
+                    chosenTarget = chosenAbility.listOfTargets[i][0];
             }
 
-            chosenAbility = null;
-            chosenTarget = null;
+            if (timer < 0f)
+                yield break;
 
-            while (chosenAbility == null)
+            if (this is PlayerCharacter)
             {
+                string part1 = $"{this.name}: Use {chosenAbility.data.myName}";
+                string part2 = chosenTarget != null ? $" on {chosenTarget.data.myName}?" : "?";
+
+                yield return TurnManager.instance.ConfirmUndo(part1 + part2, new Vector3(0, 400));
+                if (TurnManager.instance.confirmChoice == 1)
+                    chosenAbility = null;
                 if (timer < 0f)
                     yield break;
-
-                yield return ChooseAbility(logged, extraAbility);
-
-                if (timer < 0f)
-                    yield break;
-
-                for (int i = 0; i < chosenAbility.data.defaultTargets.Length; i++)
-                {
-                    yield return ChooseTarget(chosenAbility, chosenAbility.data.defaultTargets[i], i);
-                    if (chosenAbility.singleTarget.Contains(chosenAbility.data.defaultTargets[i]))
-                        chosenTarget = chosenAbility.listOfTargets[i][0];
-                }
-
-                if (timer < 0f)
-                    yield break;
-
-                if (this is PlayerCharacter)
-                {
-                    string part1 = $"{this.name}: Use {chosenAbility.data.myName}";
-                    string part2 = chosenTarget != null ? $" on {chosenTarget.data.myName}?" : "?";
-
-                    yield return TurnManager.instance.ConfirmUndo(part1 + part2, new Vector3(0, 400));
-                    if (TurnManager.instance.confirmChoice == 1)
-                        chosenAbility = null;
-                    if (timer < 0f)
-                        yield break;
-                }
             }
-
-            yield return AbilityUse(logged, extraAbility);
         }
+
+        yield return AbilityUse(logged, extraAbility);
     }
 
     protected virtual IEnumerator ChooseAbility(int logged, bool extraAbility)
@@ -471,17 +457,19 @@ public class Character : MonoBehaviour
     IEnumerator AbilityUse(int logged, bool extraAbility)
     {
         StopCoroutine(nameof(Timer));
-        foreach (Ability ability in listOfAutoAbilities)
+        if (!extraAbility)
         {
-            if (ability.currentCooldown > 0)
-                ability.currentCooldown--;
+            foreach (Ability ability in listOfAutoAbilities)
+            {
+                if (ability.currentCooldown > 0)
+                    ability.currentCooldown--;
+            }
+            foreach (Ability ability in listOfRandomAbilities)
+            {
+                if (ability.currentCooldown > 0)
+                    ability.currentCooldown--;
+            }
         }
-        foreach (Ability ability in listOfRandomAbilities)
-        {
-            if (ability.currentCooldown > 0)
-                ability.currentCooldown--;
-        }
-
         Log.instance.AddText(Log.Substitute(chosenAbility, this, chosenTarget), logged);
         if (!chosenAbility.data.myName.Equals("Skip Turn"))
         {

@@ -2698,8 +2698,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -625, y: -60}
-  m_SizeDelta: {x: -1350, y: -280}
+  m_AnchoredPosition: {x: -650, y: -60}
+  m_SizeDelta: {x: -1380, y: -280}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &608539619
 MonoBehaviour:
@@ -2762,7 +2762,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 77.35
+  m_fontSize: 77.05
   m_fontSizeBase: 14
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -6898,8 +6898,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 625, y: -60}
-  m_SizeDelta: {x: -1350, y: -280}
+  m_AnchoredPosition: {x: 600, y: -60}
+  m_SizeDelta: {x: -1280, y: -280}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1410552182
 MonoBehaviour:
@@ -6926,16 +6926,16 @@ MonoBehaviour:
     Neutral: Default Emotion.
 
     Happy: Effective
-    against Angry. Gets an extra turn when it doesn''t attack on their turn; Abilities
-    have 1 more turn of <link="Cooldown"><sprite="Cooldown" name="Cooldown"></link>.
+    against Angry. Gets an Extra Ability if they don''t attack; all Abilities have
+    1 more turn of <link="Cooldown"><sprite="Cooldown" name="Cooldown"></link>.
 
     Angry:
     Effective against Sad. +2 <link="Power"><sprite="Power" name="Power"></link>;
-    gets Stunned when killing or healing someone to full <link="Health"><sprite="Health"
+    becomes Stunned when killing or healing someone to full <link="Health"><sprite="Health"
     name="Health"></link>.
 
     Sad: Effective against Happy. Gains 2 <link="Health"><sprite="Health"
-    name="Health"></link> when attacking; loses 2 <link="Health"><sprite="Health"
+    name="Health"></link> when it attacks; loses 2 <link="Health"><sprite="Health"
     name="Health"></link> otherwise.
 
 
@@ -6984,7 +6984,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 73.85
+  m_fontSize: 77.35
   m_fontSizeBase: 14
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -7591,7 +7591,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1625251692
 RectTransform:
   m_ObjectHideFlags: 0
