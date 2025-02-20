@@ -122,11 +122,11 @@
     ],
     [
       "Archer",
-      "Increases its own Luck, then shoots down Elevated Players.",
+      "Increases its own Luck, makes itself Happy, then shoots down Elevated Players that are Angry.",
       "10",
       "1",
       "GROUNDED",
-      "Sharp Arrow,Frozen Arrow,Volley of Arrows,Focus,",
+      "Quick Shot,Frozen Arrow,Volley of Arrows,Focus,",
       "ChooseElevated",
       "Harald Lieske|Dominion: Allies|(Archer)",
       "2"
@@ -214,7 +214,7 @@
       "10",
       "-1",
       "ELEVATED",
-      "Mischief,Illusion,Distract,",
+      "Mischief,Delay,Illusion,Distract,",
       "ChooseAttack",
       "Mila Pesic|Throne of Eldraine|(Bog Naughty)",
       "2"

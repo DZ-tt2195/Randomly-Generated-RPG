@@ -252,7 +252,7 @@ public class Character : MonoBehaviour
 
         if (statEffectDict[StatusEffect.Locked] > 0)
         {
-            Log.instance.AddText($"{(this.name)}'s Position can't change.", logged);
+            Log.instance.AddText($"{(this.name)}'s Position is Locked and can't change.", logged);
         }
         else
         {
@@ -273,7 +273,7 @@ public class Character : MonoBehaviour
 
         if (statEffectDict[StatusEffect.Locked] > 0)
         {
-            Log.instance.AddText($"{(this.name)}'s Emotion can't change.", logged);
+            Log.instance.AddText($"{(this.name)}'s Emotion is Locked and can't change.", logged);
             yield break;
         }
         else

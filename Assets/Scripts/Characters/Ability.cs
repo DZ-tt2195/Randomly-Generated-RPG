@@ -4,6 +4,7 @@ using UnityEngine;
 using MyBox;
 using System.Reflection;
 using System.Linq;
+using static UnityEngine.GraphicsBuffer;
 
 public enum TeamTarget { None, Self, AnyOne, All, OnePlayer, OtherPlayer, OneEnemy, OtherEnemy, AllPlayers, AllEnemies };
 public enum AbilityType { None, Attack, StatPlayer, StatEnemy, EmotionPlayer, EmotionEnemy, PositionPlayer, PositionEnemy, Healing, Misc };
@@ -103,7 +104,7 @@ public class Ability : MonoBehaviour
         bool chance = Random.Range(0f, 1f) <= Mathf.Abs(self.statModDict[Stats.Luck])/4f;
 
         if (self.statModDict[Stats.Luck] != 0 && chance)
-            return self.statModDict[Stats.Luck] > 0 ? 2 : -2;
+            return self.statModDict[Stats.Luck] > 0 ? 3 : -3;
         else
             return 0;
     }
@@ -416,6 +417,34 @@ public class Ability : MonoBehaviour
         return listOfTargets[currentIndex].Contains(self.lastToAttackThis);
     }
 
+    bool TargetZeroCooldown(int currentIndex)
+    {
+        listOfTargets[currentIndex].RemoveAll(target => !HasNoCooldown(target));
+        return listOfTargets[currentIndex].Count > 0;
+
+        bool HasNoCooldown(Character target)
+        {
+            foreach (Ability ability in target.listOfRandomAbilities)
+                if (ability.currentCooldown == 0) return true;
+            return false;
+        }
+    }
+
+    bool TargetActiveCooldown(int currentIndex)
+    {
+        listOfTargets[currentIndex].RemoveAll(target => !HasCooldown(target));
+        return listOfTargets[currentIndex].Count > 0;
+
+        bool HasCooldown(Character target)
+        {
+            foreach (Ability ability in target.listOfAutoAbilities)
+                if (ability.currentCooldown > 0) return true;
+            foreach (Ability ability in target.listOfRandomAbilities)
+                if (ability.currentCooldown > 0) return true;
+            return false;
+        }
+    }
+
     List<Character> GetTarget(TeamTarget target)
     {
         List<Character> listOfTargets = new();
@@ -689,14 +718,14 @@ public class Ability : MonoBehaviour
         yield return null;
     }
 
-    IEnumerator TargetIncreaseRandomCooldown(Character target, int logged)
+    IEnumerator TargetForceCooldown(Character target, int logged)
     {
         List<Ability> hasNoCooldown = target.listOfRandomAbilities.Where(ability => ability.currentCooldown == 0).ToList();
         if (hasNoCooldown.Count > 0)
         {
-            Ability chosenAbility = hasNoCooldown[UnityEngine.Random.Range(0, hasNoCooldown.Count)];
+            Ability chosenAbility = hasNoCooldown[Random.Range(0, hasNoCooldown.Count)];
             chosenAbility.currentCooldown += data.miscNumber;
-            Log.instance.AddText($"{chosenAbility.data.myName} is placed on Cooldown.", logged);
+            Log.instance.AddText($"{chosenAbility.data.myName} is placed on {data.miscNumber} Cooldown.", logged);
         }
         yield return null;
     }
