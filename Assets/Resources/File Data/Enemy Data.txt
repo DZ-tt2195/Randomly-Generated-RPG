@@ -33,12 +33,12 @@
       "1"
     ],
     [
-      "Flag Bearer",
-      "If not killed in time, will summon a 3 Star Enemy.",
+      "Herald",
+      "If not killed fast enough, will start to summon 3 Star Enemies.",
       "5",
-      "0",
+      "-1",
       "GROUNDED",
-      "Flag Whack,Summon,",
+      "Flag Whack,Announce,",
       "CameOffCooldown",
       "Grant Hansen|Dominion: Renaissance|(Flag Bearer)",
       "1"
@@ -63,6 +63,17 @@
       "Prank,Caught at a Good Time,",
       "",
       "Brian Brinlee|Dominion: Nocturne|(Leprechaun)",
+      "1"
+    ],
+    [
+      "Partier",
+      "Heals all Enemies, gives them random Emotions, and increases their Max Health.",
+      "5",
+      "1",
+      "GROUNDED",
+      "Fight,Drinking Game,Share Drinks,Share Snacks,",
+      "",
+      "Harald Lieske|Dominion: Allies|(Student)",
       "1"
     ],
     [
@@ -96,17 +107,6 @@
       "Swarm,Strength in Numbers,",
       "",
       "Ian Kirkpatrick|Dominion: Dark Ages|(Rats)",
-      "1"
-    ],
-    [
-      "Student",
-      "Gives Enemies random Emotions and increases their Max Health.",
-      "5",
-      "0",
-      "GROUNDED",
-      "Bully,Oversleep,Homework,Party,",
-      "",
-      "Harald Lieske|Dominion: Allies|(Student)",
       "1"
     ],
     [

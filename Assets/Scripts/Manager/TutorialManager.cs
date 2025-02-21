@@ -167,7 +167,7 @@ public class TutorialManager : MonoBehaviour
                 break;
 
             case 8: //introduce happy
-                listOfPlayers[1].AddAbility(FileManager.instance.FindPlayerAbility("Poor Gamble"), false, false);
+                listOfPlayers[1].AddAbility(FileManager.instance.FindPlayerAbility("Slow Down"), false, false);
 
                 yield return ClickThroughDialogue(new List<string>()
                 { "Your Angel is Happy, which means they can use another Ability when they don't attack, but all their Abilities have 1 more turn of Cooldown.",
@@ -183,7 +183,7 @@ public class TutorialManager : MonoBehaviour
                 listOfPlayers[0].AddAbility(FileManager.instance.FindPlayerAbility("Embarass"), false, false);
                 listOfPlayers[0].AddAbility(FileManager.instance.FindPlayerAbility("Cheer"), false, false);
 
-                listOfPlayers[1].AddAbility(FileManager.instance.FindPlayerAbility("Share Healing"), false, false);
+                listOfPlayers[1].AddAbility(FileManager.instance.FindPlayerAbility("Calm Down"), false, false);
                 listOfPlayers[1].AddAbility(FileManager.instance.FindPlayerAbility("Assist"), false, false);
 
                 TurnManager.instance.CreateEnemy(FileManager.instance.FindBonusEnemy("Page"), Emotion.Neutral, 0);

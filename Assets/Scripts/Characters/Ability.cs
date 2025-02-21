@@ -144,7 +144,7 @@ public class Ability : MonoBehaviour
         if (extraHealth > 1 && critical > 0)
             Log.instance.AddText($"{user.data.myName} has good luck! (+{critical} Health)", logged);
         if (extraHealth > 1 && critical < 0)
-            Log.instance.AddText($"{user.data.myName} has bad luck... (-{critical} Health)", logged);
+            Log.instance.AddText($"{user.data.myName} has bad luck... (-{Mathf.Abs(critical)} Health)", logged);
 
         if (self is EnemyCharacter && CarryVariables.instance.ActiveCheat("Number Cap"))
             extraHealth = Mathf.Min(extraHealth, 4);
@@ -169,12 +169,12 @@ public class Ability : MonoBehaviour
         if (effectiveness > 0)
             Log.instance.AddText($"It's super effective! (+{effectiveness} Damage)", logged);
         else if (effectiveness < 0)
-            Log.instance.AddText($"It was ineffective...({effectiveness} Damage)", logged);
+            Log.instance.AddText($"It was ineffective...(-{Mathf.Abs(effectiveness)} Damage)", logged);
 
         if (damage > 1 && critical > 0)
             Log.instance.AddText($"{user.data.myName} has good luck! (+{critical} Damage)", logged);
         if (damage > 1 && critical < 0)
-            Log.instance.AddText($"{user.data.myName} has bad luck... (-{critical} Damage)", logged);
+            Log.instance.AddText($"{user.data.myName} has bad luck... (-{Mathf.Abs(critical)} Damage)", logged);
 
         if (self is EnemyCharacter && CarryVariables.instance.ActiveCheat("Number Cap"))
             damage = Mathf.Min(damage, 4);
