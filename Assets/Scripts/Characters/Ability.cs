@@ -100,7 +100,7 @@ public class Ability : MonoBehaviour
 
     int RollLuck()
     {
-        bool chance = Random.Range(0f, 1f) <= Mathf.Abs(self.statModDict[Stats.Luck])/4f;
+        bool chance = Random.Range(0f, 1f) <= Mathf.Abs(self.statModDict[Stats.Luck])/5f;
 
         if (self.statModDict[Stats.Luck] != 0 && chance)
             return self.statModDict[Stats.Luck] > 0 ? 3 : -3;
@@ -579,7 +579,7 @@ public class Ability : MonoBehaviour
     IEnumerator TargetAttack(Character target, int logged)
     {
         damageDealt = CalculateDamage(self, target, data.attackDamage, logged);
-        yield return target.TakeDamage(damageDealt, logged, self);
+        yield return target.ChangeHealth(-1*damageDealt, logged, self);
         if (target == null || target.currentHealth <= 0)
             killed = true;
     }
@@ -587,21 +587,21 @@ public class Ability : MonoBehaviour
     IEnumerator TargetAttackMisc(Character target, int logged)
     {
         damageDealt = CalculateDamage(self, target, data.miscNumber, logged);
-        yield return target.TakeDamage(damageDealt, logged, self);
+        yield return target.ChangeHealth(-1*damageDealt, logged, self);
         if (target == null || target.currentHealth <= 0)
             killed = true;
     }
 
     IEnumerator TargetHeal(Character target, int logged)
     {
-        yield return target.GainHealth(CalculateHealing(self, data.healthRegain, logged), logged);
+        yield return target.ChangeHealth(CalculateHealing(self, data.healthRegain, logged), logged);
         if (target.CalculateHealthPercent() >= 1f)
             fullHeal = true;
     }
 
     IEnumerator TargetHealMisc(Character target, int logged)
     {
-        yield return target.GainHealth(CalculateHealing(self, data.miscNumber, logged), logged);
+        yield return target.ChangeHealth(CalculateHealing(self, data.miscNumber, logged), logged);
         if (target.CalculateHealthPercent() >= 1f)
             fullHeal = true;
     }

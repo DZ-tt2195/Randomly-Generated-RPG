@@ -2731,11 +2731,11 @@ MonoBehaviour:
     = Takes their turn earlier in the turn order.\nLuck (<link=\"Luck\"><sprite=\"Luck\"
     name=\"Luck\"></link>): Positive <link=\"Luck\"><sprite=\"Luck\" name=\"Luck\"></link>
     = More likely to get +3 on attack and healing abilities. Negative <link=\"Luck\"><sprite=\"Luck\"
-    name=\"Luck\"></link> = More likely to get -3.\n\nCharacter Positions: Elevated
-    & Grounded\n\nMisc: \nCooldown (<link=\"Cooldown\"><sprite=\"Cooldown\" name=\"Cooldown\"></link>):
-    Ability can't be used again until enough turns have passed.\nStar (<link=\"Star\"><sprite=\"Star\"
-    name=\"Star\"></link>): More <link=\"Star\"><sprite=\"Star\" name=\"Star\"></link>
-    = Stronger enemy type."
+    name=\"Luck\"></link> = More likely to get -3.\n(Stats max out at -4 and +4.)\n\nCharacter
+    Positions: Elevated & Grounded\n\nMisc: \nCooldown (<link=\"Cooldown\"><sprite=\"Cooldown\"
+    name=\"Cooldown\"></link>): Ability can't be used again until enough turns have
+    passed.\nStar (<link=\"Star\"><sprite=\"Star\" name=\"Star\"></link>): More <link=\"Star\"><sprite=\"Star\"
+    name=\"Star\"></link> = Stronger enemy type."
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8c64c47af7c1c4fb5b88d184433c6c44, type: 2}
   m_sharedMaterial: {fileID: -3852492252101762229, guid: 8c64c47af7c1c4fb5b88d184433c6c44, type: 2}
@@ -2762,7 +2762,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 77.05
+  m_fontSize: 73.05
   m_fontSizeBase: 14
   m_fontWeight: 400
   m_enableAutoSizing: 1

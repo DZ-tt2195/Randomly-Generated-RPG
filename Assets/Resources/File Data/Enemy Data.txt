@@ -71,7 +71,7 @@
       "5",
       "1",
       "GROUNDED",
-      "Fight,Drinking Game,Share Drinks,Share Snacks,",
+      "Fight,Share Drinks,Share Snacks,Drinking Game,",
       "",
       "Harald Lieske|Dominion: Allies|(Student)",
       "1"
@@ -93,7 +93,7 @@
       "5",
       "0",
       "GROUNDED",
-      "Bite,Leap,Bark,",
+      "Bite,Leap,Bark,Cuddle,",
       "",
       "Claus Stephan|Dominion: Menagerie|(Sheepdog)",
       "1"
@@ -154,12 +154,12 @@
       "2"
     ],
     [
-      "Bull",
+      "Cow",
       "Either attacks the Player who most recently damaged them, or does healing while Happy.",
       "10",
       "-2",
       "GROUNDED",
-      "Charge,Milk,Graze,",
+      "Charge,Milk,Graze,Bellow,",
       "LastAttacker",
       "Matthias Catrein|Dominion: Menagerie|(Way of the Ox)",
       "2"
@@ -214,7 +214,7 @@
       "10",
       "1",
       "GROUNDED",
-      "Slash,Glare,Nurture,",
+      "Slash,Glare,Nurture,Guard,",
       "Effectiveness",
       "Slawomir Maniak|Eldritch Moon|(Kessig Prowler)",
       "2"
@@ -254,11 +254,11 @@
     ],
     [
       "Royalty",
-      "Buffs Enemy Stats and lowers Player Stats, and will summon more 1 Star and 2 Star Enemies.",
+      "Summons more 1 Star Enemies, and then gives them more Stats and Max Health.",
       "15",
       "-2",
       "GROUNDED",
-      "Call,Alert,Procession,Identify Targets,",
+      "Order,Promote,Call,Procession,",
       "",
       "Kieran Yanner|Throne of Eldraine|(Kenrith, the Returned King)",
       "3"

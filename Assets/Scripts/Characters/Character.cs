@@ -162,31 +162,27 @@ public class Character : MonoBehaviour
         healthText.text = KeywordTooltip.instance.EditText($"{currentHealth}/{baseHealth}Health");
     }
 
-    public IEnumerator GainHealth(int health, int logged)
+    public IEnumerator ChangeHealth(int change, int logged, Character attacker = null)
     {
-        if (this == null) yield break;
-
-        currentHealth = Mathf.Clamp(currentHealth += health, 0, this.baseHealth);
-        TurnManager.instance.CreateVisual($"+{health} Health", this.transform.localPosition);
-        Log.instance.AddText($"{(this.name)} gains {health} Health.", logged);
-        healthText.text = KeywordTooltip.instance.EditText($"{currentHealth}/{baseHealth}Health");
-    }
-
-    public IEnumerator TakeDamage(int damage, int logged, Character attacker = null)
-    {
+        if (this == null || change == 0) yield break;
         if (attacker != null) lastToAttackThis = attacker;
-        if (this == null || damage == 0) yield break;
 
-        if (statEffectDict[StatusEffect.Protected] > 0)
+        if (change > 0)
+        {
+            currentHealth = Mathf.Clamp(currentHealth += change, 0, this.baseHealth);
+            TurnManager.instance.CreateVisual($"+{change} Health", this.transform.localPosition);
+            Log.instance.AddText($"{(this.name)} gains {change} Health.", logged);
+        }
+        else if (statEffectDict[StatusEffect.Protected] > 0)
         {
             TurnManager.instance.CreateVisual($"BLOCKED", this.transform.localPosition);
-            Log.instance.AddText($"{(this.name)} is Protected from {damage} damage.", logged);
+            Log.instance.AddText($"{(this.name)} is Protected from {Mathf.Abs(change)} damage.", logged);
         }
         else
         {
-            currentHealth -= damage;
-            TurnManager.instance.CreateVisual($"-{damage} Health", this.transform.localPosition);
-            Log.instance.AddText($"{(this.name)} takes {damage} damage.", logged);
+            currentHealth -= Mathf.Abs(change);
+            TurnManager.instance.CreateVisual($"-{Mathf.Abs(change)} Health", this.transform.localPosition);
+            Log.instance.AddText($"{(this.name)} takes {Mathf.Abs(change)} damage.", logged);
 
             if (currentHealth <= 0)
                 yield return HasDied(logged);
@@ -205,7 +201,7 @@ public class Character : MonoBehaviour
             yield break;
         }
 
-        _privStatMod[stat] = Math.Clamp(_privStatMod[stat] += change, -3, 3);
+        _privStatMod[stat] = Math.Clamp(_privStatMod[stat] += change, -4, 4);
         if (logged >= 0)
         {
             TurnManager.instance.CreateVisual($"{(change > 0 ? '+' : '-')}{Math.Abs(change)} {stat}", this.transform.localPosition);
@@ -311,7 +307,7 @@ public class Character : MonoBehaviour
         CurrentEmotion = Emotion.Dead;
         CharacterUI();
 
-        Log.instance.AddText($"{this.name} has died.", logged);
+        Log.instance.AddText($"{this.name} has died.", logged+1);
         TurnManager.instance.speedQueue.Remove(this);
 
         if (this is PlayerCharacter)
@@ -334,7 +330,7 @@ public class Character : MonoBehaviour
         TurnManager.instance.listOfPlayers.Add(this);
         TurnManager.instance.listOfDead.Remove(this);
 
-        yield return GainHealth(health, logged);
+        yield return ChangeHealth(health, logged);
         yield return ChangePosition(data.startingPosition, -1);
         yield return ChangeEmotion((Emotion)UnityEngine.Random.Range(1, 5), -1);
     }
@@ -518,7 +514,7 @@ public class Character : MonoBehaviour
             else if (this.CurrentEmotion == Emotion.Sad)
             {
                 Log.instance.AddText($"{this.name} is Sad.", logged);
-                yield return (chosenAbility.mainType == AbilityType.Attack) ? GainHealth(2, logged + 1) : TakeDamage(2, logged + 1);
+                yield return ChangeHealth(chosenAbility.mainType == AbilityType.Attack ? 2 : -2, logged + 1);
             }
         }
     }

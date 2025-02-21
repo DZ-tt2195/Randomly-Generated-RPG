@@ -13,9 +13,8 @@ public class EncyclopediaManager : MonoBehaviour
 
 #region Variables
 
-    [SerializeField] TMP_Text searchResults;
-
     [Foldout("Changing searches", true)]
+        [SerializeField] TMP_Text searchResults;
         [SerializeField] List<Button> currentSearch = new();
         [SerializeField] List<GameObject> masterGameObject = new();
 
@@ -43,6 +42,7 @@ public class EncyclopediaManager : MonoBehaviour
     void ChangeMode(int n)
     {
         searchResults.text = "";
+        searchResults.gameObject.SetActive(true);
         for (int i = 0; i < currentSearch.Count; i++)
         {
             masterGameObject[i].SetActive(i == n);
@@ -317,7 +317,7 @@ public class EncyclopediaManager : MonoBehaviour
             }
         }
         storeEnemyBoxes.transform.localPosition = new Vector3(0, -1050, 0);
-        storeEnemyBoxes.sizeDelta = new Vector3(2560, Math.Max(875, 350 * ((storeEnemyBoxes.childCount / 5))));
+        storeEnemyBoxes.sizeDelta = new Vector3(2560, Math.Max(875, 350 * Mathf.Ceil(storeEnemyBoxes.childCount / 5f)));
         searchResults.text = $"Found {storeEnemyBoxes.childCount} Enemies";
     }
 
