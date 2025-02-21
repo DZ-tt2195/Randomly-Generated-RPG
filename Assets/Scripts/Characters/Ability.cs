@@ -139,17 +139,28 @@ public class Ability : MonoBehaviour
     int CalculateHealing(Character user, int number, int logged)
     {
         int critical = RollLuck();
-        int extraHealth = critical + user.CalculatePower() + number;
-
-        if (extraHealth > 1 && critical > 0)
+        bool enemyNumberCap = self is EnemyCharacter && CarryVariables.instance.ActiveCheat("Number Cap");
+        int finalCalc = number + critical + user.CalculatePower();
+        
+        if (critical > 0)
             Log.instance.AddText($"{user.data.myName} has good luck! (+{critical} Health)", logged);
-        if (extraHealth > 1 && critical < 0)
-            Log.instance.AddText($"{user.data.myName} has bad luck... (-{Mathf.Abs(critical)} Health)", logged);
+        else if (critical < 0)
+            Log.instance.AddText($"{user.data.myName} has bad luck...(-{Mathf.Abs(critical)} Health)", logged);
 
-        if (self is EnemyCharacter && CarryVariables.instance.ActiveCheat("Number Cap"))
-            extraHealth = Mathf.Min(extraHealth, 4);
-
-        return Mathf.Max(1, extraHealth);
+        if (finalCalc > 4 && enemyNumberCap)
+        {
+            Log.instance.AddText($"Enemy Healing is capped at 4. (Number Cap)", logged);
+            return 4;
+        }
+        else if (finalCalc < 1 && number > 1)
+        {
+            Log.instance.AddText($"Minimum healing of 1.", logged);
+            return 1;
+        }
+        else
+        {
+            return finalCalc;
+        }
     }
 
     int CalculateDamage(Character user, Character target, int number, int logged)
@@ -164,22 +175,33 @@ public class Ability : MonoBehaviour
         }
 
         int critical = RollLuck();
-        int damage = (critical + effectiveness + user.CalculatePower() + number) - target.statModDict[Stats.Defense];
+        bool enemyNumberCap = self is EnemyCharacter && CarryVariables.instance.ActiveCheat("Number Cap");
+        int finalCalc = number + critical + effectiveness + user.CalculatePower() - target.statModDict[Stats.Defense];
 
         if (effectiveness > 0)
             Log.instance.AddText($"It's super effective! (+{effectiveness} Damage)", logged);
         else if (effectiveness < 0)
             Log.instance.AddText($"It was ineffective...(-{Mathf.Abs(effectiveness)} Damage)", logged);
 
-        if (damage > 1 && critical > 0)
+        if (critical > 0)
             Log.instance.AddText($"{user.data.myName} has good luck! (+{critical} Damage)", logged);
-        if (damage > 1 && critical < 0)
-            Log.instance.AddText($"{user.data.myName} has bad luck... (-{Mathf.Abs(critical)} Damage)", logged);
+        else if (critical < 0)
+            Log.instance.AddText($"{user.data.myName} has bad luck...(-{Mathf.Abs(critical)} Damage)", logged);
 
-        if (self is EnemyCharacter && CarryVariables.instance.ActiveCheat("Number Cap"))
-            damage = Mathf.Min(damage, 4);
-
-        return Mathf.Max(1, damage);
+        if (finalCalc > 4 && enemyNumberCap)
+        {
+            Log.instance.AddText($"Enemy Damage is capped at 4. (Number Cap)", logged);
+            return 4;
+        }
+        else if (finalCalc < 1 && number > 1)
+        {
+            Log.instance.AddText($"Minimum damage of 1.", logged);
+            return 1;
+        }
+        else
+        {
+            return finalCalc;
+        }
     }
 
     #endregion
@@ -442,6 +464,18 @@ public class Ability : MonoBehaviour
                 if (ability.currentCooldown > 0) return true;
             return false;
         }
+    }
+
+    bool TargetIsStar(int currentIndex)
+    {
+        listOfTargets[currentIndex].RemoveAll(target => target.data.difficulty != data.miscNumber);
+        return listOfTargets[currentIndex].Count > 0;
+    }
+
+    bool TargetEffective(int currentIndex)
+    {
+        listOfTargets[currentIndex].RemoveAll(target => Effectiveness(self, target) < data.miscNumber);
+        return listOfTargets[currentIndex].Count > 0;
     }
 
     List<Character> GetTarget(TeamTarget target)

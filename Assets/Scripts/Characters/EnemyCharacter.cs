@@ -85,25 +85,25 @@ public class EnemyCharacter : Character
                             break;
 
                         case "LEASTHEALTH":
-                            ability.listOfTargets[index].OrderBy(o => o.currentHealth).ToList();
+                            ability.listOfTargets[index].OrderBy(target => target.currentHealth).ToList();
                             ability.listOfTargets[index] = new() { ability.listOfTargets[index][0] };
                             break;
                         case "MOSTHEALTH":
-                            ability.listOfTargets[index].OrderByDescending(o => o.currentHealth).ToList();
+                            ability.listOfTargets[index].OrderByDescending(target => target.currentHealth).ToList();
                             ability.listOfTargets[index] = new() { ability.listOfTargets[index][0] };
                             break;
 
                         case "EFFECTIVENESS":
-                            ability.listOfTargets[index].OrderBy(o => ability.Effectiveness(this, o)).ToList();
+                            ability.listOfTargets[index].OrderByDescending(target => ability.Effectiveness(this, target)).ToList();
                             ability.listOfTargets[index] = new() { ability.listOfTargets[index][0] };
                             break;
 
                         case "STRONGEST":
-                            ability.listOfTargets[index].OrderByDescending(o => o.CalculateStatTotals()).ToList();
+                            ability.listOfTargets[index].OrderByDescending(target => target.CalculateStatTotals()).ToList();
                             ability.listOfTargets[index] = new() { ability.listOfTargets[index][0] };
                             break;
                         case "WEAKEST":
-                            ability.listOfTargets[index].OrderBy(o => o.CalculateStatTotals()).ToList();
+                            ability.listOfTargets[index].OrderBy(target => target.CalculateStatTotals()).ToList();
                             ability.listOfTargets[index] = new() { ability.listOfTargets[index][0] };
                             break;
 

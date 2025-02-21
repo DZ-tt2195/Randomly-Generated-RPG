@@ -24,7 +24,6 @@ public class ScreenOverlay : MonoBehaviour
         [SerializeField] TMP_Text characterArtCredit;
         [SerializeField] TMP_Text emotionText;
         [SerializeField] TMP_Text stats1;
-        [SerializeField] TMP_Text stats2;
         [SerializeField] List<AbilityBox> listOfBoxes = new();
         [SerializeField] List<Image> listOfStars = new();
 
@@ -118,7 +117,7 @@ public class ScreenOverlay : MonoBehaviour
         }
     }
 
-    public void DisplayCharacterInfo(Character character, string firstStat, string secondStat)
+    public void DisplayCharacterInfo(Character character, string statText)
     {
         displayedScreen = CurrentScreen.Character;
         blackBackground.SetActive(true);
@@ -131,8 +130,7 @@ public class ScreenOverlay : MonoBehaviour
         characterArtCredit.text = character.data.artCredit;
 
         emotionText.text = KeywordTooltip.instance.EditText($"{character.CurrentEmotion}");
-        stats1.text = firstStat;
-        stats2.text = secondStat;
+        stats1.text = statText;
 
         int nextBox = 0;
         for (int i = 0; i < character.listOfRandomAbilities.Count; i++)
