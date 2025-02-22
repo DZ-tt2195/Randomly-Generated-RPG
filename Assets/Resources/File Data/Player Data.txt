@@ -15,7 +15,7 @@
       "10",
       "0",
       "GROUNDED",
-      "Cheer,Daze,Dejection,Embarass,Impale,Joust,Knock Down,Meditate,Mirror,Mock,Neutralize,Redirect,Rollout,Sap Energy,Scare,Steal,Tragedy,Twirl,Trick,",
+      "Cheer,Daze,Dejection,Embarass,Force,Impale,Joust,Knock Down,Meditate,Mirror,Mock,Neutralize,Redirect,Rollout,Sap Energy,Scare,Steal,Tragedy,Twirl,Trick,",
       "",
       "Michael Watson|Dominion: Cornucopia and Guilds|(Joust)"
     ],
@@ -25,7 +25,7 @@
       "10",
       "-1",
       "ELEVATED",
-      "Assist,Calm Down,Crash Landing,Drop Down,Enrage,Exorcism,Gift of Flight,Hide,Immunity,Invigorate,Joy,Lift Up,Overheal,Retreat,Security,Slow Down,Soft Landing,Tailwinds,Trap,",
+      "Air Combat,Assist,Calm Down,Crash Landing,Drop Down,Enrage,Exorcism,Gift of Flight,Hide,Immunity,Joy,Lift Up,Motivate,Overheal,Retreat,Security,Slow Down,Soft Landing,Tailwinds,Trap,",
       "",
       "Magali Villeneuve|Oath of the Gatewatch|(Linvala, the Preserver)"
     ],
@@ -35,7 +35,7 @@
       "10",
       "1",
       "GROUNDED",
-      "Above Danger,Agility,Bad Omens,Bounce,Dash Down,Flood,Flight's End,Headwinds,Jackpot,Lightning Storm,Manipulate Time,Readjust,Rock Slide,Roll Dice,Shockwave,Stalactites,Team Attack,Warp,",
+      "Above Danger,Agility,Bad Omens,Bounce,Dash Down,Flood,Flight's End,Headwinds,Jackpot,Lightning Storm,Manipulate Time,Readjust,Rock Slide,Roll Dice,Shockwave,Splash,Stalactites,Team Attack,Warp,",
       "",
       "Harald Lieske|Dominion: Allies|(Conjurer)"
     ]

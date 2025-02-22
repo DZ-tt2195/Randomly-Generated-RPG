@@ -15,7 +15,7 @@ public class PlayerCharacter : Character
         allAbilities.AddRange(listOfRandomAbilities);
 
         EnableAbilityBoxes();
-        TurnManager.instance.instructions.text = $"{this.name}'s Turn: Choose an ability. {(extraAbility ? "(Extra Turn)" : "")}";
+        TurnManager.instance.instructions.text = $"{this.name}: Choose an Ability. {(extraAbility ? "(Extra Turn)" : "")}";
 
         yield return WaitForChoice();
         if (choice != -1)
@@ -78,7 +78,22 @@ public class PlayerCharacter : Character
             }
             else
             {
-                TurnManager.instance.instructions.text = $"Choose someone to target. ({ability.data.myName})";
+                switch (target)
+                {
+                    case TeamTarget.AnyOne:
+                        TurnManager.instance.instructions.text = $"Choose someone to target. ({ability.data.myName})";
+                        break;
+                    case TeamTarget.OnePlayer:
+                        TurnManager.instance.instructions.text = $"Choose a Player to target. ({ability.data.myName})";
+                        break;
+                    case TeamTarget.OtherPlayer:
+                        TurnManager.instance.instructions.text = $"Choose another Player to target. ({ability.data.myName})";
+                        break;
+                    case TeamTarget.OneEnemy:
+                        TurnManager.instance.instructions.text = $"Choose an Enemy to target. ({ability.data.myName})";
+                        break;
+                }
+
                 TurnManager.instance.DisableCharacterButtons();
 
                 for (int i = 0; i < ability.listOfTargets[index].Count; i++)

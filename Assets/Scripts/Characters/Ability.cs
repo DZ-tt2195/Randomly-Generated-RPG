@@ -726,32 +726,60 @@ public class Ability : MonoBehaviour
         yield return target.ChangeEffect(StatusEffect.Extra, data.miscNumber, logged);
     }
 
-    IEnumerator TargetIncreaseCooldown(Character target, int logged)
+    IEnumerator TargetIncreaseAllCooldown(Character target, int logged)
     {
+        int total = 0;
         foreach (Ability ability in target.listOfAutoAbilities)
-            if (ability.currentCooldown > 0) ability.currentCooldown += data.miscNumber;
+        {
+            if (ability.currentCooldown > 0)
+            {
+                ability.currentCooldown += data.miscNumber;
+                total++;
+            }
+        }
         foreach (Ability ability in target.listOfRandomAbilities)
-            if (ability.currentCooldown > 0) ability.currentCooldown += data.miscNumber;
+        {
+            if (ability.currentCooldown > 0)
+            {
+                ability.currentCooldown += data.miscNumber;
+                total++;
+            }
+        }
+        Log.instance.AddText($"{total} of {target.name}'s Abilities gain {data.miscNumber} Cooldown.", logged);
         yield return null;
     }
 
-    IEnumerator TargetDecreaseCooldown(Character target, int logged)
+    IEnumerator TargetDecreaseAllCooldown(Character target, int logged)
     {
+        int total = 0;
         foreach (Ability ability in target.listOfAutoAbilities)
-            if (ability.currentCooldown > 0) ability.currentCooldown -= data.miscNumber;
+        {
+            if (ability.currentCooldown > 0)
+            {
+                ability.currentCooldown -= data.miscNumber;
+                total++;
+            }
+        }
         foreach (Ability ability in target.listOfRandomAbilities)
-            if (ability.currentCooldown > 0) ability.currentCooldown -= data.miscNumber;
+        {
+            if (ability.currentCooldown > 0)
+            {
+                ability.currentCooldown -= data.miscNumber;
+                total++;
+            }
+        }
+        Log.instance.AddText($"{total} of {target.name}'s Abilities lose {data.miscNumber} Cooldown.", logged);
         yield return null;
     }
 
-    IEnumerator TargetForceCooldown(Character target, int logged)
+    IEnumerator TargetForceOneCooldown(Character target, int logged)
     {
         List<Ability> hasNoCooldown = target.listOfRandomAbilities.Where(ability => ability.currentCooldown == 0).ToList();
         if (hasNoCooldown.Count > 0)
         {
             Ability chosenAbility = hasNoCooldown[Random.Range(0, hasNoCooldown.Count)];
             chosenAbility.currentCooldown += data.miscNumber;
-            Log.instance.AddText($"{chosenAbility.data.myName} is placed on {data.miscNumber} Cooldown.", logged);
+            Log.instance.AddText($"{target.name}'s {chosenAbility.data.myName} is placed on {data.miscNumber} Cooldown.", logged);
         }
         yield return null;
     }

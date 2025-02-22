@@ -22,7 +22,7 @@ public class Character : MonoBehaviour
 
     [Foldout("Character info", true)]
         protected Ability chosenAbility;
-        protected Character chosenTarget;
+        protected List<Character> chosenTarget = new();
         protected float timer;
         [ReadOnly] public Character lastToAttackThis { get; private set; }
         [ReadOnly] public string editedDescription { get; private set; }
@@ -342,7 +342,7 @@ public class Character : MonoBehaviour
     internal IEnumerator MyTurn(int logged)
     {
         chosenAbility = null;
-        chosenTarget = null;
+        chosenTarget = new();
 
         if (_privStatEffect[StatusEffect.Protected] > 0)
             _privStatEffect[StatusEffect.Protected]--;
@@ -402,7 +402,7 @@ public class Character : MonoBehaviour
 
         StartCoroutine(nameof(Timer));
         chosenAbility = null;
-        chosenTarget = null;
+        chosenTarget = new();
 
         while (chosenAbility == null)
         {
@@ -418,7 +418,7 @@ public class Character : MonoBehaviour
             {
                 yield return ChooseTarget(chosenAbility, chosenAbility.data.defaultTargets[i], i);
                 if (chosenAbility.singleTarget.Contains(chosenAbility.data.defaultTargets[i]))
-                    chosenTarget = chosenAbility.listOfTargets[i][0];
+                    chosenTarget.Add(chosenAbility.listOfTargets[i][0]);
             }
 
             if (timer < 0f)
@@ -426,10 +426,10 @@ public class Character : MonoBehaviour
 
             if (this is PlayerCharacter)
             {
-                string part1 = $"{this.name}: Use {chosenAbility.data.myName}";
-                string part2 = chosenTarget != null ? $" on {chosenTarget.data.myName}?" : "?";
+                string result = $"{this.name}: Use {chosenAbility.data.myName}" +
+                    $"{(chosenTarget.Count > 0 ? " on " + string.Join(" + ", chosenTarget.Select(target => target.data.myName)) : "")}?";
 
-                yield return TurnManager.instance.ConfirmUndo(part1 + part2, new Vector3(0, 400));
+                yield return TurnManager.instance.ConfirmUndo(result, new Vector3(0, 400));
                 if (TurnManager.instance.confirmChoice == 1)
                     chosenAbility = null;
                 if (timer < 0f)
@@ -466,7 +466,7 @@ public class Character : MonoBehaviour
                     ability.currentCooldown--;
             }
         }
-        Log.instance.AddText(Log.Substitute(chosenAbility, this, chosenTarget), logged);
+        Log.instance.AddText(Log.Substitute(chosenAbility, this, (chosenTarget.Count > 0) ? chosenTarget[0] : null), logged);
         if (!chosenAbility.data.myName.Equals("Skip Turn"))
         {
             chosenAbility.killed = false;
@@ -479,9 +479,13 @@ public class Character : MonoBehaviour
                 yield return chosenAbility.ResolveInstructions(splicedString, i, logged + 1);
             }
 
-            chosenAbility.currentCooldown = chosenAbility.data.baseCooldown + (CurrentEmotion == Emotion.Happy ? 1 : 0) +
+            int cooldownIncrease = chosenAbility.data.baseCooldown + (CurrentEmotion == Emotion.Happy ? 1 : 0) +
                 (CarryVariables.instance.ActiveCheat("Slower Enemy Cooldowns") && this is EnemyCharacter ? 1 : 0);
-
+            if (cooldownIncrease > 0)
+            {
+                chosenAbility.currentCooldown = cooldownIncrease;
+                Log.instance.AddText($"{this.name}'s {chosenAbility.data.myName} is placed on {cooldownIncrease} Cooldown.", logged);
+            }
             if (CarryVariables.instance.mode == CarryVariables.GameMode.Tutorial && TutorialManager.instance.currentCharacter == this)
             {
                 TutorialManager.instance.currentCharacter = null;

@@ -130,7 +130,7 @@ public class TutorialManager : MonoBehaviour
 
             case 6: //introduce angel
                 TurnManager.instance.AddPlayer(listOfPlayers[1]); //add angel
-                listOfPlayers[1].AddAbility(FileManager.instance.FindPlayerAbility("Invigorate"), false, false);
+                listOfPlayers[1].AddAbility(FileManager.instance.FindPlayerAbility("Assist"), false, false);
 
                 TextCollector collector6 = TurnManager.instance.MakeTextCollector(
                     "Here's your 2nd party member. Right click on the Angel to read what they do.",
@@ -172,7 +172,7 @@ public class TutorialManager : MonoBehaviour
                 yield return ClickThroughDialogue(new List<string>()
                 { "Your Angel is Happy, which means they can use another Ability when they don't attack, but all their Abilities have 1 more turn of Cooldown.",
                 "Emotions also apply to Enemies. If you right click the Page, you'll see that their Ability got placed on Cooldown.",
-                "Your Angel didn’t attack, so they now can use another Ability. However, Invigorate is on Cooldown for 2 turns.",
+                "Your Angel didn’t attack, so they now can use another Ability. However, Assist is on Cooldown.",
                 "Instead, you can change the Page’s Emotion to Sad. That way, your Angry Knight will gain the advantage."});
                 break;
 
@@ -184,7 +184,7 @@ public class TutorialManager : MonoBehaviour
                 listOfPlayers[0].AddAbility(FileManager.instance.FindPlayerAbility("Cheer"), false, false);
 
                 listOfPlayers[1].AddAbility(FileManager.instance.FindPlayerAbility("Calm Down"), false, false);
-                listOfPlayers[1].AddAbility(FileManager.instance.FindPlayerAbility("Assist"), false, false);
+                listOfPlayers[1].AddAbility(FileManager.instance.FindPlayerAbility("Motivate"), false, false);
 
                 TurnManager.instance.CreateEnemy(FileManager.instance.FindBonusEnemy("Page"), Emotion.Neutral, 0);
                 TurnManager.instance.CreateEnemy(FileManager.instance.FindBonusEnemy("Crow"), Emotion.Neutral, 0);
