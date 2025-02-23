@@ -6,8 +6,8 @@ using UnityEngine.UI;
 using System;
 using System.Linq;
 
-public enum TierSearch { All, Star1, Star2, Star3 };
-public enum PlayerSearch { All, Knight, Angel, Wizard };
+public enum TierSearch { Any, Star1, Star2, Star3 };
+public enum PlayerSearch { Any, Knight, Angel, Wizard };
 public class EncyclopediaManager : MonoBehaviour
 {
 
@@ -28,7 +28,8 @@ public class EncyclopediaManager : MonoBehaviour
         [SerializeField] TMP_Dropdown characterDropdown;
         [SerializeField] TMP_Dropdown type1Dropdown;
         [SerializeField] TMP_Dropdown type2Dropdown;
-        [SerializeField] Scrollbar abilityScroll;
+    [SerializeField] TMP_Dropdown cooldownDropdown;
+    [SerializeField] Scrollbar abilityScroll;
 
     [Foldout("Enemy Search", true)]
         List<Character> listOfEnemyBoxes = new();
@@ -61,6 +62,7 @@ public class EncyclopediaManager : MonoBehaviour
         characterDropdown.onValueChanged.AddListener(ChangeAbilityDropdown);
         type1Dropdown.onValueChanged.AddListener(ChangeAbilityDropdown);
         type2Dropdown.onValueChanged.AddListener(ChangeAbilityDropdown);
+        cooldownDropdown.onValueChanged.AddListener(ChangeAbilityDropdown);
         foreach (AbilityData data in FileManager.instance.listOfPlayerAbilities)
         {
             Ability nextAbility = this.gameObject.AddComponent<Ability>();
@@ -114,7 +116,7 @@ public class EncyclopediaManager : MonoBehaviour
 
     bool CompareCharacters(PlayerSearch setting, PlayerSearch current)
     {
-        if (setting == PlayerSearch.All)
+        if (setting == PlayerSearch.Any)
             return true;
         return setting == current;
     }
@@ -139,7 +141,7 @@ public class EncyclopediaManager : MonoBehaviour
     {
         return setting switch
         {
-            TierSearch.All => true,
+            TierSearch.Any => true,
             TierSearch.Star1 => difficulty == 1,
             TierSearch.Star2 => difficulty == 2,
             TierSearch.Star3 => difficulty == 3,
@@ -188,11 +190,11 @@ public class EncyclopediaManager : MonoBehaviour
 
     void SearchAbility()
     {
-        PlayerSearch searchPlayer = PlayerSearch.All;
+        PlayerSearch searchPlayer = PlayerSearch.Any;
         switch (characterDropdown.options[characterDropdown.value].text)
         {
-            case "All":
-                searchPlayer = PlayerSearch.All;
+            case "Any":
+                searchPlayer = PlayerSearch.Any;
                 break;
             case "Knight":
                 searchPlayer = PlayerSearch.Knight;
@@ -207,50 +209,34 @@ public class EncyclopediaManager : MonoBehaviour
 
         AbilityType searchType1 = ConvertType(type1Dropdown.options[type1Dropdown.value].text);
         AbilityType searchType2 = ConvertType(type2Dropdown.options[type2Dropdown.value].text);
+        int searchCooldown;
+        try
+        {
+            searchCooldown = int.Parse(cooldownDropdown.options[cooldownDropdown.value].text);
+        }
+        catch
+        {
+            searchCooldown = -1;
+        }
 
-        foreach (AbilityBox box in knightAbilities)
+        void FilterAbilities(List<AbilityBox> abilities, PlayerSearch playerType)
         {
-            if (CompareCharacters(searchPlayer, PlayerSearch.Knight)
-                && (CompareStrings(abilityInput.text, box.ability.data.myName) || CompareStrings(abilityInput.text, box.ability.editedDescription))
-                && CompareTypes(searchType1, box.ability.data) && CompareTypes(searchType2, box.ability.data))
+            foreach (AbilityBox box in abilities)
             {
-                box.transform.SetParent(storeAbilityBoxes);
-                box.transform.SetAsLastSibling();
-            }
-            else
-            {
-                box.transform.SetParent(null);
-            }
-        }
-        foreach (AbilityBox box in angelAbilities)
-        {
-            if (CompareCharacters(searchPlayer, PlayerSearch.Angel)
-                && (CompareStrings(abilityInput.text, box.ability.data.myName) || CompareStrings(abilityInput.text, box.ability.editedDescription))
-                && CompareTypes(searchType1, box.ability.data) && CompareTypes(searchType2, box.ability.data))
+                bool matches = CompareCharacters(searchPlayer, playerType)
+                    && (CompareStrings(abilityInput.text, box.ability.data.myName) || CompareStrings(abilityInput.text, box.ability.editedDescription))
+                    && CompareTypes(searchType1, box.ability.data)
+                    && CompareTypes(searchType2, box.ability.data)
+                    && (searchCooldown == -1 || box.ability.data.baseCooldown == searchCooldown);
 
-            {
-                box.transform.SetParent(storeAbilityBoxes);
-                box.transform.SetAsLastSibling();
-            }
-            else
-            {
-                box.transform.SetParent(null);
+                box.transform.SetParent(matches ? storeAbilityBoxes : null);
+                if (matches) box.transform.SetAsLastSibling();
             }
         }
-        foreach (AbilityBox box in wizardAbilities)
-        {
-            if (CompareCharacters(searchPlayer, PlayerSearch.Wizard)
-                && (CompareStrings(abilityInput.text, box.ability.data.myName) || CompareStrings(abilityInput.text, box.ability.editedDescription))
-                && CompareTypes(searchType1, box.ability.data) && CompareTypes(searchType2, box.ability.data))
-            {
-                box.transform.SetParent(storeAbilityBoxes);
-                box.transform.SetAsLastSibling();
-            }
-            else
-            {
-                box.transform.SetParent(null);
-            }
-        }
+
+        FilterAbilities(knightAbilities, PlayerSearch.Knight);
+        FilterAbilities(angelAbilities, PlayerSearch.Angel);
+        FilterAbilities(wizardAbilities, PlayerSearch.Wizard);
 
         storeAbilityBoxes.transform.localPosition = new Vector3(0, -1050, 0);
         storeAbilityBoxes.sizeDelta = new Vector3(2560, Math.Max(875, 175 * (2+Mathf.Ceil(storeAbilityBoxes.childCount / 6f))));
@@ -273,13 +259,13 @@ public class EncyclopediaManager : MonoBehaviour
 
     void SearchEnemy()
     {
-        TierSearch searchTier = TierSearch.All;
+        TierSearch searchTier = TierSearch.Any;
         Position searchPosition = Position.Dead;
 
         switch (tierDropdown.options[tierDropdown.value].text)
         {
-            case "All":
-                searchTier = TierSearch.All;
+            case "Any":
+                searchTier = TierSearch.Any;
                 break;
             case "1-Star":
                 searchTier = TierSearch.Star1;

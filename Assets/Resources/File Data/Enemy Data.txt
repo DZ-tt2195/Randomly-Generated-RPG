@@ -27,7 +27,7 @@
       "5",
       "0",
       "ELEVATED",
-      "Sound Waves,Intruder Alert,",
+      "Sound Waves,Alarm,",
       "",
       "James Paick|Guilds of Ravnica|(Dimir Spybug)",
       "1"
@@ -165,6 +165,17 @@
       "2"
     ],
     [
+      "Ghost",
+      "Makes Players change Positions, and then deals heavy damage to Elevated Players while Sad.",
+      "10",
+      "1",
+      "ELEVATED",
+      "Jumpscare,Lament,Possession,",
+      "",
+      "Eric J. Carter|Dominion: Nocturne|(Ghost)",
+      "2"
+    ],
+    [
       "Ninja",
       "Goes after the Player who has the least Health, and alternates between Grounded and Elevated.",
       "10",
@@ -214,7 +225,7 @@
       "10",
       "1",
       "GROUNDED",
-      "Slash,Glare,Nurture,Guard,",
+      "Slash,Howl,Nurture,Guard,",
       "Effectiveness",
       "Slawomir Maniak|Eldritch Moon|(Kessig Prowler)",
       "2"

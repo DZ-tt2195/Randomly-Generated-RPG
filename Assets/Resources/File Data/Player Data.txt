@@ -25,7 +25,7 @@
       "10",
       "-1",
       "ELEVATED",
-      "Air Combat,Assist,Calm Down,Crash Landing,Drop Down,Enrage,Exorcism,Gift of Flight,Hide,Immunity,Joy,Lift Up,Motivate,Overheal,Retreat,Security,Slow Down,Soft Landing,Tailwinds,Trap,",
+      "Air Combat,Assist,Calm Down,Crash Land,Enrage,Exhaust,Exorcism,Rescue,Gift of Flight,Hide,Immunity,Joy,Lift Up,Motivate,Overheal,Petrify,Plummet,Retreat,Security,Soft Landing,Tailwinds,",
       "",
       "Magali Villeneuve|Oath of the Gatewatch|(Linvala, the Preserver)"
     ],
@@ -35,7 +35,7 @@
       "10",
       "1",
       "GROUNDED",
-      "Above Danger,Agility,Bad Omens,Bounce,Dash Down,Flood,Flight's End,Headwinds,Jackpot,Lightning Storm,Manipulate Time,Readjust,Rock Slide,Roll Dice,Shockwave,Splash,Stalactites,Team Attack,Warp,",
+      "Above Danger,Agility,Bad Omens,Bounce,Dash Down,Flood,Gust,Headwinds,Jackpot,Lightning Storm,Manipulate Time,Readjust,Rock Slide,Roll Dice,Shockwave,Splash,Stalactites,Team Attack,Trap,Warp,",
       "",
       "Harald Lieske|Dominion: Allies|(Conjurer)"
     ]
