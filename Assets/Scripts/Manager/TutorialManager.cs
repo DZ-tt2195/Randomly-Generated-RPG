@@ -167,7 +167,7 @@ public class TutorialManager : MonoBehaviour
                 break;
 
             case 8: //introduce happy
-                listOfPlayers[1].AddAbility(FileManager.instance.FindPlayerAbility("Slow Down"), false, false);
+                listOfPlayers[1].AddAbility(FileManager.instance.FindPlayerAbility("Exhaust"), false, false);
 
                 yield return ClickThroughDialogue(new List<string>()
                 { "Your Angel is Happy, which means they can use another Ability when they don't attack, but all their Abilities have 1 more turn of Cooldown.",

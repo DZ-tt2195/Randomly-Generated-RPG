@@ -37,8 +37,8 @@ public class Ability : MonoBehaviour
         currentCooldown = (startWithCooldown) ? data.baseCooldown : 0;
 
         editedDescription = data.description
-            .Replace("ATK", Mathf.Abs(data.attackDamage).ToString())
-            .Replace("REGAIN", Mathf.Abs(data.healthRegain).ToString())
+            .Replace("NUM", Mathf.Abs(data.mainNumber).ToString())
+            .Replace("SEC", Mathf.Abs(data.secondNumber).ToString())
             .Replace("POWERSTAT", Mathf.Abs(data.modifyPower).ToString())
             .Replace("SPEEDSTAT", Mathf.Abs(data.modifySpeed).ToString())
             .Replace("DEFENSESTAT", Mathf.Abs(data.modifyDefense).ToString())
@@ -521,26 +521,6 @@ public class Ability : MonoBehaviour
         return listOfTargets;
     }
 
-    bool SetToGrounded(int currentIndex)
-    {
-        return (SetValues(listOfTargets[currentIndex].Count(target => target.CurrentPosition == Position.Grounded)) > 0);
-    }
-
-    bool SetToElevated(int currentIndex)
-    {
-        return (SetValues(listOfTargets[currentIndex].Count(target => target.CurrentPosition == Position.Elevated)) > 0);
-    }
-
-    int SetValues(int number)
-    {
-        float multiplier = (data.miscNumber > 0) ? data.miscNumber : -1f / data.miscNumber;
-        int actualNumber = (int)Mathf.Floor(number * multiplier);
-
-        data.attackDamage = actualNumber;
-        data.healthRegain = actualNumber;
-        return actualNumber;
-    }
-
     #endregion
 
 #region Play Instructions
@@ -578,15 +558,15 @@ public class Ability : MonoBehaviour
 
     IEnumerator TargetAttack(Character target, int logged)
     {
-        damageDealt = CalculateDamage(self, target, data.attackDamage, logged);
+        damageDealt = CalculateDamage(self, target, data.mainNumber, logged);
         yield return target.ChangeHealth(-1*damageDealt, logged, self);
         if (target == null || target.currentHealth <= 0)
             killed = true;
     }
 
-    IEnumerator TargetAttackMisc(Character target, int logged)
+    IEnumerator TargetAttackSec(Character target, int logged)
     {
-        damageDealt = CalculateDamage(self, target, data.miscNumber, logged);
+        damageDealt = CalculateDamage(self, target, data.secondNumber, logged);
         yield return target.ChangeHealth(-1*damageDealt, logged, self);
         if (target == null || target.currentHealth <= 0)
             killed = true;
@@ -594,21 +574,21 @@ public class Ability : MonoBehaviour
 
     IEnumerator TargetHeal(Character target, int logged)
     {
-        yield return target.ChangeHealth(CalculateHealing(self, data.healthRegain, logged), logged);
+        yield return target.ChangeHealth(CalculateHealing(self, data.mainNumber, logged), logged);
         if (target.CalculateHealthPercent() >= 1f)
             fullHeal = true;
     }
 
-    IEnumerator TargetHealMisc(Character target, int logged)
+    IEnumerator TargetHealSec(Character target, int logged)
     {
-        yield return target.ChangeHealth(CalculateHealing(self, data.miscNumber, logged), logged);
+        yield return target.ChangeHealth(CalculateHealing(self, data.secondNumber, logged), logged);
         if (target.CalculateHealthPercent() >= 1f)
             fullHeal = true;
     }
 
     IEnumerator TargetMaxHealth(Character target, int logged)
     {
-        yield return target.ChangeMaxHealth(data.healthRegain, logged);
+        yield return target.ChangeMaxHealth(data.miscNumber, logged);
     }
 
     IEnumerator TargetSwitchPosition(Character target, int logged)
@@ -698,7 +678,7 @@ public class Ability : MonoBehaviour
 
     IEnumerator TargetRevive(Character target, int logged)
     {
-        yield return target.Revive(data.healthRegain, logged);
+        yield return target.Revive(data.mainNumber, logged);
     }
 
     IEnumerator TargetBecomeStunned(Character target, int logged)

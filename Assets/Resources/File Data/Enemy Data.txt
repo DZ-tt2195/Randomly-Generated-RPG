@@ -73,7 +73,7 @@
       "GROUNDED",
       "Fight,Share Drinks,Share Snacks,Drinking Game,",
       "",
-      "Harald Lieske|Dominion: Allies|(Student)",
+      "Jesper Ejsing|Innistrad: Crimson Vow|(Gluttonous Guest)",
       "1"
     ],
     [
@@ -258,7 +258,7 @@
       "15",
       "2",
       "ELEVATED",
-      "Collision,Drop,Dangle,Rewrite Rules,",
+      "Collision,Drop,Dangle,",
       "MostTargets",
       "James Ryman|Kaladesh|(Marionette Master)",
       "3"

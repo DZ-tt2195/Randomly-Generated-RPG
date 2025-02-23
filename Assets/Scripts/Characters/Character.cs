@@ -165,21 +165,23 @@ public class Character : MonoBehaviour
     public IEnumerator ChangeHealth(int change, int logged, Character attacker = null)
     {
         if (this == null || change == 0) yield break;
-        if (attacker != null) lastToAttackThis = attacker;
 
         if (change > 0)
         {
             currentHealth = Mathf.Clamp(currentHealth += change, 0, this.baseHealth);
             TurnManager.instance.CreateVisual($"+{change} Health", this.transform.localPosition);
-            Log.instance.AddText($"{(this.name)} gains {change} Health.", logged);
+            Log.instance.AddText($"{this.name} gains {change} Health.", logged);
         }
         else if (statEffectDict[StatusEffect.Protected] > 0)
         {
             TurnManager.instance.CreateVisual($"BLOCKED", this.transform.localPosition);
-            Log.instance.AddText($"{(this.name)} is Protected from {Mathf.Abs(change)} damage.", logged);
+            Log.instance.AddText($"{this.name} is Protected from {Mathf.Abs(change)} damage.", logged);
         }
         else
         {
+            if (attacker != null && ((this is EnemyCharacter && attacker is PlayerCharacter) || (this is PlayerCharacter && attacker is EnemyCharacter)))
+                lastToAttackThis = attacker;
+
             currentHealth -= Mathf.Abs(change);
             TurnManager.instance.CreateVisual($"-{Mathf.Abs(change)} Health", this.transform.localPosition);
             Log.instance.AddText($"{(this.name)} takes {Mathf.Abs(change)} damage.", logged);

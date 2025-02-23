@@ -31,8 +31,8 @@ public class AbilityData
     public AbilityType[] myTypes;
     public string[] playCondition;
     public int baseCooldown;
-    public int attackDamage;
-    public int healthRegain;
+    public int mainNumber;
+    public int secondNumber;
     public int modifyPower;
     public int modifyDefense;
     public int modifySpeed;
@@ -100,8 +100,8 @@ public class DataLoader
             newAbility.instructions = (line[6].Equals("") ? new string[1] { "None" } : TurnManager.SpliceString(line[6].Trim(), '-'));
 
             newAbility.baseCooldown = StringToInt(line[7]);
-            newAbility.attackDamage = StringToInt(line[8]); VerifyNumbers(newAbility, "ATK", newAbility.attackDamage.ToString());
-            newAbility.healthRegain = StringToInt(line[9]); VerifyNumbers(newAbility, "REGAIN", newAbility.healthRegain.ToString());
+            newAbility.mainNumber = StringToInt(line[8]); VerifyNumbers(newAbility, "NUM", newAbility.mainNumber.ToString());
+            newAbility.secondNumber = StringToInt(line[9]); VerifyNumbers(newAbility, "SEC", newAbility.secondNumber.ToString());
 
             newAbility.modifyPower = StringToInt(line[10]); VerifyNumbers(newAbility, "POWERSTAT", newAbility.modifyPower.ToString());
             newAbility.modifyDefense = StringToInt(line[11]); VerifyNumbers(newAbility, "DEFENSESTAT", newAbility.modifyDefense.ToString());

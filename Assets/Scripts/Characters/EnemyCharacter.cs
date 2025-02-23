@@ -44,11 +44,16 @@ public class EnemyCharacter : Character
                 chosenAbility = allAbilities[0];
                 break;
             default:
-                if (attackingAbilities.Count == 0) chosenAbility = miscAbilities[0];
-                else if (miscAbilities.Count == 0) chosenAbility = attackingAbilities[0];
-                else if (this.CurrentEmotion == Emotion.Happy && !extraAbility) chosenAbility = miscAbilities[0];
-                else if (data.aiTargeting.Equals("CHOOSEATTACK") || this.CurrentEmotion == Emotion.Angry || this.CurrentEmotion == Emotion.Sad) chosenAbility = attackingAbilities[0];
-                else chosenAbility = Random.Range(0, 2) == 1 ? miscAbilities[0] : attackingAbilities[0];
+                if (attackingAbilities.Count == 0)
+                    chosenAbility = miscAbilities[0];
+                else if (miscAbilities.Count == 0)
+                    chosenAbility = attackingAbilities[0];
+                else if (this.CurrentEmotion == Emotion.Happy && !extraAbility)
+                    chosenAbility = miscAbilities[0];
+                else if (data.aiTargeting.Equals("CHOOSEATTACK") || this.CurrentEmotion == Emotion.Angry || this.CurrentEmotion == Emotion.Sad)
+                    chosenAbility = attackingAbilities[0];
+                else
+                    chosenAbility = Random.Range(0, 2) == 1 ? miscAbilities[0] : attackingAbilities[0];
                 break;
         }
     }
