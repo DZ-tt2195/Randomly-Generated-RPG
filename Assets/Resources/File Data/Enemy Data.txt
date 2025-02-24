@@ -45,7 +45,7 @@
     ],
     [
       "KITTY!!!",
-      "Alternates between Grounded and Elevated and attacks whoever it can reach.",
+      "Alternates between Grounded and Elevated, and attacks any Player with the same Position.",
       "5",
       "0",
       "GROUNDED",
@@ -122,18 +122,18 @@
     ],
     [
       "Archer",
-      "Increases its own Luck, makes itself Happy, then shoots down Elevated Players that are Angry.",
+      "Increases its own Luck, makes itself Happy, then attacks Angry and Elevated Players.",
       "10",
       "1",
       "GROUNDED",
-      "Quick Shot,Frozen Arrow,Volley of Arrows,Focus,",
+      "Quick Shot,Bullseye,Volley,Focus,",
       "Effectiveness",
       "Harald Lieske|Dominion: Allies|(Archer)",
       "2"
     ],
     [
       "Barbarian",
-      "Makes itself Angry, goes after the Grounded Player with the most Health, and lowers Max Health.",
+      "Makes itself Angry, goes after the Grounded Player with the most Health, and lowers their Max Health.",
       "10",
       "0",
       "GROUNDED",
@@ -148,7 +148,7 @@
       "10",
       "1",
       "ELEVATED",
-      "Drain,Screech,Hunting Season,Desperation,",
+      "Drain,Screech,Hunting Season,Bloodthirst,",
       "Effectiveness",
       "Martin Hoffmann|Dominion: Nocturne|(Bat)",
       "2"
@@ -170,7 +170,7 @@
       "10",
       "1",
       "ELEVATED",
-      "Jumpscare,Lament,Possession,",
+      "Jumpscare,Lament,Possession,Release,",
       "",
       "Eric J. Carter|Dominion: Nocturne|(Ghost)",
       "2"
@@ -188,18 +188,18 @@
     ],
     [
       "Siren",
-      "Makes itself Targeted and then deals heavy damage to Stunned Players.",
+      "Makes a Player Angry and Stunned, and then deals damage to Stunned Players.",
       "10",
       "0",
       "GROUNDED",
-      "Drown,Temptation,Alluring Song,",
+      "Drown,Shipwreck,Manipulate,Sing,",
       "ChooseAttack",
       "Claus Stephan|Dominion: Plunder|(Siren)",
       "2"
     ],
     [
       "Spider",
-      "While this is Elevated, it'll make Players Elevated and Angry, and then lower their Stats.",
+      "While this is Elevated, it'll make Players Elevated and Sad, and then lower their Stats.",
       "10",
       "1",
       "ELEVATED",
@@ -214,7 +214,7 @@
       "10",
       "-1",
       "ELEVATED",
-      "Mischief,Illusion,Delay,Distract,",
+      "Mischief,Delude,Delay,Distract,",
       "ChooseAttack",
       "Mila Pesic|Throne of Eldraine|(Bog Naughty)",
       "2"
@@ -232,11 +232,11 @@
     ],
     [
       "Demon",
-      "Damages other Enemies to make itself stronger. Eventually it'll unleash a powerful attack on all Players.",
+      "Weakens other Enemies to make itself stronger. Eventually it'll unleash a powerful attack on all Players.",
       "15",
       "2",
       "ELEVATED",
-      "Dark Energy,Betrayal,Ritual,",
+      "Dark Energy,Betrayal,Ritual,Demand Energy,",
       "CameOffCooldown",
       "Vincent Proce|Guilds of Ravnica|(Doom Whisperer)",
       "3"
@@ -254,11 +254,11 @@
     ],
     [
       "Puppeteer",
-      "Makes Players Elevated, then makes them Grounded again to deal damage.",
+      "Makes Players Elevated, then makes them Grounded again to deal damage. Can also give all other Elevated Enemies Extra Abilities.",
       "15",
       "2",
       "ELEVATED",
-      "Collision,Drop,Dangle,",
+      "Collision,Drop,Dangle,Control,",
       "MostTargets",
       "James Ryman|Kaladesh|(Marionette Master)",
       "3"

@@ -5,7 +5,7 @@ using MyBox;
 using System.Reflection;
 using System.Linq;
 
-public enum TeamTarget { None, Self, AnyOne, All, OnePlayer, OtherPlayer, OneEnemy, OtherEnemy, AllPlayers, AllEnemies };
+public enum TeamTarget { None, Self, AnyOne, All, OnePlayer, OtherPlayer, OneEnemy, OtherEnemy, AllPlayers, AllOtherPlayers, AllEnemies, AllOtherEnemies };
 public enum AbilityType { None, Attack, StatPlayer, StatEnemy, EmotionPlayer, EmotionEnemy, PositionPlayer, PositionEnemy, Healing, Misc };
 
 public class Ability : MonoBehaviour
@@ -259,6 +259,18 @@ public class Ability : MonoBehaviour
         return listOfTargets[currentIndex].Count > 0;
     }
 
+    bool TargetHealthOrMore(int currentIndex)
+    {
+        listOfTargets[currentIndex].RemoveAll(target => target.currentHealth <= data.miscNumber);
+        return listOfTargets[currentIndex].Count > 0;
+    }
+
+    bool TargetHealthOrLess(int currentIndex)
+    {
+        listOfTargets[currentIndex].RemoveAll(target => target.currentHealth >= data.miscNumber);
+        return listOfTargets[currentIndex].Count > 0;
+    }
+
     bool TargetInjured(int currentIndex)
     {
         listOfTargets[currentIndex].RemoveAll(target => target.CalculateHealthPercent() > 0.5f);
@@ -424,11 +436,14 @@ public class Ability : MonoBehaviour
         return listOfTargets[currentIndex].Count > 0;
     }
 
-    bool NotTargeted(int currentIndex)
+    bool NoTargetedPlayer(int currentIndex)
     {
-        listOfTargets[currentIndex].Remove(TurnManager.instance.targetedPlayer);
-        listOfTargets[currentIndex].Remove(TurnManager.instance.targetedEnemy);
-        return listOfTargets[currentIndex].Count > 0;
+        return (TurnManager.instance.targetedPlayer == null);
+    }
+
+    bool NoTargetedEnemy(int currentIndex)
+    {
+        return (TurnManager.instance.targetedEnemy == null);
     }
 
     bool LastAttackerExists(int currentIndex)
@@ -507,15 +522,20 @@ public class Ability : MonoBehaviour
             case TeamTarget.AllPlayers:
                 foreach (Character friend in TurnManager.instance.listOfPlayers) { listOfTargets.Add(friend); }
                 break;
+            case TeamTarget.AllOtherPlayers:
+                foreach (Character friend in TurnManager.instance.listOfPlayers) { if (friend != this.self) listOfTargets.Add(friend); }
+                break;
             case TeamTarget.OneEnemy:
                 foreach (Character foe in TurnManager.instance.listOfEnemies) { listOfTargets.Add(foe); }
                 break;
             case TeamTarget.OtherEnemy:
                 foreach (Character foe in TurnManager.instance.listOfEnemies) { if (foe != this.self) listOfTargets.Add(foe); }
-                listOfTargets.Remove(this.self);
                 break;
             case TeamTarget.AllEnemies:
                 foreach (Character foe in TurnManager.instance.listOfEnemies) { listOfTargets.Add(foe); }
+                break;
+            case TeamTarget.AllOtherEnemies:
+                foreach (Character foe in TurnManager.instance.listOfEnemies) { if (foe != this.self) listOfTargets.Add(foe); }
                 break;
         }
         return listOfTargets;
