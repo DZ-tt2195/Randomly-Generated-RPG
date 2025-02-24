@@ -30,6 +30,7 @@ public class RightClickMe : MonoBehaviour, IPointerClickHandler
         statText += $"{character.currentHealth} / {character.data.baseHealth} Health, {character.CalculatePower()} Power, {character.statModDict[Stats.Defense]} Defense\n";
         statText += $"{character.CalculateSpeed()} Speed, {character.statModDict[Stats.Luck]} Luck, begin {character.data.startingPosition}";
 
-        ScreenOverlay.instance.DisplayCharacterInfo(character, KeywordTooltip.instance.EditText(statText));
+        if (ScreenOverlay.instance != null)
+            ScreenOverlay.instance.DisplayCharacterInfo(character, KeywordTooltip.instance.EditText(statText));
     }
 }

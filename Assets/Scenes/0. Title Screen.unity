@@ -10534,10 +10534,9 @@ MonoBehaviour:
       m_Calls: []
   m_text: 'Icons: <link="Health"><sprite="Health" name="Health"></link> <link="Cooldown"><sprite="Cooldown"
     name="Cooldown"></link> <link="Power"><sprite="Power" name="Power"></link> <link="Defense"><sprite="Defense"
-    name="Defense"></link> <link="Luck"><sprite="Luck" name="Luck"></link> <link="Accuracy"><sprite="Accuracy"
-    name="Accuracy"></link> <link="Speed"><sprite="Speed" name="Speed"></link> <link="Star"><sprite="Star"
-    name="Star"></link><link="StunImage"><sprite="StunImage" name="StunImage"></link>
-    <link="ProtectedImage"><sprite="ProtectedImage" name="ProtectedImage"></link>
+    name="Defense"></link> <link="Luck"><sprite="Luck" name="Luck"></link> <link="Speed"><sprite="Speed"
+    name="Speed"></link> <link="Star"><sprite="Star" name="Star"></link><link="StunImage"><sprite="StunImage"
+    name="StunImage"></link> <link="ProtectedImage"><sprite="ProtectedImage" name="ProtectedImage"></link>
     <link="TargetedImage"><sprite="TargetedImage" name="TargetedImage"></link> <link="ExtraImage"><sprite="ExtraImage"
     name="ExtraImage"></link><link="LockImage"><sprite="LockImage" name="LockImage"></link>'
   m_isRightToLeft: 0

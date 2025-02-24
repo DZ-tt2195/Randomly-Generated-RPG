@@ -19,7 +19,8 @@ public class AbilityBox : MonoBehaviour
     public void ReceiveAbility(bool disableOverlay, Ability ability)
     {
         this.ability = ability;
-        try { button.interactable = disableOverlay; } catch (NullReferenceException) { /*do nothing*/ };
+        if (button != null)
+            button.interactable = disableOverlay;
 
         if (ability == null)
         {

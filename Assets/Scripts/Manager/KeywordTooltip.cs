@@ -103,7 +103,6 @@ public class KeywordTooltip : MonoBehaviour
 
     public void ActivateTextBox(string target, Vector3 mousePosition)
     {
-        tooltipText.transform.parent.gameObject.SetActive(true);
         this.transform.SetAsLastSibling();
 
         foreach (KeywordHover entry in linkedKeywords)
@@ -114,6 +113,7 @@ public class KeywordTooltip : MonoBehaviour
                 {
                     tooltipText.text = entry.description;
                     tooltipText.transform.parent.position = CalculatePosition(mousePosition);
+                    tooltipText.transform.parent.gameObject.SetActive(true);
                     return;
                 }
             }
@@ -124,6 +124,7 @@ public class KeywordTooltip : MonoBehaviour
             {
                 tooltipText.text = entry.description;
                 tooltipText.transform.parent.position = CalculatePosition(mousePosition);
+                tooltipText.transform.parent.gameObject.SetActive(true);
                 return;
             }
         }
@@ -133,6 +134,7 @@ public class KeywordTooltip : MonoBehaviour
             {
                 tooltipText.text = entry.description;
                 tooltipText.transform.parent.position = CalculatePosition(mousePosition);
+                tooltipText.transform.parent.gameObject.SetActive(true);
                 return;
             }
         }

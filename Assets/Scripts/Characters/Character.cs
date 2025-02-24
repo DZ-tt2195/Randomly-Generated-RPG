@@ -548,13 +548,13 @@ public class Character : MonoBehaviour
         {
             Vector3 newPosition = transform.localPosition;
             int startingPosition = (this is EnemyCharacter) ? 375 : -500;
-            newPosition.y = startingPosition + (25 * Mathf.Cos(Time.time * 3f));
+            newPosition.y = startingPosition + (20 * Mathf.Cos(Time.time * 3f));
             transform.localPosition = newPosition;
         }
         else
         {
             Vector3 newPosition = transform.localPosition;
-            int startingPosition = (this is EnemyCharacter) ? 300 : -570;
+            int startingPosition = (this is EnemyCharacter) ? 300 : -560;
             newPosition.y = startingPosition;
             transform.localPosition = newPosition;
         }
@@ -584,7 +584,7 @@ public class Character : MonoBehaviour
         for (int i = 0; i < statEffectDict[StatusEffect.Protected]; i++)
             statusText.text += "ProtectedImage";
         for (int i = 0; i < statEffectDict[StatusEffect.Locked]; i++)
-            statusText.text += "LockedImage";
+            statusText.text += "LockImage";
 
         if (TurnManager.instance != null && (TurnManager.instance.targetedPlayer == this || TurnManager.instance.targetedEnemy == this))
         {
