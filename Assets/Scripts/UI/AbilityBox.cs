@@ -27,8 +27,8 @@ public class AbilityBox : MonoBehaviour
             textName.text = "";
             textCountdown.transform.parent.gameObject.SetActive(false);
             cantUse.transform.parent.gameObject.SetActive(true);
-            cantUse.text = "X";
-            image.color = Color.red;
+            cantUse.text = "";
+            image.color = Color.gray;
             hover.enabled = false;
             hover.background.gameObject.SetActive(false);
         }

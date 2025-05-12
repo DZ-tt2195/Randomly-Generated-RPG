@@ -792,7 +792,9 @@ public class Ability : MonoBehaviour
 
     IEnumerator SummonStar(Character target, int logged)
     {
-        TurnManager.instance.CreateEnemy(FileManager.instance.RandomEnemy(data.miscNumber), (Emotion)UnityEngine.Random.Range(1, 5), logged);
+        List<CharacterData> fromList = CarryVariables.instance.listOfEnemies[data.miscNumber];
+        CharacterData randomEnemy = fromList[UnityEngine.Random.Range(0, fromList.Count)];
+        TurnManager.instance.CreateEnemy(randomEnemy, (Emotion)UnityEngine.Random.Range(1, 5), logged);
         yield return null;
     }
 

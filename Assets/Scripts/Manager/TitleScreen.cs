@@ -18,9 +18,9 @@ public class TitleScreen : MonoBehaviour
     bool stillGenerating { get { return _stillGenerating; } set { { _stillGenerating = value; } if (generationTime>0f) Debug.Log(generationTime); } }
 
     [Foldout("Misc", true)]
-    [SerializeField] GameObject playerPrefab;
     [SerializeField] GameObject storyObject;
     [SerializeField] GameObject specialThanksObject;
+    [SerializeField] TMP_Text timeText;
 
     [Foldout("RNG", true)]
     [SerializeField] bool randomSeed;
@@ -30,11 +30,6 @@ public class TitleScreen : MonoBehaviour
     [SerializeField] GameObject cheatChallengeObject;
     List<Toggle> listOfCheats = new();
     List<Toggle> listOfChallenges = new();
-
-    [Foldout("Info Screen", true)]
-    [SerializeField] List<Button> infoScreenToggles = new();
-    [SerializeField] GameObject infoScreen;
-    [SerializeField] List<AbilityBox> abilityBoxes = new();
 
     #endregion
 
@@ -56,9 +51,6 @@ public class TitleScreen : MonoBehaviour
         Character.borderColor = 0;
         StartCoroutine(GenerateFiles());
 
-        foreach (Button button in infoScreenToggles)
-            button.onClick.AddListener(ToggleInfoScreen);
-
         Toggle[] allToggles = FindObjectsOfType<Toggle>(includeInactive: true);
         foreach (Toggle toggle in allToggles)
         {
@@ -77,6 +69,17 @@ public class TitleScreen : MonoBehaviour
 
     private void Update()
     {
+        TimeSpan utcOffset = TimeZoneInfo.Local.GetUtcOffset(DateTime.Now);
+        if (utcOffset.Hours > 0)
+            timeText.text = $"Your timezone: UTC +{utcOffset.Hours:D2}:{utcOffset.Minutes:D2}";
+        else
+            timeText.text = $"Your timezone: UTC {utcOffset.Hours:D2}:{utcOffset.Minutes:D2}";
+
+        DateTime nextUtcMidnight = DateTime.UtcNow.Date.AddDays(1);
+        TimeSpan timeUntilMidnightUtc = nextUtcMidnight - DateTime.UtcNow;
+        timeText.text += $"\nNext challenge in: {timeUntilMidnightUtc.Hours:D2}:" +
+            $"{timeUntilMidnightUtc.Minutes:D2}:{timeUntilMidnightUtc.Seconds:D2}";
+
         if (stillGenerating)
             generationTime += Time.deltaTime;
     }
@@ -89,16 +92,15 @@ public class TitleScreen : MonoBehaviour
 
         if (Application.isEditor)
         {
-            yield return FileManager.instance.DownloadFile("Player Data");
-            yield return FileManager.instance.DownloadFile("Enemy Data");
-            yield return FileManager.instance.DownloadFile("Bonus Enemy Data");
-            yield return FileManager.instance.DownloadFile("Player Ability Data");
-            yield return FileManager.instance.DownloadFile("Enemy Ability Data");
-            //FileManager.instance.downloadOn = false;
+            yield return CarryVariables.instance.DownloadFile("Player Data");
+            yield return CarryVariables.instance.DownloadFile("Enemy Data");
+            yield return CarryVariables.instance.DownloadFile("Bonus Enemy Data");
+            yield return CarryVariables.instance.DownloadFile("Player Ability Data");
+            yield return CarryVariables.instance.DownloadFile("Enemy Ability Data");
         }
 
         List<CharacterData> allEnemies = DataLoader.ReadCharacterData("Enemy Data").OrderBy(data => data.myName).ToList();
-        FileManager.instance.listOfEnemies = new()
+        CarryVariables.instance.listOfEnemies = new()
         {
             new List<CharacterData>(),
             allEnemies.Where(data => data.difficulty == 1).ToList(),
@@ -106,49 +108,14 @@ public class TitleScreen : MonoBehaviour
             allEnemies.Where(data => data.difficulty == 3).ToList(),
         };
 
-        FileManager.instance.listOfBonusEnemies = DataLoader.ReadCharacterData("Bonus Enemy Data");
-        FileManager.instance.listOfPlayerAbilities = DataLoader.ReadAbilityData("Player Ability Data").OrderBy(data => data.myName).ToList();
-        FileManager.instance.listOfEnemyAbilities = DataLoader.ReadAbilityData("Enemy Ability Data").OrderBy(data => data.myName).ToList();
-
-        GeneratePlayers();
+        CarryVariables.instance.listOfBonusEnemies = DataLoader.ReadCharacterData("Bonus Enemy Data");
+        CarryVariables.instance.listOfPlayerAbilities = DataLoader.ReadAbilityData("Player Ability Data").OrderBy(data => data.myName).ToList();
+        CarryVariables.instance.listOfEnemyAbilities = DataLoader.ReadAbilityData("Enemy Ability Data").OrderBy(data => data.myName).ToList();
 
         loadButtons.SetActive(true);
         GameObject.Find("Loading Text").SetActive(false);
         if (!Application.isEditor) GameObject.Find("Play the tutorial").SetActive(false);
         stillGenerating = false;
-    }
-
-    void GeneratePlayers()
-    {
-        try
-        {
-            foreach (Character player in FileManager.instance.listOfPlayers)
-                Destroy(player.gameObject);
-            FileManager.instance.listOfPlayers.Clear();
-        }
-        catch
-        {
-            //do nothing
-        }
-
-        List<CharacterData> playerData = DataLoader.ReadCharacterData("Player Data");
-        for (int i = 0; i < playerData.Count; i++)
-        {
-            PlayerCharacter nextCharacter = Instantiate(playerPrefab).AddComponent<PlayerCharacter>();
-            nextCharacter.SetupCharacter(playerData[i], FileManager.instance.GenerateRandomPlayerAbilities(6, playerData[i].listOfSkills), (Emotion)UnityEngine.Random.Range(1,5), false);
-
-            nextCharacter.transform.SetParent(abilityBoxes[i * 6].transform.parent);
-            nextCharacter.transform.localPosition = new Vector3(-1050, 0, 0);
-
-            FileManager.instance.listOfPlayers.Add(nextCharacter);
-            for (int j = 0; j<nextCharacter.listOfRandomAbilities.Count; j++)
-                abilityBoxes[i * 6 + j].ReceiveAbility(true, nextCharacter.listOfRandomAbilities[j]);
-        }
-    }
-
-    void ToggleInfoScreen()
-    {
-        infoScreen.SetActive(!infoScreen.activeSelf);
     }
 
 #endregion

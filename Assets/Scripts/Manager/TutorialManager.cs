@@ -68,6 +68,8 @@ public class TutorialManager : MonoBehaviour
         switch (currentStep)
         {
             case 1: //introduce the concept of the game
+                Log.instance.AddText("Tutorial mode - 3 waves.");
+                Log.instance.AddText("");
                 yield return ClickThroughDialogue(new List<string>()
                 { "This is a turn-based RPG where you're given random Abilities to fight against random Enemies." });
 
@@ -77,7 +79,7 @@ public class TutorialManager : MonoBehaviour
 
             case 2: //right click on knight
                 TurnManager.instance.AddPlayer(listOfPlayers[0]); //add knight
-                listOfPlayers[0].AddAbility(FileManager.instance.FindPlayerAbility("Rollout"), false, false);
+                listOfPlayers[0].AddAbility(CarryVariables.instance.FindPlayerAbility("Rollout"), false, false);
 
                 TextCollector collector2 = TurnManager.instance.MakeTextCollector(
                     "You always have the same 3 party members. Right click on the Knight to see what they do.",
@@ -94,7 +96,7 @@ public class TutorialManager : MonoBehaviour
 
             case 3: //first time attacking
                 yield return TurnManager.instance.NewWave();
-                TurnManager.instance.CreateEnemy(FileManager.instance.FindBonusEnemy("Page"), Emotion.Neutral, 0);
+                TurnManager.instance.CreateEnemy(CarryVariables.instance.FindBonusEnemy("Page"), Emotion.Neutral, 0);
 
                 yield return ClickThroughDialogue(new List<string>()
                 { "Here's your first Enemy. Use the Knight's Ability against them." });
@@ -105,7 +107,7 @@ public class TutorialManager : MonoBehaviour
                 break;
 
             case 4: //introduce Cooldowns
-                listOfPlayers[0].AddAbility(FileManager.instance.FindPlayerAbility("Joust"), false, false);
+                listOfPlayers[0].AddAbility(CarryVariables.instance.FindPlayerAbility("Joust"), false, false);
                 yield return ClickThroughDialogue(new List<string>()
                 { "The Ability you used has a cooldown (Cooldown), so you can't use it again this round. Instead use the other Ability." });
 
@@ -130,7 +132,7 @@ public class TutorialManager : MonoBehaviour
 
             case 6: //introduce angel
                 TurnManager.instance.AddPlayer(listOfPlayers[1]); //add angel
-                listOfPlayers[1].AddAbility(FileManager.instance.FindPlayerAbility("Assist"), false, false);
+                listOfPlayers[1].AddAbility(CarryVariables.instance.FindPlayerAbility("Assist"), false, false);
 
                 TextCollector collector6 = TurnManager.instance.MakeTextCollector(
                     "Here's your 2nd party member. Right click on the Angel to read what they do.",
@@ -148,7 +150,7 @@ public class TutorialManager : MonoBehaviour
             case 7: //introduce angel's healing
                 Log.instance.AddText("");
                 yield return TurnManager.instance.NewWave();
-                TurnManager.instance.CreateEnemy(FileManager.instance.FindBonusEnemy("Page"), Emotion.Happy, 0);
+                TurnManager.instance.CreateEnemy(CarryVariables.instance.FindBonusEnemy("Page"), Emotion.Happy, 0);
 
                 yield return ClickThroughDialogue(new List<string>()
                 { "This Page is Happy. Happy is super effective against Angry, which puts your Knight at a disadvantage.",
@@ -167,7 +169,7 @@ public class TutorialManager : MonoBehaviour
                 break;
 
             case 8: //introduce happy
-                listOfPlayers[1].AddAbility(FileManager.instance.FindPlayerAbility("Exhaust"), false, false);
+                listOfPlayers[1].AddAbility(CarryVariables.instance.FindPlayerAbility("Exhaust"), false, false);
 
                 yield return ClickThroughDialogue(new List<string>()
                 { "Your Angel is Happy, which means they can use another Ability when they don't attack, but all their Abilities have 1 more turn of Cooldown.",
@@ -180,15 +182,15 @@ public class TutorialManager : MonoBehaviour
                 Log.instance.AddText("");
                 yield return TurnManager.instance.NewWave();
 
-                listOfPlayers[0].AddAbility(FileManager.instance.FindPlayerAbility("Embarass"), false, false);
-                listOfPlayers[0].AddAbility(FileManager.instance.FindPlayerAbility("Cheer"), false, false);
+                listOfPlayers[0].AddAbility(CarryVariables.instance.FindPlayerAbility("Embarass"), false, false);
+                listOfPlayers[0].AddAbility(CarryVariables.instance.FindPlayerAbility("Cheer"), false, false);
 
-                listOfPlayers[1].AddAbility(FileManager.instance.FindPlayerAbility("Calm Down"), false, false);
-                listOfPlayers[1].AddAbility(FileManager.instance.FindPlayerAbility("Motivate"), false, false);
+                listOfPlayers[1].AddAbility(CarryVariables.instance.FindPlayerAbility("Calm Down"), false, false);
+                listOfPlayers[1].AddAbility(CarryVariables.instance.FindPlayerAbility("Motivate"), false, false);
 
-                TurnManager.instance.CreateEnemy(FileManager.instance.FindBonusEnemy("Page"), Emotion.Neutral, 0);
-                TurnManager.instance.CreateEnemy(FileManager.instance.FindBonusEnemy("Crow"), Emotion.Neutral, 0);
-                TurnManager.instance.CreateEnemy(FileManager.instance.FindBonusEnemy("Crow"), Emotion.Neutral, 0);
+                TurnManager.instance.CreateEnemy(CarryVariables.instance.FindBonusEnemy("Page"), Emotion.Neutral, 0);
+                TurnManager.instance.CreateEnemy(CarryVariables.instance.FindBonusEnemy("Crow"), Emotion.Neutral, 0);
+                TurnManager.instance.CreateEnemy(CarryVariables.instance.FindBonusEnemy("Crow"), Emotion.Neutral, 0);
 
                 yield return ClickThroughDialogue(new List<string>()
                 { "Everyone has a Position; they're either Grounded or Elevated. Your Knight always starts Grounded, and Angel always starts Elevated.",
@@ -200,7 +202,7 @@ public class TutorialManager : MonoBehaviour
 
             case 10: //introduce wizard
                 TurnManager.instance.AddPlayer(listOfPlayers[2]); //add wizard
-                listOfPlayers[2].AddAbility(FileManager.instance.FindPlayerAbility("Stalactites"), false, false);
+                listOfPlayers[2].AddAbility(CarryVariables.instance.FindPlayerAbility("Stalactites"), false, false);
 
                 TextCollector collector10 = TurnManager.instance.MakeTextCollector(
                     "And now, your 3rd party member. Right click on the Wizard to read what they do.",
@@ -259,9 +261,9 @@ public class TutorialManager : MonoBehaviour
                 break;
 
             case 14: //finish off the enemies
-                listOfPlayers[2].AddAbility(FileManager.instance.FindPlayerAbility("Readjust"), false, false);
-                listOfPlayers[2].AddAbility(FileManager.instance.FindPlayerAbility("Flood"), false, false);
-                listOfPlayers[2].AddAbility(FileManager.instance.FindPlayerAbility("Shockwave"), false, false);
+                listOfPlayers[2].AddAbility(CarryVariables.instance.FindPlayerAbility("Readjust"), false, false);
+                listOfPlayers[2].AddAbility(CarryVariables.instance.FindPlayerAbility("Flood"), false, false);
+                listOfPlayers[2].AddAbility(CarryVariables.instance.FindPlayerAbility("Shockwave"), false, false);
 
                 yield return ClickThroughDialogue(new List<string>()
                 { "Anyways, now that all the Enemies are Grounded, your Knight is capable of hitting them, so finish them off."});

@@ -27,7 +27,7 @@ class WaveSetup
 public class TurnManager : MonoBehaviour
 {
 
-#region Variables
+#region Setup
 
     public static TurnManager instance;
     [Foldout("Prefabs", true)]
@@ -47,8 +47,10 @@ public class TurnManager : MonoBehaviour
         List<CharacterPositions> enemyPositions = new();
         [SerializeField] TMP_Text waveText;
         [SerializeField] TMP_Text roundText;
+        [SerializeField] Button resignButton;
 
     [Foldout("Character lists", true)]
+        System.Random dailyRNG;
         [ReadOnly] public List<Character> listOfPlayers = new();
         [ReadOnly] public List<Character> listOfEnemies = new();
         [ReadOnly] public List<Character> listOfDead = new();
@@ -64,46 +66,26 @@ public class TurnManager : MonoBehaviour
         [ReadOnly] public Character targetedEnemy { get { return _targetedEnemy; } set { ResetTargetedEnemy(value); } }
         public int confirmChoice { get; private set; }
 
-#endregion
-
-#region Setup
-
     private void Awake()
     {
         instance = this;
-    }
-
-    private void Start()
-    {
         isBattling = true;
         waveText.transform.parent.localPosition = new Vector3(0, 1200, 0);
 
-        for (int i = 0; i<5; i++)
+        resignButton.onClick.AddListener(() => GameFinished("You resigned.", $"Survived {currentWave - 1} {(currentWave - 1 == 1 ? "wave" : "waves")}."));
+
+        if (CarryVariables.instance.mode == CarryVariables.GameMode.Daily)
+        {
+            DateTime day = DateTime.UtcNow.Date;
+            int seed = day.Year * 10000 + day.Month * 100 + day.Day;
+            dailyRNG = new System.Random(seed);
+        }
+
+        for (int i = 0; i < 5; i++)
         {
             int nextX = -1050 + (350 * i);
             teammatePositions.Add(new CharacterPositions(new Vector3(nextX, -550, 0)));
             enemyPositions.Add(new CharacterPositions(new Vector3(nextX, 300, 0)));
-        }
-
-        if (CarryVariables.instance.mode == CarryVariables.GameMode.Main)
-        {
-            Log.instance.AddText("Defeat 5 waves of enemies.");
-
-            foreach (string cheat in CarryVariables.instance.listOfCheats)
-                Log.instance.AddText($"<color=#00FF00>Cheat: {cheat}</color>", 1);
-            foreach (string challenge in CarryVariables.instance.listOfChallenges)
-                Log.instance.AddText($"<color=#FF0000>Challenge: {challenge}</color>", 1);
-
-            Log.instance.AddText("");
-            foreach (Character player in FileManager.instance.listOfPlayers)
-                AddPlayer(player);
-
-            StartCoroutine(NewWave());
-        }
-        else if (CarryVariables.instance.mode == CarryVariables.GameMode.Tutorial)
-        {
-            Log.instance.AddText("Tutorial mode - 3 waves.");
-            Log.instance.AddText("");
         }
     }
 
@@ -121,7 +103,12 @@ public class TurnManager : MonoBehaviour
         {
             GameFinished("You won!", $"Survived 5 waves.");
         }
-        else if (CarryVariables.instance.mode == CarryVariables.GameMode.Main)
+        else if (CarryVariables.instance.mode == CarryVariables.GameMode.Tutorial)
+        {
+            yield return NewAnimation(true);
+            Log.instance.AddText($"WAVE {currentWave} / 3");
+        }
+        else
         {
             yield return NewAnimation(true);
             Log.instance.AddText($"WAVE {currentWave} / 5");
@@ -134,30 +121,34 @@ public class TurnManager : MonoBehaviour
                     for (int i = player.listOfRandomAbilities.Count - 1; i >= 0; i--)
                         player.DropAbility(player.listOfRandomAbilities[i]);
 
-                    List<AbilityData> newAbilties = FileManager.instance.GenerateRandomPlayerAbilities(6, player.data.listOfSkills);
+                    List<AbilityData> newAbilties = CarryVariables.instance.CompletePlayerAbilities(new(), player.name, dailyRNG);
                     foreach (AbilityData data in newAbilties)
                         player.AddAbility(data, false, false);
                 }
                 Log.instance.AddText("");
             }
 
-            foreach (int nextTier in listOfWaveSetup[currentWave-1].enemyDifficultySpawn)
-            {
-                yield return WaitTime();
-                CreateEnemy(FileManager.instance.RandomEnemy(nextTier), (Emotion)UnityEngine.Random.Range(1, 5), 0);
-            }
+            foreach (int nextTier in listOfWaveSetup[currentWave - 1].enemyDifficultySpawn)
+                yield return MakeNewEnemy(CarryVariables.instance.listOfEnemies[nextTier]);
             if (currentWave <= 4 && CarryVariables.instance.ActiveChallenge("More Enemies"))
+                yield return MakeNewEnemy(CarryVariables.instance.listOfEnemies[1]);
+
+            IEnumerator MakeNewEnemy(List<CharacterData> fromList)
             {
                 yield return WaitTime();
-                CreateEnemy(FileManager.instance.RandomEnemy(1), (Emotion)UnityEngine.Random.Range(1, 5), 0);
+                if (dailyRNG != null)
+                {
+                    CharacterData randomEnemy = fromList[dailyRNG.Next(0, fromList.Count)];
+                    CreateEnemy(randomEnemy, (Emotion)dailyRNG.Next(1, 5), 0);
+                }
+                else
+                {
+                    CharacterData randomEnemy = fromList[UnityEngine.Random.Range(0, fromList.Count)];
+                    CreateEnemy(randomEnemy, (Emotion)UnityEngine.Random.Range(1, 5), 0);
+                }
             }
 
             StartCoroutine(NewRound(false));
-        }
-        else if (CarryVariables.instance.mode == CarryVariables.GameMode.Tutorial)
-        {
-            yield return NewAnimation(true);
-            Log.instance.AddText($"WAVE {currentWave} / 3");
         }
     }
 
@@ -197,7 +188,7 @@ public class TurnManager : MonoBehaviour
             }
             else if (listOfEnemies.Count == 0)
             {
-                if (CarryVariables.instance.mode == CarryVariables.GameMode.Main)
+                if (CarryVariables.instance.mode != CarryVariables.GameMode.Tutorial)
                 {
                     Log.instance.AddText($"");
                     StartCoroutine(NewWave());
@@ -206,7 +197,7 @@ public class TurnManager : MonoBehaviour
             }
         }
 
-        if (isBattling && CarryVariables.instance.mode == CarryVariables.GameMode.Main)
+        if (isBattling && CarryVariables.instance.mode != CarryVariables.GameMode.Tutorial)
             StartCoroutine(NewRound(true));
     }
 
@@ -216,7 +207,7 @@ public class TurnManager : MonoBehaviour
         Vector3 finalPos = new Vector3(0, -1200, 0);
 
         waveText.transform.parent.localPosition = originalPos;
-        waveText.text = $"WAVE {currentWave} / {(CarryVariables.instance.mode == CarryVariables.GameMode.Main ? "5" : "3")}";
+        waveText.text = $"WAVE {currentWave} / {(CarryVariables.instance.mode == CarryVariables.GameMode.Tutorial ? "3" : "5")}";
         roundText.text = $"ROUND {currentRound}";
 
         float elapsedTime = 0f;
@@ -237,7 +228,7 @@ public class TurnManager : MonoBehaviour
         if (increaseWave)
         {
             currentWave++;
-            waveText.text = $"WAVE {currentWave} / {(CarryVariables.instance.mode == CarryVariables.GameMode.Main ? "5" : "3")}";
+            waveText.text = $"WAVE {currentWave} / {(CarryVariables.instance.mode == CarryVariables.GameMode.Tutorial ? "3" : "5")}";
         }
 
         yield return WaitTime();
@@ -387,7 +378,7 @@ public class TurnManager : MonoBehaviour
             nextEnemy.name = dataFile.myName;
             Log.instance.AddText($"{Log.Article(nextEnemy.name)} entered the fight.", logged);
 
-            nextEnemy.SetupCharacter(dataFile, FileManager.instance.ConvertToAbilityData(dataFile.listOfSkills, false), startingEmotion, true);
+            nextEnemy.SetupCharacter(dataFile, CarryVariables.instance.ConvertToAbilityData(dataFile.listOfSkills, false), startingEmotion, true);
             if (CarryVariables.instance.ActiveCheat("Weaker Enemies"))
                 StartCoroutine(nextEnemy.ChangeMaxHealth(-2, logged + 1));
             if (CarryVariables.instance.ActiveChallenge("Extra Enemy Turns"))
@@ -410,9 +401,6 @@ public class TurnManager : MonoBehaviour
                 break;
             }
         }
-
-        //foreach (Ability ability in character.listOfRandomAbilities)
-            //SaveManager.instance.SaveAbility(character.name, ability.data);
     }
 
     List<Character> AllCharacters()

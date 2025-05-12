@@ -84,9 +84,9 @@ public class Character : MonoBehaviour
         this.baseSpeed = data.baseSpeed;
 
         this.myImage.sprite = Resources.Load<Sprite>($"Characters/{this.name}");
-        AddAbility(FileManager.instance.FindEnemyAbility("Skip Turn"), true, false);
+        AddAbility(CarryVariables.instance.FindEnemyAbility("Skip Turn"), true, false);
         if (this is PlayerCharacter)
-            AddAbility(FileManager.instance.FindEnemyAbility("Revive"), true, false);
+            AddAbility(CarryVariables.instance.FindEnemyAbility("Revive"), true, false);
 
         StartCoroutine(ChangePosition(data.startingPosition, -1));
         StartCoroutine(ChangeEmotion(startingEmotion, -1));

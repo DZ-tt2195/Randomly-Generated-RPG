@@ -19,17 +19,15 @@ public class EncyclopediaManager : MonoBehaviour
         [SerializeField] List<GameObject> masterGameObject = new();
 
     [Foldout("Ability Search", true)]
-        List<AbilityBox> knightAbilities = new();
-        List<AbilityBox> angelAbilities = new();
-        List<AbilityBox> wizardAbilities = new();
+        Dictionary<string, List<AbilityBox>> abilityDictionary = new();
         [SerializeField] AbilityBox abilityBoxPrefab;
         [SerializeField] RectTransform storeAbilityBoxes;
         [SerializeField] TMP_InputField abilityInput;
         [SerializeField] TMP_Dropdown characterDropdown;
         [SerializeField] TMP_Dropdown type1Dropdown;
         [SerializeField] TMP_Dropdown type2Dropdown;
-    [SerializeField] TMP_Dropdown cooldownDropdown;
-    [SerializeField] Scrollbar abilityScroll;
+        [SerializeField] TMP_Dropdown cooldownDropdown;
+        [SerializeField] Scrollbar abilityScroll;
 
     [Foldout("Enemy Search", true)]
         List<Character> listOfEnemyBoxes = new();
@@ -63,40 +61,33 @@ public class EncyclopediaManager : MonoBehaviour
         type1Dropdown.onValueChanged.AddListener(ChangeAbilityDropdown);
         type2Dropdown.onValueChanged.AddListener(ChangeAbilityDropdown);
         cooldownDropdown.onValueChanged.AddListener(ChangeAbilityDropdown);
-        foreach (AbilityData data in FileManager.instance.listOfPlayerAbilities)
+
+        abilityDictionary.Add("Knight", new());
+        abilityDictionary.Add("Angel", new());
+        abilityDictionary.Add("Wizard", new());
+
+        foreach (AbilityData data in CarryVariables.instance.listOfPlayerAbilities)
         {
             Ability nextAbility = this.gameObject.AddComponent<Ability>();
             nextAbility.SetupAbility(data, false);
 
             AbilityBox nextBox = Instantiate(abilityBoxPrefab, null);
             nextBox.ReceiveAbility(true, nextAbility);
-
-            switch (data.user)
-            {
-                case "Knight":
-                    knightAbilities.Add(nextBox);
-                    break;
-                case "Angel":
-                    angelAbilities.Add(nextBox);
-                    break;
-                case "Wizard":
-                    wizardAbilities.Add(nextBox);
-                    break;
-            }
+            abilityDictionary[data.user].Add(nextBox);
         }
-        knightAbilities = knightAbilities.OrderBy(box => box.ability.data.myName).ToList();
-        angelAbilities = angelAbilities.OrderBy(box => box.ability.data.myName).ToList();
-        wizardAbilities = wizardAbilities.OrderBy(box => box.ability.data.myName).ToList();
+
+        foreach (var key in abilityDictionary.Keys.ToList())
+            abilityDictionary[key] = abilityDictionary[key].OrderBy(box => box.ability.data.myName).ToList();
 
         enemyInput.onValueChanged.AddListener(ChangeEnemyInput);
         tierDropdown.onValueChanged.AddListener(ChangeTierDropdown);
         positionDropdown.onValueChanged.AddListener(ChangeTierDropdown);
-        foreach (List<CharacterData> listOfData in FileManager.instance.listOfEnemies)
+        foreach (List<CharacterData> listOfData in CarryVariables.instance.listOfEnemies)
         {
             foreach (CharacterData data in listOfData)
             {
                 Character nextEnemy = Instantiate(characterPrefab).AddComponent<Character>();
-                nextEnemy.SetupCharacter(data, FileManager.instance.ConvertToAbilityData(data.listOfSkills, false), Emotion.Neutral, false);
+                nextEnemy.SetupCharacter(data, CarryVariables.instance.ConvertToAbilityData(data.listOfSkills, false), Emotion.Neutral, false);
                 listOfEnemyBoxes.Add(nextEnemy);
                 foreach (Transform child in nextEnemy.transform)
                 {
@@ -234,9 +225,9 @@ public class EncyclopediaManager : MonoBehaviour
             }
         }
 
-        FilterAbilities(knightAbilities, PlayerSearch.Knight);
-        FilterAbilities(angelAbilities, PlayerSearch.Angel);
-        FilterAbilities(wizardAbilities, PlayerSearch.Wizard);
+        FilterAbilities(abilityDictionary["Knight"], PlayerSearch.Knight);
+        FilterAbilities(abilityDictionary["Angel"], PlayerSearch.Angel);
+        FilterAbilities(abilityDictionary["Wizard"], PlayerSearch.Wizard);
 
         storeAbilityBoxes.transform.localPosition = new Vector3(0, -1050, 0);
         storeAbilityBoxes.sizeDelta = new Vector3(2560, Math.Max(875, 175 * (2+Mathf.Ceil(storeAbilityBoxes.childCount / 6f))));
