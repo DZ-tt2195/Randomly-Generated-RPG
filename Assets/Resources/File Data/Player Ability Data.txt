@@ -224,7 +224,7 @@
       "TargetIsGrounded/TargetSameEmotion",
       "TargetAttack",
       "0",
-      "3",
+      "4",
       "",
       "",
       "",

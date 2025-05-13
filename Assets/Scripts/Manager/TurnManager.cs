@@ -72,7 +72,7 @@ public class TurnManager : MonoBehaviour
         isBattling = true;
         waveText.transform.parent.localPosition = new Vector3(0, 1200, 0);
 
-        resignButton.onClick.AddListener(() => GameFinished("You resigned.", $"Survived {currentWave - 1} {(currentWave - 1 == 1 ? "wave" : "waves")}."));
+        resignButton.onClick.AddListener(() => GameFinished("You quit.", $"Survived {currentWave - 1} {(currentWave - 1 == 1 ? "wave" : "waves")}."));
 
         if (CarryVariables.instance.mode == CarryVariables.GameMode.Daily)
         {

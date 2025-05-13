@@ -204,6 +204,7 @@ public class Character : MonoBehaviour
         }
 
         _privStatMod[stat] = Math.Clamp(_privStatMod[stat] += change, -4, 4);
+        CharacterUI();
         if (logged >= 0)
         {
             TurnManager.instance.CreateVisual($"{(change > 0 ? '+' : '-')}{Math.Abs(change)} {stat}", this.transform.localPosition);
@@ -562,7 +563,6 @@ public class Character : MonoBehaviour
 
     public void CharacterUI()
     {
-        topText.text = (CurrentPosition == Position.Dead || CurrentEmotion == Emotion.Dead) ? "Dead" : KeywordTooltip.instance.EditText($"{CurrentEmotion}\n{CurrentPosition}");
         if (CurrentEmotion == Emotion.Neutral)
         {
             this.myImage.color = Color.white;
@@ -575,6 +575,33 @@ public class Character : MonoBehaviour
         {
             Color newColor = KeywordTooltip.instance.SearchForKeyword(CurrentEmotion.ToString()).color;
             this.myImage.color = new Color(newColor.r, newColor.g, newColor.b);
+        }
+
+        topText.text = "";
+        if (CurrentPosition == Position.Dead)
+        {
+            topText.text = "Dead";
+        }
+        else
+        {
+            topText.text = $"{CurrentEmotion}, {CurrentPosition}\n";
+            if (CalculatePower() > 0)
+                topText.text += $"+{CalculatePower()} Power ";
+            else if (CalculatePower() <= 0)
+                topText.text += $"{CalculatePower()} Power ";
+            if (statModDict[Stats.Defense] > 0)
+                topText.text += $"+{statModDict[Stats.Power]} Defense ";
+            else if (statModDict[Stats.Defense] <= 0)
+                topText.text += $"{statModDict[Stats.Power]} Defense ";
+            if (CalculateSpeed() > 0)
+                topText.text += $"+{CalculateSpeed()} Speed ";
+            else if (CalculateSpeed() <= 0)
+                topText.text += $"{CalculateSpeed()} Speed ";
+            if (statModDict[Stats.Luck] > 0)
+                topText.text += $"+{statModDict[Stats.Luck]} Luck ";
+            else if (statModDict[Stats.Defense] <= 0)
+                topText.text += $"{statModDict[Stats.Luck]} Luck ";
+            topText.text = KeywordTooltip.instance.EditText(topText.text);
         }
 
         statusText.text = "";
