@@ -563,6 +563,9 @@ public class Character : MonoBehaviour
 
     public void CharacterUI()
     {
+        if (topText == null || statusText == null)
+            return;
+
         if (CurrentEmotion == Emotion.Neutral)
         {
             this.myImage.color = Color.white;

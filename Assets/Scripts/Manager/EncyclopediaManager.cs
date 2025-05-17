@@ -46,6 +46,15 @@ public class EncyclopediaManager : MonoBehaviour
         {
             masterGameObject[i].SetActive(i == n);
         }
+        switch (n)
+        {
+            case 0:
+                SearchAbility();
+                break;
+            case 1:
+                SearchEnemy();
+                break;
+        }
     }
 
     private void Start()
@@ -96,9 +105,7 @@ public class EncyclopediaManager : MonoBehaviour
                 }
             }
         }
-
-        SearchEnemy();
-        SearchAbility();
+        ChangeMode(0);
     }
 
 #endregion
