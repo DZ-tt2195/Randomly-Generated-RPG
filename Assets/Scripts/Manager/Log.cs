@@ -37,7 +37,7 @@ public class Log : MonoBehaviour
     {
         string sentence = CarryVariables.instance.GetText($"{ability.data.myName} Log");
         sentence = sentence.Replace("$This$", user.data.myName);
-        try{ sentence = sentence.Replace("$Target", target.data.myName);} catch{/*do nothing*/}
+        try{ sentence = sentence.Replace("$Target$", target.data.myName);} catch{/*do nothing*/}
         return sentence;
     }
 
@@ -63,6 +63,7 @@ public class Log : MonoBehaviour
             return;
 
         TMP_Text newText = Instantiate(textBoxClone, RT.transform);
+        newText.transform.localScale = Vector3.one;
         newText.text = "";
         for (int i = 0; i < indent; i++)
             newText.text += "     ";

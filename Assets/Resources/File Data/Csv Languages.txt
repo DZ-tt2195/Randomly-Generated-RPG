@@ -11,7 +11,7 @@
     ],
     [
       "Last Update",
-      "Last Updated: July 12, 2025",
+      "Last Updated: July 13, 2025",
       "\"\""
     ],
     [
@@ -27,6 +27,11 @@
     [
       "Translator Credit",
       "\"\"",
+      "\"\""
+    ],
+    [
+      "Loading",
+      "Loading...",
       "\"\""
     ],
     [
@@ -50,8 +55,13 @@
       "\"\""
     ],
     [
-      "Cheats and Challenges",
-      "Cheats & Challenges",
+      "Timezone",
+      "Your Timezone: UTC",
+      "\"\""
+    ],
+    [
+      "Next Challenge",
+      "Next Challenge in:",
       "\"\""
     ],
     [
@@ -80,13 +90,68 @@
       "\"\""
     ],
     [
+      "Cheats and Challenges",
+      "Cheats & Challenges",
+      "\"\""
+    ],
+    [
       "Cheats",
       "Cheats",
       "\"\""
     ],
     [
+      "New Abilities Text",
+      "Players get 6 new Abilities each wave",
+      "\"\""
+    ],
+    [
+      "Knight Reach Text",
+      "Knight can target Elevated Enemies",
+      "\"\""
+    ],
+    [
+      "Weaker Enemies Text",
+      "Enemies start with -2 Max Health",
+      "\"\""
+    ],
+    [
+      "Slower Enemy Cooldowns Text",
+      "Enemy Abilities have 1 more turn of Cooldown",
+      "\"\""
+    ],
+    [
+      "Number Cap Text",
+      "Enemies attack / heal for a max of 4",
+      "\"\""
+    ],
+    [
       "Challenges",
       "Challenges",
+      "\"\""
+    ],
+    [
+      "No Revives Text",
+      "Reviving is disabled",
+      "\"\""
+    ],
+    [
+      "Ineffectives Fail Text",
+      "Ineffective attacks by Players do 0 damage",
+      "\"\""
+    ],
+    [
+      "Player Timer Text",
+      "10 seconds to do each Player's turn",
+      "\"\""
+    ],
+    [
+      "Extra Enemy Turns Text",
+      "New Enemies get 1 Extra Ability",
+      "\"\""
+    ],
+    [
+      "More Enemies Text",
+      "Waves 1-4 have another 1 Star Enemy",
       "\"\""
     ],
     [
@@ -115,8 +180,8 @@
       "\"\""
     ],
     [
-      "Animation Speed",
-      "Animation Speed",
+      "Animation Time",
+      "Animation Time",
       "\"\""
     ],
     [
@@ -130,9 +195,149 @@
       "\"\""
     ],
     [
-      "Knight",
-      "Knight",
+      "Exit",
+      "Exit",
       "\"\""
+    ],
+    [
+      "Abilities",
+      "Abilities",
+      "\"\""
+    ],
+    [
+      "Search Abilities",
+      "Search Abilities",
+      "\"\""
+    ],
+    [
+      "Type 1",
+      "Type 1",
+      "\"\""
+    ],
+    [
+      "Type 2",
+      "Type 2",
+      "\"\""
+    ],
+    [
+      "Any",
+      "Any",
+      "\"\""
+    ],
+    [
+      "Attack",
+      "Attack",
+      "\"\""
+    ],
+    [
+      "Healing",
+      "Healing",
+      "\"\""
+    ],
+    [
+      "Emotion - Player",
+      "Emotion - Player",
+      "\"\""
+    ],
+    [
+      "Emotion - Enemy",
+      "Emotion - Enemy",
+      "\"\""
+    ],
+    [
+      "Position - Player",
+      "Position - Player",
+      "\"\""
+    ],
+    [
+      "Position - Enemy",
+      "Position - Enemy",
+      "\"\""
+    ],
+    [
+      "Stats - Player",
+      "Stats - Player",
+      "\"\""
+    ],
+    [
+      "Stats - Enemy",
+      "Stats - Enemy",
+      "\"\""
+    ],
+    [
+      "Player",
+      "Player",
+      "\"\""
+    ],
+    [
+      "Cooldown Number",
+      "Cooldown",
+      "\"\""
+    ],
+    [
+      "Enemies",
+      "Enemies",
+      "\"\""
+    ],
+    [
+      "Search Enemies",
+      "Search Enemies",
+      "\"\""
+    ],
+    [
+      "Right Click Reminder",
+      "Right click to read about Enemies",
+      "\"\""
+    ],
+    [
+      "Default Position",
+      "Default Position",
+      "\"\""
+    ],
+    [
+      "Neutral",
+      "Neutral",
+      "\"\""
+    ],
+    [
+      "Neutral Text",
+      "Default Emotion.",
+      "\"\""
+    ],
+    [
+      "Sad",
+      "Sad",
+      "\"\""
+    ],
+    [
+      "Sad Text",
+      "Gains 2 Health when it attacks; loses 2 Health otherwise.",
+      "\"\""
+    ],
+    [
+      "Happy",
+      "Happy",
+      "\"\""
+    ],
+    [
+      "Happy Text",
+      "Gets an extra Ability if they don't attack; all Abilities have 1 more turn of Cooldown.",
+      "\"\""
+    ],
+    [
+      "Angry",
+      "Angry",
+      "\"\""
+    ],
+    [
+      "Angry Text",
+      "2 extra Power; becomes Stunned when killing or healing someone to full Health.\"",
+      "\"\""
+    ],
+    [
+      "Knight",
+      "Knight",
+      "Knight"
     ],
     [
       "Knight Text",
@@ -457,7 +662,7 @@
     [
       "Angel",
       "Angel",
-      "\"\""
+      "Angel"
     ],
     [
       "Angel Text",
@@ -782,7 +987,7 @@
     [
       "Wizard",
       "Wizard",
-      "\"\""
+      "Wizard"
     ],
     [
       "Wizard Text",

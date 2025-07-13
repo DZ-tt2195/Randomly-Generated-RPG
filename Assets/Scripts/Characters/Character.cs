@@ -75,7 +75,8 @@ public class Character : MonoBehaviour
     public void SetupCharacter(CharacterData characterData, List<AbilityData> listOfAbilityData, Emotion startingEmotion, bool abilitiesBeginWithCooldown)
     {
         data = characterData;
-        this.name = characterData.myName;
+        this.name = CarryVariables.instance.GetText(characterData.myName);
+        nameText.text = this.name;
         editedDescription = KeywordTooltip.instance.EditText(CarryVariables.instance.GetText($"{this.name} Text"));
 
         this.baseHealth = data.baseHealth;
@@ -83,14 +84,13 @@ public class Character : MonoBehaviour
         healthText.text = KeywordTooltip.instance.EditText($"{currentHealth}/{baseHealth}Health");
         this.baseSpeed = data.baseSpeed;
 
-        this.myImage.sprite = Resources.Load<Sprite>($"Characters/{this.name}");
+        this.myImage.sprite = Resources.Load<Sprite>($"Characters/{characterData.myName}");
         AddAbility(CarryVariables.instance.FindEnemyAbility("Skip Turn"), true, false);
         if (this is PlayerCharacter)
             AddAbility(CarryVariables.instance.FindEnemyAbility("Revive"), true, false);
 
         StartCoroutine(ChangePosition(data.startingPosition, -1));
         StartCoroutine(ChangeEmotion(startingEmotion, -1));
-        nameText.text = this.name;
 
         foreach (AbilityData data in listOfAbilityData)
             AddAbility(data, false, abilitiesBeginWithCooldown);

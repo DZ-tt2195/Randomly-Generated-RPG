@@ -18,6 +18,7 @@ public class AbilityBox : MonoBehaviour
 
     public void ReceiveAbility(bool disableOverlay, Ability ability)
     {
+        this.transform.localScale = Vector3.one;
         this.ability = ability;
         if (button != null)
             button.interactable = disableOverlay;
@@ -35,7 +36,7 @@ public class AbilityBox : MonoBehaviour
 
         else
         {
-            textName.text = ability.data.myName;
+            textName.text = CarryVariables.instance.GetText(ability.data.myName);
             hover.enabled = true;
             hover.NewDescription(ability.editedDescription);
 

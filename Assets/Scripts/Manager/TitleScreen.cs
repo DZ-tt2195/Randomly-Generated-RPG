@@ -71,13 +71,13 @@ public class TitleScreen : MonoBehaviour
     {
         TimeSpan utcOffset = TimeZoneInfo.Local.GetUtcOffset(DateTime.Now);
         if (utcOffset.Hours > 0)
-            timeText.text = $"Your timezone: UTC +{utcOffset.Hours:D2}:{utcOffset.Minutes:D2}";
+            timeText.text = $"{CarryVariables.instance.GetText("Daily Challenge")} +{utcOffset.Hours:D2}:{utcOffset.Minutes:D2}";
         else
-            timeText.text = $"Your timezone: UTC {utcOffset.Hours:D2}:{utcOffset.Minutes:D2}";
+            timeText.text = $"{CarryVariables.instance.GetText("Daily Challenge")} {utcOffset.Hours:D2}:{utcOffset.Minutes:D2}";
 
         DateTime nextUtcMidnight = DateTime.UtcNow.Date.AddDays(1);
         TimeSpan timeUntilMidnightUtc = nextUtcMidnight - DateTime.UtcNow;
-        timeText.text += $"\nNext challenge in: {timeUntilMidnightUtc.Hours:D2}:" +
+        timeText.text += $"\n{CarryVariables.instance.GetText("Next Challenge")} {timeUntilMidnightUtc.Hours:D2}:" +
             $"{timeUntilMidnightUtc.Minutes:D2}:{timeUntilMidnightUtc.Seconds:D2}";
 
         if (stillGenerating)
@@ -127,15 +127,12 @@ public class TitleScreen : MonoBehaviour
         toggle.isOn = PlayerPrefs.HasKey(toggle.name) && PlayerPrefs.GetInt(toggle.name) == 1;
         toggle.onValueChanged.AddListener((bool isOn) => SetPref(isOn, toggle.name, cheat));
         SetPref(toggle.isOn, toggle.name, cheat);
-
-        TMP_Text textLabel = toggle.transform.GetChild(0).GetComponent<TMP_Text>();
-        textLabel.text = KeywordTooltip.instance.EditText(textLabel.text);
-        textLabel.gameObject.AddComponent<KeywordLinkHover>();
     }
 
     void SetPref(bool isOn, string name, bool cheat)
     {
         PlayerPrefs.SetInt(name, (isOn) ? 1 : 0);
+        PlayerPrefs.Save();
         if (cheat && isOn)
             CarryVariables.instance.listOfCheats.Add(name);
         else if (cheat && !isOn)

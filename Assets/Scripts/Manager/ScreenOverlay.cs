@@ -38,7 +38,6 @@ public class ScreenOverlay : MonoBehaviour
     [Foldout("Emotion triangle", true)]
         [SerializeField] Button emotionButton;
         [SerializeField] GameObject emotionBackground;
-        [SerializeField] List<TMP_Text> listOfDescriptions = new();
 
     #endregion
 
@@ -60,9 +59,6 @@ public class ScreenOverlay : MonoBehaviour
         SetUndo(!PlayerPrefs.HasKey("Confirm Choices") || PlayerPrefs.GetInt("Confirm Choices") == 1);
         SetTooltip(!PlayerPrefs.HasKey("Keyword Tooltip") || PlayerPrefs.GetInt("Keyword Tooltip") == 1);
         PlayerPrefs.Save();
-
-        foreach (TMP_Text description in listOfDescriptions)
-            description.text = KeywordTooltip.instance.EditText(description.text);
     }
 
     void SettingsScreen()

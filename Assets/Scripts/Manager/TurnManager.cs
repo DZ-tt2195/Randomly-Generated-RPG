@@ -362,6 +362,7 @@ public class TurnManager : MonoBehaviour
         {
             EnemyCharacter nextEnemy = Instantiate(characterPrefab).AddComponent<EnemyCharacter>();
             nextEnemy.transform.SetParent(CarryVariables.instance.sceneCanvas);
+            nextEnemy.transform.localScale = Vector3.one;
             nextEnemy.transform.SetAsFirstSibling();
             listOfEnemies.Add(nextEnemy);
 
@@ -390,6 +391,7 @@ public class TurnManager : MonoBehaviour
     {
         listOfPlayers.Add(character);
         character.transform.SetParent(CarryVariables.instance.sceneCanvas);
+        character.transform.localScale = Vector3.one;
         character.transform.SetAsFirstSibling();
 
         foreach (CharacterPositions position in teammatePositions)

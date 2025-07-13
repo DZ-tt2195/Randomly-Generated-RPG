@@ -202,6 +202,7 @@ public class EncyclopediaManager : MonoBehaviour
             {
                 box.transform.SetParent(storeAbilityBoxes);
                 box.transform.SetAsLastSibling();
+                box.transform.localScale = Vector3.one;
             }
         }
     }
@@ -259,6 +260,7 @@ public class EncyclopediaManager : MonoBehaviour
             {
                 nextEnemy.transform.SetParent(storeEnemyBoxes);
                 nextEnemy.transform.SetAsLastSibling();
+                nextEnemy.transform.localScale = Vector3.one;
             }
             else
             {
