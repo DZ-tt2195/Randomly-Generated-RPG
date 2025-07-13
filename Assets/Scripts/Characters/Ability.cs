@@ -37,13 +37,13 @@ public class Ability : MonoBehaviour
         currentCooldown = (startWithCooldown) ? data.baseCooldown : 0;
 
         editedDescription = CarryVariables.instance.GetText($"{data.myName} Text")
-            .Replace("Num", Mathf.Abs(data.mainNumber).ToString())
-            .Replace("Sec", Mathf.Abs(data.secondNumber).ToString())
-            .Replace("PowerStat", Mathf.Abs(data.modifyPower).ToString())
-            .Replace("SpeedStat", Mathf.Abs(data.modifySpeed).ToString())
-            .Replace("DefenseStat", Mathf.Abs(data.modifyDefense).ToString())
-            .Replace("LuckStat", Mathf.Abs(data.modifyLuck).ToString())
-            .Replace("MiscStat", data.miscNumber.ToString());
+            .Replace("$Num$", Mathf.Abs(data.mainNumber).ToString())
+            .Replace("$Sec$", Mathf.Abs(data.secondNumber).ToString())
+            .Replace("$PowerStat$", Mathf.Abs(data.modifyPower).ToString())
+            .Replace("$SpeedStat$", Mathf.Abs(data.modifySpeed).ToString())
+            .Replace("$DefenseStat$", Mathf.Abs(data.modifyDefense).ToString())
+            .Replace("$LuckStat$", Mathf.Abs(data.modifyLuck).ToString())
+            .Replace("$MiscStat$", data.miscNumber.ToString());
         editedDescription = KeywordTooltip.instance.EditText(editedDescription);
 
         mainType = AbilityType.Misc;

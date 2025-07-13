@@ -48,10 +48,11 @@ public class CarryVariables : MonoBehaviour
     {
         if (instance != null)
             Destroy(instance.gameObject);
+        else
+            PlayerPrefs.SetString("Language", "English");
 
         instance = this;
         DontDestroyOnLoad(this.gameObject);
-        if (!PlayerPrefs.HasKey("Language")) PlayerPrefs.SetString("Language", "English");
         TxtLanguages();
         Debug.Log("start downloading");
         StartCoroutine(DownloadLanguages());

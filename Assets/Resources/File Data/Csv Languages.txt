@@ -45,6 +45,21 @@
       "\"\""
     ],
     [
+      "Story 1",
+      "You are a Knight, an Angel, and a Wizard, but not at the same time. You didn't have the EXP or connections to get into the good RPGs, so you're starting at this one. The costumes are obvious hand-me-downs and the work is unpaid. It's also a virtual setting, and there's no one else to co-star with.",
+      "\"\""
+    ],
+    [
+      "Story 2",
+      "Your quest is to beat up any enemies that look at you the wrong way. That NPC gave you a rock and a turnip to start with, but you didn’t remember that fact. Turns out that all the budget went into the gameplay and nothing in the game makes any cents.",
+      "\"\""
+    ],
+    [
+      "Story 3",
+      "Anyways, you must roll with the punches and work with whatever they gave you. And if all else fails, you can blame it on lag, your parents, and that really cute cat.",
+      "\"\""
+    ],
+    [
       "Play Game",
       "Play Game",
       "\"\""
@@ -55,38 +70,13 @@
       "\"\""
     ],
     [
-      "Timezone",
+      "Your Timezone",
       "Your Timezone: UTC",
       "\"\""
     ],
     [
       "Next Challenge",
       "Next Challenge in:",
-      "\"\""
-    ],
-    [
-      "Encyclopedia",
-      "Encylopedia",
-      "\"\""
-    ],
-    [
-      "Special Thanks",
-      "Special Thanks",
-      "\"\""
-    ],
-    [
-      "Story Part 1",
-      "You are a Knight, an Angel, and a Wizard, but not at the same time. You didn't have the EXP or connections to get into the good RPGs, so you're starting at this one. The costumes are obvious hand-me-downs and the work is unpaid. It's also a virtual setting, and there's no one else to co-star with.",
-      "\"\""
-    ],
-    [
-      "Story Part 2",
-      "Your quest is to beat up any enemies that look at you the wrong way. That NPC gave you a rock and a turnip to start with, but you didn’t remember that fact. Turns out that all the budget went into the gameplay and nothing in the game makes any cents. ",
-      "\"\""
-    ],
-    [
-      "Story Part 3",
-      "Anyways, you must roll with the punches and work with whatever they gave you. And if all else fails, you can blame it on lag, your parents, and that really cute cat.",
       "\"\""
     ],
     [
@@ -160,6 +150,41 @@
       "\"\""
     ],
     [
+      "Encyclopedia",
+      "Encylopedia",
+      "\"\""
+    ],
+    [
+      "Special Thanks",
+      "Special Thanks",
+      "\"\""
+    ],
+    [
+      "Seth Royston Thanks",
+      "Seth Royston for showing me how to use Google Sheets with Unity",
+      "\"\""
+    ],
+    [
+      "Liam Cribbs Thanks",
+      "Liam Cribbs for showing me how to auto-download Google Sheets contents",
+      "\"\""
+    ],
+    [
+      "Flan Falacci Thanks",
+      "Flan Falacci for thinking that this game deserved to be at Project Studio",
+      "\"\""
+    ],
+    [
+      "Inspiration Thanks",
+      "OMOCAT for making OMORI, and KupoGames for making Epic Battle Fantasy 5",
+      "\"\""
+    ],
+    [
+      "Playtest Thursday Thanks",
+      "Everyone who tried this game at Playtest Thursday (somehow you all liked it)",
+      "\"\""
+    ],
+    [
       "Settings",
       "Settings",
       "\"\""
@@ -180,6 +205,11 @@
       "\"\""
     ],
     [
+      "Random",
+      "Random",
+      "\"\""
+    ],
+    [
       "Animation Time",
       "Animation Time",
       "\"\""
@@ -195,6 +225,26 @@
       "\"\""
     ],
     [
+      "Customize Players",
+      "Customize Players",
+      "\"\""
+    ],
+    [
+      "Customize Description",
+      "Choose what Abilities and Emotions your players will have. Anything left blank will be randomized!",
+      "\"\""
+    ],
+    [
+      "Title Screen",
+      "Title Screen",
+      "\"\""
+    ],
+    [
+      "Quit Game",
+      "Quit",
+      "\"\""
+    ],
+    [
       "Exit",
       "Exit",
       "\"\""
@@ -270,7 +320,7 @@
       "\"\""
     ],
     [
-      "Cooldown Number",
+      "Cooldown $Num$ber",
       "Cooldown",
       "\"\""
     ],
@@ -351,12 +401,12 @@
     ],
     [
       "Battle Cry Text",
-      "A Player becomes Angry and gains PowerStat Power.",
+      "A Player becomes Angry and gains $PowerStat$ Power.",
       "\"\""
     ],
     [
       "Battle Cry Log",
-      "This has Target do a battle cry.",
+      "$This$ has $Target$ do a battle cry.",
       "\"\""
     ],
     [
@@ -366,12 +416,12 @@
     ],
     [
       "Cheer Text",
-      "Another Player becomes Happy and gets MiscStat Extra Ability.",
+      "Another Player becomes Happy and gets $MiscStat$ Extra Ability.",
       "\"\""
     ],
     [
       "Cheer Log",
-      "This cheers on Target.",
+      "$This$ cheers on $Target$.",
       "\"\""
     ],
     [
@@ -381,12 +431,12 @@
     ],
     [
       "Daze Text",
-      "A Grounded Enemy becomes Happy and loses PowerStat Power.",
+      "A Grounded Enemy becomes Happy and loses $PowerStat$ Power.",
       "\"\""
     ],
     [
       "Daze Log",
-      "This dazes Target.",
+      "$This$ dazes $Target$.",
       "\"\""
     ],
     [
@@ -396,12 +446,12 @@
     ],
     [
       "Desperation Text",
-      "This becomes Sad. Then deal Num damage to a Grounded Enemy.",
+      "This becomes Sad. Then deal $Num$ damage to a Grounded Enemy.",
       "\"\""
     ],
     [
       "Desperation Log",
-      "This gets desperate against Target.",
+      "$This$ gets desperate against $Target$.",
       "\"\""
     ],
     [
@@ -411,12 +461,12 @@
     ],
     [
       "Embarass Text",
-      "A Grounded Enemy becomes Sad. Then deal Num damage to them.",
+      "A Grounded Enemy becomes Sad. Then deal $Num$ damage to them.",
       "\"\""
     ],
     [
       "Embarass Log",
-      "This embarasses Target.",
+      "$This$ embarasses $Target$.",
       "\"\""
     ],
     [
@@ -426,12 +476,12 @@
     ],
     [
       "Force Text",
-      "Deal Num damage to a Grounded Enemy. Their active Ability Cooldown are decreased by MiscStat.",
+      "Deal $Num$ damage to a Grounded Enemy. Their active Ability Cooldown are decreased by $MiscStat$.",
       "\"\""
     ],
     [
       "Force Log",
-      "This forces Target to work harder.",
+      "$This$ forces $Target$ to work harder.",
       "\"\""
     ],
     [
@@ -441,12 +491,12 @@
     ],
     [
       "Impale Text",
-      "Deal Num damage to a Grounded Enemy. They becomes Stunned for MiscStat turn.",
+      "Deal $Num$ damage to a Grounded Enemy. They becomes Stunned for $MiscStat$ turn.",
       "\"\""
     ],
     [
       "Impale Log",
-      "This impales Target.",
+      "$This$ impales $Target$.",
       "\"\""
     ],
     [
@@ -461,7 +511,7 @@
     ],
     [
       "Intimidate Log",
-      "This intimidates Target.",
+      "$This$ intimidates $Target$.",
       "\"\""
     ],
     [
@@ -471,12 +521,12 @@
     ],
     [
       "Joust Text",
-      "Deal Num damage to a Grounded Enemy. Then this loses LuckStat Luck.",
+      "Deal $Num$ damage to a Grounded Enemy. Then this loses $LuckStat$ Luck.",
       "\"\""
     ],
     [
       "Joust Log",
-      "This uses joust against Target.",
+      "$This$ uses joust against $Target$.",
       "\"\""
     ],
     [
@@ -486,12 +536,12 @@
     ],
     [
       "Knock Down Text",
-      "Deal Num damage to a Grounded Enemy. Then they lose DefenseStat Defense.",
+      "Deal $Num$ damage to a Grounded Enemy. Then they lose $DefenseStat$ Defense.",
       "\"\""
     ],
     [
       "Knock Down Log",
-      "This knocks down Target.",
+      "$This$ knocks down $Target$.",
       "\"\""
     ],
     [
@@ -501,12 +551,12 @@
     ],
     [
       "Meditate Text",
-      "A Player becomes Neutral, Protected, and Locked for MiscStat turn.",
+      "A Player becomes Neutral, Protected, and Locked for $MiscStat$ turn.",
       "\"\""
     ],
     [
       "Meditate Log",
-      "This has Target meditate.",
+      "$This$ has $Target$ meditate.",
       "\"\""
     ],
     [
@@ -516,12 +566,12 @@
     ],
     [
       "Mirror Text",
-      "Deal Num damage to a Grounded Enemy with the same Emotion as this.",
+      "Deal $Num$ damage to a Grounded Enemy with the same Emotion as this.",
       "\"\""
     ],
     [
       "Mirror Log",
-      "This mirrors Target.",
+      "$This$ mirrors $Target$.",
       "\"\""
     ],
     [
@@ -531,12 +581,12 @@
     ],
     [
       "Mock Text",
-      "A Grounded Enemy becomes Angry. Then deal Num damage to them.",
+      "A Grounded Enemy becomes Angry. Then deal $Num$ damage to them.",
       "\"\""
     ],
     [
       "Mock Log",
-      "This mocks Target.",
+      "$This$ mocks $Target$.",
       "\"\""
     ],
     [
@@ -546,12 +596,12 @@
     ],
     [
       "Neutralize Text",
-      "Deal Num damage to a Grounded Enemy. Then they become Neutral.",
+      "Deal $Num$ damage to a Grounded Enemy. Then they become Neutral.",
       "\"\""
     ],
     [
       "Neutralize Log",
-      "This neutralizes Target.",
+      "$This$ neutralizes $Target$.",
       "\"\""
     ],
     [
@@ -561,12 +611,12 @@
     ],
     [
       "Redirect Text",
-      "Another Player gains DefenseStat Defense and becomes Targeted for MiscStat turns.",
+      "Another Player gains $DefenseStat$ Defense and becomes Targeted for $MiscStat$ turns.",
       "\"\""
     ],
     [
       "Redirect Log",
-      "This redirects attention to Target.",
+      "$This$ redirects attention to $Target$.",
       "\"\""
     ],
     [
@@ -576,12 +626,12 @@
     ],
     [
       "Rollout Text",
-      "This gains PowerStat Power. Then deal Num damage to a Grounded Enemy.",
+      "This gains $PowerStat$ Power. Then deal $Num$ damage to a Grounded Enemy.",
       "\"\""
     ],
     [
       "Rollout Log",
-      "This rolls out on Target.",
+      "$This$ rolls out on $Target$.",
       "\"\""
     ],
     [
@@ -591,12 +641,12 @@
     ],
     [
       "Steal Text",
-      "An Enemy becomes Angry. All Players gain DefenseStat Defense.",
+      "An Enemy becomes Angry. All Players gain $DefenseStat$ Defense.",
       "\"\""
     ],
     [
       "Steal Log",
-      "This steals from Target.",
+      "$This$ steals from $Target$.",
       "\"\""
     ],
     [
@@ -606,12 +656,12 @@
     ],
     [
       "Surprise Text",
-      "A Grounded Enemy becomes Happy. Then deal Num damage to it.",
+      "A Grounded Enemy becomes Happy. Then deal $Num$ damage to it.",
       "\"\""
     ],
     [
       "Surprise Log",
-      "This surprises Target.",
+      "$This$ surprises $Target$.",
       "\"\""
     ],
     [
@@ -621,12 +671,12 @@
     ],
     [
       "Twirl Text",
-      "This becomes Happy. Then deals Num damage to a Grounded Enemy.",
+      "This becomes Happy. Then deals $Num$ damage to a Grounded Enemy.",
       "\"\""
     ],
     [
       "Twirl Log",
-      "This twirls into Target.",
+      "$This$ twirls into $Target$.",
       "\"\""
     ],
     [
@@ -636,12 +686,12 @@
     ],
     [
       "Upset Text",
-      "A Grounded Enemy becomes Sad and loses DefenseStat Defense.",
+      "A Grounded Enemy becomes Sad and loses $DefenseStat$ Defense.",
       "\"\""
     ],
     [
       "Upset Log",
-      "This upsets Target.",
+      "$This$ upsets $Target$.",
       "\"\""
     ],
     [
@@ -651,12 +701,12 @@
     ],
     [
       "Weaken Text",
-      "Deal Num damage to a Grounded Enemy. They lose PowerStat Power.",
+      "Deal $Num$ damage to a Grounded Enemy. They lose $PowerStat$ Power.",
       "\"\""
     ],
     [
       "Weaken Log",
-      "This weakens Target.",
+      "$This$ weakens $Target$.",
       "\"\""
     ],
     [
@@ -676,12 +726,12 @@
     ],
     [
       "Air Combat Text",
-      "A Grounded Player and Enemy both become Elevated and gain PowerStat Power.",
+      "A Grounded Player and Enemy both become Elevated and gain $PowerStat$ Power.",
       "\"\""
     ],
     [
       "Air Combat Log",
-      "This initiates air combat.",
+      "$This$ initiates air combat.",
       "\"\""
     ],
     [
@@ -691,12 +741,12 @@
     ],
     [
       "Assist Text",
-      "Another Player gains Num Health and gets MiscStat Extra Ability.",
+      "Another Player gains $Num$ Health and gets $MiscStat$ Extra Ability.",
       "\"\""
     ],
     [
       "Assist Log",
-      "This assists Target.",
+      "$This$ assists $Target$.",
       "\"\""
     ],
     [
@@ -706,12 +756,12 @@
     ],
     [
       "Calm Down Text",
-      "Each non-Neutral Player gain Num Health and becomes Neutral.",
+      "Each non-Neutral Player gain $Num$ Health and becomes Neutral.",
       "\"\""
     ],
     [
       "Calm Down Log",
-      "This calms everyone down.",
+      "$This$ calms everyone down.",
       "\"\""
     ],
     [
@@ -721,12 +771,12 @@
     ],
     [
       "Crash Land Text",
-      "An Elevated Enemy becomes Grounded and loses DefenseStat Defense.",
+      "An Elevated Enemy becomes Grounded and loses $DefenseStat$ Defense.",
       "\"\""
     ],
     [
       "Crash Land Log",
-      "This makes Target crash land.",
+      "$This$ makes $Target$ crash land.",
       "\"\""
     ],
     [
@@ -741,7 +791,7 @@
     ],
     [
       "Enrage Log",
-      "This enrages Target.",
+      "$This$ enrages $Target$.",
       "\"\""
     ],
     [
@@ -751,12 +801,12 @@
     ],
     [
       "Exhaust Text",
-      "An Enemy becomes Sad and loses SpeedStat Speed.",
+      "An Enemy becomes Sad and loses $SpeedStat$ Speed.",
       "\"\""
     ],
     [
       "Exhaust Log",
-      "This exhausts Target.",
+      "$This$ exhausts $Target$.",
       "\"\""
     ],
     [
@@ -766,12 +816,12 @@
     ],
     [
       "Exorcism Text",
-      "An Elevated Enemy loses PowerStat Power. Each Elevated Player gains Num Health.",
+      "An Elevated Enemy loses $PowerStat$ Power. Each Elevated Player gains $Num$ Health.",
       "\"\""
     ],
     [
       "Exorcism Log",
-      "This exorcises Target.",
+      "$This$ exorcises $Target$.",
       "\"\""
     ],
     [
@@ -786,7 +836,7 @@
     ],
     [
       "Gift of Flight Log",
-      "This gives Target the gift of flight.",
+      "$This$ gives $Target$ the gift of flight.",
       "\"\""
     ],
     [
@@ -796,12 +846,12 @@
     ],
     [
       "Hide Text",
-      "A Grounded Enemy loses LuckStat Luck. Each Grounded Player gains Num Health.",
+      "A Grounded Enemy loses $LuckStat$ Luck. Each Grounded Player gains $Num$ Health.",
       "\"\""
     ],
     [
       "Hide Log",
-      "This has players hide from Target.",
+      "$This$ has players hide from $Target$.",
       "\"\""
     ],
     [
@@ -811,12 +861,12 @@
     ],
     [
       "Immunity Text",
-      "A Player gains Num Health and becomes Protected and Targeted for MiscStat turn.",
+      "A Player gains $Num$ Health and becomes Protected and Targeted for $MiscStat$ turn.",
       "\"\""
     ],
     [
       "Immunity Log",
-      "This grants immunity to Target.",
+      "$This$ grants immunity to $Target$.",
       "\"\""
     ],
     [
@@ -826,12 +876,12 @@
     ],
     [
       "Joy Text",
-      "An Elevated Player gains Num Health and becomes Happy.",
+      "An Elevated Player gains $Num$ Health and becomes Happy.",
       "\"\""
     ],
     [
       "Joy Log",
-      "This brings Target joy.",
+      "$This$ brings $Target$ joy.",
       "\"\""
     ],
     [
@@ -841,12 +891,12 @@
     ],
     [
       "Lift Up Text",
-      "A Grounded Player gains Num Health and becomes Elevated.",
+      "A Grounded Player gains $Num$ Health and becomes Elevated.",
       "\"\""
     ],
     [
       "Lift Up Log",
-      "This lifts Target up.",
+      "$This$ lifts $Target$ up.",
       "\"\""
     ],
     [
@@ -856,12 +906,12 @@
     ],
     [
       "Motivate Text",
-      "A Player gains Num Health. Decrease their active Cooldown by MiscStat.",
+      "A Player gains $Num$ Health. Decrease their active Cooldown by $MiscStat$.",
       "\"\""
     ],
     [
       "Motivate Log",
-      "This motivates Target.",
+      "$This$ motivates $Target$.",
       "\"\""
     ],
     [
@@ -871,12 +921,12 @@
     ],
     [
       "Overheal Text",
-      "All Players gain MiscStat Max Health and Num Health.",
+      "All Players gain $MiscStat$ Max Health and $Num$ Health.",
       "\"\""
     ],
     [
       "Overheal Log",
-      "This overheals all players.",
+      "$This$ overheals all players.",
       "\"\""
     ],
     [
@@ -886,12 +936,12 @@
     ],
     [
       "Petrify Text",
-      "An Elevated Enemy becomes Grounded, Neutral, and Stunned for MiscStat turn.",
+      "An Elevated Enemy becomes Grounded, Neutral, and Stunned for $MiscStat$ turn.",
       "\"\""
     ],
     [
       "Petrify Log",
-      "This petrifies Target.",
+      "$This$ petrifies $Target$.",
       "\"\""
     ],
     [
@@ -906,7 +956,7 @@
     ],
     [
       "Plummet Log",
-      "This plummets Target.",
+      "$This$ plummets $Target$.",
       "\"\""
     ],
     [
@@ -916,12 +966,12 @@
     ],
     [
       "Retreat Text",
-      "A Grounded Player gains Num Health and becomes Sad.",
+      "A Grounded Player gains $Num$ Health and becomes Sad.",
       "\"\""
     ],
     [
       "Retreat Log",
-      "This has Target retreat.",
+      "$This$ has $Target$ retreat.",
       "\"\""
     ],
     [
@@ -931,12 +981,12 @@
     ],
     [
       "Security Text",
-      "A Player switches Positions and gains DefenseStat Defense.",
+      "A Player switches Positions and gains $DefenseStat$ Defense.",
       "\"\""
     ],
     [
       "Security Log",
-      "This rescues Target.",
+      "$This$ rescues $Target$.",
       "\"\""
     ],
     [
@@ -946,12 +996,12 @@
     ],
     [
       "Soft Landing Text",
-      "An Elevated Player gains Num Health and becomes Grounded.",
+      "An Elevated Player gains $Num$ Health and becomes Grounded.",
       "\"\""
     ],
     [
       "Soft Landing Log",
-      "This helps Target land softly.",
+      "$This$ helps $Target$ land softly.",
       "\"\""
     ],
     [
@@ -961,12 +1011,12 @@
     ],
     [
       "Tailwinds Text",
-      "Each Elevated Player gains Num Health and SpeedStat Speed.",
+      "Each Elevated Player gains $Num$ Health and $SpeedStat$ Speed.",
       "\"\""
     ],
     [
       "Tailwinds Log",
-      "This creates tailwinds.",
+      "$This$ creates tailwinds.",
       "\"\""
     ],
     [
@@ -976,12 +1026,12 @@
     ],
     [
       "Team Up Text",
-      "Each Grounded Player gains Num Health and LuckStat Luck.",
+      "Each Grounded Player gains $Num$ Health and $LuckStat$ Luck.",
       "\"\""
     ],
     [
       "Team Up Log",
-      "This secures all players.",
+      "$This$ secures all players.",
       "\"\""
     ],
     [
@@ -1001,12 +1051,12 @@
     ],
     [
       "Above Danger Text",
-      "A Grounded Player becomes Elevated and Protected for MiscStat turn.",
+      "A Grounded Player becomes Elevated and Protected for $MiscStat$ turn.",
       "\"\""
     ],
     [
       "Above Danger Log",
-      "This moves Target above danger.",
+      "$This$ moves $Target$ above danger.",
       "\"\""
     ],
     [
@@ -1016,12 +1066,12 @@
     ],
     [
       "Bad Omens Text",
-      "Deal Num damage to all Enemies. They lose LuckStat Luck.",
+      "Deal $Num$ damage to all Enemies. They lose $LuckStat$ Luck.",
       "\"\""
     ],
     [
       "Bad Omens Log",
-      "This predicts bad omens.",
+      "$This$ predicts bad omens.",
       "\"\""
     ],
     [
@@ -1031,12 +1081,12 @@
     ],
     [
       "Bounce Text",
-      "Deal Num damage to each Grounded Enemy. They each become Elevated.",
+      "Deal $Num$ damage to each Grounded Enemy. They each become Elevated.",
       "\"\""
     ],
     [
       "Bounce Log",
-      "This bounces all enemies.",
+      "$This$ bounces all enemies.",
       "\"\""
     ],
     [
@@ -1046,12 +1096,12 @@
     ],
     [
       "Chill Text",
-      "Deal Num damage to each Grounded Enemy. Then this becomes Stunned for MiscStat turn.",
+      "Deal $Num$ damage to each Grounded Enemy. Then this becomes Stunned for $MiscStat$ turn.",
       "\"\""
     ],
     [
       "Chill Log",
-      "This chills the battlefield.",
+      "$This$ chills the battlefield.",
       "\"\""
     ],
     [
@@ -1061,12 +1111,12 @@
     ],
     [
       "Expedite Text",
-      "Another Player gains SpeedStat Speed. Decrease their active Cooldown by MiscStat.",
+      "Another Player gains $SpeedStat$ Speed. Decrease their active Cooldown by $MiscStat$.",
       "\"\""
     ],
     [
       "Expedite Log",
-      "This expedites Target.",
+      "$This$ expedites $Target$.",
       "\"\""
     ],
     [
@@ -1076,12 +1126,12 @@
     ],
     [
       "Flood Text",
-      "Each Grounded Player becomes Elevated. Then deal Num damage to each Grounded Enemy.",
+      "Each Grounded Player becomes Elevated. Then deal $Num$ damage to each Grounded Enemy.",
       "\"\""
     ],
     [
       "Flood Log",
-      "This summons a flood.",
+      "$This$ summons a flood.",
       "\"\""
     ],
     [
@@ -1091,12 +1141,12 @@
     ],
     [
       "Gust Text",
-      "An Elevated Enemy becomes Grounded and loses LuckStat Luck.",
+      "An Elevated Enemy becomes Grounded and loses $LuckStat$ Luck.",
       "\"\""
     ],
     [
       "Gust Log",
-      "This shoots gusts towards Target.",
+      "$This$ shoots gusts towards $Target$.",
       "\"\""
     ],
     [
@@ -1106,12 +1156,12 @@
     ],
     [
       "Headwinds Text",
-      "Deal Num damage to each Elevated Enemy. They each lose SpeedStat Speed.",
+      "Deal $Num$ damage to each Elevated Enemy. They each lose $SpeedStat$ Speed.",
       "\"\""
     ],
     [
       "Headwinds Log",
-      "This creates headwinds.",
+      "$This$ creates headwinds.",
       "\"\""
     ],
     [
@@ -1121,12 +1171,12 @@
     ],
     [
       "Jackpot Text",
-      "A Player gains LuckStat Luck and becomes Targeted for MiscStat turn.",
+      "A Player gains $LuckStat$ Luck and becomes Targeted for $MiscStat$ turn.",
       "\"\""
     ],
     [
       "Jackpot Log",
-      "This lets Target win the jackpot.",
+      "$This$ lets $Target$ win the jackpot.",
       "\"\""
     ],
     [
@@ -1136,12 +1186,12 @@
     ],
     [
       "Lightning Storm Text",
-      "Each Elevated Player becomes Grounded. Then deal Num damage to each Elevated Enemy.",
+      "Each Elevated Player becomes Grounded. Then deal $Num$ damage to each Elevated Enemy.",
       "\"\""
     ],
     [
       "Lightning Storm Log",
-      "This summons a lightning storm.",
+      "$This$ summons a lightning storm.",
       "\"\""
     ],
     [
@@ -1151,12 +1201,12 @@
     ],
     [
       "Manipulate Time Text",
-      "Deal Num damage to each Elevated Enemy. They each get MiscStat Extra Ability.",
+      "Deal $Num$ damage to each Elevated Enemy. They each get $MiscStat$ Extra Ability.",
       "\"\""
     ],
     [
       "Manipulate Time Log",
-      "This manipulates time.",
+      "$This$ manipulates time.",
       "\"\""
     ],
     [
@@ -1166,12 +1216,12 @@
     ],
     [
       "Paralyze Text",
-      "An Elevated Enemy becomes Grounded and Stunned for MiscStat turn.",
+      "An Elevated Enemy becomes Grounded and Stunned for $MiscStat$ turn.",
       "\"\""
     ],
     [
       "Paralyze Log",
-      "This traps Target.",
+      "$This$ traps $Target$.",
       "\"\""
     ],
     [
@@ -1181,12 +1231,12 @@
     ],
     [
       "Punch Up Text",
-      "Deal Num damage to all Enemies with MiscStat Health or more.",
+      "Deal $Num$ damage to all Enemies with $MiscStat$ Health or more.",
       "\"\""
     ],
     [
       "Punch Up Log",
-      "This punches up at the strongest.",
+      "$This$ punches up at the strongest.",
       "\"\""
     ],
     [
@@ -1196,12 +1246,12 @@
     ],
     [
       "Quick Attack Text",
-      "Each Grounded Player gains SpeedStat Speed. Deal Num damage to each Grounded Enemy.",
+      "Each Grounded Player gains $SpeedStat$ Speed. Deal $Num$ damage to each Grounded Enemy.",
       "\"\""
     ],
     [
       "Quick Attack Log",
-      "This does a quick attack.",
+      "$This$ does a quick attack.",
       "\"\""
     ],
     [
@@ -1216,7 +1266,7 @@
     ],
     [
       "Readjust Log",
-      "This readjusts everyone's position.",
+      "$This$ readjusts everyone's position.",
       "\"\""
     ],
     [
@@ -1226,12 +1276,12 @@
     ],
     [
       "Restrain Text",
-      "Deal Num damage to all Enemies. They all become Locked for MiscStat turns.",
+      "Deal $Num$ damage to all Enemies. They all become Locked for $MiscStat$ turns.",
       "\"\""
     ],
     [
       "Restrain Log",
-      "This restrains all enemies.",
+      "$This$ restrains all enemies.",
       "\"\""
     ],
     [
@@ -1241,12 +1291,12 @@
     ],
     [
       "Shockwave Text",
-      "Deal Num damage to all Enemies, and Sec damage to all Players.",
+      "Deal $Num$ damage to all Enemies, and $Sec$ damage to all Players.",
       "\"\""
     ],
     [
       "Shockwave Log",
-      "This creates a shockwave.",
+      "$This$ creates a shockwave.",
       "\"\""
     ],
     [
@@ -1256,12 +1306,12 @@
     ],
     [
       "Stalactites Text",
-      "Deal Num damage to each Elevated Enemy. They each become Grounded.",
+      "Deal $Num$ damage to each Elevated Enemy. They each become Grounded.",
       "\"\""
     ],
     [
       "Stalactites Log",
-      "This drops stalactites.",
+      "$This$ drops stalactites.",
       "\"\""
     ],
     [
@@ -1271,12 +1321,12 @@
     ],
     [
       "Team Attack Text",
-      "If all 3 Players are Elevated, deal Num damage to all Enemies.",
+      "If all 3 Players are Elevated, deal $Num$ damage to all Enemies.",
       "\"\""
     ],
     [
       "Team Attack Log",
-      "This uses a team attack.",
+      "$This$ uses a team attack.",
       "\"\""
     ],
     [
@@ -1286,12 +1336,12 @@
     ],
     [
       "Touchdown Text",
-      "An Elevated Player becomes Grounded and gains LuckStat Luck.",
+      "An Elevated Player becomes Grounded and gains $LuckStat$ Luck.",
       "\"\""
     ],
     [
       "Touchdown Log",
-      "This has Target touch down.",
+      "$This$ has $Target$ touch down.",
       "\"\""
     ],
     [
@@ -1301,12 +1351,12 @@
     ],
     [
       "Warp Text",
-      "A Grounded Enemy becomes Elevated and loses SpeedStat Speed.",
+      "A Grounded Enemy becomes Elevated and loses $SpeedStat$ Speed.",
       "\"\""
     ],
     [
       "Warp Log",
-      "This warps Target away.",
+      "$This$ warps $Target$ away.",
       "\"\""
     ],
     [
@@ -1316,12 +1366,12 @@
     ],
     [
       "Revive Text",
-      "Bring back a dead Player with Num Health and a random Emotion.",
+      "Bring back a dead Player with $Num$ Health and a random Emotion.",
       "\"\""
     ],
     [
       "Revive Log",
-      "This revives Target.",
+      "$This$ revives $Target$.",
       "\"\""
     ],
     [
@@ -1336,7 +1386,7 @@
     ],
     [
       "Skip Turn Log",
-      "This skips their turn.",
+      "$This$ skips their turn.",
       "\"\""
     ],
     [
@@ -1356,12 +1406,12 @@
     ],
     [
       "Quick Shot Text",
-      "An Elevated Player becomes Angry. Then deal Num damage to them.",
+      "An Elevated Player becomes Angry. Then deal $Num$ damage to them.",
       "\"\""
     ],
     [
       "Quick Shot Log",
-      "This fires a quick shot at Target.",
+      "$This$ fires a quick shot at $Target$.",
       "\"\""
     ],
     [
@@ -1371,12 +1421,12 @@
     ],
     [
       "Bullseye Text",
-      "This gains LuckStat Luck. Then deal Num damage to an Elevated Player.",
+      "This gains $LuckStat$ Luck. Then deal $Num$ damage to an Elevated Player.",
       "\"\""
     ],
     [
       "Bullseye Log",
-      "This shoots a frozen arrow at Target.",
+      "$This$ shoots a frozen arrow at $Target$.",
       "\"\""
     ],
     [
@@ -1386,12 +1436,12 @@
     ],
     [
       "Volley Text",
-      "Deal Num damage to all Players. They all lose LuckStat Luck.",
+      "Deal $Num$ damage to all Players. They all lose $LuckStat$ Luck.",
       "\"\""
     ],
     [
       "Volley Log",
-      "This fires a volley of arrows.",
+      "$This$ fires a volley of arrows.",
       "\"\""
     ],
     [
@@ -1401,12 +1451,12 @@
     ],
     [
       "Focus Text",
-      "This becomes Happy and gains LuckStat Luck.",
+      "This becomes Happy and gains $LuckStat$ Luck.",
       "\"\""
     ],
     [
       "Focus Log",
-      "This focuses its aim.",
+      "$This$ focuses its aim.",
       "\"\""
     ],
     [
@@ -1426,12 +1476,12 @@
     ],
     [
       "Fury Text",
-      "Deal Num damage to the Grounded Player with the most Health.",
+      "Deal $Num$ damage to the Grounded Player with the most Health.",
       "\"\""
     ],
     [
       "Fury Log",
-      "This unleashes its fury on Target.",
+      "$This$ unleashes its fury on $Target$.",
       "\"\""
     ],
     [
@@ -1441,12 +1491,12 @@
     ],
     [
       "Savagery Text",
-      "All Grounded Players lose 1 Max Health and PowerStat Power.",
+      "All Grounded Players lose 1 Max Health and $PowerStat$ Power.",
       "\"\""
     ],
     [
       "Savagery Log",
-      "This displays savagery.",
+      "$This$ displays savagery.",
       "\"\""
     ],
     [
@@ -1456,12 +1506,12 @@
     ],
     [
       "Brawl Text",
-      "This and the Grounded Player with the most Health both become Angry and Locked for MiscStat turn.",
+      "This and the Grounded Player with the most Health both become Angry and Locked for $MiscStat$ turn.",
       "\"\""
     ],
     [
       "Brawl Log",
-      "This brawls with Target.",
+      "$This$ brawls with $Target$.",
       "\"\""
     ],
     [
@@ -1471,12 +1521,12 @@
     ],
     [
       "Camp Text",
-      "This becomes Protected for MiscStat turn and gets MiscStat Extra Ability.",
+      "This becomes Protected for $MiscStat$ turn and gets $MiscStat$ Extra Ability.",
       "\"\""
     ],
     [
       "Camp Log",
-      "This goes into its camp.",
+      "$This$ goes into its camp.",
       "\"\""
     ],
     [
@@ -1496,12 +1546,12 @@
     ],
     [
       "Drain Text",
-      "Deal Num damage to a Player. This gains Num Health.",
+      "Deal $Num$ damage to a Player. This gains $Num$ Health.",
       "\"\""
     ],
     [
       "Drain Log",
-      "This drains blood out of Target.",
+      "$This$ drains blood out of $Target$.",
       "\"\""
     ],
     [
@@ -1511,12 +1561,12 @@
     ],
     [
       "Screech Text",
-      "A Player becomes Happy and loses DefenseStat Defense.",
+      "A Player becomes Happy and loses $DefenseStat$ Defense.",
       "\"\""
     ],
     [
       "Screech Log",
-      "This screeches.",
+      "$This$ screeches.",
       "\"\""
     ],
     [
@@ -1526,12 +1576,12 @@
     ],
     [
       "Hunting Season Text",
-      "This gains PowerStat Power and SpeedStat Speed.",
+      "This gains $PowerStat$ Power and $SpeedStat$ Speed.",
       "\"\""
     ],
     [
       "Hunting Season Log",
-      "This goes on the hunt.",
+      "$This$ goes on the hunt.",
       "\"\""
     ],
     [
@@ -1541,12 +1591,12 @@
     ],
     [
       "Bloodthirst Text",
-      "This becomes Sad and gets MiscStat Extra Ability.",
+      "This becomes Sad and gets $MiscStat$ Extra Ability.",
       "\"\""
     ],
     [
       "Bloodthirst Log",
-      "This becomes bloodthirsty.",
+      "$This$ becomes bloodthirsty.",
       "\"\""
     ],
     [
@@ -1566,12 +1616,12 @@
     ],
     [
       "Sting Text",
-      "Deal Num damage to a Player. This becomes Targeted for MiscStat turn.",
+      "Deal Num damage to a Player. $This$ becomes Targeted for $MiscStat$ turn.",
       "\"\""
     ],
     [
       "Sting Log",
-      "This stings Target.",
+      "$This$ stings $Target$.",
       "\"\""
     ],
     [
@@ -1581,12 +1631,12 @@
     ],
     [
       "Honey Text",
-      "Another Elevated Enemy gains Num Health.",
+      "Another Elevated Enemy gains $Num$ Health.",
       "\"\""
     ],
     [
       "Honey Log",
-      "This gives Target honey.",
+      "$This$ gives $Target$ honey.",
       "\"\""
     ],
     [
@@ -1596,12 +1646,12 @@
     ],
     [
       "Protect the Queen Text",
-      "Another Elevated Enemy becomes Protected for MiscStat turn.",
+      "Another Elevated Enemy becomes Protected for $MiscStat$ turn.",
       "\"\""
     ],
     [
       "Protect the Queen Log",
-      "This protects Target.",
+      "$This$ protects $Target$.",
       "\"\""
     ],
     [
@@ -1611,12 +1661,12 @@
     ],
     [
       "Support Text",
-      "Another Elevated Enemy gets MiscStat Extra Ability.",
+      "Another Elevated Enemy gets $MiscStat$ Extra Ability.",
       "\"\""
     ],
     [
       "Support Log",
-      "This supports Target.",
+      "$This$ supports $Target$.",
       "\"\""
     ],
     [
@@ -1636,12 +1686,12 @@
     ],
     [
       "Charge Text",
-      "Deal Num damage to the last Player who attacked this.",
+      "Deal $Num$ damage to the last Player who attacked this.",
       "\"\""
     ],
     [
       "Charge Log",
-      "This charges at Target.",
+      "$This$ charges at $Target$.",
       "\"\""
     ],
     [
@@ -1651,12 +1701,12 @@
     ],
     [
       "Milk Text",
-      "Another Enemy gains Num Health and becomes Happy.",
+      "Another Enemy gains $Num$ Health and becomes Happy.",
       "\"\""
     ],
     [
       "Milk Log",
-      "This gives milk to Target.",
+      "$This$ gives milk to $Target$.",
       "\"\""
     ],
     [
@@ -1666,12 +1716,12 @@
     ],
     [
       "Graze Text",
-      "This gains Num Max Health and Num Health.",
+      "This gains $Num$ Max Health and $Num$ Health.",
       "\"\""
     ],
     [
       "Graze Log",
-      "This grazes.",
+      "$This$ grazes.",
       "\"\""
     ],
     [
@@ -1681,12 +1731,12 @@
     ],
     [
       "Bellow Text",
-      "This gains DefenseStat Defense and becomes Targeted for MiscStat turns.",
+      "This gains $DefenseStat$ Defense and becomes Targeted for $MiscStat$ turns.",
       "\"\""
     ],
     [
       "Bellow Log",
-      "This bellows.",
+      "$This$ bellows.",
       "\"\""
     ],
     [
@@ -1706,12 +1756,12 @@
     ],
     [
       "Peck Text",
-      "Deal Num damage to any Player.",
+      "Deal $Num$ damage to any Player.",
       "\"\""
     ],
     [
       "Peck Log",
-      "This pecks Target.",
+      "$This$ pecks $Target$.",
       "\"\""
     ],
     [
@@ -1731,12 +1781,12 @@
     ],
     [
       "Dark Energy Text",
-      "Deal Num damage to all Players.",
+      "Deal $Num$ damage to all Players.",
       "\"\""
     ],
     [
       "Dark Energy Log",
-      "This unleashes dark energy.",
+      "$This$ unleashes dark energy.",
       "\"\""
     ],
     [
@@ -1746,12 +1796,12 @@
     ],
     [
       "Betrayal Text",
-      "Deal Num damage to another Enemy. This gains MiscStat Max Health, Num Health, and PowerStat Power.",
+      "Deal $Num$ damage to another Enemy. This gains $MiscStat$ Max Health, $Num$ Health, and $PowerStat$ Power.",
       "\"\""
     ],
     [
       "Betrayal Log",
-      "This betrays Target.",
+      "$This$ betrays $Target$.",
       "\"\""
     ],
     [
@@ -1761,12 +1811,12 @@
     ],
     [
       "Ritual Text",
-      "Another Enemy becomes Stunned for MiscStat turn. This reduces their active Ability Cooldown by MiscStat.",
+      "Another Enemy becomes Stunned for $MiscStat$ turn. This reduces their active Ability Cooldown by $MiscStat$.",
       "\"\""
     ],
     [
       "Ritual Log",
-      "This uses Target in a ritual.",
+      "$This$ uses $Target$ in a ritual.",
       "\"\""
     ],
     [
@@ -1776,12 +1826,12 @@
     ],
     [
       "Demand Energy Text",
-      "All other Players and Enemies lose PowerStat Power.",
+      "All other Players and Enemies lose $PowerStat$ Power.",
       "\"\""
     ],
     [
       "Demand Energy Log",
-      "This demands energy.",
+      "$This$ demands energy.",
       "\"\""
     ],
     [
@@ -1801,12 +1851,12 @@
     ],
     [
       "Firebreath Text",
-      "If this is Elevated, deals Num damage to all Players.",
+      "If this is Elevated, deals $Num$ damage to all Players.",
       "\"\""
     ],
     [
       "Firebreath Log",
-      "This unleashes its firebreath.",
+      "$This$ unleashes its firebreath.",
       "\"\""
     ],
     [
@@ -1816,12 +1866,12 @@
     ],
     [
       "Roost Text",
-      "If this is Elevated, it becomes Grounded and gains Num Health.",
+      "If this is Elevated, it becomes Grounded and gains $Num$ Health.",
       "\"\""
     ],
     [
       "Roost Log",
-      "This uses roost.",
+      "$This$ uses roost.",
       "\"\""
     ],
     [
@@ -1836,7 +1886,7 @@
     ],
     [
       "Take Flight Log",
-      "This is back for more.",
+      "$This$ is back for more.",
       "\"\""
     ],
     [
@@ -1846,12 +1896,12 @@
     ],
     [
       "Roar Text",
-      "This becomes Angry and gains PowerStat Power.",
+      "This becomes Angry and gains $PowerStat$ Power.",
       "\"\""
     ],
     [
       "Roar Log",
-      "This roars.",
+      "$This$ roars.",
       "\"\""
     ],
     [
@@ -1871,12 +1921,12 @@
     ],
     [
       "Sound Waves Text",
-      "If this is Neutral, deal Num damage to all Players.",
+      "If this is Neutral, deal $Num$ damage to all Players.",
       "\"\""
     ],
     [
       "Sound Waves Log",
-      "This creates sound waves.",
+      "$This$ creates sound waves.",
       "\"\""
     ],
     [
@@ -1886,12 +1936,12 @@
     ],
     [
       "Alarm Text",
-      "This becomes Neutral, Elevated, and Locked for MiscStat turns.",
+      "This becomes Neutral, Elevated, and Locked for $MiscStat$ turns.",
       "\"\""
     ],
     [
       "Alarm Log",
-      "This is alarmed.",
+      "$This$ is alarmed.",
       "\"\""
     ],
     [
@@ -1911,12 +1961,12 @@
     ],
     [
       "Jumpscare Text",
-      "Deal Num damage to an Elevated Player.",
+      "Deal $Num$ damage to an Elevated Player.",
       "\"\""
     ],
     [
       "Jumpscare Log",
-      "This jumpscares Target.",
+      "$This$ jumpscares $Target$.",
       "\"\""
     ],
     [
@@ -1931,7 +1981,7 @@
     ],
     [
       "Lament Log",
-      "This and Target lament.",
+      "$This$ and $Target$ lament.",
       "\"\""
     ],
     [
@@ -1941,12 +1991,12 @@
     ],
     [
       "Possession Text",
-      "A Grounded Player becomes Elevated and loses LuckStat Luck.",
+      "A Grounded Player becomes Elevated and loses $LuckStat$ Luck.",
       "\"\""
     ],
     [
       "Possession Log",
-      "This possesses Target.",
+      "$This$ possesses $Target$.",
       "\"\""
     ],
     [
@@ -1956,12 +2006,12 @@
     ],
     [
       "Release Text",
-      "An Elevated Player becomes Grounded and Stunned for MiscStat turn.",
+      "An Elevated Player becomes Grounded and Stunned for $MiscStat$ turn.",
       "\"\""
     ],
     [
       "Release Log",
-      "This releases Target.",
+      "$This$ releases $Target$.",
       "\"\""
     ],
     [
@@ -1981,12 +2031,12 @@
     ],
     [
       "Flag Whack Text",
-      "Deal Num damage to a Player.",
+      "Deal $Num$ damage to a Player.",
       "\"\""
     ],
     [
       "Flag Whack Log",
-      "This whacks Target.",
+      "$This$ whacks $Target$.",
       "\"\""
     ],
     [
@@ -1996,12 +2046,12 @@
     ],
     [
       "Announce Text",
-      "Summon a random MiscStat Star Enemy.",
+      "Summon a random $MiscStat$ Star Enemy.",
       "\"\""
     ],
     [
       "Announce Log",
-      "This announces in a new enemy.",
+      "$This$ announces in a new enemy.",
       "\"\""
     ],
     [
@@ -2021,12 +2071,12 @@
     ],
     [
       "Scratch Text",
-      "Deal Num damage to a Player with the same Position as this.",
+      "Deal $Num$ damage to a Player with the same Position as this.",
       "\"\""
     ],
     [
       "Scratch Log",
-      "This scratches Target.",
+      "$This$ scratches $Target$.",
       "\"\""
     ],
     [
@@ -2041,7 +2091,7 @@
     ],
     [
       "Stuck in a Tree Log",
-      "This gets stuck in a tree.",
+      "$This$ gets stuck in a tree.",
       "\"\""
     ],
     [
@@ -2051,12 +2101,12 @@
     ],
     [
       "Land Feet First Text",
-      "If this is Elevated, it becomes Grounded and gains Num Health.",
+      "If this is Elevated, it becomes Grounded and gains $Num$ Health.",
       "\"\""
     ],
     [
       "Land Feet First Log",
-      "This lands feet first.",
+      "$This$ lands feet first.",
       "\"\""
     ],
     [
@@ -2066,12 +2116,12 @@
     ],
     [
       "Lure Text",
-      "A Player switches Positions. This becomes Targeted for MiscStat turn.",
+      "A Player switches Positions. This becomes Targeted for $MiscStat$ turn.",
       "\"\""
     ],
     [
       "Lure Log",
-      "This lures Target.",
+      "$This$ lures $Target$.",
       "\"\""
     ],
     [
@@ -2091,12 +2141,12 @@
     ],
     [
       "Prank Text",
-      "If this took damage, deal Num damage to all Players.",
+      "If this took damage, deal $Num$ damage to all Players.",
       "\"\""
     ],
     [
       "Prank Log",
-      "This pranks everyone.",
+      "$This$ pranks everyone.",
       "\"\""
     ],
     [
@@ -2106,12 +2156,12 @@
     ],
     [
       "Caught at a Good Time Text",
-      "If this is at full Health, all Players gain SpeedStat Speed and LuckStat Luck.",
+      "If this is at full Health, all Players gain $SpeedStat$ Speed and $LuckStat$ Luck.",
       "\"\""
     ],
     [
       "Caught at a Good Time Log",
-      "This gives everyone gold.",
+      "$This$ gives everyone gold.",
       "\"\""
     ],
     [
@@ -2131,12 +2181,12 @@
     ],
     [
       "Assassinate Text",
-      "Deal Num damage to the Player with the least amount of Health.",
+      "Deal $Num$ damage to the Player with the least amount of Health.",
       "\"\""
     ],
     [
       "Assassinate Log",
-      "This pulls a sneak attack on Target.",
+      "$This$ pulls a sneak attack on $Target$.",
       "\"\""
     ],
     [
@@ -2146,12 +2196,12 @@
     ],
     [
       "Shuriken Text",
-      "A Player loses SpeedStat Speed and LuckStat Luck.",
+      "A Player loses $SpeedStat$ Speed and $LuckStat$ Luck.",
       "\"\""
     ],
     [
       "Shuriken Log",
-      "This throws a shuriken at Target.",
+      "$This$ throws a shuriken at $Target$.",
       "\"\""
     ],
     [
@@ -2161,12 +2211,12 @@
     ],
     [
       "Into Shadows Text",
-      "If this is Elevated, it becomes Grounded and Protected for MiscStat turn.",
+      "If this is Elevated, it becomes Grounded and Protected for $MiscStat$ turn.",
       "\"\""
     ],
     [
       "Into Shadows Log",
-      "This leaps into shadows.",
+      "$This$ leaps into shadows.",
       "\"\""
     ],
     [
@@ -2176,12 +2226,12 @@
     ],
     [
       "Wall Climb Text",
-      "If this is Grounded, it becomes Elevated and gains SpeedStat Speed.",
+      "If this is Grounded, it becomes Elevated and gains $SpeedStat$ Speed.",
       "\"\""
     ],
     [
       "Wall Climb Log",
-      "This climbs a wall.",
+      "$This$ climbs a wall.",
       "\"\""
     ],
     [
@@ -2201,12 +2251,12 @@
     ],
     [
       "Swing Text",
-      "Deal Num damage to a Grounded Player.",
+      "Deal $Num$ damage to a Grounded Player.",
       "\"\""
     ],
     [
       "Swing Log",
-      "This swings against Target.",
+      "$This$ swings against $Target$.",
       "\"\""
     ],
     [
@@ -2226,12 +2276,12 @@
     ],
     [
       "Fight Text",
-      "Deal Num damage to a Grounded Player.",
+      "Deal $Num$ damage to a Grounded Player.",
       "\"\""
     ],
     [
       "Fight Log",
-      "This fights Target.",
+      "$This$ fights $Target$.",
       "\"\""
     ],
     [
@@ -2241,12 +2291,12 @@
     ],
     [
       "Share Drinks Text",
-      "All Enemies gain Num Health.",
+      "All Enemies gain $Num$ Health.",
       "\"\""
     ],
     [
       "Share Drinks Log",
-      "This shares drinks.",
+      "$This$ shares drinks.",
       "\"\""
     ],
     [
@@ -2256,12 +2306,12 @@
     ],
     [
       "Share Snacks Text",
-      "All Enemies gain MiscStat Max Health.",
+      "All Enemies gain $MiscStat$ Max Health.",
       "\"\""
     ],
     [
       "Share Snacks Log",
-      "This shares snacks.",
+      "$This$ shares snacks.",
       "\"\""
     ],
     [
@@ -2276,7 +2326,7 @@
     ],
     [
       "Drinking Game Log",
-      "This plays a drinking game.",
+      "$This$ plays a drinking game.",
       "\"\""
     ],
     [
@@ -2296,12 +2346,12 @@
     ],
     [
       "Will-o'-Wisp Text",
-      "Deal Num damage to an Elevated Player.",
+      "Deal $Num$ damage to an Elevated Player.",
       "\"\""
     ],
     [
       "Will-o'-Wisp Log",
-      "This conjures a will-o'-wisp against Target.",
+      "$This$ conjures a will-o'-wisp against $Target$.",
       "\"\""
     ],
     [
@@ -2316,7 +2366,7 @@
     ],
     [
       "Cast Happiness Log",
-      "This casts happiness.",
+      "$This$ casts happiness.",
       "\"\""
     ],
     [
@@ -2331,7 +2381,7 @@
     ],
     [
       "Cast Sadness Log",
-      "This casts sadness.",
+      "$This$ casts sadness.",
       "\"\""
     ],
     [
@@ -2346,7 +2396,7 @@
     ],
     [
       "Cast Anger Log",
-      "This casts anger.",
+      "$This$ casts anger.",
       "\"\""
     ],
     [
@@ -2366,12 +2416,12 @@
     ],
     [
       "Collision Text",
-      "Deal Num damage to all Elevated Players.",
+      "Deal $Num$ damage to all Elevated Players.",
       "\"\""
     ],
     [
       "Collision Log",
-      "This collides puppets with each other.",
+      "$This$ collides puppets with each other.",
       "\"\""
     ],
     [
@@ -2381,12 +2431,12 @@
     ],
     [
       "Drop Text",
-      "Deal Num damage to all Elevated Players. They become Grounded.",
+      "Deal $Num$ damage to all Elevated Players. They become Grounded.",
       "\"\""
     ],
     [
       "Drop Log",
-      "This drops everyone on the floor.",
+      "$This$ drops everyone on the floor.",
       "\"\""
     ],
     [
@@ -2396,12 +2446,12 @@
     ],
     [
       "Dangle Text",
-      "All Grounded Players become Elevated and lose SpeedStat Speed.",
+      "All Grounded Players become Elevated and lose $SpeedStat$ Speed.",
       "\"\""
     ],
     [
       "Dangle Log",
-      "This dangles players in the air.",
+      "$This$ dangles players in the air.",
       "\"\""
     ],
     [
@@ -2411,12 +2461,12 @@
     ],
     [
       "Control Text",
-      "Each other Elevated Enemy gets MiscStat Extra Ability.",
+      "Each other Elevated Enemy gets $MiscStat$ Extra Ability.",
       "\"\""
     ],
     [
       "Control Log",
-      "This controls other enemies.",
+      "$This$ controls other enemies.",
       "\"\""
     ],
     [
@@ -2436,12 +2486,12 @@
     ],
     [
       "Bite Text",
-      "Deal Num damage to a Grounded Player with MiscStat Defense or less.",
+      "Deal $Num$ damage to a Grounded Player with $MiscStat$ Defense or less.",
       "\"\""
     ],
     [
       "Bite Log",
-      "This bites Target.",
+      "$This$ bites $Target$.",
       "\"\""
     ],
     [
@@ -2451,12 +2501,12 @@
     ],
     [
       "Leap Text",
-      "Deal Num damage to an Elevated Player. They become Grounded.",
+      "Deal $Num$ damage to an Elevated Player. They become Grounded.",
       "\"\""
     ],
     [
       "Leap Log",
-      "This leaps into Target.",
+      "$This$ leaps into $Target$.",
       "\"\""
     ],
     [
@@ -2466,12 +2516,12 @@
     ],
     [
       "Bark Text",
-      "All Players lose DefenseStat Defense.",
+      "All Players lose $DefenseStat$ Defense.",
       "\"\""
     ],
     [
       "Bark Log",
-      "This barks.",
+      "$This$ barks.",
       "\"\""
     ],
     [
@@ -2481,12 +2531,12 @@
     ],
     [
       "Cuddle Text",
-      "A Player with MiscStat Defense or more loses DefenseStat Defense.",
+      "A Player with $MiscStat$ Defense or more loses $DefenseStat$ Defense.",
       "\"\""
     ],
     [
       "Cuddle Log",
-      "This cuddles with Target.",
+      "$This$ cuddles with $Target$.",
       "\"\""
     ],
     [
@@ -2506,17 +2556,17 @@
     ],
     [
       "Swarm Text",
-      "Deal Num damage to a Grounded Player. This gains DefenseStat Defense.",
+      "Deal $Num$ damage to a Grounded Player. This gains $DefenseStat$ Defense.",
       "\"\""
     ],
     [
       "Swarm Log",
-      "This swarms Target.",
+      "$This$ swarms $Target$.",
       "\"\""
     ],
     [
       "Strength in Numbers",
-      "Strength in Numbers",
+      "Strength in $Num$bers",
       "\"\""
     ],
     [
@@ -2526,7 +2576,7 @@
     ],
     [
       "Strength in Numbers Log",
-      "This attracts more Rats.",
+      "$This$ attracts more Rats.",
       "\"\""
     ],
     [
@@ -2546,12 +2596,12 @@
     ],
     [
       "Order Text",
-      "Deal Num damage to a Player. They become Targeted for MiscStat turn.",
+      "Deal $Num$ damage to a Player. They become Targeted for $MiscStat$ turn.",
       "\"\""
     ],
     [
       "Order Log",
-      "This orders guards to attack Target. ",
+      "$This$ orders guards to attack $Target$. ",
       "\"\""
     ],
     [
@@ -2561,12 +2611,12 @@
     ],
     [
       "Promote Text",
-      "Another Enemy gains MiscStat Max Health and Num Health.",
+      "Another Enemy gains $MiscStat$ Max Health and $Num$ Health.",
       "\"\""
     ],
     [
       "Promote Log",
-      "This promotes Target.",
+      "$This$ promotes $Target$.",
       "\"\""
     ],
     [
@@ -2576,12 +2626,12 @@
     ],
     [
       "Call Text",
-      "Summon a random MiscStat Star Enemy.",
+      "Summon a random $MiscStat$ Star Enemy.",
       "\"\""
     ],
     [
       "Call Log",
-      "This calls for help.",
+      "$This$ calls for help.",
       "\"\""
     ],
     [
@@ -2591,12 +2641,12 @@
     ],
     [
       "Procession Text",
-      "All Enemies gain SpeedStat Speed.",
+      "All Enemies gain $SpeedStat$ Speed.",
       "\"\""
     ],
     [
       "Procession Log",
-      "This arranges a procession.",
+      "$This$ arranges a procession.",
       "\"\""
     ],
     [
@@ -2616,12 +2666,12 @@
     ],
     [
       "Drown Text",
-      "Deal Num damage to a Stunned Player.",
+      "Deal $Num$ damage to a Stunned Player.",
       "\"\""
     ],
     [
       "Drown Log",
-      "This drowns Target.",
+      "$This$ drowns $Target$.",
       "\"\""
     ],
     [
@@ -2631,12 +2681,12 @@
     ],
     [
       "Shipwreck Text",
-      "An Angry Player loses SpeedStat Speed and becomes Stunned for MiscStat turns.",
+      "An Angry Player loses $SpeedStat$ Speed and becomes Stunned for $MiscStat$ turns.",
       "\"\""
     ],
     [
       "Shipwreck Log",
-      "This causes Target to shipwreck.",
+      "$This$ causes $Target$ to shipwreck.",
       "\"\""
     ],
     [
@@ -2646,12 +2696,12 @@
     ],
     [
       "Manipulate Text",
-      "A Player becomes Angry and Locked for MiscStat turns.",
+      "A Player becomes Angry and Locked for $MiscStat$ turns.",
       "\"\""
     ],
     [
       "Manipulate Log",
-      "This manipulates Target.",
+      "$This$ manipulates $Target$.",
       "\"\""
     ],
     [
@@ -2661,12 +2711,12 @@
     ],
     [
       "Sing Text",
-      "A MiscStat Star Enemy becomes Targeted for MiscStat turn.",
+      "A $MiscStat$ Star Enemy becomes Targeted for $MiscStat$ turn.",
       "\"\""
     ],
     [
       "Sing Log",
-      "This sings a song.",
+      "$This$ sings a song.",
       "\"\""
     ],
     [
@@ -2686,12 +2736,12 @@
     ],
     [
       "Stab Prey Text",
-      "If this is Elevated, deal Num damage to an Elevated Player.",
+      "If this is Elevated, deal $Num$ damage to an Elevated Player.",
       "\"\""
     ],
     [
       "Stab Prey Log",
-      "This stabs Target.",
+      "$This$ stabs $Target$.",
       "\"\""
     ],
     [
@@ -2701,12 +2751,12 @@
     ],
     [
       "Trapped Text",
-      "If this is Elevated, a Grounded Player becomes Elevated and Locked for MiscStat turn.",
+      "If this is Elevated, a Grounded Player becomes Elevated and Locked for $MiscStat$ turn.",
       "\"\""
     ],
     [
       "Trapped Log",
-      "This traps Target.",
+      "$This$ traps $Target$.",
       "\"\""
     ],
     [
@@ -2716,12 +2766,12 @@
     ],
     [
       "Silk Wrap Text",
-      "An Elevated Player becomes Sad and loses PowerStat Power.",
+      "An Elevated Player becomes Sad and loses $PowerStat$ Power.",
       "\"\""
     ],
     [
       "Silk Wrap Log",
-      "This wraps Target in silk.",
+      "$This$ wraps $Target$ in silk.",
       "\"\""
     ],
     [
@@ -2731,12 +2781,12 @@
     ],
     [
       "Spin Web Text",
-      "A Grounded Enemy becomes Elevated and gains SpeedStat Speed.",
+      "A Grounded Enemy becomes Elevated and gains $SpeedStat$ Speed.",
       "\"\""
     ],
     [
       "Spin Web Log",
-      "This spins a web for Target.",
+      "$This$ spins a web for $Target$.",
       "\"\""
     ],
     [
@@ -2756,12 +2806,12 @@
     ],
     [
       "Punishment Text",
-      "Does Num damage to Player who doesn't have the same Emotion as this.",
+      "Does $Num$ damage to Player who doesn't have the same Emotion as this.",
       "\"\""
     ],
     [
       "Punishment Log",
-      "This punishes Target.",
+      "$This$ punishes $Target$.",
       "\"\""
     ],
     [
@@ -2776,7 +2826,7 @@
     ],
     [
       "Demand Happiness Log",
-      "This demands Happy.",
+      "$This$ demands Happy.",
       "\"\""
     ],
     [
@@ -2791,7 +2841,7 @@
     ],
     [
       "Demand Anger Log",
-      "This demands Angry.",
+      "$This$ demands Angry.",
       "\"\""
     ],
     [
@@ -2806,7 +2856,7 @@
     ],
     [
       "Demand Sadness Log",
-      "This demands Sad.",
+      "$This$ demands Sad.",
       "\"\""
     ],
     [
@@ -2826,12 +2876,12 @@
     ],
     [
       "Mischief Text",
-      "Deal Num damage to a Grounded Player.",
+      "Deal $Num$ damage to a Grounded Player.",
       "\"\""
     ],
     [
       "Mischief Log",
-      "This causes mischief for Target.",
+      "$This$ causes mischief for $Target$.",
       "\"\""
     ],
     [
@@ -2841,12 +2891,12 @@
     ],
     [
       "Delude Text",
-      "A Grounded Player becomes Happy and Locked for MiscStat turns.",
+      "A Grounded Player becomes Happy and Locked for $MiscStat$ turns.",
       "\"\""
     ],
     [
       "Delude Log",
-      "This deludes Target.",
+      "$This$ deludes $Target$.",
       "\"\""
     ],
     [
@@ -2856,12 +2906,12 @@
     ],
     [
       "Delay Text",
-      "One of a Grounded Player's Abilities that can be used is on Cooldown for MiscStat turns.",
+      "One of a Grounded Player's Abilities that can be used is on Cooldown for $MiscStat$ turns.",
       "\"\""
     ],
     [
       "Delay Log",
-      "This delays Target from using an ability.",
+      "$This$ delays $Target$ from using an ability.",
       "\"\""
     ],
     [
@@ -2871,12 +2921,12 @@
     ],
     [
       "Distract Text",
-      "A Grounded Player's active Ability Cooldown are increased by MiscStat.",
+      "A Grounded Player's active Ability Cooldown are increased by $MiscStat$.",
       "\"\""
     ],
     [
       "Distract Log",
-      "This distracts Target.",
+      "$This$ distracts $Target$.",
       "\"\""
     ],
     [
@@ -2896,12 +2946,12 @@
     ],
     [
       "Toughen Text",
-      "This gains Num Health and gains DefenseStat Defense.",
+      "This gains $Num$ Health and gains $DefenseStat$ Defense.",
       "\"\""
     ],
     [
       "Toughen Log",
-      "This toughens up.",
+      "$This$ toughens up.",
       "\"\""
     ],
     [
@@ -2911,12 +2961,12 @@
     ],
     [
       "In the Way Text",
-      "This becomes Grounded and Targeted for MiscStat turn.",
+      "This becomes Grounded and Targeted for $MiscStat$ turn.",
       "\"\""
     ],
     [
       "In the Way Log",
-      "This is in the way.",
+      "$This$ is in the way.",
       "\"\""
     ],
     [
@@ -2936,12 +2986,12 @@
     ],
     [
       "Slash Text",
-      "Deal Num damage to a Grounded Player.",
+      "Deal $Num$ damage to a Grounded Player.",
       "\"\""
     ],
     [
       "Slash Log",
-      "This slashes Target.",
+      "$This$ slashes $Target$.",
       "\"\""
     ],
     [
@@ -2956,7 +3006,7 @@
     ],
     [
       "Howl Log",
-      "This howls.",
+      "$This$ howls.",
       "\"\""
     ],
     [
@@ -2966,12 +3016,12 @@
     ],
     [
       "Nurture Text",
-      "All MiscStat Star Enemies gain DefenseStat Defense and LuckStat Luck.",
+      "All $MiscStat$ Star Enemies gain $DefenseStat$ Defense and $LuckStat$ Luck.",
       "\"\""
     ],
     [
       "Nurture Log",
-      "This nurtures the young.",
+      "$This$ nurtures the young.",
       "\"\""
     ],
     [
@@ -2981,12 +3031,12 @@
     ],
     [
       "Guard Text",
-      "A MiscStat Star Enemy becomes Protected for MiscStat turn.",
+      "A $MiscStat$ Star Enemy becomes Protected for $MiscStat$ turn.",
       "\"\""
     ],
     [
       "Guard Log",
-      "This guards Target.",
+      "$This$ guards $Target$.",
       "\"\""
     ]
   ]

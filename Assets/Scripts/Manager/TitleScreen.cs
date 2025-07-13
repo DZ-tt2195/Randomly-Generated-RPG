@@ -71,9 +71,9 @@ public class TitleScreen : MonoBehaviour
     {
         TimeSpan utcOffset = TimeZoneInfo.Local.GetUtcOffset(DateTime.Now);
         if (utcOffset.Hours > 0)
-            timeText.text = $"{CarryVariables.instance.GetText("Daily Challenge")} +{utcOffset.Hours:D2}:{utcOffset.Minutes:D2}";
+            timeText.text = $"{CarryVariables.instance.GetText("Your Timezone")} +{utcOffset.Hours:D2}:{utcOffset.Minutes:D2}";
         else
-            timeText.text = $"{CarryVariables.instance.GetText("Daily Challenge")} {utcOffset.Hours:D2}:{utcOffset.Minutes:D2}";
+            timeText.text = $"{CarryVariables.instance.GetText("Your Timezone")} {utcOffset.Hours:D2}:{utcOffset.Minutes:D2}";
 
         DateTime nextUtcMidnight = DateTime.UtcNow.Date.AddDays(1);
         TimeSpan timeUntilMidnightUtc = nextUtcMidnight - DateTime.UtcNow;

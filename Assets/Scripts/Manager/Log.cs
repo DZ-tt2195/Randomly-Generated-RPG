@@ -36,8 +36,8 @@ public class Log : MonoBehaviour
     public static string Substitute(Ability ability, Character user, Character target)
     {
         string sentence = CarryVariables.instance.GetText($"{ability.data.myName} Log");
-        sentence = sentence.Replace("$This$", user.data.myName);
-        try{ sentence = sentence.Replace("$Target$", target.data.myName);} catch{/*do nothing*/}
+        sentence = sentence.Replace("$This$", user.name);
+        try{ sentence = sentence.Replace("$Target$", target.name);} catch{/*do nothing*/}
         return sentence;
     }
 
