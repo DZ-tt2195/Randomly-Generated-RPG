@@ -1,0 +1,2788 @@
+{
+    [
+      "key",
+      "English",
+      "Test"
+    ],
+    [
+      "Author Credit",
+      "by Thomas \"DZ\" Tang",
+      "\"\""
+    ],
+    [
+      "Last Update",
+      "Last Updated: July 12, 2025",
+      "\"\""
+    ],
+    [
+      "Inspiration",
+      "Inspired by OMORI (OMOCAT) and Epic Battle Fantasy V (Kupo Games)",
+      "\"\""
+    ],
+    [
+      "Language",
+      "Language",
+      "\"\""
+    ],
+    [
+      "Translator Credit",
+      "\"\"",
+      "\"\""
+    ],
+    [
+      "Tutorial",
+      "Tutorial",
+      "\"\""
+    ],
+    [
+      "Story",
+      "\"Story\"",
+      "\"\""
+    ],
+    [
+      "Play Game",
+      "Play Game",
+      "\"\""
+    ],
+    [
+      "Daily Challenge",
+      "Daily Challenge",
+      "\"\""
+    ],
+    [
+      "Cheats and Challenges",
+      "Cheats & Challenges",
+      "\"\""
+    ],
+    [
+      "Encyclopedia",
+      "Encylopedia",
+      "\"\""
+    ],
+    [
+      "Special Thanks",
+      "Special Thanks",
+      "\"\""
+    ],
+    [
+      "Story Part 1",
+      "You are a Knight, an Angel, and a Wizard, but not at the same time. You didn't have the EXP or connections to get into the good RPGs, so you're starting at this one. The costumes are obvious hand-me-downs and the work is unpaid. It's also a virtual setting, and there's no one else to co-star with.",
+      "\"\""
+    ],
+    [
+      "Story Part 2",
+      "Your quest is to beat up any enemies that look at you the wrong way. That NPC gave you a rock and a turnip to start with, but you didn’t remember that fact. Turns out that all the budget went into the gameplay and nothing in the game makes any cents. ",
+      "\"\""
+    ],
+    [
+      "Story Part 3",
+      "Anyways, you must roll with the punches and work with whatever they gave you. And if all else fails, you can blame it on lag, your parents, and that really cute cat.",
+      "\"\""
+    ],
+    [
+      "Cheats",
+      "Cheats",
+      "\"\""
+    ],
+    [
+      "Challenges",
+      "Challenges",
+      "\"\""
+    ],
+    [
+      "Clear All",
+      "Clear All",
+      "\"\""
+    ],
+    [
+      "Settings",
+      "Settings",
+      "\"\""
+    ],
+    [
+      "Emotions Guide",
+      "Emotions Guide",
+      "\"\""
+    ],
+    [
+      "Close Settings",
+      "Press any key to close",
+      "\"\""
+    ],
+    [
+      "Close",
+      "Close",
+      "\"\""
+    ],
+    [
+      "Animation Speed",
+      "Animation Speed",
+      "\"\""
+    ],
+    [
+      "Confirm Decisions",
+      "Confirm Decisions",
+      "\"\""
+    ],
+    [
+      "Display Tooltip",
+      "Display Tooltip for keywords / icons",
+      "\"\""
+    ],
+    [
+      "Knight",
+      "Knight",
+      "\"\""
+    ],
+    [
+      "Knight Text",
+      "Deals damage to individual Enemies, but not to Elevated ones. Has control over Emotions.",
+      "\"\""
+    ],
+    [
+      "Battle Cry",
+      "Battle Cry",
+      "\"\""
+    ],
+    [
+      "Battle Cry Text",
+      "A Player becomes Angry and gains PowerStat Power.",
+      "\"\""
+    ],
+    [
+      "Battle Cry Log",
+      "This has Target do a battle cry.",
+      "\"\""
+    ],
+    [
+      "Cheer",
+      "Cheer",
+      "\"\""
+    ],
+    [
+      "Cheer Text",
+      "Another Player becomes Happy and gets MiscStat Extra Ability.",
+      "\"\""
+    ],
+    [
+      "Cheer Log",
+      "This cheers on Target.",
+      "\"\""
+    ],
+    [
+      "Daze",
+      "Daze",
+      "\"\""
+    ],
+    [
+      "Daze Text",
+      "A Grounded Enemy becomes Happy and loses PowerStat Power.",
+      "\"\""
+    ],
+    [
+      "Daze Log",
+      "This dazes Target.",
+      "\"\""
+    ],
+    [
+      "Desperation",
+      "Desperation",
+      "\"\""
+    ],
+    [
+      "Desperation Text",
+      "This becomes Sad. Then deal Num damage to a Grounded Enemy.",
+      "\"\""
+    ],
+    [
+      "Desperation Log",
+      "This gets desperate against Target.",
+      "\"\""
+    ],
+    [
+      "Embarass",
+      "Embarass",
+      "\"\""
+    ],
+    [
+      "Embarass Text",
+      "A Grounded Enemy becomes Sad. Then deal Num damage to them.",
+      "\"\""
+    ],
+    [
+      "Embarass Log",
+      "This embarasses Target.",
+      "\"\""
+    ],
+    [
+      "Force",
+      "Force",
+      "\"\""
+    ],
+    [
+      "Force Text",
+      "Deal Num damage to a Grounded Enemy. Their active Ability Cooldown are decreased by MiscStat.",
+      "\"\""
+    ],
+    [
+      "Force Log",
+      "This forces Target to work harder.",
+      "\"\""
+    ],
+    [
+      "Impale",
+      "Impale",
+      "\"\""
+    ],
+    [
+      "Impale Text",
+      "Deal Num damage to a Grounded Enemy. They becomes Stunned for MiscStat turn.",
+      "\"\""
+    ],
+    [
+      "Impale Log",
+      "This impales Target.",
+      "\"\""
+    ],
+    [
+      "Intimidate",
+      "Intimidate",
+      "\"\""
+    ],
+    [
+      "Intimidate Text",
+      "This becomes Angry, and another Player becomes Sad.",
+      "\"\""
+    ],
+    [
+      "Intimidate Log",
+      "This intimidates Target.",
+      "\"\""
+    ],
+    [
+      "Joust",
+      "Joust",
+      "\"\""
+    ],
+    [
+      "Joust Text",
+      "Deal Num damage to a Grounded Enemy. Then this loses LuckStat Luck.",
+      "\"\""
+    ],
+    [
+      "Joust Log",
+      "This uses joust against Target.",
+      "\"\""
+    ],
+    [
+      "Knock Down",
+      "Knock Down",
+      "\"\""
+    ],
+    [
+      "Knock Down Text",
+      "Deal Num damage to a Grounded Enemy. Then they lose DefenseStat Defense.",
+      "\"\""
+    ],
+    [
+      "Knock Down Log",
+      "This knocks down Target.",
+      "\"\""
+    ],
+    [
+      "Meditate",
+      "Meditate",
+      "\"\""
+    ],
+    [
+      "Meditate Text",
+      "A Player becomes Neutral, Protected, and Locked for MiscStat turn.",
+      "\"\""
+    ],
+    [
+      "Meditate Log",
+      "This has Target meditate.",
+      "\"\""
+    ],
+    [
+      "Mirror",
+      "Mirror",
+      "\"\""
+    ],
+    [
+      "Mirror Text",
+      "Deal Num damage to a Grounded Enemy with the same Emotion as this.",
+      "\"\""
+    ],
+    [
+      "Mirror Log",
+      "This mirrors Target.",
+      "\"\""
+    ],
+    [
+      "Mock",
+      "Mock",
+      "\"\""
+    ],
+    [
+      "Mock Text",
+      "A Grounded Enemy becomes Angry. Then deal Num damage to them.",
+      "\"\""
+    ],
+    [
+      "Mock Log",
+      "This mocks Target.",
+      "\"\""
+    ],
+    [
+      "Neutralize",
+      "Neutralize",
+      "\"\""
+    ],
+    [
+      "Neutralize Text",
+      "Deal Num damage to a Grounded Enemy. Then they become Neutral.",
+      "\"\""
+    ],
+    [
+      "Neutralize Log",
+      "This neutralizes Target.",
+      "\"\""
+    ],
+    [
+      "Redirect",
+      "Redirect",
+      "\"\""
+    ],
+    [
+      "Redirect Text",
+      "Another Player gains DefenseStat Defense and becomes Targeted for MiscStat turns.",
+      "\"\""
+    ],
+    [
+      "Redirect Log",
+      "This redirects attention to Target.",
+      "\"\""
+    ],
+    [
+      "Rollout",
+      "Rollout",
+      "\"\""
+    ],
+    [
+      "Rollout Text",
+      "This gains PowerStat Power. Then deal Num damage to a Grounded Enemy.",
+      "\"\""
+    ],
+    [
+      "Rollout Log",
+      "This rolls out on Target.",
+      "\"\""
+    ],
+    [
+      "Steal",
+      "Steal",
+      "\"\""
+    ],
+    [
+      "Steal Text",
+      "An Enemy becomes Angry. All Players gain DefenseStat Defense.",
+      "\"\""
+    ],
+    [
+      "Steal Log",
+      "This steals from Target.",
+      "\"\""
+    ],
+    [
+      "Surprise",
+      "Surprise",
+      "\"\""
+    ],
+    [
+      "Surprise Text",
+      "A Grounded Enemy becomes Happy. Then deal Num damage to it.",
+      "\"\""
+    ],
+    [
+      "Surprise Log",
+      "This surprises Target.",
+      "\"\""
+    ],
+    [
+      "Twirl",
+      "Twirl",
+      "\"\""
+    ],
+    [
+      "Twirl Text",
+      "This becomes Happy. Then deals Num damage to a Grounded Enemy.",
+      "\"\""
+    ],
+    [
+      "Twirl Log",
+      "This twirls into Target.",
+      "\"\""
+    ],
+    [
+      "Upset",
+      "Upset",
+      "\"\""
+    ],
+    [
+      "Upset Text",
+      "A Grounded Enemy becomes Sad and loses DefenseStat Defense.",
+      "\"\""
+    ],
+    [
+      "Upset Log",
+      "This upsets Target.",
+      "\"\""
+    ],
+    [
+      "Weaken",
+      "Weaken",
+      "\"\""
+    ],
+    [
+      "Weaken Text",
+      "Deal Num damage to a Grounded Enemy. They lose PowerStat Power.",
+      "\"\""
+    ],
+    [
+      "Weaken Log",
+      "This weakens Target.",
+      "\"\""
+    ],
+    [
+      "Angel",
+      "Angel",
+      "\"\""
+    ],
+    [
+      "Angel Text",
+      "Heals Players and starts Elevated. Can do everything but attack.",
+      "\"\""
+    ],
+    [
+      "Air Combat",
+      "Air Combat",
+      "\"\""
+    ],
+    [
+      "Air Combat Text",
+      "A Grounded Player and Enemy both become Elevated and gain PowerStat Power.",
+      "\"\""
+    ],
+    [
+      "Air Combat Log",
+      "This initiates air combat.",
+      "\"\""
+    ],
+    [
+      "Assist",
+      "Assist",
+      "\"\""
+    ],
+    [
+      "Assist Text",
+      "Another Player gains Num Health and gets MiscStat Extra Ability.",
+      "\"\""
+    ],
+    [
+      "Assist Log",
+      "This assists Target.",
+      "\"\""
+    ],
+    [
+      "Calm Down",
+      "Calm Down",
+      "\"\""
+    ],
+    [
+      "Calm Down Text",
+      "Each non-Neutral Player gain Num Health and becomes Neutral.",
+      "\"\""
+    ],
+    [
+      "Calm Down Log",
+      "This calms everyone down.",
+      "\"\""
+    ],
+    [
+      "Crash Land",
+      "Crash Land",
+      "\"\""
+    ],
+    [
+      "Crash Land Text",
+      "An Elevated Enemy becomes Grounded and loses DefenseStat Defense.",
+      "\"\""
+    ],
+    [
+      "Crash Land Log",
+      "This makes Target crash land.",
+      "\"\""
+    ],
+    [
+      "Enrage",
+      "Enrage",
+      "\"\""
+    ],
+    [
+      "Enrage Text",
+      "An Elevated Player becomes Angry and Grounded.",
+      "\"\""
+    ],
+    [
+      "Enrage Log",
+      "This enrages Target.",
+      "\"\""
+    ],
+    [
+      "Exhaust",
+      "Exhaust",
+      "\"\""
+    ],
+    [
+      "Exhaust Text",
+      "An Enemy becomes Sad and loses SpeedStat Speed.",
+      "\"\""
+    ],
+    [
+      "Exhaust Log",
+      "This exhausts Target.",
+      "\"\""
+    ],
+    [
+      "Exorcism",
+      "Exorcism",
+      "\"\""
+    ],
+    [
+      "Exorcism Text",
+      "An Elevated Enemy loses PowerStat Power. Each Elevated Player gains Num Health.",
+      "\"\""
+    ],
+    [
+      "Exorcism Log",
+      "This exorcises Target.",
+      "\"\""
+    ],
+    [
+      "Gift of Flight",
+      "Gift of Flight",
+      "\"\""
+    ],
+    [
+      "Gift of Flight Text",
+      "A Grounded Enemy becomes Happy and Elevated.",
+      "\"\""
+    ],
+    [
+      "Gift of Flight Log",
+      "This gives Target the gift of flight.",
+      "\"\""
+    ],
+    [
+      "Hide",
+      "Hide",
+      "\"\""
+    ],
+    [
+      "Hide Text",
+      "A Grounded Enemy loses LuckStat Luck. Each Grounded Player gains Num Health.",
+      "\"\""
+    ],
+    [
+      "Hide Log",
+      "This has players hide from Target.",
+      "\"\""
+    ],
+    [
+      "Immunity",
+      "Immunity",
+      "\"\""
+    ],
+    [
+      "Immunity Text",
+      "A Player gains Num Health and becomes Protected and Targeted for MiscStat turn.",
+      "\"\""
+    ],
+    [
+      "Immunity Log",
+      "This grants immunity to Target.",
+      "\"\""
+    ],
+    [
+      "Joy",
+      "Joy",
+      "\"\""
+    ],
+    [
+      "Joy Text",
+      "An Elevated Player gains Num Health and becomes Happy.",
+      "\"\""
+    ],
+    [
+      "Joy Log",
+      "This brings Target joy.",
+      "\"\""
+    ],
+    [
+      "Lift Up",
+      "Lift Up",
+      "\"\""
+    ],
+    [
+      "Lift Up Text",
+      "A Grounded Player gains Num Health and becomes Elevated.",
+      "\"\""
+    ],
+    [
+      "Lift Up Log",
+      "This lifts Target up.",
+      "\"\""
+    ],
+    [
+      "Motivate",
+      "Motivate",
+      "\"\""
+    ],
+    [
+      "Motivate Text",
+      "A Player gains Num Health. Decrease their active Cooldown by MiscStat.",
+      "\"\""
+    ],
+    [
+      "Motivate Log",
+      "This motivates Target.",
+      "\"\""
+    ],
+    [
+      "Overheal",
+      "Overheal",
+      "\"\""
+    ],
+    [
+      "Overheal Text",
+      "All Players gain MiscStat Max Health and Num Health.",
+      "\"\""
+    ],
+    [
+      "Overheal Log",
+      "This overheals all players.",
+      "\"\""
+    ],
+    [
+      "Petrify",
+      "Petrify",
+      "\"\""
+    ],
+    [
+      "Petrify Text",
+      "An Elevated Enemy becomes Grounded, Neutral, and Stunned for MiscStat turn.",
+      "\"\""
+    ],
+    [
+      "Petrify Log",
+      "This petrifies Target.",
+      "\"\""
+    ],
+    [
+      "Plummet",
+      "Plummet",
+      "\"\""
+    ],
+    [
+      "Plummet Text",
+      "An Elevated Enemy becomes Angry and Grounded.",
+      "\"\""
+    ],
+    [
+      "Plummet Log",
+      "This plummets Target.",
+      "\"\""
+    ],
+    [
+      "Retreat",
+      "Retreat",
+      "\"\""
+    ],
+    [
+      "Retreat Text",
+      "A Grounded Player gains Num Health and becomes Sad.",
+      "\"\""
+    ],
+    [
+      "Retreat Log",
+      "This has Target retreat.",
+      "\"\""
+    ],
+    [
+      "Security",
+      "Security",
+      "\"\""
+    ],
+    [
+      "Security Text",
+      "A Player switches Positions and gains DefenseStat Defense.",
+      "\"\""
+    ],
+    [
+      "Security Log",
+      "This rescues Target.",
+      "\"\""
+    ],
+    [
+      "Soft Landing",
+      "Soft Landing",
+      "\"\""
+    ],
+    [
+      "Soft Landing Text",
+      "An Elevated Player gains Num Health and becomes Grounded.",
+      "\"\""
+    ],
+    [
+      "Soft Landing Log",
+      "This helps Target land softly.",
+      "\"\""
+    ],
+    [
+      "Tailwinds",
+      "Tailwinds",
+      "\"\""
+    ],
+    [
+      "Tailwinds Text",
+      "Each Elevated Player gains Num Health and SpeedStat Speed.",
+      "\"\""
+    ],
+    [
+      "Tailwinds Log",
+      "This creates tailwinds.",
+      "\"\""
+    ],
+    [
+      "Team Up",
+      "Team Up",
+      "\"\""
+    ],
+    [
+      "Team Up Text",
+      "Each Grounded Player gains Num Health and LuckStat Luck.",
+      "\"\""
+    ],
+    [
+      "Team Up Log",
+      "This secures all players.",
+      "\"\""
+    ],
+    [
+      "Wizard",
+      "Wizard",
+      "\"\""
+    ],
+    [
+      "Wizard Text",
+      "Deals damage to multiple Enemies at once. Has control over Positions.",
+      "\"\""
+    ],
+    [
+      "Above Danger",
+      "Above Danger",
+      "\"\""
+    ],
+    [
+      "Above Danger Text",
+      "A Grounded Player becomes Elevated and Protected for MiscStat turn.",
+      "\"\""
+    ],
+    [
+      "Above Danger Log",
+      "This moves Target above danger.",
+      "\"\""
+    ],
+    [
+      "Bad Omens",
+      "Bad Omens",
+      "\"\""
+    ],
+    [
+      "Bad Omens Text",
+      "Deal Num damage to all Enemies. They lose LuckStat Luck.",
+      "\"\""
+    ],
+    [
+      "Bad Omens Log",
+      "This predicts bad omens.",
+      "\"\""
+    ],
+    [
+      "Bounce",
+      "Bounce",
+      "\"\""
+    ],
+    [
+      "Bounce Text",
+      "Deal Num damage to each Grounded Enemy. They each become Elevated.",
+      "\"\""
+    ],
+    [
+      "Bounce Log",
+      "This bounces all enemies.",
+      "\"\""
+    ],
+    [
+      "Chill",
+      "Chill",
+      "\"\""
+    ],
+    [
+      "Chill Text",
+      "Deal Num damage to each Grounded Enemy. Then this becomes Stunned for MiscStat turn.",
+      "\"\""
+    ],
+    [
+      "Chill Log",
+      "This chills the battlefield.",
+      "\"\""
+    ],
+    [
+      "Expedite",
+      "Expedite",
+      "\"\""
+    ],
+    [
+      "Expedite Text",
+      "Another Player gains SpeedStat Speed. Decrease their active Cooldown by MiscStat.",
+      "\"\""
+    ],
+    [
+      "Expedite Log",
+      "This expedites Target.",
+      "\"\""
+    ],
+    [
+      "Flood",
+      "Flood",
+      "\"\""
+    ],
+    [
+      "Flood Text",
+      "Each Grounded Player becomes Elevated. Then deal Num damage to each Grounded Enemy.",
+      "\"\""
+    ],
+    [
+      "Flood Log",
+      "This summons a flood.",
+      "\"\""
+    ],
+    [
+      "Gust",
+      "Gust",
+      "\"\""
+    ],
+    [
+      "Gust Text",
+      "An Elevated Enemy becomes Grounded and loses LuckStat Luck.",
+      "\"\""
+    ],
+    [
+      "Gust Log",
+      "This shoots gusts towards Target.",
+      "\"\""
+    ],
+    [
+      "Headwinds",
+      "Headwinds",
+      "\"\""
+    ],
+    [
+      "Headwinds Text",
+      "Deal Num damage to each Elevated Enemy. They each lose SpeedStat Speed.",
+      "\"\""
+    ],
+    [
+      "Headwinds Log",
+      "This creates headwinds.",
+      "\"\""
+    ],
+    [
+      "Jackpot",
+      "Jackpot",
+      "\"\""
+    ],
+    [
+      "Jackpot Text",
+      "A Player gains LuckStat Luck and becomes Targeted for MiscStat turn.",
+      "\"\""
+    ],
+    [
+      "Jackpot Log",
+      "This lets Target win the jackpot.",
+      "\"\""
+    ],
+    [
+      "Lightning Storm",
+      "Lightning Storm",
+      "\"\""
+    ],
+    [
+      "Lightning Storm Text",
+      "Each Elevated Player becomes Grounded. Then deal Num damage to each Elevated Enemy.",
+      "\"\""
+    ],
+    [
+      "Lightning Storm Log",
+      "This summons a lightning storm.",
+      "\"\""
+    ],
+    [
+      "Manipulate Time",
+      "Manipulate Time",
+      "\"\""
+    ],
+    [
+      "Manipulate Time Text",
+      "Deal Num damage to each Elevated Enemy. They each get MiscStat Extra Ability.",
+      "\"\""
+    ],
+    [
+      "Manipulate Time Log",
+      "This manipulates time.",
+      "\"\""
+    ],
+    [
+      "Paralyze",
+      "Paralyze",
+      "\"\""
+    ],
+    [
+      "Paralyze Text",
+      "An Elevated Enemy becomes Grounded and Stunned for MiscStat turn.",
+      "\"\""
+    ],
+    [
+      "Paralyze Log",
+      "This traps Target.",
+      "\"\""
+    ],
+    [
+      "Punch Up",
+      "Punch Up",
+      "\"\""
+    ],
+    [
+      "Punch Up Text",
+      "Deal Num damage to all Enemies with MiscStat Health or more.",
+      "\"\""
+    ],
+    [
+      "Punch Up Log",
+      "This punches up at the strongest.",
+      "\"\""
+    ],
+    [
+      "Quick Attack",
+      "Quick Attack",
+      "\"\""
+    ],
+    [
+      "Quick Attack Text",
+      "Each Grounded Player gains SpeedStat Speed. Deal Num damage to each Grounded Enemy.",
+      "\"\""
+    ],
+    [
+      "Quick Attack Log",
+      "This does a quick attack.",
+      "\"\""
+    ],
+    [
+      "Readjust",
+      "Readjust",
+      "\"\""
+    ],
+    [
+      "Readjust Text",
+      "All Players and Enemies switch Positions.",
+      "\"\""
+    ],
+    [
+      "Readjust Log",
+      "This readjusts everyone's position.",
+      "\"\""
+    ],
+    [
+      "Restrain",
+      "Restrain",
+      "\"\""
+    ],
+    [
+      "Restrain Text",
+      "Deal Num damage to all Enemies. They all become Locked for MiscStat turns.",
+      "\"\""
+    ],
+    [
+      "Restrain Log",
+      "This restrains all enemies.",
+      "\"\""
+    ],
+    [
+      "Shockwave",
+      "Shockwave",
+      "\"\""
+    ],
+    [
+      "Shockwave Text",
+      "Deal Num damage to all Enemies, and Sec damage to all Players.",
+      "\"\""
+    ],
+    [
+      "Shockwave Log",
+      "This creates a shockwave.",
+      "\"\""
+    ],
+    [
+      "Stalactites",
+      "Stalactites",
+      "\"\""
+    ],
+    [
+      "Stalactites Text",
+      "Deal Num damage to each Elevated Enemy. They each become Grounded.",
+      "\"\""
+    ],
+    [
+      "Stalactites Log",
+      "This drops stalactites.",
+      "\"\""
+    ],
+    [
+      "Team Attack",
+      "Team Attack",
+      "\"\""
+    ],
+    [
+      "Team Attack Text",
+      "If all 3 Players are Elevated, deal Num damage to all Enemies.",
+      "\"\""
+    ],
+    [
+      "Team Attack Log",
+      "This uses a team attack.",
+      "\"\""
+    ],
+    [
+      "Touchdown",
+      "Touchdown",
+      "\"\""
+    ],
+    [
+      "Touchdown Text",
+      "An Elevated Player becomes Grounded and gains LuckStat Luck.",
+      "\"\""
+    ],
+    [
+      "Touchdown Log",
+      "This has Target touch down.",
+      "\"\""
+    ],
+    [
+      "Warp",
+      "Warp",
+      "\"\""
+    ],
+    [
+      "Warp Text",
+      "A Grounded Enemy becomes Elevated and loses SpeedStat Speed.",
+      "\"\""
+    ],
+    [
+      "Warp Log",
+      "This warps Target away.",
+      "\"\""
+    ],
+    [
+      "Revive",
+      "Revive",
+      "\"\""
+    ],
+    [
+      "Revive Text",
+      "Bring back a dead Player with Num Health and a random Emotion.",
+      "\"\""
+    ],
+    [
+      "Revive Log",
+      "This revives Target.",
+      "\"\""
+    ],
+    [
+      "Skip Turn",
+      "Skip Turn",
+      "\"\""
+    ],
+    [
+      "Skip Turn Text",
+      "Do nothing.",
+      "\"\""
+    ],
+    [
+      "Skip Turn Log",
+      "This skips their turn.",
+      "\"\""
+    ],
+    [
+      "Archer",
+      "Archer",
+      "\"\""
+    ],
+    [
+      "Archer Text",
+      "Increases its own Luck, makes itself Happy, then attacks Angry and Elevated Players.",
+      "\"\""
+    ],
+    [
+      "Quick Shot",
+      "Quick Shot",
+      "\"\""
+    ],
+    [
+      "Quick Shot Text",
+      "An Elevated Player becomes Angry. Then deal Num damage to them.",
+      "\"\""
+    ],
+    [
+      "Quick Shot Log",
+      "This fires a quick shot at Target.",
+      "\"\""
+    ],
+    [
+      "Bullseye",
+      "Bullseye",
+      "\"\""
+    ],
+    [
+      "Bullseye Text",
+      "This gains LuckStat Luck. Then deal Num damage to an Elevated Player.",
+      "\"\""
+    ],
+    [
+      "Bullseye Log",
+      "This shoots a frozen arrow at Target.",
+      "\"\""
+    ],
+    [
+      "Volley",
+      "Volley",
+      "\"\""
+    ],
+    [
+      "Volley Text",
+      "Deal Num damage to all Players. They all lose LuckStat Luck.",
+      "\"\""
+    ],
+    [
+      "Volley Log",
+      "This fires a volley of arrows.",
+      "\"\""
+    ],
+    [
+      "Focus",
+      "Focus",
+      "\"\""
+    ],
+    [
+      "Focus Text",
+      "This becomes Happy and gains LuckStat Luck.",
+      "\"\""
+    ],
+    [
+      "Focus Log",
+      "This focuses its aim.",
+      "\"\""
+    ],
+    [
+      "Barbarian",
+      "Barbarian",
+      "\"\""
+    ],
+    [
+      "Barbarian Text",
+      "Makes itself Angry, goes after the Grounded Player with the most Health, and lowers their Max Health.",
+      "\"\""
+    ],
+    [
+      "Fury",
+      "Fury",
+      "\"\""
+    ],
+    [
+      "Fury Text",
+      "Deal Num damage to the Grounded Player with the most Health.",
+      "\"\""
+    ],
+    [
+      "Fury Log",
+      "This unleashes its fury on Target.",
+      "\"\""
+    ],
+    [
+      "Savagery",
+      "Savagery",
+      "\"\""
+    ],
+    [
+      "Savagery Text",
+      "All Grounded Players lose 1 Max Health and PowerStat Power.",
+      "\"\""
+    ],
+    [
+      "Savagery Log",
+      "This displays savagery.",
+      "\"\""
+    ],
+    [
+      "Brawl",
+      "Brawl",
+      "\"\""
+    ],
+    [
+      "Brawl Text",
+      "This and the Grounded Player with the most Health both become Angry and Locked for MiscStat turn.",
+      "\"\""
+    ],
+    [
+      "Brawl Log",
+      "This brawls with Target.",
+      "\"\""
+    ],
+    [
+      "Camp",
+      "Camp",
+      "\"\""
+    ],
+    [
+      "Camp Text",
+      "This becomes Protected for MiscStat turn and gets MiscStat Extra Ability.",
+      "\"\""
+    ],
+    [
+      "Camp Log",
+      "This goes into its camp.",
+      "\"\""
+    ],
+    [
+      "Bat",
+      "Bat",
+      "\"\""
+    ],
+    [
+      "Bat Text",
+      "Makes itself Sad, then it attacks Happy players and heals at the same time.",
+      "\"\""
+    ],
+    [
+      "Drain",
+      "Drain",
+      "\"\""
+    ],
+    [
+      "Drain Text",
+      "Deal Num damage to a Player. This gains Num Health.",
+      "\"\""
+    ],
+    [
+      "Drain Log",
+      "This drains blood out of Target.",
+      "\"\""
+    ],
+    [
+      "Screech",
+      "Screech",
+      "\"\""
+    ],
+    [
+      "Screech Text",
+      "A Player becomes Happy and loses DefenseStat Defense.",
+      "\"\""
+    ],
+    [
+      "Screech Log",
+      "This screeches.",
+      "\"\""
+    ],
+    [
+      "Hunting Season",
+      "Hunting Season",
+      "\"\""
+    ],
+    [
+      "Hunting Season Text",
+      "This gains PowerStat Power and SpeedStat Speed.",
+      "\"\""
+    ],
+    [
+      "Hunting Season Log",
+      "This goes on the hunt.",
+      "\"\""
+    ],
+    [
+      "Bloodthirst",
+      "Bloodthirst",
+      "\"\""
+    ],
+    [
+      "Bloodthirst Text",
+      "This becomes Sad and gets MiscStat Extra Ability.",
+      "\"\""
+    ],
+    [
+      "Bloodthirst Log",
+      "This becomes bloodthirsty.",
+      "\"\""
+    ],
+    [
+      "Bees",
+      "Bees",
+      "\"\""
+    ],
+    [
+      "Bees Text",
+      "Helps other Elevated Enemies stay alive with status effects.",
+      "\"\""
+    ],
+    [
+      "Sting",
+      "Sting",
+      "\"\""
+    ],
+    [
+      "Sting Text",
+      "Deal Num damage to a Player. This becomes Targeted for MiscStat turn.",
+      "\"\""
+    ],
+    [
+      "Sting Log",
+      "This stings Target.",
+      "\"\""
+    ],
+    [
+      "Honey",
+      "Honey",
+      "\"\""
+    ],
+    [
+      "Honey Text",
+      "Another Elevated Enemy gains Num Health.",
+      "\"\""
+    ],
+    [
+      "Honey Log",
+      "This gives Target honey.",
+      "\"\""
+    ],
+    [
+      "Protect the Queen",
+      "Protect the Queen",
+      "\"\""
+    ],
+    [
+      "Protect the Queen Text",
+      "Another Elevated Enemy becomes Protected for MiscStat turn.",
+      "\"\""
+    ],
+    [
+      "Protect the Queen Log",
+      "This protects Target.",
+      "\"\""
+    ],
+    [
+      "Support",
+      "Support",
+      "\"\""
+    ],
+    [
+      "Support Text",
+      "Another Elevated Enemy gets MiscStat Extra Ability.",
+      "\"\""
+    ],
+    [
+      "Support Log",
+      "This supports Target.",
+      "\"\""
+    ],
+    [
+      "Cow",
+      "Cow",
+      "\"\""
+    ],
+    [
+      "Cow Text",
+      "Either attacks the Player who most recently damaged them, or does healing while Happy.",
+      "\"\""
+    ],
+    [
+      "Charge",
+      "Charge",
+      "\"\""
+    ],
+    [
+      "Charge Text",
+      "Deal Num damage to the last Player who attacked this.",
+      "\"\""
+    ],
+    [
+      "Charge Log",
+      "This charges at Target.",
+      "\"\""
+    ],
+    [
+      "Milk",
+      "Milk",
+      "\"\""
+    ],
+    [
+      "Milk Text",
+      "Another Enemy gains Num Health and becomes Happy.",
+      "\"\""
+    ],
+    [
+      "Milk Log",
+      "This gives milk to Target.",
+      "\"\""
+    ],
+    [
+      "Graze",
+      "Graze",
+      "\"\""
+    ],
+    [
+      "Graze Text",
+      "This gains Num Max Health and Num Health.",
+      "\"\""
+    ],
+    [
+      "Graze Log",
+      "This grazes.",
+      "\"\""
+    ],
+    [
+      "Bellow",
+      "Bellow",
+      "\"\""
+    ],
+    [
+      "Bellow Text",
+      "This gains DefenseStat Defense and becomes Targeted for MiscStat turns.",
+      "\"\""
+    ],
+    [
+      "Bellow Log",
+      "This bellows.",
+      "\"\""
+    ],
+    [
+      "Crow",
+      "Crow",
+      "\"\""
+    ],
+    [
+      "Crow Text",
+      "Basic Enemy who attacks Grounded and Elevated Players.",
+      "\"\""
+    ],
+    [
+      "Peck",
+      "Peck",
+      "\"\""
+    ],
+    [
+      "Peck Text",
+      "Deal Num damage to any Player.",
+      "\"\""
+    ],
+    [
+      "Peck Log",
+      "This pecks Target.",
+      "\"\""
+    ],
+    [
+      "Demon",
+      "Demon",
+      "\"\""
+    ],
+    [
+      "Demon Text",
+      "Weakens other Enemies to make itself stronger. Eventually it'll unleash a powerful attack on all Players.",
+      "\"\""
+    ],
+    [
+      "Dark Energy",
+      "Dark Energy",
+      "\"\""
+    ],
+    [
+      "Dark Energy Text",
+      "Deal Num damage to all Players.",
+      "\"\""
+    ],
+    [
+      "Dark Energy Log",
+      "This unleashes dark energy.",
+      "\"\""
+    ],
+    [
+      "Betrayal",
+      "Betrayal",
+      "\"\""
+    ],
+    [
+      "Betrayal Text",
+      "Deal Num damage to another Enemy. This gains MiscStat Max Health, Num Health, and PowerStat Power.",
+      "\"\""
+    ],
+    [
+      "Betrayal Log",
+      "This betrays Target.",
+      "\"\""
+    ],
+    [
+      "Ritual",
+      "Ritual",
+      "\"\""
+    ],
+    [
+      "Ritual Text",
+      "Another Enemy becomes Stunned for MiscStat turn. This reduces their active Ability Cooldown by MiscStat.",
+      "\"\""
+    ],
+    [
+      "Ritual Log",
+      "This uses Target in a ritual.",
+      "\"\""
+    ],
+    [
+      "Demand Energy",
+      "Demand Energy",
+      "\"\""
+    ],
+    [
+      "Demand Energy Text",
+      "All other Players and Enemies lose PowerStat Power.",
+      "\"\""
+    ],
+    [
+      "Demand Energy Log",
+      "This demands energy.",
+      "\"\""
+    ],
+    [
+      "Dragon",
+      "Dragon",
+      "\"\""
+    ],
+    [
+      "Dragon Text",
+      "Deals lots of damage to all Players when Elevated. Heals itself and becomes Grounded when damaged.",
+      "\"\""
+    ],
+    [
+      "Firebreath",
+      "Firebreath",
+      "\"\""
+    ],
+    [
+      "Firebreath Text",
+      "If this is Elevated, deals Num damage to all Players.",
+      "\"\""
+    ],
+    [
+      "Firebreath Log",
+      "This unleashes its firebreath.",
+      "\"\""
+    ],
+    [
+      "Roost",
+      "Roost",
+      "\"\""
+    ],
+    [
+      "Roost Text",
+      "If this is Elevated, it becomes Grounded and gains Num Health.",
+      "\"\""
+    ],
+    [
+      "Roost Log",
+      "This uses roost.",
+      "\"\""
+    ],
+    [
+      "Take Flight",
+      "Take Flight",
+      "\"\""
+    ],
+    [
+      "Take Flight Text",
+      "All Grounded Enemies becomes Elevated.",
+      "\"\""
+    ],
+    [
+      "Take Flight Log",
+      "This is back for more.",
+      "\"\""
+    ],
+    [
+      "Roar",
+      "Roar",
+      "\"\""
+    ],
+    [
+      "Roar Text",
+      "This becomes Angry and gains PowerStat Power.",
+      "\"\""
+    ],
+    [
+      "Roar Log",
+      "This roars.",
+      "\"\""
+    ],
+    [
+      "Drone",
+      "Drone",
+      "\"\""
+    ],
+    [
+      "Drone Text",
+      "Makes itself Neutral and Elevated, then attacks multiple Players at once.",
+      "\"\""
+    ],
+    [
+      "Sound Waves",
+      "Sound Waves",
+      "\"\""
+    ],
+    [
+      "Sound Waves Text",
+      "If this is Neutral, deal Num damage to all Players.",
+      "\"\""
+    ],
+    [
+      "Sound Waves Log",
+      "This creates sound waves.",
+      "\"\""
+    ],
+    [
+      "Alarm",
+      "Alarm",
+      "\"\""
+    ],
+    [
+      "Alarm Text",
+      "This becomes Neutral, Elevated, and Locked for MiscStat turns.",
+      "\"\""
+    ],
+    [
+      "Alarm Log",
+      "This is alarmed.",
+      "\"\""
+    ],
+    [
+      "Ghost",
+      "Ghost",
+      "\"\""
+    ],
+    [
+      "Ghost Text",
+      "Makes Players change Positions, and then deals heavy damage to Elevated Players while Sad.",
+      "\"\""
+    ],
+    [
+      "Jumpscare",
+      "Jumpscare",
+      "\"\""
+    ],
+    [
+      "Jumpscare Text",
+      "Deal Num damage to an Elevated Player.",
+      "\"\""
+    ],
+    [
+      "Jumpscare Log",
+      "This jumpscares Target.",
+      "\"\""
+    ],
+    [
+      "Lament",
+      "Lament",
+      "\"\""
+    ],
+    [
+      "Lament Text",
+      "This and another Enemy both become Sad.",
+      "\"\""
+    ],
+    [
+      "Lament Log",
+      "This and Target lament.",
+      "\"\""
+    ],
+    [
+      "Possession",
+      "Possession",
+      "\"\""
+    ],
+    [
+      "Possession Text",
+      "A Grounded Player becomes Elevated and loses LuckStat Luck.",
+      "\"\""
+    ],
+    [
+      "Possession Log",
+      "This possesses Target.",
+      "\"\""
+    ],
+    [
+      "Release",
+      "Release",
+      "\"\""
+    ],
+    [
+      "Release Text",
+      "An Elevated Player becomes Grounded and Stunned for MiscStat turn.",
+      "\"\""
+    ],
+    [
+      "Release Log",
+      "This releases Target.",
+      "\"\""
+    ],
+    [
+      "Herald",
+      "Herald",
+      "\"\""
+    ],
+    [
+      "Herald Text",
+      "If not killed fast enough, will start to summon 3 Star Enemies.",
+      "\"\""
+    ],
+    [
+      "Flag Whack",
+      "Flag Whack",
+      "\"\""
+    ],
+    [
+      "Flag Whack Text",
+      "Deal Num damage to a Player.",
+      "\"\""
+    ],
+    [
+      "Flag Whack Log",
+      "This whacks Target.",
+      "\"\""
+    ],
+    [
+      "Announce",
+      "Announce",
+      "\"\""
+    ],
+    [
+      "Announce Text",
+      "Summon a random MiscStat Star Enemy.",
+      "\"\""
+    ],
+    [
+      "Announce Log",
+      "This announces in a new enemy.",
+      "\"\""
+    ],
+    [
+      "KITTY!!!",
+      "KITTY!!!",
+      "\"\""
+    ],
+    [
+      "KITTY!!! Text",
+      "Alternates between Grounded and Elevated, and attacks any Player with the same Position.",
+      "\"\""
+    ],
+    [
+      "Scratch",
+      "Scratch",
+      "\"\""
+    ],
+    [
+      "Scratch Text",
+      "Deal Num damage to a Player with the same Position as this.",
+      "\"\""
+    ],
+    [
+      "Scratch Log",
+      "This scratches Target.",
+      "\"\""
+    ],
+    [
+      "Stuck in a Tree",
+      "Stuck in a Tree",
+      "\"\""
+    ],
+    [
+      "Stuck in a Tree Text",
+      "If this is Grounded, it becomes Elevated and Sad.",
+      "\"\""
+    ],
+    [
+      "Stuck in a Tree Log",
+      "This gets stuck in a tree.",
+      "\"\""
+    ],
+    [
+      "Land Feet First",
+      "Land Feet First",
+      "\"\""
+    ],
+    [
+      "Land Feet First Text",
+      "If this is Elevated, it becomes Grounded and gains Num Health.",
+      "\"\""
+    ],
+    [
+      "Land Feet First Log",
+      "This lands feet first.",
+      "\"\""
+    ],
+    [
+      "Lure",
+      "Lure",
+      "\"\""
+    ],
+    [
+      "Lure Text",
+      "A Player switches Positions. This becomes Targeted for MiscStat turn.",
+      "\"\""
+    ],
+    [
+      "Lure Log",
+      "This lures Target.",
+      "\"\""
+    ],
+    [
+      "Leprechaun",
+      "Leprechaun",
+      "\"\""
+    ],
+    [
+      "Leprechaun Text",
+      "If this is at full Health, it increases Players Stats; otherwise it deals lots of damage.",
+      "\"\""
+    ],
+    [
+      "Prank",
+      "Prank",
+      "\"\""
+    ],
+    [
+      "Prank Text",
+      "If this took damage, deal Num damage to all Players.",
+      "\"\""
+    ],
+    [
+      "Prank Log",
+      "This pranks everyone.",
+      "\"\""
+    ],
+    [
+      "Caught at a Good Time",
+      "Caught at a Good Time",
+      "\"\""
+    ],
+    [
+      "Caught at a Good Time Text",
+      "If this is at full Health, all Players gain SpeedStat Speed and LuckStat Luck.",
+      "\"\""
+    ],
+    [
+      "Caught at a Good Time Log",
+      "This gives everyone gold.",
+      "\"\""
+    ],
+    [
+      "Ninja",
+      "Ninja",
+      "\"\""
+    ],
+    [
+      "Ninja Text",
+      "Goes after the Player who has the least Health, and alternates between Grounded and Elevated.",
+      "\"\""
+    ],
+    [
+      "Assassinate",
+      "Assassinate",
+      "\"\""
+    ],
+    [
+      "Assassinate Text",
+      "Deal Num damage to the Player with the least amount of Health.",
+      "\"\""
+    ],
+    [
+      "Assassinate Log",
+      "This pulls a sneak attack on Target.",
+      "\"\""
+    ],
+    [
+      "Shuriken",
+      "Shuriken",
+      "\"\""
+    ],
+    [
+      "Shuriken Text",
+      "A Player loses SpeedStat Speed and LuckStat Luck.",
+      "\"\""
+    ],
+    [
+      "Shuriken Log",
+      "This throws a shuriken at Target.",
+      "\"\""
+    ],
+    [
+      "Into Shadows",
+      "Into Shadows",
+      "\"\""
+    ],
+    [
+      "Into Shadows Text",
+      "If this is Elevated, it becomes Grounded and Protected for MiscStat turn.",
+      "\"\""
+    ],
+    [
+      "Into Shadows Log",
+      "This leaps into shadows.",
+      "\"\""
+    ],
+    [
+      "Wall Climb",
+      "Wall Climb",
+      "\"\""
+    ],
+    [
+      "Wall Climb Text",
+      "If this is Grounded, it becomes Elevated and gains SpeedStat Speed.",
+      "\"\""
+    ],
+    [
+      "Wall Climb Log",
+      "This climbs a wall.",
+      "\"\""
+    ],
+    [
+      "Page",
+      "Page",
+      "\"\""
+    ],
+    [
+      "Page Text",
+      "Basic Enemy who attacks Grounded Players.",
+      "\"\""
+    ],
+    [
+      "Swing",
+      "Swing",
+      "\"\""
+    ],
+    [
+      "Swing Text",
+      "Deal Num damage to a Grounded Player.",
+      "\"\""
+    ],
+    [
+      "Swing Log",
+      "This swings against Target.",
+      "\"\""
+    ],
+    [
+      "Partier",
+      "Partier",
+      "\"\""
+    ],
+    [
+      "Partier Text",
+      "Heals all Enemies, gives them random Emotions, and increases their Max Health.",
+      "\"\""
+    ],
+    [
+      "Fight",
+      "Fight",
+      "\"\""
+    ],
+    [
+      "Fight Text",
+      "Deal Num damage to a Grounded Player.",
+      "\"\""
+    ],
+    [
+      "Fight Log",
+      "This fights Target.",
+      "\"\""
+    ],
+    [
+      "Share Drinks",
+      "Share Drinks",
+      "\"\""
+    ],
+    [
+      "Share Drinks Text",
+      "All Enemies gain Num Health.",
+      "\"\""
+    ],
+    [
+      "Share Drinks Log",
+      "This shares drinks.",
+      "\"\""
+    ],
+    [
+      "Share Snacks",
+      "Share Snacks",
+      "\"\""
+    ],
+    [
+      "Share Snacks Text",
+      "All Enemies gain MiscStat Max Health.",
+      "\"\""
+    ],
+    [
+      "Share Snacks Log",
+      "This shares snacks.",
+      "\"\""
+    ],
+    [
+      "Drinking Game",
+      "Drinking Game",
+      "\"\""
+    ],
+    [
+      "Drinking Game Text",
+      "All Enemies get a random Emotion.",
+      "\"\""
+    ],
+    [
+      "Drinking Game Log",
+      "This plays a drinking game.",
+      "\"\""
+    ],
+    [
+      "Pixie",
+      "Pixie",
+      "\"\""
+    ],
+    [
+      "Pixie Text",
+      "Changes all Player Emotions at the same time, and attacks Elevated Players.",
+      "\"\""
+    ],
+    [
+      "Will-o'-Wisp",
+      "Will-o'-Wisp",
+      "\"\""
+    ],
+    [
+      "Will-o'-Wisp Text",
+      "Deal Num damage to an Elevated Player.",
+      "\"\""
+    ],
+    [
+      "Will-o'-Wisp Log",
+      "This conjures a will-o'-wisp against Target.",
+      "\"\""
+    ],
+    [
+      "Cast Happiness",
+      "Cast Happiness",
+      "\"\""
+    ],
+    [
+      "Cast Happiness Text",
+      "All Player become Happy.",
+      "\"\""
+    ],
+    [
+      "Cast Happiness Log",
+      "This casts happiness.",
+      "\"\""
+    ],
+    [
+      "Cast Sadness",
+      "Cast Sadness",
+      "\"\""
+    ],
+    [
+      "Cast Sadness Text",
+      "All Players become Sad.",
+      "\"\""
+    ],
+    [
+      "Cast Sadness Log",
+      "This casts sadness.",
+      "\"\""
+    ],
+    [
+      "Cast Anger",
+      "Cast Anger",
+      "\"\""
+    ],
+    [
+      "Cast Anger Text",
+      "All Players become Angry.",
+      "\"\""
+    ],
+    [
+      "Cast Anger Log",
+      "This casts anger.",
+      "\"\""
+    ],
+    [
+      "Puppeteer",
+      "Puppeteer",
+      "\"\""
+    ],
+    [
+      "Puppeteer Text",
+      "Makes Players Elevated, then makes them Grounded again to deal damage. Can also give all other Elevated Enemies Extra Abilities.",
+      "\"\""
+    ],
+    [
+      "Collision",
+      "Collision",
+      "\"\""
+    ],
+    [
+      "Collision Text",
+      "Deal Num damage to all Elevated Players.",
+      "\"\""
+    ],
+    [
+      "Collision Log",
+      "This collides puppets with each other.",
+      "\"\""
+    ],
+    [
+      "Drop",
+      "Drop",
+      "\"\""
+    ],
+    [
+      "Drop Text",
+      "Deal Num damage to all Elevated Players. They become Grounded.",
+      "\"\""
+    ],
+    [
+      "Drop Log",
+      "This drops everyone on the floor.",
+      "\"\""
+    ],
+    [
+      "Dangle",
+      "Dangle",
+      "\"\""
+    ],
+    [
+      "Dangle Text",
+      "All Grounded Players become Elevated and lose SpeedStat Speed.",
+      "\"\""
+    ],
+    [
+      "Dangle Log",
+      "This dangles players in the air.",
+      "\"\""
+    ],
+    [
+      "Control",
+      "Control",
+      "\"\""
+    ],
+    [
+      "Control Text",
+      "Each other Elevated Enemy gets MiscStat Extra Ability.",
+      "\"\""
+    ],
+    [
+      "Control Log",
+      "This controls other enemies.",
+      "\"\""
+    ],
+    [
+      "PUPPY!!!",
+      "PUPPY!!!",
+      "\"\""
+    ],
+    [
+      "PUPPY!!! Text",
+      "Attacks Players after they're Grounded and their Defense has been reduced.",
+      "\"\""
+    ],
+    [
+      "Bite",
+      "Bite",
+      "\"\""
+    ],
+    [
+      "Bite Text",
+      "Deal Num damage to a Grounded Player with MiscStat Defense or less.",
+      "\"\""
+    ],
+    [
+      "Bite Log",
+      "This bites Target.",
+      "\"\""
+    ],
+    [
+      "Leap",
+      "Leap",
+      "\"\""
+    ],
+    [
+      "Leap Text",
+      "Deal Num damage to an Elevated Player. They become Grounded.",
+      "\"\""
+    ],
+    [
+      "Leap Log",
+      "This leaps into Target.",
+      "\"\""
+    ],
+    [
+      "Bark",
+      "Bark",
+      "\"\""
+    ],
+    [
+      "Bark Text",
+      "All Players lose DefenseStat Defense.",
+      "\"\""
+    ],
+    [
+      "Bark Log",
+      "This barks.",
+      "\"\""
+    ],
+    [
+      "Cuddle",
+      "Cuddle",
+      "\"\""
+    ],
+    [
+      "Cuddle Text",
+      "A Player with MiscStat Defense or more loses DefenseStat Defense.",
+      "\"\""
+    ],
+    [
+      "Cuddle Log",
+      "This cuddles with Target.",
+      "\"\""
+    ],
+    [
+      "Rats",
+      "Rats",
+      "\"\""
+    ],
+    [
+      "Rats Text",
+      "Defensive enemy that makes copies of itself.",
+      "\"\""
+    ],
+    [
+      "Swarm",
+      "Swarm",
+      "\"\""
+    ],
+    [
+      "Swarm Text",
+      "Deal Num damage to a Grounded Player. This gains DefenseStat Defense.",
+      "\"\""
+    ],
+    [
+      "Swarm Log",
+      "This swarms Target.",
+      "\"\""
+    ],
+    [
+      "Strength in Numbers",
+      "Strength in Numbers",
+      "\"\""
+    ],
+    [
+      "Strength in Numbers Text",
+      "Summon a Rats.",
+      "\"\""
+    ],
+    [
+      "Strength in Numbers Log",
+      "This attracts more Rats.",
+      "\"\""
+    ],
+    [
+      "Royalty",
+      "Royalty",
+      "\"\""
+    ],
+    [
+      "Royalty Text",
+      "Summons more 1 Star Enemies, and then gives them more Stats and Max Health.",
+      "\"\""
+    ],
+    [
+      "Order",
+      "Order",
+      "\"\""
+    ],
+    [
+      "Order Text",
+      "Deal Num damage to a Player. They become Targeted for MiscStat turn.",
+      "\"\""
+    ],
+    [
+      "Order Log",
+      "This orders guards to attack Target. ",
+      "\"\""
+    ],
+    [
+      "Promote",
+      "Promote",
+      "\"\""
+    ],
+    [
+      "Promote Text",
+      "Another Enemy gains MiscStat Max Health and Num Health.",
+      "\"\""
+    ],
+    [
+      "Promote Log",
+      "This promotes Target.",
+      "\"\""
+    ],
+    [
+      "Call",
+      "Call",
+      "\"\""
+    ],
+    [
+      "Call Text",
+      "Summon a random MiscStat Star Enemy.",
+      "\"\""
+    ],
+    [
+      "Call Log",
+      "This calls for help.",
+      "\"\""
+    ],
+    [
+      "Procession",
+      "Procession",
+      "\"\""
+    ],
+    [
+      "Procession Text",
+      "All Enemies gain SpeedStat Speed.",
+      "\"\""
+    ],
+    [
+      "Procession Log",
+      "This arranges a procession.",
+      "\"\""
+    ],
+    [
+      "Siren",
+      "Siren",
+      "\"\""
+    ],
+    [
+      "Siren Text",
+      "Makes a Player Angry and Stunned, and then deals damage to Stunned Players.",
+      "\"\""
+    ],
+    [
+      "Drown",
+      "Drown",
+      "\"\""
+    ],
+    [
+      "Drown Text",
+      "Deal Num damage to a Stunned Player.",
+      "\"\""
+    ],
+    [
+      "Drown Log",
+      "This drowns Target.",
+      "\"\""
+    ],
+    [
+      "Shipwreck",
+      "Shipwreck",
+      "\"\""
+    ],
+    [
+      "Shipwreck Text",
+      "An Angry Player loses SpeedStat Speed and becomes Stunned for MiscStat turns.",
+      "\"\""
+    ],
+    [
+      "Shipwreck Log",
+      "This causes Target to shipwreck.",
+      "\"\""
+    ],
+    [
+      "Manipulate",
+      "Manipulate",
+      "\"\""
+    ],
+    [
+      "Manipulate Text",
+      "A Player becomes Angry and Locked for MiscStat turns.",
+      "\"\""
+    ],
+    [
+      "Manipulate Log",
+      "This manipulates Target.",
+      "\"\""
+    ],
+    [
+      "Sing",
+      "Sing",
+      "\"\""
+    ],
+    [
+      "Sing Text",
+      "A MiscStat Star Enemy becomes Targeted for MiscStat turn.",
+      "\"\""
+    ],
+    [
+      "Sing Log",
+      "This sings a song.",
+      "\"\""
+    ],
+    [
+      "Spider",
+      "Spider",
+      "\"\""
+    ],
+    [
+      "Spider Text",
+      "While this is Elevated, it'll make Players Elevated and Sad, and then lower their Stats.",
+      "\"\""
+    ],
+    [
+      "Stab Prey",
+      "Stab Prey",
+      "\"\""
+    ],
+    [
+      "Stab Prey Text",
+      "If this is Elevated, deal Num damage to an Elevated Player.",
+      "\"\""
+    ],
+    [
+      "Stab Prey Log",
+      "This stabs Target.",
+      "\"\""
+    ],
+    [
+      "Trapped",
+      "Trapped",
+      "\"\""
+    ],
+    [
+      "Trapped Text",
+      "If this is Elevated, a Grounded Player becomes Elevated and Locked for MiscStat turn.",
+      "\"\""
+    ],
+    [
+      "Trapped Log",
+      "This traps Target.",
+      "\"\""
+    ],
+    [
+      "Silk Wrap",
+      "Silk Wrap",
+      "\"\""
+    ],
+    [
+      "Silk Wrap Text",
+      "An Elevated Player becomes Sad and loses PowerStat Power.",
+      "\"\""
+    ],
+    [
+      "Silk Wrap Log",
+      "This wraps Target in silk.",
+      "\"\""
+    ],
+    [
+      "Spin Web",
+      "Spin Web",
+      "\"\""
+    ],
+    [
+      "Spin Web Text",
+      "A Grounded Enemy becomes Elevated and gains SpeedStat Speed.",
+      "\"\""
+    ],
+    [
+      "Spin Web Log",
+      "This spins a web for Target.",
+      "\"\""
+    ],
+    [
+      "Taskmaster",
+      "Taskmaster",
+      "\"\""
+    ],
+    [
+      "Taskmaster Text",
+      "Keeps changing its own Emotion, and deals heavy damage to any Player with a different Emotion.",
+      "\"\""
+    ],
+    [
+      "Punishment",
+      "Punishment",
+      "\"\""
+    ],
+    [
+      "Punishment Text",
+      "Does Num damage to Player who doesn't have the same Emotion as this.",
+      "\"\""
+    ],
+    [
+      "Punishment Log",
+      "This punishes Target.",
+      "\"\""
+    ],
+    [
+      "Demand Happiness",
+      "Demand Happiness",
+      "\"\""
+    ],
+    [
+      "Demand Happiness Text",
+      "This becomes Happy.",
+      "\"\""
+    ],
+    [
+      "Demand Happiness Log",
+      "This demands Happy.",
+      "\"\""
+    ],
+    [
+      "Demand Anger",
+      "Demand Anger",
+      "\"\""
+    ],
+    [
+      "Demand Anger Text",
+      "This becomes Angry.",
+      "\"\""
+    ],
+    [
+      "Demand Anger Log",
+      "This demands Angry.",
+      "\"\""
+    ],
+    [
+      "Demand Sadness",
+      "Demand Sadness",
+      "\"\""
+    ],
+    [
+      "Demand Sadness Text",
+      "This becomes Sad.",
+      "\"\""
+    ],
+    [
+      "Demand Sadness Log",
+      "This demands Sad.",
+      "\"\""
+    ],
+    [
+      "Trickster",
+      "Trickster",
+      "\"\""
+    ],
+    [
+      "Trickster Text",
+      "Makes a Grounded Player Happy, and then makes their Ability Cooldown take longer.",
+      "\"\""
+    ],
+    [
+      "Mischief",
+      "Mischief",
+      "\"\""
+    ],
+    [
+      "Mischief Text",
+      "Deal Num damage to a Grounded Player.",
+      "\"\""
+    ],
+    [
+      "Mischief Log",
+      "This causes mischief for Target.",
+      "\"\""
+    ],
+    [
+      "Delude",
+      "Delude",
+      "\"\""
+    ],
+    [
+      "Delude Text",
+      "A Grounded Player becomes Happy and Locked for MiscStat turns.",
+      "\"\""
+    ],
+    [
+      "Delude Log",
+      "This deludes Target.",
+      "\"\""
+    ],
+    [
+      "Delay",
+      "Delay",
+      "\"\""
+    ],
+    [
+      "Delay Text",
+      "One of a Grounded Player's Abilities that can be used is on Cooldown for MiscStat turns.",
+      "\"\""
+    ],
+    [
+      "Delay Log",
+      "This delays Target from using an ability.",
+      "\"\""
+    ],
+    [
+      "Distract",
+      "Distract",
+      "\"\""
+    ],
+    [
+      "Distract Text",
+      "A Grounded Player's active Ability Cooldown are increased by MiscStat.",
+      "\"\""
+    ],
+    [
+      "Distract Log",
+      "This distracts Target.",
+      "\"\""
+    ],
+    [
+      "Wall",
+      "Wall",
+      "\"\""
+    ],
+    [
+      "Wall Text",
+      "Makes itself Targeted and increases its Defense.",
+      "\"\""
+    ],
+    [
+      "Toughen",
+      "Toughen",
+      "\"\""
+    ],
+    [
+      "Toughen Text",
+      "This gains Num Health and gains DefenseStat Defense.",
+      "\"\""
+    ],
+    [
+      "Toughen Log",
+      "This toughens up.",
+      "\"\""
+    ],
+    [
+      "In the Way",
+      "In the Way",
+      "\"\""
+    ],
+    [
+      "In the Way Text",
+      "This becomes Grounded and Targeted for MiscStat turn.",
+      "\"\""
+    ],
+    [
+      "In the Way Log",
+      "This is in the way.",
+      "\"\""
+    ],
+    [
+      "Wolf",
+      "Wolf",
+      "\"\""
+    ],
+    [
+      "Wolf Text",
+      "Makes itself Angry and goes after Sad and Grounded Players. Also helps out any 1 Star Enemies.",
+      "\"\""
+    ],
+    [
+      "Slash",
+      "Slash",
+      "\"\""
+    ],
+    [
+      "Slash Text",
+      "Deal Num damage to a Grounded Player.",
+      "\"\""
+    ],
+    [
+      "Slash Log",
+      "This slashes Target.",
+      "\"\""
+    ],
+    [
+      "Howl",
+      "Howl",
+      "\"\""
+    ],
+    [
+      "Howl Text",
+      "An Enemy becomes Angry, and a Player becomes Sad.",
+      "\"\""
+    ],
+    [
+      "Howl Log",
+      "This howls.",
+      "\"\""
+    ],
+    [
+      "Nurture",
+      "Nurture",
+      "\"\""
+    ],
+    [
+      "Nurture Text",
+      "All MiscStat Star Enemies gain DefenseStat Defense and LuckStat Luck.",
+      "\"\""
+    ],
+    [
+      "Nurture Log",
+      "This nurtures the young.",
+      "\"\""
+    ],
+    [
+      "Guard",
+      "Guard",
+      "\"\""
+    ],
+    [
+      "Guard Text",
+      "A MiscStat Star Enemy becomes Protected for MiscStat turn.",
+      "\"\""
+    ],
+    [
+      "Guard Log",
+      "This guards Target.",
+      "\"\""
+    ]
+  ]
+}

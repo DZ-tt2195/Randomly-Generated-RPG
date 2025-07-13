@@ -8,6 +8,7 @@ using UnityEngine.Networking;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using System.IO;
+using System.Text.RegularExpressions;
 
 public class CarryVariables : MonoBehaviour
 {
@@ -23,7 +24,7 @@ public class CarryVariables : MonoBehaviour
 
     [Foldout("Files", true)]
         public bool downloadOn = true;
-        private string ID = "1hMvLkthvrosGe7GUuUReFIcvK7NNX4SRE1Z40bbjRyI";
+        private string ID = "1dzI-REK9mWqcYQMd7uS7JPx_CdkTwnbDr0L8vgJcWuk";
         private string apiKey = "AIzaSyCl_GqHd1-WROqf7i2YddE3zH6vSv3sNTA";
         private string baseUrl = "https://sheets.googleapis.com/v4/spreadsheets/";
 
@@ -31,11 +32,13 @@ public class CarryVariables : MonoBehaviour
         [Tooltip("store all enemy ability data")][ReadOnly] public List<AbilityData> listOfEnemyAbilities;
         [Tooltip("store all enemy data")][ReadOnly] public List<List<CharacterData>> listOfEnemies = new();
         [Tooltip("store all bonus enemy data")][ReadOnly] public List<CharacterData> listOfBonusEnemies;
+        Dictionary<string, Dictionary<string, string>> keyTranslate = new();
 
     [Foldout("Misc info", true)]
         public GameMode mode { get; private set; }
         [ReadOnly] public Transform sceneCanvas;
         [SerializeField] Canvas permanentCanvas;
+        [SerializeField] [Scene] string toLoad;
 
     [Foldout("Scene transition", true)]
         [SerializeField] Image transitionImage;
@@ -43,15 +46,15 @@ public class CarryVariables : MonoBehaviour
 
     private void Awake()
     {
-        if (instance == null)
-        {
-            instance = this;
-            DontDestroyOnLoad(this.gameObject);
-        }
-        else
-        {
-            Destroy(this.gameObject);
-        }
+        if (instance != null)
+            Destroy(instance.gameObject);
+
+        instance = this;
+        DontDestroyOnLoad(this.gameObject);
+        if (!PlayerPrefs.HasKey("Language")) PlayerPrefs.SetString("Language", "English");
+        TxtLanguages();
+        Debug.Log("start downloading");
+        StartCoroutine(DownloadLanguages());
     }
 
     private void Start()
@@ -82,8 +85,12 @@ public class CarryVariables : MonoBehaviour
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        sceneCanvas = GameObject.Find("Canvas").transform;
-        StartCoroutine(BringBackObjects());
+        GameObject obj = GameObject.Find("Canvas");
+        if (obj != null)
+        {
+            sceneCanvas = obj.transform;
+            StartCoroutine(BringBackObjects());
+        }
     }
 
     IEnumerator BringBackObjects()
@@ -125,7 +132,135 @@ public class CarryVariables : MonoBehaviour
 
     #endregion
 
-#region Files
+#region Translations
+
+    void TxtLanguages()
+    {
+        TextAsset[] languageFiles = Resources.LoadAll<TextAsset>("Txt Languages");
+        foreach (TextAsset language in languageFiles)
+        {
+            (bool success, string converted) = ConvertTxtName(language);
+            if (success)
+            {
+                Dictionary<string, string> newDictionary = new();
+                keyTranslate.Add(converted, newDictionary);
+                string[] lines = language.text.Split('\n');
+
+                foreach (string line in lines)
+                {
+                    if (line != "")
+                    {
+                        string[] parts = line.Split('=');
+                        newDictionary[parts[0].Trim()] = parts[1].Trim();
+                    }
+                }
+            }
+        }
+
+        (bool, string) ConvertTxtName(TextAsset asset)
+        {
+            //pattern: "0. English"
+            string pattern = @"^\d+\.\s*(.+)$";
+            Match match = Regex.Match(asset.name, pattern);
+            if (match.Success)
+                return (true, match.Groups[1].Value);
+            else
+                return (false, "");
+        }
+    }
+
+    IEnumerator DownloadLanguages()
+    {
+        yield return DownloadFile("Csv Languages");
+        GetLanguages(TSVReader.ReadFile("Csv Languages"));
+    }
+
+    void GetLanguages(string[][] data)
+    {
+        for (int i = 1; i < data[1].Length; i++)
+        {
+            data[1][i] = data[1][i].Replace("\"", "").Trim();
+            Dictionary<string, string> newDictionary = new();
+            keyTranslate.Add(data[1][i], newDictionary);
+        }
+
+        List<string> listOfKeys = new();
+        for (int i = 2; i < data.Length; i++)
+        {
+            for (int j = 0; j < data[i].Length; j++)
+            {
+                data[i][j] = data[i][j].Replace("\"", "").Replace("\\", "").Replace("]", "").Trim();
+                if (j > 0)
+                {
+                    string language = data[1][j];
+                    string key = data[i][0];
+                    keyTranslate[language][key] = data[i][j];
+                }
+                else
+                {
+                    listOfKeys.Add(data[i][j]);
+                }
+            }
+        }
+        CreateBaseTxtFile(listOfKeys);
+        SceneManager.LoadScene(toLoad);
+    }
+
+    void CreateBaseTxtFile(List<string> listOfKeys)
+    {
+        if (Application.isEditor)
+        {
+            string baseText = "";
+            foreach (string key in listOfKeys)
+                baseText += $"{key}=\n";
+            string filePath = $"Assets/Resources/BaseTxtFile.txt";
+            File.WriteAllText($"{filePath}", baseText);
+            /*
+            string filePath = Path.Combine(Application.persistentDataPath, "BaseTxtFile.txt");
+            using (StreamWriter writer = new StreamWriter(filePath))
+            {
+                foreach (string input in listOfKeys)
+                    writer.WriteLine($"{input}=");
+            }*/
+        }
+    }
+
+    public string GetText(string key, params object[] args)
+    {
+        try
+        {
+            return string.Format(keyTranslate[PlayerPrefs.GetString("Language")][key], args);
+        }
+        catch
+        {
+            try
+            {
+                return string.Format(keyTranslate["English"][key], args);
+            }
+            catch
+            {
+                return key;
+            }
+        }
+    }
+
+    public Dictionary<string, Dictionary<string, string>> GetTranslations()
+    {
+        return keyTranslate;
+    }
+
+    public void ChangeLanguage(string newLanguage)
+    {
+        if (!PlayerPrefs.GetString("Language").Equals(newLanguage))
+        {
+            PlayerPrefs.SetString("Language", newLanguage);
+            SceneManager.LoadScene(0);
+        }
+    }
+
+    #endregion
+
+#region Character Files
 
     internal IEnumerator DownloadFile(string range)
     {

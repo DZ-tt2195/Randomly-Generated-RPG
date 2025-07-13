@@ -7,14 +7,12 @@ using System;
 using System.Linq;
 
 public enum TierSearch { Any, Star1, Star2, Star3 };
-public enum PlayerSearch { Any, Knight, Angel, Wizard };
 public class EncyclopediaManager : MonoBehaviour
 {
 
 #region Variables
 
     [Foldout("Changing searches", true)]
-        [SerializeField] TMP_Text searchResults;
         [SerializeField] List<Button> currentSearch = new();
         [SerializeField] List<GameObject> masterGameObject = new();
 
@@ -27,7 +25,6 @@ public class EncyclopediaManager : MonoBehaviour
         [SerializeField] TMP_Dropdown type1Dropdown;
         [SerializeField] TMP_Dropdown type2Dropdown;
         [SerializeField] TMP_Dropdown cooldownDropdown;
-        [SerializeField] Scrollbar abilityScroll;
 
     [Foldout("Enemy Search", true)]
         List<Character> listOfEnemyBoxes = new();
@@ -40,8 +37,6 @@ public class EncyclopediaManager : MonoBehaviour
 
     void ChangeMode(int n)
     {
-        searchResults.text = "";
-        searchResults.gameObject.SetActive(true);
         for (int i = 0; i < currentSearch.Count; i++)
         {
             masterGameObject[i].SetActive(i == n);
@@ -112,13 +107,6 @@ public class EncyclopediaManager : MonoBehaviour
 
 #region Helper Methods
 
-    bool CompareCharacters(PlayerSearch setting, PlayerSearch current)
-    {
-        if (setting == PlayerSearch.Any)
-            return true;
-        return setting == current;
-    }
-
     bool CompareStrings(string searchBox, string comparison)
     {
         if (searchBox.IsNullOrEmpty())
@@ -188,23 +176,6 @@ public class EncyclopediaManager : MonoBehaviour
 
     void SearchAbility()
     {
-        PlayerSearch searchPlayer = PlayerSearch.Any;
-        switch (characterDropdown.options[characterDropdown.value].text)
-        {
-            case "Any":
-                searchPlayer = PlayerSearch.Any;
-                break;
-            case "Knight":
-                searchPlayer = PlayerSearch.Knight;
-                break;
-            case "Angel":
-                searchPlayer = PlayerSearch.Angel;
-                break;
-            case "Wizard":
-                searchPlayer = PlayerSearch.Wizard;
-                break;
-        }
-
         AbilityType searchType1 = ConvertType(type1Dropdown.options[type1Dropdown.value].text);
         AbilityType searchType2 = ConvertType(type2Dropdown.options[type2Dropdown.value].text);
         int searchCooldown;
@@ -217,28 +188,22 @@ public class EncyclopediaManager : MonoBehaviour
             searchCooldown = -1;
         }
 
-        void FilterAbilities(List<AbilityBox> abilities, PlayerSearch playerType)
-        {
-            foreach (AbilityBox box in abilities)
-            {
-                bool matches = CompareCharacters(searchPlayer, playerType)
-                    && (CompareStrings(abilityInput.text, box.ability.data.myName) || CompareStrings(abilityInput.text, box.ability.editedDescription))
-                    && CompareTypes(searchType1, box.ability.data)
-                    && CompareTypes(searchType2, box.ability.data)
-                    && (searchCooldown == -1 || box.ability.data.baseCooldown == searchCooldown);
+        for (int i = storeAbilityBoxes.childCount-1; i >= 0; i--)
+            storeAbilityBoxes.GetChild(i).SetParent(null);
 
-                box.transform.SetParent(matches ? storeAbilityBoxes : null);
-                if (matches) box.transform.SetAsLastSibling();
+        foreach (AbilityBox box in abilityDictionary[characterDropdown.options[characterDropdown.value].text])
+        {
+            bool matches = (CompareStrings(abilityInput.text, box.ability.data.myName) || CompareStrings(abilityInput.text, box.ability.editedDescription))
+                && CompareTypes(searchType1, box.ability.data)
+                && CompareTypes(searchType2, box.ability.data)
+                && (searchCooldown == -1 || box.ability.data.baseCooldown == searchCooldown);
+
+            if (matches)
+            {
+                box.transform.SetParent(storeAbilityBoxes);
+                box.transform.SetAsLastSibling();
             }
         }
-
-        FilterAbilities(abilityDictionary["Knight"], PlayerSearch.Knight);
-        FilterAbilities(abilityDictionary["Angel"], PlayerSearch.Angel);
-        FilterAbilities(abilityDictionary["Wizard"], PlayerSearch.Wizard);
-
-        storeAbilityBoxes.transform.localPosition = new Vector3(0, -1050, 0);
-        storeAbilityBoxes.sizeDelta = new Vector3(2560, Math.Max(875, 175 * (2+Mathf.Ceil(storeAbilityBoxes.childCount / 6f))));
-        searchResults.text = $"Found {storeAbilityBoxes.childCount} Abilities";
     }
 
     #endregion
@@ -302,7 +267,6 @@ public class EncyclopediaManager : MonoBehaviour
         }
         storeEnemyBoxes.transform.localPosition = new Vector3(0, -1050, 0);
         storeEnemyBoxes.sizeDelta = new Vector3(2560, Math.Max(875, 350 * Mathf.Ceil(storeEnemyBoxes.childCount / 5f)));
-        searchResults.text = $"Found {storeEnemyBoxes.childCount} Enemies";
     }
 
     #endregion

@@ -88,8 +88,8 @@ public class AbilityForcer : MonoBehaviour
         clicked = clickedBox;
         clickedBox.ReceiveAbility(true, null);
 
-        foreach (Transform child in blanks)
-            child.transform.SetParent(null);
+        for (int i = blanks.childCount - 1; i >= 0; i--)
+            blanks.GetChild(i).SetParent(null);
 
         foreach (AbilityBox box in abilityDictionary[toFind])
             box.transform.SetParent(blanks);
@@ -98,8 +98,8 @@ public class AbilityForcer : MonoBehaviour
     void SendAbility(Ability ability)
     {
         clicked.ReceiveAbility(true, ability);
-        foreach (Transform child in blanks)
-            child.transform.SetParent(null);
+        for (int i = blanks.childCount - 1; i >= 0; i--)
+            blanks.GetChild(i).SetParent(null);
     }
 
     void Confirmed()

@@ -76,7 +76,7 @@ public class Character : MonoBehaviour
     {
         data = characterData;
         this.name = characterData.myName;
-        editedDescription = KeywordTooltip.instance.EditText(data.description);
+        editedDescription = KeywordTooltip.instance.EditText(CarryVariables.instance.GetText($"{this.name} Text"));
 
         this.baseHealth = data.baseHealth;
         this.currentHealth = this.baseHealth;

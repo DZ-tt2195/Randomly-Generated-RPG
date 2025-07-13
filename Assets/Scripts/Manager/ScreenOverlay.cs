@@ -59,6 +59,7 @@ public class ScreenOverlay : MonoBehaviour
         SetAnimationSpeed(PlayerPrefs.HasKey("Animation Speed") ? PlayerPrefs.GetFloat("Animation Speed") : 0.5f);
         SetUndo(!PlayerPrefs.HasKey("Confirm Choices") || PlayerPrefs.GetInt("Confirm Choices") == 1);
         SetTooltip(!PlayerPrefs.HasKey("Keyword Tooltip") || PlayerPrefs.GetInt("Keyword Tooltip") == 1);
+        PlayerPrefs.Save();
 
         foreach (TMP_Text description in listOfDescriptions)
             description.text = KeywordTooltip.instance.EditText(description.text);
@@ -77,18 +78,21 @@ public class ScreenOverlay : MonoBehaviour
         animationSlider.value = value;
         animationText.text = value.ToString("F1");
         PlayerPrefs.SetFloat("Animation Speed", value);
+        PlayerPrefs.Save();
     }
 
     public void SetUndo(bool value)
     {
         undoToggle.isOn = value;
         PlayerPrefs.SetInt("Confirm Choices", value ? 1 : 0);
+        PlayerPrefs.Save();
     }
 
     public void SetTooltip(bool value)
     {
         tooltipToggle.isOn = value;
         PlayerPrefs.SetInt("Keyword Tooltip", value ? 1 : 0);
+        PlayerPrefs.Save();
     }
 
     void SeeEmotions()

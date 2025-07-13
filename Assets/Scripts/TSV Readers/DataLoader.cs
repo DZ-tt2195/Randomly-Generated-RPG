@@ -10,7 +10,6 @@ using System.Reflection;
 public class CharacterData
 {
     public string myName;
-    public string description;
     public int baseHealth;
     public int baseSpeed;
     public Position startingPosition;
@@ -25,8 +24,6 @@ public class AbilityData
 {
     public string user;
     public string myName;
-    public string description;
-    public string logDescription;
     public string[] instructions;
     public AbilityType[] myTypes;
     public string[] playCondition;
@@ -59,15 +56,21 @@ public class DataLoader
                 line[j] = line[j].Trim().Replace("\"", "").Replace("\\", "").Replace("]", "");
             }
 
-            newCharacter.myName = line[0];
-            newCharacter.description = line[1];
-            newCharacter.baseHealth = StringToInt(line[2]);
-            newCharacter.baseSpeed = StringToInt(line[3]);
-            newCharacter.startingPosition = line[4].Equals("GROUNDED") ? Position.Grounded : Position.Elevated;
-            newCharacter.listOfSkills = line[5].Trim();
-            newCharacter.aiTargeting = line[6].Trim().ToUpper();
-            newCharacter.artCredit = line[7].Replace("|", "\n");
-            try { newCharacter.difficulty = StringToInt(line[8]); } catch { newCharacter.difficulty = 0; }
+            try
+            {
+                newCharacter.myName = line[0];
+                newCharacter.baseHealth = StringToInt(line[2]);
+                newCharacter.baseSpeed = StringToInt(line[3]);
+                newCharacter.startingPosition = line[4].Equals("GROUNDED") ? Position.Grounded : Position.Elevated;
+                newCharacter.listOfSkills = line[5].Trim();
+                newCharacter.aiTargeting = line[6].Trim().ToUpper();
+                newCharacter.artCredit = line[7].Replace("|", "\n");
+                try { newCharacter.difficulty = StringToInt(line[8]); } catch { newCharacter.difficulty = 0; }
+            }
+            catch
+            {
+                Debug.Log($"{fileToLoad} failed at line {i}");
+            }
         }
         return nextData;
     }
@@ -87,8 +90,6 @@ public class DataLoader
 
             newAbility.user = line[0];
             newAbility.myName = line[1];
-            newAbility.description = line[2];
-            newAbility.logDescription = line[3];
 
             string[] listOfTargets = (line[4].Equals("") ? new string[1] { "None" } : TurnManager.SpliceString(line[4].Trim().ToUpper(), '-'));
             TeamTarget[] convertToTargets = new TeamTarget[listOfTargets.Length];
@@ -191,9 +192,10 @@ public class DataLoader
             return -1;
         }
     }
-
+    
     static void VerifyNumbers(AbilityData data, string toReplace, string newText)
     {
+        /*
         int count = Regex.Matches(data.description, toReplace).Count;
         if (count > 0)
         {
@@ -207,6 +209,6 @@ public class DataLoader
                 if (float.Parse(newText) == 0f)
                     Debug.LogError($"{data.user}: {data.myName} has wrong {toReplace}");
             }
-        }
+        }*/
     }
 }
