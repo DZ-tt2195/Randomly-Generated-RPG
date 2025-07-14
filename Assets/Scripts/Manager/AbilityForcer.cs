@@ -26,7 +26,7 @@ public class AbilityForcer : MonoBehaviour
         }
         else
         {
-            Log.instance.AddText("Defeat 5 waves of enemies.");
+            Log.instance.AddText(CarryVariables.instance.GetText("Defeat Waves").Replace("$Num$", "5"));
             SearchBoxes("Knight");
             SearchBoxes("Angel");
             SearchBoxes("Wizard");
@@ -110,22 +110,21 @@ public class AbilityForcer : MonoBehaviour
             PlayerCharacter nextCharacter = Instantiate(playerPrefab).AddComponent<PlayerCharacter>();
 
             Emotion startingEmotion = Emotion.Dead;
-            switch (emotionDropdowns[i].options[emotionDropdowns[i].value].text)
+            string dropdownValue = emotionDropdowns[i].options[emotionDropdowns[i].value].text;
+
+            if (dropdownValue == CarryVariables.instance.GetText("Random"))
             {
-                case "Random":
-                    int randomValue = dailyRNG != null ? dailyRNG.Next(1, 5) : UnityEngine.Random.Range(1, 5);
-                    startingEmotion = (Emotion)randomValue;
-                    break;
-                case "Happy":
-                    startingEmotion = Emotion.Happy;
-                    break;
-                case "Sad":
-                    startingEmotion = Emotion.Sad;
-                    break;
-                case "Angry":
-                    startingEmotion = Emotion.Angry;
-                    break;
+                int randomValue = dailyRNG != null ? dailyRNG.Next(1, 5) : UnityEngine.Random.Range(1, 5);
+                startingEmotion = (Emotion)randomValue;
             }
+            else if (dropdownValue == CarryVariables.instance.GetText("Neutral"))
+                startingEmotion = Emotion.Neutral;
+            else if (dropdownValue == CarryVariables.instance.GetText("Happy"))
+                startingEmotion = Emotion.Happy;
+            else if (dropdownValue == CarryVariables.instance.GetText("Angry"))
+                startingEmotion = Emotion.Angry;
+            else if (dropdownValue == CarryVariables.instance.GetText("Sad"))
+                startingEmotion = Emotion.Sad;
 
             List<AbilityData> abilitiesForPlayer = new();
             for (int j = 0; j<6; j++)

@@ -257,6 +257,7 @@ GameObject:
   - component: {fileID: 95404040}
   - component: {fileID: 95404039}
   - component: {fileID: 95404038}
+  - component: {fileID: 95404041}
   m_Layer: 0
   m_Name: Header
   m_TagString: Untagged
@@ -394,6 +395,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 95404036}
   m_CullTransparentMesh: 1
+--- !u!114 &95404041
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 95404036}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 159b66c071ced43f499eb58b9b7c8b01, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  key: Next in Line
 --- !u!1001 &106160383
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1762,7 +1776,7 @@ GameObject:
   - component: {fileID: 429758109}
   - component: {fileID: 429758108}
   m_Layer: 0
-  m_Name: Resign
+  m_Name: Quit Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2941,6 +2955,9 @@ MonoBehaviour:
   m_Options:
     m_Options:
     - m_Text: Random
+      m_Image: {fileID: 0}
+      m_Color: {r: 1, g: 1, b: 1, a: 1}
+    - m_Text: Neutral
       m_Image: {fileID: 0}
       m_Color: {r: 1, g: 1, b: 1, a: 1}
     - m_Text: Angry
@@ -4209,6 +4226,7 @@ GameObject:
   - component: {fileID: 992600089}
   - component: {fileID: 992600091}
   - component: {fileID: 992600090}
+  - component: {fileID: 992600092}
   m_Layer: 5
   m_Name: Header
   m_TagString: Untagged
@@ -4334,6 +4352,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 992600088}
   m_CullTransparentMesh: 1
+--- !u!114 &992600092
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 992600088}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 159b66c071ced43f499eb58b9b7c8b01, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  key: Choose Emotion
 --- !u!1 &1058481262
 GameObject:
   m_ObjectHideFlags: 0
@@ -5060,6 +5091,9 @@ MonoBehaviour:
   m_Options:
     m_Options:
     - m_Text: Random
+      m_Image: {fileID: 0}
+      m_Color: {r: 1, g: 1, b: 1, a: 1}
+    - m_Text: Neutral
       m_Image: {fileID: 0}
       m_Color: {r: 1, g: 1, b: 1, a: 1}
     - m_Text: Angry
@@ -5961,6 +5995,7 @@ GameObject:
   - component: {fileID: 1359340250}
   - component: {fileID: 1359340252}
   - component: {fileID: 1359340251}
+  - component: {fileID: 1359340253}
   m_Layer: 5
   m_Name: Header
   m_TagString: Untagged
@@ -6086,6 +6121,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1359340249}
   m_CullTransparentMesh: 1
+--- !u!114 &1359340253
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1359340249}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 159b66c071ced43f499eb58b9b7c8b01, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  key: Choose Emotion
 --- !u!1 &1366723268
 GameObject:
   m_ObjectHideFlags: 0
@@ -6097,6 +6145,7 @@ GameObject:
   - component: {fileID: 1366723269}
   - component: {fileID: 1366723271}
   - component: {fileID: 1366723270}
+  - component: {fileID: 1366723272}
   m_Layer: 5
   m_Name: Header
   m_TagString: Untagged
@@ -6222,6 +6271,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1366723268}
   m_CullTransparentMesh: 1
+--- !u!114 &1366723272
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1366723268}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 159b66c071ced43f499eb58b9b7c8b01, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  key: Choose Emotion
 --- !u!1001 &1395305052
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8358,6 +8420,9 @@ MonoBehaviour:
   m_Options:
     m_Options:
     - m_Text: Random
+      m_Image: {fileID: 0}
+      m_Color: {r: 1, g: 1, b: 1, a: 1}
+    - m_Text: Neutral
       m_Image: {fileID: 0}
       m_Color: {r: 1, g: 1, b: 1, a: 1}
     - m_Text: Angry

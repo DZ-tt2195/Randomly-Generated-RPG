@@ -6,6 +6,7 @@ using TMPro;
 using MyBox;
 using System;
 using System.Linq;
+using static UnityEngine.GraphicsBuffer;
 
 public enum Stats { Power, Defense, Speed, Luck };
 public enum StatusEffect { Stunned, Targeted, Locked, Protected, Extra };
@@ -77,7 +78,7 @@ public class Character : MonoBehaviour
         data = characterData;
         this.name = CarryVariables.instance.GetText(characterData.myName);
         nameText.text = this.name;
-        editedDescription = KeywordTooltip.instance.EditText(CarryVariables.instance.GetText($"{this.name} Text"));
+        editedDescription = KeywordTooltip.instance.EditText(CarryVariables.instance.GetText($"{characterData.myName} Text"));
 
         this.baseHealth = data.baseHealth;
         this.currentHealth = this.baseHealth;
@@ -487,7 +488,9 @@ public class Character : MonoBehaviour
             if (cooldownIncrease > 0)
             {
                 chosenAbility.currentCooldown = cooldownIncrease;
-                Log.instance.AddText($"{this.name}'s {chosenAbility.data.myName} is placed on {cooldownIncrease} Cooldown.", logged);
+                Log.instance.AddText(CarryVariables.instance.GetText("Force Cooldown").
+                    Replace("$Target$", this.name).Replace("$Ability$", CarryVariables.instance.GetText(chosenAbility.data.myName).
+                    Replace("$MiscStat$", cooldownIncrease.ToString())), logged);
             }
             if (CarryVariables.instance.mode == CarryVariables.GameMode.Tutorial && TutorialManager.instance.currentCharacter == this)
             {
@@ -583,11 +586,11 @@ public class Character : MonoBehaviour
         topText.text = "";
         if (CurrentPosition == Position.Dead)
         {
-            topText.text = "Dead";
+            topText.text = CarryVariables.instance.GetText("Dead");
         }
         else
         {
-            topText.text = $"{CurrentEmotion}, {CurrentPosition}\n";
+            topText.text = $"{CarryVariables.instance.GetText(CurrentEmotion.ToString())}, {CarryVariables.instance.GetText(CurrentPosition.ToString())}\n";
             if (CalculatePower() > 0)
                 topText.text += $"+{CalculatePower()} Power ";
             else if (CalculatePower() <= 0)

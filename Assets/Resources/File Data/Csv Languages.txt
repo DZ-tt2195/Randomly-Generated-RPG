@@ -6,7 +6,7 @@
     ],
     [
       "Author Credit",
-      "by Thomas \"DZ\" Tang",
+      "by Thomas Tang (DZ)",
       "\"\""
     ],
     [
@@ -41,7 +41,7 @@
     ],
     [
       "Story",
-      "\"Story\"",
+      "Story",
       "\"\""
     ],
     [
@@ -235,6 +235,16 @@
       "\"\""
     ],
     [
+      "Choose Emotion",
+      "Choose Emotion",
+      "\"\""
+    ],
+    [
+      "Next in Line",
+      "Next in Line",
+      "\"\""
+    ],
+    [
       "Title Screen",
       "Title Screen",
       "\"\""
@@ -245,6 +255,16 @@
       "\"\""
     ],
     [
+      "Round",
+      "Round",
+      "\"\""
+    ],
+    [
+      "Wave",
+      "Wave",
+      "\"\""
+    ],
+    [
       "Exit",
       "Exit",
       "\"\""
@@ -320,7 +340,7 @@
       "\"\""
     ],
     [
-      "Cooldown $Num$ber",
+      "Cooldown Number",
       "Cooldown",
       "\"\""
     ],
@@ -342,6 +362,11 @@
     [
       "Default Position",
       "Default Position",
+      "\"\""
+    ],
+    [
+      "Dead",
+      "Dead",
       "\"\""
     ],
     [
@@ -382,6 +407,76 @@
     [
       "Angry Text",
       "2 extra Power; becomes Stunned when killing or healing someone to full Health.\"",
+      "\"\""
+    ],
+    [
+      "Grounded",
+      "Grounded",
+      "\"\""
+    ],
+    [
+      "Elevated",
+      "Elevated",
+      "\"\""
+    ],
+    [
+      "Good Luck",
+      "$This$ has good luck! (+$Num$)",
+      "\"\""
+    ],
+    [
+      "Bad Luck",
+      "$This$ has bad luck...(-$Num$)",
+      "\"\""
+    ],
+    [
+      "Apply Number Cap",
+      "Amount capped at 4 (Number Cap).",
+      "\"\""
+    ],
+    [
+      "Apply Minimum",
+      "Amount capped at 1.",
+      "\"\""
+    ],
+    [
+      "Apply Ineffectives Fail",
+      "$This$'s attack fails (Ineffectives Fail).",
+      "\"\""
+    ],
+    [
+      "Failed",
+      "FAILED",
+      "\"\""
+    ],
+    [
+      "Super Effective",
+      "It's super effective! (+$Num$)",
+      "\"\""
+    ],
+    [
+      "Not Effective",
+      "It's not very effective... (-$Num$)",
+      "\"\""
+    ],
+    [
+      "Increase Cooldown",
+      "$Num$ of $Target$'s Abilities gain $MiscStat$ Cooldown.",
+      "\"\""
+    ],
+    [
+      "Decrease Cooldown",
+      "$Num$ of $Target$'s Abilities lose $MiscStat$ Cooldown.",
+      "\"\""
+    ],
+    [
+      "Force Cooldown",
+      "$Target$'s $Ability$ is placed on $MiscStat$ Cooldown.",
+      "\"\""
+    ],
+    [
+      "Defeat Waves",
+      "Defeat $Num$ waves of enemies.",
       "\"\""
     ],
     [
