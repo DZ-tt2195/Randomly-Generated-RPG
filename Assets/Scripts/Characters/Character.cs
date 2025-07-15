@@ -76,9 +76,9 @@ public class Character : MonoBehaviour
     public void SetupCharacter(CharacterData characterData, List<AbilityData> listOfAbilityData, Emotion startingEmotion, bool abilitiesBeginWithCooldown)
     {
         data = characterData;
-        this.name = CarryVariables.instance.GetText(characterData.myName);
+        this.name = CarryVariables.instance.Translate(characterData.myName);
         nameText.text = this.name;
-        editedDescription = KeywordTooltip.instance.EditText(CarryVariables.instance.GetText($"{characterData.myName} Text"));
+        editedDescription = KeywordTooltip.instance.EditText(CarryVariables.instance.Translate($"{characterData.myName} Text"));
 
         this.baseHealth = data.baseHealth;
         this.currentHealth = this.baseHealth;
@@ -142,20 +142,24 @@ public class Character : MonoBehaviour
 
         if (statEffectDict[StatusEffect.Protected] > 0 && effect < 0)
         {
-            TurnManager.instance.CreateVisual($"BLOCKED", this.transform.localPosition);
-            Log.instance.AddText($"{(this.name)} is Protected from losing {Mathf.Abs(effect)} Max Health.", logged);
+            TurnManager.instance.CreateVisual(CarryVariables.instance.Translate("Blocked"), this.transform.localPosition);
+            string answer = CarryVariables.instance.Translate("Blocked Stat Drop", new()
+            {
+                ("This", this.name), ("Num", effect.ToString()), ("StatDrop", CarryVariables.instance.Translate("Max Health"))
+            });
+
+            Log.instance.AddText(answer, logged);
             yield break;
         }
 
         baseHealth += effect;
+        TurnManager.instance.CreateVisual($"{effect} {CarryVariables.instance.Translate("Max Health")}", this.transform.localPosition);
         if (effect > 0)
         {
-            TurnManager.instance.CreateVisual($"+{effect} MAX HEALTH", this.transform.localPosition);
             Log.instance.AddText($"{this.name} has {effect} more Max Health.", logged);
         }
         else
         {
-            TurnManager.instance.CreateVisual($"{effect} MAX Health", this.transform.localPosition);
             Log.instance.AddText($"{this.name} has {Mathf.Abs(effect)} less Max Health.", logged);
             if (baseHealth < currentHealth)
                 currentHealth = baseHealth;
@@ -470,6 +474,7 @@ public class Character : MonoBehaviour
                     ability.currentCooldown--;
             }
         }
+
         Log.instance.AddText(Log.Substitute(chosenAbility, this, (chosenTarget.Count > 0) ? chosenTarget[0] : null), logged);
         if (!chosenAbility.data.myName.Equals("Skip Turn"))
         {
@@ -485,12 +490,15 @@ public class Character : MonoBehaviour
 
             int cooldownIncrease = chosenAbility.data.baseCooldown + (CurrentEmotion == Emotion.Happy ? 1 : 0) +
                 (CarryVariables.instance.ActiveCheat("Slower Enemy Cooldowns") && this is EnemyCharacter ? 1 : 0);
+
             if (cooldownIncrease > 0)
             {
                 chosenAbility.currentCooldown = cooldownIncrease;
-                Log.instance.AddText(CarryVariables.instance.GetText("Force Cooldown").
-                    Replace("$Target$", this.name).Replace("$Ability$", CarryVariables.instance.GetText(chosenAbility.data.myName).
-                    Replace("$MiscStat$", cooldownIncrease.ToString())), logged);
+                string answer = CarryVariables.instance.Translate("Force Cooldown", new()
+                {
+                    ("Target", this.name), ("Ability", CarryVariables.instance.Translate(chosenAbility.data.myName)), ("MiscStat", cooldownIncrease.ToString())
+                });
+                Log.instance.AddText(answer, logged);
             }
             if (CarryVariables.instance.mode == CarryVariables.GameMode.Tutorial && TutorialManager.instance.currentCharacter == this)
             {
@@ -586,27 +594,24 @@ public class Character : MonoBehaviour
         topText.text = "";
         if (CurrentPosition == Position.Dead)
         {
-            topText.text = CarryVariables.instance.GetText("Dead");
+            topText.text = CarryVariables.instance.Translate("Dead");
         }
         else
         {
-            topText.text = $"{CarryVariables.instance.GetText(CurrentEmotion.ToString())}, {CarryVariables.instance.GetText(CurrentPosition.ToString())}\n";
-            if (CalculatePower() > 0)
-                topText.text += $"+{CalculatePower()} Power ";
-            else if (CalculatePower() <= 0)
-                topText.text += $"{CalculatePower()} Power ";
-            if (statModDict[Stats.Defense] > 0)
-                topText.text += $"+{statModDict[Stats.Power]} Defense ";
-            else if (statModDict[Stats.Defense] <= 0)
-                topText.text += $"{statModDict[Stats.Power]} Defense ";
-            if (CalculateSpeed() > 0)
-                topText.text += $"+{CalculateSpeed()} Speed ";
-            else if (CalculateSpeed() <= 0)
-                topText.text += $"{CalculateSpeed()} Speed ";
-            if (statModDict[Stats.Luck] > 0)
-                topText.text += $"+{statModDict[Stats.Luck]} Luck ";
-            else if (statModDict[Stats.Defense] <= 0)
-                topText.text += $"{statModDict[Stats.Luck]} Luck ";
+            topText.text = $"{CarryVariables.instance.Translate(CurrentEmotion.ToString())}, " +
+                $"{CarryVariables.instance.Translate(CurrentPosition.ToString())}\n";
+
+            AddToTopText(CalculatePower(), "Power");
+            AddToTopText(statModDict[Stats.Defense], "Defense");
+            AddToTopText(CalculateSpeed(), "Speed");
+            AddToTopText(statModDict[Stats.Luck], "Luck");
+            void AddToTopText(int amount, string text)
+            {
+                if (amount > 0)
+                    topText.text += $"{amount} {text}";
+                else
+                    topText.text += $"{amount} {text}";
+            }
             topText.text = KeywordTooltip.instance.EditText(topText.text);
         }
 

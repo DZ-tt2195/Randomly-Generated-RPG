@@ -129,7 +129,7 @@ public class ScreenOverlay : MonoBehaviour
         characterDescription.text = character.editedDescription;
         characterArtCredit.text = character.data.artCredit;
 
-        emotionText.text = KeywordTooltip.instance.EditText(CarryVariables.instance.GetText(character.CurrentEmotion.ToString()));
+        emotionText.text = KeywordTooltip.instance.EditText(CarryVariables.instance.Translate(character.CurrentEmotion.ToString()));
         stats1.text = statText;
 
         int nextBox = 0;

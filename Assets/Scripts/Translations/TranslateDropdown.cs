@@ -15,6 +15,6 @@ public class TranslateDropdown : MonoBehaviour
 
         dropdown = GetComponent<TMP_Dropdown>();
         for (int i = 0; i < dropdown.options.Count; i++)
-            dropdown.options[i].text = CarryVariables.instance.GetText(dropdown.options[i].text);
+            dropdown.options[i].text = CarryVariables.instance.Translate(dropdown.options[i].text);
     }
 }

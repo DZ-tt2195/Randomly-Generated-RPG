@@ -26,7 +26,7 @@ public class AbilityForcer : MonoBehaviour
         }
         else
         {
-            Log.instance.AddText(CarryVariables.instance.GetText("Defeat Waves").Replace("$Num$", "5"));
+            Log.instance.AddText(CarryVariables.instance.Translate("Defeat Waves", new() { ("$Num$", "5")}));
             SearchBoxes("Knight");
             SearchBoxes("Angel");
             SearchBoxes("Wizard");
@@ -112,18 +112,18 @@ public class AbilityForcer : MonoBehaviour
             Emotion startingEmotion = Emotion.Dead;
             string dropdownValue = emotionDropdowns[i].options[emotionDropdowns[i].value].text;
 
-            if (dropdownValue == CarryVariables.instance.GetText("Random"))
+            if (dropdownValue == CarryVariables.instance.Translate("Random"))
             {
                 int randomValue = dailyRNG != null ? dailyRNG.Next(1, 5) : UnityEngine.Random.Range(1, 5);
                 startingEmotion = (Emotion)randomValue;
             }
-            else if (dropdownValue == CarryVariables.instance.GetText("Neutral"))
+            else if (dropdownValue == CarryVariables.instance.Translate("Neutral"))
                 startingEmotion = Emotion.Neutral;
-            else if (dropdownValue == CarryVariables.instance.GetText("Happy"))
+            else if (dropdownValue == CarryVariables.instance.Translate("Happy"))
                 startingEmotion = Emotion.Happy;
-            else if (dropdownValue == CarryVariables.instance.GetText("Angry"))
+            else if (dropdownValue == CarryVariables.instance.Translate("Angry"))
                 startingEmotion = Emotion.Angry;
-            else if (dropdownValue == CarryVariables.instance.GetText("Sad"))
+            else if (dropdownValue == CarryVariables.instance.Translate("Sad"))
                 startingEmotion = Emotion.Sad;
 
             List<AbilityData> abilitiesForPlayer = new();

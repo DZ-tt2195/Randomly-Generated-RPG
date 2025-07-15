@@ -11,6 +11,6 @@ public class SetText : MonoBehaviour
         if (CarryVariables.instance == null)
             SceneManager.LoadScene(0);
         else
-            GetComponent<TMP_Text>().text = KeywordTooltip.instance.EditText(CarryVariables.instance.GetText(key));
+            GetComponent<TMP_Text>().text = KeywordTooltip.instance.EditText(CarryVariables.instance.Translate(key));
     }
 }

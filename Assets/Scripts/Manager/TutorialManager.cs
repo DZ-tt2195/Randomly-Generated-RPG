@@ -68,7 +68,7 @@ public class TutorialManager : MonoBehaviour
         switch (currentStep)
         {
             case 1: //introduce the concept of the game
-                Log.instance.AddText(CarryVariables.instance.GetText("Defeat Waves").Replace("$Num$", "3"));
+                Log.instance.AddText(CarryVariables.instance.Translate("Defeat Waves", new() { ("Num", "3") }));
                 Log.instance.AddText("");
                 yield return ClickThroughDialogue(new List<string>()
                 { "This is a turn-based RPG where you're given random Abilities to fight against random Enemies." });

@@ -11,7 +11,7 @@
     ],
     [
       "Last Update",
-      "Last Updated: July 13, 2025",
+      "Last Updated: July 14, 2025",
       "\"\""
     ],
     [
@@ -220,6 +220,16 @@
       "\"\""
     ],
     [
+      "Confirm",
+      "Confirm",
+      "\"\""
+    ],
+    [
+      "Rechoose",
+      "Rechoose",
+      "\"\""
+    ],
+    [
       "Display Tooltip",
       "Display Tooltip for keywords / icons",
       "\"\""
@@ -420,6 +430,36 @@
       "\"\""
     ],
     [
+      "Health",
+      "Health",
+      "\"\""
+    ],
+    [
+      "Max Health",
+      "Max Health",
+      "\"\""
+    ],
+    [
+      "Power",
+      "Power",
+      "\"\""
+    ],
+    [
+      "Defense",
+      "Defense",
+      "\"\""
+    ],
+    [
+      "Speed",
+      "Speed",
+      "\"\""
+    ],
+    [
+      "Luck",
+      "Luck",
+      "\"\""
+    ],
+    [
       "Good Luck",
       "$This$ has good luck! (+$Num$)",
       "\"\""
@@ -427,6 +467,31 @@
     [
       "Bad Luck",
       "$This$ has bad luck...(-$Num$)",
+      "\"\""
+    ],
+    [
+      "Protected",
+      "Protected",
+      "\"\""
+    ],
+    [
+      "Blocked",
+      "Blocked",
+      "\"\""
+    ],
+    [
+      "Blocked Stat Drop",
+      "$This$ is Protected from losing $Num$ $Stat$.",
+      "\"\""
+    ],
+    [
+      "Locked",
+      "Locked",
+      "\"\""
+    ],
+    [
+      "Stunned",
+      "Stunned",
       "\"\""
     ],
     [
@@ -446,7 +511,7 @@
     ],
     [
       "Failed",
-      "FAILED",
+      "Failed",
       "\"\""
     ],
     [
@@ -470,7 +535,7 @@
       "\"\""
     ],
     [
-      "Force Cooldown",
+      "Apply Cooldown",
       "$Target$'s $Ability$ is placed on $MiscStat$ Cooldown.",
       "\"\""
     ],

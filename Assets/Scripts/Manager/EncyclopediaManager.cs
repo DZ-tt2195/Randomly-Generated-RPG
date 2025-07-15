@@ -66,9 +66,9 @@ public class EncyclopediaManager : MonoBehaviour
         type2Dropdown.onValueChanged.AddListener(ChangeAbilityDropdown);
         cooldownDropdown.onValueChanged.AddListener(ChangeAbilityDropdown);
 
-        abilityDictionary.Add(CarryVariables.instance.GetText("Knight"), new());
-        abilityDictionary.Add(CarryVariables.instance.GetText("Wizard"), new());
-        abilityDictionary.Add(CarryVariables.instance.GetText("Angel"), new());
+        abilityDictionary.Add(CarryVariables.instance.Translate("Knight"), new());
+        abilityDictionary.Add(CarryVariables.instance.Translate("Wizard"), new());
+        abilityDictionary.Add(CarryVariables.instance.Translate("Angel"), new());
 
         foreach (AbilityData data in CarryVariables.instance.listOfPlayerAbilities)
         {
@@ -77,7 +77,7 @@ public class EncyclopediaManager : MonoBehaviour
 
             AbilityBox nextBox = Instantiate(abilityBoxPrefab, null);
             nextBox.ReceiveAbility(true, nextAbility);
-            abilityDictionary[CarryVariables.instance.GetText(data.user)].Add(nextBox);
+            abilityDictionary[CarryVariables.instance.Translate(data.user)].Add(nextBox);
         }
 
         foreach (var key in abilityDictionary.Keys.ToList())

@@ -36,14 +36,17 @@ public class Ability : MonoBehaviour
         this.data = data;
         currentCooldown = (startWithCooldown) ? data.baseCooldown : 0;
 
-        editedDescription = CarryVariables.instance.GetText($"{data.myName} Text")
-            .Replace("$Num$", Mathf.Abs(data.mainNumber).ToString())
-            .Replace("$Sec$", Mathf.Abs(data.secondNumber).ToString())
-            .Replace("$PowerStat$", Mathf.Abs(data.modifyPower).ToString())
-            .Replace("$SpeedStat$", Mathf.Abs(data.modifySpeed).ToString())
-            .Replace("$DefenseStat$", Mathf.Abs(data.modifyDefense).ToString())
-            .Replace("$LuckStat$", Mathf.Abs(data.modifyLuck).ToString())
-            .Replace("$MiscStat$", data.miscNumber.ToString());
+        editedDescription = CarryVariables.instance.Translate($"{data.myName} Text",
+            new List<(string, string)>()
+            {
+                ("$Num$", Mathf.Abs(data.mainNumber).ToString()),
+                ("$Sec$", Mathf.Abs(data.secondNumber).ToString()),
+                ("$PowerStat$", Mathf.Abs(data.modifyPower).ToString()),
+                ("$DefenseStat$", Mathf.Abs(data.modifyDefense).ToString()),
+                ("$SpeedStat$", Mathf.Abs(data.modifySpeed).ToString()),
+                ("$LuckStat$", Mathf.Abs(data.modifyLuck).ToString()),
+                ("$MiscStat$", Mathf.Abs(data.miscNumber).ToString()),
+            });
         editedDescription = KeywordTooltip.instance.EditText(editedDescription);
 
         mainType = AbilityType.Misc;
@@ -144,18 +147,21 @@ public class Ability : MonoBehaviour
 
         if (critical != 0)
         {
-            string answer = (critical > 0) ? CarryVariables.instance.GetText("Good Luck") : CarryVariables.instance.GetText("Bad Luck");
-            Log.instance.AddText(answer.Replace("$This$", this.name).Replace("$Num", $"{Mathf.Abs(critical)}"), logged);
+            string answer = CarryVariables.instance.Translate(critical > 0 ? "Good Luck" : "Bad Luck", new()
+            {
+                ("This", this.name), ("Num", Mathf.Abs(critical).ToString())
+            });
+            Log.instance.AddText(answer, logged);
         }
 
         if (finalCalc > 4 && enemyNumberCap)
         {
-            Log.instance.AddText(CarryVariables.instance.GetText("Apply Number Cap"), logged);
+            Log.instance.AddText(CarryVariables.instance.Translate("Apply Number Cap"), logged);
             return 4;
         }
         else if (finalCalc < 1 && number > 1)
         {
-            Log.instance.AddText(CarryVariables.instance.GetText("Apply Minimum"), logged);
+            Log.instance.AddText(CarryVariables.instance.Translate("Apply Minimum"), logged);
             return 1;
         }
         else
@@ -170,8 +176,8 @@ public class Ability : MonoBehaviour
 
         if (effectiveness < 0 && CarryVariables.instance.ActiveChallenge("Ineffectives Fail") && user is PlayerCharacter)
         {
-            Log.instance.AddText(CarryVariables.instance.GetText("Apply Ineffectives Fail").Replace($"$This$", this.name), logged);
-            TurnManager.instance.CreateVisual(CarryVariables.instance.GetText("Failed"), target.transform.localPosition);
+            Log.instance.AddText(CarryVariables.instance.Translate("Apply Ineffectives Fail", new() { ("This", this.name) }), logged);
+            TurnManager.instance.CreateVisual(CarryVariables.instance.Translate("Failed"), target.transform.localPosition);
             return 0;
         }
 
@@ -180,24 +186,24 @@ public class Ability : MonoBehaviour
         int finalCalc = number + critical + effectiveness + user.CalculatePower() - target.statModDict[Stats.Defense];
 
         if (effectiveness > 0)
-            Log.instance.AddText(CarryVariables.instance.GetText("Super Effective").Replace("$Num$", $"{Mathf.Abs(effectiveness)}"), logged);
+            Log.instance.AddText(CarryVariables.instance.Translate("Super Effective", new() { ("$Num$", Mathf.Abs(effectiveness).ToString())}), logged);
         else if (effectiveness < 0)
-            Log.instance.AddText(CarryVariables.instance.GetText("Not Effective").Replace("$Num$", $"{Mathf.Abs(effectiveness)}"), logged);
+            Log.instance.AddText(CarryVariables.instance.Translate("Not Effective", new() { ("$Num$", Mathf.Abs(effectiveness).ToString()) }), logged);
 
         if (critical != 0)
         {
-            string answer = (critical > 0) ? CarryVariables.instance.GetText("Good Luck") : CarryVariables.instance.GetText("Bad Luck");
+            string answer = (critical > 0) ? CarryVariables.instance.Translate("Good Luck") : CarryVariables.instance.Translate("Bad Luck");
             Log.instance.AddText(answer.Replace("$This$", this.name).Replace("$Num", $"{Mathf.Abs(critical)}"), logged);
         }
 
         if (finalCalc > 4 && enemyNumberCap)
         {
-            Log.instance.AddText(CarryVariables.instance.GetText("Apply Number Cap"), logged);
+            Log.instance.AddText(CarryVariables.instance.Translate("Apply Number Cap"), logged);
             return 4;
         }
         else if (finalCalc < 1 && number > 1)
         {
-            Log.instance.AddText(CarryVariables.instance.GetText("Apply Minimum"), logged);
+            Log.instance.AddText(CarryVariables.instance.Translate("Apply Minimum"), logged);
             return 1;
         }
         else
@@ -748,9 +754,11 @@ public class Ability : MonoBehaviour
             }
         }
 
-        Log.instance.AddText(CarryVariables.instance.GetText("Increase Cooldown").
-            Replace("$Target$", target.name).Replace("$Num$", total.ToString().
-            Replace("$MiscStat$", data.miscNumber.ToString())), logged);
+        string answer = CarryVariables.instance.Translate("Increase Cooldown", new()
+        {
+            ("Target", target.name), ("Num", total.ToString()), ("MiscStat", data.miscNumber.ToString())
+        });
+        Log.instance.AddText(answer, logged);
         yield return null;
     }
 
@@ -773,9 +781,12 @@ public class Ability : MonoBehaviour
                 total++;
             }
         }
-        Log.instance.AddText(CarryVariables.instance.GetText("Decrease Cooldown").
-            Replace("$Target$", target.name).Replace("$Num$", total.ToString().
-            Replace("$MiscStat$", data.miscNumber.ToString())), logged);
+
+        string answer = CarryVariables.instance.Translate("Decrease Cooldown", new()
+        {
+            ("Target", target.name), ("Num", total.ToString()), ("MiscStat", data.miscNumber.ToString())
+        });
+        Log.instance.AddText(answer, logged);
         yield return null;
     }
 
@@ -786,9 +797,11 @@ public class Ability : MonoBehaviour
         {
             Ability chosenAbility = hasNoCooldown[Random.Range(0, hasNoCooldown.Count)];
             chosenAbility.currentCooldown += data.miscNumber;
-            Log.instance.AddText(CarryVariables.instance.GetText("Force Cooldown").
-                Replace("$Target$", target.name).Replace("$Ability$", CarryVariables.instance.GetText(chosenAbility.data.myName).
-                Replace("$MiscStat$", data.miscNumber.ToString())), logged);
+            string answer = CarryVariables.instance.Translate("Force Cooldown", new()
+            {
+                ("Target", target.name), ("Ability", CarryVariables.instance.Translate(chosenAbility.data.myName))
+            });
+            Log.instance.AddText(answer, logged);
         }
         yield return null;
     }

@@ -226,23 +226,25 @@ public class CarryVariables : MonoBehaviour
         }
     }
 
-    public string GetText(string key, params object[] args)
+    public string Translate(string key, List<(string, string)> toReplace = null)
     {
+        string answer = "";
+
         try
         {
-            return string.Format(keyTranslate[PlayerPrefs.GetString("Language")][key], args);
+            answer = keyTranslate[PlayerPrefs.GetString("Language")][key];
         }
         catch
         {
-            try
-            {
-                return string.Format(keyTranslate["English"][key], args);
-            }
-            catch
-            {
-                return key;
-            }
+            answer = keyTranslate[PlayerPrefs.GetString("English")][key];
         }
+
+        if (toReplace != null)
+        {
+            foreach ((string one, string two) in toReplace)
+                answer.Replace($"${one}$", two);
+        }
+        return answer;
     }
 
     public Dictionary<string, Dictionary<string, string>> GetTranslations()
