@@ -13,9 +13,6 @@ public class TitleScreen : MonoBehaviour
 #region Variables
 
     public static TitleScreen instance;
-    float generationTime = 0f;
-    bool _stillGenerating;
-    bool stillGenerating { get { return _stillGenerating; } set { { _stillGenerating = value; } if (generationTime>0f) Debug.Log(generationTime); } }
 
     [Foldout("Misc", true)]
     [SerializeField] GameObject storyObject;
@@ -49,7 +46,6 @@ public class TitleScreen : MonoBehaviour
         UnityEngine.Random.InitState(chosenSeed);
 
         Character.borderColor = 0;
-        StartCoroutine(GenerateFiles());
 
         Toggle[] allToggles = FindObjectsOfType<Toggle>(includeInactive: true);
         foreach (Toggle toggle in allToggles)
@@ -79,43 +75,6 @@ public class TitleScreen : MonoBehaviour
         TimeSpan timeUntilMidnightUtc = nextUtcMidnight - DateTime.UtcNow;
         timeText.text += $"\n{CarryVariables.instance.Translate("Next Challenge")} {timeUntilMidnightUtc.Hours:D2}:" +
             $"{timeUntilMidnightUtc.Minutes:D2}:{timeUntilMidnightUtc.Seconds:D2}";
-
-        if (stillGenerating)
-            generationTime += Time.deltaTime;
-    }
-
-    IEnumerator GenerateFiles()
-    {
-        stillGenerating = true;
-        GameObject loadButtons = GameObject.Find("Gameplay Buttons");
-        loadButtons.SetActive(false);
-
-        if (Application.isEditor)
-        {
-            yield return CarryVariables.instance.DownloadFile("Player Data");
-            yield return CarryVariables.instance.DownloadFile("Enemy Data");
-            yield return CarryVariables.instance.DownloadFile("Bonus Enemy Data");
-            yield return CarryVariables.instance.DownloadFile("Player Ability Data");
-            yield return CarryVariables.instance.DownloadFile("Enemy Ability Data");
-        }
-
-        List<CharacterData> allEnemies = DataLoader.ReadCharacterData("Enemy Data").OrderBy(data => data.myName).ToList();
-        CarryVariables.instance.listOfEnemies = new()
-        {
-            new List<CharacterData>(),
-            allEnemies.Where(data => data.difficulty == 1).ToList(),
-            allEnemies.Where(data => data.difficulty == 2).ToList(),
-            allEnemies.Where(data => data.difficulty == 3).ToList(),
-        };
-
-        CarryVariables.instance.listOfBonusEnemies = DataLoader.ReadCharacterData("Bonus Enemy Data");
-        CarryVariables.instance.listOfPlayerAbilities = DataLoader.ReadAbilityData("Player Ability Data").OrderBy(data => data.myName).ToList();
-        CarryVariables.instance.listOfEnemyAbilities = DataLoader.ReadAbilityData("Enemy Ability Data").OrderBy(data => data.myName).ToList();
-
-        loadButtons.SetActive(true);
-        GameObject.Find("Loading Text").SetActive(false);
-        if (!Application.isEditor) GameObject.Find("Play the tutorial").SetActive(false);
-        stillGenerating = false;
     }
 
 #endregion

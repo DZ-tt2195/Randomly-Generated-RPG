@@ -31,7 +31,9 @@ public class LanguageDropdown : MonoBehaviour
 
         void ChangeLanguageDropdown(int n)
         {
-            CarryVariables.instance.ChangeLanguage(dropdown.options[dropdown.value].text);
+            string currentOption = dropdown.options[dropdown.value].text;
+            if (PlayerPrefs.GetString("Language") != currentOption)
+                CarryVariables.instance.ChangeLanguage(currentOption);
         }
     }
 }

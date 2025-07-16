@@ -272,7 +272,7 @@
     [
       "Bees",
       "Sting",
-      "Deal Num damage to a Player. $This$ becomes Targeted for $MiscStat$ turn.",
+      "Deal Num damage to a Player. This becomes Targeted for $MiscStat$ turn.",
       "$This$ stings $Target$.",
       "OnePlayer-Self",
       "None-None",

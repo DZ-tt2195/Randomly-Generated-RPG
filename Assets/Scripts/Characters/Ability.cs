@@ -39,13 +39,13 @@ public class Ability : MonoBehaviour
         editedDescription = CarryVariables.instance.Translate($"{data.myName} Text",
             new List<(string, string)>()
             {
-                ("$Num$", Mathf.Abs(data.mainNumber).ToString()),
-                ("$Sec$", Mathf.Abs(data.secondNumber).ToString()),
-                ("$PowerStat$", Mathf.Abs(data.modifyPower).ToString()),
-                ("$DefenseStat$", Mathf.Abs(data.modifyDefense).ToString()),
-                ("$SpeedStat$", Mathf.Abs(data.modifySpeed).ToString()),
-                ("$LuckStat$", Mathf.Abs(data.modifyLuck).ToString()),
-                ("$MiscStat$", Mathf.Abs(data.miscNumber).ToString()),
+                ("Num", Mathf.Abs(data.mainNumber).ToString()),
+                ("Sec", Mathf.Abs(data.secondNumber).ToString()),
+                ("PowerStat", Mathf.Abs(data.modifyPower).ToString()),
+                ("DefenseStat", Mathf.Abs(data.modifyDefense).ToString()),
+                ("SpeedStat", Mathf.Abs(data.modifySpeed).ToString()),
+                ("LuckStat", Mathf.Abs(data.modifyLuck).ToString()),
+                ("MiscStat", Mathf.Abs(data.miscNumber).ToString()),
             });
         editedDescription = KeywordTooltip.instance.EditText(editedDescription);
 
@@ -797,7 +797,7 @@ public class Ability : MonoBehaviour
         {
             Ability chosenAbility = hasNoCooldown[Random.Range(0, hasNoCooldown.Count)];
             chosenAbility.currentCooldown += data.miscNumber;
-            string answer = CarryVariables.instance.Translate("Force Cooldown", new()
+            string answer = CarryVariables.instance.Translate("Apply Cooldown", new()
             {
                 ("Target", target.name), ("Ability", CarryVariables.instance.Translate(chosenAbility.data.myName))
             });

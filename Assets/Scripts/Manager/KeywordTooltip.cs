@@ -33,7 +33,7 @@ public class KeywordTooltip : MonoBehaviour
         Ydisplace = tooltipText.rectTransform.sizeDelta.y * 1.25f;
     }
 
-    private void Start()
+    public void SwitchLanguage()
     {
         foreach (KeywordHover hover in linkedKeywords)
         {
@@ -83,7 +83,7 @@ public class KeywordTooltip : MonoBehaviour
             foreach (KeywordHover link in spriteKeywordStatuses)
             {
                 string toReplace = link.original.Replace("Image", "");
-                answer = answer.Replace(toReplace, $"<link=\"{toReplace}\"><sprite=\"{toReplace}\" name=\"{toReplace}\"></link>");
+                answer = answer.Replace(link.original, $"<link=\"{toReplace}\"><sprite=\"{toReplace}\" name=\"{toReplace}\"></link>");
             }
         }
         return answer;

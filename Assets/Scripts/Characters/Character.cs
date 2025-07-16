@@ -494,7 +494,7 @@ public class Character : MonoBehaviour
             if (cooldownIncrease > 0)
             {
                 chosenAbility.currentCooldown = cooldownIncrease;
-                string answer = CarryVariables.instance.Translate("Force Cooldown", new()
+                string answer = CarryVariables.instance.Translate("Apply Cooldown", new()
                 {
                     ("Target", this.name), ("Ability", CarryVariables.instance.Translate(chosenAbility.data.myName)), ("MiscStat", cooldownIncrease.ToString())
                 });
@@ -605,12 +605,13 @@ public class Character : MonoBehaviour
             AddToTopText(statModDict[Stats.Defense], "Defense");
             AddToTopText(CalculateSpeed(), "Speed");
             AddToTopText(statModDict[Stats.Luck], "Luck");
+
             void AddToTopText(int amount, string text)
             {
                 if (amount > 0)
-                    topText.text += $"{amount} {text}";
+                    topText.text += $"{amount} {text} ";
                 else
-                    topText.text += $"{amount} {text}";
+                    topText.text += $"{amount} {text} ";
             }
             topText.text = KeywordTooltip.instance.EditText(topText.text);
         }
@@ -622,20 +623,16 @@ public class Character : MonoBehaviour
         for (int i = 0; i < statEffectDict[StatusEffect.Protected]; i++)
             statusText.text += "ProtectedImage";
         for (int i = 0; i < statEffectDict[StatusEffect.Locked]; i++)
-            statusText.text += "LockImage";
+            statusText.text += "LockedImage";
 
         if (TurnManager.instance != null && (TurnManager.instance.targetedPlayer == this || TurnManager.instance.targetedEnemy == this))
-        {
             for (int i = 0; i < statEffectDict[StatusEffect.Targeted]; i++)
                 statusText.text += "TargetedImage";
-        }
         else
-        {
             _privStatEffect[StatusEffect.Targeted] = 0;
-        }
 
         for (int i = 0; i < statEffectDict[StatusEffect.Stunned]; i++)
-            statusText.text += "StunImage";
+            statusText.text += "StunnedImage";
 
         statusText.text = KeywordTooltip.instance.EditText(statusText.text, true);
     }

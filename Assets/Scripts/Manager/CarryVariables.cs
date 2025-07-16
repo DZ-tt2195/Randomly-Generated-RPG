@@ -46,16 +46,48 @@ public class CarryVariables : MonoBehaviour
 
     private void Awake()
     {
-        if (instance != null)
-            Destroy(instance.gameObject);
+        if (instance == null)
+        {
+            instance = this;
+            DontDestroyOnLoad(this.gameObject);
+            if (!PlayerPrefs.HasKey("Language")) PlayerPrefs.SetString("Language", "English");
+            StartCoroutine(DoDownloads());
+        }
         else
-            PlayerPrefs.SetString("Language", "English");
+        {
+            Destroy(this.gameObject);
+        }
+    }
 
-        instance = this;
-        DontDestroyOnLoad(this.gameObject);
+    IEnumerator DoDownloads()
+    {
+        CoroutineGroup group = new(this);
+        group.StartCoroutine(DownloadFile("Csv Languages"));
+        group.StartCoroutine(DownloadFile("Player Data"));
+        group.StartCoroutine(DownloadFile("Enemy Data"));
+        group.StartCoroutine(DownloadFile("Bonus Enemy Data"));
+        group.StartCoroutine(DownloadFile("Player Ability Data"));
+        group.StartCoroutine(DownloadFile("Enemy Ability Data"));
+
+        while (group.AnyProcessing)
+            yield return null;
+
+        List<CharacterData> allEnemies = DataLoader.ReadCharacterData("Enemy Data").OrderBy(data => data.myName).ToList();
+        listOfEnemies = new()
+        {
+            new List<CharacterData>(),
+            allEnemies.Where(data => data.difficulty == 1).ToList(),
+            allEnemies.Where(data => data.difficulty == 2).ToList(),
+            allEnemies.Where(data => data.difficulty == 3).ToList(),
+        };
+
+        listOfBonusEnemies = DataLoader.ReadCharacterData("Bonus Enemy Data");
+        listOfPlayerAbilities = DataLoader.ReadAbilityData("Player Ability Data").OrderBy(data => data.myName).ToList();
+        listOfEnemyAbilities = DataLoader.ReadAbilityData("Enemy Ability Data").OrderBy(data => data.myName).ToList();
+
+        GetLanguages(TSVReader.ReadFile("Csv Languages"));
         TxtLanguages();
-        Debug.Log("start downloading");
-        StartCoroutine(DownloadLanguages());
+        ChangeLanguage(PlayerPrefs.GetString("Language"));
     }
 
     private void Start()
@@ -170,12 +202,6 @@ public class CarryVariables : MonoBehaviour
         }
     }
 
-    IEnumerator DownloadLanguages()
-    {
-        yield return DownloadFile("Csv Languages");
-        GetLanguages(TSVReader.ReadFile("Csv Languages"));
-    }
-
     void GetLanguages(string[][] data)
     {
         for (int i = 1; i < data[1].Length; i++)
@@ -204,7 +230,6 @@ public class CarryVariables : MonoBehaviour
             }
         }
         CreateBaseTxtFile(listOfKeys);
-        SceneManager.LoadScene(toLoad);
     }
 
     void CreateBaseTxtFile(List<string> listOfKeys)
@@ -229,6 +254,8 @@ public class CarryVariables : MonoBehaviour
     public string Translate(string key, List<(string, string)> toReplace = null)
     {
         string answer = "";
+        if (key == "" || int.TryParse(key, out _))
+            return key;
 
         try
         {
@@ -251,7 +278,7 @@ public class CarryVariables : MonoBehaviour
         if (toReplace != null)
         {
             foreach ((string one, string two) in toReplace)
-                answer.Replace($"${one}$", two);
+                answer = answer.Replace($"${one}$", two);
         }
         return answer;
     }
@@ -263,20 +290,18 @@ public class CarryVariables : MonoBehaviour
 
     public void ChangeLanguage(string newLanguage)
     {
-        if (!PlayerPrefs.GetString("Language").Equals(newLanguage))
-        {
-            PlayerPrefs.SetString("Language", newLanguage);
-            SceneManager.LoadScene(0);
-        }
+        PlayerPrefs.SetString("Language", newLanguage);
+        KeywordTooltip.instance.SwitchLanguage();
+        SceneManager.LoadScene(toLoad);
     }
 
     #endregion
 
 #region Character Files
 
-    internal IEnumerator DownloadFile(string range)
+    IEnumerator DownloadFile(string range)
     {
-        if (downloadOn)
+        if (downloadOn && Application.isEditor)
         {
             string url = $"{baseUrl}{ID}/values/{range}?key={apiKey}";
             using UnityWebRequest www = UnityWebRequest.Get(url);

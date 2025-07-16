@@ -425,12 +425,7 @@
       "\"\""
     ],
     [
-      "Extra Ability",
-      "Extra Ability",
-      "Extra Ability"
-    ],
-    [
-      "Extra Ability Text",
+      "Extra Text",
       "This can use another Ability on their turn.",
       "\"\""
     ],
@@ -1861,7 +1856,7 @@
     ],
     [
       "Sting Text",
-      "Deal Num damage to a Player. $This$ becomes Targeted for $MiscStat$ turn.",
+      "Deal Num damage to a Player. This becomes Targeted for $MiscStat$ turn.",
       "\"\""
     ],
     [
