@@ -6,11 +6,34 @@ public class SetText : MonoBehaviour
 {
     [SerializeField] string key;
 
-    private void Start()
+    private void OnEnable()
     {
-        if (CarryVariables.instance == null)
-            SceneManager.LoadScene(0);
+        if (SceneManager.GetActiveScene().buildIndex == 0)
+        {
+            SceneManager.sceneLoaded += OnSceneLoaded;
+        }
         else
-            GetComponent<TMP_Text>().text = KeywordTooltip.instance.EditText(CarryVariables.instance.Translate(key));
+        {
+            Translate();
+        }
+    }
+
+    void OnDisable()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
+    void Translate()
+    {
+        GetComponent<TMP_Text>().text = KeywordTooltip.instance.EditText(CarryVariables.instance.Translate(key));
+    }
+
+    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        if (SceneManager.GetActiveScene().buildIndex >= 1)
+        {
+            Debug.Log($"translate {key}");
+            Translate();
+        }
     }
 }

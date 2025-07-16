@@ -1096,8 +1096,8 @@ RectTransform:
   - {fileID: 1468127771}
   m_Father: {fileID: 1358802685}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.6666667, y: 0}
-  m_AnchorMax: {x: 0.6666667, y: 1}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 50, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -1921,119 +1921,99 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   linkedKeywords:
-  - keywordVariations:
-    - Neutral
+  - original: Neutral
+    translated: 
     description: Default Emotion.
     color: {r: 0.85, g: 0.85, b: 0.85, a: 0}
-  - keywordVariations:
-    - Happy
+  - original: Happy
+    translated: 
     description: Effective against Angry. Gets an extra Ability if they don't attack;
       all Abilities have 1 more turn of Cooldown.
     color: {r: 0.4, g: 1, b: 0, a: 0}
-  - keywordVariations:
-    - Angry
+  - original: Angry
+    translated: 
     description: Effective against Sad. +2 Power; becomes Stunned when killing or
       healing someone to full Health.
     color: {r: 1, g: 0.5, b: 0.5, a: 0}
-  - keywordVariations:
-    - Sad
+  - original: Sad
+    translated: 
     description: Effective against Happy. Gains 2 Health when it attacks; loses 2
       Health otherwise.
     color: {r: 1, g: 0.7, b: 1, a: 0}
-  - keywordVariations:
-    - Stunned
-    - Stuns
-    - Stunning
-    - Stun
+  - original: Stunned
+    translated: 
     description: Skips their next turn.
     color: {r: 1, g: 0.15, b: 0.15, a: 0}
-  - keywordVariations:
-    - Protected
-    - Protect
+  - original: Protected
+    translated: 
     description: Can't lose Stats or Health until their next turn.
     color: {r: 0.735849, g: 0.735849, b: 0.735849, a: 0}
-  - keywordVariations:
-    - Targeted
+  - original: Targeted
+    translated: 
     description: All single-target Abilities must target them if possible.
     color: {r: 0.5, g: 0.75, b: 0, a: 0}
-  - keywordVariations:
-    - Locked
-    - Lock
+  - original: Locked
+    translated: 
     description: Emotion and Position can't change until their next turn.
     color: {r: 1, g: 1, b: 1, a: 0}
-  - keywordVariations:
-    - Grounded
+  - original: Grounded
+    translated: 
     description: Can't be targeted by abilities that only affect Elevated targets.
     color: {r: 1, g: 0.5779401, b: 0, a: 0}
-  - keywordVariations:
-    - Elevated
+  - original: Elevated
+    translated: 
     description: Can't be targeted by abilities that only affect Grounded targets.
     color: {r: 1, g: 0.25, b: 1, a: 0}
-  - keywordVariations:
-    - Positions
-    - Position
-    description: Elevated / Grounded
-    color: {r: 1, g: 1, b: 1, a: 0}
-  - keywordVariations:
-    - Emotions
-    - Emotion
-    description: Neutral / Happy / Angry / Sad
-    color: {r: 1, g: 1, b: 1, a: 0}
-  - keywordVariations:
-    - Stats
-    - Stat
-    description: Power / Defense / Speed / Luck
-    color: {r: 1, g: 1, b: 1, a: 0}
   spriteKeywords:
-  - keywordVariations:
-    - Health
-    description: 'Health: Amount of damage this can take before dying.'
-    color: {r: 0, g: 0, b: 0, a: 0}
-  - keywordVariations:
-    - Power
-    description: Higher Power = Attack and healing abilities are stronger.
-    color: {r: 0, g: 0, b: 0, a: 0}
-  - keywordVariations:
-    - Defense
-    description: Higher Defense = Take less damage from opposing attacks.
-    color: {r: 0, g: 0, b: 0, a: 0}
-  - keywordVariations:
-    - Cooldown
+  - original: Cooldown
+    translated: 
     description: 'Cooldown: Ability can''t be used again until enough turns have
       passed.'
     color: {r: 0, g: 0, b: 0, a: 0}
-  - keywordVariations:
-    - Speed
+  - original: Health
+    translated: 
+    description: 'Health: Amount of damage this can take before dying.'
+    color: {r: 0, g: 0, b: 0, a: 0}
+  - original: Power
+    translated: 
+    description: Higher Power = Attack and healing abilities are stronger.
+    color: {r: 0, g: 0, b: 0, a: 0}
+  - original: Defense
+    translated: 
+    description: Higher Defense = Take less damage from opposing attacks.
+    color: {r: 0, g: 0, b: 0, a: 0}
+  - original: Speed
+    translated: 
     description: Higher Speed = Takes their turn earlier in the turn order.
     color: {r: 0, g: 0, b: 0, a: 0}
-  - keywordVariations:
-    - Luck
+  - original: Luck
+    translated: 
     description: "Positive Luck = More likely to get +3 on attack and healing abilities.
       \nNegative Luck = More likely to get -3."
     color: {r: 0, g: 0, b: 0, a: 0}
-  - keywordVariations:
-    - Star
+  - original: Star
+    translated: 
     description: More Star = Stronger Enemy type.
     color: {r: 0, g: 0, b: 0, a: 0}
   spriteKeywordStatuses:
-  - keywordVariations:
-    - StunImage
+  - original: StunnedImage
+    translated: 
     description: 'Stunned: This skips their next turn.'
     color: {r: 0, g: 0, b: 0, a: 0}
-  - keywordVariations:
-    - ProtectedImage
+  - original: ProtectedImage
+    translated: 
     description: 'Protected: This can''t lose Stats or Health until their next turn.'
     color: {r: 0, g: 0, b: 0, a: 0}
-  - keywordVariations:
-    - TargetedImage
+  - original: TargetedImage
+    translated: 
     description: 'Targeted: All single-target Abilities must target this if possible.'
     color: {r: 0, g: 0, b: 0, a: 0}
-  - keywordVariations:
-    - ExtraImage
+  - original: Extra AbilityImage
+    translated: 
     description: 'Extra Ability: This can use another Ability on their turn.'
     color: {r: 0, g: 0, b: 0, a: 0}
-  - keywordVariations:
-    - LockImage
+  - original: LockedImage
+    translated: 
     description: 'Locked: This can''t change Position or Emotion until their next
       turn.'
     color: {r: 0, g: 0, b: 0, a: 0}
@@ -2204,7 +2184,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &760507580
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3099,7 +3079,7 @@ MonoBehaviour:
   m_linkedTextComponent: {fileID: 0}
   parentLinkedComponent: {fileID: 0}
   m_enableKerning: 1
-  m_ActiveFontFeatures: 00000000
+  m_ActiveFontFeatures: 6e72656b
   m_enableExtraPadding: 0
   checkPaddingRequired: 0
   m_isRichText: 1
@@ -3790,8 +3770,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 230, y: 0}
-  m_SizeDelta: {x: 450, y: 200}
+  m_AnchoredPosition: {x: 250, y: 0}
+  m_SizeDelta: {x: 500, y: 200}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1163857273
 MonoBehaviour:
@@ -3840,7 +3820,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 90.8
+  m_fontSize: 100
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -3862,7 +3842,7 @@ MonoBehaviour:
   m_linkedTextComponent: {fileID: 0}
   parentLinkedComponent: {fileID: 0}
   m_enableKerning: 1
-  m_ActiveFontFeatures: 00000000
+  m_ActiveFontFeatures: 6e72656b
   m_enableExtraPadding: 0
   checkPaddingRequired: 0
   m_isRichText: 1
@@ -4792,7 +4772,7 @@ MonoBehaviour:
   m_linkedTextComponent: {fileID: 0}
   parentLinkedComponent: {fileID: 0}
   m_enableKerning: 1
-  m_ActiveFontFeatures: 00000000
+  m_ActiveFontFeatures: 6e72656b
   m_enableExtraPadding: 0
   checkPaddingRequired: 0
   m_isRichText: 1
@@ -5016,7 +4996,7 @@ RectTransform:
   m_Father: {fileID: 78873250}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0.6666667, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 10, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -5495,8 +5475,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 140, y: 0}
-  m_SizeDelta: {x: 250, y: 200}
+  m_AnchoredPosition: {x: 250, y: 0}
+  m_SizeDelta: {x: 500, y: 200}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1732399734
 MonoBehaviour:
@@ -5567,7 +5547,7 @@ MonoBehaviour:
   m_linkedTextComponent: {fileID: 0}
   parentLinkedComponent: {fileID: 0}
   m_enableKerning: 1
-  m_ActiveFontFeatures: 00000000
+  m_ActiveFontFeatures: 6e72656b
   m_enableExtraPadding: 0
   checkPaddingRequired: 0
   m_isRichText: 1

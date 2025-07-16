@@ -637,7 +637,7 @@ public class Character : MonoBehaviour
         for (int i = 0; i < statEffectDict[StatusEffect.Stunned]; i++)
             statusText.text += "StunImage";
 
-        statusText.text = KeywordTooltip.instance.EditText(statusText.text);
+        statusText.text = KeywordTooltip.instance.EditText(statusText.text, true);
     }
 
     #endregion

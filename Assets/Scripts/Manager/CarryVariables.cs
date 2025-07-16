@@ -236,7 +236,16 @@ public class CarryVariables : MonoBehaviour
         }
         catch
         {
-            answer = keyTranslate[PlayerPrefs.GetString("English")][key];
+            try
+            {
+                answer = keyTranslate[PlayerPrefs.GetString("English")][key];
+                Debug.Log($"{key} failed to translate in {PlayerPrefs.GetString("Language")}");
+            }
+            catch
+            {
+                Debug.Log($"{key} failed to translate at all");
+                return key;
+            }
         }
 
         if (toReplace != null)

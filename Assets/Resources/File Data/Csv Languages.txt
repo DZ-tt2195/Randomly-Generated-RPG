@@ -1,6 +1,6 @@
 {
     [
-      "key",
+      "Translations",
       "English",
       "Test"
     ],
@@ -235,6 +235,216 @@
       "\"\""
     ],
     [
+      "Cooldown",
+      "Cooldown",
+      "Cooldown"
+    ],
+    [
+      "Cooldown Text",
+      "Cooldown: Ability can't be used again until enough turns have passed.",
+      "\"\""
+    ],
+    [
+      "Dead",
+      "Dead",
+      "Dead"
+    ],
+    [
+      "Neutral",
+      "Neutral",
+      "Neutral"
+    ],
+    [
+      "Neutral Text",
+      "Default Emotion.",
+      "\"\""
+    ],
+    [
+      "Sad",
+      "Sad",
+      "Sad"
+    ],
+    [
+      "Sad Text",
+      "Effective against Happy. Gains 2 Health when it attacks; loses 2 Health otherwise.",
+      "\"\""
+    ],
+    [
+      "Happy",
+      "Happy",
+      "Happy"
+    ],
+    [
+      "Happy Text",
+      "Effective against Angry. Gets an extra Ability if they don't attack; all Abilities have 1 more turn of Cooldown.",
+      "\"\""
+    ],
+    [
+      "Angry",
+      "Angry",
+      "Angry"
+    ],
+    [
+      "Angry Text",
+      "Effective against Sad. 2 extra Power; becomes Stunned when killing or healing someone to full Health.\"",
+      "\"\""
+    ],
+    [
+      "Grounded",
+      "Grounded",
+      "Grounded"
+    ],
+    [
+      "Grounded Text",
+      "Can't be targeted by abilities that only affect Elevated targets.",
+      "\"\""
+    ],
+    [
+      "Elevated",
+      "Elevated",
+      "Elevated"
+    ],
+    [
+      "Elevated Text",
+      "Can't be targeted by abilities that only affect Grounded targets.",
+      "\"\""
+    ],
+    [
+      "Health",
+      "Health",
+      "Health"
+    ],
+    [
+      "Health Text",
+      "Health: Amount of damage this can take before dying.",
+      "\"\""
+    ],
+    [
+      "Max Health",
+      "Max Health",
+      "Max Health"
+    ],
+    [
+      "Power",
+      "Power",
+      "Power"
+    ],
+    [
+      "Power Text",
+      "Higher Power = Attack and healing abilities are stronger.",
+      "\"\""
+    ],
+    [
+      "Defense",
+      "Defense",
+      "Defense"
+    ],
+    [
+      "Defense Text",
+      "Higher Defense = Take less damage from opposing attacks.",
+      "\"\""
+    ],
+    [
+      "Speed",
+      "Speed",
+      "Speed"
+    ],
+    [
+      "Speed Text",
+      "Higher Speed = Takes their turn earlier in the turn order.",
+      "\"\""
+    ],
+    [
+      "Luck",
+      "Luck",
+      "Luck"
+    ],
+    [
+      "Luck Text",
+      "Positive Luck = More likely to get +3 on attack and healing abilities. Negative Luck = More likely to get -3.",
+      "\"\""
+    ],
+    [
+      "Good Luck",
+      "$This$ has good luck! (+$Num$)",
+      "\"\""
+    ],
+    [
+      "Bad Luck",
+      "$This$ has bad luck...(-$Num$)",
+      "\"\""
+    ],
+    [
+      "Protected",
+      "Protected",
+      "Protected"
+    ],
+    [
+      "Protected Text",
+      "Can't lose Stats or Health until their next turn.",
+      "\"\""
+    ],
+    [
+      "Blocked",
+      "Blocked",
+      "Blocked"
+    ],
+    [
+      "Blocked Stat Drop",
+      "$This$ is Protected from losing $Num$ $Stat$.",
+      "\"\""
+    ],
+    [
+      "Locked",
+      "Locked",
+      "Locked"
+    ],
+    [
+      "Locked Text",
+      "Emotion and Position can't change until their next turn.",
+      "\"\""
+    ],
+    [
+      "Stunned",
+      "Stunned",
+      "Stunned"
+    ],
+    [
+      "Stunned Text",
+      "Skips their next turn.",
+      "\"\""
+    ],
+    [
+      "Targeted",
+      "Targeted",
+      "Targeted"
+    ],
+    [
+      "Targeted Text",
+      "All single-target Abilities must target them if possible.",
+      "\"\""
+    ],
+    [
+      "Extra Ability",
+      "Extra Ability",
+      "Extra Ability"
+    ],
+    [
+      "Extra Ability Text",
+      "This can use another Ability on their turn.",
+      "\"\""
+    ],
+    [
+      "Star",
+      "Star",
+      "Star"
+    ],
+    [
+      "Star Text",
+      "More Star = Stronger Enemy type.",
+      "\"\""
+    ],
+    [
       "Customize Players",
       "Customize Players",
       "\"\""
@@ -350,11 +560,6 @@
       "\"\""
     ],
     [
-      "Cooldown Number",
-      "Cooldown",
-      "\"\""
-    ],
-    [
       "Enemies",
       "Enemies",
       "\"\""
@@ -372,126 +577,6 @@
     [
       "Default Position",
       "Default Position",
-      "\"\""
-    ],
-    [
-      "Dead",
-      "Dead",
-      "\"\""
-    ],
-    [
-      "Neutral",
-      "Neutral",
-      "\"\""
-    ],
-    [
-      "Neutral Text",
-      "Default Emotion.",
-      "\"\""
-    ],
-    [
-      "Sad",
-      "Sad",
-      "\"\""
-    ],
-    [
-      "Sad Text",
-      "Gains 2 Health when it attacks; loses 2 Health otherwise.",
-      "\"\""
-    ],
-    [
-      "Happy",
-      "Happy",
-      "\"\""
-    ],
-    [
-      "Happy Text",
-      "Gets an extra Ability if they don't attack; all Abilities have 1 more turn of Cooldown.",
-      "\"\""
-    ],
-    [
-      "Angry",
-      "Angry",
-      "\"\""
-    ],
-    [
-      "Angry Text",
-      "2 extra Power; becomes Stunned when killing or healing someone to full Health.\"",
-      "\"\""
-    ],
-    [
-      "Grounded",
-      "Grounded",
-      "\"\""
-    ],
-    [
-      "Elevated",
-      "Elevated",
-      "\"\""
-    ],
-    [
-      "Health",
-      "Health",
-      "\"\""
-    ],
-    [
-      "Max Health",
-      "Max Health",
-      "\"\""
-    ],
-    [
-      "Power",
-      "Power",
-      "\"\""
-    ],
-    [
-      "Defense",
-      "Defense",
-      "\"\""
-    ],
-    [
-      "Speed",
-      "Speed",
-      "\"\""
-    ],
-    [
-      "Luck",
-      "Luck",
-      "\"\""
-    ],
-    [
-      "Good Luck",
-      "$This$ has good luck! (+$Num$)",
-      "\"\""
-    ],
-    [
-      "Bad Luck",
-      "$This$ has bad luck...(-$Num$)",
-      "\"\""
-    ],
-    [
-      "Protected",
-      "Protected",
-      "\"\""
-    ],
-    [
-      "Blocked",
-      "Blocked",
-      "\"\""
-    ],
-    [
-      "Blocked Stat Drop",
-      "$This$ is Protected from losing $Num$ $Stat$.",
-      "\"\""
-    ],
-    [
-      "Locked",
-      "Locked",
-      "\"\""
-    ],
-    [
-      "Stunned",
-      "Stunned",
       "\"\""
     ],
     [
