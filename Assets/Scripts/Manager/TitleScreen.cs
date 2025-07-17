@@ -66,15 +66,14 @@ public class TitleScreen : MonoBehaviour
     private void Update()
     {
         TimeSpan utcOffset = TimeZoneInfo.Local.GetUtcOffset(DateTime.Now);
-        if (utcOffset.Hours > 0)
-            timeText.text = $"{CarryVariables.instance.Translate("Your Timezone")} +{utcOffset.Hours:D2}:{utcOffset.Minutes:D2}";
-        else
-            timeText.text = $"{CarryVariables.instance.Translate("Your Timezone")} {utcOffset.Hours:D2}:{utcOffset.Minutes:D2}";
+        string timezone = (utcOffset.Hours > 0 ? "+" : "") + $"{utcOffset.Hours:D2}:{utcOffset.Minutes:D2}";
+        timeText.text = $"{CarryVariables.instance.Translate("Your Timezone", new() { ("Time", timezone)})}";
 
         DateTime nextUtcMidnight = DateTime.UtcNow.Date.AddDays(1);
         TimeSpan timeUntilMidnightUtc = nextUtcMidnight - DateTime.UtcNow;
-        timeText.text += $"\n{CarryVariables.instance.Translate("Next Challenge")} {timeUntilMidnightUtc.Hours:D2}:" +
-            $"{timeUntilMidnightUtc.Minutes:D2}:{timeUntilMidnightUtc.Seconds:D2}";
+
+        string nextChallenge = $"{timeUntilMidnightUtc.Hours:D2}:{timeUntilMidnightUtc.Minutes:D2}:{timeUntilMidnightUtc.Seconds:D2}";
+        timeText.text += $"\n{CarryVariables.instance.Translate("Next Challenge", new() { ("Time", nextChallenge)})}";
     }
 
 #endregion

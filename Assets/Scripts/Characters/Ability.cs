@@ -186,14 +186,14 @@ public class Ability : MonoBehaviour
         int finalCalc = number + critical + effectiveness + user.CalculatePower() - target.statModDict[Stats.Defense];
 
         if (effectiveness > 0)
-            Log.instance.AddText(CarryVariables.instance.Translate("Super Effective", new() { ("$Num$", Mathf.Abs(effectiveness).ToString())}), logged);
+            Log.instance.AddText(CarryVariables.instance.Translate("Super Effective", new() { ("Num", Mathf.Abs(effectiveness).ToString())}), logged);
         else if (effectiveness < 0)
-            Log.instance.AddText(CarryVariables.instance.Translate("Not Effective", new() { ("$Num$", Mathf.Abs(effectiveness).ToString()) }), logged);
+            Log.instance.AddText(CarryVariables.instance.Translate("Not Effective", new() { ("Num", Mathf.Abs(effectiveness).ToString()) }), logged);
 
         if (critical != 0)
         {
             string answer = (critical > 0) ? CarryVariables.instance.Translate("Good Luck") : CarryVariables.instance.Translate("Bad Luck");
-            Log.instance.AddText(answer.Replace("$This$", this.name).Replace("$Num", $"{Mathf.Abs(critical)}"), logged);
+            Log.instance.AddText(answer.Replace("This", this.name).Replace("Num", $"{Mathf.Abs(critical)}"), logged);
         }
 
         if (finalCalc > 4 && enemyNumberCap)

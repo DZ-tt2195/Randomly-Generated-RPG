@@ -26,7 +26,7 @@ public class AbilityForcer : MonoBehaviour
         }
         else
         {
-            Log.instance.AddText(CarryVariables.instance.Translate("Defeat Waves", new() { ("$Num$", "5")}));
+            Log.instance.AddText(CarryVariables.instance.Translate("Defeat Waves", new() { ("Num", "5")}));
             SearchBoxes("Knight");
             SearchBoxes("Angel");
             SearchBoxes("Wizard");
@@ -48,16 +48,25 @@ public class AbilityForcer : MonoBehaviour
                 DateTime day = DateTime.UtcNow.Date;
                 int seed = day.Year * 10000 + day.Month * 100 + day.Day;
                 dailyRNG = new System.Random(seed);
-                Log.instance.AddText($"Daily Challenge: {day:MMMM dd, yyyy}", 1);
+
+                string text1 = $"{CarryVariables.instance.Translate("Daily Challenge")}";
+                string text2 = CarryVariables.instance.Translate("Current Date", new()
+                {
+                    ("Month", CarryVariables.instance.Translate($"Month {day.Month}")),
+                    ("Day", day.Day.ToString()),
+                    ("Year", day.Year.ToString())
+                });
+
+                Log.instance.AddText($"{text1}: {text2}", 1);
                 Confirmed();
             }
             else if (CarryVariables.instance.mode == CarryVariables.GameMode.Main)
             {
                 confirmButton.onClick.AddListener(Confirmed);
                 foreach (string cheat in CarryVariables.instance.listOfCheats)
-                    Log.instance.AddText($"<color=#00FF00>Cheat: {cheat}</color>", 1);
+                    Log.instance.AddText($"<color=#00FF00>{CarryVariables.instance.Translate("Cheat")}: {CarryVariables.instance.Translate(cheat)}</color>", 1);
                 foreach (string challenge in CarryVariables.instance.listOfChallenges)
-                    Log.instance.AddText($"<color=#FF0000>Challenge: {challenge}</color>", 1);
+                    Log.instance.AddText($"<color=#FF0000>{CarryVariables.instance.Translate("Challenge")}: {CarryVariables.instance.Translate(challenge)}</color>", 1);
 
                 abilityDictionary.Add("Knight", new());
                 abilityDictionary.Add("Angel", new());

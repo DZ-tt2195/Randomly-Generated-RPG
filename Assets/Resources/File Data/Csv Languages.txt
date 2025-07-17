@@ -76,12 +76,77 @@
     ],
     [
       "Your Timezone",
-      "Your Timezone: UTC",
+      "Your Timezone: UTC $Time$",
       "\"\""
     ],
     [
       "Next Challenge",
-      "Next Challenge in:",
+      "Next Challenge in: $Time$",
+      "\"\""
+    ],
+    [
+      "Current Date",
+      "$Month$ $Day$, $Year$",
+      "\"\""
+    ],
+    [
+      "Month 1",
+      "January",
+      "\"\""
+    ],
+    [
+      "Month 2",
+      "February",
+      "\"\""
+    ],
+    [
+      "Month 3",
+      "March",
+      "\"\""
+    ],
+    [
+      "Month 4",
+      "Aprl",
+      "\"\""
+    ],
+    [
+      "Month 5",
+      "May",
+      "\"\""
+    ],
+    [
+      "Month 6",
+      "June",
+      "\"\""
+    ],
+    [
+      "Month 7",
+      "July",
+      "\"\""
+    ],
+    [
+      "Month 8",
+      "August",
+      "\"\""
+    ],
+    [
+      "Month 9",
+      "September",
+      "\"\""
+    ],
+    [
+      "Month 10",
+      "October",
+      "\"\""
+    ],
+    [
+      "Month 11",
+      "November",
+      "\"\""
+    ],
+    [
+      "Month 12",
+      "December",
       "\"\""
     ],
     [
@@ -95,8 +160,18 @@
       "\"\""
     ],
     [
+      "New Abilities",
+      "New Abilities",
+      "\"\""
+    ],
+    [
       "New Abilities Text",
       "Players get 6 new Abilities each wave",
+      "\"\""
+    ],
+    [
+      "Knight Reach",
+      "Knight Reach",
       "\"\""
     ],
     [
@@ -105,13 +180,28 @@
       "\"\""
     ],
     [
+      "Weaker Enemies",
+      "Weaker Enemies",
+      "\"\""
+    ],
+    [
       "Weaker Enemies Text",
       "Enemies start with -2 Max Health",
       "\"\""
     ],
     [
+      "Slower Enemy Cooldowns",
+      "Slower Enemy Cooldowns",
+      "\"\""
+    ],
+    [
       "Slower Enemy Cooldowns Text",
       "Enemy Abilities have 1 more turn of Cooldown",
+      "\"\""
+    ],
+    [
+      "Number Cap",
+      "Number Cap",
       "\"\""
     ],
     [
@@ -125,8 +215,18 @@
       "\"\""
     ],
     [
+      "No Revives",
+      "No Revives",
+      "\"\""
+    ],
+    [
       "No Revives Text",
       "Reviving is disabled",
+      "\"\""
+    ],
+    [
+      "Ineffectives Fail",
+      "Ineffectives Fail",
       "\"\""
     ],
     [
@@ -135,13 +235,28 @@
       "\"\""
     ],
     [
+      "Player Timer",
+      "Player Timer",
+      "\"\""
+    ],
+    [
       "Player Timer Text",
       "10 seconds to do each Player's turn",
       "\"\""
     ],
     [
+      "Extra Enemy Turns",
+      "Extra Enemy Turns",
+      "\"\""
+    ],
+    [
       "Extra Enemy Turns Text",
       "New Enemies get 1 Extra Ability",
+      "\"\""
+    ],
+    [
+      "More Enemies",
+      "More Enemies",
       "\"\""
     ],
     [

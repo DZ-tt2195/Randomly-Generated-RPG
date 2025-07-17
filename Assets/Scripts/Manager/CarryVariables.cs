@@ -279,7 +279,7 @@ public class CarryVariables : MonoBehaviour
         if (toReplace != null)
         {
             foreach ((string one, string two) in toReplace)
-                answer = answer.Replace($"${one}$", two);
+                answer = answer.Replace($"${one.Replace("$", "")}$", two);
         }
         return answer;
     }

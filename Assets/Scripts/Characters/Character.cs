@@ -220,8 +220,7 @@ public class Character : MonoBehaviour
     {
         if (this == null || change == 0) yield break;
 
-        _privStatEffect[statusEffect] += change;
-        CharacterUI();
+        _privStatEffect[statusEffect] = _privStatEffect[statusEffect]+change;
         TurnManager.instance.CreateVisual(statusEffect == StatusEffect.Extra ? "EXTRA ABILITY" : statusEffect.ToString().ToUpper(), this.transform.localPosition);
         string pluralSuffix = _privStatEffect[statusEffect] == 1 ? "" : "s";
 
@@ -248,6 +247,7 @@ public class Character : MonoBehaviour
                 Log.instance.AddText($"{this.name} is Protected for the next {_privStatEffect[statusEffect]} attack{pluralSuffix}.", logged);
                 break;
         }
+        CharacterUI();
     }
 
     public IEnumerator ChangePosition(Position newPosition, int logged)
