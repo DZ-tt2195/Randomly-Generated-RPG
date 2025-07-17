@@ -263,8 +263,8 @@ public class TurnManager : MonoBehaviour
         listOfSpeedImages[0].transform.parent.gameObject.SetActive(false);
 
         Log.instance.AddText("");
-        Log.instance.AddText(message1);
-        Log.instance.AddText(message2);
+        Log.instance.AddText(CarryVariables.instance.Translate(message1));
+        Log.instance.AddText(CarryVariables.instance.Translate(message2));
         Log.instance.enabled = false;
     }
 
@@ -309,14 +309,10 @@ public class TurnManager : MonoBehaviour
         TextCollector collector = Instantiate(undoBox);
         collector.StatsSetup(header, position);
 
-        try
+        if (buttons != null)
         {
             foreach (string text in buttons)
                 collector.AddTextButton(text);
-        }
-        catch (NullReferenceException)
-        {
-            //do nothing
         }
         return collector;
     }

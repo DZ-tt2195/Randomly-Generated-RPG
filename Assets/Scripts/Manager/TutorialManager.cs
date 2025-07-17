@@ -57,7 +57,7 @@ public class TutorialManager : MonoBehaviour
         TextCollector collector = TurnManager.instance.MakeTextCollector("", Vector3.zero, new List<string>() { "Next" });
         foreach (string nextString in allDialogue)
         {
-            collector.textbox.text = KeywordTooltip.instance.EditText(nextString);
+            collector.textbox.text = KeywordTooltip.instance.EditText(CarryVariables.instance.Translate($"Tutorial {nextString}"));
             yield return collector.WaitForChoice();
         }
         Destroy(collector.gameObject);
@@ -70,8 +70,7 @@ public class TutorialManager : MonoBehaviour
             case 1: //introduce the concept of the game
                 Log.instance.AddText(CarryVariables.instance.Translate("Defeat Waves", new() { ("Num", "3") }));
                 Log.instance.AddText("");
-                yield return ClickThroughDialogue(new List<string>()
-                { "This is a turn-based RPG where you're given random Abilities to fight against random Enemies." });
+                yield return ClickThroughDialogue(new List<string>() { "1.0" });
 
                 currentStep = 2;
                 StartCoroutine(NextStep());
@@ -81,9 +80,9 @@ public class TutorialManager : MonoBehaviour
                 TurnManager.instance.AddPlayer(listOfPlayers[0]); //add knight
                 listOfPlayers[0].AddAbility(CarryVariables.instance.FindPlayerAbility("Rollout"), false, false);
 
-                TextCollector collector2 = TurnManager.instance.MakeTextCollector(
-                    "You always have the same 3 party members. Right click on the Knight to see what they do.",
-                    Vector3.zero);
+                string text2 = KeywordTooltip.instance.EditText(CarryVariables.instance.Translate("Tutorial 2.0"));
+                TextCollector collector2 = TurnManager.instance.MakeTextCollector(text2, Vector3.zero);
+
                 while (ScreenOverlay.instance.displayedScreen != CurrentScreen.Character)
                     yield return null;
                 while (ScreenOverlay.instance.displayedScreen != CurrentScreen.None)
@@ -97,9 +96,7 @@ public class TutorialManager : MonoBehaviour
             case 3: //first time attacking
                 yield return TurnManager.instance.NewWave();
                 TurnManager.instance.CreateEnemy(CarryVariables.instance.FindBonusEnemy("Page"), Emotion.Neutral, 0);
-
-                yield return ClickThroughDialogue(new List<string>()
-                { "Here's your first Enemy. Use the Knight's Ability against them." });
+                yield return ClickThroughDialogue(new List<string>() { "3.0" });
 
                 yield return TurnManager.instance.NewRound(false);
                 currentStep = 4;
@@ -108,24 +105,18 @@ public class TutorialManager : MonoBehaviour
 
             case 4: //introduce Cooldowns
                 listOfPlayers[0].AddAbility(CarryVariables.instance.FindPlayerAbility("Joust"), false, false);
-                yield return ClickThroughDialogue(new List<string>()
-                { "The Ability you used has a cooldown (Cooldown), so you can't use it again this round. Instead use the other Ability." });
+                yield return ClickThroughDialogue(new List<string>() { "4.0" });
 
                 yield return TurnManager.instance.NewRound(true);
                 while (TurnManager.instance.listOfEnemies.Count > 0)
                     yield return TurnManager.instance.NewRound(true);
+
                 currentStep = 5;
                 StartCoroutine(NextStep());
                 break;
 
             case 5: //introduce angry
-                yield return ClickThroughDialogue(new List<string>()
-                { "You killed your first Enemy! Now you may have noticed your Knight is \"Angry\".",
-                "Everyone begins with a random Emotion. Emotions are effective against other Emotions, and have their own side effects.",
-                "Happy beats Angry, which beats Sad, which beats Happy. Neutral is neutral against everything else.",
-                "This game, your Knight started off Angry, which means they get +2 Power (attacks and healing abilities are stronger by 2 points).",
-                "However, if they kill someone (like they just did right now), or heal someone to full Health, they get Stunned and miss their next turn."});
-
+                yield return ClickThroughDialogue(new List<string>() { "5.0", "5.1", "5.2", "5.3", "5.4" });
                 currentStep = 6;
                 StartCoroutine(NextStep());
                 break;
@@ -134,9 +125,9 @@ public class TutorialManager : MonoBehaviour
                 TurnManager.instance.AddPlayer(listOfPlayers[1]); //add angel
                 listOfPlayers[1].AddAbility(CarryVariables.instance.FindPlayerAbility("Assist"), false, false);
 
-                TextCollector collector6 = TurnManager.instance.MakeTextCollector(
-                    "Here's your 2nd party member. Right click on the Angel to read what they do.",
-                    Vector3.zero);
+                string text6 = KeywordTooltip.instance.EditText(CarryVariables.instance.Translate("Tutorial 6.0"));
+                TextCollector collector6 = TurnManager.instance.MakeTextCollector(text6, Vector3.zero);
+
                 while (ScreenOverlay.instance.displayedScreen != CurrentScreen.Character)
                     yield return null;
                 while (ScreenOverlay.instance.displayedScreen != CurrentScreen.None)
@@ -152,11 +143,7 @@ public class TutorialManager : MonoBehaviour
                 yield return TurnManager.instance.NewWave();
                 TurnManager.instance.CreateEnemy(CarryVariables.instance.FindBonusEnemy("Page"), Emotion.Happy, 0);
 
-                yield return ClickThroughDialogue(new List<string>()
-                { "This Page is Happy. Happy is super effective against Angry, which puts your Knight at a disadvantage.",
-                "Your Knight has the higher Speed, so normally they'd take their turn before the Angel. But they're Stunned right now.",
-                "So instead, use the Angel’s Ability to heal the Knight."});
-
+                yield return ClickThroughDialogue(new List<string>() { "7.0", "7.1", "7.2" });
                 currentCharacter = listOfPlayers[1]; //wait for angel's next turn
                 currentStep = 8;
 
@@ -170,12 +157,7 @@ public class TutorialManager : MonoBehaviour
 
             case 8: //introduce happy
                 listOfPlayers[1].AddAbility(CarryVariables.instance.FindPlayerAbility("Exhaust"), false, false);
-
-                yield return ClickThroughDialogue(new List<string>()
-                { "Your Angel is Happy, which means they can use another Ability when they don't attack, but all their Abilities have 1 more turn of Cooldown.",
-                "Emotions also apply to Enemies. If you right click the Page, you'll see that their Ability got placed on Cooldown.",
-                "Your Angel didn’t attack, so they now can use another Ability. However, Assist is on Cooldown.",
-                "Instead, you can change the Page’s Emotion to Sad. That way, your Angry Knight will gain the advantage."});
+                yield return ClickThroughDialogue(new List<string>() { "8.0", "8.1", "8.2", "8.3" });
                 break;
 
             case 9: //introduce grounded and Elevated
@@ -192,10 +174,7 @@ public class TutorialManager : MonoBehaviour
                 TurnManager.instance.CreateEnemy(CarryVariables.instance.FindBonusEnemy("Crow"), Emotion.Neutral, 0);
                 TurnManager.instance.CreateEnemy(CarryVariables.instance.FindBonusEnemy("Crow"), Emotion.Neutral, 0);
 
-                yield return ClickThroughDialogue(new List<string>()
-                { "Everyone has a Position; they're either Grounded or Elevated. Your Knight always starts Grounded, and Angel always starts Elevated.",
-                  "One of the Knight's big weaknesses is that they have no way to attack Elevated Enemies." });
-
+                yield return ClickThroughDialogue(new List<string>() { "9.0", "9.1" });
                 currentStep = 10;
                 StartCoroutine(NextStep());
                 break;
@@ -204,9 +183,9 @@ public class TutorialManager : MonoBehaviour
                 TurnManager.instance.AddPlayer(listOfPlayers[2]); //add wizard
                 listOfPlayers[2].AddAbility(CarryVariables.instance.FindPlayerAbility("Stalactites"), false, false);
 
-                TextCollector collector10 = TurnManager.instance.MakeTextCollector(
-                    "And now, your 3rd party member. Right click on the Wizard to read what they do.",
-                    Vector3.zero);
+                string text10 = KeywordTooltip.instance.EditText(CarryVariables.instance.Translate("Tutorial 10.0"));
+                TextCollector collector10 = TurnManager.instance.MakeTextCollector(text10, Vector3.zero);
+
                 while (ScreenOverlay.instance.displayedScreen != CurrentScreen.Character)
                     yield return null;
                 while (ScreenOverlay.instance.displayedScreen != CurrentScreen.None)
@@ -218,9 +197,7 @@ public class TutorialManager : MonoBehaviour
                 break;
 
             case 11: //introduce wizard Abilities
-                yield return ClickThroughDialogue(new List<string>()
-                { "Your Wizard has an Ability that forces all Elevated Enemies to be Grounded. Use Stalactites against the 2 Crows." });
-
+                yield return ClickThroughDialogue(new List<string>() { "11.0" });
                 currentCharacter = listOfPlayers[2]; //wait for wizard's next turn
                 currentStep = 12;
 
@@ -233,10 +210,7 @@ public class TutorialManager : MonoBehaviour
                 break;
 
             case 12: //introduce sad
-                yield return ClickThroughDialogue(new List<string>()
-                { "Your Wizard is Sad, which means every time they attack, they gain 2 Health. But if they don't attack, they lose 2 Health.",
-                "For your convenience, attacking Abilities are colored red, healing Abilities are colored green, the others are colored blue."});
-
+                yield return ClickThroughDialogue(new List<string>() { "12.0", "12.1" });
                 currentStep = 13;
                 yield return (NextStep());
                 break;
@@ -246,9 +220,9 @@ public class TutorialManager : MonoBehaviour
                 Vector3 originalPos = emotionButton.transform.localPosition;
                 emotionButton.transform.localPosition = new Vector2(0, -150);
 
-                TextCollector collector13 = TurnManager.instance.MakeTextCollector(
-                    "You can always remind yourself of what each Emotion does by opening the Emotion Guide (usually it's at the bottom right of the screen).",
-                    Vector3.zero);
+                string text13 = KeywordTooltip.instance.EditText(CarryVariables.instance.Translate("Tutorial 13.0"));
+                TextCollector collector13 = TurnManager.instance.MakeTextCollector(text13, Vector3.zero);
+
                 while (ScreenOverlay.instance.displayedScreen != CurrentScreen.Emotion)
                     yield return null;
                 while (ScreenOverlay.instance.displayedScreen != CurrentScreen.None)
@@ -265,15 +239,12 @@ public class TutorialManager : MonoBehaviour
                 listOfPlayers[2].AddAbility(CarryVariables.instance.FindPlayerAbility("Flood"), false, false);
                 listOfPlayers[2].AddAbility(CarryVariables.instance.FindPlayerAbility("Shockwave"), false, false);
 
-                yield return ClickThroughDialogue(new List<string>()
-                { "Anyways, now that all the Enemies are Grounded, your Knight is capable of hitting them, so finish them off."});
+                yield return ClickThroughDialogue(new List<string>() { "14.0" });
                 break;
 
             case 15: //tutorial over
-                yield return ClickThroughDialogue(new List<string>()
-                { "You’ve completed the tutorial. In the main game, your 3 party members get 6 random Abilities.",
-                "During the game, you'll fight off 5 waves of random Enemies, with more powerful ones later on. Glhf!"});
-                TurnManager.instance.GameFinished("Tutorial finished.", "");
+                yield return ClickThroughDialogue(new List<string>() { "15.0", "15.1" });
+                TurnManager.instance.GameFinished("Tutorial Finished", "");
                 break;
         }
     }

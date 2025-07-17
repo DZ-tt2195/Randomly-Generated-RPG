@@ -293,6 +293,7 @@ GameObject:
   - component: {fileID: 11479319}
   - component: {fileID: 11479321}
   - component: {fileID: 11479320}
+  - component: {fileID: 11479322}
   m_Layer: 0
   m_Name: Title
   m_TagString: Untagged
@@ -316,8 +317,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 50, y: 185}
-  m_SizeDelta: {x: 1920, y: 1080}
+  m_AnchoredPosition: {x: -325, y: 225}
+  m_SizeDelta: {x: 1200, y: 650}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &11479320
 MonoBehaviour:
@@ -339,9 +340,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'RANDOMLY
-
-    GENERATED'
+  m_text: RANDOMLY GENERATED
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8c64c47af7c1c4fb5b88d184433c6c44, type: 2}
   m_sharedMaterial: {fileID: -3852492252101762229, guid: 8c64c47af7c1c4fb5b88d184433c6c44, type: 2}
@@ -368,12 +367,12 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 350
+  m_fontSize: 352.5
   m_fontSizeBase: 350
   m_fontWeight: 400
-  m_enableAutoSizing: 0
+  m_enableAutoSizing: 1
   m_fontSizeMin: 18
-  m_fontSizeMax: 200
+  m_fontSizeMax: 1000
   m_fontStyle: 0
   m_HorizontalAlignment: 1
   m_VerticalAlignment: 512
@@ -420,6 +419,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 11479318}
   m_CullTransparentMesh: 1
+--- !u!114 &11479322
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 11479318}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 159b66c071ced43f499eb58b9b7c8b01, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  key: Title
 --- !u!1 &15923186
 GameObject:
   m_ObjectHideFlags: 0
@@ -6401,10 +6413,10 @@ MonoBehaviour:
   m_text: 'Icons: <link="Health"><sprite="Health" name="Health"></link> <link="Cooldown"><sprite="Cooldown"
     name="Cooldown"></link> <link="Power"><sprite="Power" name="Power"></link> <link="Defense"><sprite="Defense"
     name="Defense"></link> <link="Luck"><sprite="Luck" name="Luck"></link> <link="Speed"><sprite="Speed"
-    name="Speed"></link> <link="Star"><sprite="Star" name="Star"></link><link="StunImage"><sprite="StunImage"
-    name="StunImage"></link> <link="ProtectedImage"><sprite="ProtectedImage" name="ProtectedImage"></link>
+    name="Speed"></link> <link="Star"><sprite="Star" name="Star"></link><link="StunImage"><sprite="StunnedImage"
+    name="StunnedImage"></link> <link="ProtectedImage"><sprite="ProtectedImage" name="ProtectedImage"></link>
     <link="TargetedImage"><sprite="TargetedImage" name="TargetedImage"></link> <link="ExtraImage"><sprite="ExtraImage"
-    name="ExtraImage"></link><link="LockImage"><sprite="LockImage" name="LockImage"></link>'
+    name="ExtraImage"></link><link="LockedImage"><sprite="LockedImage" name="LockedImage"></link>'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8c64c47af7c1c4fb5b88d184433c6c44, type: 2}
   m_sharedMaterial: {fileID: -3852492252101762229, guid: 8c64c47af7c1c4fb5b88d184433c6c44, type: 2}
@@ -9953,7 +9965,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1935262698
 RectTransform:
   m_ObjectHideFlags: 0

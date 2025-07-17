@@ -5,13 +5,18 @@
       "Test"
     ],
     [
+      "Title",
+      "RANDOMLY GENERATED",
+      "\"\""
+    ],
+    [
       "Author Credit",
       "by Thomas Tang (DZ)",
       "\"\""
     ],
     [
       "Last Update",
-      "Last Updated: July 14, 2025",
+      "Last Updated: July 16, 2025",
       "\"\""
     ],
     [
@@ -40,6 +45,11 @@
       "\"\""
     ],
     [
+      "Play Game",
+      "Play Game",
+      "\"\""
+    ],
+    [
       "Story",
       "Story",
       "\"\""
@@ -57,11 +67,6 @@
     [
       "Story 3",
       "Anyways, you must roll with the punches and work with whatever they gave you. And if all else fails, you can blame it on lag, your parents, and that really cute cat.",
-      "\"\""
-    ],
-    [
-      "Play Game",
-      "Play Game",
       "\"\""
     ],
     [
@@ -147,11 +152,6 @@
     [
       "Clear All",
       "Clear All",
-      "\"\""
-    ],
-    [
-      "Encyclopedia",
-      "Encylopedia",
       "\"\""
     ],
     [
@@ -425,6 +425,11 @@
       "\"\""
     ],
     [
+      "Extra",
+      "Extra Ability",
+      "\"\""
+    ],
+    [
       "Extra Text",
       "This can use another Ability on their turn.",
       "\"\""
@@ -460,6 +465,11 @@
       "\"\""
     ],
     [
+      "Defeat Waves",
+      "Defeat $Num$ waves of enemies.",
+      "\"\""
+    ],
+    [
       "Title Screen",
       "Title Screen",
       "\"\""
@@ -477,6 +487,156 @@
     [
       "Wave",
       "Wave",
+      "\"\""
+    ],
+    [
+      "Tutorial 1.0",
+      "This is a turn-based RPG where you're given random Abilities to fight against random Enemies.",
+      "\"\""
+    ],
+    [
+      "Tutorial 2.0",
+      "You always have the same 3 party members. Right click on the Knight to see what they do.\"",
+      "\"\""
+    ],
+    [
+      "Tutorial 3.0",
+      "Here's your first Enemy. Use the Knight's Ability against them.",
+      "\"\""
+    ],
+    [
+      "Tutorial 4.0",
+      "The Ability you used has a Cooldown, so you can't use it again this round. Instead use the other Ability",
+      "\"\""
+    ],
+    [
+      "Tutorial 5.0",
+      "You killed your first Enemy! Now you may have noticed your Knight is Angry.",
+      "\"\""
+    ],
+    [
+      "Tutorial 5.1",
+      "Everyone begins with a random Emotion. Emotions are effective against other Emotions, and have their own side effects.",
+      "\"\""
+    ],
+    [
+      "Tutorial 5.2",
+      "Happy beats Angry, which beats Sad, which beats Happy. Neutral is neutral against everything else.",
+      "\"\""
+    ],
+    [
+      "Tutorial 5.3",
+      "Your Knight is Angry, which means they get +2 Power (attacks and healing abilities are stronger by 2 points).",
+      "\"\""
+    ],
+    [
+      "Tutorial 5.4",
+      "However, if they kill someone (like right now), or heal someone to full Health, they'll get Stunned and miss their next turn.",
+      "\"\""
+    ],
+    [
+      "Tutorial 6.0",
+      "Here's your 2nd party member. Right click on the Angel to read what they do.",
+      "\"\""
+    ],
+    [
+      "Tutorial 7.0",
+      "This Page is Happy. Happy is super effective against Angry, which puts your Knight at a disadvantage.",
+      "\"\""
+    ],
+    [
+      "Tutorial 7.1",
+      "Your Knight has the higher Speed, so normally they'd take their turn before the Angel. But they're Stunned right now.",
+      "\"\""
+    ],
+    [
+      "Tutorial 7.2",
+      "So instead, use the Angel’s Ability to heal the Knight.",
+      "\"\""
+    ],
+    [
+      "Tutorial 8.0",
+      "Your Angel is Happy, which means they can use another Ability when they don't attack, but all their Abilities have 1 more turn of Cooldown.",
+      "\"\""
+    ],
+    [
+      "Tutorial 8.1",
+      "Emotions also apply to Enemies. If you right click the Page, you'll see that their Ability got placed on Cooldown.",
+      "\"\""
+    ],
+    [
+      "Tutorial 8.2",
+      "Your Angel didn’t attack, so they now can use another Ability. However, the healing ability they used is on Cooldown.",
+      "\"\""
+    ],
+    [
+      "Tutorial 8.3",
+      "Instead, you can change the Page’s Emotion to Sad. That way, your Angry Knight will gain the advantage.",
+      "\"\""
+    ],
+    [
+      "Tutorial 9.0",
+      "Everyone is either Grounded or Elevated. Your Knight always starts Grounded, and Angel always starts Elevated.",
+      "\"\""
+    ],
+    [
+      "Tutorial 9.1",
+      "One of the Knight's big weaknesses is that they have no way to attack Elevated Enemies.",
+      "\"\""
+    ],
+    [
+      "Tutorial 10.0",
+      "And now, your 3rd party member. Right click on the Wizard to read what they do.",
+      "\"\""
+    ],
+    [
+      "Tutorial 11.0",
+      "Your Wizard has an Ability that forces all Elevated Enemies to be Grounded. Use it against the 2 Crows.",
+      "\"\""
+    ],
+    [
+      "Tutorial 12.0",
+      "Your Wizard is Sad, which means every time they attack, they gain 2 Health. But if they don't attack, they lose 2 Health.",
+      "\"\""
+    ],
+    [
+      "Tutorial 12.1",
+      "For your convenience, attacking Abilities are colored red, healing Abilities are colored green, the others are colored blue.",
+      "\"\""
+    ],
+    [
+      "Tutorial 13.0",
+      "You can always remind yourself of what each Emotion does by opening the Emotion Guide (usually it's at the bottom right of the screen).",
+      "\"\""
+    ],
+    [
+      "Tutorial 14.0",
+      "Anyways, now that all the Enemies are Grounded, your Knight is capable of hitting them, so finish them off.",
+      "\"\""
+    ],
+    [
+      "Tutorial 15.0",
+      "You’ve completed the tutorial. In the main game, your 3 party members get 6 random Abilities.",
+      "\"\""
+    ],
+    [
+      "Tutorial 15.1",
+      "To win, you'll have fight off 5 waves of random Enemies, with more powerful ones later on. Glhf!",
+      "\"\""
+    ],
+    [
+      "Tutorial Finished",
+      "Tutorial finished.",
+      "\"\""
+    ],
+    [
+      "Next",
+      "Next",
+      "\"\""
+    ],
+    [
+      "Encyclopedia",
+      "Encylopedia",
       "\"\""
     ],
     [
@@ -617,11 +777,6 @@
     [
       "Apply Cooldown",
       "$Target$'s $Ability$ is placed on $MiscStat$ Cooldown.",
-      "\"\""
-    ],
-    [
-      "Defeat Waves",
-      "Defeat $Num$ waves of enemies.",
       "\"\""
     ],
     [

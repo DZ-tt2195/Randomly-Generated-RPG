@@ -211,7 +211,7 @@ public class CarryVariables : MonoBehaviour
             keyTranslate.Add(data[1][i], newDictionary);
         }
 
-        List<string> listOfKeys = new();
+        List<(string, string)> listOfKeys = new();
         for (int i = 2; i < data.Length; i++)
         {
             for (int j = 0; j < data[i].Length; j++)
@@ -222,25 +222,26 @@ public class CarryVariables : MonoBehaviour
                     string language = data[1][j];
                     string key = data[i][0];
                     keyTranslate[language][key] = data[i][j];
-                }
-                else
-                {
-                    listOfKeys.Add(data[i][j]);
+
+                    if (j == 1)
+                        listOfKeys.Add((data[i][0], data[i][1]));
                 }
             }
         }
         CreateBaseTxtFile(listOfKeys);
     }
 
-    void CreateBaseTxtFile(List<string> listOfKeys)
+    void CreateBaseTxtFile(List<(string, string)> listOfKeys)
     {
         if (Application.isEditor)
         {
             string baseText = "";
-            foreach (string key in listOfKeys)
-                baseText += $"{key}=\n";
+            foreach ((string key, string value) in listOfKeys)
+                baseText += $"{key}={value}\n";
+
             string filePath = $"Assets/Resources/BaseTxtFile.txt";
             File.WriteAllText($"{filePath}", baseText);
+
             /*
             string filePath = Path.Combine(Application.persistentDataPath, "BaseTxtFile.txt");
             using (StreamWriter writer = new StreamWriter(filePath))

@@ -6,7 +6,6 @@ using TMPro;
 using MyBox;
 using System;
 using System.Linq;
-using static UnityEngine.GraphicsBuffer;
 
 public enum Stats { Power, Defense, Speed, Luck };
 public enum StatusEffect { Stunned, Targeted, Locked, Protected, Extra };

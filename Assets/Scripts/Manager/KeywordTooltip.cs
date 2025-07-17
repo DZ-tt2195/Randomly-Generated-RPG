@@ -83,7 +83,7 @@ public class KeywordTooltip : MonoBehaviour
             foreach (KeywordHover link in spriteKeywordStatuses)
             {
                 string toReplace = link.original.Replace("Image", "");
-                answer = answer.Replace(link.original, $"<link=\"{toReplace}\"><sprite=\"{toReplace}\" name=\"{toReplace}\"></link>");
+                answer = answer.Replace(link.original, $"<link=\"{toReplace}\"><sprite=\"{link.original}\" name=\"{link.original}\"></link>");
             }
         }
         return answer;
