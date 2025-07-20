@@ -192,8 +192,11 @@ public class Ability : MonoBehaviour
 
         if (critical != 0)
         {
-            string answer = (critical > 0) ? CarryVariables.instance.Translate("Good Luck") : CarryVariables.instance.Translate("Bad Luck");
-            Log.instance.AddText(answer.Replace("This", this.name).Replace("Num", $"{Mathf.Abs(critical)}"), logged);
+            string answer = CarryVariables.instance.Translate(critical > 0 ? "Good Luck" : "Bad Luck", new()
+            {
+                ("This", this.name), ("Num", Mathf.Abs(critical).ToString())
+            });
+            Log.instance.AddText(answer, logged);
         }
 
         if (finalCalc > 4 && enemyNumberCap)

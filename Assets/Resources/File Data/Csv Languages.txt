@@ -270,6 +270,66 @@
       "\"\""
     ],
     [
+      "Apply Number Cap",
+      "Amount capped at 4 (Number Cap).",
+      "\"\""
+    ],
+    [
+      "Apply Minimum",
+      "Amount capped at 1.",
+      "\"\""
+    ],
+    [
+      "Apply Ineffectives Fail",
+      "$This$'s attack fails (Ineffectives Fail).",
+      "\"\""
+    ],
+    [
+      "Failed",
+      "Failed",
+      "\"\""
+    ],
+    [
+      "Super Effective",
+      "It's super effective! (+$Num$)",
+      "\"\""
+    ],
+    [
+      "Not Effective",
+      "It's not very effective... (-$Num$)",
+      "\"\""
+    ],
+    [
+      "Increase Cooldown",
+      "$Num$ of $Target$'s Abilities gain $MiscStat$ Cooldown.",
+      "\"\""
+    ],
+    [
+      "Decrease Cooldown",
+      "$Num$ of $Target$'s Abilities lose $MiscStat$ Cooldown.",
+      "\"\""
+    ],
+    [
+      "Apply Cooldown",
+      "$Target$'s $Ability$ is placed on $MiscStat$ Cooldown.",
+      "\"\""
+    ],
+    [
+      "Timer",
+      "Timer",
+      "\"\""
+    ],
+    [
+      "Out of Time",
+      "$This$ runs out of time. (Player Timer)",
+      "\"\""
+    ],
+    [
+      "Gain New Abilities",
+      "Players have new Abilities.",
+      "\"\""
+    ],
+    [
       "Special Thanks",
       "Special Thanks",
       "\"\""
@@ -520,6 +580,16 @@
       "\"\""
     ],
     [
+      "Blocked Emotion",
+      "$This$ is Locked and can't change Emotion.",
+      "\"\""
+    ],
+    [
+      "Blocked Position",
+      "$This$ is Locked and can't change Position.",
+      "\"\""
+    ],
+    [
       "Stunned",
       "Stunned",
       "Stunned"
@@ -527,6 +597,11 @@
     [
       "Stunned Text",
       "Skips their next turn.",
+      "\"\""
+    ],
+    [
+      "Miss Turn",
+      "$This$ is Stunned and misses a turn.",
       "\"\""
     ],
     [
@@ -550,6 +625,16 @@
       "\"\""
     ],
     [
+      "Gain Extra Ability",
+      "$This$ gets $Num$ extra Abilities next turn.",
+      "\"\""
+    ],
+    [
+      "Use Extra Ability",
+      "$This$ uses another Ability.",
+      "\"\""
+    ],
+    [
       "Star",
       "Star",
       "Star"
@@ -557,6 +642,41 @@
     [
       "Star Text",
       "More Star = Stronger Enemy type.",
+      "\"\""
+    ],
+    [
+      "Increase Stat",
+      "$This$ gains $Num$ $Stat$.",
+      "\"\""
+    ],
+    [
+      "Decrease Stat",
+      "$This$ loses $Num$ $Stat$.\"",
+      "\"\""
+    ],
+    [
+      "Become New",
+      "$This$ becomes $Change$.",
+      "\"\""
+    ],
+    [
+      "Change Status",
+      "$This$ is $Status$ for $Num$ rounds.",
+      "\"\""
+    ],
+    [
+      "Died",
+      "$This$ has died.",
+      "\"\""
+    ],
+    [
+      "Revived",
+      "$This$ comes back to life.",
+      "\"\""
+    ],
+    [
+      "Emotion Effect",
+      "$This$ is $Emotion$.",
       "\"\""
     ],
     [
@@ -602,6 +722,31 @@
     [
       "Wave",
       "Wave",
+      "\"\""
+    ],
+    [
+      "Enter Fight",
+      "$This$ enters the fight.",
+      "\"\""
+    ],
+    [
+      "Quit Fight",
+      "You quit.",
+      "\"\""
+    ],
+    [
+      "Game Won",
+      "You won!",
+      "\"\""
+    ],
+    [
+      "Game Lost",
+      "You lost.",
+      "\"\""
+    ],
+    [
+      "Waves Survived",
+      "Waves survived: $Num$",
       "\"\""
     ],
     [
@@ -847,51 +992,6 @@
     [
       "Default Position",
       "Default Position",
-      "\"\""
-    ],
-    [
-      "Apply Number Cap",
-      "Amount capped at 4 (Number Cap).",
-      "\"\""
-    ],
-    [
-      "Apply Minimum",
-      "Amount capped at 1.",
-      "\"\""
-    ],
-    [
-      "Apply Ineffectives Fail",
-      "$This$'s attack fails (Ineffectives Fail).",
-      "\"\""
-    ],
-    [
-      "Failed",
-      "Failed",
-      "\"\""
-    ],
-    [
-      "Super Effective",
-      "It's super effective! (+$Num$)",
-      "\"\""
-    ],
-    [
-      "Not Effective",
-      "It's not very effective... (-$Num$)",
-      "\"\""
-    ],
-    [
-      "Increase Cooldown",
-      "$Num$ of $Target$'s Abilities gain $MiscStat$ Cooldown.",
-      "\"\""
-    ],
-    [
-      "Decrease Cooldown",
-      "$Num$ of $Target$'s Abilities lose $MiscStat$ Cooldown.",
-      "\"\""
-    ],
-    [
-      "Apply Cooldown",
-      "$Target$'s $Ability$ is placed on $MiscStat$ Cooldown.",
       "\"\""
     ],
     [

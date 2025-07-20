@@ -72,7 +72,7 @@ public class TurnManager : MonoBehaviour
         isBattling = true;
         waveText.transform.parent.localPosition = new Vector3(0, 1200, 0);
 
-        resignButton.onClick.AddListener(() => GameFinished("You quit.", $"Survived {currentWave - 1} {(currentWave - 1 == 1 ? "wave" : "waves")}."));
+        resignButton.onClick.AddListener(() => GameFinished("Quit Fight."));
 
         if (CarryVariables.instance.mode == CarryVariables.GameMode.Daily)
         {
@@ -101,21 +101,21 @@ public class TurnManager : MonoBehaviour
 
         if (currentWave > 5)
         {
-            GameFinished("You won!", $"Survived 5 waves.");
+            GameFinished("Game Won");
         }
         else if (CarryVariables.instance.mode == CarryVariables.GameMode.Tutorial)
         {
             yield return NewAnimation(true);
-            Log.instance.AddText($"WAVE {currentWave} / 3");
+            Log.instance.AddText($"{CarryVariables.instance.Translate("Wave")} {currentWave} / 3");
         }
         else
         {
             yield return NewAnimation(true);
-            Log.instance.AddText($"WAVE {currentWave} / 5");
+            Log.instance.AddText($"{CarryVariables.instance.Translate("Wave")} {currentWave} / 5");
 
             if (currentWave >= 2 && CarryVariables.instance.ActiveCheat("New Abilities"))
             {
-                Log.instance.AddText($"Players have new abilities.");
+                Log.instance.AddText(CarryVariables.instance.Translate("Gain New Abilities"));
                 foreach (Character player in listOfPlayers)
                 {
                     for (int i = player.listOfRandomAbilities.Count - 1; i >= 0; i--)
@@ -158,7 +158,7 @@ public class TurnManager : MonoBehaviour
             yield return NewAnimation(false);
 
         Log.instance.AddText($"");
-        Log.instance.AddText($"ROUND {currentRound}");
+        Log.instance.AddText($"{CarryVariables.instance.Translate("Round")} {currentRound}");
 
         speedQueue = AllCharacters();
 
@@ -183,7 +183,7 @@ public class TurnManager : MonoBehaviour
 
             if (CheckLost())
             {
-                GameFinished("You lost.", $"Survived {currentWave - 1} {(currentWave - 1 == 1 ? "wave" : "waves")}.");
+                GameFinished("Game Lost");
                 yield break;
             }
             else if (listOfEnemies.Count == 0)
@@ -207,8 +207,8 @@ public class TurnManager : MonoBehaviour
         Vector3 finalPos = new Vector3(0, -1200, 0);
 
         waveText.transform.parent.localPosition = originalPos;
-        waveText.text = $"WAVE {currentWave} / {(CarryVariables.instance.mode == CarryVariables.GameMode.Tutorial ? "3" : "5")}";
-        roundText.text = $"ROUND {currentRound}";
+        waveText.text = $"{CarryVariables.instance.Translate("Wave")} {currentWave} / {(CarryVariables.instance.mode == CarryVariables.GameMode.Tutorial ? "3" : "5")}";
+        roundText.text = $"{CarryVariables.instance.Translate("Round")} {currentRound}";
 
         float elapsedTime = 0f;
         float totalTime = PlayerPrefs.GetFloat("Animation Speed");
@@ -224,11 +224,11 @@ public class TurnManager : MonoBehaviour
         yield return WaitTime();
 
         currentRound++;
-        roundText.text = $"ROUND {currentRound}";
+        roundText.text = $"{CarryVariables.instance.Translate("Round")} {currentRound}";
         if (increaseWave)
         {
             currentWave++;
-            waveText.text = $"WAVE {currentWave} / {(CarryVariables.instance.mode == CarryVariables.GameMode.Tutorial ? "3" : "5")}";
+            waveText.text = $"{CarryVariables.instance.Translate("Wave")} {currentWave} / {(CarryVariables.instance.mode == CarryVariables.GameMode.Tutorial ? "3" : "5")}";
         }
 
         yield return WaitTime();
@@ -243,7 +243,7 @@ public class TurnManager : MonoBehaviour
         waveText.transform.parent.localPosition = finalPos;
     }
 
-    public void GameFinished(string message1, string message2)
+    public void GameFinished(string message1)
     {
         try
         {
@@ -264,7 +264,7 @@ public class TurnManager : MonoBehaviour
 
         Log.instance.AddText("");
         Log.instance.AddText(CarryVariables.instance.Translate(message1));
-        Log.instance.AddText(CarryVariables.instance.Translate(message2));
+        Log.instance.AddText(CarryVariables.instance.Translate("Waves Survived", new() { ("Num", (currentWave-1).ToString())}));
         Log.instance.enabled = false;
     }
 
@@ -373,7 +373,7 @@ public class TurnManager : MonoBehaviour
             }
 
             nextEnemy.name = dataFile.myName;
-            Log.instance.AddText($"{Log.Article(nextEnemy.name)} entered the fight.", logged);
+            Log.instance.AddText(CarryVariables.instance.Translate("Enter Fight", new() { ("This", nextEnemy.name)}), logged);
 
             nextEnemy.SetupCharacter(dataFile, CarryVariables.instance.ConvertToAbilityData(dataFile.listOfSkills, false), startingEmotion, true);
             if (CarryVariables.instance.ActiveCheat("Weaker Enemies"))

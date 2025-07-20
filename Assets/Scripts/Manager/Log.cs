@@ -41,22 +41,6 @@ public class Log : MonoBehaviour
         return sentence;
     }
 
-    public static string Article(string followingWord)
-    {
-        if (followingWord.StartsWith('A')
-            || followingWord.StartsWith('E')
-            || followingWord.StartsWith('I')
-            || followingWord.StartsWith('O')
-            || followingWord.StartsWith('U'))
-        {
-            return $"an {followingWord}";
-        }
-        else
-        {
-            return $"a {followingWord}";
-        }
-    }
-    
     public void AddText(string logText, int indent = 0)
     {
         if (indent < 0)
