@@ -16,7 +16,7 @@
     ],
     [
       "Last Update",
-      "Last Updated: July 16, 2025",
+      "Last Updated: July 20, 2025",
       "\"\""
     ],
     [
@@ -37,11 +37,6 @@
     [
       "Loading",
       "Loading...",
-      "\"\""
-    ],
-    [
-      "Tutorial",
-      "Tutorial",
       "\"\""
     ],
     [
@@ -645,41 +640,6 @@
       "\"\""
     ],
     [
-      "Increase Stat",
-      "$This$ gains $Num$ $Stat$.",
-      "\"\""
-    ],
-    [
-      "Decrease Stat",
-      "$This$ loses $Num$ $Stat$.\"",
-      "\"\""
-    ],
-    [
-      "Become New",
-      "$This$ becomes $Change$.",
-      "\"\""
-    ],
-    [
-      "Change Status",
-      "$This$ is $Status$ for $Num$ rounds.",
-      "\"\""
-    ],
-    [
-      "Died",
-      "$This$ has died.",
-      "\"\""
-    ],
-    [
-      "Revived",
-      "$This$ comes back to life.",
-      "\"\""
-    ],
-    [
-      "Emotion Effect",
-      "$This$ is $Emotion$.",
-      "\"\""
-    ],
-    [
       "Customize Players",
       "Customize Players",
       "\"\""
@@ -747,6 +707,86 @@
     [
       "Waves Survived",
       "Waves survived: $Num$",
+      "\"\""
+    ],
+    [
+      "Increase Stat",
+      "$This$ gains $Num$ $Stat$.",
+      "\"\""
+    ],
+    [
+      "Decrease Stat",
+      "$This$ loses $Num$ $Stat$.\"",
+      "\"\""
+    ],
+    [
+      "Become New",
+      "$This$ becomes $Change$.",
+      "\"\""
+    ],
+    [
+      "Change Status",
+      "$This$ is $Status$ for $Num$ rounds.",
+      "\"\""
+    ],
+    [
+      "Died",
+      "$This$ has died.",
+      "\"\""
+    ],
+    [
+      "Revived",
+      "$This$ comes back to life.",
+      "\"\""
+    ],
+    [
+      "Emotion Effect",
+      "$This$ is $Emotion$.",
+      "\"\""
+    ],
+    [
+      "Choose Ability",
+      "$This$: Choose an Ability.",
+      "\"\""
+    ],
+    [
+      "Must Choose Targeted",
+      "$Target$ is Targeted.",
+      "\"\""
+    ],
+    [
+      "Choose Any Target",
+      "Choose someone to target ($Ability$).",
+      "\"\""
+    ],
+    [
+      "Choose One Player",
+      "Choose a player to target ($Ability$).",
+      "\"\""
+    ],
+    [
+      "Choose Another Player",
+      "Choose another player to target ($Ability$).",
+      "\"\""
+    ],
+    [
+      "Choose An Enemy",
+      "Choose an enemy to target ($Ability$).",
+      "\"\""
+    ],
+    [
+      "Confirm No Target",
+      "Use $Ability$?",
+      "\"\""
+    ],
+    [
+      "Confirm Target",
+      "Use $Ability$ on:",
+      "\"\""
+    ],
+    [
+      "Tutorial",
+      "Tutorial",
       "\"\""
     ],
     [

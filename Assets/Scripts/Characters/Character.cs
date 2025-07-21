@@ -457,8 +457,16 @@ public class Character : MonoBehaviour
 
             if (this is PlayerCharacter)
             {
-                string result = $"{this.name}: Use {chosenAbility.data.myName}" +
-                    $"{(chosenTarget.Count > 0 ? " on " + string.Join(" + ", chosenTarget.Select(target => target.data.myName)) : "")}?";
+                string result = "";
+                if (chosenTarget.Count == 0)
+                {
+                    result = CarryVariables.instance.Translate("Confirm No Target", new() { ("Ability", CarryVariables.instance.Translate(chosenAbility.data.myName)) });
+                }
+                else
+                {
+                    result = CarryVariables.instance.Translate("Confirm Target", new() { ("Ability", CarryVariables.instance.Translate(chosenAbility.data.myName)) });
+                    result += string.Join(" + ", chosenTarget.Select(target => target.name));
+                }
 
                 yield return TurnManager.instance.ConfirmUndo(result, new Vector3(0, 400));
                 if (TurnManager.instance.confirmChoice == 1)

@@ -15,7 +15,7 @@ public class PlayerCharacter : Character
         allAbilities.AddRange(listOfRandomAbilities);
 
         EnableAbilityBoxes();
-        TurnManager.instance.instructions.text = $"{this.name}: Choose an Ability. {(extraAbility ? "(Extra Turn)" : "")}";
+        TurnManager.instance.instructions.text = CarryVariables.instance.Translate("Choose Ability", new() { ("This", this.name)});
 
         yield return WaitForChoice();
         if (choice != -1)
@@ -73,7 +73,7 @@ public class PlayerCharacter : Character
         {
             if (TurnManager.instance.CheckForTargeted(ability.listOfTargets[index]))
             {
-                TurnManager.instance.instructions.text = $"{TurnManager.instance.targetedEnemy.data.myName} is Targeted.";
+                TurnManager.instance.instructions.text = CarryVariables.instance.Translate("Must Choose Targeted", new() { ("Target", TurnManager.instance.targetedEnemy.name) });
                 ability.listOfTargets[index] = new() { TurnManager.instance.targetedEnemy };
             }
             else
@@ -81,16 +81,16 @@ public class PlayerCharacter : Character
                 switch (target)
                 {
                     case TeamTarget.AnyOne:
-                        TurnManager.instance.instructions.text = $"Choose someone to target. ({ability.data.myName})";
+                        TurnManager.instance.instructions.text = CarryVariables.instance.Translate("Choose Any Target", new() { ("Ability", CarryVariables.instance.Translate(ability.data.myName))});
                         break;
                     case TeamTarget.OnePlayer:
-                        TurnManager.instance.instructions.text = $"Choose a Player to target. ({ability.data.myName})";
+                        TurnManager.instance.instructions.text = CarryVariables.instance.Translate("Choose One Player", new() { ("Ability", CarryVariables.instance.Translate(ability.data.myName)) });
                         break;
                     case TeamTarget.OtherPlayer:
-                        TurnManager.instance.instructions.text = $"Choose another Player to target. ({ability.data.myName})";
+                        TurnManager.instance.instructions.text = CarryVariables.instance.Translate("Choose Another Player", new() { ("Ability", CarryVariables.instance.Translate(ability.data.myName)) });
                         break;
                     case TeamTarget.OneEnemy:
-                        TurnManager.instance.instructions.text = $"Choose an Enemy to target. ({ability.data.myName})";
+                        TurnManager.instance.instructions.text = CarryVariables.instance.Translate("Choose An Enemy", new() { ("Ability", CarryVariables.instance.Translate(ability.data.myName)) });
                         break;
                 }
 
