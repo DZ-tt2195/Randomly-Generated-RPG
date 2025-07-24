@@ -16,7 +16,7 @@
     ],
     [
       "Last Update",
-      "Last Updated: July 20, 2025",
+      "Last Updated: July 24, 2025",
       "\"\""
     ],
     [
@@ -612,16 +612,16 @@
     [
       "Extra",
       "Extra Ability",
-      "\"\""
+      "Extra Ability"
     ],
     [
       "Extra Text",
-      "This can use another Ability on their turn.",
+      "Can use another Ability on their turn.",
       "\"\""
     ],
     [
       "Gain Extra Ability",
-      "$This$ gets $Num$ extra Abilities next turn.",
+      "$This$ gets $Num$ extra Abilities on their turn.",
       "\"\""
     ],
     [
@@ -752,11 +752,6 @@
     [
       "Must Choose Targeted",
       "$Target$ is Targeted.",
-      "\"\""
-    ],
-    [
-      "Choose Any Target",
-      "Choose someone to target ($Ability$).",
       "\"\""
     ],
     [
@@ -1376,7 +1371,7 @@
     ],
     [
       "Air Combat Text",
-      "A Grounded Player and Enemy both become Elevated and gain $PowerStat$ Power.",
+      "A Grounded Player and Grounded Enemy both become Elevated. The Player gains $PowerStat$ Power.",
       "\"\""
     ],
     [

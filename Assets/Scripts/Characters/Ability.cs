@@ -5,7 +5,7 @@ using MyBox;
 using System.Reflection;
 using System.Linq;
 
-public enum TeamTarget { None, Self, AnyOne, All, OnePlayer, OtherPlayer, OneEnemy, OtherEnemy, AllPlayers, AllOtherPlayers, AllEnemies, AllOtherEnemies };
+public enum TeamTarget { None, Self, All, OnePlayer, OtherPlayer, OneEnemy, OtherEnemy, AllPlayers, AllOtherPlayers, AllEnemies, AllOtherEnemies };
 public enum AbilityType { None, Attack, StatPlayer, StatEnemy, EmotionPlayer, EmotionEnemy, PositionPlayer, PositionEnemy, Healing, Misc };
 
 public class Ability : MonoBehaviour
@@ -14,7 +14,7 @@ public class Ability : MonoBehaviour
 #region Setup
 
     [ReadOnly] public AbilityData data;
-    [ReadOnly] public HashSet<TeamTarget> singleTarget = new() { TeamTarget.AnyOne, TeamTarget.OnePlayer, TeamTarget.OtherPlayer, TeamTarget.OneEnemy, TeamTarget.OtherEnemy };
+    [ReadOnly] public HashSet<TeamTarget> singleTarget = new() { TeamTarget.OnePlayer, TeamTarget.OtherPlayer, TeamTarget.OneEnemy, TeamTarget.OtherEnemy };
     [ReadOnly] public Character self;
     [ReadOnly] public string editedDescription;
     [ReadOnly] public AbilityType mainType;
@@ -517,10 +517,6 @@ public class Ability : MonoBehaviour
                 listOfTargets.Add(this.self);
                 break;
             case TeamTarget.All:
-                foreach (Character foe in TurnManager.instance.listOfEnemies) { listOfTargets.Add(foe); }
-                foreach (Character friend in TurnManager.instance.listOfPlayers) { listOfTargets.Add(friend); }
-                break;
-            case TeamTarget.AnyOne:
                 foreach (Character foe in TurnManager.instance.listOfEnemies) { listOfTargets.Add(foe); }
                 foreach (Character friend in TurnManager.instance.listOfPlayers) { listOfTargets.Add(friend); }
                 break;

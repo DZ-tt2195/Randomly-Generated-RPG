@@ -398,11 +398,11 @@
     [
       "Angel",
       "Air Combat",
-      "A Grounded Player and Enemy both become Elevated and gain $PowerStat$ Power.",
+      "A Grounded Player and Grounded Enemy both become Elevated. The Player gains $PowerStat$ Power.",
       "$This$ initiates air combat.",
       "OnePlayer-OneEnemy",
       "TargetIsGrounded-TargetIsGrounded",
-      "TargetBecomeElevated/TargetGainPower-TargetBecomeElevated/TargetGainPower",
+      "TargetBecomeElevated/TargetGainPower-TargetBecomeElevated",
       "0",
       "",
       "",

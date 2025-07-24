@@ -465,6 +465,7 @@ public class Character : MonoBehaviour
                 else
                 {
                     result = CarryVariables.instance.Translate("Confirm Target", new() { ("Ability", CarryVariables.instance.Translate(chosenAbility.data.myName)) });
+                    result += " ";
                     result += string.Join(" + ", chosenTarget.Select(target => target.name));
                 }
 

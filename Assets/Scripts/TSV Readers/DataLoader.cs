@@ -149,7 +149,6 @@ public class DataLoader
         }
         return line switch
         {
-            "ANYONE" => TeamTarget.AnyOne,
             "SELF" => TeamTarget.Self,
             "ALL" => TeamTarget.All,
             "ONEPLAYER" => TeamTarget.OnePlayer,

@@ -1947,14 +1947,18 @@ MonoBehaviour:
   - original: Protected
     translated: 
     description: Can't lose Stats or Health until their next turn.
-    color: {r: 0.735849, g: 0.735849, b: 0.735849, a: 0}
+    color: {r: 1, g: 0.721519, b: 0, a: 0}
   - original: Targeted
     translated: 
     description: All single-target Abilities must target them if possible.
-    color: {r: 0.5, g: 0.75, b: 0, a: 0}
+    color: {r: 0.43290636, g: 0.6415094, b: 0.009077947, a: 0}
   - original: Locked
     translated: 
     description: Emotion and Position can't change until their next turn.
+    color: {r: 0.6320754, g: 0.6320754, b: 0.6320754, a: 0}
+  - original: Extra
+    translated: 
+    description: Can't be targeted by abilities that only affect Grounded targets.
     color: {r: 1, g: 1, b: 1, a: 0}
   - original: Grounded
     translated: 

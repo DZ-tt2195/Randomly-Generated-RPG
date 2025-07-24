@@ -72,7 +72,7 @@ public class TurnManager : MonoBehaviour
         isBattling = true;
         waveText.transform.parent.localPosition = new Vector3(0, 1200, 0);
 
-        resignButton.onClick.AddListener(() => GameFinished("Quit Fight."));
+        resignButton.onClick.AddListener(() => GameFinished("Quit Fight.", false));
 
         if (CarryVariables.instance.mode == CarryVariables.GameMode.Daily)
         {
@@ -101,7 +101,7 @@ public class TurnManager : MonoBehaviour
 
         if (currentWave > 5)
         {
-            GameFinished("Game Won");
+            GameFinished("Game Won", true);
         }
         else if (CarryVariables.instance.mode == CarryVariables.GameMode.Tutorial)
         {
@@ -183,7 +183,7 @@ public class TurnManager : MonoBehaviour
 
             if (CheckLost())
             {
-                GameFinished("Game Lost");
+                GameFinished("Game Lost", false);
                 yield break;
             }
             else if (listOfEnemies.Count == 0)
@@ -243,7 +243,7 @@ public class TurnManager : MonoBehaviour
         waveText.transform.parent.localPosition = finalPos;
     }
 
-    public void GameFinished(string message1)
+    public void GameFinished(string message1, bool win)
     {
         try
         {
@@ -264,7 +264,9 @@ public class TurnManager : MonoBehaviour
 
         Log.instance.AddText("");
         Log.instance.AddText(CarryVariables.instance.Translate(message1));
-        Log.instance.AddText(CarryVariables.instance.Translate("Waves Survived", new() { ("Num", (currentWave-1).ToString())}));
+
+        int number = (win) ? currentWave : currentWave - 1;
+        Log.instance.AddText(CarryVariables.instance.Translate("Waves Survived", new() { ("Num", (number).ToString())}));
         Log.instance.enabled = false;
     }
 

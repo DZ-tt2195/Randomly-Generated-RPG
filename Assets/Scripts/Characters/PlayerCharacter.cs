@@ -80,9 +80,6 @@ public class PlayerCharacter : Character
             {
                 switch (target)
                 {
-                    case TeamTarget.AnyOne:
-                        TurnManager.instance.instructions.text = CarryVariables.instance.Translate("Choose Any Target", new() { ("Ability", CarryVariables.instance.Translate(ability.data.myName))});
-                        break;
                     case TeamTarget.OnePlayer:
                         TurnManager.instance.instructions.text = CarryVariables.instance.Translate("Choose One Player", new() { ("Ability", CarryVariables.instance.Translate(ability.data.myName)) });
                         break;

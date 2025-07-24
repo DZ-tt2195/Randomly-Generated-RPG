@@ -244,7 +244,7 @@ public class TutorialManager : MonoBehaviour
 
             case 15: //tutorial over
                 yield return ClickThroughDialogue(new List<string>() { "15.0", "15.1" });
-                TurnManager.instance.GameFinished("Tutorial Finished");
+                TurnManager.instance.GameFinished("Tutorial Finished", true);
                 break;
         }
     }
