@@ -35,7 +35,7 @@
       "10",
       "1",
       "GROUNDED",
-      "Above Danger,Bad Omens,Bounce,Chill,Expedite,Flood,Gust,Headwinds,Jackpot,Lightning Storm,Manipulate Time,Paralyze,Punch Up,Quick Attack,Readjust,Restrain,Shockwave,Stalactites,Team Attack,Touchdown,Warp,",
+      "Above Danger,Bad Omens,Bounce,Chill,Accelerate,Flood,Gust,Headwinds,Jackpot,Lightning Storm,Manipulate Time,Bind,Punch Up,Quick Attack,Readjust,Restrain,Shockwave,Stalactites,Team Attack,Touchdown,Warp,",
       "",
       "Harald Lieske|Dominion: Allies|(Conjurer)"
     ]

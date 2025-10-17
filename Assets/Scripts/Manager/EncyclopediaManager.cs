@@ -231,13 +231,13 @@ public class EncyclopediaManager : MonoBehaviour
             case "Any":
                 searchTier = TierSearch.Any;
                 break;
-            case "1-Star":
+            case "1":
                 searchTier = TierSearch.Star1;
                 break;
-            case "2-Star":
+            case "2":
                 searchTier = TierSearch.Star2;
                 break;
-            case "3-Star":
+            case "3":
                 searchTier = TierSearch.Star3;
                 break;
         }

@@ -847,9 +847,9 @@
     ],
     [
       "Wizard",
-      "Expedite",
+      "Accelerate",
       "Another Player gains $SpeedStat$ Speed. Decrease their active Cooldown by $MiscStat$.",
-      "$This$ expedites $Target$.",
+      "$This$ accelerates $Target$.",
       "OtherPlayer",
       "None",
       "TargetGainSpeed/TargetDecreaseAllCooldown",
@@ -973,9 +973,9 @@
     ],
     [
       "Wizard",
-      "Paralyze",
+      "Bind",
       "An Elevated Enemy becomes Grounded and Stunned for $MiscStat$ turn.",
-      "$This$ traps $Target$.",
+      "$This$ binds $Target$.",
       "OneEnemy",
       "TargetIsElevated",
       "TargetBecomeGrounded/TargetBecomeStunned",
