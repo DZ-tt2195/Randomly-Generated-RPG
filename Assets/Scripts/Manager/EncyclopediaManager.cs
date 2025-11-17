@@ -21,18 +21,18 @@ public class EncyclopediaManager : MonoBehaviour
         [SerializeField] AbilityBox abilityBoxPrefab;
         [SerializeField] RectTransform storeAbilityBoxes;
         [SerializeField] TMP_InputField abilityInput;
-        [SerializeField] TMP_Dropdown characterDropdown;
-        [SerializeField] TMP_Dropdown type1Dropdown;
-        [SerializeField] TMP_Dropdown type2Dropdown;
-        [SerializeField] TMP_Dropdown cooldownDropdown;
+        [SerializeField] TranslateDropdown characterDropdown;
+        [SerializeField] TranslateDropdown type1Dropdown;
+        [SerializeField] TranslateDropdown type2Dropdown;
+        [SerializeField] TranslateDropdown cooldownDropdown;
 
     [Foldout("Enemy Search", true)]
         List<Character> listOfEnemyBoxes = new();
         [SerializeField] GameObject characterPrefab;
         [SerializeField] RectTransform storeEnemyBoxes;
         [SerializeField] TMP_InputField enemyInput;
-        [SerializeField] TMP_Dropdown tierDropdown;
-        [SerializeField] TMP_Dropdown positionDropdown;
+        [SerializeField] TranslateDropdown tierDropdown;
+        [SerializeField] TranslateDropdown positionDropdown;
         [SerializeField] Scrollbar enemyScroll;
 
     void ChangeMode(int n)
@@ -61,10 +61,10 @@ public class EncyclopediaManager : MonoBehaviour
         }
 
         abilityInput.onValueChanged.AddListener(ChangeAbilityInput);
-        characterDropdown.onValueChanged.AddListener(ChangeAbilityDropdown);
-        type1Dropdown.onValueChanged.AddListener(ChangeAbilityDropdown);
-        type2Dropdown.onValueChanged.AddListener(ChangeAbilityDropdown);
-        cooldownDropdown.onValueChanged.AddListener(ChangeAbilityDropdown);
+        characterDropdown.dropdown.onValueChanged.AddListener(ChangeAbilityDropdown);
+        type1Dropdown.dropdown.onValueChanged.AddListener(ChangeAbilityDropdown);
+        type2Dropdown.dropdown.onValueChanged.AddListener(ChangeAbilityDropdown);
+        cooldownDropdown.dropdown.onValueChanged.AddListener(ChangeAbilityDropdown);
 
         abilityDictionary.Add(CarryVariables.instance.Translate("Knight"), new());
         abilityDictionary.Add(CarryVariables.instance.Translate("Wizard"), new());
@@ -84,8 +84,9 @@ public class EncyclopediaManager : MonoBehaviour
             abilityDictionary[key] = abilityDictionary[key].OrderBy(box => box.ability.data.myName).ToList();
 
         enemyInput.onValueChanged.AddListener(ChangeEnemyInput);
-        tierDropdown.onValueChanged.AddListener(ChangeTierDropdown);
-        positionDropdown.onValueChanged.AddListener(ChangeTierDropdown);
+        tierDropdown.dropdown.onValueChanged.AddListener(ChangeTierDropdown);
+        positionDropdown.dropdown.onValueChanged.AddListener(ChangeTierDropdown);
+
         foreach (List<CharacterData> listOfData in CarryVariables.instance.listOfEnemies)
         {
             foreach (CharacterData data in listOfData)
@@ -176,12 +177,12 @@ public class EncyclopediaManager : MonoBehaviour
 
     void SearchAbility()
     {
-        AbilityType searchType1 = ConvertType(type1Dropdown.options[type1Dropdown.value].text);
-        AbilityType searchType2 = ConvertType(type2Dropdown.options[type2Dropdown.value].text);
+        AbilityType searchType1 = ConvertType(type1Dropdown.GetOriginal());
+        AbilityType searchType2 = ConvertType(type2Dropdown.GetOriginal());
         int searchCooldown;
         try
         {
-            searchCooldown = int.Parse(cooldownDropdown.options[cooldownDropdown.value].text);
+            searchCooldown = int.Parse(cooldownDropdown.GetOriginal());
         }
         catch
         {
@@ -191,7 +192,7 @@ public class EncyclopediaManager : MonoBehaviour
         for (int i = storeAbilityBoxes.childCount-1; i >= 0; i--)
             storeAbilityBoxes.GetChild(i).SetParent(null);
 
-        foreach (AbilityBox box in abilityDictionary[characterDropdown.options[characterDropdown.value].text])
+        foreach (AbilityBox box in abilityDictionary[characterDropdown.GetOriginal()])
         {
             bool matches = (CompareStrings(abilityInput.text, box.ability.data.myName) || CompareStrings(abilityInput.text, box.ability.editedDescription))
                 && CompareTypes(searchType1, box.ability.data)
@@ -226,7 +227,7 @@ public class EncyclopediaManager : MonoBehaviour
         TierSearch searchTier = TierSearch.Any;
         Position searchPosition = Position.Dead;
 
-        switch (tierDropdown.options[tierDropdown.value].text)
+        switch (tierDropdown.GetOriginal())
         {
             case "Any":
                 searchTier = TierSearch.Any;
@@ -241,7 +242,7 @@ public class EncyclopediaManager : MonoBehaviour
                 searchTier = TierSearch.Star3;
                 break;
         }
-        switch (positionDropdown.options[positionDropdown.value].text)
+        switch (positionDropdown.GetOriginal())
         {
             case "Any":
                 searchPosition = Position.Dead;

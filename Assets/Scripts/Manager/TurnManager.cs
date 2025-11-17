@@ -72,7 +72,7 @@ public class TurnManager : MonoBehaviour
         isBattling = true;
         waveText.transform.parent.localPosition = new Vector3(0, 1200, 0);
 
-        resignButton.onClick.AddListener(() => GameFinished("Quit Fight.", false));
+        resignButton.onClick.AddListener(() => GameFinished("Quit Fight", false));
 
         if (CarryVariables.instance.mode == CarryVariables.GameMode.Daily)
         {
@@ -450,12 +450,14 @@ public class TurnManager : MonoBehaviour
         }
     }
 
-    public bool CheckForTargeted(List<Character> possibleTargets)
+    public Character CheckForTargeted(List<Character> possibleTargets)
     {
         if (targetedPlayer != null && possibleTargets.Contains(targetedPlayer))
-            return true;
+            return targetedPlayer;
+        if (targetedEnemy != null && possibleTargets.Contains(targetedEnemy))
+            return targetedEnemy;
 
-        return (targetedEnemy != null && possibleTargets.Contains(targetedEnemy));
+        return null;
     }
 
     void ResetTargetedPlayer(Character newTarget)

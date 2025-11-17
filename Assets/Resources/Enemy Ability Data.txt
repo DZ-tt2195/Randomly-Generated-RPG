@@ -75,7 +75,7 @@
       "Archer",
       "Bullseye",
       "This gains $LuckStat$ Luck. Then deal $Num$ damage to an Elevated Player.",
-      "$This$ shoots a frozen arrow at $Target$.",
+      "$This$ shoots a direct arrow at $Target$.",
       "Self-OnePlayer",
       "None-TargetIsElevated",
       "TargetGainLuck-TargetAttack",
@@ -860,7 +860,7 @@
       "",
       "1",
       "1",
-      "-1",
+      "",
       "StatPlayer"
     ],
     [
@@ -1136,7 +1136,7 @@
     [
       "PUPPY!!!",
       "Bite",
-      "Deal $Num$ damage to a Grounded Player with $MiscStat$ Defense or less.",
+      "Deal $Num$ damage to a Grounded Player with -1 Defense or less.",
       "$This$ bites $Target$.",
       "OnePlayer",
       "TargetIsGrounded/TargetDefenseOrLess",

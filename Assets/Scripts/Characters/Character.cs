@@ -471,7 +471,10 @@ public class Character : MonoBehaviour
 
                 yield return TurnManager.instance.ConfirmUndo(result, new Vector3(0, 400));
                 if (TurnManager.instance.confirmChoice == 1)
+                {
+                    chosenAbility.listOfTargets.Clear();
                     chosenAbility = null;
+                }
                 if (timer < 0f)
                     yield break;
             }
@@ -660,11 +663,19 @@ public class Character : MonoBehaviour
         for (int i = 0; i < statEffectDict[StatusEffect.Locked]; i++)
             statusText.text += "LockedImage";
 
-        if (TurnManager.instance != null && (TurnManager.instance.targetedPlayer == this || TurnManager.instance.targetedEnemy == this))
+        if (TurnManager.instance != null)
+        {
+            if (statEffectDict[StatusEffect.Targeted] == 0 && TurnManager.instance.targetedPlayer == this)
+                TurnManager.instance.targetedPlayer = null;
+            if (statEffectDict[StatusEffect.Targeted] == 0 && TurnManager.instance.targetedEnemy == this)
+                TurnManager.instance.targetedEnemy = null;
             for (int i = 0; i < statEffectDict[StatusEffect.Targeted]; i++)
                 statusText.text += "TargetedImage";
+        }
         else
+        {
             _privStatEffect[StatusEffect.Targeted] = 0;
+        }
 
         for (int i = 0; i < statEffectDict[StatusEffect.Stunned]; i++)
             statusText.text += "StunnedImage";

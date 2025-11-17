@@ -10,7 +10,7 @@ public class TSVReader
 {
 	public static string[][] ReadFile(string file)
 	{
-        TextAsset data = Resources.Load($"File Data/{file}") as TextAsset;
+        TextAsset data = Resources.Load($"{file}") as TextAsset;
 
         string editData = data.text;
         editData = editData.Replace("],", "").Replace("{", "").Replace("}", "");

@@ -13,7 +13,7 @@ public class AbilityForcer : MonoBehaviour
     Dictionary<string, List<AbilityBox>> abilityDictionary = new();
     [SerializeField] Button confirmButton;
     [SerializeField] Transform blanks;
-    [SerializeField] List<TMP_Dropdown> emotionDropdowns = new();
+    [SerializeField] List<TranslateDropdown> emotionDropdowns = new();
     List<AbilityBox> chosenAbilities = new();
 
     AbilityBox clicked;
@@ -119,21 +119,25 @@ public class AbilityForcer : MonoBehaviour
             PlayerCharacter nextCharacter = Instantiate(playerPrefab).AddComponent<PlayerCharacter>();
 
             Emotion startingEmotion = Emotion.Dead;
-            string dropdownValue = emotionDropdowns[i].options[emotionDropdowns[i].value].text;
-
-            if (dropdownValue == CarryVariables.instance.Translate("Random"))
+            switch (emotionDropdowns[i].GetOriginal())
             {
-                int randomValue = dailyRNG != null ? dailyRNG.Next(1, 5) : UnityEngine.Random.Range(1, 5);
-                startingEmotion = (Emotion)randomValue;
+                case "Random":
+                    int randomValue = dailyRNG != null ? dailyRNG.Next(1, 5) : UnityEngine.Random.Range(1, 5);
+                    startingEmotion = (Emotion)randomValue;
+                    break;
+                case "Neutral":
+                    startingEmotion = Emotion.Neutral;
+                    break;
+                case "Happy":
+                    startingEmotion = Emotion.Happy;
+                    break;
+                case "Angry":
+                    startingEmotion = Emotion.Angry;
+                    break;
+                case "Sad":
+                    startingEmotion = Emotion.Sad;
+                    break;
             }
-            else if (dropdownValue == CarryVariables.instance.Translate("Neutral"))
-                startingEmotion = Emotion.Neutral;
-            else if (dropdownValue == CarryVariables.instance.Translate("Happy"))
-                startingEmotion = Emotion.Happy;
-            else if (dropdownValue == CarryVariables.instance.Translate("Angry"))
-                startingEmotion = Emotion.Angry;
-            else if (dropdownValue == CarryVariables.instance.Translate("Sad"))
-                startingEmotion = Emotion.Sad;
 
             List<AbilityData> abilitiesForPlayer = new();
             for (int j = 0; j<6; j++)

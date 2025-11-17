@@ -1,6 +1,6 @@
 Title=RANDOMLY GENERATED
 Author Credit=by Thomas Tang (DZ)
-Last Update=Last Updated: July 24, 2025
+Last Update=Last Updated: Nov 21, 2025
 Inspiration=Inspired by OMORI (OMOCAT) and Epic Battle Fantasy V (Kupo Games)
 Language=Language
 Translator Credit=
@@ -103,7 +103,7 @@ Defense Text=Higher Defense = Take less damage from opposing attacks.
 Speed=Speed
 Speed Text=Higher Speed = Takes their turn earlier in the turn order.
 Luck=Luck
-Luck Text=Positive Luck = More likely to get +3 on attack and healing abilities. Negative Luck = More likely to get -3.
+Luck Text=Positive Luck = More likely to get +2 on attack and healing abilities. Negative Luck = More likely to get -2.
 Good Luck=$This$ has good luck! (+$Num$)
 Bad Luck=$This$ has bad luck...(-$Num$)
 Protected=Protected
@@ -411,7 +411,7 @@ Quick Shot Text=An Elevated Player becomes Angry. Then deal $Num$ damage to them
 Quick Shot Log=$This$ fires a quick shot at $Target$.
 Bullseye=Bullseye
 Bullseye Text=This gains $LuckStat$ Luck. Then deal $Num$ damage to an Elevated Player.
-Bullseye Log=$This$ shoots a frozen arrow at $Target$.
+Bullseye Log=$This$ shoots a direct arrow at $Target$.
 Volley=Volley
 Volley Text=Deal $Num$ damage to all Players. They all lose $LuckStat$ Luck.
 Volley Log=$This$ fires a volley of arrows.
@@ -623,7 +623,7 @@ Control Log=$This$ controls other enemies.
 PUPPY!!!=PUPPY!!!
 PUPPY!!! Text=Attacks Players after they're Grounded and their Defense has been reduced.
 Bite=Bite
-Bite Text=Deal $Num$ damage to a Grounded Player with $MiscStat$ Defense or less.
+Bite Text=Deal $Num$ damage to a Grounded Player with -1 Defense or less.
 Bite Log=$This$ bites $Target$.
 Leap=Leap
 Leap Text=Deal $Num$ damage to an Elevated Player. They become Grounded.

@@ -106,7 +106,7 @@ public class Ability : MonoBehaviour
         bool chance = Random.Range(0f, 1f) <= Mathf.Abs(self.statModDict[Stats.Luck])/5f;
 
         if (self.statModDict[Stats.Luck] != 0 && chance)
-            return self.statModDict[Stats.Luck] > 0 ? 3 : -3;
+            return self.statModDict[Stats.Luck] > 0 ? 2 : -2;
         else
             return 0;
     }
@@ -569,7 +569,8 @@ public class Ability : MonoBehaviour
                 if (methodName.Equals("None") || methodName.Equals(""))
                     continue;
 
-                yield return ((IEnumerator)enumeratorDictionary[methodName].Invoke(this, new object[2] { target, logged }));
+                if (target != null && target.currentHealth >= 0)
+                    yield return ((IEnumerator)enumeratorDictionary[methodName].Invoke(this, new object[2] { target, logged }));
                 if (!runNextMethod) break;
                 yield return TurnManager.instance.WaitTime();
             }

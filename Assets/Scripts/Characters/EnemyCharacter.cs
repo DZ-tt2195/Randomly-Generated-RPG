@@ -66,9 +66,11 @@ public class EnemyCharacter : Character
 
             if (ability.singleTarget.Contains(target))
             {
-                if (TurnManager.instance.CheckForTargeted(ability.listOfTargets[index]))
+                Character targeted = TurnManager.instance.CheckForTargeted(ability.listOfTargets[index]);
+
+                if (targeted != null)
                 {
-                    ability.listOfTargets[index] = new List<Character> { TurnManager.instance.targetedPlayer };
+                    ability.listOfTargets[index] = new List<Character> { targeted };
                 }
                 else
                 {

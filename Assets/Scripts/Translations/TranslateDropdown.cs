@@ -6,15 +6,23 @@ using UnityEngine.SceneManagement;
 
 public class TranslateDropdown : MonoBehaviour
 {
-    TMP_Dropdown dropdown;
+    public TMP_Dropdown dropdown { get; private set; }
+    public List<(string, string)> translatedOptions = new();
 
     void Awake()
     {
-        if (CarryVariables.instance == null)
-            SceneManager.LoadScene(0);
-
         dropdown = GetComponent<TMP_Dropdown>();
         for (int i = 0; i < dropdown.options.Count; i++)
-            dropdown.options[i].text = CarryVariables.instance.Translate(dropdown.options[i].text);
+        {
+            string original = dropdown.options[i].text;
+            string translated = CarryVariables.instance.Translate(original);
+            translatedOptions.Add((original, translated));
+            dropdown.options[i].text = translated;
+        }
+    }
+
+    public string GetOriginal()
+    {
+        return translatedOptions[dropdown.value].Item1;
     }
 }

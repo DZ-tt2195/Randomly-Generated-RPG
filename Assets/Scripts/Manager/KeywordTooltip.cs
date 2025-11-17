@@ -75,18 +75,14 @@ public class KeywordTooltip : MonoBehaviour
             foreach (KeywordHover link in spriteKeywords)
             {
                 string toReplace = link.translated;
-                answer = answer.Replace(toReplace, $"<link=\"{toReplace}\"><sprite=\"{toReplace}\" name=\"{toReplace}\"></link>");
+                answer = answer.Replace(toReplace, $"<link=\"{link.original}\"><sprite=\"{link.original}\" name=\"{link.original}\"></link>");
             }
         }
         else
         {
             foreach (KeywordHover link in spriteKeywordStatuses)
             {
-                string toReplace = link.original.Replace("Image", "");
-                if (toReplace.Equals("Extra"))
-                    answer = answer.Replace(link.original, $"<link=\"{"Extra Ability"}\"><sprite=\"{link.original}\" name=\"{link.original}\"></link>");
-                else
-                    answer = answer.Replace(link.original, $"<link=\"{toReplace}\"><sprite=\"{link.original}\" name=\"{link.original}\"></link>");
+                answer = answer.Replace(link.original, $"<link=\"{link.original}\"><sprite=\"{link.original}\" name=\"{link.original}\"></link>");
             }
         }
         return answer;
@@ -132,7 +128,7 @@ public class KeywordTooltip : MonoBehaviour
 
         foreach (KeywordHover entry in linkedKeywords)
         {
-            if (entry.translated.Equals(target))
+            if (entry.original.Equals(target))
             {
                 tooltipText.text = entry.description;
                 tooltipText.transform.parent.position = CalculatePosition(mousePosition);
@@ -142,7 +138,7 @@ public class KeywordTooltip : MonoBehaviour
         }
         foreach (KeywordHover entry in spriteKeywords)
         {
-            if (entry.translated.Equals(target))
+            if (entry.original.Equals(target))
             {
                 tooltipText.text = entry.description;
                 tooltipText.transform.parent.position = CalculatePosition(mousePosition);
@@ -152,7 +148,7 @@ public class KeywordTooltip : MonoBehaviour
         }
         foreach (KeywordHover entry in spriteKeywordStatuses)
         {
-            if (entry.translated.Equals(target))
+            if (entry.original.Equals(target))
             {
                 tooltipText.text = entry.description;
                 tooltipText.transform.parent.position = CalculatePosition(mousePosition);

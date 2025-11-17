@@ -71,10 +71,11 @@ public class PlayerCharacter : Character
 
         if (ability.singleTarget.Contains(target))
         {
-            if (TurnManager.instance.CheckForTargeted(ability.listOfTargets[index]))
+            Character targeted = TurnManager.instance.CheckForTargeted(ability.listOfTargets[index]);
+            if (targeted != null)
             {
-                TurnManager.instance.instructions.text = CarryVariables.instance.Translate("Must Choose Targeted", new() { ("Target", TurnManager.instance.targetedEnemy.name) });
-                ability.listOfTargets[index] = new() { TurnManager.instance.targetedEnemy };
+                TurnManager.instance.instructions.text = CarryVariables.instance.Translate("Must Choose Targeted", new() { ("Target", targeted.name) });
+                ability.listOfTargets[index] = new List<Character> { targeted };
             }
             else
             {
