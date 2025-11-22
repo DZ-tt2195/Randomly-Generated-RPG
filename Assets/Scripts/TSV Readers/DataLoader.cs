@@ -13,7 +13,7 @@ public class CharacterData
     public int baseHealth;
     public int baseSpeed;
     public Position startingPosition;
-    public string listOfSkills;
+    public string listOfAbilities;
     public string aiTargeting;
     public string artCredit;
     public int difficulty;
@@ -62,7 +62,7 @@ public class DataLoader
                 newCharacter.baseHealth = StringToInt(line[2]);
                 newCharacter.baseSpeed = StringToInt(line[3]);
                 newCharacter.startingPosition = line[4].Equals("GROUNDED") ? Position.Grounded : Position.Elevated;
-                newCharacter.listOfSkills = line[5].Trim();
+                newCharacter.listOfAbilities = line[5].Trim();
                 newCharacter.aiTargeting = line[6].Trim().ToUpper();
                 newCharacter.artCredit = line[7].Replace("|", "\n");
                 try { newCharacter.difficulty = StringToInt(line[8]); } catch { newCharacter.difficulty = 0; }

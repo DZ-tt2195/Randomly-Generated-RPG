@@ -97,10 +97,9 @@ public class Character : MonoBehaviour
         listOfRandomAbilities = listOfRandomAbilities.OrderBy(o => o.mainType).ToList();
     }
 
-    internal void AddAbility(AbilityData ability, bool auto, bool startWithCooldown)
+    internal void AddAbility(AbilityData abilityFile, bool auto, bool startWithCooldown)
     {
-        Ability newAbility = this.gameObject.AddComponent<Ability>();
-        newAbility.SetupAbility(ability, startWithCooldown);
+        Ability newAbility = new Ability(this, abilityFile, startWithCooldown);
         (auto ? listOfAutoAbilities : listOfRandomAbilities).Add(newAbility);
     }
 
@@ -108,7 +107,6 @@ public class Character : MonoBehaviour
     {
         listOfAutoAbilities.Remove(ability);
         listOfRandomAbilities.Remove(ability);
-        Destroy(ability);
     }
 
     #endregion

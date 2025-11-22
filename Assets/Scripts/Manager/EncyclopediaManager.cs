@@ -72,9 +72,7 @@ public class EncyclopediaManager : MonoBehaviour
 
         foreach (AbilityData data in CarryVariables.instance.listOfPlayerAbilities)
         {
-            Ability nextAbility = this.gameObject.AddComponent<Ability>();
-            nextAbility.SetupAbility(data, false);
-
+            Ability nextAbility = new Ability(null, data, false);
             AbilityBox nextBox = Instantiate(abilityBoxPrefab, null);
             nextBox.ReceiveAbility(true, nextAbility);
             abilityDictionary[CarryVariables.instance.Translate(data.user)].Add(nextBox);
@@ -92,7 +90,7 @@ public class EncyclopediaManager : MonoBehaviour
             foreach (CharacterData data in listOfData)
             {
                 Character nextEnemy = Instantiate(characterPrefab).AddComponent<Character>();
-                nextEnemy.SetupCharacter(data, CarryVariables.instance.ConvertToAbilityData(data.listOfSkills, false), Emotion.Neutral, false);
+                nextEnemy.SetupCharacter(data, CarryVariables.instance.ConvertToAbilityData(data.listOfAbilities, false), Emotion.Neutral, false);
                 listOfEnemyBoxes.Add(nextEnemy);
                 foreach (Transform child in nextEnemy.transform)
                 {

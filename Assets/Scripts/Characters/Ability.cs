@@ -8,7 +8,7 @@ using System.Linq;
 public enum TeamTarget { None, Self, All, OnePlayer, OtherPlayer, OneEnemy, OtherEnemy, AllPlayers, AllOtherPlayers, AllEnemies, AllOtherEnemies };
 public enum AbilityType { None, Attack, StatPlayer, StatEnemy, EmotionPlayer, EmotionEnemy, PositionPlayer, PositionEnemy, Healing, Misc };
 
-public class Ability : MonoBehaviour
+public class Ability
 {
 
 #region Setup
@@ -30,9 +30,9 @@ public class Ability : MonoBehaviour
     public Dictionary<string, MethodInfo> boolDictionary = new();
     public Dictionary<string, MethodInfo> enumeratorDictionary = new();
 
-    public void SetupAbility(AbilityData data, bool startWithCooldown)
+    public Ability(Character self, AbilityData data, bool startWithCooldown)
     {
-        self = GetComponent<Character>();
+        this.self = self;
         this.data = data;
         currentCooldown = (startWithCooldown) ? data.baseCooldown : 0;
 
@@ -149,7 +149,7 @@ public class Ability : MonoBehaviour
         {
             string answer = CarryVariables.instance.Translate(critical > 0 ? "Good Luck" : "Bad Luck", new()
             {
-                ("This", this.name), ("Num", Mathf.Abs(critical).ToString())
+                ("This", user.name), ("Num", Mathf.Abs(critical).ToString())
             });
             Log.instance.AddText(answer, logged);
         }
@@ -176,7 +176,7 @@ public class Ability : MonoBehaviour
 
         if (effectiveness < 0 && CarryVariables.instance.ActiveChallenge("Ineffectives Fail") && user is PlayerCharacter)
         {
-            Log.instance.AddText(CarryVariables.instance.Translate("Apply Ineffectives Fail", new() { ("This", this.name) }), logged);
+            Log.instance.AddText(CarryVariables.instance.Translate("Apply Ineffectives Fail", new() { ("This", user.name) }), logged);
             TurnManager.instance.CreateVisual(CarryVariables.instance.Translate("Failed"), target.transform.localPosition);
             return 0;
         }
@@ -194,7 +194,7 @@ public class Ability : MonoBehaviour
         {
             string answer = CarryVariables.instance.Translate(critical > 0 ? "Good Luck" : "Bad Luck", new()
             {
-                ("This", this.name), ("Num", Mathf.Abs(critical).ToString())
+                ("This", user.name), ("Num", Mathf.Abs(critical).ToString())
             });
             Log.instance.AddText(answer, logged);
         }

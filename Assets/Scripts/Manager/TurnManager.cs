@@ -121,7 +121,7 @@ public class TurnManager : MonoBehaviour
                     for (int i = player.listOfRandomAbilities.Count - 1; i >= 0; i--)
                         player.DropAbility(player.listOfRandomAbilities[i]);
 
-                    List<AbilityData> newAbilties = CarryVariables.instance.CompletePlayerAbilities(new(), player.name, dailyRNG);
+                    List<AbilityData> newAbilties = CarryVariables.instance.CompletePlayerAbilities(new(), CarryVariables.instance.ConvertToAbilityData(player.data.listOfAbilities, true), dailyRNG);
                     foreach (AbilityData data in newAbilties)
                         player.AddAbility(data, false, false);
                 }
@@ -377,7 +377,7 @@ public class TurnManager : MonoBehaviour
             nextEnemy.name = dataFile.myName;
             Log.instance.AddText(CarryVariables.instance.Translate("Enter Fight", new() { ("This", nextEnemy.name)}), logged);
 
-            nextEnemy.SetupCharacter(dataFile, CarryVariables.instance.ConvertToAbilityData(dataFile.listOfSkills, false), startingEmotion, true);
+            nextEnemy.SetupCharacter(dataFile, CarryVariables.instance.ConvertToAbilityData(dataFile.listOfAbilities, false), startingEmotion, true);
             if (CarryVariables.instance.ActiveCheat("Weaker Enemies"))
                 StartCoroutine(nextEnemy.ChangeMaxHealth(-2, logged + 1));
             if (CarryVariables.instance.ActiveChallenge("Extra Enemy Turns"))

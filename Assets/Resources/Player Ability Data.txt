@@ -620,7 +620,7 @@
       "None",
       "TargetHeal/TargetDecreaseAllCooldown",
       "1",
-      "4",
+      "3",
       "",
       "",
       "",

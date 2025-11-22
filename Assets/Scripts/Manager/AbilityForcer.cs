@@ -74,9 +74,7 @@ public class AbilityForcer : MonoBehaviour
 
                 foreach (AbilityData data in CarryVariables.instance.listOfPlayerAbilities)
                 {
-                    Ability nextAbility = this.gameObject.AddComponent<Ability>();
-                    nextAbility.SetupAbility(data, false);
-
+                    Ability nextAbility = new Ability(null, data, false);
                     AbilityBox nextBox = Instantiate(abilityBoxPrefab, null);
                     nextBox.ReceiveAbility(true, nextAbility);
 
@@ -146,7 +144,7 @@ public class AbilityForcer : MonoBehaviour
                 if (nextBox.ability != null && !abilitiesForPlayer.Contains(nextBox.ability.data))
                     abilitiesForPlayer.Add(nextBox.ability.data);
             }
-            abilitiesForPlayer = CarryVariables.instance.CompletePlayerAbilities(abilitiesForPlayer, playerData[i].myName, dailyRNG);
+            abilitiesForPlayer = CarryVariables.instance.CompletePlayerAbilities(abilitiesForPlayer, CarryVariables.instance.ConvertToAbilityData(playerData[i].listOfAbilities, true), dailyRNG);
 
             nextCharacter.SetupCharacter(playerData[i], abilitiesForPlayer, startingEmotion, false);
             TurnManager.instance.AddPlayer(nextCharacter);

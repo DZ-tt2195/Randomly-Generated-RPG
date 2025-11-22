@@ -294,16 +294,65 @@ public class CarryVariables : MonoBehaviour
         return foundData;
     }
 
-    public List<AbilityData> CompletePlayerAbilities(List<AbilityData> current, string player, System.Random dailyRNG)
+    public List<AbilityData> CompletePlayerAbilities(List<AbilityData> forced, List<AbilityData> toChooseFrom, System.Random dailyRNG)
     {
+        string playerName = toChooseFrom[0].user;
         List<AbilityData> newList = new();
-        newList.AddRange(current);
+        newList.AddRange(forced);
+
+        List<string> toFillOut = playerName switch
+        {
+            "Knight" => new() { "Attack", "Attack", "Attack", "Emotion", "Stats", "Emotion" },
+            "Angel" => new() { "Heal", "Heal", "Heal", "Position", "Emotion", "Stats" },
+            "Wizard" => new() { "Attack", "Attack", "Attack", "Position", "Stats", "Position" },
+            _ => throw new NotImplementedException(),
+        };
+
+        foreach (AbilityData data in forced)
+            CheckOff(data);
+
+        bool CheckOff(AbilityData ability)
+        {
+            bool answer = false;
+            if (ability.myTypes.Contains(AbilityType.Attack) && toFillOut.Contains("Attack"))
+            {
+                toFillOut.Remove("Attack");
+                answer = true;
+            }
+            if (ability.myTypes.Contains(AbilityType.Healing) && toFillOut.Contains("Heal"))
+            {
+                toFillOut.Remove("Heal");
+                answer = true;
+            }
+            if (ability.myTypes.Contains(AbilityType.PositionEnemy) || ability.myTypes.Contains(AbilityType.PositionPlayer) && toFillOut.Contains("Position"))
+            {
+                toFillOut.Remove("Position");
+                answer = true;
+            }
+            if (ability.myTypes.Contains(AbilityType.EmotionEnemy) || ability.myTypes.Contains(AbilityType.EmotionPlayer) && toFillOut.Contains("Emotion"))
+            {
+                toFillOut.Remove("Emotion");
+                answer = true;
+            }
+            if (ability.myTypes.Contains(AbilityType.StatEnemy) || ability.myTypes.Contains(AbilityType.StatPlayer) && toFillOut.Contains("Stats"))
+            {
+                toFillOut.Remove("Stats");
+                answer = true;
+            }
+            return answer;
+        }
 
         while (newList.Count < 6)
         {
-            int randomNumber = (dailyRNG != null) ? dailyRNG.Next(0, listOfPlayerAbilities.Count) : UnityEngine.Random.Range(0, listOfPlayerAbilities.Count);
-            AbilityData randomAbility = listOfPlayerAbilities[randomNumber];
-            if (!newList.Contains(randomAbility) && randomAbility.user.Equals(player))
+            int randomNumber = (dailyRNG != null) ? dailyRNG.Next(0, toChooseFrom.Count) : UnityEngine.Random.Range(0, toChooseFrom.Count);
+            AbilityData randomAbility = toChooseFrom[randomNumber];
+
+            bool removedOne = toFillOut.Count == 0;
+
+            if (newList.Contains(randomAbility) || !randomAbility.user.Equals(playerName))
+                continue;
+
+            if (toFillOut.Count == 0 || CheckOff(randomAbility))
                 newList.Add(randomAbility);
         }
         return newList;
