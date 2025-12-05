@@ -13,7 +13,7 @@
     ],
     [
       "Last Update",
-      "Last Updated: Nov 21, 2025"
+      "Last Updated: Dec 05, 2025"
     ],
     [
       "Inspiration",
@@ -669,7 +669,7 @@
     ],
     [
       "Tutorial 7.0",
-      "This Page is Happy. Happy is super effective against Angry, which puts your Knight at a disadvantage."
+      "This Page is Happy. Happy is super effective against Angry (will deal an extra 2 damage), which puts your Knight at a disadvantage."
     ],
     [
       "Tutorial 7.1",
@@ -689,7 +689,7 @@
     ],
     [
       "Tutorial 8.2",
-      "Your Angel didn’t attack, so they now can use another Ability. However, the healing ability they used is on Cooldown."
+      "Your Angel didn’t attack, so they now can use another Ability. However, Assist is on Cooldown."
     ],
     [
       "Tutorial 8.3",
@@ -709,7 +709,7 @@
     ],
     [
       "Tutorial 11.0",
-      "Your Wizard has an Ability that forces all Elevated Enemies to be Grounded. Use it against the 2 Crows."
+      "Your Wizard has an Ability that forces all Elevated Enemies to be Grounded. Use Stalactites against the 2 Crows."
     ],
     [
       "Tutorial 12.0",

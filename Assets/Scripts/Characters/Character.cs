@@ -472,6 +472,7 @@ public class Character : MonoBehaviour
                 {
                     chosenAbility.listOfTargets.Clear();
                     chosenAbility = null;
+                    chosenTarget.Clear();
                 }
                 if (timer < 0f)
                     yield break;

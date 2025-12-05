@@ -117,20 +117,20 @@ public class Ability
         {
             Emotion.Happy => target.CurrentEmotion switch
             {
-                Emotion.Angry => 1,
-                Emotion.Sad => -1,
+                Emotion.Angry => 2,
+                Emotion.Sad => -2,
                 _ => 0
             },
             Emotion.Angry => target.CurrentEmotion switch
             {
-                Emotion.Sad => 1,
-                Emotion.Happy => -1,
+                Emotion.Sad => 2,
+                Emotion.Happy => -2,
                 _ => 0
             },
             Emotion.Sad => target.CurrentEmotion switch
             {
-                Emotion.Happy => 1,
-                Emotion.Angry => -1,
+                Emotion.Happy => 2,
+                Emotion.Angry => -2,
                 _ => 0
             },
             _ => 0

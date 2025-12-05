@@ -60,7 +60,7 @@
       "$This$ fires a quick shot at $Target$.",
       "OnePlayer",
       "TargetIsElevated",
-      "TargetBecomeAngry/TargetBecomeAngry",
+      "TargetBecomeAngry/TargetAttack",
       "0",
       "3",
       "",
