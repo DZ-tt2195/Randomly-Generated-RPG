@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using MyBox;
 using TMPro;
 using System.Linq;
+using System.Diagnostics;
 using System;
 
 class CharacterPositions
@@ -65,6 +66,7 @@ public class TurnManager : MonoBehaviour
         Character _targetedEnemy;
         [ReadOnly] public Character targetedEnemy { get { return _targetedEnemy; } set { ResetTargetedEnemy(value); } }
         public int confirmChoice { get; private set; }
+        Stopwatch gameTimer;
 
     private void Awake()
     {
@@ -99,7 +101,13 @@ public class TurnManager : MonoBehaviour
         instructions.transform.parent.gameObject.SetActive(false);
         DisableCharacterButtons();
 
-        if (currentWave > 5)
+        if (currentWave == 0)
+        {
+            gameTimer = new Stopwatch();
+            gameTimer.Start();
+        }
+
+        if (currentWave > listOfWaveSetup.Count)
         {
             GameFinished("Game Won", true);
         }
@@ -111,7 +119,7 @@ public class TurnManager : MonoBehaviour
         else
         {
             yield return NewAnimation(true);
-            Log.instance.AddText($"{CarryVariables.instance.Translate("Wave")} {currentWave} / 5");
+            Log.instance.AddText($"{CarryVariables.instance.Translate("Wave")} {currentWave} / {listOfWaveSetup.Count}");
 
             if (currentWave >= 2 && CarryVariables.instance.ActiveCheat("New Abilities"))
             {
@@ -155,8 +163,9 @@ public class TurnManager : MonoBehaviour
     public IEnumerator NewRound(bool playAnimation)
     {
         if (playAnimation)
+        {
             yield return NewAnimation(false);
-
+        }
         Log.instance.AddText($"");
         Log.instance.AddText($"{CarryVariables.instance.Translate("Round")} {currentRound}");
 
@@ -267,6 +276,12 @@ public class TurnManager : MonoBehaviour
 
         int number = (win) ? currentWave : currentWave - 1;
         Log.instance.AddText(CarryVariables.instance.Translate("Waves Survived", new() { ("Num", (number).ToString())}));
+
+        if (gameTimer != null)
+        {
+            gameTimer.Stop();
+            Log.instance.AddText(CarryVariables.instance.Translate("Time Taken", new() {("Time", MyExtensions.StopwatchTime(gameTimer))}));
+        }
         Log.instance.enabled = false;
     }
 

@@ -13,7 +13,7 @@
     ],
     [
       "Last Update",
-      "Last Updated: Dec 05, 2025"
+      "Last Updated: Dec 08, 2025"
     ],
     [
       "Inspiration",
@@ -566,6 +566,10 @@
     [
       "Waves Survived",
       "Waves survived: $Num$"
+    ],
+    [
+      "Time Taken",
+      "Time taken: $Time$"
     ],
     [
       "Increase Stat",

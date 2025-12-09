@@ -1,6 +1,6 @@
 Title=RANDOMLY GENERATED
 Author Credit=by Thomas Tang (DZ)
-Last Update=Last Updated: Dec 05, 2025
+Last Update=Last Updated: Dec 08, 2025
 Inspiration=Inspired by OMORI (OMOCAT) and Epic Battle Fantasy V (Kupo Games)
 Language=Language
 Translator Credit=
@@ -139,6 +139,7 @@ Quit Fight=You quit.
 Game Won=You won!
 Game Lost=You lost.
 Waves Survived=Waves survived: $Num$
+Time Taken=Time taken: $Time$
 Increase Stat=$This$ gains $Num$ $Stat$.
 Decrease Stat=$This$ loses $Num$ $Stat$.
 Become New=$This$ becomes $Change$.
