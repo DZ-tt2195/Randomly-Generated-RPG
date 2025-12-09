@@ -7,7 +7,7 @@ using MyBox;
 using System;
 using System.Linq;
 
-public enum Stats { Power, Defense, Speed, Luck };
+public enum Stats { Power, Defense };
 public enum StatusEffect { Stunned, Targeted, Locked, Protected, Extra };
 public enum Position { Grounded, Elevated, Dead };
 public enum Emotion { Dead, Neutral, Happy, Angry, Sad };
@@ -82,7 +82,6 @@ public class Character : MonoBehaviour
         this.baseHealth = data.baseHealth;
         this.currentHealth = this.baseHealth;
         healthText.text = KeywordTooltip.instance.EditText($"{currentHealth}/{baseHealth}Health");
-        this.baseSpeed = data.baseSpeed;
 
         this.myImage.sprite = Resources.Load<Sprite>($"Characters/{characterData.myName}");
         AddAbility(CarryVariables.instance.FindEnemyAbility("Skip Turn"), true, false);
@@ -120,17 +119,17 @@ public class Character : MonoBehaviour
 
     public int CalculatePower()
     {
-        return statModDict[Stats.Power] + (CurrentEmotion == Emotion.Angry ? 2 : 0);
+        return statModDict[Stats.Power] + (CurrentEmotion == Emotion.Angry ? 1 : 0);
     }
 
-    public int CalculateSpeed()
+    public int CalculateDefense()
     {
-        return this.baseSpeed + statModDict[Stats.Speed];
+        return statModDict[Stats.Defense] + (CurrentEmotion == Emotion.Angry ? 1 : 0);
     }
 
     public int CalculateStatTotals()
     {
-        return (CalculatePower() + statModDict[Stats.Defense] + CalculateSpeed() + statModDict[Stats.Luck]);
+        return (CalculatePower() + CalculateDefense());
     }
 
     public IEnumerator ChangeMaxHealth(int effect, int logged)
@@ -357,6 +356,7 @@ public class Character : MonoBehaviour
 
         Log.instance.AddText(CarryVariables.instance.Translate("Revived", new() { ("This", this.name)}), logged);
         TurnManager.instance.listOfPlayers.Add(this);
+        TurnManager.instance.speedQueue.Insert(0, this);
         TurnManager.instance.listOfDead.Remove(this);
 
         yield return ChangeHealth(health, logged);
@@ -640,8 +640,6 @@ public class Character : MonoBehaviour
 
             AddToTopText(CalculatePower(), "Power");
             AddToTopText(statModDict[Stats.Defense], "Defense");
-            AddToTopText(CalculateSpeed(), "Speed");
-            AddToTopText(statModDict[Stats.Luck], "Luck");
 
             void AddToTopText(int amount, string text)
             {

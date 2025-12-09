@@ -39,7 +39,6 @@ public class TurnManager : MonoBehaviour
 
     [Foldout("UI", true)]
         public List<AbilityBox> listOfBoxes = new();
-        [SerializeField] List<RightClickMe> listOfSpeedImages = new();
         public TMP_Text instructions;
         public TMP_Text timerText;
         bool borderDecrease = true;
@@ -170,11 +169,20 @@ public class TurnManager : MonoBehaviour
         Log.instance.AddText($"{CarryVariables.instance.Translate("Round")} {currentRound}");
 
         speedQueue = AllCharacters();
+        List<Character> AllCharacters()
+        {
+            List<Character> allTargets = new();
+            allTargets.AddRange(listOfPlayers);
+            allTargets.AddRange(listOfEnemies);
+            return allTargets;
+        }
+
+        foreach (Character character in speedQueue)
+            UnityEngine.Debug.Log($"round {currentRound}: {character.name}");
 
         while (speedQueue.Count > 0)
         {
             DisableCharacterButtons();
-            DisplaySpeedQueue();
             listOfBoxes[0].transform.parent.gameObject.SetActive(false);
 
             Character nextInLine = speedQueue[0];
@@ -269,7 +277,6 @@ public class TurnManager : MonoBehaviour
         instructions.text = "";
         instructions.transform.parent.gameObject.SetActive(false);
         quitButton.gameObject.SetActive(true);
-        listOfSpeedImages[0].transform.parent.gameObject.SetActive(false);
 
         Log.instance.AddText("");
         Log.instance.AddText(CarryVariables.instance.Translate(message1));
@@ -340,30 +347,6 @@ public class TurnManager : MonoBehaviour
         pv.Setup(text, position);
     }
 
-    void DisplaySpeedQueue()
-    {
-        listOfSpeedImages[0].transform.parent.gameObject.SetActive(true);
-        speedQueue = speedQueue.OrderByDescending(o => o.CalculateSpeed()).ToList();
-
-        for (int i = 0; i < listOfSpeedImages.Count; i++)
-        {
-            try
-            {
-                listOfSpeedImages[i].gameObject.SetActive(true);
-                listOfSpeedImages[i].character = speedQueue[i];
-                listOfSpeedImages[i].image.sprite = speedQueue[i].myImage.sprite;
-                listOfSpeedImages[i].image.color = speedQueue[i].myImage.color;
-            }
-            catch (ArgumentOutOfRangeException)
-            {
-                listOfSpeedImages[i].gameObject.SetActive(false);
-            }
-            catch (MissingReferenceException)
-            {
-                listOfSpeedImages[i].gameObject.SetActive(false);
-            }
-        }
-    }
 
 #endregion
 
@@ -416,14 +399,6 @@ public class TurnManager : MonoBehaviour
                 break;
             }
         }
-    }
-
-    List<Character> AllCharacters()
-    {
-        List<Character> allTargets = new();
-        allTargets.AddRange(listOfPlayers);
-        allTargets.AddRange(listOfEnemies);
-        return allTargets.Shuffle();
     }
 
     public static string[] SpliceString(string text, char splitUp)

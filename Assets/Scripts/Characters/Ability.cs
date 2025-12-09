@@ -43,8 +43,6 @@ public class Ability
                 ("Sec", Mathf.Abs(data.secondNumber).ToString()),
                 ("PowerStat", Mathf.Abs(data.modifyPower).ToString()),
                 ("DefenseStat", Mathf.Abs(data.modifyDefense).ToString()),
-                ("SpeedStat", Mathf.Abs(data.modifySpeed).ToString()),
-                ("LuckStat", Mathf.Abs(data.modifyLuck).ToString()),
                 ("MiscStat", Mathf.Abs(data.miscNumber).ToString()),
             });
         editedDescription = KeywordTooltip.instance.EditText(editedDescription);
@@ -101,16 +99,6 @@ public class Ability
 
 #region Calculations
 
-    int RollLuck()
-    {
-        bool chance = Random.Range(0f, 1f) <= Mathf.Abs(self.statModDict[Stats.Luck])/5f;
-
-        if (self.statModDict[Stats.Luck] != 0 && chance)
-            return self.statModDict[Stats.Luck] > 0 ? 2 : -2;
-        else
-            return 0;
-    }
-
     public int Effectiveness(Character user, Character target)
     {
         int answer = user.CurrentEmotion switch
@@ -141,18 +129,8 @@ public class Ability
 
     int CalculateHealing(Character user, int number, int logged)
     {
-        int critical = RollLuck();
         bool enemyNumberCap = self is EnemyCharacter && CarryVariables.instance.ActiveCheat("Number Cap");
-        int finalCalc = number + critical + user.CalculatePower();
-
-        if (critical != 0)
-        {
-            string answer = CarryVariables.instance.Translate(critical > 0 ? "Good Luck" : "Bad Luck", new()
-            {
-                ("This", user.name), ("Num", Mathf.Abs(critical).ToString())
-            });
-            Log.instance.AddText(answer, logged);
-        }
+        int finalCalc = number + user.CalculatePower();
 
         if (finalCalc > 4 && enemyNumberCap)
         {
@@ -181,23 +159,13 @@ public class Ability
             return 0;
         }
 
-        int critical = RollLuck();
         bool enemyNumberCap = self is EnemyCharacter && CarryVariables.instance.ActiveCheat("Number Cap");
-        int finalCalc = number + critical + effectiveness + user.CalculatePower() - target.statModDict[Stats.Defense];
+        int finalCalc = number + effectiveness + user.CalculatePower() - target.CalculateDefense();
 
         if (effectiveness > 0)
             Log.instance.AddText(CarryVariables.instance.Translate("Super Effective", new() { ("Num", Mathf.Abs(effectiveness).ToString())}), logged);
         else if (effectiveness < 0)
             Log.instance.AddText(CarryVariables.instance.Translate("Not Effective", new() { ("Num", Mathf.Abs(effectiveness).ToString()) }), logged);
-
-        if (critical != 0)
-        {
-            string answer = CarryVariables.instance.Translate(critical > 0 ? "Good Luck" : "Bad Luck", new()
-            {
-                ("This", user.name), ("Num", Mathf.Abs(critical).ToString())
-            });
-            Log.instance.AddText(answer, logged);
-        }
 
         if (finalCalc > 4 && enemyNumberCap)
         {
@@ -408,30 +376,6 @@ public class Ability
     bool TargetDefenseOrLess(int currentIndex)
     {
         listOfTargets[currentIndex].RemoveAll(target => target.statModDict[Stats.Defense] >= data.miscNumber);
-        return listOfTargets[currentIndex].Count > 0;
-    }
-
-    bool TargetSpeedOrMore(int currentIndex)
-    {
-        listOfTargets[currentIndex].RemoveAll(target => target.statModDict[Stats.Speed] <= data.miscNumber);
-        return listOfTargets[currentIndex].Count > 0;
-    }
-
-    bool TargetSpeedOrLess(int currentIndex)
-    {
-        listOfTargets[currentIndex].RemoveAll(target => target.statModDict[Stats.Speed] >= data.miscNumber);
-        return listOfTargets[currentIndex].Count > 0;
-    }
-
-    bool TargetLuckOrMore(int currentIndex)
-    {
-        listOfTargets[currentIndex].RemoveAll(target => target.statModDict[Stats.Luck] <= data.miscNumber);
-        return listOfTargets[currentIndex].Count > 0;
-    }
-
-    bool TargetLuckOrLess(int currentIndex)
-    {
-        listOfTargets[currentIndex].RemoveAll(target => target.statModDict[Stats.Luck] >= data.miscNumber);
         return listOfTargets[currentIndex].Count > 0;
     }
 
@@ -677,26 +621,6 @@ public class Ability
     IEnumerator TargetLoseDefense(Character target, int logged)
     {
         yield return target.ChangeStat(Stats.Defense, -1*data.modifyDefense, logged);
-    }
-
-    IEnumerator TargetGainSpeed(Character target, int logged)
-    {
-        yield return target.ChangeStat(Stats.Speed, data.modifySpeed, logged);
-    }
-
-    IEnumerator TargetLoseSpeed(Character target, int logged)
-    {
-        yield return target.ChangeStat(Stats.Speed, -1*data.modifySpeed, logged);
-    }
-
-    IEnumerator TargetGainLuck(Character target, int logged)
-    {
-        yield return target.ChangeStat(Stats.Luck, data.modifyLuck, logged);
-    }
-
-    IEnumerator TargetLoseLuck(Character target, int logged)
-    {
-        yield return target.ChangeStat(Stats.Luck, -1*data.modifyLuck, logged);
     }
 
     IEnumerator TargetDeath(Character target, int logged)

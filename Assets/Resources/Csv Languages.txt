@@ -13,7 +13,7 @@
     ],
     [
       "Last Update",
-      "Last Updated: Dec 08, 2025"
+      "Last Updated: Dec 09, 2025"
     ],
     [
       "Inspiration",
@@ -365,7 +365,7 @@
     ],
     [
       "Angry Text",
-      "Effective against Sad. 2 extra Power; becomes Stunned when killing or healing someone to full Health.\""
+      "Effective against Sad. 1 extra Power and Defense; becomes Stunned when killing or healing someone to full Health."
     ],
     [
       "Grounded",
@@ -410,30 +410,6 @@
     [
       "Defense Text",
       "Higher Defense = Take less damage from opposing attacks."
-    ],
-    [
-      "Speed",
-      "Speed"
-    ],
-    [
-      "Speed Text",
-      "Higher Speed = Takes their turn earlier in the turn order."
-    ],
-    [
-      "Luck",
-      "Luck"
-    ],
-    [
-      "Luck Text",
-      "Positive Luck = More likely to get +2 on attack and healing abilities. Negative Luck = More likely to get -2."
-    ],
-    [
-      "Good Luck",
-      "$This$ has good luck! (+$Num$)"
-    ],
-    [
-      "Bad Luck",
-      "$This$ has bad luck...(-$Num$)"
     ],
     [
       "Protected",
@@ -661,7 +637,7 @@
     ],
     [
       "Tutorial 5.3",
-      "Your Knight is Angry, which means they get +2 Power (attacks and healing abilities are stronger by 2 points)."
+      "Your Knight is Angry, which means they get +1 Power (attacks and healing abilities are stronger by 1 point) and +1 Defense (take 1 less damage)."
     ],
     [
       "Tutorial 5.4",
@@ -677,7 +653,7 @@
     ],
     [
       "Tutorial 7.1",
-      "Your Knight has the higher Speed, so normally they'd take their turn before the Angel. But they're Stunned right now."
+      "Normally Knight would take their turn before Angel would. But they're Stunned right now."
     ],
     [
       "Tutorial 7.2",
@@ -833,7 +809,7 @@
     ],
     [
       "Knight Text",
-      "Deals damage to individual Enemies, but not to Elevated ones. Has control over Emotions."
+      "Deals lots of damage to individual Enemies, and only Grounded ones. Has control over Emotions and Defense."
     ],
     [
       "Battle Cry",
@@ -841,7 +817,7 @@
     ],
     [
       "Battle Cry Text",
-      "A Player becomes Angry and gains $PowerStat$ Power."
+      "A Player becomes Angry and gains $DefenseStat$ Defense."
     ],
     [
       "Battle Cry Log",
@@ -865,7 +841,7 @@
     ],
     [
       "Daze Text",
-      "A Grounded Enemy becomes Happy and loses $PowerStat$ Power."
+      "A Grounded Enemy becomes Happy and loses $DefenseStat$ Defense."
     ],
     [
       "Daze Log",
@@ -937,7 +913,7 @@
     ],
     [
       "Joust Text",
-      "Deal $Num$ damage to a Grounded Enemy. Then this loses $LuckStat$ Luck."
+      "Deal $Num$ damage to a Grounded Enemy. Then this loses $PowerStat$ Power."
     ],
     [
       "Joust Log",
@@ -1016,16 +992,16 @@
       "$This$ redirects attention to $Target$."
     ],
     [
-      "Rollout",
-      "Rollout"
+      "Strike",
+      "Strike"
     ],
     [
-      "Rollout Text",
-      "This gains $PowerStat$ Power. Then deal $Num$ damage to a Grounded Enemy."
+      "Strike Text",
+      "This gains $DefenseStat$ Defense. Then deal $Num$ damage to a Grounded Enemy."
     ],
     [
-      "Rollout Log",
-      "$This$ rolls out on $Target$."
+      "Strike Log",
+      "$This$ strikes at $Target$."
     ],
     [
       "Steal",
@@ -1076,16 +1052,16 @@
       "$This$ upsets $Target$."
     ],
     [
-      "Weaken",
-      "Weaken"
+      "Immobilize",
+      "Immobilize"
     ],
     [
-      "Weaken Text",
-      "Deal $Num$ damage to a Grounded Enemy. They lose $PowerStat$ Power."
+      "Immobilize Text",
+      "Deal $Num$ damage to a Grounded Enemy. They become Locked for $MiscStat$ turns."
     ],
     [
-      "Weaken Log",
-      "$This$ weakens $Target$."
+      "Immobilize Log",
+      "$This$ Immobilizes $Target$."
     ],
     [
       "Angel",
@@ -1161,7 +1137,7 @@
     ],
     [
       "Exhaust Text",
-      "An Enemy becomes Sad and loses $SpeedStat$ Speed."
+      "An Enemy becomes Sad and loses $PowerStat$ Power."
     ],
     [
       "Exhaust Log",
@@ -1173,7 +1149,7 @@
     ],
     [
       "Exorcism Text",
-      "An Elevated Enemy loses $PowerStat$ Power. Each Elevated Player gains $Num$ Health."
+      "An Elevated Enemy loses $DefenseStat$ Defense. Each Elevated Player gains $Num$ Health."
     ],
     [
       "Exorcism Log",
@@ -1197,7 +1173,7 @@
     ],
     [
       "Hide Text",
-      "A Grounded Enemy loses $LuckStat$ Luck. Each Grounded Player gains $Num$ Health."
+      "A Grounded Enemy loses $PowerStat$ Power. Each Grounded Player gains $Num$ Health."
     ],
     [
       "Hide Log",
@@ -1329,7 +1305,7 @@
     ],
     [
       "Tailwinds Text",
-      "Each Elevated Player gains $Num$ Health and $SpeedStat$ Speed."
+      "Each Elevated Player gains $Num$ Health and $DefenseStat$ Defense."
     ],
     [
       "Tailwinds Log",
@@ -1341,11 +1317,11 @@
     ],
     [
       "Team Up Text",
-      "Each Grounded Player gains $Num$ Health and $LuckStat$ Luck."
+      "Each Grounded Player gains $Num$ Health and $PowerStat$ Power."
     ],
     [
       "Team Up Log",
-      "$This$ secures all players."
+      "$This$ forms a team."
     ],
     [
       "Wizard",
@@ -1353,7 +1329,7 @@
     ],
     [
       "Wizard Text",
-      "Deals damage to multiple Enemies at once. Has control over Positions."
+      "Deals small amounts of damage to multiple Enemies at once. Has control over Positions and Power."
     ],
     [
       "Above Danger",
@@ -1373,7 +1349,7 @@
     ],
     [
       "Bad Omens Text",
-      "Deal $Num$ damage to all Enemies. They lose $LuckStat$ Luck."
+      "Deal $Num$ damage to all Enemies. They lose $PowerStat$ Power."
     ],
     [
       "Bad Omens Log",
@@ -1409,7 +1385,7 @@
     ],
     [
       "Accelerate Text",
-      "Another Player gains $SpeedStat$ Speed. Decrease their active Cooldown by $MiscStat$."
+      "Another Player gains $PowerStat$ Power. Decrease their active Cooldown by $MiscStat$."
     ],
     [
       "Accelerate Log",
@@ -1433,7 +1409,7 @@
     ],
     [
       "Gust Text",
-      "An Elevated Enemy becomes Grounded and loses $LuckStat$ Luck."
+      "An Elevated Enemy becomes Grounded and loses $PowerStat$ Power."
     ],
     [
       "Gust Log",
@@ -1445,23 +1421,23 @@
     ],
     [
       "Headwinds Text",
-      "Deal $Num$ damage to each Elevated Enemy. They each lose $SpeedStat$ Speed."
+      "Deal $Num$ damage to each Elevated Enemy. They each lose $PowerStat$ Power."
     ],
     [
       "Headwinds Log",
       "$This$ creates headwinds."
     ],
     [
-      "Jackpot",
-      "Jackpot"
+      "Crown",
+      "Crown"
     ],
     [
-      "Jackpot Text",
-      "A Player gains $LuckStat$ Luck and becomes Targeted for $MiscStat$ turn."
+      "Crown Text",
+      "A Player gains $PowerStat$ Power and becomes Targeted for $MiscStat$ turns."
     ],
     [
-      "Jackpot Log",
-      "$This$ lets $Target$ win the jackpot."
+      "Crown Log",
+      "$This$ crowns $Target$ as a winner."
     ],
     [
       "Lightning Storm",
@@ -1517,11 +1493,11 @@
     ],
     [
       "Quick Attack Text",
-      "Each Grounded Player gains $SpeedStat$ Speed. Deal $Num$ damage to each Grounded Enemy."
+      "A Grounded Player gains $PowerStat$ Power. Deal $Num$ damage to each Grounded Enemy."
     ],
     [
       "Quick Attack Log",
-      "$This$ does a quick attack."
+      "$This$ has $Target$ perform a quick attack."
     ],
     [
       "Readjust",
@@ -1589,7 +1565,7 @@
     ],
     [
       "Touchdown Text",
-      "An Elevated Player becomes Grounded and gains $LuckStat$ Luck."
+      "An Elevated Player becomes Grounded and gains $PowerStat$ Power."
     ],
     [
       "Touchdown Log",
@@ -1601,7 +1577,7 @@
     ],
     [
       "Warp Text",
-      "A Grounded Enemy becomes Elevated and loses $SpeedStat$ Speed."
+      "A Grounded Enemy becomes Elevated and loses $PowerStat$ Power."
     ],
     [
       "Warp Log",
@@ -1637,7 +1613,7 @@
     ],
     [
       "Archer Text",
-      "Increases its own Luck, makes itself Happy, then attacks Angry and Elevated Players."
+      "Makes itself Happy, then shoots down Angry and Elevated Players."
     ],
     [
       "Quick Shot",
@@ -1657,7 +1633,7 @@
     ],
     [
       "Bullseye Text",
-      "This gains $LuckStat$ Luck. Then deal $Num$ damage to an Elevated Player."
+      "This gains $PowerStat$ Power. Then deal $Num$ damage to an Elevated Player."
     ],
     [
       "Bullseye Log",
@@ -1669,7 +1645,7 @@
     ],
     [
       "Volley Text",
-      "Deal $Num$ damage to all Players. They all lose $LuckStat$ Luck."
+      "Deal $Num$ damage to all Players."
     ],
     [
       "Volley Log",
@@ -1681,7 +1657,7 @@
     ],
     [
       "Focus Text",
-      "This becomes Happy and gains $LuckStat$ Luck."
+      "This becomes Happy and gains $DefenseStat$ Defense."
     ],
     [
       "Focus Log",
@@ -1781,7 +1757,7 @@
     ],
     [
       "Hunting Season Text",
-      "This gains $PowerStat$ Power and $SpeedStat$ Speed."
+      "This gains $PowerStat$ Power."
     ],
     [
       "Hunting Season Log",
@@ -2113,7 +2089,7 @@
     ],
     [
       "Possession Text",
-      "A Grounded Player becomes Elevated and loses $LuckStat$ Luck."
+      "A Grounded Player becomes Elevated and loses $PowerStat$ Power."
     ],
     [
       "Possession Log",
@@ -2245,7 +2221,7 @@
     ],
     [
       "Caught at a Good Time Text",
-      "If this is at full Health, all Players gain $SpeedStat$ Speed and $LuckStat$ Luck."
+      "If this is at full Health, all Players gain $PowerStat$ Power and $DefenseStat$ Defense."
     ],
     [
       "Caught at a Good Time Log",
@@ -2277,7 +2253,7 @@
     ],
     [
       "Shuriken Text",
-      "A Player loses $SpeedStat$ Speed and $LuckStat$ Luck."
+      "A Player loses $PowerStat$ Power and $DefenseStat$ Defense."
     ],
     [
       "Shuriken Log",
@@ -2301,7 +2277,7 @@
     ],
     [
       "Wall Climb Text",
-      "If this is Grounded, it becomes Elevated and gains $SpeedStat$ Speed."
+      "If this is Grounded, it becomes Elevated and gains $DefenseStat$ Defense."
     ],
     [
       "Wall Climb Log",
@@ -2477,7 +2453,7 @@
     ],
     [
       "Dangle Text",
-      "All Grounded Players become Elevated and lose $SpeedStat$ Speed."
+      "All Grounded Players become Elevated and lose $DefenseStat$ Defense."
     ],
     [
       "Dangle Log",
@@ -2633,7 +2609,7 @@
     ],
     [
       "Procession Text",
-      "All Enemies gain $SpeedStat$ Speed."
+      "All Enemies gain $DefenseStat$ Defense."
     ],
     [
       "Procession Log",
@@ -2665,7 +2641,7 @@
     ],
     [
       "Shipwreck Text",
-      "An Angry Player loses $SpeedStat$ Speed and becomes Stunned for $MiscStat$ turns."
+      "An Angry Player loses $DefenseStat$ Defense and becomes Stunned for $MiscStat$ turns."
     ],
     [
       "Shipwreck Log",
@@ -2745,7 +2721,7 @@
     ],
     [
       "Spin Web Text",
-      "A Grounded Enemy becomes Elevated and gains $SpeedStat$ Speed."
+      "A Grounded Enemy becomes Elevated and gains $DefenseStat$ Defense."
     ],
     [
       "Spin Web Log",
@@ -2933,7 +2909,7 @@
     ],
     [
       "Nurture Text",
-      "All $MiscStat$ Star Enemies gain $DefenseStat$ Defense and $LuckStat$ Luck."
+      "All $MiscStat$ Star Enemies gain $PowerStat$ Power and $DefenseStat$ Defense."
     ],
     [
       "Nurture Log",

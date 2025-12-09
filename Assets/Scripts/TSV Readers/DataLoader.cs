@@ -11,7 +11,6 @@ public class CharacterData
 {
     public string myName;
     public int baseHealth;
-    public int baseSpeed;
     public Position startingPosition;
     public string listOfAbilities;
     public string aiTargeting;
@@ -32,8 +31,6 @@ public class AbilityData
     public int secondNumber;
     public int modifyPower;
     public int modifyDefense;
-    public int modifySpeed;
-    public int modifyLuck;
     public int miscNumber;
     public TeamTarget[] defaultTargets;
 }
@@ -60,12 +57,11 @@ public class DataLoader
             {
                 newCharacter.myName = line[0];
                 newCharacter.baseHealth = StringToInt(line[2]);
-                newCharacter.baseSpeed = StringToInt(line[3]);
-                newCharacter.startingPosition = line[4].Equals("GROUNDED") ? Position.Grounded : Position.Elevated;
-                newCharacter.listOfAbilities = line[5].Trim();
-                newCharacter.aiTargeting = line[6].Trim().ToUpper();
-                newCharacter.artCredit = line[7].Replace("|", "\n");
-                try { newCharacter.difficulty = StringToInt(line[8]); } catch { newCharacter.difficulty = 0; }
+                newCharacter.startingPosition = line[3].Equals("GROUNDED") ? Position.Grounded : Position.Elevated;
+                newCharacter.listOfAbilities = line[4].Trim();
+                newCharacter.aiTargeting = line[5].Trim().ToUpper();
+                newCharacter.artCredit = line[6].Replace("|", "\n");
+                try { newCharacter.difficulty = StringToInt(line[7]); } catch { newCharacter.difficulty = 0; }
             }
             catch
             {
@@ -106,11 +102,9 @@ public class DataLoader
 
             newAbility.modifyPower = StringToInt(line[10]); VerifyNumbers(newAbility, "POWERSTAT", newAbility.modifyPower.ToString());
             newAbility.modifyDefense = StringToInt(line[11]); VerifyNumbers(newAbility, "DEFENSESTAT", newAbility.modifyDefense.ToString());
-            newAbility.modifySpeed = StringToInt(line[12]); VerifyNumbers(newAbility, "SPEEDSTAT", newAbility.modifySpeed.ToString());
-            newAbility.modifyLuck = StringToInt(line[13]); VerifyNumbers(newAbility, "LUCKSTAT", newAbility.modifyLuck.ToString());
-            newAbility.miscNumber = StringToInt(line[14]); VerifyNumbers(newAbility, "MISC", newAbility.miscNumber.ToString());
+            newAbility.miscNumber = StringToInt(line[12]); VerifyNumbers(newAbility, "MISC", newAbility.miscNumber.ToString());
 
-            string[] listOfTypes = TurnManager.SpliceString(line[15].ToUpper().Trim(), '/');
+            string[] listOfTypes = TurnManager.SpliceString(line[13].ToUpper().Trim(), '/');
             AbilityType[] convertToTypes = new AbilityType[listOfTypes.Length];
             for (int j = 0; j < listOfTypes.Length; j++)
                 convertToTypes[j] = StringToAbilityType(listOfTypes[j]);

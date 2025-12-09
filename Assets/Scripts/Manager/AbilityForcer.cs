@@ -27,9 +27,9 @@ public class AbilityForcer : MonoBehaviour
         else
         {
             Log.instance.AddText(CarryVariables.instance.Translate("Defeat Waves", new() { ("Num", "5")}));
+            SearchBoxes("Wizard");
             SearchBoxes("Knight");
             SearchBoxes("Angel");
-            SearchBoxes("Wizard");
 
             void SearchBoxes(string toFind)
             {
@@ -68,9 +68,9 @@ public class AbilityForcer : MonoBehaviour
                 foreach (string challenge in CarryVariables.instance.listOfChallenges)
                     Log.instance.AddText($"<color=#FF0000>{CarryVariables.instance.Translate("Challenge")}: {CarryVariables.instance.Translate(challenge)}</color>", 1);
 
+                abilityDictionary.Add("Wizard", new());
                 abilityDictionary.Add("Knight", new());
                 abilityDictionary.Add("Angel", new());
-                abilityDictionary.Add("Wizard", new());
 
                 foreach (AbilityData data in CarryVariables.instance.listOfPlayerAbilities)
                 {

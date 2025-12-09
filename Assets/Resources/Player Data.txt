@@ -3,19 +3,26 @@
       "Player Name",
       "Description",
       "Base Health",
-      "Base Speed",
       "Start Position",
       "Skills",
       "AI Targeting",
       "Art Credit"
     ],
     [
-      "Knight",
-      "Deals damage to individual Enemies, but not to Elevated ones. Has control over Emotions.",
+      "Wizard",
+      "Deals small amounts of damage to multiple Enemies at once. Has control over Positions and Power.",
       "10",
-      "0",
       "GROUNDED",
-      "Cheer,Daze,Desperation,Embarass,Force,Impale,Intimidate,Joust,Knock Down,Meditate,Mirror,Mock,Neutralize,Redirect,Rollout,Steal,Surprise,Twirl,Upset,Weaken,",
+      "Above Danger,Accelerate,Bad Omens,Bind,Bounce,Chill,Crown,Flood,Gust,Headwinds,Lightning Storm,Manipulate Time,Punch Up,Quick Attack,Readjust,Restrain,Shockwave,Stalactites,Team Attack,Touchdown,Warp,",
+      "",
+      "Harald Lieske|Dominion: Allies|(Conjurer)"
+    ],
+    [
+      "Knight",
+      "Deals lots of damage to individual Enemies, and only Grounded ones. Has control over Emotions and Defense.",
+      "10",
+      "GROUNDED",
+      "Cheer,Daze,Desperation,Embarass,Force,Immobilize,Impale,Intimidate,Joust,Knock Down,Meditate,Mirror,Mock,Neutralize,Redirect,Steal,Strike,Surprise,Twirl,Upset,",
       "",
       "Michael Watson|Dominion: Cornucopia and Guilds|(Joust)"
     ],
@@ -23,21 +30,10 @@
       "Angel",
       "Heals Players and starts Elevated. Can do everything but attack.",
       "10",
-      "-1",
       "ELEVATED",
       "Air Combat,Assist,Calm Down,Crash Land,Enrage,Exhaust,Exorcism,Gift of Flight,Hide,Immunity,Joy,Lift Up,Motivate,Overheal,Petrify,Plummet,Retreat,Security,Soft Landing,Tailwinds,Team Up,",
       "",
       "Magali Villeneuve|Oath of the Gatewatch|(Linvala, the Preserver)"
-    ],
-    [
-      "Wizard",
-      "Deals damage to multiple Enemies at once. Has control over Positions.",
-      "10",
-      "1",
-      "GROUNDED",
-      "Above Danger,Bad Omens,Bounce,Chill,Accelerate,Flood,Gust,Headwinds,Jackpot,Lightning Storm,Manipulate Time,Bind,Punch Up,Quick Attack,Readjust,Restrain,Shockwave,Stalactites,Team Attack,Touchdown,Warp,",
-      "",
-      "Harald Lieske|Dominion: Allies|(Conjurer)"
     ]
   ]
 }
