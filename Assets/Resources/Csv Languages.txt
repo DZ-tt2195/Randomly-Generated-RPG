@@ -13,11 +13,7 @@
     ],
     [
       "Last Update",
-      "Last Updated: Dec 09, 2025"
-    ],
-    [
-      "Inspiration",
-      "Inspired by OMORI (OMOCAT) and Epic Battle Fantasy V (Kupo Games)"
+      "Last Updated: Dec 12, 2025"
     ],
     [
       "Language",
@@ -34,6 +30,10 @@
     [
       "Play Game",
       "Play Game"
+    ],
+    [
+      "Update History",
+      "Update History"
     ],
     [
       "Story",
@@ -277,7 +277,7 @@
     ],
     [
       "Inspiration Thanks",
-      "OMOCAT for making OMORI, and KupoGames for making Epic Battle Fantasy 5"
+      "This game was inspired by OMORI (by OMOCAT), and Epic Battle Fantasy V (by KupoGames)"
     ],
     [
       "Playtest Thursday Thanks",
@@ -2609,7 +2609,7 @@
     ],
     [
       "Procession Text",
-      "All Enemies gain $DefenseStat$ Defense."
+      "All Enemies gain $PowerStat$ Power."
     ],
     [
       "Procession Log",

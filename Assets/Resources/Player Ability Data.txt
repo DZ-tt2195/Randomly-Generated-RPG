@@ -125,7 +125,7 @@
       "",
       "",
       "2",
-      "Attack/StatEnemy"
+      "Attack"
     ],
     [
       "Knight",
