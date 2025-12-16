@@ -239,6 +239,11 @@ public class CarryVariables : MonoBehaviour
         return keyTranslate;
     }
 
+    public bool TranslationExists(string key)
+    {
+        return keyTranslate["English"].ContainsKey(key);
+    }
+
     public void ChangeLanguage(string newLanguage)
     {
         PlayerPrefs.SetString("Language", newLanguage);

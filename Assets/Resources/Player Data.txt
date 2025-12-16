@@ -13,7 +13,7 @@
       "Deals small amounts of damage to multiple Enemies at once. Has control over Positions and Power.",
       "10",
       "GROUNDED",
-      "Above Danger,Accelerate,Bad Omens,Bind,Bounce,Chill,Crown,Flood,Gust,Headwinds,Lightning Storm,Manipulate Time,Punch Up,Quick Attack,Readjust,Restrain,Shockwave,Stalactites,Team Attack,Touchdown,Warp,",
+      "Above Danger,Accelerate,Bad Omens,Bind,Bounce,Chill,Crown,Flood,Gust,Headwinds,Manipulate Time,Punch Up,Quick Attack,Readjust,Restrain,Shockwave,Stalactites,Storm,Team Attack,Touchdown,Warp,",
       "",
       "Harald Lieske|Dominion: Allies|(Conjurer)"
     ],

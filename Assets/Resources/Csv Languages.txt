@@ -13,7 +13,7 @@
     ],
     [
       "Last Update",
-      "Last Updated: Dec 12, 2025"
+      "Last Updated: Dec 18, 2025"
     ],
     [
       "Language",
@@ -365,7 +365,7 @@
     ],
     [
       "Angry Text",
-      "Effective against Sad. 1 extra Power and Defense; becomes Stunned when killing or healing someone to full Health."
+      "Effective against Sad. +1 Power and +1 Defense; becomes Stunned when killing or healing someone to full Health."
     ],
     [
       "Grounded",
@@ -1440,16 +1440,16 @@
       "$This$ crowns $Target$ as a winner."
     ],
     [
-      "Lightning Storm",
-      "Lightning Storm"
+      "Storm",
+      "Storm"
     ],
     [
-      "Lightning Storm Text",
+      "Storm Text",
       "Each Elevated Player becomes Grounded. Then deal $Num$ damage to each Elevated Enemy."
     ],
     [
-      "Lightning Storm Log",
-      "$This$ summons a lightning storm."
+      "Storm Log",
+      "$This$ summons a storm."
     ],
     [
       "Manipulate Time",
@@ -2926,6 +2926,30 @@
     [
       "Guard Log",
       "$This$ guards $Target$."
+    ],
+    [
+      "Update 0",
+      "Dec 9, 2025"
+    ],
+    [
+      "Update 0 Text",
+      "Dropped speed and luck, and changed those abilities|Turn order is now players first (in order of Wizard, Knight, Angel), then enemies first|Angry's +2 Power now +1 Power, +1 Defense"
+    ],
+    [
+      "Update 1",
+      "Dec 12, 2025"
+    ],
+    [
+      "Update 1 Text",
+      "Changed Royalty's Procession to affect Power|Fixed a tag for an ability"
+    ],
+    [
+      "Update 2",
+      "Dec 18, 2025"
+    ],
+    [
+      "Update 2 Text",
+      "Knight's Twirl and Wizard's Shockwave: has no Cooldown|Angel's Team Up: 2 Health to 3 Health|Wizard's Lightning Storm and Flood: 3 damage to 4 damage, dropped “lightning”|Archer's Volley: has 1 turn of cooldown|Fixed some UI bugs with Defense stat"
     ]
   ]
 }

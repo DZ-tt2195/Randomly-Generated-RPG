@@ -27,7 +27,7 @@ public class RightClickMe : MonoBehaviour, IPointerClickHandler
     {
         string statText = "";
 
-        statText += $"{character.currentHealth} / {character.data.baseHealth} Health, {character.CalculatePower()} Power, {character.statModDict[Stats.Defense]} Defense\n";
+        statText += $"{character.currentHealth} / {character.data.baseHealth} {CarryVariables.instance.Translate("Health")}, {character.CalculatePower()} {CarryVariables.instance.Translate("Power")}, {character.CalculateDefense()} {CarryVariables.instance.Translate("Defense")}\n";
         statText += $"{CarryVariables.instance.Translate(character.data.startingPosition.ToString())}";
 
         if (ScreenOverlay.instance != null)

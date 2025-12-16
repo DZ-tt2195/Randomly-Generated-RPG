@@ -1,6 +1,6 @@
 Title=RANDOMLY GENERATED
 Author Credit=by Thomas Tang (DZ)
-Last Update=Last Updated: Dec 12, 2025
+Last Update=Last Updated: Dec 18, 2025
 Language=Language
 Translator Credit=
 Loading=Loading...
@@ -88,7 +88,7 @@ Sad Text=Effective against Happy. Gains 2 Health when it attacks; loses 2 Health
 Happy=Happy
 Happy Text=Effective against Angry. Gets an extra Ability if they don't attack; all Abilities have 1 more turn of Cooldown.
 Angry=Angry
-Angry Text=Effective against Sad. 1 extra Power and Defense; becomes Stunned when killing or healing someone to full Health.
+Angry Text=Effective against Sad. +1 Power and +1 Defense; becomes Stunned when killing or healing someone to full Health.
 Grounded=Grounded
 Grounded Text=Can't be targeted by abilities that only affect Elevated targets.
 Elevated=Elevated
@@ -357,9 +357,9 @@ Headwinds Log=$This$ creates headwinds.
 Crown=Crown
 Crown Text=A Player gains $PowerStat$ Power and becomes Targeted for $MiscStat$ turns.
 Crown Log=$This$ crowns $Target$ as a winner.
-Lightning Storm=Lightning Storm
-Lightning Storm Text=Each Elevated Player becomes Grounded. Then deal $Num$ damage to each Elevated Enemy.
-Lightning Storm Log=$This$ summons a lightning storm.
+Storm=Storm
+Storm Text=Each Elevated Player becomes Grounded. Then deal $Num$ damage to each Elevated Enemy.
+Storm Log=$This$ summons a storm.
 Manipulate Time=Manipulate Time
 Manipulate Time Text=Deal $Num$ damage to each Elevated Enemy. They each get $MiscStat$ Extra Ability.
 Manipulate Time Log=$This$ manipulates time.
@@ -729,3 +729,16 @@ Nurture Log=$This$ nurtures the young.
 Guard=Guard
 Guard Text=A $MiscStat$ Star Enemy becomes Protected for $MiscStat$ turn.
 Guard Log=$This$ guards $Target$.
+Update 0=Dec 9, 2025
+Update 0 Text=Dropped speed and luck, and changed those abilities
+Turn order is now players first (in order of Wizard, Knight, Angel), then enemies first
+Angry's +2 Power now +1 Power, +1 Defense
+Update 1=Dec 12, 2025
+Update 1 Text=Changed Royalty's Procession to affect Power
+Fixed a tag for an ability
+Update 2=Dec 18, 2025
+Update 2 Text=Knight's Twirl and Wizard's Shockwave: has no Cooldown
+Angel's Team Up: 2 Health to 3 Health
+Wizard's Lightning Storm and Flood: 3 damage to 4 damage, dropped “lightning”
+Archer's Volley: has 1 turn of cooldown
+Fixed some UI bugs with Defense stat

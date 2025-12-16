@@ -103,6 +103,7 @@ MonoBehaviour:
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -239,6 +240,7 @@ MonoBehaviour:
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -700,6 +702,7 @@ MonoBehaviour:
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -824,6 +827,17 @@ PrefabInstance:
     - target: {fileID: 3691590185208044889, guid: a042c107274f74a03a3cafea8b584572, type: 3}
       propertyPath: m_Name
       value: Hover Image
+      objectReference: {fileID: 0}
+    - target: {fileID: 3713695489742377036, guid: a042c107274f74a03a3cafea8b584572, type: 3}
+      propertyPath: m_text
+      value: Effective against <link="Sad"><u><color=#FFB2FF>Sad<color=#FFFFFF></u></link>.
+        1 extra <link="Power"><sprite="Power" name="Power"></link> and <link="Defense"><sprite="Defense"
+        name="Defense"></link>; becomes <link="Stunned"><u><color=#FF2626>Stunned<color=#FFFFFF></u></link>
+        when killing or healing someone to full <link="Health"><sprite="Health" name="Health"></link>.
+      objectReference: {fileID: 0}
+    - target: {fileID: 3713695489742377036, guid: a042c107274f74a03a3cafea8b584572, type: 3}
+      propertyPath: m_fontSize
+      value: 59.5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

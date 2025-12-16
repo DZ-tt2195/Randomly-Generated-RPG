@@ -87,24 +87,24 @@ public class DataLoader
             newAbility.user = line[0];
             newAbility.myName = line[1];
 
-            string[] listOfTargets = (line[4].Equals("") ? new string[1] { "None" } : TurnManager.SpliceString(line[4].Trim().ToUpper(), '-'));
+            string[] listOfTargets = (line[3].Equals("") ? new string[1] { "None" } : TurnManager.SpliceString(line[3].Trim().ToUpper(), '-'));
             TeamTarget[] convertToTargets = new TeamTarget[listOfTargets.Length];
             for (int j = 0; j < listOfTargets.Length; j++)
                 convertToTargets[j] = StringToTeamTarget(listOfTargets[j]);
             newAbility.defaultTargets = convertToTargets;
 
-            newAbility.playCondition = (line[5].Equals("") ? new string[1] { "None" } : TurnManager.SpliceString(line[5].Trim(), '-'));
-            newAbility.instructions = (line[6].Equals("") ? new string[1] { "None" } : TurnManager.SpliceString(line[6].Trim(), '-'));
+            newAbility.playCondition = (line[4].Equals("") ? new string[1] { "None" } : TurnManager.SpliceString(line[4].Trim(), '-'));
+            newAbility.instructions = (line[5].Equals("") ? new string[1] { "None" } : TurnManager.SpliceString(line[5].Trim(), '-'));
 
-            newAbility.baseCooldown = StringToInt(line[7]);
-            newAbility.mainNumber = StringToInt(line[8]); VerifyNumbers(newAbility, "NUM", newAbility.mainNumber.ToString());
-            newAbility.secondNumber = StringToInt(line[9]); VerifyNumbers(newAbility, "SEC", newAbility.secondNumber.ToString());
+            newAbility.baseCooldown = StringToInt(line[6]);
+            newAbility.mainNumber = StringToInt(line[7]); VerifyNumbers(newAbility, "NUM", newAbility.mainNumber.ToString());
+            newAbility.secondNumber = StringToInt(line[8]); VerifyNumbers(newAbility, "SEC", newAbility.secondNumber.ToString());
 
-            newAbility.modifyPower = StringToInt(line[10]); VerifyNumbers(newAbility, "POWERSTAT", newAbility.modifyPower.ToString());
-            newAbility.modifyDefense = StringToInt(line[11]); VerifyNumbers(newAbility, "DEFENSESTAT", newAbility.modifyDefense.ToString());
-            newAbility.miscNumber = StringToInt(line[12]); VerifyNumbers(newAbility, "MISC", newAbility.miscNumber.ToString());
+            newAbility.modifyPower = StringToInt(line[9]); VerifyNumbers(newAbility, "POWERSTAT", newAbility.modifyPower.ToString());
+            newAbility.modifyDefense = StringToInt(line[10]); VerifyNumbers(newAbility, "DEFENSESTAT", newAbility.modifyDefense.ToString());
+            newAbility.miscNumber = StringToInt(line[11]); VerifyNumbers(newAbility, "MISC", newAbility.miscNumber.ToString());
 
-            string[] listOfTypes = TurnManager.SpliceString(line[13].ToUpper().Trim(), '/');
+            string[] listOfTypes = TurnManager.SpliceString(line[12].ToUpper().Trim(), '/');
             AbilityType[] convertToTypes = new AbilityType[listOfTypes.Length];
             for (int j = 0; j < listOfTypes.Length; j++)
                 convertToTypes[j] = StringToAbilityType(listOfTypes[j]);

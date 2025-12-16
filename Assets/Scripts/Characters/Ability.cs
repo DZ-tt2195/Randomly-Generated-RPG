@@ -357,25 +357,25 @@ public class Ability
 
     bool TargetPowerOrMore(int currentIndex)
     {
-        listOfTargets[currentIndex].RemoveAll(target => target.statModDict[Stats.Power] <= data.miscNumber);
+        listOfTargets[currentIndex].RemoveAll(target => target.CalculatePower() <= data.miscNumber);
         return listOfTargets[currentIndex].Count > 0;
     }
 
     bool TargetPowerOrLess(int currentIndex)
     {
-        listOfTargets[currentIndex].RemoveAll(target => target.statModDict[Stats.Power] >= data.miscNumber);
+        listOfTargets[currentIndex].RemoveAll(target => target.CalculatePower() >= data.miscNumber);
         return listOfTargets[currentIndex].Count > 0;
     }
 
     bool TargetDefenseOrMore(int currentIndex)
     {
-        listOfTargets[currentIndex].RemoveAll(target => target.statModDict[Stats.Defense] <= data.miscNumber);
+        listOfTargets[currentIndex].RemoveAll(target => target.CalculateDefense() <= data.miscNumber);
         return listOfTargets[currentIndex].Count > 0;
     }
 
     bool TargetDefenseOrLess(int currentIndex)
     {
-        listOfTargets[currentIndex].RemoveAll(target => target.statModDict[Stats.Defense] >= data.miscNumber);
+        listOfTargets[currentIndex].RemoveAll(target => target.CalculateDefense() >= data.miscNumber);
         return listOfTargets[currentIndex].Count > 0;
     }
 

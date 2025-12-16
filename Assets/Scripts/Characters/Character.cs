@@ -38,7 +38,6 @@ public class Character : MonoBehaviour
         private Dictionary<StatusEffect, int> _privStatEffect = new();
         public IReadOnlyDictionary<StatusEffect, int> statEffectDict => _privStatEffect;
         private Dictionary<Stats, int> _privStatMod = new();
-        public IReadOnlyDictionary<Stats, int> statModDict => _privStatMod;
 
         public Position CurrentPosition { get; private set; }
         public Emotion CurrentEmotion { get; private set; }
@@ -81,7 +80,7 @@ public class Character : MonoBehaviour
 
         this.baseHealth = data.baseHealth;
         this.currentHealth = this.baseHealth;
-        healthText.text = KeywordTooltip.instance.EditText($"{currentHealth}/{baseHealth}Health");
+        healthText.text = KeywordTooltip.instance.EditText($"{currentHealth}/{baseHealth}{CarryVariables.instance.Translate("Health")}");
 
         this.myImage.sprite = Resources.Load<Sprite>($"Characters/{characterData.myName}");
         AddAbility(CarryVariables.instance.FindEnemyAbility("Skip Turn"), true, false);
@@ -119,12 +118,12 @@ public class Character : MonoBehaviour
 
     public int CalculatePower()
     {
-        return statModDict[Stats.Power] + (CurrentEmotion == Emotion.Angry ? 1 : 0);
+        return _privStatMod[Stats.Power] + (CurrentEmotion == Emotion.Angry ? 1 : 0);
     }
 
     public int CalculateDefense()
     {
-        return statModDict[Stats.Defense] + (CurrentEmotion == Emotion.Angry ? 1 : 0);
+        return _privStatMod[Stats.Defense] + (CurrentEmotion == Emotion.Angry ? 1 : 0);
     }
 
     public int CalculateStatTotals()
@@ -167,7 +166,7 @@ public class Character : MonoBehaviour
             if (baseHealth < currentHealth)
                 currentHealth = baseHealth;
         }
-        healthText.text = KeywordTooltip.instance.EditText($"{currentHealth}/{baseHealth}Health");
+        healthText.text = KeywordTooltip.instance.EditText($"{currentHealth}/{baseHealth}{CarryVariables.instance.Translate("Health")}");
     }
 
     public IEnumerator ChangeHealth(int change, int logged, Character attacker = null)
@@ -206,7 +205,7 @@ public class Character : MonoBehaviour
             if (currentHealth <= 0)
                 yield return HasDied(logged);
         }
-        healthText.text = KeywordTooltip.instance.EditText($"{currentHealth}/{baseHealth}Health");
+        healthText.text = KeywordTooltip.instance.EditText($"{currentHealth}/{baseHealth}{CarryVariables.instance.Translate("Health")}");
     }
 
     public IEnumerator ChangeStat(Stats stat, int change, int logged)
@@ -638,8 +637,8 @@ public class Character : MonoBehaviour
             topText.text = $"{CarryVariables.instance.Translate(CurrentEmotion.ToString())}, " +
                 $"{CarryVariables.instance.Translate(CurrentPosition.ToString())}\n";
 
-            AddToTopText(CalculatePower(), "Power");
-            AddToTopText(statModDict[Stats.Defense], "Defense");
+            AddToTopText(CalculatePower(), CarryVariables.instance.Translate("Power"));
+            AddToTopText(CalculateDefense(), CarryVariables.instance.Translate("Defense"));
 
             void AddToTopText(int amount, string text)
             {
