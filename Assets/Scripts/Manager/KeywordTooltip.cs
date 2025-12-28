@@ -37,17 +37,17 @@ public class KeywordTooltip : MonoBehaviour
     {
         foreach (KeywordHover hover in linkedKeywords)
         {
-            hover.translated = CarryVariables.instance.Translate(hover.original);
-            hover.description = CarryVariables.instance.Translate($"{hover.original} Text");
+            hover.translated = AutoTranslate.DoEnum((ToTranslate)Enum.Parse(typeof(ToTranslate), hover.original));
+            hover.description = Translator.inst.Translate($"{hover.original}_Text");
         }
         foreach (KeywordHover hover in spriteKeywords)
         {
-            hover.translated = CarryVariables.instance.Translate(hover.original);
-            hover.description = CarryVariables.instance.Translate($"{hover.original} Text");
+            hover.translated = AutoTranslate.DoEnum((ToTranslate)Enum.Parse(typeof(ToTranslate), hover.original));
+            hover.description = Translator.inst.Translate($"{hover.original}_Text");
         }
         foreach (KeywordHover hover in spriteKeywordStatuses)
         {
-            hover.description = CarryVariables.instance.Translate($"{hover.original.Replace("Image", "")} Text");
+            hover.description = Translator.inst.Translate($"{hover.original.ToString().Replace("Image", "")}_Text");
         }
 
         foreach (KeywordHover hover in linkedKeywords)
@@ -82,7 +82,8 @@ public class KeywordTooltip : MonoBehaviour
         {
             foreach (KeywordHover link in spriteKeywordStatuses)
             {
-                answer = answer.Replace(link.original, $"<link=\"{link.original}\"><sprite=\"{link.original}\" name=\"{link.original}\"></link>");
+                string switchOut = link.original.ToString();
+                answer = answer.Replace(switchOut, $"<link=\"{switchOut}\"><sprite=\"{switchOut}\" name=\"{switchOut}\"></link>");
             }
         }
         return answer;

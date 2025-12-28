@@ -290,6 +290,38 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 786129041}
     m_Modifications:
+    - target: {fileID: 1376439963667714930, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
+    - target: {fileID: 1376439963667714930, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -3852492252101762229, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
+    - target: {fileID: 1759404231573523795, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_fontSize
+      value: 62.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 1759404231573523795, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
+    - target: {fileID: 1759404231573523795, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -3852492252101762229, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
+    - target: {fileID: 2720551814390327679, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_fontSize
+      value: 155.15
+      objectReference: {fileID: 0}
+    - target: {fileID: 2720551814390327679, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
+    - target: {fileID: 2720551814390327679, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -3852492252101762229, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
     - target: {fileID: 4763938441055505231, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
       propertyPath: m_Name
       value: Ability Box (5)
@@ -374,6 +406,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6462867163304083132, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_fontSize
+      value: 59.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6462867163304083132, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
+    - target: {fileID: 6462867163304083132, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -3852492252101762229, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -637,6 +681,38 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1675742382}
     m_Modifications:
+    - target: {fileID: 1376439963667714930, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
+    - target: {fileID: 1376439963667714930, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -3852492252101762229, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
+    - target: {fileID: 1759404231573523795, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_fontSize
+      value: 62.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 1759404231573523795, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
+    - target: {fileID: 1759404231573523795, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -3852492252101762229, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
+    - target: {fileID: 2720551814390327679, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_fontSize
+      value: 155.15
+      objectReference: {fileID: 0}
+    - target: {fileID: 2720551814390327679, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
+    - target: {fileID: 2720551814390327679, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -3852492252101762229, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
     - target: {fileID: 4763938441055505231, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
       propertyPath: m_Name
       value: Ability Box 8
@@ -725,6 +801,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6462867163304083132, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_fontSize
+      value: 59.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6462867163304083132, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
+    - target: {fileID: 6462867163304083132, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -3852492252101762229, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -754,6 +842,38 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1675742382}
     m_Modifications:
+    - target: {fileID: 1376439963667714930, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
+    - target: {fileID: 1376439963667714930, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -3852492252101762229, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
+    - target: {fileID: 1759404231573523795, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_fontSize
+      value: 62.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 1759404231573523795, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
+    - target: {fileID: 1759404231573523795, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -3852492252101762229, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
+    - target: {fileID: 2720551814390327679, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_fontSize
+      value: 155.15
+      objectReference: {fileID: 0}
+    - target: {fileID: 2720551814390327679, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
+    - target: {fileID: 2720551814390327679, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -3852492252101762229, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
     - target: {fileID: 4763938441055505231, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
       propertyPath: m_Name
       value: Ability Box 4
@@ -842,6 +962,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6462867163304083132, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_fontSize
+      value: 59.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6462867163304083132, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
+    - target: {fileID: 6462867163304083132, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -3852492252101762229, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -871,6 +1003,38 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1232743747}
     m_Modifications:
+    - target: {fileID: 1376439963667714930, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
+    - target: {fileID: 1376439963667714930, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -3852492252101762229, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
+    - target: {fileID: 1759404231573523795, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_fontSize
+      value: 62.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 1759404231573523795, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
+    - target: {fileID: 1759404231573523795, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -3852492252101762229, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
+    - target: {fileID: 2720551814390327679, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_fontSize
+      value: 155.15
+      objectReference: {fileID: 0}
+    - target: {fileID: 2720551814390327679, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
+    - target: {fileID: 2720551814390327679, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -3852492252101762229, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
     - target: {fileID: 4763938441055505231, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
       propertyPath: m_Name
       value: Ability Box (11)
@@ -955,6 +1119,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6462867163304083132, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_fontSize
+      value: 59.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6462867163304083132, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
+    - target: {fileID: 6462867163304083132, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -3852492252101762229, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1123,6 +1299,38 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1232743747}
     m_Modifications:
+    - target: {fileID: 1376439963667714930, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
+    - target: {fileID: 1376439963667714930, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -3852492252101762229, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
+    - target: {fileID: 1759404231573523795, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_fontSize
+      value: 62.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 1759404231573523795, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
+    - target: {fileID: 1759404231573523795, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -3852492252101762229, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
+    - target: {fileID: 2720551814390327679, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_fontSize
+      value: 155.15
+      objectReference: {fileID: 0}
+    - target: {fileID: 2720551814390327679, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
+    - target: {fileID: 2720551814390327679, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -3852492252101762229, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
     - target: {fileID: 4763938441055505231, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
       propertyPath: m_Name
       value: Ability Box (12)
@@ -1207,6 +1415,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6462867163304083132, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_fontSize
+      value: 59.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6462867163304083132, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
+    - target: {fileID: 6462867163304083132, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -3852492252101762229, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1536,8 +1756,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: ROUND 1
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8c64c47af7c1c4fb5b88d184433c6c44, type: 2}
-  m_sharedMaterial: {fileID: -3852492252101762229, guid: 8c64c47af7c1c4fb5b88d184433c6c44, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
+  m_sharedMaterial: {fileID: -3852492252101762229, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1564,9 +1784,9 @@ MonoBehaviour:
   m_fontSize: 200
   m_fontSizeBase: 200
   m_fontWeight: 400
-  m_enableAutoSizing: 0
+  m_enableAutoSizing: 1
   m_fontSizeMin: 18
-  m_fontSizeMax: 80
+  m_fontSizeMax: 200
   m_fontStyle: 0
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 1024
@@ -1834,6 +2054,38 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1675742382}
     m_Modifications:
+    - target: {fileID: 1376439963667714930, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
+    - target: {fileID: 1376439963667714930, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -3852492252101762229, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
+    - target: {fileID: 1759404231573523795, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_fontSize
+      value: 62.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 1759404231573523795, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
+    - target: {fileID: 1759404231573523795, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -3852492252101762229, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
+    - target: {fileID: 2720551814390327679, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_fontSize
+      value: 155.15
+      objectReference: {fileID: 0}
+    - target: {fileID: 2720551814390327679, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
+    - target: {fileID: 2720551814390327679, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -3852492252101762229, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
     - target: {fileID: 4763938441055505231, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
       propertyPath: m_Name
       value: Ability Box 1
@@ -1922,6 +2174,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6462867163304083132, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_fontSize
+      value: 59.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6462867163304083132, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
+    - target: {fileID: 6462867163304083132, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -3852492252101762229, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1976,6 +2240,38 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 879833847}
     m_Modifications:
+    - target: {fileID: 1376439963667714930, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
+    - target: {fileID: 1376439963667714930, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -3852492252101762229, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
+    - target: {fileID: 1759404231573523795, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_fontSize
+      value: 62.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 1759404231573523795, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
+    - target: {fileID: 1759404231573523795, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -3852492252101762229, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
+    - target: {fileID: 2720551814390327679, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_fontSize
+      value: 155.15
+      objectReference: {fileID: 0}
+    - target: {fileID: 2720551814390327679, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
+    - target: {fileID: 2720551814390327679, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -3852492252101762229, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
     - target: {fileID: 4763938441055505231, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
       propertyPath: m_Name
       value: Ability Box (1)
@@ -2060,6 +2356,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6462867163304083132, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_fontSize
+      value: 59.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6462867163304083132, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
+    - target: {fileID: 6462867163304083132, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -3852492252101762229, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2078,6 +2386,38 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1675742382}
     m_Modifications:
+    - target: {fileID: 1376439963667714930, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
+    - target: {fileID: 1376439963667714930, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -3852492252101762229, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
+    - target: {fileID: 1759404231573523795, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_fontSize
+      value: 62.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 1759404231573523795, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
+    - target: {fileID: 1759404231573523795, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -3852492252101762229, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
+    - target: {fileID: 2720551814390327679, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_fontSize
+      value: 155.15
+      objectReference: {fileID: 0}
+    - target: {fileID: 2720551814390327679, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
+    - target: {fileID: 2720551814390327679, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -3852492252101762229, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
     - target: {fileID: 4763938441055505231, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
       propertyPath: m_Name
       value: Ability Box 7
@@ -2166,6 +2506,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6462867163304083132, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_fontSize
+      value: 59.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6462867163304083132, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
+    - target: {fileID: 6462867163304083132, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -3852492252101762229, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2420,8 +2772,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: WAVE 5 / 5
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8c64c47af7c1c4fb5b88d184433c6c44, type: 2}
-  m_sharedMaterial: {fileID: -3852492252101762229, guid: 8c64c47af7c1c4fb5b88d184433c6c44, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
+  m_sharedMaterial: {fileID: -3852492252101762229, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -2448,9 +2800,9 @@ MonoBehaviour:
   m_fontSize: 300
   m_fontSizeBase: 300
   m_fontWeight: 400
-  m_enableAutoSizing: 0
+  m_enableAutoSizing: 1
   m_fontSizeMin: 18
-  m_fontSizeMax: 80
+  m_fontSizeMax: 300
   m_fontStyle: 0
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 256
@@ -2517,6 +2869,38 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 879833847}
     m_Modifications:
+    - target: {fileID: 1376439963667714930, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
+    - target: {fileID: 1376439963667714930, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -3852492252101762229, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
+    - target: {fileID: 1759404231573523795, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_fontSize
+      value: 62.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 1759404231573523795, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
+    - target: {fileID: 1759404231573523795, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -3852492252101762229, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
+    - target: {fileID: 2720551814390327679, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_fontSize
+      value: 155.15
+      objectReference: {fileID: 0}
+    - target: {fileID: 2720551814390327679, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
+    - target: {fileID: 2720551814390327679, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -3852492252101762229, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
     - target: {fileID: 4763938441055505231, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
       propertyPath: m_Name
       value: Ability Box (5)
@@ -2601,6 +2985,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6462867163304083132, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_fontSize
+      value: 59.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6462867163304083132, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
+    - target: {fileID: 6462867163304083132, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -3852492252101762229, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2619,6 +3015,38 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 879833847}
     m_Modifications:
+    - target: {fileID: 1376439963667714930, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
+    - target: {fileID: 1376439963667714930, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -3852492252101762229, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
+    - target: {fileID: 1759404231573523795, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_fontSize
+      value: 62.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 1759404231573523795, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
+    - target: {fileID: 1759404231573523795, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -3852492252101762229, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
+    - target: {fileID: 2720551814390327679, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_fontSize
+      value: 155.15
+      objectReference: {fileID: 0}
+    - target: {fileID: 2720551814390327679, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
+    - target: {fileID: 2720551814390327679, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -3852492252101762229, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
     - target: {fileID: 4763938441055505231, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
       propertyPath: m_Name
       value: Ability Box (2)
@@ -2703,6 +3131,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6462867163304083132, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_fontSize
+      value: 59.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6462867163304083132, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
+    - target: {fileID: 6462867163304083132, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -3852492252101762229, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2884,6 +3324,38 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1675742382}
     m_Modifications:
+    - target: {fileID: 1376439963667714930, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
+    - target: {fileID: 1376439963667714930, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -3852492252101762229, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
+    - target: {fileID: 1759404231573523795, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_fontSize
+      value: 62.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 1759404231573523795, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
+    - target: {fileID: 1759404231573523795, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -3852492252101762229, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
+    - target: {fileID: 2720551814390327679, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_fontSize
+      value: 155.15
+      objectReference: {fileID: 0}
+    - target: {fileID: 2720551814390327679, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
+    - target: {fileID: 2720551814390327679, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -3852492252101762229, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
     - target: {fileID: 4763938441055505231, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
       propertyPath: m_Name
       value: Ability Box 6
@@ -2972,6 +3444,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6462867163304083132, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_fontSize
+      value: 59.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6462867163304083132, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
+    - target: {fileID: 6462867163304083132, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -3852492252101762229, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -3001,6 +3485,38 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 786129041}
     m_Modifications:
+    - target: {fileID: 1376439963667714930, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
+    - target: {fileID: 1376439963667714930, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -3852492252101762229, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
+    - target: {fileID: 1759404231573523795, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_fontSize
+      value: 62.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 1759404231573523795, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
+    - target: {fileID: 1759404231573523795, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -3852492252101762229, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
+    - target: {fileID: 2720551814390327679, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_fontSize
+      value: 155.15
+      objectReference: {fileID: 0}
+    - target: {fileID: 2720551814390327679, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
+    - target: {fileID: 2720551814390327679, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -3852492252101762229, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
     - target: {fileID: 4763938441055505231, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
       propertyPath: m_Name
       value: Ability Box (1)
@@ -3085,6 +3601,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6462867163304083132, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_fontSize
+      value: 59.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6462867163304083132, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
+    - target: {fileID: 6462867163304083132, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -3852492252101762229, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -3155,7 +3683,7 @@ MonoBehaviour:
       m_Calls: []
   m_text: "Back to \nTitle Screen"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8c64c47af7c1c4fb5b88d184433c6c44, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
   m_sharedMaterial: {fileID: -3852492252101762229, guid: 8c64c47af7c1c4fb5b88d184433c6c44, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -3222,7 +3750,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_hasFontAssetChanged: 0
+  m_hasFontAssetChanged: 1
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!222 &784836267
@@ -3245,7 +3773,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 159b66c071ced43f499eb58b9b7c8b01, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  key: Title Screen
+  key: 107
 --- !u!1 &786129040
 GameObject:
   m_ObjectHideFlags: 0
@@ -3690,6 +4218,38 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 786129041}
     m_Modifications:
+    - target: {fileID: 1376439963667714930, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
+    - target: {fileID: 1376439963667714930, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -3852492252101762229, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
+    - target: {fileID: 1759404231573523795, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_fontSize
+      value: 62.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 1759404231573523795, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
+    - target: {fileID: 1759404231573523795, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -3852492252101762229, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
+    - target: {fileID: 2720551814390327679, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_fontSize
+      value: 155.15
+      objectReference: {fileID: 0}
+    - target: {fileID: 2720551814390327679, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
+    - target: {fileID: 2720551814390327679, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -3852492252101762229, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
     - target: {fileID: 4763938441055505231, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
       propertyPath: m_Name
       value: Ability Box (2)
@@ -3774,6 +4334,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6462867163304083132, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_fontSize
+      value: 59.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6462867163304083132, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
+    - target: {fileID: 6462867163304083132, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -3852492252101762229, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -3843,8 +4415,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Option A
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8c64c47af7c1c4fb5b88d184433c6c44, type: 2}
-  m_sharedMaterial: {fileID: -3852492252101762229, guid: 8c64c47af7c1c4fb5b88d184433c6c44, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
+  m_sharedMaterial: {fileID: -3852492252101762229, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -4118,8 +4690,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Choose Emotion
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8c64c47af7c1c4fb5b88d184433c6c44, type: 2}
-  m_sharedMaterial: {fileID: -3852492252101762229, guid: 8c64c47af7c1c4fb5b88d184433c6c44, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
+  m_sharedMaterial: {fileID: -3852492252101762229, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -4208,7 +4780,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 159b66c071ced43f499eb58b9b7c8b01, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  key: Choose Emotion
+  key: 0
 --- !u!1 &1058481262
 GameObject:
   m_ObjectHideFlags: 0
@@ -4360,8 +4932,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Random
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8c64c47af7c1c4fb5b88d184433c6c44, type: 2}
-  m_sharedMaterial: {fileID: -3852492252101762229, guid: 8c64c47af7c1c4fb5b88d184433c6c44, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
+  m_sharedMaterial: {fileID: -3852492252101762229, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -4499,8 +5071,8 @@ MonoBehaviour:
   m_text: Choose what Abilities and Emotions your players will have. Anything left
     blank will be randomized!
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8c64c47af7c1c4fb5b88d184433c6c44, type: 2}
-  m_sharedMaterial: {fileID: -3852492252101762229, guid: 8c64c47af7c1c4fb5b88d184433c6c44, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
+  m_sharedMaterial: {fileID: -3852492252101762229, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -4589,7 +5161,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 159b66c071ced43f499eb58b9b7c8b01, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  key: Customize Description
+  key: 104
 --- !u!1 &1160457126
 GameObject:
   m_ObjectHideFlags: 0
@@ -4724,6 +5296,38 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 786129041}
     m_Modifications:
+    - target: {fileID: 1376439963667714930, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
+    - target: {fileID: 1376439963667714930, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -3852492252101762229, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
+    - target: {fileID: 1759404231573523795, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_fontSize
+      value: 62.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 1759404231573523795, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
+    - target: {fileID: 1759404231573523795, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -3852492252101762229, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
+    - target: {fileID: 2720551814390327679, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_fontSize
+      value: 155.15
+      objectReference: {fileID: 0}
+    - target: {fileID: 2720551814390327679, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
+    - target: {fileID: 2720551814390327679, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -3852492252101762229, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
     - target: {fileID: 4763938441055505231, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
       propertyPath: m_Name
       value: Ability Box (6)
@@ -4808,6 +5412,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6462867163304083132, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_fontSize
+      value: 59.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6462867163304083132, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
+    - target: {fileID: 6462867163304083132, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -3852492252101762229, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -4878,8 +5494,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Customize Players
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8c64c47af7c1c4fb5b88d184433c6c44, type: 2}
-  m_sharedMaterial: {fileID: -3852492252101762229, guid: 8c64c47af7c1c4fb5b88d184433c6c44, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
+  m_sharedMaterial: {fileID: -3852492252101762229, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -4968,7 +5584,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 159b66c071ced43f499eb58b9b7c8b01, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  key: Customize Players
+  key: 103
 --- !u!1 &1205098617
 GameObject:
   m_ObjectHideFlags: 0
@@ -5377,6 +5993,38 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 786129041}
     m_Modifications:
+    - target: {fileID: 1376439963667714930, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
+    - target: {fileID: 1376439963667714930, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -3852492252101762229, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
+    - target: {fileID: 1759404231573523795, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_fontSize
+      value: 62.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 1759404231573523795, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
+    - target: {fileID: 1759404231573523795, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -3852492252101762229, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
+    - target: {fileID: 2720551814390327679, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_fontSize
+      value: 155.15
+      objectReference: {fileID: 0}
+    - target: {fileID: 2720551814390327679, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
+    - target: {fileID: 2720551814390327679, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -3852492252101762229, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
     - target: {fileID: 4763938441055505231, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
       propertyPath: m_Name
       value: Ability Box (4)
@@ -5461,6 +6109,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6462867163304083132, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_fontSize
+      value: 59.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6462867163304083132, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
+    - target: {fileID: 6462867163304083132, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -3852492252101762229, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -5682,6 +6342,38 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1232743747}
     m_Modifications:
+    - target: {fileID: 1376439963667714930, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
+    - target: {fileID: 1376439963667714930, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -3852492252101762229, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
+    - target: {fileID: 1759404231573523795, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_fontSize
+      value: 62.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 1759404231573523795, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
+    - target: {fileID: 1759404231573523795, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -3852492252101762229, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
+    - target: {fileID: 2720551814390327679, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_fontSize
+      value: 155.15
+      objectReference: {fileID: 0}
+    - target: {fileID: 2720551814390327679, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
+    - target: {fileID: 2720551814390327679, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -3852492252101762229, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
     - target: {fileID: 4763938441055505231, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
       propertyPath: m_Name
       value: Ability Box (9)
@@ -5766,6 +6458,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6462867163304083132, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_fontSize
+      value: 59.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6462867163304083132, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
+    - target: {fileID: 6462867163304083132, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -3852492252101762229, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -5836,8 +6540,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Choose Emotion
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8c64c47af7c1c4fb5b88d184433c6c44, type: 2}
-  m_sharedMaterial: {fileID: -3852492252101762229, guid: 8c64c47af7c1c4fb5b88d184433c6c44, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
+  m_sharedMaterial: {fileID: -3852492252101762229, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -5926,7 +6630,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 159b66c071ced43f499eb58b9b7c8b01, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  key: Choose Emotion
+  key: 0
 --- !u!1 &1366723268
 GameObject:
   m_ObjectHideFlags: 0
@@ -5987,8 +6691,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Choose Emotion
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8c64c47af7c1c4fb5b88d184433c6c44, type: 2}
-  m_sharedMaterial: {fileID: -3852492252101762229, guid: 8c64c47af7c1c4fb5b88d184433c6c44, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
+  m_sharedMaterial: {fileID: -3852492252101762229, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -6077,7 +6781,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 159b66c071ced43f499eb58b9b7c8b01, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  key: Choose Emotion
+  key: 0
 --- !u!1 &1383226840
 GameObject:
   m_ObjectHideFlags: 0
@@ -6150,8 +6854,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8c64c47af7c1c4fb5b88d184433c6c44, type: 2}
-  m_sharedMaterial: {fileID: -3852492252101762229, guid: 8c64c47af7c1c4fb5b88d184433c6c44, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
+  m_sharedMaterial: {fileID: -3852492252101762229, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -6236,6 +6940,38 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1675742382}
     m_Modifications:
+    - target: {fileID: 1376439963667714930, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
+    - target: {fileID: 1376439963667714930, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -3852492252101762229, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
+    - target: {fileID: 1759404231573523795, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_fontSize
+      value: 62.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 1759404231573523795, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
+    - target: {fileID: 1759404231573523795, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -3852492252101762229, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
+    - target: {fileID: 2720551814390327679, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_fontSize
+      value: 155.15
+      objectReference: {fileID: 0}
+    - target: {fileID: 2720551814390327679, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
+    - target: {fileID: 2720551814390327679, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -3852492252101762229, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
     - target: {fileID: 4763938441055505231, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
       propertyPath: m_Name
       value: Ability Box 3
@@ -6324,6 +7060,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6462867163304083132, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_fontSize
+      value: 59.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6462867163304083132, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
+    - target: {fileID: 6462867163304083132, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -3852492252101762229, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -6405,8 +7153,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Play Game
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8c64c47af7c1c4fb5b88d184433c6c44, type: 2}
-  m_sharedMaterial: {fileID: -3852492252101762229, guid: 8c64c47af7c1c4fb5b88d184433c6c44, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
+  m_sharedMaterial: {fileID: -3852492252101762229, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -6495,7 +7243,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 159b66c071ced43f499eb58b9b7c8b01, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  key: Play Game
+  key: 65
 --- !u!1 &1414646918
 GameObject:
   m_ObjectHideFlags: 0
@@ -6776,8 +7524,8 @@ MonoBehaviour:
 
     9.9'
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8c64c47af7c1c4fb5b88d184433c6c44, type: 2}
-  m_sharedMaterial: {fileID: -3852492252101762229, guid: 8c64c47af7c1c4fb5b88d184433c6c44, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
+  m_sharedMaterial: {fileID: -3852492252101762229, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -6862,6 +7610,38 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1675742382}
     m_Modifications:
+    - target: {fileID: 1376439963667714930, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
+    - target: {fileID: 1376439963667714930, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -3852492252101762229, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
+    - target: {fileID: 1759404231573523795, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_fontSize
+      value: 62.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 1759404231573523795, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
+    - target: {fileID: 1759404231573523795, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -3852492252101762229, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
+    - target: {fileID: 2720551814390327679, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_fontSize
+      value: 155.15
+      objectReference: {fileID: 0}
+    - target: {fileID: 2720551814390327679, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
+    - target: {fileID: 2720551814390327679, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -3852492252101762229, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
     - target: {fileID: 4763938441055505231, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
       propertyPath: m_Name
       value: Ability Box 2
@@ -6950,6 +7730,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6462867163304083132, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_fontSize
+      value: 59.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6462867163304083132, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
+    - target: {fileID: 6462867163304083132, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -3852492252101762229, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -7182,6 +7974,38 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1232743747}
     m_Modifications:
+    - target: {fileID: 1376439963667714930, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
+    - target: {fileID: 1376439963667714930, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -3852492252101762229, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
+    - target: {fileID: 1759404231573523795, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_fontSize
+      value: 62.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 1759404231573523795, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
+    - target: {fileID: 1759404231573523795, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -3852492252101762229, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
+    - target: {fileID: 2720551814390327679, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_fontSize
+      value: 155.15
+      objectReference: {fileID: 0}
+    - target: {fileID: 2720551814390327679, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
+    - target: {fileID: 2720551814390327679, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -3852492252101762229, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
     - target: {fileID: 4763938441055505231, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
       propertyPath: m_Name
       value: Ability Box (10)
@@ -7266,6 +8090,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6462867163304083132, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_fontSize
+      value: 59.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6462867163304083132, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
+    - target: {fileID: 6462867163304083132, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -3852492252101762229, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -7284,6 +8120,38 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 879833847}
     m_Modifications:
+    - target: {fileID: 1376439963667714930, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
+    - target: {fileID: 1376439963667714930, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -3852492252101762229, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
+    - target: {fileID: 1759404231573523795, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_fontSize
+      value: 62.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 1759404231573523795, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
+    - target: {fileID: 1759404231573523795, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -3852492252101762229, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
+    - target: {fileID: 2720551814390327679, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_fontSize
+      value: 155.15
+      objectReference: {fileID: 0}
+    - target: {fileID: 2720551814390327679, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
+    - target: {fileID: 2720551814390327679, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -3852492252101762229, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
     - target: {fileID: 4763938441055505231, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
       propertyPath: m_Name
       value: Ability Box (4)
@@ -7368,6 +8236,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6462867163304083132, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_fontSize
+      value: 59.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6462867163304083132, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
+    - target: {fileID: 6462867163304083132, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -3852492252101762229, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -7528,8 +8408,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Quit
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8c64c47af7c1c4fb5b88d184433c6c44, type: 2}
-  m_sharedMaterial: {fileID: -3852492252101762229, guid: 8c64c47af7c1c4fb5b88d184433c6c44, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
+  m_sharedMaterial: {fileID: -3852492252101762229, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -7618,7 +8498,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 159b66c071ced43f499eb58b9b7c8b01, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  key: Quit Game
+  key: 108
 --- !u!1001 &1594011052
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7627,6 +8507,38 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 786129041}
     m_Modifications:
+    - target: {fileID: 1376439963667714930, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
+    - target: {fileID: 1376439963667714930, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -3852492252101762229, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
+    - target: {fileID: 1759404231573523795, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_fontSize
+      value: 62.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 1759404231573523795, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
+    - target: {fileID: 1759404231573523795, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -3852492252101762229, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
+    - target: {fileID: 2720551814390327679, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_fontSize
+      value: 155.15
+      objectReference: {fileID: 0}
+    - target: {fileID: 2720551814390327679, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
+    - target: {fileID: 2720551814390327679, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -3852492252101762229, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
     - target: {fileID: 4763938441055505231, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
       propertyPath: m_Name
       value: Ability Box (3)
@@ -7711,6 +8623,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6462867163304083132, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_fontSize
+      value: 59.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6462867163304083132, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
+    - target: {fileID: 6462867163304083132, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -3852492252101762229, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -8293,8 +9217,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Option A
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8c64c47af7c1c4fb5b88d184433c6c44, type: 2}
-  m_sharedMaterial: {fileID: -3852492252101762229, guid: 8c64c47af7c1c4fb5b88d184433c6c44, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
+  m_sharedMaterial: {fileID: -3852492252101762229, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -8500,6 +9424,38 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1232743747}
     m_Modifications:
+    - target: {fileID: 1376439963667714930, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
+    - target: {fileID: 1376439963667714930, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -3852492252101762229, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
+    - target: {fileID: 1759404231573523795, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_fontSize
+      value: 62.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 1759404231573523795, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
+    - target: {fileID: 1759404231573523795, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -3852492252101762229, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
+    - target: {fileID: 2720551814390327679, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_fontSize
+      value: 155.15
+      objectReference: {fileID: 0}
+    - target: {fileID: 2720551814390327679, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
+    - target: {fileID: 2720551814390327679, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -3852492252101762229, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
     - target: {fileID: 4763938441055505231, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
       propertyPath: m_Name
       value: Ability Box (7)
@@ -8584,6 +9540,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6462867163304083132, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_fontSize
+      value: 59.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6462867163304083132, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
+    - target: {fileID: 6462867163304083132, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -3852492252101762229, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -8602,6 +9570,38 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1232743747}
     m_Modifications:
+    - target: {fileID: 1376439963667714930, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
+    - target: {fileID: 1376439963667714930, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -3852492252101762229, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
+    - target: {fileID: 1759404231573523795, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_fontSize
+      value: 62.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 1759404231573523795, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
+    - target: {fileID: 1759404231573523795, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -3852492252101762229, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
+    - target: {fileID: 2720551814390327679, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_fontSize
+      value: 155.15
+      objectReference: {fileID: 0}
+    - target: {fileID: 2720551814390327679, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
+    - target: {fileID: 2720551814390327679, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -3852492252101762229, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
     - target: {fileID: 4763938441055505231, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
       propertyPath: m_Name
       value: Ability Box (8)
@@ -8686,6 +9686,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6462867163304083132, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_fontSize
+      value: 59.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6462867163304083132, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
+    - target: {fileID: 6462867163304083132, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -3852492252101762229, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -8881,8 +9893,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Option A
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8c64c47af7c1c4fb5b88d184433c6c44, type: 2}
-  m_sharedMaterial: {fileID: -3852492252101762229, guid: 8c64c47af7c1c4fb5b88d184433c6c44, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
+  m_sharedMaterial: {fileID: -3852492252101762229, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -8967,6 +9979,38 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 879833847}
     m_Modifications:
+    - target: {fileID: 1376439963667714930, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
+    - target: {fileID: 1376439963667714930, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -3852492252101762229, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
+    - target: {fileID: 1759404231573523795, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_fontSize
+      value: 62.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 1759404231573523795, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
+    - target: {fileID: 1759404231573523795, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -3852492252101762229, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
+    - target: {fileID: 2720551814390327679, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_fontSize
+      value: 155.15
+      objectReference: {fileID: 0}
+    - target: {fileID: 2720551814390327679, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
+    - target: {fileID: 2720551814390327679, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -3852492252101762229, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
     - target: {fileID: 4763938441055505231, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
       propertyPath: m_Name
       value: Ability Box (3)
@@ -9051,6 +10095,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6462867163304083132, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_fontSize
+      value: 59.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6462867163304083132, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
+    - target: {fileID: 6462867163304083132, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -3852492252101762229, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -9069,6 +10125,38 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 879833847}
     m_Modifications:
+    - target: {fileID: 1376439963667714930, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
+    - target: {fileID: 1376439963667714930, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -3852492252101762229, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
+    - target: {fileID: 1759404231573523795, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_fontSize
+      value: 62.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 1759404231573523795, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
+    - target: {fileID: 1759404231573523795, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -3852492252101762229, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
+    - target: {fileID: 2720551814390327679, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_fontSize
+      value: 155.15
+      objectReference: {fileID: 0}
+    - target: {fileID: 2720551814390327679, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
+    - target: {fileID: 2720551814390327679, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -3852492252101762229, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
     - target: {fileID: 4763938441055505231, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
       propertyPath: m_Name
       value: Ability Box (6)
@@ -9153,6 +10241,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6462867163304083132, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_fontSize
+      value: 59.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6462867163304083132, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
+    - target: {fileID: 6462867163304083132, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -3852492252101762229, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -9222,8 +10322,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Random
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8c64c47af7c1c4fb5b88d184433c6c44, type: 2}
-  m_sharedMaterial: {fileID: -3852492252101762229, guid: 8c64c47af7c1c4fb5b88d184433c6c44, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
+  m_sharedMaterial: {fileID: -3852492252101762229, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -9434,8 +10534,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Random
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8c64c47af7c1c4fb5b88d184433c6c44, type: 2}
-  m_sharedMaterial: {fileID: -3852492252101762229, guid: 8c64c47af7c1c4fb5b88d184433c6c44, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
+  m_sharedMaterial: {fileID: -3852492252101762229, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -9955,8 +11055,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: New Text
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8c64c47af7c1c4fb5b88d184433c6c44, type: 2}
-  m_sharedMaterial: {fileID: -3852492252101762229, guid: 8c64c47af7c1c4fb5b88d184433c6c44, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
+  m_sharedMaterial: {fileID: -3852492252101762229, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -10063,13 +11163,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentCharacter: {fileID: 0}
-  forcedPlayerInfo:
-  - name: Knight
-    forcedEmotion: 3
-  - name: Angel
-    forcedEmotion: 2
-  - name: Wizard
-    forcedEmotion: 4
   characterPrefab: {fileID: 8345166759536211255, guid: 750995808170643f1b046855142825f7, type: 3}
 --- !u!4 &2053818004
 Transform:
@@ -10094,6 +11187,38 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1675742382}
     m_Modifications:
+    - target: {fileID: 1376439963667714930, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
+    - target: {fileID: 1376439963667714930, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -3852492252101762229, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
+    - target: {fileID: 1759404231573523795, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_fontSize
+      value: 62.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 1759404231573523795, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
+    - target: {fileID: 1759404231573523795, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -3852492252101762229, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
+    - target: {fileID: 2720551814390327679, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_fontSize
+      value: 155.15
+      objectReference: {fileID: 0}
+    - target: {fileID: 2720551814390327679, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
+    - target: {fileID: 2720551814390327679, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -3852492252101762229, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
     - target: {fileID: 4763938441055505231, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
       propertyPath: m_Name
       value: Ability Box 5
@@ -10182,6 +11307,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6462867163304083132, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_fontSize
+      value: 59.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6462867163304083132, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
+    - target: {fileID: 6462867163304083132, guid: 095425bcff01a4e739f6b575dd1c9140, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -3852492252101762229, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

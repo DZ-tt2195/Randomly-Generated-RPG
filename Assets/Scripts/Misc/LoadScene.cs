@@ -6,7 +6,7 @@ using MyBox;
 public class LoadScene : MonoBehaviour
 {
     [Scene] [SerializeField] string scene;
-    [SerializeField] CarryVariables.GameMode gameMode;
+    [SerializeField] GameMode gameMode;
     [SerializeField] LoadSceneMode loadMode;
 
     Button button;
@@ -17,8 +17,8 @@ public class LoadScene : MonoBehaviour
         button.onClick.AddListener(NextScene);
     }
 
-    public void NextScene()
+    void NextScene()
     {
-        StartCoroutine(CarryVariables.instance.UnloadObjects(SceneManager.GetActiveScene().name, scene, gameMode));
+        ScreenOverlay.instance.UnloadObjects(SceneManager.GetActiveScene().name, scene, gameMode);
     }
 }

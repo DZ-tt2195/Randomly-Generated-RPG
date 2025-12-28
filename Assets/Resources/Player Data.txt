@@ -1,39 +1,4 @@
-{
-    [
-      "Player Name",
-      "Description",
-      "Base Health",
-      "Start Position",
-      "Skills",
-      "AI Targeting",
-      "Art Credit"
-    ],
-    [
-      "Wizard",
-      "Deals small amounts of damage to multiple Enemies at once. Has control over Positions and Power.",
-      "10",
-      "GROUNDED",
-      "Above Danger,Accelerate,Bad Omens,Bind,Bounce,Chill,Crown,Flood,Gust,Headwinds,Manipulate Time,Punch Up,Quick Attack,Readjust,Restrain,Shockwave,Stalactites,Storm,Team Attack,Touchdown,Warp,",
-      "",
-      "Harald Lieske|Dominion: Allies|(Conjurer)"
-    ],
-    [
-      "Knight",
-      "Deals lots of damage to individual Enemies, and only Grounded ones. Has control over Emotions and Defense.",
-      "10",
-      "GROUNDED",
-      "Cheer,Daze,Desperation,Embarass,Force,Immobilize,Impale,Intimidate,Joust,Knock Down,Meditate,Mirror,Mock,Neutralize,Redirect,Steal,Strike,Surprise,Twirl,Upset,",
-      "",
-      "Michael Watson|Dominion: Cornucopia and Guilds|(Joust)"
-    ],
-    [
-      "Angel",
-      "Heals Players and starts Elevated. Can do everything but attack.",
-      "10",
-      "ELEVATED",
-      "Air Combat,Assist,Calm Down,Crash Land,Enrage,Exhaust,Exorcism,Gift of Flight,Hide,Immunity,Joy,Lift Up,Motivate,Overheal,Petrify,Plummet,Retreat,Security,Soft Landing,Tailwinds,Team Up,",
-      "",
-      "Magali Villeneuve|Oath of the Gatewatch|(Linvala, the Preserver)"
-    ]
-  ]
-}
+characterName	description	baseHealth	startPosition	listOfAbilities	aiTargeting	artCredit	difficulty
+Wizard	Deals small amounts of damage to multiple Enemies at once. Has control over Positions and Power.	10	GROUNDED	Above_Danger,Accelerate,Bad_Omens,Bind,Bounce,Chill,Crown,Flood,Gust,Headwinds,Manipulate_Time,Punch_Up,Quick_Attack,Readjust,Restrain,Shockwave,Stalactites,Storm,Team_Attack,Touchdown,Warp,	None	Harald Lieske\nDominion: Allies\n(Conjurer)	0
+Knight	Deals lots of damage to individual Enemies, and only Grounded ones. Has control over Emotions and Defense.	10	GROUNDED	Cheer,Daze,Desperation,Embarass,Force,Immobilize,Impale,Intimidate,Joust,Knock_Down,Meditate,Mirror,Mock,Neutralize,Redirect,Steal,Strike,Surprise,Twirl,Upset,	None	Michael Watson\nDominion: Cornucopia and Guilds\n(Joust)	0
+Angel	Heals Players and starts Elevated. Can do everything but attack.	10	ELEVATED	Air_Combat,Assist,Calm_Down,Crash_Land,Enrage,Exhaust,Exorcism,Gift_of_Flight,Hide,Immunity,Joy,Lift_Up,Motivate,Overheal,Petrify,Plummet,Retreat,Security,Soft_Landing,Tailwinds,Team_Up,	None	Magali Villeneuve\nOath of the Gatewatch\n(Linvala, the Preserver)	0

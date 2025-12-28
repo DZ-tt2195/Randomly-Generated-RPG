@@ -15,7 +15,7 @@ public class PlayerCharacter : Character
         allAbilities.AddRange(listOfRandomAbilities);
 
         EnableAbilityBoxes();
-        TurnManager.instance.instructions.text = CarryVariables.instance.Translate("Choose Ability", new() { ("This", this.name)});
+        TurnManager.instance.instructions.text = AutoTranslate.Choose_Ability(this.name);
 
         yield return WaitForChoice();
         if (choice != -1)
@@ -74,21 +74,22 @@ public class PlayerCharacter : Character
             Character targeted = TurnManager.instance.CheckForTargeted(ability.listOfTargets[index]);
             if (targeted != null)
             {
-                TurnManager.instance.instructions.text = CarryVariables.instance.Translate("Must Choose Targeted", new() { ("Target", targeted.name) });
+                TurnManager.instance.instructions.text = AutoTranslate.Must_Choose_Targeted(targeted.name);
                 ability.listOfTargets[index] = new List<Character> { targeted };
             }
             else
             {
+                string abilityName = AutoTranslate.DoEnum(ability.data.abilityName);
                 switch (target)
                 {
                     case TeamTarget.OnePlayer:
-                        TurnManager.instance.instructions.text = CarryVariables.instance.Translate("Choose One Player", new() { ("Ability", CarryVariables.instance.Translate(ability.data.myName)) });
+                        TurnManager.instance.instructions.text = AutoTranslate.Choose_One_Player(abilityName);
                         break;
                     case TeamTarget.OtherPlayer:
-                        TurnManager.instance.instructions.text = CarryVariables.instance.Translate("Choose Another Player", new() { ("Ability", CarryVariables.instance.Translate(ability.data.myName)) });
+                        TurnManager.instance.instructions.text = AutoTranslate.Choose_Another_Player(abilityName); 
                         break;
                     case TeamTarget.OneEnemy:
-                        TurnManager.instance.instructions.text = CarryVariables.instance.Translate("Choose An Enemy", new() { ("Ability", CarryVariables.instance.Translate(ability.data.myName)) });
+                        TurnManager.instance.instructions.text = AutoTranslate.Choose_An_Enemy(abilityName); 
                         break;
                 }
 

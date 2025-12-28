@@ -15,7 +15,7 @@ public class TranslateDropdown : MonoBehaviour
         for (int i = 0; i < dropdown.options.Count; i++)
         {
             string original = dropdown.options[i].text;
-            string translated = CarryVariables.instance.Translate(original);
+            string translated = Translator.inst.Translate(original);
             translatedOptions.Add((original, translated));
             dropdown.options[i].text = translated;
         }

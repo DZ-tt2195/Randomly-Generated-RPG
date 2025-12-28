@@ -74,20 +74,20 @@ public class Character : MonoBehaviour
     public void SetupCharacter(CharacterData characterData, List<AbilityData> listOfAbilityData, Emotion startingEmotion, bool abilitiesBeginWithCooldown)
     {
         data = characterData;
-        this.name = CarryVariables.instance.Translate(characterData.myName);
+        this.name = AutoTranslate.DoEnum(characterData.characterName);
         nameText.text = this.name;
-        editedDescription = KeywordTooltip.instance.EditText(CarryVariables.instance.Translate($"{characterData.myName} Text"));
+        editedDescription = KeywordTooltip.instance.EditText(Translator.inst.Translate($"{characterData.characterName}_Text"));
 
         this.baseHealth = data.baseHealth;
         this.currentHealth = this.baseHealth;
-        healthText.text = KeywordTooltip.instance.EditText($"{currentHealth}/{baseHealth}{CarryVariables.instance.Translate("Health")}");
+        healthText.text = KeywordTooltip.instance.EditText($"{currentHealth}/{baseHealth}{AutoTranslate.DoEnum(ToTranslate.Health)}");
 
-        this.myImage.sprite = Resources.Load<Sprite>($"Characters/{characterData.myName}");
-        AddAbility(CarryVariables.instance.FindEnemyAbility("Skip Turn"), true, false);
+        this.myImage.sprite = this.data.sprite;
+        AddAbility(GameFiles.inst.FindEnemyAbility(ToTranslate.Skip_Turn), true, false);
         if (this is PlayerCharacter)
-            AddAbility(CarryVariables.instance.FindEnemyAbility("Revive"), true, false);
+            AddAbility(GameFiles.inst.FindEnemyAbility(ToTranslate.Revive), true, false);
 
-        StartCoroutine(ChangePosition(data.startingPosition, -1));
+        StartCoroutine(ChangePosition(data.startPosition, -1));
         StartCoroutine(ChangeEmotion(startingEmotion, -1));
 
         foreach (AbilityData data in listOfAbilityData)
@@ -138,12 +138,8 @@ public class Character : MonoBehaviour
 
         if (statEffectDict[StatusEffect.Protected] > 0 && effect < 0)
         {
-            TurnManager.instance.CreateVisual(CarryVariables.instance.Translate("Blocked"), this.transform.localPosition);
-            answer = CarryVariables.instance.Translate("Blocked Stat Drop", new()
-            {
-                ("This", this.name), ("Num", effect.ToString()), ("Stat", CarryVariables.instance.Translate("Max Health"))
-            });
-
+            TurnManager.instance.CreateVisual(AutoTranslate.DoEnum(ToTranslate.Blocked), this.transform.localPosition);
+            answer = AutoTranslate.Blocked_Stat_Drop(this.name, effect.ToString(), AutoTranslate.DoEnum(ToTranslate.Max_Health));
             Log.instance.AddText(answer, logged);
             yield break;
         }
@@ -151,22 +147,20 @@ public class Character : MonoBehaviour
         baseHealth += effect;
         if (effect > 0)
         {
-            TurnManager.instance.CreateVisual($"+{effect} {CarryVariables.instance.Translate("Max Health")}", this.transform.localPosition);
-            answer = CarryVariables.instance.Translate("Increase Stat", new()
-            { ("This", this.name), ("Num", effect.ToString()), ("Stat", CarryVariables.instance.Translate("Max Health"))});
+            TurnManager.instance.CreateVisual($"+{effect} {AutoTranslate.DoEnum(ToTranslate.Max_Health)}", this.transform.localPosition);
+            answer = AutoTranslate.Increase_Stat(this.name, effect.ToString(), AutoTranslate.DoEnum(ToTranslate.Max_Health));
             Log.instance.AddText(answer, logged);
         }
         else
         {
-            TurnManager.instance.CreateVisual($"{effect} {CarryVariables.instance.Translate("Max Health")}", this.transform.localPosition);
-            answer = CarryVariables.instance.Translate("Decrease Stat", new()
-            { ("This", this.name), ("Num", Mathf.Abs(effect).ToString()), ("Stat", CarryVariables.instance.Translate("Max Health"))});
+            TurnManager.instance.CreateVisual($"{effect} {AutoTranslate.DoEnum(ToTranslate.Max_Health)}", this.transform.localPosition);
+            answer = AutoTranslate.Decrease_Stat(this.name, Mathf.Abs(effect).ToString(), AutoTranslate.DoEnum(ToTranslate.Max_Health));
             Log.instance.AddText(answer, logged);
 
             if (baseHealth < currentHealth)
                 currentHealth = baseHealth;
         }
-        healthText.text = KeywordTooltip.instance.EditText($"{currentHealth}/{baseHealth}{CarryVariables.instance.Translate("Health")}");
+        healthText.text = KeywordTooltip.instance.EditText($"{currentHealth}/{baseHealth}{AutoTranslate.DoEnum(ToTranslate.Health)}");
     }
 
     public IEnumerator ChangeHealth(int change, int logged, Character attacker = null)
@@ -177,17 +171,15 @@ public class Character : MonoBehaviour
         if (change > 0)
         {
             currentHealth = Mathf.Clamp(currentHealth += change, 0, this.baseHealth);
-            TurnManager.instance.CreateVisual($"+{change} {CarryVariables.instance.Translate("Health")}", this.transform.localPosition);
+            TurnManager.instance.CreateVisual($"+{change} {AutoTranslate.DoEnum(ToTranslate.Health)}", this.transform.localPosition);
 
-            answer = CarryVariables.instance.Translate("Increase Stat", new()
-            { ("This", this.name), ("Num", change.ToString()), ("Stat", CarryVariables.instance.Translate("Health"))});
+            answer = AutoTranslate.Increase_Stat(this.name, change.ToString(), AutoTranslate.DoEnum(ToTranslate.Health));
             Log.instance.AddText(answer, logged);
         }
         else if (statEffectDict[StatusEffect.Protected] > 0)
         {
-            TurnManager.instance.CreateVisual(CarryVariables.instance.Translate("Blocked"), this.transform.localPosition);
-            answer = CarryVariables.instance.Translate("Blocked Stat Drop", new()
-            { ("This", this.name), ("Num", change.ToString()), ("Stat", CarryVariables.instance.Translate("Health"))});
+            TurnManager.instance.CreateVisual($"{AutoTranslate.DoEnum(ToTranslate.Blocked)}", this.transform.localPosition);
+            answer = AutoTranslate.Blocked_Stat_Drop(this.name, change.ToString(), AutoTranslate.DoEnum(ToTranslate.Health));
             Log.instance.AddText(answer, logged);
         }
         else
@@ -196,16 +188,15 @@ public class Character : MonoBehaviour
                 lastToAttackThis = attacker;
 
             currentHealth -= Mathf.Abs(change);
-            TurnManager.instance.CreateVisual($"{change} {CarryVariables.instance.Translate("Health")}", this.transform.localPosition);
+            TurnManager.instance.CreateVisual($"{change} {AutoTranslate.DoEnum(ToTranslate.Health)}", this.transform.localPosition);
 
-            answer = CarryVariables.instance.Translate("Decrease Stat", new()
-            { ("This", this.name), ("Num", Mathf.Abs(change).ToString()), ("Stat", CarryVariables.instance.Translate("Health"))});
+            answer = AutoTranslate.Decrease_Stat(this.name, Mathf.Abs(change).ToString(), AutoTranslate.DoEnum(ToTranslate.Health));
             Log.instance.AddText(answer, logged);
 
             if (currentHealth <= 0)
                 yield return HasDied(logged);
         }
-        healthText.text = KeywordTooltip.instance.EditText($"{currentHealth}/{baseHealth}{CarryVariables.instance.Translate("Health")}");
+        healthText.text = KeywordTooltip.instance.EditText($"{currentHealth}/{baseHealth}{AutoTranslate.DoEnum(ToTranslate.Health)}");
     }
 
     public IEnumerator ChangeStat(Stats stat, int change, int logged)
@@ -215,9 +206,8 @@ public class Character : MonoBehaviour
 
         if (statEffectDict[StatusEffect.Protected] > 0 && change < 0)
         {
-            TurnManager.instance.CreateVisual(CarryVariables.instance.Translate("Blocked"), this.transform.localPosition);
-            answer = CarryVariables.instance.Translate("Blocked Stat Drop", new()
-            { ("This", this.name), ("Num", change.ToString()), ("Stat", CarryVariables.instance.Translate(stat.ToString()))});
+            TurnManager.instance.CreateVisual($"{AutoTranslate.DoEnum(ToTranslate.Blocked)}", this.transform.localPosition);
+            answer = AutoTranslate.Blocked_Stat_Drop(this.name, change.ToString(), Translator.inst.Translate(stat.ToString()));
             Log.instance.AddText(answer, logged);
             yield break;
         }
@@ -226,16 +216,14 @@ public class Character : MonoBehaviour
         CharacterUI();
         if (logged >= 0 && change > 0)
         {
-            TurnManager.instance.CreateVisual($"+{change} {CarryVariables.instance.Translate(stat.ToString())}", this.transform.localPosition);
-            answer = CarryVariables.instance.Translate("Increase Stat", new()
-            { ("This", this.name), ("Num", change.ToString()), ("Stat", CarryVariables.instance.Translate(stat.ToString()))});
+            TurnManager.instance.CreateVisual($"+{change} {Translator.inst.Translate(stat.ToString())}", this.transform.localPosition);
+            answer = AutoTranslate.Increase_Stat(this.name, change.ToString(), Translator.inst.Translate(stat.ToString()));
             Log.instance.AddText(answer, logged);
         }
         else if (logged >= 0 && change < 0)
         {
-            TurnManager.instance.CreateVisual($"{change} {CarryVariables.instance.Translate(stat.ToString())}", this.transform.localPosition);
-            answer = CarryVariables.instance.Translate("Decrease Stat", new()
-            { ("This", this.name), ("Num", Mathf.Abs(change).ToString()), ("Stat", CarryVariables.instance.Translate(stat.ToString()))});
+            TurnManager.instance.CreateVisual($"{change} {Translator.inst.Translate(stat.ToString())}", this.transform.localPosition);
+            answer = AutoTranslate.Decrease_Stat(this.name, Mathf.Abs(change).ToString(), Translator.inst.Translate(stat.ToString()));
             Log.instance.AddText(answer, logged);
         }
     }
@@ -245,17 +233,16 @@ public class Character : MonoBehaviour
         if (this == null || change == 0) yield break;
 
         _privStatEffect[statusEffect] = _privStatEffect[statusEffect]+change;
-        TurnManager.instance.CreateVisual(CarryVariables.instance.Translate(statusEffect.ToString()), this.transform.localPosition);
+        TurnManager.instance.CreateVisual(Translator.inst.Translate(statusEffect.ToString()), this.transform.localPosition);
 
         if (statusEffect == StatusEffect.Extra)
         {
-            Log.instance.AddText(CarryVariables.instance.Translate("Gain Extra Ability",
-                new() { ("This", this.name), ("Num", _privStatEffect[statusEffect].ToString()) }), logged);
+            Log.instance.AddText(AutoTranslate.Gain_Extra_Ability(this.name, _privStatEffect[statusEffect].ToString()), logged);
         }
         else
         {
-            Log.instance.AddText(CarryVariables.instance.Translate("Change Status",
-                new() { ("This", this.name), ("Status", CarryVariables.instance.Translate(statusEffect.ToString())), ("Num", _privStatEffect[statusEffect].ToString()) }), logged);
+            Log.instance.AddText(AutoTranslate.Change_Status(this.name, Translator.inst.Translate(statusEffect.ToString()), _privStatEffect[statusEffect].ToString()), logged);
+            
             if (statusEffect == StatusEffect.Targeted)
             {
                 if (this is PlayerCharacter)
@@ -273,7 +260,7 @@ public class Character : MonoBehaviour
 
         if (statEffectDict[StatusEffect.Locked] > 0)
         {
-            Log.instance.AddText(CarryVariables.instance.Translate("Blocked Position", new() { ("This", this.name)}), logged);
+            Log.instance.AddText(AutoTranslate.Blocked_Position(this.name), logged);
         }
         else
         {
@@ -282,10 +269,9 @@ public class Character : MonoBehaviour
 
             if (Log.instance != null && logged >= 0)
             {
-                string change = CarryVariables.instance.Translate("Become New", new()
-                { ("This", this.name), ("Change", CarryVariables.instance.Translate(newPosition.ToString())) });
+                string change = AutoTranslate.Become_New(this.name, Translator.inst.Translate(newPosition.ToString()));
                 Log.instance.AddText(change, logged);
-                TurnManager.instance.CreateVisual(CarryVariables.instance.Translate(newPosition.ToString()), this.transform.localPosition);
+                TurnManager.instance.CreateVisual(Translator.inst.Translate(newPosition.ToString()), this.transform.localPosition);
             }
         }
     }
@@ -296,7 +282,7 @@ public class Character : MonoBehaviour
 
         if (statEffectDict[StatusEffect.Locked] > 0)
         {
-            Log.instance.AddText(CarryVariables.instance.Translate("Blocked Emotion", new() { ("This", this.name) }), logged);
+            Log.instance.AddText(AutoTranslate.Blocked_Emotion(this.name), logged);
         }
         else
         {
@@ -305,10 +291,9 @@ public class Character : MonoBehaviour
 
             if (Log.instance != null && logged >= 0)
             {
-                string change = CarryVariables.instance.Translate("Become New", new()
-                { ("This", this.name), ("Change", CarryVariables.instance.Translate(newEmotion.ToString())) });
+                string change = AutoTranslate.Become_New(this.name, Translator.inst.Translate(newEmotion.ToString()));
                 Log.instance.AddText(change, logged);
-                TurnManager.instance.CreateVisual(CarryVariables.instance.Translate(newEmotion.ToString()), this.transform.localPosition);
+                TurnManager.instance.CreateVisual(Translator.inst.Translate(newEmotion.ToString()), this.transform.localPosition);
             }
         }
     }
@@ -334,7 +319,7 @@ public class Character : MonoBehaviour
         CurrentEmotion = Emotion.Dead;
         CharacterUI();
 
-        Log.instance.AddText(CarryVariables.instance.Translate("Died", new() { ("This", this.name)}), logged+1);
+        Log.instance.AddText(AutoTranslate.Died(this.name), logged+1);
         TurnManager.instance.speedQueue.Remove(this);
 
         if (this is PlayerCharacter)
@@ -353,13 +338,13 @@ public class Character : MonoBehaviour
     {
         if (this == null || this.currentHealth > 0) yield break;
 
-        Log.instance.AddText(CarryVariables.instance.Translate("Revived", new() { ("This", this.name)}), logged);
+        Log.instance.AddText(AutoTranslate.Revived(this.name), logged);
         TurnManager.instance.listOfPlayers.Add(this);
         TurnManager.instance.speedQueue.Insert(0, this);
         TurnManager.instance.listOfDead.Remove(this);
 
         yield return ChangeHealth(health, logged);
-        yield return ChangePosition(data.startingPosition, -1);
+        yield return ChangePosition(data.startPosition, -1);
         yield return ChangeEmotion((Emotion)UnityEngine.Random.Range(1, 5), -1);
     }
 
@@ -384,7 +369,7 @@ public class Character : MonoBehaviour
         while (statEffectDict[StatusEffect.Extra] > 0 && TurnManager.instance.listOfEnemies.Count > 0)
         {
             _privStatEffect[StatusEffect.Extra]--;
-            Log.instance.AddText(CarryVariables.instance.Translate("Use Extra Ability", new() { ("This", this.name) }), logged);
+            Log.instance.AddText(AutoTranslate.Use_Extra_Ability(this.name), logged);
 
             CharacterUI();
             yield return ResolveTurn(logged, true);
@@ -394,22 +379,22 @@ public class Character : MonoBehaviour
     IEnumerator Timer()
     {
         timer = 10f;
-        if (this is PlayerCharacter && CarryVariables.instance.ActiveChallenge("Player Timer"))
+        if (this is PlayerCharacter && ScreenOverlay.instance.ActiveChallenge(ToTranslate.Player_Timer))
         {
             TurnManager.instance.timerText.gameObject.SetActive(true);
             while (timer > 0f)
             {
                 yield return null;
                 timer -= Time.deltaTime;
-                TurnManager.instance.timerText.text = $"Timer: {timer:F1}";
+                TurnManager.instance.timerText.text = AutoTranslate.Counting_Down($"{timer:F1}");
             }
 
             TextCollector[] allCollectors = FindObjectsByType<TextCollector>(FindObjectsSortMode.None);
             foreach (TextCollector collector in allCollectors)
                 Destroy(collector.gameObject);
 
-            Log.instance.AddText(CarryVariables.instance.Translate("Out of Time", new() { ("This", this.name) }), 0);
-            Log.instance.AddText(CarryVariables.instance.Translate("Skip Turn Log", new() { ("This", this.name)}), 0);
+            Log.instance.AddText(AutoTranslate.Out_of_Time(this.name));
+            Log.instance.AddText(AutoTranslate.Skip_Turn_Log(this.name));
         }
         else
         {
@@ -424,7 +409,7 @@ public class Character : MonoBehaviour
             yield return TurnManager.instance.WaitTime();
             _privStatEffect[StatusEffect.Stunned]--;
             CharacterUI();
-            Log.instance.AddText(CarryVariables.instance.Translate("Miss Turn", new() { ("This", this.name)}), 0);
+            Log.instance.AddText(AutoTranslate.Miss_Turn(this.name), 0);
             yield break;
         }
 
@@ -442,10 +427,10 @@ public class Character : MonoBehaviour
             if (timer < 0f)
                 yield break;
 
-            for (int i = 0; i < chosenAbility.data.defaultTargets.Length; i++)
+            for (int i = 0; i < chosenAbility.data.toTarget.Length; i++)
             {
-                yield return ChooseTarget(chosenAbility, chosenAbility.data.defaultTargets[i], i);
-                if (chosenAbility.singleTarget.Contains(chosenAbility.data.defaultTargets[i]))
+                yield return ChooseTarget(chosenAbility, chosenAbility.data.toTarget[i], i);
+                if (chosenAbility.singleTarget.Contains(chosenAbility.data.toTarget[i]))
                     chosenTarget.Add(chosenAbility.listOfTargets[i][0]);
             }
 
@@ -457,11 +442,11 @@ public class Character : MonoBehaviour
                 string result = "";
                 if (chosenTarget.Count == 0)
                 {
-                    result = CarryVariables.instance.Translate("Confirm No Target", new() { ("Ability", CarryVariables.instance.Translate(chosenAbility.data.myName)) });
+                    result = AutoTranslate.Confirm_No_Target(AutoTranslate.DoEnum(chosenAbility.data.abilityName));
                 }
                 else
                 {
-                    result = CarryVariables.instance.Translate("Confirm Target", new() { ("Ability", CarryVariables.instance.Translate(chosenAbility.data.myName)) });
+                    result = AutoTranslate.Confirm_Target(AutoTranslate.DoEnum(chosenAbility.data.abilityName));
                     result += " ";
                     result += string.Join(" + ", chosenTarget.Select(target => target.name));
                 }
@@ -508,8 +493,8 @@ public class Character : MonoBehaviour
             }
         }
 
-        Log.instance.AddText(Log.Substitute(chosenAbility, this, (chosenTarget.Count > 0) ? chosenTarget[0] : null), logged);
-        if (!chosenAbility.data.myName.Equals("Skip Turn"))
+        Log.instance.AddText(Log.AbilityLogged(chosenAbility, this, (chosenTarget.Count > 0) ? chosenTarget[0] : null), logged);
+        if (!chosenAbility.data.abilityName.Equals(ToTranslate.Skip_Turn))
         {
             chosenAbility.killed = false;
             chosenAbility.fullHeal = false;
@@ -522,18 +507,15 @@ public class Character : MonoBehaviour
             }
 
             int cooldownIncrease = chosenAbility.data.baseCooldown + (CurrentEmotion == Emotion.Happy ? 1 : 0) +
-                (CarryVariables.instance.ActiveCheat("Slower Enemy Cooldowns") && this is EnemyCharacter ? 1 : 0);
+                (ScreenOverlay.instance.ActiveCheat(ToTranslate.Slower_Enemy_Cooldowns) && this is EnemyCharacter ? 1 : 0);
 
             if (cooldownIncrease > 0)
             {
                 chosenAbility.currentCooldown = cooldownIncrease;
-                string answer = CarryVariables.instance.Translate("Apply Cooldown", new()
-                {
-                    ("Target", this.name), ("Ability", CarryVariables.instance.Translate(chosenAbility.data.myName)), ("MiscStat", cooldownIncrease.ToString())
-                });
+                string answer = AutoTranslate.Apply_Cooldown(this.name, AutoTranslate.DoEnum(chosenAbility.data.abilityName), cooldownIncrease.ToString());
                 Log.instance.AddText(answer, logged);
             }
-            if (CarryVariables.instance.mode == CarryVariables.GameMode.Tutorial && TutorialManager.instance.currentCharacter == this)
+            if (ScreenOverlay.instance.mode == GameMode.Tutorial && TutorialManager.instance.currentCharacter == this)
             {
                 TutorialManager.instance.currentCharacter = null;
                 yield return TutorialManager.instance.NextStep();
@@ -544,10 +526,9 @@ public class Character : MonoBehaviour
 
     IEnumerator EmotionEffect(int logged, bool extraAbility)
     {
-        if (timer > 0f && chosenAbility != null && !chosenAbility.data.myName.Equals("Skip Turn"))
+        if (timer > 0f && chosenAbility != null && !chosenAbility.data.abilityName.Equals("Skip Turn"))
         {
-            string answer = CarryVariables.instance.Translate("Emotion Effect",
-                new() { ("This", this.name), ("Emotion", CarryVariables.instance.Translate(this.CurrentEmotion.ToString())) });
+            string answer = AutoTranslate.Emotion_Effect(this.name, Translator.inst.Translate(CurrentEmotion.ToString()));
 
             if (this.CurrentEmotion == Emotion.Angry)
             {
@@ -579,7 +560,7 @@ public class Character : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (CarryVariables.instance.mode != CarryVariables.GameMode.Other)
+        if (ScreenOverlay.instance.mode != GameMode.Other)
         {
             this.border.SetAlpha(borderColor);
             ScreenPosition();
@@ -630,15 +611,14 @@ public class Character : MonoBehaviour
         topText.text = "";
         if (CurrentPosition == Position.Dead)
         {
-            topText.text = CarryVariables.instance.Translate("Dead");
+            topText.text = AutoTranslate.DoEnum(ToTranslate.Dead);
         }
         else
         {
-            topText.text = $"{CarryVariables.instance.Translate(CurrentEmotion.ToString())}, " +
-                $"{CarryVariables.instance.Translate(CurrentPosition.ToString())}\n";
-
-            AddToTopText(CalculatePower(), CarryVariables.instance.Translate("Power"));
-            AddToTopText(CalculateDefense(), CarryVariables.instance.Translate("Defense"));
+            topText.text = $"{Translator.inst.Translate(CurrentEmotion.ToString())}, {Translator.inst.Translate(CurrentPosition.ToString())}\n";
+            
+            AddToTopText(CalculatePower(), AutoTranslate.DoEnum(ToTranslate.Power));
+            AddToTopText(CalculateDefense(), AutoTranslate.DoEnum(ToTranslate.Defense));
 
             void AddToTopText(int amount, string text)
             {

@@ -36,19 +36,44 @@ public class Ability
         this.data = data;
         currentCooldown = (startWithCooldown) ? data.baseCooldown : 0;
 
-        editedDescription = CarryVariables.instance.Translate($"{data.myName} Text",
-            new List<(string, string)>()
+        try
+        {
+            MethodInfo method = typeof(AutoTranslate).GetMethod($"{data.abilityName}_Text", BindingFlags.Static | BindingFlags.Public);
+            ParameterInfo[] parameters = method.GetParameters();
+            object[] args = new object[parameters.Length];
+
+            for (int i = 0; i<parameters.Length; i++)
             {
-                ("Num", Mathf.Abs(data.mainNumber).ToString()),
-                ("Sec", Mathf.Abs(data.secondNumber).ToString()),
-                ("PowerStat", Mathf.Abs(data.modifyPower).ToString()),
-                ("DefenseStat", Mathf.Abs(data.modifyDefense).ToString()),
-                ("MiscStat", Mathf.Abs(data.miscNumber).ToString()),
-            });
-        editedDescription = KeywordTooltip.instance.EditText(editedDescription);
+                switch (parameters[i].Name)
+                {
+                    case "Num":
+                        args[i] = Mathf.Abs(data.mainNumber).ToString(); 
+                        break;
+                    case "Sec":
+                        args[i] = Mathf.Abs(data.secondNumber).ToString(); 
+                        break;
+                    case "PowerStat":
+                        args[i] = Mathf.Abs(data.powerStat).ToString(); 
+                        break;
+                    case "DefenseStat":
+                        args[i] = Mathf.Abs(data.defenseStat).ToString(); 
+                        break;
+                    case "MiscStat":
+                        args[i] = Mathf.Abs(data.miscNumber).ToString(); 
+                        break;
+                }
+            }
+
+            object result = method.Invoke(null, args);
+            editedDescription = KeywordTooltip.instance.EditText((string)result);
+        }
+        catch
+        {
+            editedDescription = KeywordTooltip.instance.EditText(Translator.inst.Translate($"{data.abilityName}_Text"));
+        }
 
         mainType = AbilityType.Misc;
-        foreach (AbilityType type in data.myTypes)
+        foreach (AbilityType type in data.abilityTypes)
         {
             if (type == AbilityType.Attack)
             {
@@ -70,11 +95,11 @@ public class Ability
                 if (small.Equals("None") || small.Equals("") || boolDictionary.ContainsKey(small))
                     continue;
 
-                MethodInfo method = typeof(Ability).GetMethod(small, BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
-                if (method != null && method.ReturnType == typeof(bool))
-                    boolDictionary.Add(small, method);
+                MethodInfo boolMethod = typeof(Ability).GetMethod(small, BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
+                if (boolMethod != null && boolMethod.ReturnType == typeof(bool))
+                    boolDictionary.Add(small, boolMethod);
                 else
-                    Debug.LogError($"{data.myName}: play condition: {small} doesn't exist");
+                    Debug.LogError($"{data.abilityName}: play condition: {small} doesn't exist");
             }
         }
 
@@ -86,11 +111,11 @@ public class Ability
                 if (small.Equals("None") || small.Equals("") || enumeratorDictionary.ContainsKey(small))
                     continue;
 
-                MethodInfo method = typeof(Ability).GetMethod(small, BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
-                if (method != null && method.ReturnType == typeof(IEnumerator))
-                    enumeratorDictionary.Add(small, method);
+                MethodInfo useMethod = typeof(Ability).GetMethod(small, BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
+                if (useMethod != null && useMethod.ReturnType == typeof(IEnumerator))
+                    enumeratorDictionary.Add(small, useMethod);
                 else
-                    Debug.LogError($"{data.myName}: instructions: {small} doesn't exist");
+                    Debug.LogError($"{data.abilityName}: instructions: {small} doesn't exist");
             }
         }
     }
@@ -129,17 +154,17 @@ public class Ability
 
     int CalculateHealing(Character user, int number, int logged)
     {
-        bool enemyNumberCap = self is EnemyCharacter && CarryVariables.instance.ActiveCheat("Number Cap");
+        bool enemyNumberCap = self is EnemyCharacter && ScreenOverlay.instance.ActiveCheat(ToTranslate.Number_Cap);
         int finalCalc = number + user.CalculatePower();
 
         if (finalCalc > 4 && enemyNumberCap)
         {
-            Log.instance.AddText(CarryVariables.instance.Translate("Apply Number Cap"), logged);
+            Log.instance.AddText(AutoTranslate.DoEnum(ToTranslate.Apply_Number_Cap), logged);
             return 4;
         }
         else if (finalCalc < 1 && number > 1)
         {
-            Log.instance.AddText(CarryVariables.instance.Translate("Apply Minimum"), logged);
+            Log.instance.AddText(AutoTranslate.DoEnum(ToTranslate.Apply_Minimum), logged);
             return 1;
         }
         else
@@ -152,29 +177,29 @@ public class Ability
     {
         int effectiveness = Effectiveness(user, target);
 
-        if (effectiveness < 0 && CarryVariables.instance.ActiveChallenge("Ineffectives Fail") && user is PlayerCharacter)
+        if (effectiveness < 0 && ScreenOverlay.instance.ActiveChallenge(ToTranslate.Ineffectives_Fail) && user is PlayerCharacter)
         {
-            Log.instance.AddText(CarryVariables.instance.Translate("Apply Ineffectives Fail", new() { ("This", user.name) }), logged);
-            TurnManager.instance.CreateVisual(CarryVariables.instance.Translate("Failed"), target.transform.localPosition);
+            Log.instance.AddText(AutoTranslate.Apply_Ineffectives_Fail(user.name), logged);
+            TurnManager.instance.CreateVisual(AutoTranslate.DoEnum(ToTranslate.Failed), target.transform.localPosition);
             return 0;
         }
 
-        bool enemyNumberCap = self is EnemyCharacter && CarryVariables.instance.ActiveCheat("Number Cap");
+        bool enemyNumberCap = self is EnemyCharacter && ScreenOverlay.instance.ActiveCheat(ToTranslate.Number_Cap);
         int finalCalc = number + effectiveness + user.CalculatePower() - target.CalculateDefense();
 
         if (effectiveness > 0)
-            Log.instance.AddText(CarryVariables.instance.Translate("Super Effective", new() { ("Num", Mathf.Abs(effectiveness).ToString())}), logged);
+            Log.instance.AddText(AutoTranslate.Super_Effective(Mathf.Abs(effectiveness).ToString()), logged);
         else if (effectiveness < 0)
-            Log.instance.AddText(CarryVariables.instance.Translate("Not Effective", new() { ("Num", Mathf.Abs(effectiveness).ToString()) }), logged);
+            Log.instance.AddText(AutoTranslate.Not_Effective(Mathf.Abs(effectiveness).ToString()), logged);
 
         if (finalCalc > 4 && enemyNumberCap)
         {
-            Log.instance.AddText(CarryVariables.instance.Translate("Apply Number Cap"), logged);
+            Log.instance.AddText(AutoTranslate.DoEnum(ToTranslate.Apply_Number_Cap), logged);
             return 4;
         }
         else if (finalCalc < 1 && number > 1)
         {
-            Log.instance.AddText(CarryVariables.instance.Translate("Apply Minimum"), logged);
+            Log.instance.AddText(AutoTranslate.DoEnum(ToTranslate.Apply_Minimum), logged);
             return 1;
         }
         else
@@ -189,7 +214,7 @@ public class Ability
 
     public bool CanPlay()
     {
-        if (data.myName.Equals("Revive") && CarryVariables.instance.ActiveChallenge("No Revives"))
+        if (data.abilityName.Equals(ToTranslate.Revive) && ScreenOverlay.instance.ActiveChallenge(ToTranslate.No_Revives))
             return false;
         if (currentCooldown > 0)
             return false;
@@ -202,7 +227,7 @@ public class Ability
             if (methodsInStrings[0].Equals("TargetIsDead"))
                 listOfTargets.Add(TurnManager.instance.listOfDead);
             else
-                listOfTargets.Add(GetTarget(data.defaultTargets[i]));
+                listOfTargets.Add(GetTarget(data.toTarget[i]));
 
             for (int j = 0; j < methodsInStrings.Length; j++)
             {
@@ -318,14 +343,14 @@ public class Ability
 
     bool TargetIsGrounded(int currentIndex)
     {
-        if (!(self.name.Equals("Knight") && CarryVariables.instance.ActiveCheat("Knight Reach")))
+        if (!(self.name.Equals(ToTranslate.Knight) && ScreenOverlay.instance.ActiveCheat(ToTranslate.Knight_Reach)))
             listOfTargets[currentIndex].RemoveAll(target => target.CurrentPosition != Position.Grounded);
         return listOfTargets[currentIndex].Count > 0;
     }
 
     bool AllGrounded(int currentIndex)
     {
-        int numberGrounded = (data.defaultTargets[currentIndex] == TeamTarget.AllPlayers) ? TurnManager.instance.listOfPlayers.Count + TurnManager.instance.listOfDead.Count : TurnManager.instance.listOfEnemies.Count;
+        int numberGrounded = (data.toTarget[currentIndex] == TeamTarget.AllPlayers) ? TurnManager.instance.listOfPlayers.Count + TurnManager.instance.listOfDead.Count : TurnManager.instance.listOfEnemies.Count;
         listOfTargets[currentIndex].RemoveAll(target => target.CurrentPosition != Position.Grounded);
         return (listOfTargets[currentIndex].Count == numberGrounded);
     }
@@ -338,7 +363,7 @@ public class Ability
 
     bool AllElevated(int currentIndex)
     {
-        int numberGrounded = (data.defaultTargets[currentIndex] == TeamTarget.AllPlayers) ? TurnManager.instance.listOfPlayers.Count + TurnManager.instance.listOfDead.Count : TurnManager.instance.listOfEnemies.Count;
+        int numberGrounded = (data.toTarget[currentIndex] == TeamTarget.AllPlayers) ? TurnManager.instance.listOfPlayers.Count + TurnManager.instance.listOfDead.Count : TurnManager.instance.listOfEnemies.Count;
         listOfTargets[currentIndex].RemoveAll(target => target.CurrentPosition != Position.Elevated);
         return (listOfTargets[currentIndex].Count == numberGrounded);
     }
@@ -605,22 +630,22 @@ public class Ability
 
     IEnumerator TargetGainPower(Character target, int logged)
     {
-        yield return target.ChangeStat(Stats.Power, data.modifyPower, logged);
+        yield return target.ChangeStat(Stats.Power, data.powerStat, logged);
     }
 
     IEnumerator TargetLosePower(Character target, int logged)
     {
-        yield return target.ChangeStat(Stats.Power, -1*data.modifyPower, logged);
+        yield return target.ChangeStat(Stats.Power, -1*data.powerStat, logged);
     }
 
     IEnumerator TargetGainDefense(Character target, int logged)
     {
-        yield return target.ChangeStat(Stats.Defense, data.modifyDefense, logged);
+        yield return target.ChangeStat(Stats.Defense, data.defenseStat, logged);
     }
 
     IEnumerator TargetLoseDefense(Character target, int logged)
     {
-        yield return target.ChangeStat(Stats.Defense, -1*data.modifyDefense, logged);
+        yield return target.ChangeStat(Stats.Defense, -1*data.defenseStat, logged);
     }
 
     IEnumerator TargetDeath(Character target, int logged)
@@ -678,10 +703,7 @@ public class Ability
             }
         }
 
-        string answer = CarryVariables.instance.Translate("Increase Cooldown", new()
-        {
-            ("Target", target.name), ("Num", total.ToString()), ("MiscStat", data.miscNumber.ToString())
-        });
+        string answer = AutoTranslate.Increase_Cooldown(target.name, total.ToString(), data.miscNumber.ToString());
         Log.instance.AddText(answer, logged);
         yield return null;
     }
@@ -706,10 +728,7 @@ public class Ability
             }
         }
 
-        string answer = CarryVariables.instance.Translate("Decrease Cooldown", new()
-        {
-            ("Target", target.name), ("Num", total.ToString()), ("MiscStat", data.miscNumber.ToString())
-        });
+        string answer = AutoTranslate.Decrease_Cooldown(target.name, total.ToString(), data.miscNumber.ToString());
         Log.instance.AddText(answer, logged);
         yield return null;
     }
@@ -720,11 +739,8 @@ public class Ability
         if (hasNoCooldown.Count > 0)
         {
             Ability chosenAbility = hasNoCooldown[Random.Range(0, hasNoCooldown.Count)];
-            chosenAbility.currentCooldown += data.miscNumber;
-            string answer = CarryVariables.instance.Translate("Apply Cooldown", new()
-            {
-                ("Target", target.name), ("Ability", CarryVariables.instance.Translate(chosenAbility.data.myName))
-            });
+            chosenAbility.currentCooldown += this.data.miscNumber;
+            string answer = AutoTranslate.Apply_Cooldown(target.name, AutoTranslate.DoEnum(chosenAbility.data.abilityName), this.data.miscNumber.ToString());
             Log.instance.AddText(answer, logged);
         }
         yield return null;
@@ -738,9 +754,9 @@ public class Ability
 
     IEnumerator SummonStar(Character target, int logged)
     {
-        List<CharacterData> fromList = CarryVariables.instance.listOfEnemies[data.miscNumber];
-        CharacterData randomEnemy = fromList[UnityEngine.Random.Range(0, fromList.Count)];
-        TurnManager.instance.CreateEnemy(randomEnemy, (Emotion)UnityEngine.Random.Range(1, 5), logged);
+        List<CharacterData> fromList = GameFiles.inst.listOfEnemies[data.miscNumber];
+        CharacterData randomEnemy = fromList[Random.Range(0, fromList.Count)];
+        TurnManager.instance.CreateEnemy(randomEnemy, (Emotion)Random.Range(1, 5), logged);
         yield return null;
     }
 

@@ -4,7 +4,9 @@ using UnityEngine;
 using MyBox;
 using TMPro;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
+public enum GameMode { Main, Tutorial, Daily, Other };
 public enum CurrentScreen { None, Character, Settings, Emotion };
 public class ScreenOverlay : MonoBehaviour
 {
@@ -13,8 +15,14 @@ public class ScreenOverlay : MonoBehaviour
 
     public static ScreenOverlay instance;
     public CurrentScreen displayedScreen { get; private set; }
+    public GameMode mode { get; private set; }
 
+
+    [Foldout("General UI", true)]
     [SerializeField] GameObject blackBackground;
+    [SerializeField] Canvas permanentCanvas;
+    [ReadOnly] public Transform sceneCanvas;
+
 
     [Foldout("Character display", true)]
         [SerializeField] GameObject characterDisplayBackground;
@@ -39,6 +47,14 @@ public class ScreenOverlay : MonoBehaviour
         [SerializeField] Button emotionButton;
         [SerializeField] GameObject emotionBackground;
 
+    [Foldout("Scene transition", true)]
+        [SerializeField] Image transitionImage;
+        [SerializeField] float transitionTime;
+
+    [Foldout("Cheats and Challenges", true)]
+        [ReadOnly] public List<ToTranslate> listOfCheats = new();
+        [ReadOnly] public List<ToTranslate> listOfChallenges = new();
+
     #endregion
 
 #region Setup
@@ -51,6 +67,8 @@ public class ScreenOverlay : MonoBehaviour
         undoToggle.onValueChanged.AddListener(SetUndo);
         tooltipToggle.onValueChanged.AddListener(SetTooltip);
         emotionButton.onClick.AddListener(SeeEmotions);
+
+        permanentCanvas.gameObject.SetActive(true);
     }
 
     private void Start()
@@ -59,6 +77,16 @@ public class ScreenOverlay : MonoBehaviour
         SetUndo(!PlayerPrefs.HasKey("Confirm Choices") || PlayerPrefs.GetInt("Confirm Choices") == 1);
         SetTooltip(!PlayerPrefs.HasKey("Keyword Tooltip") || PlayerPrefs.GetInt("Keyword Tooltip") == 1);
         PlayerPrefs.Save();
+    }
+
+    private void OnEnable()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    private void OnDisable()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 
     void SettingsScreen()
@@ -129,7 +157,7 @@ public class ScreenOverlay : MonoBehaviour
         characterDescription.text = character.editedDescription;
         characterArtCredit.text = character.data.artCredit;
 
-        emotionText.text = KeywordTooltip.instance.EditText(CarryVariables.instance.Translate(character.CurrentEmotion.ToString()));
+        emotionText.text = KeywordTooltip.instance.EditText(Translator.inst.Translate(character.CurrentEmotion.ToString()));
         stats1.text = statText;
 
         int nextBox = 0;
@@ -156,6 +184,69 @@ public class ScreenOverlay : MonoBehaviour
         {
             listOfStars[i].gameObject.SetActive(false);
         }
+    }
+
+    #endregion
+
+#region Scenes
+
+    public void UnloadObjects(string originalScene, string nextScene, GameMode mode)
+    {
+        StartCoroutine(UnloadTime( originalScene,  nextScene,  mode));
+    }
+
+    IEnumerator UnloadTime(string originalScene, string nextScene, GameMode mode)
+    {
+        yield return SceneTransitionEffect(0);
+        this.mode = mode;
+        SceneManager.LoadScene(nextScene);
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        GameObject obj = GameObject.Find("Canvas");
+        if (obj != null)
+        {
+            sceneCanvas = obj.transform;
+            StartCoroutine(BringBackObjects());
+        }
+    }
+
+    IEnumerator BringBackObjects()
+    {
+        yield return SceneTransitionEffect(1);
+        transitionImage.gameObject.SetActive(false);
+    }
+
+    IEnumerator SceneTransitionEffect(float begin)
+    {
+        transitionImage.gameObject.SetActive(true);
+        transitionImage.SetAlpha(begin);
+
+        float waitTime = 0f;
+        while (waitTime < transitionTime)
+        {
+            transitionImage.SetAlpha(Mathf.Abs(begin - (waitTime / transitionTime)));
+            waitTime += Time.deltaTime;
+            yield return null;
+        }
+
+        transitionImage.SetAlpha(Mathf.Abs(begin - 1));
+        transitionImage.gameObject.SetActive(true);
+    }
+
+    #endregion
+
+#region Cheats/Challenges
+
+    public bool ActiveCheat(ToTranslate cheat)
+    {
+        return (mode == GameMode.Main && listOfCheats.Contains(cheat));
+    }
+
+    public bool ActiveChallenge(ToTranslate challenge)
+    {
+        return (mode == GameMode.Main && listOfChallenges.Contains(challenge));
     }
 
     #endregion

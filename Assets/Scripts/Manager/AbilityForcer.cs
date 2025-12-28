@@ -10,7 +10,7 @@ public class AbilityForcer : MonoBehaviour
     System.Random dailyRNG;
     [SerializeField] AbilityBox abilityBoxPrefab;
     [SerializeField] GameObject playerPrefab;
-    Dictionary<string, List<AbilityBox>> abilityDictionary = new();
+    Dictionary<ToTranslate, List<AbilityBox>> abilityDictionary = new();
     [SerializeField] Button confirmButton;
     [SerializeField] Transform blanks;
     [SerializeField] List<TranslateDropdown> emotionDropdowns = new();
@@ -20,20 +20,20 @@ public class AbilityForcer : MonoBehaviour
 
     void Start()
     {
-        if (CarryVariables.instance.mode == CarryVariables.GameMode.Tutorial)
+        if (ScreenOverlay.instance.mode == GameMode.Tutorial)
         {
             Destroy(this.gameObject);
         }
         else
         {
-            Log.instance.AddText(CarryVariables.instance.Translate("Defeat Waves", new() { ("Num", "5")}));
-            SearchBoxes("Wizard");
-            SearchBoxes("Knight");
-            SearchBoxes("Angel");
+            Log.instance.AddText(AutoTranslate.Defeat_Waves("5"));
+            SearchBoxes(ToTranslate.Wizard);
+            SearchBoxes(ToTranslate.Knight);
+            SearchBoxes(ToTranslate.Angel);
 
-            void SearchBoxes(string toFind)
+            void SearchBoxes(ToTranslate toFind)
             {
-                Transform search = this.transform.Find(toFind);
+                Transform search = this.transform.Find(toFind.ToString());
                 foreach (Transform child in search)
                 {
                     AbilityBox box = child.GetComponent<AbilityBox>();
@@ -43,54 +43,47 @@ public class AbilityForcer : MonoBehaviour
                 }
             }
 
-            if (CarryVariables.instance.mode == CarryVariables.GameMode.Daily)
+            if (ScreenOverlay.instance.mode == GameMode.Daily)
             {
                 DateTime day = DateTime.UtcNow.Date;
                 int seed = day.Year * 10000 + day.Month * 100 + day.Day;
                 dailyRNG = new System.Random(seed);
 
-                string text1 = $"{CarryVariables.instance.Translate("Daily Challenge")}";
-                string text2 = CarryVariables.instance.Translate("Current Date", new()
-                {
-                    ("Month", CarryVariables.instance.Translate($"Month {day.Month}")),
-                    ("Day", day.Day.ToString()),
-                    ("Year", day.Year.ToString())
-                });
-
-                Log.instance.AddText($"{text1}: {text2}", 1);
+                Log.instance.AddText(AutoTranslate.DoEnum(ToTranslate.Daily_Challenge), 0);
+                Log.instance.AddText(AutoTranslate.Current_Date(Translator.inst.Translate($"Month_{day.Month}"), day.Day.ToString(), day.Year.ToString()), 1);
                 Confirmed();
             }
-            else if (CarryVariables.instance.mode == CarryVariables.GameMode.Main)
+            else if (ScreenOverlay.instance.mode == GameMode.Main)
             {
                 confirmButton.onClick.AddListener(Confirmed);
-                foreach (string cheat in CarryVariables.instance.listOfCheats)
-                    Log.instance.AddText($"<color=#00FF00>{CarryVariables.instance.Translate("Cheat")}: {CarryVariables.instance.Translate(cheat)}</color>", 1);
-                foreach (string challenge in CarryVariables.instance.listOfChallenges)
-                    Log.instance.AddText($"<color=#FF0000>{CarryVariables.instance.Translate("Challenge")}: {CarryVariables.instance.Translate(challenge)}</color>", 1);
+                foreach (ToTranslate cheat in ScreenOverlay.instance.listOfCheats)
+                    Log.instance.AddText($"<color=#00FF00>{AutoTranslate.DoEnum(ToTranslate.Cheat)}: {AutoTranslate.DoEnum(cheat)}</color>", 1);
+                foreach (ToTranslate challenge in ScreenOverlay.instance.listOfChallenges)
+                    Log.instance.AddText($"<color=#FF0000>{AutoTranslate.DoEnum(ToTranslate.Challenge)}: {AutoTranslate.DoEnum(challenge)}</color>", 1);
 
-                abilityDictionary.Add("Wizard", new());
-                abilityDictionary.Add("Knight", new());
-                abilityDictionary.Add("Angel", new());
+                abilityDictionary.Add(ToTranslate.Wizard, new());
+                abilityDictionary.Add(ToTranslate.Knight, new());
+                abilityDictionary.Add(ToTranslate.Angel, new());
 
-                foreach (AbilityData data in CarryVariables.instance.listOfPlayerAbilities)
+                foreach (AbilityData data in GameFiles.inst.listOfPlayerAbilities)
                 {
                     Ability nextAbility = new Ability(null, data, false);
                     AbilityBox nextBox = Instantiate(abilityBoxPrefab, null);
                     nextBox.ReceiveAbility(true, nextAbility);
 
                     nextBox.button.onClick.AddListener(() => SendAbility(nextAbility));
-                    abilityDictionary[data.user].Add(nextBox);
+                    abilityDictionary[data.controller].Add(nextBox);
                 }
 
                 foreach (var key in abilityDictionary.Keys.ToList())
-                    abilityDictionary[key] = abilityDictionary[key].OrderBy(box => box.ability.data.myName).ToList();
+                    abilityDictionary[key] = abilityDictionary[key].OrderBy(box => box.ability.data.abilityName).ToList();
             }
 
-            Log.instance.AddText("");
+            Log.instance.AddText(AutoTranslate.DoEnum(ToTranslate.Blank));
         }
     }
 
-    void Summon(AbilityBox clickedBox, string toFind)
+    void Summon(AbilityBox clickedBox, ToTranslate toFind)
     {
         clicked = clickedBox;
         clickedBox.ReceiveAbility(true, null);
@@ -111,8 +104,7 @@ public class AbilityForcer : MonoBehaviour
 
     void Confirmed()
     {
-        List<CharacterData> playerData = DataLoader.ReadCharacterData("Player Data");
-        for (int i = 0; i < playerData.Count; i++)
+        for (int i = 0; i < GameFiles.inst.listOfPlayers.Count; i++)
         {
             PlayerCharacter nextCharacter = Instantiate(playerPrefab).AddComponent<PlayerCharacter>();
 
@@ -144,9 +136,9 @@ public class AbilityForcer : MonoBehaviour
                 if (nextBox.ability != null && !abilitiesForPlayer.Contains(nextBox.ability.data))
                     abilitiesForPlayer.Add(nextBox.ability.data);
             }
-            abilitiesForPlayer = CarryVariables.instance.CompletePlayerAbilities(abilitiesForPlayer, CarryVariables.instance.ConvertToAbilityData(playerData[i].listOfAbilities, true), dailyRNG);
+            abilitiesForPlayer = GameFiles.inst.CompletePlayerAbilities(abilitiesForPlayer, GameFiles.inst.ConvertToAbilityData(GameFiles.inst.listOfPlayers[i].listOfAbilities, true), dailyRNG);
 
-            nextCharacter.SetupCharacter(playerData[i], abilitiesForPlayer, startingEmotion, false);
+            nextCharacter.SetupCharacter(GameFiles.inst.listOfPlayers[i], abilitiesForPlayer, startingEmotion, false);
             TurnManager.instance.AddPlayer(nextCharacter);
         }
         TurnManager.instance.StartCoroutine(TurnManager.instance.NewWave());

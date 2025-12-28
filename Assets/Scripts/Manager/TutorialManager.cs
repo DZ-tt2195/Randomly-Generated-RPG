@@ -23,7 +23,7 @@ public class TutorialManager : MonoBehaviour
 
     private void Start()
     {
-        if (CarryVariables.instance.mode != CarryVariables.GameMode.Tutorial)
+        if (ScreenOverlay.instance.mode != GameMode.Tutorial)
         {
             Destroy(this.gameObject);
         }
@@ -33,27 +33,26 @@ public class TutorialManager : MonoBehaviour
             ScreenOverlay.instance.SetUndo(true);
             ScreenOverlay.instance.SetTooltip(true);
 
-            List<CharacterData> playerData = DataLoader.ReadCharacterData("Player Data");
-            for (int i = 0; i < playerData.Count; i++)
+            for (int i = 0; i < GameFiles.inst.listOfPlayers.Count; i++)
             {
                 PlayerCharacter nextCharacter = Instantiate(characterPrefab).AddComponent<PlayerCharacter>();
                 Emotion forcedEmotion = Emotion.Neutral;
-                switch (playerData[i].myName)
+                switch (GameFiles.inst.listOfPlayers[i].characterName)
                 {
-                    case "Knight":
+                    case ToTranslate.Knight:
                         knight = nextCharacter;
                         forcedEmotion = Emotion.Angry;
                         break;
-                    case "Angel":
+                    case ToTranslate.Angel:
                         angel = nextCharacter;
                         forcedEmotion = Emotion.Happy;
                         break;
-                    case "Wizard":
+                    case ToTranslate.Wizard:
                         wizard = nextCharacter;
                         forcedEmotion = Emotion.Sad;
                         break;
                 }
-                nextCharacter.SetupCharacter(playerData[i], new List<AbilityData>(), forcedEmotion, false);
+                nextCharacter.SetupCharacter(GameFiles.inst.listOfPlayers[i], new List<AbilityData>(), forcedEmotion, false);
             }
 
             currentStep = 1;
@@ -61,12 +60,12 @@ public class TutorialManager : MonoBehaviour
         }
     }
 
-    IEnumerator ClickThroughDialogue(List<string> allDialogue)
+    IEnumerator ClickThroughDialogue(List<ToTranslate> allDialogue)
     {
         TextCollector collector = TurnManager.instance.MakeTextCollector("", Vector3.zero, new List<string>() { "Next" });
-        foreach (string nextString in allDialogue)
+        foreach (ToTranslate nextString in allDialogue)
         {
-            collector.textbox.text = KeywordTooltip.instance.EditText(CarryVariables.instance.Translate($"Tutorial {nextString}"));
+            collector.textbox.text = KeywordTooltip.instance.EditText(AutoTranslate.DoEnum(nextString));
             yield return collector.WaitForChoice();
         }
         Destroy(collector.gameObject);
@@ -77,9 +76,9 @@ public class TutorialManager : MonoBehaviour
         switch (currentStep)
         {
             case 1: //introduce the concept of the game
-                Log.instance.AddText(CarryVariables.instance.Translate("Defeat Waves", new() { ("Num", "3") }));
+                Log.instance.AddText(AutoTranslate.Defeat_Waves("3"));
                 Log.instance.AddText("");
-                yield return ClickThroughDialogue(new List<string>() { "1.0" });
+                yield return ClickThroughDialogue(new List<ToTranslate>() { ToTranslate.Tutorial_10 });
 
                 currentStep = 2;
                 StartCoroutine(NextStep());
@@ -87,9 +86,9 @@ public class TutorialManager : MonoBehaviour
 
             case 2: //right click on knight
                 TurnManager.instance.AddPlayer(knight); //add knight
-                knight.AddAbility(CarryVariables.instance.FindPlayerAbility("Strike"), false, false);
+                knight.AddAbility(GameFiles.inst.FindPlayerAbility(ToTranslate.Strike), false, false);
 
-                string text2 = KeywordTooltip.instance.EditText(CarryVariables.instance.Translate("Tutorial 2.0"));
+                string text2 = KeywordTooltip.instance.EditText(AutoTranslate.DoEnum(ToTranslate.Tutorial_20));
                 TextCollector collector2 = TurnManager.instance.MakeTextCollector(text2, Vector3.zero);
 
                 while (ScreenOverlay.instance.displayedScreen != CurrentScreen.Character)
@@ -104,8 +103,8 @@ public class TutorialManager : MonoBehaviour
 
             case 3: //first time attacking
                 yield return TurnManager.instance.NewWave();
-                TurnManager.instance.CreateEnemy(CarryVariables.instance.FindBonusEnemy("Page"), Emotion.Neutral, 0);
-                yield return ClickThroughDialogue(new List<string>() { "3.0" });
+                TurnManager.instance.CreateEnemy(GameFiles.inst.FindBonusEnemy(ToTranslate.Page), Emotion.Neutral, 0);
+                yield return ClickThroughDialogue(new List<ToTranslate>() { ToTranslate.Tutorial_30 });
 
                 yield return TurnManager.instance.NewRound(false);
                 currentStep = 4;
@@ -113,8 +112,8 @@ public class TutorialManager : MonoBehaviour
                 break;
 
             case 4: //introduce Cooldowns
-                knight.AddAbility(CarryVariables.instance.FindPlayerAbility("Joust"), false, false);
-                yield return ClickThroughDialogue(new List<string>() { "4.0" });
+                knight.AddAbility(GameFiles.inst.FindPlayerAbility(ToTranslate.Joust), false, false);
+                yield return ClickThroughDialogue(new List<ToTranslate>() { ToTranslate.Tutorial_40 });
 
                 yield return TurnManager.instance.NewRound(true);
                 while (TurnManager.instance.listOfEnemies.Count > 0)
@@ -125,16 +124,16 @@ public class TutorialManager : MonoBehaviour
                 break;
 
             case 5: //introduce angry
-                yield return ClickThroughDialogue(new List<string>() { "5.0", "5.1", "5.2", "5.3", "5.4" });
+                yield return ClickThroughDialogue(new List<ToTranslate>() { ToTranslate.Tutorial_50, ToTranslate.Tutorial_51, ToTranslate.Tutorial_52, ToTranslate.Tutorial_53, ToTranslate.Tutorial_54 });
                 currentStep = 6;
                 StartCoroutine(NextStep());
                 break;
 
             case 6: //introduce angel
                 TurnManager.instance.AddPlayer(angel); //add angel
-                angel.AddAbility(CarryVariables.instance.FindPlayerAbility("Assist"), false, false);
+                angel.AddAbility(GameFiles.inst.FindPlayerAbility(ToTranslate.Assist), false, false);
 
-                string text6 = KeywordTooltip.instance.EditText(CarryVariables.instance.Translate("Tutorial 6.0"));
+                string text6 = KeywordTooltip.instance.EditText(AutoTranslate.DoEnum(ToTranslate.Tutorial_60));
                 TextCollector collector6 = TurnManager.instance.MakeTextCollector(text6, Vector3.zero);
 
                 while (ScreenOverlay.instance.displayedScreen != CurrentScreen.Character)
@@ -150,9 +149,9 @@ public class TutorialManager : MonoBehaviour
             case 7: //introduce angel's healing
                 Log.instance.AddText("");
                 yield return TurnManager.instance.NewWave();
-                TurnManager.instance.CreateEnemy(CarryVariables.instance.FindBonusEnemy("Page"), Emotion.Happy, 0);
+                TurnManager.instance.CreateEnemy(GameFiles.inst.FindBonusEnemy(ToTranslate.Page), Emotion.Happy, 0);
 
-                yield return ClickThroughDialogue(new List<string>() { "7.0", "7.1", "7.2" });
+                yield return ClickThroughDialogue(new List<ToTranslate>() { ToTranslate.Tutorial_70, ToTranslate.Tutorial_71, ToTranslate.Tutorial_72});
                 currentCharacter = angel; //wait for angel's next turn
                 currentStep = 8;
 
@@ -165,34 +164,34 @@ public class TutorialManager : MonoBehaviour
                 break;
 
             case 8: //introduce happy
-                angel.AddAbility(CarryVariables.instance.FindPlayerAbility("Exhaust"), false, false);
-                yield return ClickThroughDialogue(new List<string>() { "8.0", "8.1", "8.2", "8.3" });
+                angel.AddAbility(GameFiles.inst.FindPlayerAbility(ToTranslate.Exhaust), false, false);
+                yield return ClickThroughDialogue(new List<ToTranslate>() { ToTranslate.Tutorial_80, ToTranslate.Tutorial_81, ToTranslate.Tutorial_82, ToTranslate.Tutorial_83 });
                 break;
 
             case 9: //introduce grounded and Elevated
                 Log.instance.AddText("");
                 yield return TurnManager.instance.NewWave();
 
-                knight.AddAbility(CarryVariables.instance.FindPlayerAbility("Embarass"), false, false);
-                knight.AddAbility(CarryVariables.instance.FindPlayerAbility("Cheer"), false, false);
+                knight.AddAbility(GameFiles.inst.FindPlayerAbility(ToTranslate.Embarass), false, false);
+                knight.AddAbility(GameFiles.inst.FindPlayerAbility(ToTranslate.Cheer), false, false);
 
-                angel.AddAbility(CarryVariables.instance.FindPlayerAbility("Team Up"), false, false);
-                angel.AddAbility(CarryVariables.instance.FindPlayerAbility("Motivate"), false, false);
+                angel.AddAbility(GameFiles.inst.FindPlayerAbility(ToTranslate.Team_Up), false, false);
+                angel.AddAbility(GameFiles.inst.FindPlayerAbility(ToTranslate.Motivate), false, false);
 
-                TurnManager.instance.CreateEnemy(CarryVariables.instance.FindBonusEnemy("Page"), Emotion.Neutral, 0);
-                TurnManager.instance.CreateEnemy(CarryVariables.instance.FindBonusEnemy("Crow"), Emotion.Neutral, 0);
-                TurnManager.instance.CreateEnemy(CarryVariables.instance.FindBonusEnemy("Crow"), Emotion.Neutral, 0);
+                TurnManager.instance.CreateEnemy(GameFiles.inst.FindBonusEnemy(ToTranslate.Page), Emotion.Neutral, 0);
+                for (int i = 0; i<2; i++)
+                    TurnManager.instance.CreateEnemy(GameFiles.inst.FindBonusEnemy(ToTranslate.Crow), Emotion.Neutral, 0);
 
-                yield return ClickThroughDialogue(new List<string>() { "9.0", "9.1" });
+                yield return ClickThroughDialogue(new List<ToTranslate>() { ToTranslate.Tutorial_90, ToTranslate.Tutorial_91 });
                 currentStep = 10;
                 StartCoroutine(NextStep());
                 break;
 
             case 10: //introduce wizard
                 TurnManager.instance.AddPlayer(wizard); //add wizard
-                wizard.AddAbility(CarryVariables.instance.FindPlayerAbility("Stalactites"), false, false);
+                wizard.AddAbility(GameFiles.inst.FindPlayerAbility(ToTranslate.Stalactites), false, false);
 
-                string text10 = KeywordTooltip.instance.EditText(CarryVariables.instance.Translate("Tutorial 10.0"));
+                string text10 = KeywordTooltip.instance.EditText(AutoTranslate.DoEnum(ToTranslate.Tutorial_100));
                 TextCollector collector10 = TurnManager.instance.MakeTextCollector(text10, Vector3.zero);
 
                 while (ScreenOverlay.instance.displayedScreen != CurrentScreen.Character)
@@ -206,7 +205,7 @@ public class TutorialManager : MonoBehaviour
                 break;
 
             case 11: //introduce wizard Abilities
-                yield return ClickThroughDialogue(new List<string>() { "11.0" });
+                yield return ClickThroughDialogue(new List<ToTranslate>() { ToTranslate.Tutorial_110 });
                 currentCharacter = wizard; //wait for wizard's next turn
                 currentStep = 12;
 
@@ -219,7 +218,7 @@ public class TutorialManager : MonoBehaviour
                 break;
 
             case 12: //introduce sad
-                yield return ClickThroughDialogue(new List<string>() { "12.0", "12.1" });
+                yield return ClickThroughDialogue(new List<ToTranslate>() { ToTranslate.Tutorial_120, ToTranslate.Tutorial_121 });
                 currentStep = 13;
                 yield return (NextStep());
                 break;
@@ -229,7 +228,7 @@ public class TutorialManager : MonoBehaviour
                 Vector3 originalPos = emotionButton.transform.localPosition;
                 emotionButton.transform.localPosition = new Vector2(0, -150);
 
-                string text13 = KeywordTooltip.instance.EditText(CarryVariables.instance.Translate("Tutorial 13.0"));
+                string text13 = KeywordTooltip.instance.EditText(AutoTranslate.DoEnum(ToTranslate.Tutorial_130));
                 TextCollector collector13 = TurnManager.instance.MakeTextCollector(text13, Vector3.zero);
 
                 while (ScreenOverlay.instance.displayedScreen != CurrentScreen.Emotion)
@@ -244,16 +243,16 @@ public class TutorialManager : MonoBehaviour
                 break;
 
             case 14: //finish off the enemies
-                wizard.AddAbility(CarryVariables.instance.FindPlayerAbility("Readjust"), false, false);
-                wizard.AddAbility(CarryVariables.instance.FindPlayerAbility("Flood"), false, false);
-                wizard.AddAbility(CarryVariables.instance.FindPlayerAbility("Shockwave"), false, false);
+                wizard.AddAbility(GameFiles.inst.FindPlayerAbility(ToTranslate.Readjust), false, false);
+                wizard.AddAbility(GameFiles.inst.FindPlayerAbility(ToTranslate.Flood), false, false);
+                wizard.AddAbility(GameFiles.inst.FindPlayerAbility(ToTranslate.Shockwave), false, false);
 
-                yield return ClickThroughDialogue(new List<string>() { "14.0" });
+                yield return ClickThroughDialogue(new List<ToTranslate>() { ToTranslate.Tutorial_140 });
                 break;
 
             case 15: //tutorial over
-                yield return ClickThroughDialogue(new List<string>() { "15.0", "15.1" });
-                TurnManager.instance.GameFinished("Tutorial Finished", true);
+                yield return ClickThroughDialogue(new List<ToTranslate>() { ToTranslate.Tutorial_150, ToTranslate.Tutorial_151 });
+                TurnManager.instance.GameFinished(ToTranslate.Tutorial_Finished, true);
                 break;
         }
     }

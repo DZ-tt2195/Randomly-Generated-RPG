@@ -47,7 +47,7 @@ public class TitleScreen : MonoBehaviour
 
         Character.borderColor = 0;
 
-        Toggle[] allToggles = FindObjectsOfType<Toggle>(includeInactive: true);
+        Toggle[] allToggles = FindObjectsByType<Toggle>(FindObjectsSortMode.None);
         foreach (Toggle toggle in allToggles)
         {
             if (toggle.transform.parent.name.Equals("Cheats"))
@@ -67,13 +67,13 @@ public class TitleScreen : MonoBehaviour
     {
         TimeSpan utcOffset = TimeZoneInfo.Local.GetUtcOffset(DateTime.Now);
         string timezone = (utcOffset.Hours > 0 ? "+" : "") + $"{utcOffset.Hours:D2}:{utcOffset.Minutes:D2}";
-        timeText.text = $"{CarryVariables.instance.Translate("Your Timezone", new() { ("Time", timezone)})}";
+        timeText.text = AutoTranslate.Your_Timezone(timezone);
 
         DateTime nextUtcMidnight = DateTime.UtcNow.Date.AddDays(1);
         TimeSpan timeUntilMidnightUtc = nextUtcMidnight - DateTime.UtcNow;
 
         string nextChallenge = $"{timeUntilMidnightUtc.Hours:D2}:{timeUntilMidnightUtc.Minutes:D2}:{timeUntilMidnightUtc.Seconds:D2}";
-        timeText.text += $"\n{CarryVariables.instance.Translate("Next Challenge", new() { ("Time", nextChallenge)})}";
+        timeText.text += $"\n{AutoTranslate.Next_Challenge(nextChallenge)}";
     }
 
 #endregion
@@ -91,15 +91,17 @@ public class TitleScreen : MonoBehaviour
     {
         PlayerPrefs.SetInt(name, (isOn) ? 1 : 0);
         PlayerPrefs.Save();
+
+        ToTranslate converted = (ToTranslate)Enum.Parse(typeof(ToTranslate), name);
         if (cheat && isOn)
-            CarryVariables.instance.listOfCheats.Add(name);
+            ScreenOverlay.instance.listOfCheats.Add(converted);
         else if (cheat && !isOn)
-            CarryVariables.instance.listOfCheats.Remove(name);
+            ScreenOverlay.instance.listOfCheats.Remove(converted);
 
         else if (!cheat && isOn)
-            CarryVariables.instance.listOfChallenges.Add(name);
+            ScreenOverlay.instance.listOfChallenges.Add(converted);
         else if (!cheat && !isOn)
-            CarryVariables.instance.listOfChallenges.Remove(name);
+            ScreenOverlay.instance.listOfChallenges.Remove(converted);
     }
 
     public void CheatChallengeMenu()

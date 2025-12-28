@@ -1,30 +1,3 @@
-{
-    [
-      "Enemy Name",
-      "Description",
-      "Base Health",
-      "Start Position",
-      "Skills",
-      "AI Targeting",
-      "Art Credit"
-    ],
-    [
-      "Page",
-      "Basic Enemy who attacks Grounded Players.",
-      "5",
-      "GROUNDED",
-      "Swing,",
-      "",
-      "Alayna Danner|Dominion: Adventures|(Page)"
-    ],
-    [
-      "Crow",
-      "Basic Enemy who attacks Grounded and Elevated Players.",
-      "4",
-      "ELEVATED",
-      "Peck,",
-      "",
-      "Una Fricker|Classic Sixth Edition|(Storm Crow)"
-    ]
-  ]
-}
+characterName	description	baseHealth	startPosition	listOfAbilities	aiTargeting	artCredit	difficulty
+Page	Basic Enemy who attacks Grounded Players.	5	GROUNDED	Swing,	None	Alayna Danner\nDominion: Adventures\n(Page)	0
+Crow	Basic Enemy who attacks Grounded and Elevated Players.	4	ELEVATED	Peck,	None	Una Fricker\nClassic Sixth Edition\n(Storm Crow)	0

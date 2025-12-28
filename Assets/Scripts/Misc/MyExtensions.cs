@@ -13,6 +13,13 @@ public static class MyExtensions
         return $"{(int)time.TotalMinutes}:{seconds}.{time.Milliseconds}";
     }
 
+    public static void SetAlpha(SpriteRenderer target, float alpha)
+    {
+        Color newColor = target.color;
+        newColor.a = alpha;
+        target.color = newColor;
+    }
+
     public static void Shuffle(this Transform originalTransform)
     {
         List<int> indexes = new();

@@ -1,8 +1,9 @@
 using UnityEditor;
 using UnityEngine;
 using System.IO;
+using TMPro;
 
-public static class LineCounter
+public static class TestScripts
 {
     [MenuItem("Tools/Count Lines of Code")]
     public static void CountLines()
@@ -24,4 +25,36 @@ public static class LineCounter
         }
         Debug.Log($"Total lines of C# code in Scripts/: {total} (across {files.Length} files)");
     }
+
+    [MenuItem("Tools/Change All TMP Fonts")]
+    static void ChangeAllFonts()
+    {
+        TMP_FontAsset newFont = Selection.activeObject as TMP_FontAsset;
+
+        if (newFont == null)
+        {
+            Debug.LogError("Select a TMP_FontAsset first.");
+            return;
+        }
+
+        TMP_Text[] texts = Object.FindObjectsByType<TMP_Text>(
+            FindObjectsSortMode.None
+        );
+
+        int count = 0;
+
+        foreach (var text in texts)
+        {
+            if (text.font != newFont)
+            {
+                Undo.RecordObject(text, "Change TMP Font");
+                text.font = newFont;
+                EditorUtility.SetDirty(text);
+                count++;
+            }
+        }
+
+        Debug.Log($"Updated {count} TMP_Text components.");
+    }
+
 }

@@ -46,7 +46,7 @@ public class TextCollector : MonoBehaviour
     internal void AddTextButton(string text)
     {
         Button nextButton = Instantiate(textButton, this.transform.GetChild(1));
-        nextButton.transform.GetChild(0).GetComponent<TMP_Text>().text = CarryVariables.instance.Translate(text);
+        nextButton.transform.GetChild(0).GetComponent<TMP_Text>().text = Translator.inst.Translate(text);
 
         nextButton.interactable = true;
         int buttonNumber = buttonsInCollector.Count;

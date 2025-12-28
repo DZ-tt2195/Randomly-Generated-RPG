@@ -36,7 +36,7 @@ public class AbilityBox : MonoBehaviour
 
         else
         {
-            textName.text = CarryVariables.instance.Translate(ability.data.myName);
+            textName.text = AutoTranslate.DoEnum(ability.data.abilityName) ;
             hover.enabled = true;
             hover.NewDescription(ability.editedDescription);
 

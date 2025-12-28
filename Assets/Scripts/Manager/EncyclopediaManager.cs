@@ -5,6 +5,7 @@ using TMPro;
 using UnityEngine.UI;
 using System;
 using System.Linq;
+using Unity.Collections;
 
 public enum TierSearch { Any, Star1, Star2, Star3 };
 public class EncyclopediaManager : MonoBehaviour
@@ -17,7 +18,7 @@ public class EncyclopediaManager : MonoBehaviour
         [SerializeField] List<GameObject> masterGameObject = new();
 
     [Foldout("Ability Search", true)]
-        Dictionary<string, List<AbilityBox>> abilityDictionary = new();
+        Dictionary<ToTranslate, List<AbilityBox>> abilityDictionary = new();
         [SerializeField] AbilityBox abilityBoxPrefab;
         [SerializeField] RectTransform storeAbilityBoxes;
         [SerializeField] TMP_InputField abilityInput;
@@ -66,31 +67,31 @@ public class EncyclopediaManager : MonoBehaviour
         type2Dropdown.dropdown.onValueChanged.AddListener(ChangeAbilityDropdown);
         cooldownDropdown.dropdown.onValueChanged.AddListener(ChangeAbilityDropdown);
 
-        abilityDictionary.Add(CarryVariables.instance.Translate("Knight"), new());
-        abilityDictionary.Add(CarryVariables.instance.Translate("Wizard"), new());
-        abilityDictionary.Add(CarryVariables.instance.Translate("Angel"), new());
+        abilityDictionary.Add(ToTranslate.Knight, new());
+        abilityDictionary.Add(ToTranslate.Wizard, new());
+        abilityDictionary.Add(ToTranslate.Angel, new());
 
-        foreach (AbilityData data in CarryVariables.instance.listOfPlayerAbilities)
+        foreach (AbilityData data in GameFiles.inst.listOfPlayerAbilities)
         {
             Ability nextAbility = new Ability(null, data, false);
             AbilityBox nextBox = Instantiate(abilityBoxPrefab, null);
             nextBox.ReceiveAbility(true, nextAbility);
-            abilityDictionary[CarryVariables.instance.Translate(data.user)].Add(nextBox);
+            abilityDictionary[data.controller].Add(nextBox);
         }
 
         foreach (var key in abilityDictionary.Keys.ToList())
-            abilityDictionary[key] = abilityDictionary[key].OrderBy(box => box.ability.data.myName).ToList();
+            abilityDictionary[key] = abilityDictionary[key].OrderBy(box => box.ability.data.abilityName).ToList();
 
         enemyInput.onValueChanged.AddListener(ChangeEnemyInput);
         tierDropdown.dropdown.onValueChanged.AddListener(ChangeTierDropdown);
         positionDropdown.dropdown.onValueChanged.AddListener(ChangeTierDropdown);
 
-        foreach (List<CharacterData> listOfData in CarryVariables.instance.listOfEnemies)
+        foreach (var KVP in GameFiles.inst.listOfEnemies)
         {
-            foreach (CharacterData data in listOfData)
+            foreach (CharacterData data in GameFiles.inst.listOfEnemies[KVP.Key])
             {
                 Character nextEnemy = Instantiate(characterPrefab).AddComponent<Character>();
-                nextEnemy.SetupCharacter(data, CarryVariables.instance.ConvertToAbilityData(data.listOfAbilities, false), Emotion.Neutral, false);
+                nextEnemy.SetupCharacter(data, GameFiles.inst.ConvertToAbilityData(data.listOfAbilities, false), Emotion.Neutral, false);
                 listOfEnemyBoxes.Add(nextEnemy);
                 foreach (Transform child in nextEnemy.transform)
                 {
@@ -117,7 +118,7 @@ public class EncyclopediaManager : MonoBehaviour
     {
         if (setting == AbilityType.None)
             return true;
-        foreach (AbilityType type in data.myTypes)
+        foreach (AbilityType type in data.abilityTypes)
             if (type == setting) return true;
         return false;
     }
@@ -139,24 +140,15 @@ public class EncyclopediaManager : MonoBehaviour
         if (setting == Position.Dead)
             return true;
         else
-            return setting == data.startingPosition;
+            return setting == data.startPosition;
     }
 
     AbilityType ConvertType(string text)
     {
-        return text switch
-        {
-            "Attack" => AbilityType.Attack,
-            "Healing" => AbilityType.Healing,
-            "Emotion - Player" => AbilityType.EmotionPlayer,
-            "Emotion - Enemy" => AbilityType.EmotionEnemy,
-            "Position - Player" => AbilityType.PositionPlayer,
-            "Position - Enemy" => AbilityType.PositionEnemy,
-            "Stats - Player" => AbilityType.StatPlayer,
-            "Stats - Enemy" => AbilityType.StatEnemy,
-            "Misc" => AbilityType.Misc,
-            _ => AbilityType.None,
-        };
+        if (text.Equals("Any"))
+            return AbilityType.None;
+        else
+            return (AbilityType)Enum.Parse(typeof(AbilityType), text.ToString());
     }
 
 #endregion
@@ -190,9 +182,9 @@ public class EncyclopediaManager : MonoBehaviour
         for (int i = storeAbilityBoxes.childCount-1; i >= 0; i--)
             storeAbilityBoxes.GetChild(i).SetParent(null);
 
-        foreach (AbilityBox box in abilityDictionary[characterDropdown.GetOriginal()])
+        foreach (AbilityBox box in abilityDictionary[(ToTranslate)Enum.Parse(typeof(ToTranslate), characterDropdown.GetOriginal())])
         {
-            bool matches = (CompareStrings(abilityInput.text, box.ability.data.myName) || CompareStrings(abilityInput.text, box.ability.editedDescription))
+            bool matches = (CompareStrings(abilityInput.text, box.ability.data.abilityName.ToString()) || CompareStrings(abilityInput.text, box.ability.editedDescription))
                 && CompareTypes(searchType1, box.ability.data)
                 && CompareTypes(searchType2, box.ability.data)
                 && (searchCooldown == -1 || box.ability.data.baseCooldown == searchCooldown);
@@ -255,7 +247,7 @@ public class EncyclopediaManager : MonoBehaviour
 
         foreach (Character nextEnemy in listOfEnemyBoxes)
         {
-            if (CompareStrings(enemyInput.text, nextEnemy.data.myName) && ComparePositions(searchPosition, nextEnemy.data) && CompareTiers(searchTier, nextEnemy.data.difficulty))
+            if (CompareStrings(enemyInput.text, nextEnemy.data.characterName.ToString()) && ComparePositions(searchPosition, nextEnemy.data) && CompareTiers(searchTier, nextEnemy.data.difficulty))
             {
                 nextEnemy.transform.SetParent(storeEnemyBoxes);
                 nextEnemy.transform.SetAsLastSibling();

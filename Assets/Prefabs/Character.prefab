@@ -66,13 +66,13 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: <link="StunImage"><sprite="StunImage" name="StunImage"></link> <link="ProtectedImage"><sprite="ProtectedImage"
-    name="ProtectedImage"></link> <link="TargetedImage"><sprite="TargetedImage" name="TargetedImage"></link>
-    <link="ExtraImage"><sprite="ExtraImage" name="ExtraImage"></link><link="LockImage"><sprite="LockImage"
-    name="LockImage"></link>
+  m_text: <link="StunnedImage"><sprite="StunnedImage" name="StunnedImage"></link>
+    <link="ProtectedImage"><sprite="ProtectedImage" name="ProtectedImage"></link>
+    <link="TargetedImage"><sprite="TargetedImage" name="TargetedImage"></link> <link="ExtraImage"><sprite="ExtraImage"
+    name="ExtraImage"></link><link="LockedImage"><sprite="LockedImage" name="LockedImage"></link>
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8c64c47af7c1c4fb5b88d184433c6c44, type: 2}
-  m_sharedMaterial: {fileID: -3852492252101762229, guid: 8c64c47af7c1c4fb5b88d184433c6c44, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
+  m_sharedMaterial: {fileID: -3852492252101762229, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -107,6 +107,7 @@ MonoBehaviour:
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -219,8 +220,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 10/10<link="Health"><sprite="Health" name="Health"></link>
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: b97528b4a6f894ee8910ec8b7a877569, type: 2}
-  m_sharedMaterial: {fileID: 4301627588024881906, guid: b97528b4a6f894ee8910ec8b7a877569, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
+  m_sharedMaterial: {fileID: -3852492252101762229, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -244,7 +245,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 59.5
+  m_fontSize: 73.75
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -255,6 +256,7 @@ MonoBehaviour:
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -357,11 +359,11 @@ MonoBehaviour:
   m_text: '<link="Angry"><u><color=#FF8080>Angry<color=#FFFFFF></u></link>, <link="Grounded"><u><color=#FF9300>Grounded<color=#FFFFFF></u></link>
 
     +2
-    <link="Power"><sprite="Power" name="Power"> </link>+1 <link="Speed"><sprite="Speed"
-    name="Speed"></link>'
+    <link="Power"><sprite="Power" name="Power"> </link>+1 <link="Defense"><sprite="Defense"
+    name="Defense"></link>'
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8c64c47af7c1c4fb5b88d184433c6c44, type: 2}
-  m_sharedMaterial: {fileID: -3852492252101762229, guid: 8c64c47af7c1c4fb5b88d184433c6c44, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
+  m_sharedMaterial: {fileID: -3852492252101762229, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -396,6 +398,7 @@ MonoBehaviour:
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -583,8 +586,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Knight
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8c64c47af7c1c4fb5b88d184433c6c44, type: 2}
-  m_sharedMaterial: {fileID: -3852492252101762229, guid: 8c64c47af7c1c4fb5b88d184433c6c44, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
+  m_sharedMaterial: {fileID: -3852492252101762229, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -619,6 +622,7 @@ MonoBehaviour:
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0

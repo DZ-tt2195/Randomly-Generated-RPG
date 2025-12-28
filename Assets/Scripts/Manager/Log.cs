@@ -5,6 +5,8 @@ using TMPro;
 using UnityEngine.UI;
 using MyBox;
 using System.Text.RegularExpressions;
+using System;
+using System.Reflection;
 
 public class Log : MonoBehaviour
 {    
@@ -18,12 +20,34 @@ public class Log : MonoBehaviour
         instance = this;
     }
 
-    public static string Substitute(Ability ability, Character user, Character target)
+    public static string AbilityLogged(Ability ability, Character user, Character target)
     {
-        string sentence = CarryVariables.instance.Translate($"{ability.data.myName} Log", new() { ("This", user.name)});
-        if (target != null)
-            sentence = sentence.Replace("$Target$", target.name);
-        return sentence;
+        try
+        {
+            MethodInfo method = typeof(AutoTranslate).GetMethod($"{ability.data.abilityName}_Log", BindingFlags.Static | BindingFlags.Public);
+            ParameterInfo[] parameters = method.GetParameters();
+            object[] args = new object[parameters.Length];
+
+            for (int i = 0; i<parameters.Length; i++)
+            {
+                switch (parameters[i].Name)
+                {
+                    case "This":
+                        args[i] = user.name; 
+                        break;
+                    case "Target":
+                        args[i] = (target == null) ? "" : target.name; 
+                        break;
+                }
+            }
+
+            object result = method.Invoke(null, args);
+            return (string)result;
+        }
+        catch
+        {
+            return Translator.inst.Translate($"{ability.data.abilityName}_Log");
+        }
     }
 
     public void AddText(string logText, int indent = 0)

@@ -73,9 +73,9 @@ public class TurnManager : MonoBehaviour
         isBattling = true;
         waveText.transform.parent.localPosition = new Vector3(0, 1200, 0);
 
-        resignButton.onClick.AddListener(() => GameFinished("Quit Fight", false));
+        resignButton.onClick.AddListener(() => GameFinished(ToTranslate.Quit_Fight, false));
 
-        if (CarryVariables.instance.mode == CarryVariables.GameMode.Daily)
+        if (ScreenOverlay.instance.mode == GameMode.Daily)
         {
             DateTime day = DateTime.UtcNow.Date;
             int seed = day.Year * 10000 + day.Month * 100 + day.Day;
@@ -108,27 +108,27 @@ public class TurnManager : MonoBehaviour
 
         if (currentWave > listOfWaveSetup.Count)
         {
-            GameFinished("Game Won", true);
+            GameFinished(ToTranslate.Game_Won, true);
         }
-        else if (CarryVariables.instance.mode == CarryVariables.GameMode.Tutorial)
+        else if (ScreenOverlay.instance.mode == GameMode.Tutorial)
         {
             yield return NewAnimation(true);
-            Log.instance.AddText($"{CarryVariables.instance.Translate("Wave")} {currentWave} / 3");
+            Log.instance.AddText(AutoTranslate.Wave(currentWave.ToString(), "3"));
         }
         else
         {
             yield return NewAnimation(true);
-            Log.instance.AddText($"{CarryVariables.instance.Translate("Wave")} {currentWave} / {listOfWaveSetup.Count}");
+            Log.instance.AddText(AutoTranslate.Wave(currentWave.ToString(), listOfWaveSetup.Count.ToString()));
 
-            if (currentWave >= 2 && CarryVariables.instance.ActiveCheat("New Abilities"))
+            if (currentWave >= 2 && ScreenOverlay.instance.ActiveCheat(ToTranslate.New_Abilities))
             {
-                Log.instance.AddText(CarryVariables.instance.Translate("Gain New Abilities"));
+                Log.instance.AddText(AutoTranslate.DoEnum(ToTranslate.Gain_New_Abilities));
                 foreach (Character player in listOfPlayers)
                 {
                     for (int i = player.listOfRandomAbilities.Count - 1; i >= 0; i--)
                         player.DropAbility(player.listOfRandomAbilities[i]);
 
-                    List<AbilityData> newAbilties = CarryVariables.instance.CompletePlayerAbilities(new(), CarryVariables.instance.ConvertToAbilityData(player.data.listOfAbilities, true), dailyRNG);
+                    List<AbilityData> newAbilties = GameFiles.inst.CompletePlayerAbilities(new(), GameFiles.inst.ConvertToAbilityData(player.data.listOfAbilities, true), dailyRNG);
                     foreach (AbilityData data in newAbilties)
                         player.AddAbility(data, false, false);
                 }
@@ -136,9 +136,9 @@ public class TurnManager : MonoBehaviour
             }
 
             foreach (int nextTier in listOfWaveSetup[currentWave - 1].enemyDifficultySpawn)
-                yield return MakeNewEnemy(CarryVariables.instance.listOfEnemies[nextTier]);
-            if (currentWave <= 4 && CarryVariables.instance.ActiveChallenge("More Enemies"))
-                yield return MakeNewEnemy(CarryVariables.instance.listOfEnemies[1]);
+                yield return MakeNewEnemy(GameFiles.inst.listOfEnemies[nextTier]);
+            if (currentWave <= 4 && ScreenOverlay.instance.ActiveChallenge(ToTranslate.More_Enemies))
+                yield return MakeNewEnemy(GameFiles.inst.listOfEnemies[1]);
 
             IEnumerator MakeNewEnemy(List<CharacterData> fromList)
             {
@@ -166,7 +166,7 @@ public class TurnManager : MonoBehaviour
             yield return NewAnimation(false);
         }
         Log.instance.AddText($"");
-        Log.instance.AddText($"{CarryVariables.instance.Translate("Round")} {currentRound}");
+        Log.instance.AddText(AutoTranslate.Round(currentRound.ToString()));
 
         speedQueue = AllCharacters();
         List<Character> AllCharacters()
@@ -176,9 +176,6 @@ public class TurnManager : MonoBehaviour
             allTargets.AddRange(listOfEnemies);
             return allTargets;
         }
-
-        foreach (Character character in speedQueue)
-            UnityEngine.Debug.Log($"round {currentRound}: {character.name}");
 
         while (speedQueue.Count > 0)
         {
@@ -200,12 +197,12 @@ public class TurnManager : MonoBehaviour
 
             if (CheckLost())
             {
-                GameFinished("Game Lost", false);
+                GameFinished(ToTranslate.Game_Lost, false);
                 yield break;
             }
             else if (listOfEnemies.Count == 0)
             {
-                if (CarryVariables.instance.mode != CarryVariables.GameMode.Tutorial)
+                if (ScreenOverlay.instance.mode != GameMode.Tutorial)
                 {
                     Log.instance.AddText($"");
                     StartCoroutine(NewWave());
@@ -214,7 +211,7 @@ public class TurnManager : MonoBehaviour
             }
         }
 
-        if (isBattling && CarryVariables.instance.mode != CarryVariables.GameMode.Tutorial)
+        if (isBattling && ScreenOverlay.instance.mode != GameMode.Tutorial)
             StartCoroutine(NewRound(true));
     }
 
@@ -224,8 +221,8 @@ public class TurnManager : MonoBehaviour
         Vector3 finalPos = new Vector3(0, -1200, 0);
 
         waveText.transform.parent.localPosition = originalPos;
-        waveText.text = $"{CarryVariables.instance.Translate("Wave")} {currentWave} / {(CarryVariables.instance.mode == CarryVariables.GameMode.Tutorial ? "3" : "5")}";
-        roundText.text = $"{CarryVariables.instance.Translate("Round")} {currentRound}";
+        waveText.text = AutoTranslate.Wave(currentWave.ToString(), ScreenOverlay.instance.mode == GameMode.Tutorial ? "3" : listOfWaveSetup.Count.ToString());
+        roundText.text = AutoTranslate.Round(currentRound.ToString());
 
         float elapsedTime = 0f;
         float totalTime = PlayerPrefs.GetFloat("Animation Speed");
@@ -241,11 +238,11 @@ public class TurnManager : MonoBehaviour
         yield return WaitTime();
 
         currentRound++;
-        roundText.text = $"{CarryVariables.instance.Translate("Round")} {currentRound}";
+        roundText.text = AutoTranslate.Round(currentRound.ToString());
         if (increaseWave)
         {
             currentWave++;
-            waveText.text = $"{CarryVariables.instance.Translate("Wave")} {currentWave} / {(CarryVariables.instance.mode == CarryVariables.GameMode.Tutorial ? "3" : "5")}";
+            waveText.text = AutoTranslate.Wave(currentWave.ToString(), ScreenOverlay.instance.mode == GameMode.Tutorial ? "3" : listOfWaveSetup.Count.ToString());
         }
 
         yield return WaitTime();
@@ -260,7 +257,7 @@ public class TurnManager : MonoBehaviour
         waveText.transform.parent.localPosition = finalPos;
     }
 
-    public void GameFinished(string message1, bool win)
+    public void GameFinished(ToTranslate message, bool win)
     {
         try
         {
@@ -279,15 +276,15 @@ public class TurnManager : MonoBehaviour
         quitButton.gameObject.SetActive(true);
 
         Log.instance.AddText("");
-        Log.instance.AddText(CarryVariables.instance.Translate(message1));
+        Log.instance.AddText(AutoTranslate.DoEnum(message));
 
         int number = (win) ? currentWave : currentWave - 1;
-        Log.instance.AddText(CarryVariables.instance.Translate("Waves Survived", new() { ("Num", (number).ToString())}));
+        Log.instance.AddText(AutoTranslate.Waves_Survived(number.ToString()));
 
         if (gameTimer != null)
         {
             gameTimer.Stop();
-            Log.instance.AddText(CarryVariables.instance.Translate("Time Taken", new() {("Time", MyExtensions.StopwatchTime(gameTimer))}));
+            Log.instance.AddText(AutoTranslate.Time_Taken(MyExtensions.StopwatchTime(gameTimer)));
         }
         Log.instance.enabled = false;
     }
@@ -343,7 +340,7 @@ public class TurnManager : MonoBehaviour
 
     public void CreateVisual(string text, Vector3 position)
     {
-        PointsVisual pv = Instantiate(pointsVisual, CarryVariables.instance.sceneCanvas);
+        PointsVisual pv = Instantiate(pointsVisual, ScreenOverlay.instance.sceneCanvas);
         pv.Setup(text, position);
     }
 
@@ -357,7 +354,7 @@ public class TurnManager : MonoBehaviour
         if (listOfEnemies.Count < 5)
         {
             EnemyCharacter nextEnemy = Instantiate(characterPrefab).AddComponent<EnemyCharacter>();
-            nextEnemy.transform.SetParent(CarryVariables.instance.sceneCanvas);
+            nextEnemy.transform.SetParent(ScreenOverlay.instance.sceneCanvas);
             nextEnemy.transform.localScale = Vector3.one;
             nextEnemy.transform.SetAsFirstSibling();
             listOfEnemies.Add(nextEnemy);
@@ -372,13 +369,13 @@ public class TurnManager : MonoBehaviour
                 }
             }
 
-            nextEnemy.name = dataFile.myName;
-            Log.instance.AddText(CarryVariables.instance.Translate("Enter Fight", new() { ("This", nextEnemy.name)}), logged);
-
-            nextEnemy.SetupCharacter(dataFile, CarryVariables.instance.ConvertToAbilityData(dataFile.listOfAbilities, false), startingEmotion, true);
-            if (CarryVariables.instance.ActiveCheat("Weaker Enemies"))
+            nextEnemy.name = AutoTranslate.DoEnum(dataFile.characterName);
+            Log.instance.AddText(AutoTranslate.Enter_Fight(nextEnemy.name), logged);
+            
+            nextEnemy.SetupCharacter(dataFile, GameFiles.inst.ConvertToAbilityData(dataFile.listOfAbilities, false), startingEmotion, true);
+            if (ScreenOverlay.instance.ActiveCheat(ToTranslate.Weaker_Enemies))
                 StartCoroutine(nextEnemy.ChangeMaxHealth(-2, logged + 1));
-            if (CarryVariables.instance.ActiveChallenge("Extra Enemy Turns"))
+            if (ScreenOverlay.instance.ActiveChallenge(ToTranslate.Extra_Enemy_Turns))
                 StartCoroutine(nextEnemy.ChangeEffect(StatusEffect.Extra, 1, logged+1));
         }
     }
@@ -386,7 +383,7 @@ public class TurnManager : MonoBehaviour
     public void AddPlayer(Character character)
     {
         listOfPlayers.Add(character);
-        character.transform.SetParent(CarryVariables.instance.sceneCanvas);
+        character.transform.SetParent(ScreenOverlay.instance.sceneCanvas);
         character.transform.localScale = Vector3.one;
         character.transform.SetAsFirstSibling();
 

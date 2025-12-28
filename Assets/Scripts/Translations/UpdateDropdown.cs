@@ -15,16 +15,17 @@ public class UpdateDropdown : MonoBehaviour
         dropdown.onValueChanged.AddListener(ChangeDropdown);
 
         int nextUpdate = 0;
-        while (CarryVariables.instance.TranslationExists($"Update {nextUpdate}") && CarryVariables.instance.TranslationExists($"Update {nextUpdate} Text"))
+        while (Translator.inst.TranslationExists($"Update_{nextUpdate}") && Translator.inst.TranslationExists($"Update_{nextUpdate}_Text"))
         {
-            dropdown.AddOptions(new List<string>() { CarryVariables.instance.Translate($"Update {nextUpdate}") });
+            dropdown.AddOptions(new List<string>() { Translator.inst.Translate($"Update_{nextUpdate}") });
             nextUpdate++;
         }
         dropdown.value = dropdown.options.Count-1;
+        ChangeDropdown(dropdown.options.Count-1);
 
         void ChangeDropdown(int n)
         {
-            updateText.text = CarryVariables.instance.Translate($"Update {dropdown.value} Text");
+            updateText.text = Translator.inst.Translate($"Update_{dropdown.value}_Text");
         }
         this.gameObject.SetActive(dropdown.options.Count >= 1);
     }

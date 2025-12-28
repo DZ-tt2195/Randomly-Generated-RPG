@@ -4,7 +4,7 @@ using UnityEngine.SceneManagement;
 
 public class SetText : MonoBehaviour
 {
-    [SerializeField] string key;
+    [SerializeField] ToTranslate key;
     TMP_Text textBox;
 
     private void OnEnable()
@@ -23,7 +23,7 @@ public class SetText : MonoBehaviour
 
     void Translate()
     {
-        textBox.text = KeywordTooltip.instance.EditText(CarryVariables.instance.Translate(key));
+        textBox.text = KeywordTooltip.instance.EditText(AutoTranslate.DoEnum(key));
     }
 
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
