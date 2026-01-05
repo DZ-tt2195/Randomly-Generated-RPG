@@ -1,4 +1,6 @@
 characterName	description	baseHealth	startPosition	listOfAbilities	aiTargeting	artCredit	difficulty
+Page	Basic Enemy who attacks Grounded Players.	5	GROUNDED	Swing,	None	Alayna Danner\nDominion: Adventures\n(Page)	0
+Crow	Basic Enemy who attacks Grounded and Elevated Players.	4	ELEVATED	Peck,	None	Una Fricker\nClassic Sixth Edition\n(Storm Crow)	0
 Bees	Helps other Elevated Enemies stay alive with status effects.	5	ELEVATED	Sting,Honey,Protect_the_Queen,Support,	None	Tom Wanerstrand\nTime Spiral\n(Unyaro Bees)	1
 Drone	Makes itself Neutral and Elevated, then attacks multiple Players at once.	5	ELEVATED	Sound_Waves,Alarm,	None	James Paick\nGuilds of Ravnica\n(Dimir Spybug)	1
 Herald	If not killed fast enough, will start to summon 3 Star Enemies.	5	GROUNDED	Flag_Whack,Announce,	CameOffCooldown	Grant Hansen\nDominion: Renaissance\n(Flag Bearer)	1

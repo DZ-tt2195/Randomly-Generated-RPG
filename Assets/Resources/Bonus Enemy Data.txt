@@ -1,3 +1,0 @@
-characterName	description	baseHealth	startPosition	listOfAbilities	aiTargeting	artCredit	difficulty
-Page	Basic Enemy who attacks Grounded Players.	5	GROUNDED	Swing,	None	Alayna Danner\nDominion: Adventures\n(Page)	0
-Crow	Basic Enemy who attacks Grounded and Elevated Players.	4	ELEVATED	Peck,	None	Una Fricker\nClassic Sixth Edition\n(Storm Crow)	0

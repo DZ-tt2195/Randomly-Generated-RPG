@@ -1,53 +1,53 @@
 controller	abilityName	description	toTarget	playCondition	instructions	baseCooldown	mainNumber	secondNumber	powerStat	defenseStat	miscNumber	abilityTypes
 Knight	Battle_Cry	A Player becomes Angry and gains $DefenseStat$ Defense.	OnePlayer	None	TargetBecomeAngry/TargetGainDefense	1				1		EmotionPlayer/StatPlayer
-Knight	Cheer	Another Player becomes Happy and gets $MiscStat$ Extra Ability.	OtherPlayer		TargetBecomeHappy/TargetGetExtraAbility	1					1	EmotionPlayer
+Knight	Cheer	Another Player becomes Happy and gets $MiscStat$ Extra Ability.	OtherPlayer	None	TargetBecomeHappy/TargetGetExtraAbility	1					1	EmotionPlayer
 Knight	Daze	A Grounded Enemy becomes Happy and loses $DefenseStat$ Defense.	OneEnemy	TargetIsGrounded	TargetBecomeHappy/TargetLoseDefense	1				1		EmotionEnemy/StatEnemy
 Knight	Desperation	This becomes Sad. Then deal $Num$ damage to a Grounded Enemy.	Self-OneEnemy	None-TargetIsGrounded	TargetBecomeSad-TargetAttack	1	3					Attack/EmotionPlayer
 Knight	Embarass	A Grounded Enemy becomes Sad. Then deal $Num$ damage to them.	OneEnemy	TargetIsGrounded	TargetBecomeSad/TargetAttack	0	3					Attack/EmotionEnemy
 Knight	Force	Deal $Num$ damage to a Grounded Enemy. Their active Ability Cooldown are decreased by $MiscStat$.	OneEnemy	TargetIsGrounded	TargetAttack/TargetDecreaseAllCooldown	0	4				1	Attack
-Knight	Immobilize	Deal $Num$ damage to a Grounded Enemy. They become Locked for $MiscStat$ turns.	OneEnemy	TargetIsGrounded	TargetAttack/TargetBecomeLocked	1	5				2	Attack
+Knight	Immobilize	Deal $Num$ damage to a Grounded Enemy. They become Locked for $MiscStat$ turns.	OneEnemy	TargetIsGrounded	TargetAttack/TargetBecomeLocked	1	5				3	Attack
 Knight	Impale	Deal $Num$ damage to a Grounded Enemy. They becomes Stunned for $MiscStat$ turn.	OneEnemy	TargetIsGrounded	TargetAttack/TargetBecomeStunned	2	4				1	Attack
 Knight	Intimidate	This becomes Angry, and another Player becomes Sad.	Self-OtherPlayer	None-None	TargetBecomeAngry-TargetBecomeSad	0						EmotionPlayer
 Knight	Joust	Deal $Num$ damage to a Grounded Enemy. Then this loses $PowerStat$ Power.	OneEnemy-Self	TargetIsGrounded-None	TargetAttack-TargetLosePower	0	4		1			Attack
 Knight	Knock_Down	Deal $Num$ damage to a Grounded Enemy. Then they lose $DefenseStat$ Defense.	OneEnemy	TargetIsGrounded	TargetAttack/TargetLoseDefense	1	5			1		Attack/StatEnemy
-Knight	Meditate	A Player becomes Neutral, Protected, and Locked for $MiscStat$ turn.	OnePlayer		TargetBecomeNeutral/TargetBecomeProtected/TargetBecomeLocked	1					1	EmotionPlayer
+Knight	Meditate	A Player becomes Neutral, Protected, and Locked for $MiscStat$ turn.	OnePlayer	None	TargetBecomeNeutral/TargetBecomeProtected/TargetBecomeLocked	1					1	EmotionPlayer
 Knight	Mirror	Deal $Num$ damage to a Grounded Enemy with the same Emotion as this.	OneEnemy	TargetIsGrounded/TargetSameEmotion	TargetAttack	0	4					Attack
 Knight	Mock	A Grounded Enemy becomes Angry. Then deal $Num$ damage to them.	OneEnemy	TargetIsGrounded	TargetBecomeAngry/TargetAttack	0	3					Attack/EmotionEnemy
 Knight	Neutralize	Deal $Num$ damage to a Grounded Enemy. Then they become Neutral.	OneEnemy	TargetIsGrounded	TargetAttack/TargetBecomeNeutral	0	3					Attack/EmotionEnemy
-Knight	Redirect	Another Player gains $DefenseStat$ Defense and becomes Targeted for $MiscStat$ turns.	OtherPlayer		TargetGainDefense/TargetBecomeTargeted	1				1	2	StatPlayer
+Knight	Redirect	Another Player gains $DefenseStat$ Defense and becomes Targeted for $MiscStat$ turns.	OtherPlayer	None	TargetGainDefense/TargetBecomeTargeted	1				1	2	StatPlayer
 Knight	Steal	An Enemy becomes Angry. All Players gain $DefenseStat$ Defense.	OneEnemy-AllPlayers	None-None	TargetBecomeAngry-TargetGainDefense	1				1		EmotionEnemy/StatPlayer
 Knight	Strike	This gains $DefenseStat$ Defense. Then deal $Num$ damage to a Grounded Enemy.	Self-OneEnemy	None-TargetIsGrounded	TargetGainDefense-TargetAttack	1	2			1		Attack/StatPlayer
 Knight	Surprise	A Grounded Enemy becomes Happy. Then deal $Num$ damage to it.	OneEnemy	TargetIsGrounded	TargetBecomeHappy/TargetAttack	0	3					Attack/EmotionEnemy
 Knight	Twirl	This becomes Happy. Then deals $Num$ damage to a Grounded Enemy.	Self-OneEnemy	None-TargetIsGrounded	TargetBecomeHappy-TargetAttack	0	3					Attack/EmotionPlayer
 Knight	Upset	A Grounded Enemy becomes Sad and loses $DefenseStat$ Defense.	OneEnemy	TargetIsGrounded	TargetBecomeSad/TargetLoseDefense	1				1		EmotionEnemy/StatEnemy
 Angel	Air_Combat	A Grounded Player and Grounded Enemy both become Elevated. The Player gains $PowerStat$ Power.	OnePlayer-OneEnemy	TargetIsGrounded-TargetIsGrounded	TargetBecomeElevated/TargetGainPower-TargetBecomeElevated	0			1			PositionPlayer/PositionEnemy/StatPlayer
-Angel	Assist	Another Player gains $Num$ Health and gets $MiscStat$ Extra Ability.	OtherPlayer		TargetHeal/TargetGetExtraAbility	1	2				1	Healing
+Angel	Assist	Another Player gains $Num$ Health and gets $MiscStat$ Extra Ability.	OtherPlayer	None	TargetHeal/TargetGetExtraAbility	1	2				1	Healing
 Angel	Calm_Down	Each non-Neutral Player gain $Num$ Health and becomes Neutral.	AllPlayers	TargetNotNeutral	TargetHeal/TargetBecomeNeutral	0	2					Healing/EmotionPlayer
 Angel	Crash_Land	An Elevated Enemy becomes Grounded and loses $DefenseStat$ Defense.	OneEnemy	TargetIsElevated	TargetBecomeGrounded/TargetLoseDefense	1				1		PositionEnemy/StatEnemy
-Angel	Enrage	An Elevated Player becomes Angry and Grounded.	OnePlayer	TargetIsElevated	TargetBecomeGrounded/TargetBecomeAngry	0						EmotionPlayer/PositionPlayer
-Angel	Exhaust	An Enemy becomes Sad and loses $PowerStat$ Power.	OneEnemy		TargetBecomeSad/TargetLosePower	1			1			EmotionEnemy/StatEnemy
+Angel	Enrage	A Grounded Player gains $Num$ Health and becomes Angry.	OnePlayer	TargetIsGrounded	TargetHeal/TargetBecomeAngry	0	3					Healing/EmotionPlayer
+Angel	Exhaust	An Enemy becomes Sad and loses $PowerStat$ Power.	OneEnemy	None	TargetBecomeSad/TargetLosePower	1			1			EmotionEnemy/StatEnemy
 Angel	Exorcism	An Elevated Enemy loses $DefenseStat$ Defense. Each Elevated Player gains $Num$ Health.	OneEnemy-AllPlayers	TargetIsElevated-TargetIsElevated	TargetLoseDefense-TargetHeal	1	3			1		Healing/StatEnemy
 Angel	Gift_of_Flight	A Grounded Enemy becomes Happy and Elevated.	OneEnemy	TargetIsGrounded	TargetBecomeElevated/TargetBecomeHappy	0						EmotionEnemy/PositionEnemy
 Angel	Hide	A Grounded Enemy loses $PowerStat$ Power. Each Grounded Player gains $Num$ Health.	OneEnemy-AllPlayers	TargetIsGrounded-TargetIsGrounded	TargetLosePower-TargetHeal	1	3		1			Healing/StatEnemy
-Angel	Immunity	A Player gains $Num$ Health and becomes Protected and Targeted for $MiscStat$ turn.	OnePlayer		TargetHeal/TargetBecomeProtected/TargetBecomeTargeted	2	3				1	Healing
+Angel	Immunity	A Player gains $Num$ Health and becomes Protected and Targeted for $MiscStat$ turn.	OnePlayer	None	TargetHeal/TargetBecomeProtected/TargetBecomeTargeted	2	3				1	Healing
 Angel	Joy	An Elevated Player gains $Num$ Health and becomes Happy.	OnePlayer	TargetIsElevated	TargetHeal/TargetBecomeHappy	0	3					Healing/EmotionPlayer
 Angel	Lift_Up	A Grounded Player gains $Num$ Health and becomes Elevated.	OnePlayer	TargetIsGrounded	TargetHeal/TargetBecomeElevated	0	3					Healing/PositionPlayer
 Angel	Motivate	A Player gains $Num$ Health. Decrease their active Cooldown by $MiscStat$.	OnePlayer	None	TargetHeal/TargetDecreaseAllCooldown	1	3				1	Healing
 Angel	Overheal	All Players gain $MiscStat$ Max Health and $Num$ Health.	AllPlayers	None	TargetMaxHealth/TargetHeal	2	2				1	Healing
 Angel	Petrify	An Elevated Enemy becomes Grounded, Neutral, and Stunned for $MiscStat$ turn.	OneEnemy	TargetIsElevated	TargetBecomeGrounded/TargetBecomeNeutral/TargetBecomeStunned	1					1	EmotionEnemy/PositionEnemy
 Angel	Plummet	An Elevated Enemy becomes Angry and Grounded.	OneEnemy	TargetIsElevated	TargetBecomeGrounded/TargetBecomeAngry	0						EmotionEnemy/PositionEnemy
-Angel	Retreat	A Grounded Player gains $Num$ Health and becomes Sad.	OnePlayer	TargetIsGrounded	TargetHeal/TargetBecomeSad	0	3					Healing/EmotionPlayer
-Angel	Security	A Player switches Positions and gains $DefenseStat$ Defense.	OnePlayer		TargetSwitchPosition/TargetGainDefense	1				1		PositionPlayer/StatPlayer
+Angel	Retreat	An Elevated Player becomes Sad and Grounded.	OnePlayer	TargetIsElevated	TargetBecomeGrounded/TargetBecomeSad	0	3					EmotionPlayer/PositionPlayer
+Angel	Security	A Player switches Positions and gains $DefenseStat$ Defense.	OnePlayer	None	TargetSwitchPosition/TargetGainDefense	1				1		PositionPlayer/StatPlayer
 Angel	Soft_Landing	An Elevated Player gains $Num$ Health and becomes Grounded.	OnePlayer	TargetIsElevated	TargetHeal/TargetBecomeGrounded	0	3					Healing/PositionPlayer
 Angel	Tailwinds	Each Elevated Player gains $Num$ Health and $DefenseStat$ Defense.	AllPlayers	TargetIsElevated	TargetHeal/TargetGainDefense	1	3			1		Healing/StatPlayer
 Angel	Team_Up	Each Grounded Player gains $Num$ Health and $PowerStat$ Power.	AllPlayers	TargetIsGrounded	TargetHeal/TargetGainPower	1	3		1			Healing/StatPlayer
 Wizard	Above_Danger	A Grounded Player becomes Elevated and Protected for $MiscStat$ turn.	OnePlayer	TargetIsGrounded	TargetBecomeElevated/TargetBecomeProtected	1					1	PositionPlayer
 Wizard	Accelerate	Another Player gains $PowerStat$ Power. Decrease their active Cooldown by $MiscStat$.	OtherPlayer	None	TargetGainPower/TargetDecreaseAllCooldown	2			1		1	StatPlayer
-Wizard	Bad_Omens	Deal $Num$ damage to all Enemies. They lose $PowerStat$ Power.	AllEnemies		TargetAttack/TargetLosePower	2	2		1			Attack/StatEnemy
+Wizard	Bad_Omens	Deal $Num$ damage to all Enemies. They all lose $PowerStat$ Power.	AllEnemies	None	TargetAttack/TargetLosePower	2	2		1			Attack/StatEnemy
 Wizard	Bind	An Elevated Enemy becomes Grounded and Stunned for $MiscStat$ turn.	OneEnemy	TargetIsElevated	TargetBecomeGrounded/TargetBecomeStunned	1					1	PositionEnemy
 Wizard	Bounce	Deal $Num$ damage to each Grounded Enemy. They each become Elevated.	AllEnemies	TargetIsGrounded	TargetAttack/TargetBecomeElevated	0	1					Attack/PositionEnemy
 Wizard	Chill	Deal $Num$ damage to each Grounded Enemy. Then this becomes Stunned for $MiscStat$ turn.	AllEnemies-Self	TargetIsGrounded-None	TargetAttack-TargetBecomeStunned	1	3				1	Attack
-Wizard	Crown	A Player gains $PowerStat$ Power and becomes Targeted for $MiscStat$ turns.	OnePlayer		TargetGainPower/TargetBecomeTargeted	1			1		2	StatPlayer
+Wizard	Crown	A Player gains $PowerStat$ Power and becomes Targeted for $MiscStat$ turns.	OnePlayer	None	TargetGainPower/TargetBecomeTargeted	1			1		2	StatPlayer
 Wizard	Flood	Each Grounded Player becomes Elevated. Then deal $Num$ damage to each Grounded Enemy.	AllPlayers-AllEnemies	TargetIsGrounded-TargetIsGrounded	TargetBecomeElevated-TargetAttack	2	4					Attack/PositionPlayer
 Wizard	Gust	An Elevated Enemy becomes Grounded and loses $PowerStat$ Power.	OneEnemy	TargetIsElevated	TargetBecomeGrounded/TargetLosePower	1			1			PositionEnemy/StatEnemy
 Wizard	Headwinds	Deal $Num$ damage to each Elevated Enemy. They each lose $PowerStat$ Power.	AllEnemies	TargetIsElevated	TargetAttack/TargetLosePower	1	2		1			Attack/StatEnemy
@@ -55,7 +55,7 @@ Wizard	Manipulate_Time	Deal $Num$ damage to each Elevated Enemy. They each get $
 Wizard	Punch_Up	Deal $Num$ damage to all Enemies with $MiscStat$ Health or more.	AllEnemies	TargetHealthOrMore	TargetAttack	0	2				6	Attack
 Wizard	Quick_Attack	A Grounded Player gains $PowerStat$ Power. Deal $Num$ damage to each Grounded Enemy.	OnePlayer-AllEnemies	TargetIsGrounded-TargetIsGrounded	TargetGainPower-TargetAttack	1	2		1			Attack/StatPlayer
 Wizard	Readjust	All Players and Enemies switch Positions.	All	None	TargetSwitchPosition	0						PositionPlayer/PositionEnemy
-Wizard	Restrain	Deal $Num$ damage to all Enemies. They all become Locked for $MiscStat$ turns.	AllEnemies		TargetAttack/TargetBecomeLocked	1	2				2	Attack
+Wizard	Restrain	Deal $Num$ damage to all Enemies. They all become Locked for $MiscStat$ turns.	AllEnemies	None	TargetAttack/TargetBecomeLocked	1	2				2	Attack
 Wizard	Shockwave	Deal $Num$ damage to all Enemies, and $Sec$ damage to all Players.	AllEnemies-AllPlayers	None-None	TargetAttack-TargetAttackSec	0	2	1				Attack
 Wizard	Stalactites	Deal $Num$ damage to each Elevated Enemy. They each become Grounded.	AllEnemies	TargetIsElevated	TargetAttack/TargetBecomeGrounded	0	1					Attack/PositionEnemy
 Wizard	Storm	Each Elevated Player becomes Grounded. Then deal $Num$ damage to each Elevated Enemy.	AllPlayers-AllEnemies	TargetIsElevated-TargetIsElevated	TargetBecomeGrounded-TargetAttack	2	4					Attack/PositionPlayer

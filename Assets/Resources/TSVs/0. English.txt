@@ -1,6 +1,6 @@
 Title	RANDOMLY GENERATED
 Author_Credit	by Thomas Tang (DZ)
-Last_Update	Last Updated: Dec 28, 2025
+Last_Update	Last Updated: Jan 07, 2026
 Language	Language
 Translator_Credit	Original Language
 Loading	Loading...
@@ -189,8 +189,8 @@ EmotionPlayer	Emotion - Player
 EmotionEnemy	Emotion - Enemy
 PositionPlayer	Position - Player
 PositionEnemy	Position - Enemy
-StatsPlayer	Stats - Player
-StatsEnemy	Stats - Enemy
+StatPlayer	Stats - Player
+StatEnemy	Stats - Enemy
 Player	Player
 Enemies	Enemies
 Search_Enemies	Search Enemies
@@ -276,7 +276,7 @@ Crash_Land	Crash Land
 Crash_Land_Text	An Elevated Enemy becomes Grounded and loses $DefenseStat$ Defense.
 Crash_Land_Log	$This$ makes $Target$ crash land.
 Enrage	Enrage
-Enrage_Text	An Elevated Player becomes Angry and Grounded.
+Enrage_Text	A Grounded Player gains $Num$ Health and becomes Angry.
 Enrage_Log	$This$ enrages $Target$.
 Exhaust	Exhaust
 Exhaust_Text	An Enemy becomes Sad and loses $PowerStat$ Power.
@@ -312,7 +312,7 @@ Plummet	Plummet
 Plummet_Text	An Elevated Enemy becomes Angry and Grounded.
 Plummet_Log	$This$ plummets $Target$.
 Retreat	Retreat
-Retreat_Text	A Grounded Player gains $Num$ Health and becomes Sad.
+Retreat_Text	An Elevated Player becomes Sad and Grounded.
 Retreat_Log	$This$ has $Target$ retreat.
 Security	Security
 Security_Text	A Player switches Positions and gains $DefenseStat$ Defense.
@@ -332,7 +332,7 @@ Above_Danger	Above Danger
 Above_Danger_Text	A Grounded Player becomes Elevated and Protected for $MiscStat$ turn.
 Above_Danger_Log	$This$ moves $Target$ above danger.
 Bad_Omens	Bad Omens
-Bad_Omens_Text	Deal $Num$ damage to all Enemies. They lose $PowerStat$ Power.
+Bad_Omens_Text	Deal $Num$ damage to all Enemies. They all lose $PowerStat$ Power.
 Bad_Omens_Log	$This$ predicts bad omens.
 Bounce	Bounce
 Bounce_Text	Deal $Num$ damage to each Grounded Enemy. They each become Elevated.
@@ -669,7 +669,7 @@ Stab_Prey	Stab Prey
 Stab_Prey_Text	If this is Elevated, deal $Num$ damage to an Elevated Player.
 Stab_Prey_Log	$This$ stabs $Target$.
 Trapped	Trapped
-Trapped_Text	If this is Elevated, a Grounded Player becomes Elevated and Locked for $MiscStat$ turn.
+Trapped_Text	If this is Elevated, a Grounded Player becomes Elevated and Locked for $MiscStat$ turns.
 Trapped_Log	$This$ traps $Target$.
 Silk_Wrap	Silk Wrap
 Silk_Wrap_Text	An Elevated Player becomes Sad and loses $PowerStat$ Power.
@@ -739,3 +739,5 @@ Blank
 Counting_Down	Timer: $Num$
 Update_3	Dec 28, 2025
 Update_3_Text	New translation features - you can download the English translation file and upload your own translation
+Update_4	Jan 07, 2026
+Update_4_Text	Fixed an issue with the encyclopedia, and added Page and Crow to it \nFixed bugs in ability forcer \nKnight's Immobilize and Spider's Trapped add 1 more turn of locked \nSwitched emotions/names for Angel's Retreat and Enrage \nFixed Drone's Alarm

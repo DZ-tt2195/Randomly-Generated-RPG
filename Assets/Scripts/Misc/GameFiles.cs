@@ -44,7 +44,6 @@ public class GameFiles : MonoBehaviour
     [Tooltip("store all enemy ability data")][ReadOnly] public List<AbilityData> listOfEnemyAbilities;
     [Tooltip("store all player data")][ReadOnly] public List<CharacterData> listOfPlayers = new();
     [Tooltip("store all enemy data")][ReadOnly] public Dictionary<int, List<CharacterData>> listOfEnemies = new();
-    [Tooltip("store all bonus enemy data")][ReadOnly] public List<CharacterData> listOfBonusEnemies;
 
     void Awake()
     {
@@ -52,11 +51,11 @@ public class GameFiles : MonoBehaviour
         listOfPlayerAbilities = ReadTSVFile<AbilityData>(Resources.Load<TextAsset>("Player Ability Data").text);
         listOfEnemyAbilities = ReadTSVFile<AbilityData>(Resources.Load<TextAsset>("Enemy Ability Data").text);
         listOfPlayers = ReadTSVFile<CharacterData>(Resources.Load<TextAsset>("Player Data").text);
-        listOfBonusEnemies = ReadTSVFile<CharacterData>(Resources.Load<TextAsset>("Bonus Enemy Data").text);
 
         List<CharacterData> allEnemies = ReadTSVFile<CharacterData>(Resources.Load<TextAsset>("Enemy Data").text);
         listOfEnemies = new Dictionary<int, List<CharacterData>>
         {
+            { 0, new List<CharacterData>() },
             { 1, new List<CharacterData>() },
             { 2, new List<CharacterData>() },
             { 3, new List<CharacterData>() }
@@ -213,11 +212,11 @@ public class GameFiles : MonoBehaviour
         return foundData;
     }
 
-    public CharacterData FindBonusEnemy(ToTranslate target)
+    public CharacterData FindSpecificEnemy(ToTranslate target, int difficulty)
     {
-        CharacterData foundData = listOfBonusEnemies.FirstOrDefault(character => character.characterName == target);
+        CharacterData foundData = listOfEnemies[difficulty].FirstOrDefault(character => character.characterName == target);
         if (foundData == null)
-            Debug.LogError($"failed to find enemy in bonus enemies: {target}");
+            Debug.LogError($"failed to find enemy: {target}, {difficulty}");
         return foundData;
     }
 
