@@ -12843,10 +12843,10 @@ MonoBehaviour:
     - m_Text: PositionEnemy
       m_Image: {fileID: 0}
       m_Color: {r: 1, g: 1, b: 1, a: 1}
-    - m_Text: StatsPlayer
+    - m_Text: StatPlayer
       m_Image: {fileID: 0}
       m_Color: {r: 1, g: 1, b: 1, a: 1}
-    - m_Text: StatsEnemy
+    - m_Text: StatEnemy
       m_Image: {fileID: 0}
       m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_OnValueChanged:
@@ -24019,10 +24019,10 @@ MonoBehaviour:
     - m_Text: PositionEnemy
       m_Image: {fileID: 0}
       m_Color: {r: 1, g: 1, b: 1, a: 1}
-    - m_Text: StatsPlayer
+    - m_Text: StatPlayer
       m_Image: {fileID: 0}
       m_Color: {r: 1, g: 1, b: 1, a: 1}
-    - m_Text: StatsEnemy
+    - m_Text: StatEnemy
       m_Image: {fileID: 0}
       m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_OnValueChanged:
@@ -24830,6 +24830,9 @@ MonoBehaviour:
   m_Options:
     m_Options:
     - m_Text: Any
+      m_Image: {fileID: 0}
+      m_Color: {r: 1, g: 1, b: 1, a: 1}
+    - m_Text: 0
       m_Image: {fileID: 0}
       m_Color: {r: 1, g: 1, b: 1, a: 1}
     - m_Text: 1

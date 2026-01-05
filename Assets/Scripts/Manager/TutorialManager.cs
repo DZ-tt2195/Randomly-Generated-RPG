@@ -103,7 +103,7 @@ public class TutorialManager : MonoBehaviour
 
             case 3: //first time attacking
                 yield return TurnManager.instance.NewWave();
-                TurnManager.instance.CreateEnemy(GameFiles.inst.FindBonusEnemy(ToTranslate.Page), Emotion.Neutral, 0);
+                TurnManager.instance.CreateEnemy(GameFiles.inst.FindSpecificEnemy(ToTranslate.Page, 0), Emotion.Neutral, 0);
                 yield return ClickThroughDialogue(new List<ToTranslate>() { ToTranslate.Tutorial_30 });
 
                 yield return TurnManager.instance.NewRound(false);
@@ -149,7 +149,7 @@ public class TutorialManager : MonoBehaviour
             case 7: //introduce angel's healing
                 Log.instance.AddText("");
                 yield return TurnManager.instance.NewWave();
-                TurnManager.instance.CreateEnemy(GameFiles.inst.FindBonusEnemy(ToTranslate.Page), Emotion.Happy, 0);
+                TurnManager.instance.CreateEnemy(GameFiles.inst.FindSpecificEnemy(ToTranslate.Page, 0), Emotion.Happy, 0);
 
                 yield return ClickThroughDialogue(new List<ToTranslate>() { ToTranslate.Tutorial_70, ToTranslate.Tutorial_71, ToTranslate.Tutorial_72});
                 currentCharacter = angel; //wait for angel's next turn
@@ -178,9 +178,9 @@ public class TutorialManager : MonoBehaviour
                 angel.AddAbility(GameFiles.inst.FindPlayerAbility(ToTranslate.Team_Up), false, false);
                 angel.AddAbility(GameFiles.inst.FindPlayerAbility(ToTranslate.Motivate), false, false);
 
-                TurnManager.instance.CreateEnemy(GameFiles.inst.FindBonusEnemy(ToTranslate.Page), Emotion.Neutral, 0);
+                TurnManager.instance.CreateEnemy(GameFiles.inst.FindSpecificEnemy(ToTranslate.Page, 0), Emotion.Neutral, 0);
                 for (int i = 0; i<2; i++)
-                    TurnManager.instance.CreateEnemy(GameFiles.inst.FindBonusEnemy(ToTranslate.Crow), Emotion.Neutral, 0);
+                    TurnManager.instance.CreateEnemy(GameFiles.inst.FindSpecificEnemy(ToTranslate.Crow, 0), Emotion.Neutral, 0);
 
                 yield return ClickThroughDialogue(new List<ToTranslate>() { ToTranslate.Tutorial_90, ToTranslate.Tutorial_91 });
                 currentStep = 10;

@@ -16,7 +16,6 @@ public static class FileManager
         EditorCoroutineUtility.StartCoroutineOwnerless(Download("TSVs/0. English", "1HO4JtV9ukU0UMJfZV7zG5bhExNQqzZwoU3bPh1OfpPk", "1585553982"));
         EditorCoroutineUtility.StartCoroutineOwnerless(Download("Player Data", "1HO4JtV9ukU0UMJfZV7zG5bhExNQqzZwoU3bPh1OfpPk", "2114962038"));
         EditorCoroutineUtility.StartCoroutineOwnerless(Download("Player Ability Data", "1HO4JtV9ukU0UMJfZV7zG5bhExNQqzZwoU3bPh1OfpPk", "1268954754"));
-        EditorCoroutineUtility.StartCoroutineOwnerless(Download("Bonus Enemy Data", "1HO4JtV9ukU0UMJfZV7zG5bhExNQqzZwoU3bPh1OfpPk", "1656788292"));
         EditorCoroutineUtility.StartCoroutineOwnerless(Download("Enemy Data", "1HO4JtV9ukU0UMJfZV7zG5bhExNQqzZwoU3bPh1OfpPk", "567473665"));
         EditorCoroutineUtility.StartCoroutineOwnerless(Download("Enemy Ability Data", "1HO4JtV9ukU0UMJfZV7zG5bhExNQqzZwoU3bPh1OfpPk", "949940889"));
     }
