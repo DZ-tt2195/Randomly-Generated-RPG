@@ -65,7 +65,7 @@ public class TutorialManager : MonoBehaviour
         TextCollector collector = TurnManager.instance.MakeTextCollector("", Vector3.zero, new List<string>() { "Next" });
         foreach (ToTranslate nextString in allDialogue)
         {
-            collector.textbox.text = KeywordTooltip.instance.EditText(AutoTranslate.DoEnum(nextString));
+            collector.textbox.text = KeywordTooltip.instance.EditText(Translator.inst.Translate(nextString));
             yield return collector.WaitForChoice();
         }
         Destroy(collector.gameObject);
@@ -88,7 +88,7 @@ public class TutorialManager : MonoBehaviour
                 TurnManager.instance.AddPlayer(knight); //add knight
                 knight.AddAbility(GameFiles.inst.FindPlayerAbility(ToTranslate.Strike), false, false);
 
-                string text2 = KeywordTooltip.instance.EditText(AutoTranslate.DoEnum(ToTranslate.Tutorial_20));
+                string text2 = KeywordTooltip.instance.EditText(AutoTranslate.Tutorial_20());
                 TextCollector collector2 = TurnManager.instance.MakeTextCollector(text2, Vector3.zero);
 
                 while (ScreenOverlay.instance.displayedScreen != CurrentScreen.Character)
@@ -133,7 +133,7 @@ public class TutorialManager : MonoBehaviour
                 TurnManager.instance.AddPlayer(angel); //add angel
                 angel.AddAbility(GameFiles.inst.FindPlayerAbility(ToTranslate.Assist), false, false);
 
-                string text6 = KeywordTooltip.instance.EditText(AutoTranslate.DoEnum(ToTranslate.Tutorial_60));
+                string text6 = KeywordTooltip.instance.EditText(AutoTranslate.Tutorial_60());
                 TextCollector collector6 = TurnManager.instance.MakeTextCollector(text6, Vector3.zero);
 
                 while (ScreenOverlay.instance.displayedScreen != CurrentScreen.Character)
@@ -191,7 +191,7 @@ public class TutorialManager : MonoBehaviour
                 TurnManager.instance.AddPlayer(wizard); //add wizard
                 wizard.AddAbility(GameFiles.inst.FindPlayerAbility(ToTranslate.Stalactites), false, false);
 
-                string text10 = KeywordTooltip.instance.EditText(AutoTranslate.DoEnum(ToTranslate.Tutorial_100));
+                string text10 = KeywordTooltip.instance.EditText(AutoTranslate.Tutorial_100());
                 TextCollector collector10 = TurnManager.instance.MakeTextCollector(text10, Vector3.zero);
 
                 while (ScreenOverlay.instance.displayedScreen != CurrentScreen.Character)
@@ -228,7 +228,7 @@ public class TutorialManager : MonoBehaviour
                 Vector3 originalPos = emotionButton.transform.localPosition;
                 emotionButton.transform.localPosition = new Vector2(0, -150);
 
-                string text13 = KeywordTooltip.instance.EditText(AutoTranslate.DoEnum(ToTranslate.Tutorial_130));
+                string text13 = KeywordTooltip.instance.EditText(AutoTranslate.Tutorial_130());
                 TextCollector collector13 = TurnManager.instance.MakeTextCollector(text13, Vector3.zero);
 
                 while (ScreenOverlay.instance.displayedScreen != CurrentScreen.Emotion)

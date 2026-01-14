@@ -1817,7 +1817,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 995, y: 56}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &751019120
@@ -5217,7 +5217,6 @@ MonoBehaviour:
   listOfPlayerAbilities: []
   listOfEnemyAbilities: []
   listOfPlayers: []
-  listOfBonusEnemies: []
 --- !u!114 &1681304445
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5301,11 +5300,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2798756370095456150, guid: a042c107274f74a03a3cafea8b584572, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 1044
+      value: 695
       objectReference: {fileID: 0}
     - target: {fileID: 2798756370095456150, guid: a042c107274f74a03a3cafea8b584572, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 174
+      value: -2
       objectReference: {fileID: 0}
     - target: {fileID: 2798756370095456150, guid: a042c107274f74a03a3cafea8b584572, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -5324,6 +5323,10 @@ PrefabInstance:
       value: Hover Image
       objectReference: {fileID: 0}
     - target: {fileID: 3713695489742377036, guid: a042c107274f74a03a3cafea8b584572, type: 3}
+      propertyPath: m_text
+      value: "\u6D4B\u8BD5\u4E2D\u6587\u662F\u5426\u663E\u793A"
+      objectReference: {fileID: 0}
+    - target: {fileID: 3713695489742377036, guid: a042c107274f74a03a3cafea8b584572, type: 3}
       propertyPath: m_fontAsset
       value: 
       objectReference: {fileID: 11400000, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
@@ -5331,6 +5334,10 @@ PrefabInstance:
       propertyPath: m_sharedMaterial
       value: 
       objectReference: {fileID: -3852492252101762229, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
+    - target: {fileID: 3713695489742377036, guid: a042c107274f74a03a3cafea8b584572, type: 3}
+      propertyPath: m_hasFontAssetChanged
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

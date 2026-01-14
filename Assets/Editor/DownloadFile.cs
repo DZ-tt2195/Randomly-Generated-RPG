@@ -57,37 +57,32 @@ public static class FileManager
             foreach (Match m in regex.Matches(value).Cast<Match>())
             {
                 string match = m.Groups[1].Value;
-                allMatches.Add(match);
+                if (!allMatches.Contains(match))
+                    allMatches.Add(match);
             }
 
             if (allMatches.Count == 0)
-            {
                 noConvert.Add(key);
-            }
             else
-            {
-                allMatches = allMatches.Distinct().ToList();
                 needConvert.Add((key, allMatches));
-            }
         }
 
         using (StreamWriter writer = new StreamWriter("Assets/Scripts/Translations/AutoTranslate.cs"))
         {
-            writer.WriteLine("using System.Collections.Generic;\npublic static class AutoTranslate\n{\n");
+            writer.WriteLine("public static class AutoTranslate \n{ \n");
 
             for (int i = 0; i < needConvert.Count; i++)
             {
                 (string key, List<string> replace) = needConvert[i];
                 string nextCode = $"public static string {key} (";
-
                 for (int j = 0; j < replace.Count; j++)
                 {
                     nextCode += $"string {replace[j]}";
                     if (j < replace.Count - 1)
                         nextCode += ",";
                 }
-                nextCode += ")  { return(";
-                nextCode += $"Translator.inst.Translate(\"{key}\", new()";
+                nextCode += ") => ";
+                nextCode += $"Translator.inst.Translate(\"{key}\", new() ";
                 nextCode += "{";
 
                 for (int j = 0; j < replace.Count; j++)
@@ -96,24 +91,26 @@ public static class FileManager
                     if (j < replace.Count - 1)
                         nextCode += ",";
                 }
-                nextCode += "})); }\n";
+                nextCode += "});\n";
                 writer.WriteLine(nextCode);
             }
-            
-            writer.WriteLine("public static string DoEnum(ToTranslate thing) {return(Translator.inst.Translate(thing.ToString()));}");
-            writer.WriteLine("}");
 
-            writer.WriteLine("public enum ToTranslate {");
             string nextEnum = "";
             for (int i = 0; i < noConvert.Count; i++)
             {
-                nextEnum += $"{noConvert[i]}";
+                string toAdd = noConvert[i];
+                writer.WriteLine($"public static string {toAdd}() => Translator.inst.Translate(\"{toAdd}\");");
+                nextEnum += toAdd;
                 if (i < noConvert.Count - 1)
                     nextEnum += ",";
             }
+            writer.WriteLine("}");
+            
+            writer.WriteLine("public enum ToTranslate {");
             writer.WriteLine(nextEnum);
             writer.WriteLine("}");
         }
+
         Debug.Log($"{noConvert.Count} enum lines, {needConvert.Count} converted lines");
         AssetDatabase.Refresh();
     }

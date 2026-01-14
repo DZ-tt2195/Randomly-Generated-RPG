@@ -159,12 +159,12 @@ public class Ability
 
         if (finalCalc > 4 && enemyNumberCap)
         {
-            Log.instance.AddText(AutoTranslate.DoEnum(ToTranslate.Apply_Number_Cap), logged);
+            Log.instance.AddText(Translator.inst.Translate(ToTranslate.Apply_Number_Cap), logged);
             return 4;
         }
         else if (finalCalc < 1 && number > 1)
         {
-            Log.instance.AddText(AutoTranslate.DoEnum(ToTranslate.Apply_Minimum), logged);
+            Log.instance.AddText(Translator.inst.Translate(ToTranslate.Apply_Minimum), logged);
             return 1;
         }
         else
@@ -180,7 +180,7 @@ public class Ability
         if (effectiveness < 0 && ScreenOverlay.instance.ActiveChallenge(ToTranslate.Ineffectives_Fail) && user is PlayerCharacter)
         {
             Log.instance.AddText(AutoTranslate.Apply_Ineffectives_Fail(user.name), logged);
-            TurnManager.instance.CreateVisual(AutoTranslate.DoEnum(ToTranslate.Failed), target.transform.localPosition);
+            TurnManager.instance.CreateVisual(AutoTranslate.Failed(), target.transform.localPosition);
             return 0;
         }
 
@@ -194,12 +194,12 @@ public class Ability
 
         if (finalCalc > 4 && enemyNumberCap)
         {
-            Log.instance.AddText(AutoTranslate.DoEnum(ToTranslate.Apply_Number_Cap), logged);
+            Log.instance.AddText(AutoTranslate.Apply_Number_Cap(), logged);
             return 4;
         }
         else if (finalCalc < 1 && number > 1)
         {
-            Log.instance.AddText(AutoTranslate.DoEnum(ToTranslate.Apply_Minimum), logged);
+            Log.instance.AddText(AutoTranslate.Apply_Minimum(), logged);
             return 1;
         }
         else
@@ -740,7 +740,7 @@ public class Ability
         {
             Ability chosenAbility = hasNoCooldown[Random.Range(0, hasNoCooldown.Count)];
             chosenAbility.currentCooldown += this.data.miscNumber;
-            string answer = AutoTranslate.Apply_Cooldown(target.name, AutoTranslate.DoEnum(chosenAbility.data.abilityName), this.data.miscNumber.ToString());
+            string answer = AutoTranslate.Apply_Cooldown(target.name, Translator.inst.Translate(chosenAbility.data.abilityName), this.data.miscNumber.ToString());
             Log.instance.AddText(answer, logged);
         }
         yield return null;

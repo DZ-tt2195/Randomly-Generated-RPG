@@ -23,7 +23,7 @@ public class SetText : MonoBehaviour
 
     void Translate()
     {
-        textBox.text = KeywordTooltip.instance.EditText(AutoTranslate.DoEnum(key));
+        textBox.text = KeywordTooltip.instance.EditText(Translator.inst.Translate(key));
     }
 
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)

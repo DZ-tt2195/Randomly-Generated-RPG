@@ -61,13 +61,13 @@ public class Log : MonoBehaviour
         targetText += logText;
         allText.text += KeywordTooltip.instance.EditText(targetText) + "\n";
 
+        if (scroll.value <= 0.2f)
+            Invoke(nameof(ScrollDown), 0.1f);
         LayoutRebuilder.ForceRebuildLayoutImmediate(allText.rectTransform);
-        Invoke(nameof(ScrollDown), 0.1f);
     }
 
     void ScrollDown()
     {
-        if (scroll.value <= 0.2f)
-            scroll.value = 0;
+        scroll.value = 0;
     }
 }

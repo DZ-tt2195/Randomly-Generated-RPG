@@ -79,7 +79,7 @@ public class PlayerCharacter : Character
             }
             else
             {
-                string abilityName = AutoTranslate.DoEnum(ability.data.abilityName);
+                string abilityName = Translator.inst.Translate(ability.data.abilityName);
                 switch (target)
                 {
                     case TeamTarget.OnePlayer:

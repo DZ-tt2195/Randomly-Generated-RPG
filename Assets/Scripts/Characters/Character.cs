@@ -74,13 +74,13 @@ public class Character : MonoBehaviour
     public void SetupCharacter(CharacterData characterData, List<AbilityData> listOfAbilityData, Emotion startingEmotion, bool abilitiesBeginWithCooldown)
     {
         data = characterData;
-        this.name = AutoTranslate.DoEnum(characterData.characterName);
+        this.name = Translator.inst.Translate(characterData.characterName);
         nameText.text = this.name;
         editedDescription = KeywordTooltip.instance.EditText(Translator.inst.Translate($"{characterData.characterName}_Text"));
 
         this.baseHealth = data.baseHealth;
         this.currentHealth = this.baseHealth;
-        healthText.text = KeywordTooltip.instance.EditText($"{currentHealth}/{baseHealth}{AutoTranslate.DoEnum(ToTranslate.Health)}");
+        healthText.text = KeywordTooltip.instance.EditText($"{currentHealth}/{baseHealth}{Translator.inst.Translate(ToTranslate.Health)}");
 
         this.myImage.sprite = this.data.sprite;
         AddAbility(GameFiles.inst.FindEnemyAbility(ToTranslate.Skip_Turn), true, false);
@@ -138,8 +138,8 @@ public class Character : MonoBehaviour
 
         if (statEffectDict[StatusEffect.Protected] > 0 && effect < 0)
         {
-            TurnManager.instance.CreateVisual(AutoTranslate.DoEnum(ToTranslate.Blocked), this.transform.localPosition);
-            answer = AutoTranslate.Blocked_Stat_Drop(this.name, effect.ToString(), AutoTranslate.DoEnum(ToTranslate.Max_Health));
+            TurnManager.instance.CreateVisual(AutoTranslate.Blocked(), this.transform.localPosition);
+            answer = AutoTranslate.Blocked_Stat_Drop(this.name, effect.ToString(), AutoTranslate.Max_Health());
             Log.instance.AddText(answer, logged);
             yield break;
         }
@@ -147,20 +147,20 @@ public class Character : MonoBehaviour
         baseHealth += effect;
         if (effect > 0)
         {
-            TurnManager.instance.CreateVisual($"+{effect} {AutoTranslate.DoEnum(ToTranslate.Max_Health)}", this.transform.localPosition);
-            answer = AutoTranslate.Increase_Stat(this.name, effect.ToString(), AutoTranslate.DoEnum(ToTranslate.Max_Health));
+            TurnManager.instance.CreateVisual($"+{effect} {AutoTranslate.Max_Health()}", this.transform.localPosition);
+            answer = AutoTranslate.Increase_Stat(this.name, effect.ToString(), AutoTranslate.Max_Health());
             Log.instance.AddText(answer, logged);
         }
         else
         {
-            TurnManager.instance.CreateVisual($"{effect} {AutoTranslate.DoEnum(ToTranslate.Max_Health)}", this.transform.localPosition);
-            answer = AutoTranslate.Decrease_Stat(this.name, Mathf.Abs(effect).ToString(), AutoTranslate.DoEnum(ToTranslate.Max_Health));
+            TurnManager.instance.CreateVisual($"{effect} {AutoTranslate.Max_Health()}", this.transform.localPosition);
+            answer = AutoTranslate.Decrease_Stat(this.name, Mathf.Abs(effect).ToString(), AutoTranslate.Max_Health());
             Log.instance.AddText(answer, logged);
 
             if (baseHealth < currentHealth)
                 currentHealth = baseHealth;
         }
-        healthText.text = KeywordTooltip.instance.EditText($"{currentHealth}/{baseHealth}{AutoTranslate.DoEnum(ToTranslate.Health)}");
+        healthText.text = KeywordTooltip.instance.EditText($"{currentHealth}/{baseHealth}{AutoTranslate.Health()}");
     }
 
     public IEnumerator ChangeHealth(int change, int logged, Character attacker = null)
@@ -171,15 +171,15 @@ public class Character : MonoBehaviour
         if (change > 0)
         {
             currentHealth = Mathf.Clamp(currentHealth += change, 0, this.baseHealth);
-            TurnManager.instance.CreateVisual($"+{change} {AutoTranslate.DoEnum(ToTranslate.Health)}", this.transform.localPosition);
+            TurnManager.instance.CreateVisual($"+{change} {AutoTranslate.Health()}", this.transform.localPosition);
 
-            answer = AutoTranslate.Increase_Stat(this.name, change.ToString(), AutoTranslate.DoEnum(ToTranslate.Health));
+            answer = AutoTranslate.Increase_Stat(this.name, change.ToString(), AutoTranslate.Health());
             Log.instance.AddText(answer, logged);
         }
         else if (statEffectDict[StatusEffect.Protected] > 0)
         {
-            TurnManager.instance.CreateVisual($"{AutoTranslate.DoEnum(ToTranslate.Blocked)}", this.transform.localPosition);
-            answer = AutoTranslate.Blocked_Stat_Drop(this.name, change.ToString(), AutoTranslate.DoEnum(ToTranslate.Health));
+            TurnManager.instance.CreateVisual($"{AutoTranslate.Blocked()}", this.transform.localPosition);
+            answer = AutoTranslate.Blocked_Stat_Drop(this.name, change.ToString(), AutoTranslate.Health());
             Log.instance.AddText(answer, logged);
         }
         else
@@ -188,15 +188,15 @@ public class Character : MonoBehaviour
                 lastToAttackThis = attacker;
 
             currentHealth -= Mathf.Abs(change);
-            TurnManager.instance.CreateVisual($"{change} {AutoTranslate.DoEnum(ToTranslate.Health)}", this.transform.localPosition);
+            TurnManager.instance.CreateVisual($"{change} {AutoTranslate.Health()}", this.transform.localPosition);
 
-            answer = AutoTranslate.Decrease_Stat(this.name, Mathf.Abs(change).ToString(), AutoTranslate.DoEnum(ToTranslate.Health));
+            answer = AutoTranslate.Decrease_Stat(this.name, Mathf.Abs(change).ToString(), AutoTranslate.Health());
             Log.instance.AddText(answer, logged);
 
             if (currentHealth <= 0)
                 yield return HasDied(logged);
         }
-        healthText.text = KeywordTooltip.instance.EditText($"{currentHealth}/{baseHealth}{AutoTranslate.DoEnum(ToTranslate.Health)}");
+        healthText.text = KeywordTooltip.instance.EditText($"{currentHealth}/{baseHealth}{AutoTranslate.Health()}");
     }
 
     public IEnumerator ChangeStat(Stats stat, int change, int logged)
@@ -206,7 +206,7 @@ public class Character : MonoBehaviour
 
         if (statEffectDict[StatusEffect.Protected] > 0 && change < 0)
         {
-            TurnManager.instance.CreateVisual($"{AutoTranslate.DoEnum(ToTranslate.Blocked)}", this.transform.localPosition);
+            TurnManager.instance.CreateVisual($"{AutoTranslate.Blocked()}", this.transform.localPosition);
             answer = AutoTranslate.Blocked_Stat_Drop(this.name, change.ToString(), Translator.inst.Translate(stat.ToString()));
             Log.instance.AddText(answer, logged);
             yield break;
@@ -442,11 +442,11 @@ public class Character : MonoBehaviour
                 string result = "";
                 if (chosenTarget.Count == 0)
                 {
-                    result = AutoTranslate.Confirm_No_Target(AutoTranslate.DoEnum(chosenAbility.data.abilityName));
+                    result = AutoTranslate.Confirm_No_Target(Translator.inst.Translate(chosenAbility.data.abilityName));
                 }
                 else
                 {
-                    result = AutoTranslate.Confirm_Target(AutoTranslate.DoEnum(chosenAbility.data.abilityName));
+                    result = AutoTranslate.Confirm_Target(Translator.inst.Translate(chosenAbility.data.abilityName));
                     result += " ";
                     result += string.Join(" + ", chosenTarget.Select(target => target.name));
                 }
@@ -512,7 +512,7 @@ public class Character : MonoBehaviour
             if (cooldownIncrease > 0)
             {
                 chosenAbility.currentCooldown = cooldownIncrease;
-                string answer = AutoTranslate.Apply_Cooldown(this.name, AutoTranslate.DoEnum(chosenAbility.data.abilityName), cooldownIncrease.ToString());
+                string answer = AutoTranslate.Apply_Cooldown(this.name, Translator.inst.Translate(chosenAbility.data.abilityName), cooldownIncrease.ToString());
                 Log.instance.AddText(answer, logged);
             }
             if (ScreenOverlay.instance.mode == GameMode.Tutorial && TutorialManager.instance.currentCharacter == this)
@@ -611,14 +611,14 @@ public class Character : MonoBehaviour
         topText.text = "";
         if (CurrentPosition == Position.Dead)
         {
-            topText.text = AutoTranslate.DoEnum(ToTranslate.Dead);
+            topText.text = AutoTranslate.Dead();
         }
         else
         {
             topText.text = $"{Translator.inst.Translate(CurrentEmotion.ToString())}, {Translator.inst.Translate(CurrentPosition.ToString())}\n";
             
-            AddToTopText(CalculatePower(), AutoTranslate.DoEnum(ToTranslate.Power));
-            AddToTopText(CalculateDefense(), AutoTranslate.DoEnum(ToTranslate.Defense));
+            AddToTopText(CalculatePower(), AutoTranslate.Power());
+            AddToTopText(CalculateDefense(), AutoTranslate.Defense());
 
             void AddToTopText(int amount, string text)
             {

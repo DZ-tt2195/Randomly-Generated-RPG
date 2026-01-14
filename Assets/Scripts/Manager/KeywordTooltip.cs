@@ -37,12 +37,12 @@ public class KeywordTooltip : MonoBehaviour
     {
         foreach (KeywordHover hover in linkedKeywords)
         {
-            hover.translated = AutoTranslate.DoEnum((ToTranslate)Enum.Parse(typeof(ToTranslate), hover.original));
+            hover.translated = Translator.inst.Translate(hover.original);
             hover.description = Translator.inst.Translate($"{hover.original}_Text");
         }
         foreach (KeywordHover hover in spriteKeywords)
         {
-            hover.translated = AutoTranslate.DoEnum((ToTranslate)Enum.Parse(typeof(ToTranslate), hover.original));
+            hover.translated = Translator.inst.Translate(hover.original);
             hover.description = Translator.inst.Translate($"{hover.original}_Text");
         }
         foreach (KeywordHover hover in spriteKeywordStatuses)

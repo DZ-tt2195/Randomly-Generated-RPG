@@ -79,9 +79,6 @@ public class EncyclopediaManager : MonoBehaviour
             abilityDictionary[data.controller].Add(nextBox);
         }
 
-        foreach (var key in abilityDictionary.Keys.ToList())
-            abilityDictionary[key] = abilityDictionary[key].OrderBy(box => box.ability.data.abilityName).ToList();
-
         enemyInput.onValueChanged.AddListener(ChangeEnemyInput);
         tierDropdown.dropdown.onValueChanged.AddListener(ChangeTierDropdown);
         positionDropdown.dropdown.onValueChanged.AddListener(ChangeTierDropdown);
@@ -182,7 +179,8 @@ public class EncyclopediaManager : MonoBehaviour
         for (int i = storeAbilityBoxes.childCount-1; i >= 0; i--)
             storeAbilityBoxes.GetChild(i).SetParent(null);
 
-        foreach (AbilityBox box in abilityDictionary[(ToTranslate)Enum.Parse(typeof(ToTranslate), characterDropdown.GetOriginal())])
+        ToTranslate playerToFind = (ToTranslate)Enum.Parse(typeof(ToTranslate), characterDropdown.GetOriginal());
+        foreach (AbilityBox box in abilityDictionary[playerToFind])
         {
             bool matches = (CompareStrings(abilityInput.text, box.ability.data.abilityName.ToString()) || CompareStrings(abilityInput.text, box.ability.editedDescription))
                 && CompareTypes(searchType1, box.ability.data)

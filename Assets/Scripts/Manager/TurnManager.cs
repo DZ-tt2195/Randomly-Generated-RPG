@@ -122,7 +122,7 @@ public class TurnManager : MonoBehaviour
 
             if (currentWave >= 2 && ScreenOverlay.instance.ActiveCheat(ToTranslate.New_Abilities))
             {
-                Log.instance.AddText(AutoTranslate.DoEnum(ToTranslate.Gain_New_Abilities));
+                Log.instance.AddText(AutoTranslate.Gain_New_Abilities());
                 foreach (Character player in listOfPlayers)
                 {
                     for (int i = player.listOfRandomAbilities.Count - 1; i >= 0; i--)
@@ -132,7 +132,7 @@ public class TurnManager : MonoBehaviour
                     foreach (AbilityData data in newAbilties)
                         player.AddAbility(data, false, false);
                 }
-                Log.instance.AddText("");
+                Log.instance.AddText(AutoTranslate.Blank());
             }
 
             foreach (int nextTier in listOfWaveSetup[currentWave - 1].enemyDifficultySpawn)
@@ -276,7 +276,7 @@ public class TurnManager : MonoBehaviour
         quitButton.gameObject.SetActive(true);
 
         Log.instance.AddText("");
-        Log.instance.AddText(AutoTranslate.DoEnum(message));
+        Log.instance.AddText(Translator.inst.Translate(message));
 
         int number = (win) ? currentWave : currentWave - 1;
         Log.instance.AddText(AutoTranslate.Waves_Survived(number.ToString()));
@@ -369,7 +369,7 @@ public class TurnManager : MonoBehaviour
                 }
             }
 
-            nextEnemy.name = AutoTranslate.DoEnum(dataFile.characterName);
+            nextEnemy.name = Translator.inst.Translate(dataFile.characterName);
             Log.instance.AddText(AutoTranslate.Enter_Fight(nextEnemy.name), logged);
             
             nextEnemy.SetupCharacter(dataFile, GameFiles.inst.ConvertToAbilityData(dataFile.listOfAbilities, false), startingEmotion, true);

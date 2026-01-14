@@ -49,7 +49,7 @@ public class AbilityForcer : MonoBehaviour
                 int seed = day.Year * 10000 + day.Month * 100 + day.Day;
                 dailyRNG = new System.Random(seed);
 
-                Log.instance.AddText(AutoTranslate.DoEnum(ToTranslate.Daily_Challenge), 0);
+                Log.instance.AddText(Translator.inst.Translate(ToTranslate.Daily_Challenge), 0);
                 Log.instance.AddText(AutoTranslate.Current_Date(Translator.inst.Translate($"Month_{day.Month}"), day.Day.ToString(), day.Year.ToString()), 1);
                 Confirmed();
             }
@@ -57,9 +57,9 @@ public class AbilityForcer : MonoBehaviour
             {
                 confirmButton.onClick.AddListener(Confirmed);
                 foreach (ToTranslate cheat in ScreenOverlay.instance.listOfCheats)
-                    Log.instance.AddText($"<color=#00FF00>{AutoTranslate.DoEnum(ToTranslate.Cheat)}: {AutoTranslate.DoEnum(cheat)}</color>", 1);
+                    Log.instance.AddText($"<color=#00FF00>{Translator.inst.Translate(ToTranslate.Cheat)}: {Translator.inst.Translate(cheat)}</color>", 1);
                 foreach (ToTranslate challenge in ScreenOverlay.instance.listOfChallenges)
-                    Log.instance.AddText($"<color=#FF0000>{AutoTranslate.DoEnum(ToTranslate.Challenge)}: {AutoTranslate.DoEnum(challenge)}</color>", 1);
+                    Log.instance.AddText($"<color=#FF0000>{Translator.inst.Translate(ToTranslate.Challenge)}: {Translator.inst.Translate(challenge)}</color>", 1);
 
                 abilityDictionary.Add(ToTranslate.Wizard, new());
                 abilityDictionary.Add(ToTranslate.Knight, new());
@@ -79,7 +79,7 @@ public class AbilityForcer : MonoBehaviour
                     abilityDictionary[key] = abilityDictionary[key].OrderBy(box => box.ability.data.abilityName).ToList();
             }
 
-            Log.instance.AddText(AutoTranslate.DoEnum(ToTranslate.Blank));
+            Log.instance.AddText(Translator.inst.Translate(ToTranslate.Blank));
         }
     }
 
