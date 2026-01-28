@@ -1,6 +1,6 @@
 Title	RANDOMLY GENERATED
 Author_Credit	by Thomas Tang (DZ)
-Last_Update	Last Updated: Jan 13, 2026
+Last_Update	Last Updated: Feb 08, 2026
 Language	Language
 Translator_Credit	Original Language
 Loading	Loading...
@@ -743,3 +743,5 @@ Update_4	Jan 07, 2026
 Update_4_Text	Fixed an issue with the encyclopedia, and added Page and Crow to it \nFixed bugs in ability forcer \nKnight's Immobilize and Spider's Trapped add 1 more turn of locked \nSwitched emotions/names for Angel's Retreat and Enrage \nFixed Drone's Alarm
 Update_5	Jan 13, 2026
 Update_5_Text	Fixed log autoscroll \nFixed encyclopedia putting abilities in not-alphabetical order
+Update_6	Feb 08, 2026
+Update_6_Text	Fixed some translation issues \nAdded fonts for some languages \nFixed minor bugs in encyclopedia

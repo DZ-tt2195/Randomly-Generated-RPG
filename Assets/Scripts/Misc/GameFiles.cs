@@ -48,11 +48,11 @@ public class GameFiles : MonoBehaviour
     void Awake()
     {
         inst = this;
-        listOfPlayerAbilities = ReadTSVFile<AbilityData>(Resources.Load<TextAsset>("Player Ability Data").text);
-        listOfEnemyAbilities = ReadTSVFile<AbilityData>(Resources.Load<TextAsset>("Enemy Ability Data").text);
-        listOfPlayers = ReadTSVFile<CharacterData>(Resources.Load<TextAsset>("Player Data").text);
+        listOfPlayerAbilities = ReadTSVFile<AbilityData>(Resources.Load<TextAsset>("Data/Player Ability Data").text);
+        listOfEnemyAbilities = ReadTSVFile<AbilityData>(Resources.Load<TextAsset>("Data/Enemy Ability Data").text);
+        listOfPlayers = ReadTSVFile<CharacterData>(Resources.Load<TextAsset>("Data/Player Data").text);
 
-        List<CharacterData> allEnemies = ReadTSVFile<CharacterData>(Resources.Load<TextAsset>("Enemy Data").text);
+        List<CharacterData> allEnemies = ReadTSVFile<CharacterData>(Resources.Load<TextAsset>("Data/Enemy Data").text);
         listOfEnemies = new Dictionary<int, List<CharacterData>>
         {
             { 0, new List<CharacterData>() },

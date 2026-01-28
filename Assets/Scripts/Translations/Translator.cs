@@ -32,7 +32,7 @@ public class Translator : MonoBehaviour
 
     private void Start()
     {
-        TextAsset[] languageFiles = Resources.LoadAll<TextAsset>("TSVs");
+        TextAsset[] languageFiles = Resources.LoadAll<TextAsset>("Languages");
         foreach (TextAsset language in languageFiles)
         {
             string fileName = ConvertName(language);
@@ -99,8 +99,8 @@ public class Translator : MonoBehaviour
         {
             try
             {
-                answer = keyTranslate[("English")][key];
                 //Debug.Log($"{key} failed to translate in {PlayerPrefs.GetString("Language")}");
+                answer = keyTranslate[("English")][key];
             }
             catch
             {
@@ -112,11 +112,10 @@ public class Translator : MonoBehaviour
         if (toReplace != null)
         {
             foreach ((string one, string two) in toReplace)
-                answer = answer.Replace($"${one}$", two);
+                answer = answer.Replace($"${one}$", Translate(two));
         }
         return answer;
     }
-
     public Dictionary<string, Dictionary<string, string>> GetTranslations()
     {
         return keyTranslate;

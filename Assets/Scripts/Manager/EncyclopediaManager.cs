@@ -7,7 +7,7 @@ using System;
 using System.Linq;
 using Unity.Collections;
 
-public enum TierSearch { Any, Star1, Star2, Star3 };
+public enum TierSearch { Any, Star0, Star1, Star2, Star3 };
 public class EncyclopediaManager : MonoBehaviour
 {
 
@@ -125,6 +125,7 @@ public class EncyclopediaManager : MonoBehaviour
         return setting switch
         {
             TierSearch.Any => true,
+            TierSearch.Star0 => difficulty == 0,
             TierSearch.Star1 => difficulty == 1,
             TierSearch.Star2 => difficulty == 2,
             TierSearch.Star3 => difficulty == 3,
@@ -220,6 +221,9 @@ public class EncyclopediaManager : MonoBehaviour
             case "Any":
                 searchTier = TierSearch.Any;
                 break;
+            case "0":
+                searchTier = TierSearch.Star0;
+                break;
             case "1":
                 searchTier = TierSearch.Star1;
                 break;
@@ -256,8 +260,6 @@ public class EncyclopediaManager : MonoBehaviour
                 nextEnemy.transform.SetParent(null);
             }
         }
-        storeEnemyBoxes.transform.localPosition = new Vector3(0, -1050, 0);
-        storeEnemyBoxes.sizeDelta = new Vector3(2560, Math.Max(875, 350 * Mathf.Ceil(storeEnemyBoxes.childCount / 5f)));
     }
 
     #endregion

@@ -13,11 +13,11 @@ public static class FileManager
     public static void DownloadTSV()
     {
         Debug.Log($"starting downloads");
-        EditorCoroutineUtility.StartCoroutineOwnerless(Download("TSVs/0. English", "1HO4JtV9ukU0UMJfZV7zG5bhExNQqzZwoU3bPh1OfpPk", "1585553982"));
-        EditorCoroutineUtility.StartCoroutineOwnerless(Download("Player Data", "1HO4JtV9ukU0UMJfZV7zG5bhExNQqzZwoU3bPh1OfpPk", "2114962038"));
-        EditorCoroutineUtility.StartCoroutineOwnerless(Download("Player Ability Data", "1HO4JtV9ukU0UMJfZV7zG5bhExNQqzZwoU3bPh1OfpPk", "1268954754"));
-        EditorCoroutineUtility.StartCoroutineOwnerless(Download("Enemy Data", "1HO4JtV9ukU0UMJfZV7zG5bhExNQqzZwoU3bPh1OfpPk", "567473665"));
-        EditorCoroutineUtility.StartCoroutineOwnerless(Download("Enemy Ability Data", "1HO4JtV9ukU0UMJfZV7zG5bhExNQqzZwoU3bPh1OfpPk", "949940889"));
+        EditorCoroutineUtility.StartCoroutineOwnerless(Download("Languages/0. English", "1HO4JtV9ukU0UMJfZV7zG5bhExNQqzZwoU3bPh1OfpPk", "1585553982"));
+        EditorCoroutineUtility.StartCoroutineOwnerless(Download("Data/Player Data", "1HO4JtV9ukU0UMJfZV7zG5bhExNQqzZwoU3bPh1OfpPk", "2114962038"));
+        EditorCoroutineUtility.StartCoroutineOwnerless(Download("Data/Player Ability Data", "1HO4JtV9ukU0UMJfZV7zG5bhExNQqzZwoU3bPh1OfpPk", "1268954754"));
+        EditorCoroutineUtility.StartCoroutineOwnerless(Download("Data/Enemy Data", "1HO4JtV9ukU0UMJfZV7zG5bhExNQqzZwoU3bPh1OfpPk", "567473665"));
+        EditorCoroutineUtility.StartCoroutineOwnerless(Download("Data/Enemy Ability Data", "1HO4JtV9ukU0UMJfZV7zG5bhExNQqzZwoU3bPh1OfpPk", "949940889"));
     }
     static IEnumerator Download(string fileName, string spreadsheetID, string sheetGID)
     {
@@ -41,7 +41,7 @@ public static class FileManager
     [MenuItem("Tools/Make enums and functions")]
     public static void EnumsAndFunctions()
     {
-        TextAsset englishFile = Resources.Load<TextAsset>("TSVs/0. English");
+        TextAsset englishFile = Resources.Load<TextAsset>("Languages/0. English");
         Dictionary<string, string> newDictionary = Translator.ReadLanguageFile(englishFile.text);
         
         List<string> noConvert = new();
@@ -51,7 +51,7 @@ public static class FileManager
         {
             string key = KVP.Key;
             string value = KVP.Value;
-            
+
             Regex regex = new(@"\$(.*?)\$");
             List<string> allMatches = new();
             foreach (Match m in regex.Matches(value).Cast<Match>())
@@ -61,19 +61,24 @@ public static class FileManager
                     allMatches.Add(match);
             }
 
-            if (allMatches.Count == 0)
-                noConvert.Add(key);
-            else
-                needConvert.Add((key, allMatches));
+                if (allMatches.Count == 0)
+                    noConvert.Add(key);
+                else
+                    needConvert.Add((key, allMatches));
         }
 
         using (StreamWriter writer = new StreamWriter("Assets/Scripts/Translations/AutoTranslate.cs"))
         {
-            writer.WriteLine("public static class AutoTranslate \n{ \n");
+            writer.WriteLine("public static class AutoTranslate \n{");
 
+            string needSubEnum = "";
             for (int i = 0; i < needConvert.Count; i++)
             {
                 (string key, List<string> replace) = needConvert[i];
+                needSubEnum += key;
+                if (i < noConvert.Count - 1)
+                    needSubEnum += ",";
+
                 string nextCode = $"public static string {key} (";
                 for (int j = 0; j < replace.Count; j++)
                 {
@@ -91,24 +96,23 @@ public static class FileManager
                     if (j < replace.Count - 1)
                         nextCode += ",";
                 }
-                nextCode += "});\n";
+                nextCode += "});";
                 writer.WriteLine(nextCode);
             }
 
-            string nextEnum = "";
+            string toTranslateEnum = "";
             for (int i = 0; i < noConvert.Count; i++)
             {
                 string toAdd = noConvert[i];
                 writer.WriteLine($"public static string {toAdd}() => Translator.inst.Translate(\"{toAdd}\");");
-                nextEnum += toAdd;
+                toTranslateEnum += toAdd;
                 if (i < noConvert.Count - 1)
-                    nextEnum += ",";
+                    toTranslateEnum += ",";
             }
             writer.WriteLine("}");
             
-            writer.WriteLine("public enum ToTranslate {");
-            writer.WriteLine(nextEnum);
-            writer.WriteLine("}");
+            writer.WriteLine("public enum ToTranslate {" + toTranslateEnum + "}");
+            //writer.WriteLine("public enum NeedSub {" + needSubEnum + "}");
         }
 
         Debug.Log($"{noConvert.Count} enum lines, {needConvert.Count} converted lines");
