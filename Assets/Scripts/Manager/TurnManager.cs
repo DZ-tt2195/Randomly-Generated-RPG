@@ -30,7 +30,7 @@ public class TurnManager : MonoBehaviour
 
 #region Setup
 
-    public static TurnManager instance;
+    public static TurnManager inst;
     [Foldout("Prefabs", true)]
         [SerializeField] GameObject characterPrefab;
         [SerializeField] PointsVisual pointsVisual;
@@ -50,7 +50,7 @@ public class TurnManager : MonoBehaviour
         [SerializeField] Button resignButton;
 
     [Foldout("Character lists", true)]
-        System.Random dailyRNG;
+        [ReadOnly] public System.Random dailyRNG;
         [ReadOnly] public List<Character> listOfPlayers = new();
         [ReadOnly] public List<Character> listOfEnemies = new();
         [ReadOnly] public List<Character> listOfDead = new();
@@ -66,20 +66,27 @@ public class TurnManager : MonoBehaviour
         [ReadOnly] public Character targetedEnemy { get { return _targetedEnemy; } set { ResetTargetedEnemy(value); } }
         public int confirmChoice { get; private set; }
         Stopwatch gameTimer;
+    [Foldout("Translate", true)]
+        [SerializeField] TMP_Text leave;
+        [SerializeField] TMP_Text quit;
 
     private void Awake()
     {
-        instance = this;
+        inst = this;
         isBattling = true;
         waveText.transform.parent.localPosition = new Vector3(0, 1200, 0);
 
-        resignButton.onClick.AddListener(() => GameFinished(ToTranslate.Quit_Fight, false));
+        leave.text = AutoTranslate.Title_Screen();
+        quit.text = AutoTranslate.Quit_Game();
+        resignButton.onClick.AddListener(() => GameFinished(AutoTranslate.Quit_Fight(), false));
 
         if (ScreenOverlay.instance.mode == GameMode.Daily)
         {
             DateTime day = DateTime.UtcNow.Date;
             int seed = day.Year * 10000 + day.Month * 100 + day.Day;
             dailyRNG = new System.Random(seed);
+            Log.instance.AddText(Translator.inst.Translate(AutoTranslate.Daily_Challenge()), 0);
+            Log.instance.AddText(AutoTranslate.Current_Date(Translator.inst.Translate($"Month_{day.Month}"), day.Day.ToString(), day.Year.ToString()), 1);
         }
 
         for (int i = 0; i < 5; i++)
@@ -108,7 +115,7 @@ public class TurnManager : MonoBehaviour
 
         if (currentWave > listOfWaveSetup.Count)
         {
-            GameFinished(ToTranslate.Game_Won, true);
+            GameFinished(AutoTranslate.Game_Won(), true);
         }
         else if (ScreenOverlay.instance.mode == GameMode.Tutorial)
         {
@@ -120,7 +127,7 @@ public class TurnManager : MonoBehaviour
             yield return NewAnimation(true);
             Log.instance.AddText(AutoTranslate.Wave(currentWave.ToString(), listOfWaveSetup.Count.ToString()));
 
-            if (currentWave >= 2 && ScreenOverlay.instance.ActiveCheat(ToTranslate.New_Abilities))
+            if (currentWave >= 2 && ScreenOverlay.instance.ActiveCheat(AutoTranslate.New_Abilities()))
             {
                 Log.instance.AddText(AutoTranslate.Gain_New_Abilities());
                 foreach (Character player in listOfPlayers)
@@ -136,23 +143,15 @@ public class TurnManager : MonoBehaviour
             }
 
             foreach (int nextTier in listOfWaveSetup[currentWave - 1].enemyDifficultySpawn)
-                yield return MakeNewEnemy(GameFiles.inst.listOfEnemies[nextTier]);
-            if (currentWave <= 4 && ScreenOverlay.instance.ActiveChallenge(ToTranslate.More_Enemies))
-                yield return MakeNewEnemy(GameFiles.inst.listOfEnemies[1]);
+                yield return MakeNewEnemy(GameFiles.inst.RandomEnemy(nextTier, dailyRNG));
 
-            IEnumerator MakeNewEnemy(List<CharacterData> fromList)
+            if (currentWave <= 4 && ScreenOverlay.instance.ActiveChallenge(AutoTranslate.More_Enemies()))
+                yield return MakeNewEnemy(GameFiles.inst.RandomEnemy(1, dailyRNG));
+
+            IEnumerator MakeNewEnemy(CharacterData newEnemy)
             {
                 yield return WaitTime();
-                if (dailyRNG != null)
-                {
-                    CharacterData randomEnemy = fromList[dailyRNG.Next(0, fromList.Count)];
-                    CreateEnemy(randomEnemy, (Emotion)dailyRNG.Next(1, 5), 0);
-                }
-                else
-                {
-                    CharacterData randomEnemy = fromList[UnityEngine.Random.Range(0, fromList.Count)];
-                    CreateEnemy(randomEnemy, (Emotion)UnityEngine.Random.Range(1, 5), 0);
-                }
+                CreateEnemy(newEnemy, Character.RandomEmotion(dailyRNG), 0);
             }
 
             StartCoroutine(NewRound(false));
@@ -197,14 +196,14 @@ public class TurnManager : MonoBehaviour
 
             if (CheckLost())
             {
-                GameFinished(ToTranslate.Game_Lost, false);
+                GameFinished(AutoTranslate.Game_Lost(), false);
                 yield break;
             }
             else if (listOfEnemies.Count == 0)
             {
                 if (ScreenOverlay.instance.mode != GameMode.Tutorial)
                 {
-                    Log.instance.AddText($"");
+                    Log.instance.AddText(AutoTranslate.Blank());
                     StartCoroutine(NewWave());
                 }
                 yield break;
@@ -257,7 +256,7 @@ public class TurnManager : MonoBehaviour
         waveText.transform.parent.localPosition = finalPos;
     }
 
-    public void GameFinished(ToTranslate message, bool win)
+    public void GameFinished(string message, bool win)
     {
         try
         {
@@ -373,9 +372,9 @@ public class TurnManager : MonoBehaviour
             Log.instance.AddText(AutoTranslate.Enter_Fight(nextEnemy.name), logged);
             
             nextEnemy.SetupCharacter(dataFile, GameFiles.inst.ConvertToAbilityData(dataFile.listOfAbilities, false), startingEmotion, true);
-            if (ScreenOverlay.instance.ActiveCheat(ToTranslate.Weaker_Enemies))
+            if (ScreenOverlay.instance.ActiveCheat(AutoTranslate.Weaker_Enemies()))
                 StartCoroutine(nextEnemy.ChangeMaxHealth(-2, logged + 1));
-            if (ScreenOverlay.instance.ActiveChallenge(ToTranslate.Extra_Enemy_Turns))
+            if (ScreenOverlay.instance.ActiveChallenge(AutoTranslate.Extra_Enemy_Turns()))
                 StartCoroutine(nextEnemy.ChangeEffect(StatusEffect.Extra, 1, logged+1));
         }
     }

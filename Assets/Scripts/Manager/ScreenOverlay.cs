@@ -52,8 +52,8 @@ public class ScreenOverlay : MonoBehaviour
         [SerializeField] float transitionTime;
 
     [Foldout("Cheats and Challenges", true)]
-        [ReadOnly] public List<ToTranslate> listOfCheats = new();
-        [ReadOnly] public List<ToTranslate> listOfChallenges = new();
+        [ReadOnly] public List<string> listOfCheats = new();
+        [ReadOnly] public List<string> listOfChallenges = new();
 
     #endregion
 
@@ -165,7 +165,7 @@ public class ScreenOverlay : MonoBehaviour
         {
             Ability nextAbility = character.listOfRandomAbilities[i];
             listOfBoxes[nextBox].gameObject.SetActive(true);
-            listOfBoxes[nextBox].ReceiveAbility(TurnManager.instance != null && nextAbility.CanPlay(), nextAbility);
+            listOfBoxes[nextBox].ReceiveAbility(TurnManager.inst != null && nextAbility.CanPlay(), nextAbility);
             nextBox++;
         }
         for (int i = nextBox; i < listOfBoxes.Count; i++)
@@ -239,12 +239,12 @@ public class ScreenOverlay : MonoBehaviour
 
 #region Cheats/Challenges
 
-    public bool ActiveCheat(ToTranslate cheat)
+    public bool ActiveCheat(string cheat)
     {
         return (mode == GameMode.Main && listOfCheats.Contains(cheat));
     }
 
-    public bool ActiveChallenge(ToTranslate challenge)
+    public bool ActiveChallenge(string challenge)
     {
         return (mode == GameMode.Main && listOfChallenges.Contains(challenge));
     }

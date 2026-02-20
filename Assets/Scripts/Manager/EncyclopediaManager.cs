@@ -18,7 +18,7 @@ public class EncyclopediaManager : MonoBehaviour
         [SerializeField] List<GameObject> masterGameObject = new();
 
     [Foldout("Ability Search", true)]
-        Dictionary<ToTranslate, List<AbilityBox>> abilityDictionary = new();
+        Dictionary<string, List<AbilityBox>> abilityDictionary = new();
         [SerializeField] AbilityBox abilityBoxPrefab;
         [SerializeField] RectTransform storeAbilityBoxes;
         [SerializeField] TMP_InputField abilityInput;
@@ -35,6 +35,20 @@ public class EncyclopediaManager : MonoBehaviour
         [SerializeField] TranslateDropdown tierDropdown;
         [SerializeField] TranslateDropdown positionDropdown;
         [SerializeField] Scrollbar enemyScroll;
+
+    [Foldout("Translate", true)]
+        [SerializeField] TMP_Text close;
+        [SerializeField] TMP_Text abilities;
+        [SerializeField] TMP_Text enemies;
+        [SerializeField] TMP_Text searchAbilities;
+        [SerializeField] TMP_Text type1;
+        [SerializeField] TMP_Text type2;
+        [SerializeField] TMP_Text player;
+        [SerializeField] TMP_Text cooldown;
+        [SerializeField] TMP_Text rightClick;
+        [SerializeField] TMP_Text searchEnemies;
+        [SerializeField] TMP_Text stars;
+        [SerializeField] TMP_Text position;
 
     void ChangeMode(int n)
     {
@@ -55,6 +69,19 @@ public class EncyclopediaManager : MonoBehaviour
 
     private void Start()
     {
+        close.text = AutoTranslate.Close();
+        abilities.text = AutoTranslate.Abilities();
+        enemies.text = AutoTranslate.Enemies();
+        searchAbilities.text = AutoTranslate.Search_Abilities();
+        type1.text = AutoTranslate.Type_1();
+        type2.text = AutoTranslate.Type_2();
+        player.text = AutoTranslate.Player();
+        cooldown.text = KeywordTooltip.instance.EditText(AutoTranslate.Cooldown());
+        rightClick.text = AutoTranslate.Right_Click_Reminder();
+        searchEnemies.text = AutoTranslate.Search_Enemies();
+        stars.text = KeywordTooltip.instance.EditText(AutoTranslate.Star());
+        position.text = AutoTranslate.Default_Position();
+
         for (int i = 0; i<currentSearch.Count; i++)
         {
             int k = i;
@@ -67,28 +94,28 @@ public class EncyclopediaManager : MonoBehaviour
         type2Dropdown.dropdown.onValueChanged.AddListener(ChangeAbilityDropdown);
         cooldownDropdown.dropdown.onValueChanged.AddListener(ChangeAbilityDropdown);
 
-        abilityDictionary.Add(ToTranslate.Knight, new());
-        abilityDictionary.Add(ToTranslate.Wizard, new());
-        abilityDictionary.Add(ToTranslate.Angel, new());
+        abilityDictionary.Add(nameof(AutoTranslate.Wizard), new());
+        abilityDictionary.Add(nameof(AutoTranslate.Knight), new());
+        abilityDictionary.Add(nameof(AutoTranslate.Angel), new());
 
-        foreach (AbilityData data in GameFiles.inst.listOfPlayerAbilities)
+        foreach (var KVP in GameFiles.inst.listOfPlayerAbilities)
         {
-            Ability nextAbility = new Ability(null, data, false);
+            Ability nextAbility = new Ability(null, KVP.Value, false);
             AbilityBox nextBox = Instantiate(abilityBoxPrefab, null);
             nextBox.ReceiveAbility(true, nextAbility);
-            abilityDictionary[data.controller].Add(nextBox);
+            abilityDictionary[KVP.Value.controller].Add(nextBox);
         }
 
         enemyInput.onValueChanged.AddListener(ChangeEnemyInput);
         tierDropdown.dropdown.onValueChanged.AddListener(ChangeTierDropdown);
         positionDropdown.dropdown.onValueChanged.AddListener(ChangeTierDropdown);
 
-        foreach (var KVP in GameFiles.inst.listOfEnemies)
+        foreach (var KVP1 in GameFiles.inst.listOfEnemies)
         {
-            foreach (CharacterData data in GameFiles.inst.listOfEnemies[KVP.Key])
+            foreach (var KVP2 in GameFiles.inst.listOfEnemies[KVP1.Key])
             {
                 Character nextEnemy = Instantiate(characterPrefab).AddComponent<Character>();
-                nextEnemy.SetupCharacter(data, GameFiles.inst.ConvertToAbilityData(data.listOfAbilities, false), Emotion.Neutral, false);
+                nextEnemy.SetupCharacter(KVP2.Value, GameFiles.inst.ConvertToAbilityData(KVP2.Value.listOfAbilities, false), Emotion.Neutral, false);
                 listOfEnemyBoxes.Add(nextEnemy);
                 foreach (Transform child in nextEnemy.transform)
                 {
@@ -180,8 +207,7 @@ public class EncyclopediaManager : MonoBehaviour
         for (int i = storeAbilityBoxes.childCount-1; i >= 0; i--)
             storeAbilityBoxes.GetChild(i).SetParent(null);
 
-        ToTranslate playerToFind = (ToTranslate)Enum.Parse(typeof(ToTranslate), characterDropdown.GetOriginal());
-        foreach (AbilityBox box in abilityDictionary[playerToFind])
+        foreach (AbilityBox box in abilityDictionary[characterDropdown.GetOriginal()])
         {
             bool matches = (CompareStrings(abilityInput.text, box.ability.data.abilityName.ToString()) || CompareStrings(abilityInput.text, box.ability.editedDescription))
                 && CompareTypes(searchType1, box.ability.data)

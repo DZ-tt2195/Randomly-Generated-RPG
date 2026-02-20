@@ -1,8 +1,11 @@
 Title	RANDOMLY GENERATED
+Blank	
 Author_Credit	by Thomas Tang (DZ)
 Last_Update	Last Updated: Feb 08, 2026
 Language	Language
 Translator_Credit	Original Language
+Upload_Translation	Upload Translation
+Download_English	Download English
 Loading	Loading...
 Play_Game	Play Game
 Update_History	Update History
@@ -58,14 +61,11 @@ Increase_Cooldown	$Num$ of $Target$'s Abilities gain $MiscStat$ Cooldown.
 Decrease_Cooldown	$Num$ of $Target$'s Abilities lose $MiscStat$ Cooldown.
 Apply_Cooldown	$Target$'s $Ability$ is placed on $MiscStat$ Cooldown.
 Timer	Timer
+Counting_Down	Timer: $Num$
 Out_of_Time	$This$ runs out of time. (Player Timer)
 Gain_New_Abilities	Players have new Abilities.
 Special_Thanks	Special Thanks
-Seth_Royston_Thanks	Seth Royston for showing me how to use Google Sheets with Unity
-Liam_Cribbs_Thanks	Liam Cribbs for showing me how to auto-download Google Sheets contents
-Flan_Falacci_Thanks	Flan Falacci for thinking that this game deserved to be at Project Studio
-Inspiration_Thanks	This game was inspired by OMORI (by OMOCAT), and Epic Battle Fantasy V (by KupoGames)
-Playtest_Thursday_Thanks	Everyone who tried this game at Playtest Thursday (somehow you all liked it)
+All_Thanks	Seth Royston for showing me how to use Google Sheets with Unity \nLiam Cribbs for showing me how to auto-download Google Sheets contents \nFlan Falacci for thinking that this game deserved to be at Project Studio \nThis game was inspired by OMORI (by OMOCAT), and Epic Battle Fantasy V (by KupoGames) \nEveryone who tried this game at Playtest Thursday (somehow you all liked it)
 Settings	Settings
 Emotions_Guide	Emotions Guide
 Close_Settings	Press any key to close
@@ -82,11 +82,11 @@ Dead	Dead
 Neutral	Neutral
 Neutral_Text	Default Emotion.
 Sad	Sad
-Sad_Text	Effective against Happy. Gains 2 Health when it attacks; loses 2 Health otherwise.
+Sad_Text	 +2 Power against Happy, -2 Power against Angry.
 Happy	Happy
-Happy_Text	Effective against Angry. Gets an extra Ability if they don't attack; all Abilities have 1 more turn of Cooldown.
+Happy_Text	 +2 Power against Angry, -2 Power against Sad.
 Angry	Angry
-Angry_Text	Effective against Sad. +1 Power and +1 Defense; becomes Stunned when killing or healing someone to full Health.
+Angry_Text	 +2 Power against Sad, -2 Power against Happy.
 Grounded	Grounded
 Grounded_Text	Can't be targeted by abilities that only affect Elevated targets.
 Elevated	Elevated
@@ -108,7 +108,7 @@ Blocked_Emotion	$This$ is Locked and can't change Emotion.
 Blocked_Position	$This$ is Locked and can't change Position.
 Stunned	Stunned
 Stunned_Text	Skips their next turn.
-Miss_Turn	$This$ is Stunned and misses a turn.
+Miss_Turn	$This$ is Stunned and skips a turn.
 Targeted	Targeted
 Targeted_Text	All single-target Abilities must target them if possible.
 Extra	Extra Ability
@@ -118,9 +118,7 @@ Use_Extra_Ability	$This$ uses another Ability.
 Star	Star
 Star_Text	More Star = Stronger Enemy type.
 Customize_Players	Customize Players
-Customize_Description	Choose what Abilities and Emotions your players will have. Anything left blank will be randomized!
-Choose_Emotion	Choose Emotion
-Next_in_Line	Next in Line
+Customize_Description	Choose Player Abilities and Rules. Anything left blank will be randomized!
 Defeat_Waves	Defeat $Num$ waves of enemies.
 Title_Screen	Title Screen
 Quit_Game	Quit
@@ -147,33 +145,24 @@ Choose_An_Enemy	Choose an enemy to target ($Ability$).
 Confirm_No_Target	Use $Ability$?
 Confirm_Target	Use $Ability$ on:
 Tutorial	Tutorial
-Tutorial_10	This is a turn-based RPG where you're given random Abilities to fight against random Enemies.
+Tutorial_10	This is a turn-based RPG where your Players are given random Abilities to fight against random Enemies.
 Tutorial_20	You always have the same 3 party members. Right click on the Knight to see what they do.
 Tutorial_30	Here's your first Enemy. Use the Knight's Ability against them.
-Tutorial_40	The Ability you used has a Cooldown, so you can't use it again this round. Instead use the other Ability
+Tutorial_40	The Ability you used has 1 turn of cooldown (Cooldown), so you can't use it again this round. Instead use a different Ability.
 Tutorial_50	You killed your first Enemy! Now you may have noticed your Knight is Angry.
-Tutorial_51	Everyone begins with a random Emotion. Emotions are effective against other Emotions, and have their own side effects.
-Tutorial_52	Happy beats Angry, which beats Sad, which beats Happy. Neutral is neutral against everything else.
-Tutorial_53	Your Knight is Angry, which means they get +1 Power (attacks and healing abilities are stronger by 1 point) and +1 Defense (take 1 less damage).
-Tutorial_54	However, if they kill someone (like right now), or heal someone to full Health, they'll get Stunned and miss their next turn.
+Tutorial_51	Everyone begins with a random Emotion. Each Emotion is effective against a different Emotions.
+Tutorial_52	To see which Emotions are effective against which, open the Emotion Guide (usually it's at the bottom right of the screen).
 Tutorial_60	Here's your 2nd party member. Right click on the Angel to read what they do.
-Tutorial_70	This Page is Happy. Happy is super effective against Angry (will deal an extra 2 damage), which puts your Knight at a disadvantage.
-Tutorial_71	Normally Knight would take their turn before Angel would. But they're Stunned right now.
-Tutorial_72	So instead, use the Angel’s Ability to heal the Knight.
-Tutorial_80	Your Angel is Happy, which means they can use another Ability when they don't attack, but all their Abilities have 1 more turn of Cooldown.
-Tutorial_81	Emotions also apply to Enemies. If you right click the Page, you'll see that their Ability got placed on Cooldown.
-Tutorial_82	Your Angel didn’t attack, so they now can use another Ability. However, Assist is on Cooldown.
-Tutorial_83	Instead, you can change the Page’s Emotion to Sad. That way, your Angry Knight will gain the advantage.
+Tutorial_70	This Page is Happy. Since Happy is super effective against Angry, this puts your Knight at a disadvantage.
+Tutorial_71	But you can have the Angel make the Page Sad. That way, your Angry Knight will gain the advantage.
 Tutorial_90	Everyone is either Grounded or Elevated. Your Knight always starts Grounded, and Angel always starts Elevated.
 Tutorial_91	One of the Knight's big weaknesses is that they have no way to attack Elevated Enemies.
 Tutorial_100	And now, your 3rd party member. Right click on the Wizard to read what they do.
 Tutorial_110	Your Wizard has an Ability that forces all Elevated Enemies to be Grounded. Use Stalactites against the 2 Crows.
-Tutorial_120	Your Wizard is Sad, which means every time they attack, they gain 2 Health. But if they don't attack, they lose 2 Health.
-Tutorial_121	For your convenience, attacking Abilities are colored red, healing Abilities are colored green, the others are colored blue.
-Tutorial_130	You can always remind yourself of what each Emotion does by opening the Emotion Guide (usually it's at the bottom right of the screen).
-Tutorial_140	Anyways, now that all the Enemies are Grounded, your Knight is capable of hitting them, so finish them off.
-Tutorial_150	You’ve completed the tutorial. In the main game, your 3 party members get 6 random Abilities.
-Tutorial_151	To win, you'll have fight off 5 waves of random Enemies, with more powerful ones later on. Glhf!
+Tutorial_120	Now that all the Enemies are Grounded, your Knight is capable of hitting them, so finish them off.
+Tutorial_121	Note that for your convenience, attacking Abilities are colored red, healing Abilities are colored green, the others are colored blue.
+Tutorial_130	You’ve completed the tutorial. In the main game, the 3 Players get 6 random Abilities, and each fight has different Rules.
+Tutorial_131	To win, you'll have fight off 5 waves of random Enemies, with the Enemies getting stronger later on. Glhf!
 Tutorial_Finished	Tutorial finished.
 Next	Next
 Encyclopedia	Encyclopedia
@@ -733,10 +722,6 @@ Update_1	Dec 12, 2025
 Update_1_Text	Changed Royalty's Procession to affect Power\nFixed a tag for an ability
 Update_2	Dec 18, 2025
 Update_2_Text	Knight's Twirl and Wizard's Shockwave: has no Cooldown\nAngel's Team Up: 2 Health to 3 Health\nWizard's Lightning Storm and Flood: 3 damage to 4 damage, dropped “lightning”\nArcher's Volley: has 1 turn of cooldown\nFixed some UI bugs with Defense stat
-Upload_Translation	Upload Translation
-Download_English	Download English
-Blank	
-Counting_Down	Timer: $Num$
 Update_3	Dec 28, 2025
 Update_3_Text	New translation features - you can download the English translation file and upload your own translation
 Update_4	Jan 07, 2026
@@ -745,3 +730,5 @@ Update_5	Jan 13, 2026
 Update_5_Text	Fixed log autoscroll \nFixed encyclopedia putting abilities in not-alphabetical order
 Update_6	Feb 08, 2026
 Update_6_Text	Fixed some translation issues \nAdded fonts for some languages \nFixed minor bugs in encyclopedia
+Update_7	Later Date
+Update_7_Text	Emotions no longer have extra rules \nChanged many abilities

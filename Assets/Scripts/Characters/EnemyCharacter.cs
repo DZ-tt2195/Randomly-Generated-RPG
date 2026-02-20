@@ -47,9 +47,10 @@ public class EnemyCharacter : Character
                     chosenAbility = miscAbilities[0];
                 else if (miscAbilities.Count == 0)
                     chosenAbility = attackingAbilities[0];
+                    /*
                 else if (this.CurrentEmotion == Emotion.Happy && !extraAbility)
-                    chosenAbility = miscAbilities[0];
-                else if (data.aiTargeting == CharacterTargeting.ChooseAttack || this.CurrentEmotion == Emotion.Angry || this.CurrentEmotion == Emotion.Sad)
+                    chosenAbility = miscAbilities[0];*/
+                else if (data.aiTargeting == CharacterTargeting.ChooseAttack /*|| this.CurrentEmotion == Emotion.Angry || this.CurrentEmotion == Emotion.Sad*/)
                     chosenAbility = attackingAbilities[0];
                 else
                     chosenAbility = Random.Range(0, 2) == 1 ? miscAbilities[0] : attackingAbilities[0];
@@ -59,13 +60,13 @@ public class EnemyCharacter : Character
 
     protected override IEnumerator ChooseTarget(Ability ability, TeamTarget target, int index)
     {
-        if (!ability.data.abilityName.Equals(AutoTranslate.Skip_Turn()))
+        if (!ability.data.abilityName.Equals(nameof(AutoTranslate.Skip_Turn)))
         {
             ability.listOfTargets[index] = ability.listOfTargets[index].Shuffle();
 
             if (ability.singleTarget.Contains(target))
             {
-                Character targeted = TurnManager.instance.CheckForTargeted(ability.listOfTargets[index]);
+                Character targeted = TurnManager.inst.CheckForTargeted(ability.listOfTargets[index]);
 
                 if (targeted != null)
                 {

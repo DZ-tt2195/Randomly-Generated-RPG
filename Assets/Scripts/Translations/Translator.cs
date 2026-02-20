@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 using MyBox;
 using System;
 using System.Reflection;
-
+using TMPro;
 
 public class Translator : MonoBehaviour
 {
@@ -15,6 +15,16 @@ public class Translator : MonoBehaviour
     public static Translator inst;
     Dictionary<string, Dictionary<string, string>> keyTranslate = new();
     [Scene][SerializeField] string toLoad;
+    [SerializeField] TMP_Text settingsText;
+    [SerializeField] TMP_Text emotionGuide;
+    [SerializeField] TMP_Text pressToClose;
+    [SerializeField] TMP_Text animationTime;
+    [SerializeField] TMP_Text confirmDecisions;
+    [SerializeField] TMP_Text displayTooltip;
+    [SerializeField] TMP_Text angry;
+    [SerializeField] TMP_Text happy;
+    [SerializeField] TMP_Text sad;
+    [SerializeField] TMP_Text neutral;
 
     void Awake()
     {
@@ -29,7 +39,6 @@ public class Translator : MonoBehaviour
             Destroy(this.gameObject);
         }
     }
-
     private void Start()
     {
         TextAsset[] languageFiles = Resources.LoadAll<TextAsset>("Languages");
@@ -54,11 +63,8 @@ public class Translator : MonoBehaviour
 
         if (!PlayerPrefs.HasKey("English") || !keyTranslate.ContainsKey(PlayerPrefs.GetString("Language")))
             PlayerPrefs.SetString("Language", "English");
-
-        KeywordTooltip.instance.SwitchLanguage();
-        ScreenOverlay.instance.UnloadObjects(SceneManager.GetActiveScene().name, toLoad, GameMode.Other);
+        TranslateScreen();
     }
-
     public static Dictionary<string, string> ReadLanguageFile(string textToConvert)
     {
         string[] splitUp = textToConvert.Split('\n');
@@ -82,12 +88,6 @@ public class Translator : MonoBehaviour
     {
         return keyTranslate["English"].ContainsKey(key);
     }
-
-    public string Translate(ToTranslate key)
-    {
-        return Translate(key.ToString());
-    }
-
     public string Translate(string key, List<(string, string)> toReplace = null)
     {
         string answer;
@@ -120,7 +120,6 @@ public class Translator : MonoBehaviour
     {
         return keyTranslate;
     }
-
     public void ChangeLanguage(string newLanguage, Dictionary<string, string> addedTranslation)
     {
         if (addedTranslation != null)
@@ -130,9 +129,24 @@ public class Translator : MonoBehaviour
         if (!PlayerPrefs.GetString("Language").Equals(newLanguage))
         {
             PlayerPrefs.SetString("Language", newLanguage);
-            KeywordTooltip.instance.SwitchLanguage();
-            ScreenOverlay.instance.UnloadObjects(SceneManager.GetActiveScene().name, toLoad, GameMode.Other);
+            TranslateScreen();
         }
+    }
+    void TranslateScreen()
+    {
+        KeywordTooltip.instance.SwitchLanguage();
+        settingsText.text = AutoTranslate.Settings();
+        emotionGuide.text = AutoTranslate.Emotions_Guide();
+        pressToClose.text = AutoTranslate.Close_Settings();
+        animationTime.text = AutoTranslate.Animation_Time();
+        confirmDecisions.text = AutoTranslate.Confirm_Decisions();
+        displayTooltip.text = AutoTranslate.Display_Tooltip();
+        angry.text = AutoTranslate.Angry();
+        happy.text = AutoTranslate.Happy();
+        sad.text = AutoTranslate.Sad();
+        neutral.text = AutoTranslate.Neutral();
+
+        ScreenOverlay.instance.UnloadObjects(SceneManager.GetActiveScene().name, toLoad, GameMode.Other);
     }
 
 #endregion

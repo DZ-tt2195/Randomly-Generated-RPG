@@ -7,16 +7,16 @@ using UnityEngine.UI;
 
 public class AbilityForcer : MonoBehaviour
 {
-    System.Random dailyRNG;
     [SerializeField] AbilityBox abilityBoxPrefab;
     [SerializeField] GameObject playerPrefab;
-    Dictionary<ToTranslate, List<AbilityBox>> abilityDictionary = new();
+    Dictionary<string, List<AbilityBox>> abilityDictionary = new();
     [SerializeField] Button confirmButton;
     [SerializeField] Transform blanks;
-    [SerializeField] List<TranslateDropdown> emotionDropdowns = new();
     List<AbilityBox> chosenAbilities = new();
-
     AbilityBox clicked;
+    [SerializeField] TMP_Text header;
+    [SerializeField] TMP_Text description;
+    [SerializeField] TMP_Text confirm;
 
     void Start()
     {
@@ -27,13 +27,13 @@ public class AbilityForcer : MonoBehaviour
         else
         {
             Log.instance.AddText(AutoTranslate.Defeat_Waves("5"));
-            SearchBoxes(ToTranslate.Wizard);
-            SearchBoxes(ToTranslate.Knight);
-            SearchBoxes(ToTranslate.Angel);
+            SearchBoxes(AutoTranslate.Wizard());
+            SearchBoxes(AutoTranslate.Knight());
+            SearchBoxes(AutoTranslate.Angel());
 
-            void SearchBoxes(ToTranslate toFind)
+            void SearchBoxes(string toFind)
             {
-                Transform search = this.transform.Find(toFind.ToString());
+                Transform search = this.transform.Find(toFind);
                 foreach (Transform child in search)
                 {
                     AbilityBox box = child.GetComponent<AbilityBox>();
@@ -45,45 +45,42 @@ public class AbilityForcer : MonoBehaviour
 
             if (ScreenOverlay.instance.mode == GameMode.Daily)
             {
-                DateTime day = DateTime.UtcNow.Date;
-                int seed = day.Year * 10000 + day.Month * 100 + day.Day;
-                dailyRNG = new System.Random(seed);
-
-                Log.instance.AddText(Translator.inst.Translate(ToTranslate.Daily_Challenge), 0);
-                Log.instance.AddText(AutoTranslate.Current_Date(Translator.inst.Translate($"Month_{day.Month}"), day.Day.ToString(), day.Year.ToString()), 1);
                 Confirmed();
             }
             else if (ScreenOverlay.instance.mode == GameMode.Main)
             {
+                header.text = AutoTranslate.Customize_Players();
+                description.text = AutoTranslate.Customize_Description();
+                confirm.text = AutoTranslate.Confirm();
+
                 confirmButton.onClick.AddListener(Confirmed);
-                foreach (ToTranslate cheat in ScreenOverlay.instance.listOfCheats)
-                    Log.instance.AddText($"<color=#00FF00>{Translator.inst.Translate(ToTranslate.Cheat)}: {Translator.inst.Translate(cheat)}</color>", 1);
-                foreach (ToTranslate challenge in ScreenOverlay.instance.listOfChallenges)
-                    Log.instance.AddText($"<color=#FF0000>{Translator.inst.Translate(ToTranslate.Challenge)}: {Translator.inst.Translate(challenge)}</color>", 1);
+                foreach (string cheat in ScreenOverlay.instance.listOfCheats)
+                    Log.instance.AddText($"<color=#00FF00>{Translator.inst.Translate(AutoTranslate.Cheat())}: {Translator.inst.Translate(cheat)}</color>", 1);
+                foreach (string challenge in ScreenOverlay.instance.listOfChallenges)
+                    Log.instance.AddText($"<color=#FF0000>{Translator.inst.Translate(AutoTranslate.Challenge())}: {Translator.inst.Translate(challenge)}</color>", 1);
 
-                abilityDictionary.Add(ToTranslate.Wizard, new());
-                abilityDictionary.Add(ToTranslate.Knight, new());
-                abilityDictionary.Add(ToTranslate.Angel, new());
+                abilityDictionary.Add(nameof(AutoTranslate.Wizard), new());
+                abilityDictionary.Add(nameof(AutoTranslate.Knight), new());
+                abilityDictionary.Add(nameof(AutoTranslate.Angel), new());
 
-                foreach (AbilityData data in GameFiles.inst.listOfPlayerAbilities)
+                foreach (var KVP in GameFiles.inst.listOfPlayerAbilities)
                 {
-                    Ability nextAbility = new Ability(null, data, false);
+                    Ability nextAbility = new Ability(null, KVP.Value, false);
                     AbilityBox nextBox = Instantiate(abilityBoxPrefab, null);
                     nextBox.ReceiveAbility(true, nextAbility);
 
                     nextBox.button.onClick.AddListener(() => SendAbility(nextAbility));
-                    abilityDictionary[data.controller].Add(nextBox);
+                    abilityDictionary[KVP.Value.controller].Add(nextBox);
                 }
-
                 foreach (var key in abilityDictionary.Keys.ToList())
                     abilityDictionary[key] = abilityDictionary[key].OrderBy(box => box.ability.data.abilityName).ToList();
             }
 
-            Log.instance.AddText(Translator.inst.Translate(ToTranslate.Blank));
+            Log.instance.AddText(AutoTranslate.Blank());
         }
     }
 
-    void Summon(AbilityBox clickedBox, ToTranslate toFind)
+    void Summon(AbilityBox clickedBox, string toFind)
     {
         clicked = clickedBox;
         clickedBox.ReceiveAbility(true, null);
@@ -104,44 +101,25 @@ public class AbilityForcer : MonoBehaviour
 
     void Confirmed()
     {
-        for (int i = 0; i < GameFiles.inst.listOfPlayers.Count; i++)
+        int counter = 0;
+        foreach (var KVP in GameFiles.inst.listOfPlayers)
         {
             PlayerCharacter nextCharacter = Instantiate(playerPrefab).AddComponent<PlayerCharacter>();
-
-            Emotion startingEmotion = Emotion.Dead;
-            switch (emotionDropdowns[i].GetOriginal())
-            {
-                case "Random":
-                    int randomValue = dailyRNG != null ? dailyRNG.Next(1, 5) : UnityEngine.Random.Range(1, 5);
-                    startingEmotion = (Emotion)randomValue;
-                    break;
-                case "Neutral":
-                    startingEmotion = Emotion.Neutral;
-                    break;
-                case "Happy":
-                    startingEmotion = Emotion.Happy;
-                    break;
-                case "Angry":
-                    startingEmotion = Emotion.Angry;
-                    break;
-                case "Sad":
-                    startingEmotion = Emotion.Sad;
-                    break;
-            }
-
             List<AbilityData> abilitiesForPlayer = new();
             for (int j = 0; j<6; j++)
             {
-                AbilityBox nextBox = chosenAbilities[i * 6 + j];
+                AbilityBox nextBox = chosenAbilities[counter * 6 + j];
                 if (nextBox.ability != null && !abilitiesForPlayer.Contains(nextBox.ability.data))
                     abilitiesForPlayer.Add(nextBox.ability.data);
             }
-            abilitiesForPlayer = GameFiles.inst.CompletePlayerAbilities(abilitiesForPlayer, GameFiles.inst.ConvertToAbilityData(GameFiles.inst.listOfPlayers[i].listOfAbilities, true), dailyRNG);
+            abilitiesForPlayer = GameFiles.inst.CompletePlayerAbilities(abilitiesForPlayer, GameFiles.inst.ConvertToAbilityData(KVP.Value.listOfAbilities, true), TurnManager.inst.dailyRNG);
 
-            nextCharacter.SetupCharacter(GameFiles.inst.listOfPlayers[i], abilitiesForPlayer, startingEmotion, false);
-            TurnManager.instance.AddPlayer(nextCharacter);
+            nextCharacter.SetupCharacter(KVP.Value, abilitiesForPlayer, Character.RandomEmotion(TurnManager.inst.dailyRNG), false);
+            TurnManager.inst.AddPlayer(nextCharacter);
+            counter++;
         }
-        TurnManager.instance.StartCoroutine(TurnManager.instance.NewWave());
+
+        TurnManager.inst.StartCoroutine(TurnManager.inst.NewWave());
         Destroy(this.gameObject);
     }
 }

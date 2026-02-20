@@ -9,14 +9,14 @@ Knight	Immobilize	Deal $Num$ damage to a Grounded Enemy. They become Locked for 
 Knight	Impale	Deal $Num$ damage to a Grounded Enemy. They becomes Stunned for $MiscStat$ turn.	OneEnemy	TargetIsGrounded	TargetAttack/TargetBecomeStunned	2	4				1	Attack
 Knight	Intimidate	This becomes Angry, and another Player becomes Sad.	Self-OtherPlayer	None-None	TargetBecomeAngry-TargetBecomeSad	0						EmotionPlayer
 Knight	Joust	Deal $Num$ damage to a Grounded Enemy. Then this loses $PowerStat$ Power.	OneEnemy-Self	TargetIsGrounded-None	TargetAttack-TargetLosePower	0	4		1			Attack
-Knight	Knock_Down	Deal $Num$ damage to a Grounded Enemy. Then they lose $DefenseStat$ Defense.	OneEnemy	TargetIsGrounded	TargetAttack/TargetLoseDefense	1	5			1		Attack/StatEnemy
+Knight	Knock_Down	Deal $Num$ damage to a Grounded Enemy. Then they lose $DefenseStat$ Defense.	OneEnemy	TargetIsGrounded	TargetAttack/TargetLoseDefense	1	4			1		Attack/StatEnemy
 Knight	Meditate	A Player becomes Neutral, Protected, and Locked for $MiscStat$ turn.	OnePlayer	None	TargetBecomeNeutral/TargetBecomeProtected/TargetBecomeLocked	1					1	EmotionPlayer
 Knight	Mirror	Deal $Num$ damage to a Grounded Enemy with the same Emotion as this.	OneEnemy	TargetIsGrounded/TargetSameEmotion	TargetAttack	0	4					Attack
 Knight	Mock	A Grounded Enemy becomes Angry. Then deal $Num$ damage to them.	OneEnemy	TargetIsGrounded	TargetBecomeAngry/TargetAttack	0	3					Attack/EmotionEnemy
 Knight	Neutralize	Deal $Num$ damage to a Grounded Enemy. Then they become Neutral.	OneEnemy	TargetIsGrounded	TargetAttack/TargetBecomeNeutral	0	3					Attack/EmotionEnemy
 Knight	Redirect	Another Player gains $DefenseStat$ Defense and becomes Targeted for $MiscStat$ turns.	OtherPlayer	None	TargetGainDefense/TargetBecomeTargeted	1				1	2	StatPlayer
 Knight	Steal	An Enemy becomes Angry. All Players gain $DefenseStat$ Defense.	OneEnemy-AllPlayers	None-None	TargetBecomeAngry-TargetGainDefense	1				1		EmotionEnemy/StatPlayer
-Knight	Strike	This gains $DefenseStat$ Defense. Then deal $Num$ damage to a Grounded Enemy.	Self-OneEnemy	None-TargetIsGrounded	TargetGainDefense-TargetAttack	1	2			1		Attack/StatPlayer
+Knight	Strike	This gains $DefenseStat$ Defense. Then deal $Num$ damage to a Grounded Enemy.	Self-OneEnemy	None-TargetIsGrounded	TargetGainDefense-TargetAttack	2	4			1		Attack/StatPlayer
 Knight	Surprise	A Grounded Enemy becomes Happy. Then deal $Num$ damage to it.	OneEnemy	TargetIsGrounded	TargetBecomeHappy/TargetAttack	0	3					Attack/EmotionEnemy
 Knight	Twirl	This becomes Happy. Then deals $Num$ damage to a Grounded Enemy.	Self-OneEnemy	None-TargetIsGrounded	TargetBecomeHappy-TargetAttack	0	3					Attack/EmotionPlayer
 Knight	Upset	A Grounded Enemy becomes Sad and loses $DefenseStat$ Defense.	OneEnemy	TargetIsGrounded	TargetBecomeSad/TargetLoseDefense	1				1		EmotionEnemy/StatEnemy

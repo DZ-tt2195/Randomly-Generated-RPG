@@ -154,17 +154,17 @@ public class Ability
 
     int CalculateHealing(Character user, int number, int logged)
     {
-        bool enemyNumberCap = self is EnemyCharacter && ScreenOverlay.instance.ActiveCheat(ToTranslate.Number_Cap);
+        bool enemyNumberCap = self is EnemyCharacter && ScreenOverlay.instance.ActiveCheat(AutoTranslate.Number_Cap());
         int finalCalc = number + user.CalculatePower();
 
         if (finalCalc > 4 && enemyNumberCap)
         {
-            Log.instance.AddText(Translator.inst.Translate(ToTranslate.Apply_Number_Cap), logged);
+            Log.instance.AddText(Translator.inst.Translate(AutoTranslate.Apply_Number_Cap()), logged);
             return 4;
         }
         else if (finalCalc < 1 && number > 1)
         {
-            Log.instance.AddText(Translator.inst.Translate(ToTranslate.Apply_Minimum), logged);
+            Log.instance.AddText(Translator.inst.Translate(AutoTranslate.Apply_Minimum()), logged);
             return 1;
         }
         else
@@ -177,14 +177,14 @@ public class Ability
     {
         int effectiveness = Effectiveness(user, target);
 
-        if (effectiveness < 0 && ScreenOverlay.instance.ActiveChallenge(ToTranslate.Ineffectives_Fail) && user is PlayerCharacter)
+        if (effectiveness < 0 && ScreenOverlay.instance.ActiveChallenge(AutoTranslate.Ineffectives_Fail()) && user is PlayerCharacter)
         {
             Log.instance.AddText(AutoTranslate.Apply_Ineffectives_Fail(user.name), logged);
-            TurnManager.instance.CreateVisual(AutoTranslate.Failed(), target.transform.localPosition);
+            TurnManager.inst.CreateVisual(AutoTranslate.Failed(), target.transform.localPosition);
             return 0;
         }
 
-        bool enemyNumberCap = self is EnemyCharacter && ScreenOverlay.instance.ActiveCheat(ToTranslate.Number_Cap);
+        bool enemyNumberCap = self is EnemyCharacter && ScreenOverlay.instance.ActiveCheat(AutoTranslate.Number_Cap());
         int finalCalc = number + effectiveness + user.CalculatePower() - target.CalculateDefense();
 
         if (effectiveness > 0)
@@ -214,7 +214,7 @@ public class Ability
 
     public bool CanPlay()
     {
-        if (data.abilityName.Equals(ToTranslate.Revive) && ScreenOverlay.instance.ActiveChallenge(ToTranslate.No_Revives))
+        if (data.abilityName.Equals(AutoTranslate.Revive()) && ScreenOverlay.instance.ActiveChallenge(AutoTranslate.No_Revives()))
             return false;
         if (currentCooldown > 0)
             return false;
@@ -225,7 +225,7 @@ public class Ability
         {
             string[] methodsInStrings = data.playCondition[i].Split('/');
             if (methodsInStrings[0].Equals("TargetIsDead"))
-                listOfTargets.Add(TurnManager.instance.listOfDead);
+                listOfTargets.Add(TurnManager.inst.listOfDead);
             else
                 listOfTargets.Add(GetTarget(data.toTarget[i]));
 
@@ -248,7 +248,7 @@ public class Ability
 
     bool CanSummon(int currentIndex)
     {
-        return TurnManager.instance.listOfEnemies.Count < 5;
+        return TurnManager.inst.listOfEnemies.Count < 5;
     }
 
     bool TargetAtMaxHealth(int currentIndex)
@@ -343,14 +343,14 @@ public class Ability
 
     bool TargetIsGrounded(int currentIndex)
     {
-        if (!(self.name.Equals(ToTranslate.Knight) && ScreenOverlay.instance.ActiveCheat(ToTranslate.Knight_Reach)))
+        if (!(self.name.Equals(AutoTranslate.Knight()) && ScreenOverlay.instance.ActiveCheat(AutoTranslate.Knight_Reach())))
             listOfTargets[currentIndex].RemoveAll(target => target.CurrentPosition != Position.Grounded);
         return listOfTargets[currentIndex].Count > 0;
     }
 
     bool AllGrounded(int currentIndex)
     {
-        int numberGrounded = (data.toTarget[currentIndex] == TeamTarget.AllPlayers) ? TurnManager.instance.listOfPlayers.Count + TurnManager.instance.listOfDead.Count : TurnManager.instance.listOfEnemies.Count;
+        int numberGrounded = (data.toTarget[currentIndex] == TeamTarget.AllPlayers) ? TurnManager.inst.listOfPlayers.Count + TurnManager.inst.listOfDead.Count : TurnManager.inst.listOfEnemies.Count;
         listOfTargets[currentIndex].RemoveAll(target => target.CurrentPosition != Position.Grounded);
         return (listOfTargets[currentIndex].Count == numberGrounded);
     }
@@ -363,7 +363,7 @@ public class Ability
 
     bool AllElevated(int currentIndex)
     {
-        int numberGrounded = (data.toTarget[currentIndex] == TeamTarget.AllPlayers) ? TurnManager.instance.listOfPlayers.Count + TurnManager.instance.listOfDead.Count : TurnManager.instance.listOfEnemies.Count;
+        int numberGrounded = (data.toTarget[currentIndex] == TeamTarget.AllPlayers) ? TurnManager.inst.listOfPlayers.Count + TurnManager.inst.listOfDead.Count : TurnManager.inst.listOfEnemies.Count;
         listOfTargets[currentIndex].RemoveAll(target => target.CurrentPosition != Position.Elevated);
         return (listOfTargets[currentIndex].Count == numberGrounded);
     }
@@ -418,12 +418,12 @@ public class Ability
 
     bool NoTargetedPlayer(int currentIndex)
     {
-        return (TurnManager.instance.targetedPlayer == null);
+        return (TurnManager.inst.targetedPlayer == null);
     }
 
     bool NoTargetedEnemy(int currentIndex)
     {
-        return (TurnManager.instance.targetedEnemy == null);
+        return (TurnManager.inst.targetedEnemy == null);
     }
 
     bool LastAttackerExists(int currentIndex)
@@ -486,32 +486,32 @@ public class Ability
                 listOfTargets.Add(this.self);
                 break;
             case TeamTarget.All:
-                foreach (Character foe in TurnManager.instance.listOfEnemies) { listOfTargets.Add(foe); }
-                foreach (Character friend in TurnManager.instance.listOfPlayers) { listOfTargets.Add(friend); }
+                foreach (Character foe in TurnManager.inst.listOfEnemies) { listOfTargets.Add(foe); }
+                foreach (Character friend in TurnManager.inst.listOfPlayers) { listOfTargets.Add(friend); }
                 break;
             case TeamTarget.OnePlayer:
-                foreach (Character friend in TurnManager.instance.listOfPlayers) { listOfTargets.Add(friend); }
+                foreach (Character friend in TurnManager.inst.listOfPlayers) { listOfTargets.Add(friend); }
                 break;
             case TeamTarget.OtherPlayer:
-                foreach (Character friend in TurnManager.instance.listOfPlayers) { if (friend != this.self) listOfTargets.Add(friend); }
+                foreach (Character friend in TurnManager.inst.listOfPlayers) { if (friend != this.self) listOfTargets.Add(friend); }
                 break;
             case TeamTarget.AllPlayers:
-                foreach (Character friend in TurnManager.instance.listOfPlayers) { listOfTargets.Add(friend); }
+                foreach (Character friend in TurnManager.inst.listOfPlayers) { listOfTargets.Add(friend); }
                 break;
             case TeamTarget.AllOtherPlayers:
-                foreach (Character friend in TurnManager.instance.listOfPlayers) { if (friend != this.self) listOfTargets.Add(friend); }
+                foreach (Character friend in TurnManager.inst.listOfPlayers) { if (friend != this.self) listOfTargets.Add(friend); }
                 break;
             case TeamTarget.OneEnemy:
-                foreach (Character foe in TurnManager.instance.listOfEnemies) { listOfTargets.Add(foe); }
+                foreach (Character foe in TurnManager.inst.listOfEnemies) { listOfTargets.Add(foe); }
                 break;
             case TeamTarget.OtherEnemy:
-                foreach (Character foe in TurnManager.instance.listOfEnemies) { if (foe != this.self) listOfTargets.Add(foe); }
+                foreach (Character foe in TurnManager.inst.listOfEnemies) { if (foe != this.self) listOfTargets.Add(foe); }
                 break;
             case TeamTarget.AllEnemies:
-                foreach (Character foe in TurnManager.instance.listOfEnemies) { listOfTargets.Add(foe); }
+                foreach (Character foe in TurnManager.inst.listOfEnemies) { listOfTargets.Add(foe); }
                 break;
             case TeamTarget.AllOtherEnemies:
-                foreach (Character foe in TurnManager.instance.listOfEnemies) { if (foe != this.self) listOfTargets.Add(foe); }
+                foreach (Character foe in TurnManager.inst.listOfEnemies) { if (foe != this.self) listOfTargets.Add(foe); }
                 break;
         }
         return listOfTargets;
@@ -524,7 +524,7 @@ public class Ability
     public IEnumerator ResolveInstructions(string[] listOfMethods, int index, int logged)
     {
         runNextMethod = true;
-        TurnManager.instance.instructions.transform.parent.gameObject.SetActive(false);
+        TurnManager.inst.instructions.transform.parent.gameObject.SetActive(false);
 
         foreach (Character target in listOfTargets[index])
         {
@@ -541,7 +541,7 @@ public class Ability
                 if (target != null && target.currentHealth >= 0)
                     yield return ((IEnumerator)enumeratorDictionary[methodName].Invoke(this, new object[2] { target, logged }));
                 if (!runNextMethod) break;
-                yield return TurnManager.instance.WaitTime();
+                yield return TurnManager.inst.WaitTime();
             }
         }
     }
@@ -625,7 +625,7 @@ public class Ability
 
     IEnumerator TargetRandomEmotion(Character target, int logged)
     {
-        yield return target.ChangeEmotion((Emotion)UnityEngine.Random.Range(1, 5), logged);
+        yield return target.ChangeEmotion(Character.RandomEmotion(null), logged);
     }
 
     IEnumerator TargetGainPower(Character target, int logged)
@@ -703,7 +703,7 @@ public class Ability
             }
         }
 
-        string answer = AutoTranslate.Increase_Cooldown(target.name, total.ToString(), data.miscNumber.ToString());
+        string answer = AutoTranslate.Increase_Cooldown(total.ToString(), target.name, data.miscNumber.ToString());
         Log.instance.AddText(answer, logged);
         yield return null;
     }
@@ -728,7 +728,7 @@ public class Ability
             }
         }
 
-        string answer = AutoTranslate.Decrease_Cooldown(target.name, total.ToString(), data.miscNumber.ToString());
+        string answer = AutoTranslate.Decrease_Cooldown(total.ToString(), target.name, data.miscNumber.ToString());
         Log.instance.AddText(answer, logged);
         yield return null;
     }
@@ -748,15 +748,13 @@ public class Ability
 
     IEnumerator TargetCopy(Character target, int logged)
     {
-        TurnManager.instance.CreateEnemy(target.data, (Emotion)UnityEngine.Random.Range(1, 5), logged);
+        TurnManager.inst.CreateEnemy(target.data, Character.RandomEmotion(null), logged);
         yield return null;
     }
 
     IEnumerator SummonStar(Character target, int logged)
     {
-        List<CharacterData> fromList = GameFiles.inst.listOfEnemies[data.miscNumber];
-        CharacterData randomEnemy = fromList[Random.Range(0, fromList.Count)];
-        TurnManager.instance.CreateEnemy(randomEnemy, (Emotion)Random.Range(1, 5), logged);
+        TurnManager.inst.CreateEnemy(GameFiles.inst.RandomEnemy(data.miscNumber, null), Character.RandomEmotion(null), logged);
         yield return null;
     }
 

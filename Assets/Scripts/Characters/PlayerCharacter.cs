@@ -15,7 +15,7 @@ public class PlayerCharacter : Character
         allAbilities.AddRange(listOfRandomAbilities);
 
         EnableAbilityBoxes();
-        TurnManager.instance.instructions.text = AutoTranslate.Choose_Ability(this.name);
+        TurnManager.inst.instructions.text = AutoTranslate.Choose_Ability(this.name);
 
         yield return WaitForChoice();
         if (choice != -1)
@@ -26,12 +26,12 @@ public class PlayerCharacter : Character
 
     void EnableAbilityBoxes()
     {
-        TurnManager.instance.listOfBoxes[0].transform.parent.gameObject.SetActive(true);
+        TurnManager.inst.listOfBoxes[0].transform.parent.gameObject.SetActive(true);
         int boxesFilled = 0;
 
         for (int i = 0; i<listOfAutoAbilities.Count; i++)
         {
-            AbilityBox box = TurnManager.instance.listOfBoxes[boxesFilled];
+            AbilityBox box = TurnManager.inst.listOfBoxes[boxesFilled];
             box.gameObject.SetActive(true);
             box.ReceiveAbility(listOfAutoAbilities[i].CanPlay(), listOfAutoAbilities[i]);
 
@@ -44,7 +44,7 @@ public class PlayerCharacter : Character
 
         for (int i = 0; i<listOfRandomAbilities.Count; i++)
         {
-            AbilityBox box = TurnManager.instance.listOfBoxes[boxesFilled];
+            AbilityBox box = TurnManager.inst.listOfBoxes[boxesFilled];
             box.gameObject.SetActive(true);
             box.ReceiveAbility(listOfRandomAbilities[i].CanPlay(), listOfRandomAbilities[i]);
 
@@ -55,9 +55,9 @@ public class PlayerCharacter : Character
             boxesFilled++;
         }
 
-        for (int i = boxesFilled; i < TurnManager.instance.listOfBoxes.Count; i++)
+        for (int i = boxesFilled; i < TurnManager.inst.listOfBoxes.Count; i++)
         {
-            AbilityBox box = TurnManager.instance.listOfBoxes[i];
+            AbilityBox box = TurnManager.inst.listOfBoxes[i];
             box.gameObject.SetActive(true);
             box.button.onClick.RemoveAllListeners();
             box.ReceiveAbility(true, null);
@@ -66,15 +66,15 @@ public class PlayerCharacter : Character
 
     protected override IEnumerator ChooseTarget(Ability ability, TeamTarget target, int index)
     {
-        foreach (AbilityBox box in TurnManager.instance.listOfBoxes)
+        foreach (AbilityBox box in TurnManager.inst.listOfBoxes)
             box.gameObject.SetActive(false);
 
         if (ability.singleTarget.Contains(target))
         {
-            Character targeted = TurnManager.instance.CheckForTargeted(ability.listOfTargets[index]);
+            Character targeted = TurnManager.inst.CheckForTargeted(ability.listOfTargets[index]);
             if (targeted != null)
             {
-                TurnManager.instance.instructions.text = AutoTranslate.Must_Choose_Targeted(targeted.name);
+                TurnManager.inst.instructions.text = AutoTranslate.Must_Choose_Targeted(targeted.name);
                 ability.listOfTargets[index] = new List<Character> { targeted };
             }
             else
@@ -83,17 +83,17 @@ public class PlayerCharacter : Character
                 switch (target)
                 {
                     case TeamTarget.OnePlayer:
-                        TurnManager.instance.instructions.text = AutoTranslate.Choose_One_Player(abilityName);
+                        TurnManager.inst.instructions.text = AutoTranslate.Choose_One_Player(abilityName);
                         break;
                     case TeamTarget.OtherPlayer:
-                        TurnManager.instance.instructions.text = AutoTranslate.Choose_Another_Player(abilityName); 
+                        TurnManager.inst.instructions.text = AutoTranslate.Choose_Another_Player(abilityName); 
                         break;
                     case TeamTarget.OneEnemy:
-                        TurnManager.instance.instructions.text = AutoTranslate.Choose_An_Enemy(abilityName); 
+                        TurnManager.inst.instructions.text = AutoTranslate.Choose_An_Enemy(abilityName); 
                         break;
                 }
 
-                TurnManager.instance.DisableCharacterButtons();
+                TurnManager.inst.DisableCharacterButtons();
 
                 for (int i = 0; i < ability.listOfTargets[index].Count; i++)
                 {

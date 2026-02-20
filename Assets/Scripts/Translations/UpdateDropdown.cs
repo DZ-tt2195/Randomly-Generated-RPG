@@ -8,9 +8,11 @@ public class UpdateDropdown : MonoBehaviour
 {
     TMP_Dropdown dropdown;
     [SerializeField] TMP_Text updateText;
+    [SerializeField] TMP_Text updateHistory;
 
     private void Start()
     {
+        updateHistory.text = AutoTranslate.Update_History();
         dropdown = GetComponent<TMP_Dropdown>();
         dropdown.onValueChanged.AddListener(ChangeDropdown);
 

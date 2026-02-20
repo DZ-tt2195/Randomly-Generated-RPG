@@ -10,7 +10,7 @@ public enum CharacterTargeting { None, MostTargets, CameOffCooldown, LastAttacke
 [Serializable]
 public class CharacterData
 {
-    public ToTranslate characterName;
+    public string characterName;
     public int baseHealth;
     public Position startPosition;
     public string listOfAbilities;
@@ -19,12 +19,11 @@ public class CharacterData
     public int difficulty;
     public Sprite sprite;
 }
-
 [Serializable]
 public class AbilityData
 {
-    public ToTranslate controller;
-    public ToTranslate abilityName;
+    public string controller;
+    public string abilityName;
     public string[] instructions;
     public AbilityType[] abilityTypes;
     public string[] playCondition;
@@ -40,10 +39,10 @@ public class AbilityData
 public class GameFiles : MonoBehaviour
 {
     public static GameFiles inst;
-    [Tooltip("store all player ability data")][ReadOnly] public List<AbilityData> listOfPlayerAbilities;
-    [Tooltip("store all enemy ability data")][ReadOnly] public List<AbilityData> listOfEnemyAbilities;
-    [Tooltip("store all player data")][ReadOnly] public List<CharacterData> listOfPlayers = new();
-    [Tooltip("store all enemy data")][ReadOnly] public Dictionary<int, List<CharacterData>> listOfEnemies = new();
+    [Tooltip("store all player ability data")][ReadOnly] public Dictionary<string, AbilityData> listOfPlayerAbilities;
+    [Tooltip("store all enemy ability data")][ReadOnly] public Dictionary<string, AbilityData> listOfEnemyAbilities;
+    [Tooltip("store all player data")][ReadOnly] public Dictionary<string, CharacterData> listOfPlayers = new();
+    [Tooltip("store all enemy data")][ReadOnly] public Dictionary<int, Dictionary<string, CharacterData>> listOfEnemies = new();
 
     void Awake()
     {
@@ -52,19 +51,16 @@ public class GameFiles : MonoBehaviour
         listOfEnemyAbilities = ReadTSVFile<AbilityData>(Resources.Load<TextAsset>("Data/Enemy Ability Data").text);
         listOfPlayers = ReadTSVFile<CharacterData>(Resources.Load<TextAsset>("Data/Player Data").text);
 
-        List<CharacterData> allEnemies = ReadTSVFile<CharacterData>(Resources.Load<TextAsset>("Data/Enemy Data").text);
-        listOfEnemies = new Dictionary<int, List<CharacterData>>
+        Dictionary<string, CharacterData> allEnemies = ReadTSVFile<CharacterData>(Resources.Load<TextAsset>("Data/Enemy Data").text);
+        foreach (var KVP in allEnemies)
         {
-            { 0, new List<CharacterData>() },
-            { 1, new List<CharacterData>() },
-            { 2, new List<CharacterData>() },
-            { 3, new List<CharacterData>() }
-        };
-        foreach (CharacterData data in allEnemies)
-            listOfEnemies[data.difficulty].Add(data);
+            if (!listOfEnemies.ContainsKey(KVP.Value.difficulty))
+                listOfEnemies.Add(KVP.Value.difficulty, new Dictionary<string, CharacterData>());
+            listOfEnemies[KVP.Value.difficulty].Add(KVP.Key, KVP.Value);
+        }
     }
 
-    List<T> ReadTSVFile<T>(string textToConvert) where T : new()
+    Dictionary<string, T> ReadTSVFile<T>(string textToConvert) where T : new()
     {
         string[] splitUp = textToConvert.Split('\n');
         Dictionary<string, int> columnIndex = new();
@@ -73,11 +69,10 @@ public class GameFiles : MonoBehaviour
         for (int i = 0; i<headers.Length; i++)
             columnIndex[headers[i].Trim()] = i;
 
-        List<T> toReturn = new();
+        Dictionary<string, T> toReturn = new();
         for (int i = 1; i<splitUp.Length; i++)
         {
             T nextData = new();
-            toReturn.Add(nextData);
             string[] thisRow = splitUp[i].Split('\t');
 
             foreach (FieldInfo field in typeof(T).GetFields(BindingFlags.Public | BindingFlags.Instance))
@@ -93,8 +88,6 @@ public class GameFiles : MonoBehaviour
                         field.SetValue(nextData, sheetValue);
                     else if (field.FieldType == typeof(AbilityType[]))
                         field.SetValue(nextData, StringToAbilityType(sheetValue));
-                    else if (field.FieldType == typeof(ToTranslate))
-                        field.SetValue(nextData, StringToTranslate(sheetValue));
                     else if (field.FieldType == typeof(Position))
                         field.SetValue(nextData, StringToPosition(sheetValue));
                     else if (field.FieldType == typeof(TeamTarget[]))
@@ -141,11 +134,6 @@ public class GameFiles : MonoBehaviour
                         return toReturn;
                     }
 
-                    ToTranslate StringToTranslate(string line)
-                    {
-                        return (ToTranslate)Enum.Parse(typeof(ToTranslate), line);
-                    }
-
                     CharacterTargeting StringToTargeting(string line)
                     {
                         return (CharacterTargeting)Enum.Parse(typeof(CharacterTargeting), line);
@@ -167,7 +155,10 @@ public class GameFiles : MonoBehaviour
                         field.SetValue(nextData, Resources.Load<Sprite>($"Characters/{thisRow[columnIndex["characterName"]]}"));
                 }
             }
-
+            if (nextData is CharacterData character)
+                toReturn.Add(character.characterName, nextData);
+            else if (nextData is AbilityData ability)
+                toReturn.Add(ability.abilityName, nextData);
         }
         return toReturn;
 
@@ -175,6 +166,18 @@ public class GameFiles : MonoBehaviour
 
 #region Character Files
 
+    public CharacterData RandomEnemy(int difficulty, System.Random dailyRNG)
+    {
+        Dictionary<string, CharacterData> enemyList = listOfEnemies[difficulty];
+        List<string> convertedKeys = enemyList.Keys.ToList();
+        string randomKey = "";
+
+        if (dailyRNG != null)
+            randomKey = convertedKeys[dailyRNG.Next(0, convertedKeys.Count)];
+        else
+            randomKey = convertedKeys[UnityEngine.Random.Range(0, convertedKeys.Count)];
+        return enemyList[randomKey];
+    }
     public List<AbilityData> ConvertToAbilityData(string list, bool player)
     {
         string[] divideIntoNumbers = list.Split(',');
@@ -185,8 +188,7 @@ public class GameFiles : MonoBehaviour
             {
                 try
                 {
-                    ToTranslate converted = (ToTranslate)Enum.Parse(typeof(ToTranslate), divideIntoNumbers[j]);
-                    AbilityData nextData = (player) ? FindPlayerAbility(converted) : FindEnemyAbility(converted);
+                    AbilityData nextData = (player) ? FindPlayerAbility(divideIntoNumbers[j]) : FindEnemyAbility(divideIntoNumbers[j]);
                     splitAbilities.Add(nextData);
                 }
                 catch (NullReferenceException) { continue; }
@@ -195,44 +197,22 @@ public class GameFiles : MonoBehaviour
         }
         return splitAbilities;
     }
-
-    public AbilityData FindPlayerAbility(ToTranslate target)
-    {
-        AbilityData foundData = listOfPlayerAbilities.FirstOrDefault(ability => ability.abilityName == target);
-        if (foundData == null)
-            Debug.LogError($"failed to find player ability: {target}");
-        return foundData;
-    }
-
-    public AbilityData FindEnemyAbility(ToTranslate target)
-    {
-        AbilityData foundData = listOfEnemyAbilities.FirstOrDefault(ability => ability.abilityName == target);
-        if (foundData == null)
-            Debug.LogError($"failed to find enemy ability: {target}");
-        return foundData;
-    }
-
-    public CharacterData FindSpecificEnemy(ToTranslate target, int difficulty)
-    {
-        CharacterData foundData = listOfEnemies[difficulty].FirstOrDefault(character => character.characterName == target);
-        if (foundData == null)
-            Debug.LogError($"failed to find enemy: {target}, {difficulty}");
-        return foundData;
-    }
-
+    public AbilityData FindPlayerAbility(string target) => listOfPlayerAbilities[target];
+    public AbilityData FindEnemyAbility(string target) => listOfEnemyAbilities[target];
+    public CharacterData FindSpecificEnemy(string target, int difficulty) => listOfEnemies[difficulty][target];
     public List<AbilityData> CompletePlayerAbilities(List<AbilityData> forced, List<AbilityData> toChooseFrom, System.Random dailyRNG)
     {
-        ToTranslate playerName = toChooseFrom[0].controller;
+        string playerName = toChooseFrom[0].controller;
         List<AbilityData> newList = new();
         newList.AddRange(forced);
 
-        List<string> toFillOut = playerName switch
-        {
-            ToTranslate.Knight => new() { "Attack", "Attack", "Attack", "Emotion", "Stats", "Emotion" },
-            ToTranslate.Angel => new() { "Heal", "Heal", "Heal", "Position", "Emotion", "Stats" },
-            ToTranslate.Wizard => new() { "Attack", "Attack", "Attack", "Position", "Stats", "Position" },
-            _ => throw new NotImplementedException(),
-        };
+        List<string> toFillOut = new();
+        if (playerName.Equals(AutoTranslate.Knight()))
+            toFillOut = new() { "Attack", "Attack", "Attack", "Emotion", "Stats", "Emotion" };
+        else if (playerName.Equals(AutoTranslate.Angel()))
+            toFillOut = new() { "Heal", "Heal", "Heal", "Position", "Emotion", "Stats" };
+        else if (playerName.Equals(AutoTranslate.Wizard()))
+            toFillOut = new() { "Attack", "Attack", "Attack", "Position", "Stats", "Position" };
 
         foreach (AbilityData data in forced)
             CheckOff(data);

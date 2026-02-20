@@ -27,11 +27,37 @@ public class TitleScreen : MonoBehaviour
     [SerializeField] GameObject cheatChallengeObject;
     List<Toggle> listOfCheats = new();
     List<Toggle> listOfChallenges = new();
+    
+    [Foldout("Translate", true)]
+    [SerializeField] TMP_Text gameName;
+    [SerializeField] TMP_Text author;
+    [SerializeField] TMP_Text lastUpdate;
+    [SerializeField] TMP_Text tutorial;
+    [SerializeField] TMP_Text story;
+    [SerializeField] TMP_Text storyText;
+    [SerializeField] TMP_Text play;
+    [SerializeField] TMP_Text daily;
+    [SerializeField] TMP_Text encyclopedia;
+    [SerializeField] TMP_Text specialThanks;
+    [SerializeField] TMP_Text actualThanks;
 
     #endregion
 
 #region Setup
-
+    void TranslateScreen()
+    {
+        gameName.text = AutoTranslate.Title();
+        author.text = AutoTranslate.Author_Credit();
+        lastUpdate.text = AutoTranslate.Last_Update();
+        tutorial.text = AutoTranslate.Tutorial();
+        story.text = AutoTranslate.Story();
+        storyText.text = AutoTranslate.Story_Text();
+        play.text = AutoTranslate.Play_Game();
+        daily.text = AutoTranslate.Daily_Challenge();
+        encyclopedia.text = AutoTranslate.Encyclopedia();
+        specialThanks.text = AutoTranslate.Special_Thanks();
+        actualThanks.text = AutoTranslate.All_Thanks();
+    }
     void Start()
     {
         if (randomSeed || !Application.isEditor)
@@ -61,6 +87,7 @@ public class TitleScreen : MonoBehaviour
                 InitialToggle(toggle, false);
             }
         }
+        TranslateScreen();
     }
 
     private void Update()
@@ -87,21 +114,20 @@ public class TitleScreen : MonoBehaviour
         SetPref(toggle.isOn, toggle.name, cheat);
     }
 
-    void SetPref(bool isOn, string name, bool cheat)
+    void SetPref(bool isOn, string pref, bool cheat)
     {
         PlayerPrefs.SetInt(name, (isOn) ? 1 : 0);
         PlayerPrefs.Save();
 
-        ToTranslate converted = (ToTranslate)Enum.Parse(typeof(ToTranslate), name);
         if (cheat && isOn)
-            ScreenOverlay.instance.listOfCheats.Add(converted);
+            ScreenOverlay.instance.listOfCheats.Add(pref);
         else if (cheat && !isOn)
-            ScreenOverlay.instance.listOfCheats.Remove(converted);
+            ScreenOverlay.instance.listOfCheats.Remove(pref);
 
         else if (!cheat && isOn)
-            ScreenOverlay.instance.listOfChallenges.Add(converted);
+            ScreenOverlay.instance.listOfChallenges.Add(pref);
         else if (!cheat && !isOn)
-            ScreenOverlay.instance.listOfChallenges.Remove(converted);
+            ScreenOverlay.instance.listOfChallenges.Remove(pref);
     }
 
     public void CheatChallengeMenu()

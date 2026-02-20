@@ -15,8 +15,12 @@ public class UploadedFile
 public class LanguageDropdown : MonoBehaviour
 {
     [SerializeField] TMP_Dropdown dropdown;
+    [SerializeField] TMP_Text languageText;
+    [SerializeField] TMP_Text translatorCredit;
     [SerializeField] Button uploadButton;
+    [SerializeField] TMP_Text uploadText;
     [SerializeField] Button downloadButton;
+    [SerializeField] TMP_Text downloadText;
     [SerializeField] TextAsset toDownload;
 
     void Start()
@@ -24,8 +28,12 @@ public class LanguageDropdown : MonoBehaviour
         uploadButton.gameObject.SetActive(false);
         downloadButton.gameObject.SetActive(false);
 
-        dropdown.onValueChanged.AddListener(ChangeLanguageDropdown);
+        languageText.text = AutoTranslate.Language();
+        translatorCredit.text = AutoTranslate.Translator_Credit();
+        uploadText.text = AutoTranslate.Upload_Translation();
+        downloadText.text = AutoTranslate.Download_English();
 
+        dropdown.onValueChanged.AddListener(ChangeLanguageDropdown);
         List<string> languages = Translator.inst.GetTranslations().Keys.ToList();
         for (int i = 0; i < languages.Count; i++)
         {
