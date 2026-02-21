@@ -4876,8 +4876,6 @@ MonoBehaviour:
   emotionBackground: {fileID: 556872815}
   transitionImage: {fileID: 372563724}
   transitionTime: 0.25
-  listOfCheats: []
-  listOfChallenges: []
 --- !u!114 &1681304444
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5007,7 +5005,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3713695489742377036, guid: a042c107274f74a03a3cafea8b584572, type: 3}
       propertyPath: m_text
-      value: "\u6D4B\u8BD5\u4E2D\u6587\u662F\u5426\u663E\u793A"
+      value: Hi
       objectReference: {fileID: 0}
     - target: {fileID: 3713695489742377036, guid: a042c107274f74a03a3cafea8b584572, type: 3}
       propertyPath: m_fontAsset

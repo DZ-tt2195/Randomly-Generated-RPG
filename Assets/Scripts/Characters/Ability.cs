@@ -152,17 +152,11 @@ public class Ability
         return answer;
     }
 
-    int CalculateHealing(Character user, int number, int logged)
+    int CalculateHealing(Character user, Character target, int number, int logged)
     {
-        bool enemyNumberCap = self is EnemyCharacter && ScreenOverlay.instance.ActiveCheat(AutoTranslate.Number_Cap());
         int finalCalc = number + user.CalculatePower();
 
-        if (finalCalc > 4 && enemyNumberCap)
-        {
-            Log.instance.AddText(Translator.inst.Translate(AutoTranslate.Apply_Number_Cap()), logged);
-            return 4;
-        }
-        else if (finalCalc < 1 && number > 1)
+        if (finalCalc < 1 && number > 1)
         {
             Log.instance.AddText(Translator.inst.Translate(AutoTranslate.Apply_Minimum()), logged);
             return 1;
@@ -176,15 +170,6 @@ public class Ability
     int CalculateDamage(Character user, Character target, int number, int logged)
     {
         int effectiveness = Effectiveness(user, target);
-
-        if (effectiveness < 0 && ScreenOverlay.instance.ActiveChallenge(AutoTranslate.Ineffectives_Fail()) && user is PlayerCharacter)
-        {
-            Log.instance.AddText(AutoTranslate.Apply_Ineffectives_Fail(user.name), logged);
-            TurnManager.inst.CreateVisual(AutoTranslate.Failed(), target.transform.localPosition);
-            return 0;
-        }
-
-        bool enemyNumberCap = self is EnemyCharacter && ScreenOverlay.instance.ActiveCheat(AutoTranslate.Number_Cap());
         int finalCalc = number + effectiveness + user.CalculatePower() - target.CalculateDefense();
 
         if (effectiveness > 0)
@@ -192,12 +177,7 @@ public class Ability
         else if (effectiveness < 0)
             Log.instance.AddText(AutoTranslate.Not_Effective(Mathf.Abs(effectiveness).ToString()), logged);
 
-        if (finalCalc > 4 && enemyNumberCap)
-        {
-            Log.instance.AddText(AutoTranslate.Apply_Number_Cap(), logged);
-            return 4;
-        }
-        else if (finalCalc < 1 && number > 1)
+        if (finalCalc < 1 && number > 1)
         {
             Log.instance.AddText(AutoTranslate.Apply_Minimum(), logged);
             return 1;
@@ -214,8 +194,6 @@ public class Ability
 
     public bool CanPlay()
     {
-        if (data.abilityName.Equals(AutoTranslate.Revive()) && ScreenOverlay.instance.ActiveChallenge(AutoTranslate.No_Revives()))
-            return false;
         if (currentCooldown > 0)
             return false;
 
@@ -343,8 +321,6 @@ public class Ability
 
     bool TargetIsGrounded(int currentIndex)
     {
-        if (!(self.name.Equals(AutoTranslate.Knight()) && ScreenOverlay.instance.ActiveCheat(AutoTranslate.Knight_Reach())))
-            listOfTargets[currentIndex].RemoveAll(target => target.CurrentPosition != Position.Grounded);
         return listOfTargets[currentIndex].Count > 0;
     }
 
@@ -571,14 +547,14 @@ public class Ability
 
     IEnumerator TargetHeal(Character target, int logged)
     {
-        yield return target.ChangeHealth(CalculateHealing(self, data.mainNumber, logged), logged);
+        yield return target.ChangeHealth(CalculateHealing(self, target, data.mainNumber, logged), logged);
         if (target.CalculateHealthPercent() >= 1f)
             fullHeal = true;
     }
 
     IEnumerator TargetHealSec(Character target, int logged)
     {
-        yield return target.ChangeHealth(CalculateHealing(self, data.secondNumber, logged), logged);
+        yield return target.ChangeHealth(CalculateHealing(self, target, data.secondNumber, logged), logged);
         if (target.CalculateHealthPercent() >= 1f)
             fullHeal = true;
     }

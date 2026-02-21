@@ -72,21 +72,6 @@ public class TitleScreen : MonoBehaviour
         UnityEngine.Random.InitState(chosenSeed);
 
         Character.borderColor = 0;
-
-        Toggle[] allToggles = FindObjectsByType<Toggle>(FindObjectsSortMode.None);
-        foreach (Toggle toggle in allToggles)
-        {
-            if (toggle.transform.parent.name.Equals("Cheats"))
-            {
-                listOfCheats.Add(toggle);
-                InitialToggle(toggle, true);
-            }
-            else if (toggle.transform.parent.name.Equals("Challenges"))
-            {
-                listOfChallenges.Add(toggle);
-                InitialToggle(toggle, false);
-            }
-        }
         TranslateScreen();
     }
 
@@ -104,52 +89,6 @@ public class TitleScreen : MonoBehaviour
     }
 
 #endregion
-
-#region Cheats/Challenges
-
-    void InitialToggle(Toggle toggle, bool cheat)
-    {
-        toggle.isOn = PlayerPrefs.HasKey(toggle.name) && PlayerPrefs.GetInt(toggle.name) == 1;
-        toggle.onValueChanged.AddListener((bool isOn) => SetPref(isOn, toggle.name, cheat));
-        SetPref(toggle.isOn, toggle.name, cheat);
-    }
-
-    void SetPref(bool isOn, string pref, bool cheat)
-    {
-        PlayerPrefs.SetInt(name, (isOn) ? 1 : 0);
-        PlayerPrefs.Save();
-
-        if (cheat && isOn)
-            ScreenOverlay.instance.listOfCheats.Add(pref);
-        else if (cheat && !isOn)
-            ScreenOverlay.instance.listOfCheats.Remove(pref);
-
-        else if (!cheat && isOn)
-            ScreenOverlay.instance.listOfChallenges.Add(pref);
-        else if (!cheat && !isOn)
-            ScreenOverlay.instance.listOfChallenges.Remove(pref);
-    }
-
-    public void CheatChallengeMenu()
-    {
-        cheatChallengeObject.SetActive(!cheatChallengeObject.activeSelf);
-    }
-
-    public void ClearAll()
-    {
-        foreach (Toggle cheat in listOfCheats)
-        {
-            cheat.isOn = false;
-            SetPref(false, cheat.name, true);
-        }
-        foreach (Toggle challenge in listOfChallenges)
-        {
-            challenge.isOn = false;
-            SetPref(false, challenge.name, false);
-        }
-    }
-
-    #endregion
 
 #region Misc
 

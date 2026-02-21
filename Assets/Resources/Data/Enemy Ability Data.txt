@@ -1,13 +1,13 @@
 controller	abilityName	description	toTarget	playCondition	instructions	baseCooldown	mainNumber	secondNumber	powerStat	defenseStat	miscNumber	abilityTypes
 Blank	Revive	Bring back a dead Player with $Num$ Health and a random Emotion.	OtherPlayer	TargetIsDead	TargetRevive	1	10					Healing
 Blank	Skip_Turn	Do nothing.	Self	None	None	0						Misc
-Archer	Quick_Shot	An Elevated Player becomes Angry. Then deal $Num$ damage to them.	OnePlayer	TargetIsElevated	TargetBecomeAngry/TargetAttack	0	3					Attack/EmotionPlayer
+Archer	Quick_Shot	An Elevated Player becomes Angry. Then deal $Num$ damage to them.	OnePlayer	TargetIsElevated	TargetBecomeAngry/TargetAttack	1	4					Attack/EmotionPlayer
 Archer	Bullseye	This gains $PowerStat$ Power. Then deal $Num$ damage to an Elevated Player.	Self-OnePlayer	None-TargetIsElevated	TargetGainPower-TargetAttack	1	2		1			Attack/StatEnemy
 Archer	Volley	Deal $Num$ damage to all Players.	AllPlayers	None	TargetAttack	1	2					Attack/StatPlayer
 Archer	Focus	This becomes Happy and gains $DefenseStat$ Defense.	Self	None	TargetBecomeHappy/TargetGainDefense	1				1		EmotionEnemy/StatEnemy
 Barbarian	Fury	Deal $Num$ damage to the Grounded Player with the most Health.	OnePlayer	TargetIsGrounded	TargetAttack	0	3					Attack
 Barbarian	Savagery	All Grounded Players lose 1 Max Health and $PowerStat$ Power.	AllPlayers	TargetIsGrounded	TargetMaxHealth/TargetLosePower	1			1		-1	StatPlayer
-Barbarian	Brawl	This and the Grounded Player with the most Health both become Angry and Locked for $MiscStat$ turn.	Self-OnePlayer	None-TargetIsGrounded	TargetBecomeAngry/TargetBecomeLocked-TargetBecomeAngry/TargetBecomeLocked	0					1	EmotionPlayer/EmotionEnemy
+Barbarian	Brawl	This and the Grounded Player with the most Health both become Angry and Locked for $MiscStat$ turns.	Self-OnePlayer	None-TargetIsGrounded	TargetBecomeAngry/TargetBecomeLocked-TargetBecomeAngry/TargetBecomeLocked	1					2	EmotionPlayer/EmotionEnemy
 Barbarian	Camp	This becomes Protected for $MiscStat$ turn and gets $MiscStat$ Extra Ability.	Self	None	TargetBecomeProtected/TargetGetExtraAbility	2					1	Misc
 Bat	Drain	Deal $Num$ damage to a Player. This gains $Num$ Health.	OnePlayer-Self	TargetEffective-None	TargetAttack-TargetHeal	1	2				0	Attack/Healing
 Bat	Screech	A Player becomes Happy and loses $DefenseStat$ Defense.	OnePlayer	None	TargetBecomeHappy/TargetLoseDefense	1				1		EmotionPlayer/StatPlayer
@@ -18,22 +18,22 @@ Bees	Honey	Another Elevated Enemy gains $Num$ Health.	OtherEnemy	TargetIsElevate
 Bees	Protect_the_Queen	Another Elevated Enemy becomes Protected for $MiscStat$ turn.	OtherEnemy	TargetIsElevated	TargetBecomeProtected	1					1	Misc
 Bees	Support	Another Elevated Enemy gets $MiscStat$ Extra Ability.	OtherEnemy	TargetIsElevated	TargetGetExtraAbility	1					1	Misc
 Cow	Charge	Deal $Num$ damage to the last Player who attacked this.	OnePlayer	LastAttackerExists	TargetAttack	0	4					Attack
-Cow	Milk	Another Enemy gains $Num$ Health and becomes Happy.	OtherEnemy	TargetInjured	TargetHeal/TargetBecomeHappy	0	2					Healing/EmotionEnemy
+Cow	Milk	Another Enemy gains $Num$ Health and becomes Happy.	OtherEnemy	TargetInjured	TargetHeal/TargetBecomeHappy	1	4					Healing/EmotionEnemy
 Cow	Graze	This gains $Num$ Max Health and $Num$ Health.	Self	None	TargetMaxHealth/TargetHeal	1	2				2	Healing
 Cow	Bellow	This gains $DefenseStat$ Defense and becomes Targeted for $MiscStat$ turns.	Self	TargetDefenseOrLess/NoTargetedEnemy	TargetGainDefense/TargetBecomeTargeted	1				1	2	StatEnemy
 Crow	Peck	Deal $Num$ damage to any Player.	OnePlayer	None	TargetAttack	0	2					Attack
-Demon	Dark_Energy	Deal $Num$ damage to all Players.	AllPlayers	None	TargetAttack	3	6					Attack
+Demon	Dark_Energy	Deal $Num$ damage to all Players.	AllPlayers	None	TargetAttack	4	6					Attack
 Demon	Betrayal	Deal $Num$ damage to another Enemy. This gains $MiscStat$ Max Health, $Num$ Health, and $PowerStat$ Power.	OtherEnemy-Self	None-None	TargetAttack-TargetMaxHealth/TargetHeal/TargetGainPower	1	3		1		3	Healing/StatEnemy
 Demon	Ritual	Another Enemy becomes Stunned for $MiscStat$ turn. This reduces their active Ability Cooldown by $MiscStat$.	OtherEnemy-Self	None-TargetActiveCooldown	TargetBecomeStunned-TargetDecreaseAllCooldown	1					1	Misc
 Demon	Demand_Energy	All other Players and Enemies lose $PowerStat$ Power.	AllPlayers-AllOtherEnemies	None-None	TargetLosePower-TargetLosePower	1			1			StatPlayer/StatEnemy
-Dragon	Firebreath	If this is Elevated, deals $Num$ damage to all Players.	Self-AllPlayers	TargetIsElevated-None	None-TargetAttack	1	3					Attack
+Dragon	Firebreath	If this is Elevated, deals $Num$ damage to all Players.	Self-AllPlayers	TargetIsElevated-None	None-TargetAttack	1	4					Attack
 Dragon	Roost	If this is Elevated, it becomes Grounded and gains $Num$ Health.	Self	TargetIsElevated/TargetInjured	TargetBecomeGrounded/TargetHeal	0	4					Healing/PositionEnemy
 Dragon	Take_Flight	All Grounded Enemies becomes Elevated.	AllEnemies	TargetIsGrounded	TargetBecomeElevated	0						PositionEnemy
 Dragon	Roar	This becomes Angry and gains $PowerStat$ Power.	Self	TargetNotAngry	TargetBecomeAngry/TargetGainPower	1			1			EmotionEnemy/StatEnemy
 Drone	Sound_Waves	If this is Neutral, deal $Num$ damage to all Players.	Self-AllPlayers	TargetIsNeutral-None	TargetBecomeNeutral-TargetAttack	0	1					Attack
 Drone	Alarm	This becomes Neutral, Elevated, and Locked for $MiscStat$ turns.	Self	None	TargetBecomeNeutral/TargetBecomeElevated/TargetBecomeLocked	0					2	EmotionEnemy/PositionEnemy
-Ghost	Jumpscare	Deal $Num$ damage to an Elevated Player.	OnePlayer	TargetIsElevated	TargetAttack	1	4					Attack
-Ghost	Lament	This and another Enemy both become Sad.	Self-OtherEnemy	TargetNotSad-TargetNotSad	TargetBecomeSad-TargetBecomeSad	0						EmotionEnemy
+Ghost	Jumpscare	Deal $Num$ damage to an Elevated Player.	OnePlayer	TargetIsElevated	TargetAttack	0	3					Attack
+Ghost	Lament	This and another Enemy both become Sad.	Self-OtherEnemy	TargetNotSad-TargetNotSad	TargetBecomeSad-TargetBecomeSad	1						EmotionEnemy
 Ghost	Possession	A Grounded Player becomes Elevated and loses $PowerStat$ Power.	OnePlayer	TargetIsGrounded	TargetBecomeElevated/TargetLosePower	1			1			PositionPlayer/StatPlayer
 Ghost	Release	An Elevated Player becomes Grounded and Stunned for $MiscStat$ turn.	OnePlayer	TargetIsElevated	TargetBecomeGrounded/TargetBecomeStunned	2					1	PositionPlayer
 Herald	Flag_Whack	Deal $Num$ damage to a Player.	OnePlayer		TargetAttack	0	2					Attack
@@ -90,6 +90,6 @@ Trickster	Distract	A Grounded Player's active Ability Cooldown are increased by 
 Wall	Toughen	This gains $Num$ Health and gains $DefenseStat$ Defense.	Self	TargetInjured/TargetDefenseOrLess	TargetHeal/TargetGainDefense	1	2			1	3	Healing/StatEnemy
 Wall	In_the_Way	This becomes Grounded and Targeted for $MiscStat$ turn.	Self	NoTargetedEnemy	TargetBecomeGrounded/TargetBecomeTargeted	0					1	Misc
 Wolf	Slash	Deal $Num$ damage to a Grounded Player.	OnePlayer	TargetIsGrounded/TargetEffective	TargetAttack	0	3				0	Attack
-Wolf	Howl	An Enemy becomes Angry, and a Player becomes Sad.	OneEnemy-OnePlayer	TargetNotAngry-TargetNotSad	TargetBecomeAngry-TargetBecomeSad	0						EmotionPlayer/EmotionEnemy
+Wolf	Howl	An Enemy becomes Angry, and a Player becomes Sad.	OneEnemy-OnePlayer	TargetNotAngry-TargetNotSad	TargetBecomeAngry-TargetBecomeSad	1						EmotionPlayer/EmotionEnemy
 Wolf	Nurture	All $MiscStat$ Star Enemies gain $PowerStat$ Power and $DefenseStat$ Defense.	AllEnemies	TargetIsStar	TargetGainPower/TargetGainDefense	1			1	1	1	StatEnemy
 Wolf	Guard	A $MiscStat$ Star Enemy becomes Protected for $MiscStat$ turn.	OneEnemy	TargetIsStar	TargetBecomeProtected	1					1	Misc

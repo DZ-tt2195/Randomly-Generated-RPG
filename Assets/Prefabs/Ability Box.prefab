@@ -828,6 +828,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Hover Image
       objectReference: {fileID: 0}
+    - target: {fileID: 3691590185208044889, guid: a042c107274f74a03a3cafea8b584572, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3713695489742377036, guid: a042c107274f74a03a3cafea8b584572, type: 3}
       propertyPath: m_text
       value: 

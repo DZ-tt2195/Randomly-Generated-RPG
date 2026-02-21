@@ -40,7 +40,6 @@ public class TurnManager : MonoBehaviour
     [Foldout("UI", true)]
         public List<AbilityBox> listOfBoxes = new();
         public TMP_Text instructions;
-        public TMP_Text timerText;
         bool borderDecrease = true;
         [SerializeField] Button quitButton;
         List<CharacterPositions> teammatePositions = new();
@@ -127,33 +126,11 @@ public class TurnManager : MonoBehaviour
             yield return NewAnimation(true);
             Log.instance.AddText(AutoTranslate.Wave(currentWave.ToString(), listOfWaveSetup.Count.ToString()));
 
-            if (currentWave >= 2 && ScreenOverlay.instance.ActiveCheat(AutoTranslate.New_Abilities()))
-            {
-                Log.instance.AddText(AutoTranslate.Gain_New_Abilities());
-                foreach (Character player in listOfPlayers)
-                {
-                    for (int i = player.listOfRandomAbilities.Count - 1; i >= 0; i--)
-                        player.DropAbility(player.listOfRandomAbilities[i]);
-
-                    List<AbilityData> newAbilties = GameFiles.inst.CompletePlayerAbilities(new(), GameFiles.inst.ConvertToAbilityData(player.data.listOfAbilities, true), dailyRNG);
-                    foreach (AbilityData data in newAbilties)
-                        player.AddAbility(data, false, false);
-                }
-                Log.instance.AddText(AutoTranslate.Blank());
-            }
-
             foreach (int nextTier in listOfWaveSetup[currentWave - 1].enemyDifficultySpawn)
-                yield return MakeNewEnemy(GameFiles.inst.RandomEnemy(nextTier, dailyRNG));
-
-            if (currentWave <= 4 && ScreenOverlay.instance.ActiveChallenge(AutoTranslate.More_Enemies()))
-                yield return MakeNewEnemy(GameFiles.inst.RandomEnemy(1, dailyRNG));
-
-            IEnumerator MakeNewEnemy(CharacterData newEnemy)
             {
                 yield return WaitTime();
-                CreateEnemy(newEnemy, Character.RandomEmotion(dailyRNG), 0);
+                CreateEnemy(GameFiles.inst.RandomEnemy(nextTier, dailyRNG), Character.RandomEmotion(dailyRNG), 0);
             }
-
             StartCoroutine(NewRound(false));
         }
     }
@@ -370,12 +347,7 @@ public class TurnManager : MonoBehaviour
 
             nextEnemy.name = Translator.inst.Translate(dataFile.characterName);
             Log.instance.AddText(AutoTranslate.Enter_Fight(nextEnemy.name), logged);
-            
             nextEnemy.SetupCharacter(dataFile, GameFiles.inst.ConvertToAbilityData(dataFile.listOfAbilities, false), startingEmotion, true);
-            if (ScreenOverlay.instance.ActiveCheat(AutoTranslate.Weaker_Enemies()))
-                StartCoroutine(nextEnemy.ChangeMaxHealth(-2, logged + 1));
-            if (ScreenOverlay.instance.ActiveChallenge(AutoTranslate.Extra_Enemy_Turns()))
-                StartCoroutine(nextEnemy.ChangeEffect(StatusEffect.Extra, 1, logged+1));
         }
     }
 

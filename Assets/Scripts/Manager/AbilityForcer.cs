@@ -49,15 +49,10 @@ public class AbilityForcer : MonoBehaviour
             }
             else if (ScreenOverlay.instance.mode == GameMode.Main)
             {
-                header.text = AutoTranslate.Customize_Players();
+                header.text = AutoTranslate.Customize_Game();
                 description.text = AutoTranslate.Customize_Description();
                 confirm.text = AutoTranslate.Confirm();
-
                 confirmButton.onClick.AddListener(Confirmed);
-                foreach (string cheat in ScreenOverlay.instance.listOfCheats)
-                    Log.instance.AddText($"<color=#00FF00>{Translator.inst.Translate(AutoTranslate.Cheat())}: {Translator.inst.Translate(cheat)}</color>", 1);
-                foreach (string challenge in ScreenOverlay.instance.listOfChallenges)
-                    Log.instance.AddText($"<color=#FF0000>{Translator.inst.Translate(AutoTranslate.Challenge())}: {Translator.inst.Translate(challenge)}</color>", 1);
 
                 abilityDictionary.Add(nameof(AutoTranslate.Wizard), new());
                 abilityDictionary.Add(nameof(AutoTranslate.Knight), new());

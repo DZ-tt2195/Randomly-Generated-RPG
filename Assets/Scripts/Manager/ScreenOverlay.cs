@@ -51,10 +51,6 @@ public class ScreenOverlay : MonoBehaviour
         [SerializeField] Image transitionImage;
         [SerializeField] float transitionTime;
 
-    [Foldout("Cheats and Challenges", true)]
-        [ReadOnly] public List<string> listOfCheats = new();
-        [ReadOnly] public List<string> listOfChallenges = new();
-
     #endregion
 
 #region Setup
@@ -233,20 +229,6 @@ public class ScreenOverlay : MonoBehaviour
 
         transitionImage.SetAlpha(Mathf.Abs(begin - 1));
         transitionImage.gameObject.SetActive(true);
-    }
-
-    #endregion
-
-#region Cheats/Challenges
-
-    public bool ActiveCheat(string cheat)
-    {
-        return (mode == GameMode.Main && listOfCheats.Contains(cheat));
-    }
-
-    public bool ActiveChallenge(string challenge)
-    {
-        return (mode == GameMode.Main && listOfChallenges.Contains(challenge));
     }
 
     #endregion

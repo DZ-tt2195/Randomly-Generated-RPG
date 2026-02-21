@@ -1,7 +1,7 @@
 Title	RANDOMLY GENERATED
 Blank	
 Author_Credit	by Thomas Tang (DZ)
-Last_Update	Last Updated: Feb 08, 2026
+Last_Update	Last Updated: Feb 21, 2026
 Language	Language
 Translator_Credit	Original Language
 Upload_Translation	Upload Translation
@@ -27,43 +27,12 @@ Month_9	September
 Month_10	October
 Month_11	November
 Month_12	December
-Cheats_and_Challenges	Cheats & Challenges
-Cheat	Cheat
-New_Abilities	New Abilities
-New_Abilities_Text	Players get 6 new Abilities each wave
-Knight_Reach	Knight Reach
-Knight_Reach_Text	Knight can target Elevated Enemies
-Weaker_Enemies	Weaker Enemies
-Weaker_Enemies_Text	Enemies start with -2 Max Health
-Slower_Enemy_Cooldowns	Slower Enemy Cooldowns
-Slower_Enemy_Cooldowns_Text	Enemy Abilities have 1 more turn of Cooldown
-Number_Cap	Number Cap
-Number_Cap_Text	Enemies attack / heal for a max of 4
-Challenge	Challenge
-No_Revives	No Revives
-No_Revives_Text	Reviving is disabled
-Ineffectives_Fail	Ineffectives Fail
-Ineffectives_Fail_Text	Ineffective attacks by Players do 0 damage
-Player_Timer	Player Timer
-Player_Timer_Text	10 seconds to do each Player's turn
-Extra_Enemy_Turns	Extra Enemy Turns
-Extra_Enemy_Turns_Text	New Enemies get 1 Extra Ability
-More_Enemies	More Enemies
-More_Enemies_Text	Waves 1-4 have another 1 Star Enemy
-Clear_All	Clear All
-Apply_Number_Cap	Amount capped at 4 (Number Cap).
 Apply_Minimum	Amount capped at 1.
-Apply_Ineffectives_Fail	$This$'s attack fails (Ineffectives Fail).
-Failed	Failed
 Super_Effective	It's super effective! (+$Num$)
 Not_Effective	It's not very effective... (-$Num$)
 Increase_Cooldown	$Num$ of $Target$'s Abilities gain $MiscStat$ Cooldown.
 Decrease_Cooldown	$Num$ of $Target$'s Abilities lose $MiscStat$ Cooldown.
 Apply_Cooldown	$Target$'s $Ability$ is placed on $MiscStat$ Cooldown.
-Timer	Timer
-Counting_Down	Timer: $Num$
-Out_of_Time	$This$ runs out of time. (Player Timer)
-Gain_New_Abilities	Players have new Abilities.
 Special_Thanks	Special Thanks
 All_Thanks	Seth Royston for showing me how to use Google Sheets with Unity \nLiam Cribbs for showing me how to auto-download Google Sheets contents \nFlan Falacci for thinking that this game deserved to be at Project Studio \nThis game was inspired by OMORI (by OMOCAT), and Epic Battle Fantasy V (by KupoGames) \nEveryone who tried this game at Playtest Thursday (somehow you all liked it)
 Settings	Settings
@@ -117,8 +86,8 @@ Gain_Extra_Ability	$This$ gains extra Abilities on their turn ($Num$).
 Use_Extra_Ability	$This$ uses another Ability.
 Star	Star
 Star_Text	More Star = Stronger Enemy type.
-Customize_Players	Customize Players
-Customize_Description	Choose Player Abilities and Rules. Anything left blank will be randomized!
+Customize_Game	Customize Game
+Customize_Description	Choose Player Abilities and Rules. Everything else will be randomized.
 Defeat_Waves	Defeat $Num$ waves of enemies.
 Title_Screen	Title Screen
 Quit_Game	Quit
@@ -409,7 +378,7 @@ Savagery	Savagery
 Savagery_Text	All Grounded Players lose 1 Max Health and $PowerStat$ Power.
 Savagery_Log	$This$ displays savagery.
 Brawl	Brawl
-Brawl_Text	This and the Grounded Player with the most Health both become Angry and Locked for $MiscStat$ turn.
+Brawl_Text	This and the Grounded Player with the most Health both become Angry and Locked for $MiscStat$ turns.
 Brawl_Log	$This$ brawls with $Target$.
 Camp	Camp
 Camp_Text	This becomes Protected for $MiscStat$ turn and gets $MiscStat$ Extra Ability.
@@ -730,5 +699,5 @@ Update_5	Jan 13, 2026
 Update_5_Text	Fixed log autoscroll \nFixed encyclopedia putting abilities in not-alphabetical order
 Update_6	Feb 08, 2026
 Update_6_Text	Fixed some translation issues \nAdded fonts for some languages \nFixed minor bugs in encyclopedia
-Update_7	Later Date
-Update_7_Text	Emotions no longer have extra rules \nChanged many abilities
+Update_7	Feb 21, 2026
+Update_7_Text	Emotions no longer have extra rules \nUpdated tutorial \nChanged many abilities \Dropped most cheats and challenges \nAdd Rules that can be chosen to affect gameplay

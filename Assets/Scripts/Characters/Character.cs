@@ -373,31 +373,6 @@ public class Character : MonoBehaviour
             yield return ResolveTurn(logged, true);
         }
     }
-    IEnumerator Timer()
-    {
-        timer = 10f;
-        if (this is PlayerCharacter && ScreenOverlay.instance.ActiveChallenge(AutoTranslate.Player_Timer()))
-        {
-            TurnManager.inst.timerText.gameObject.SetActive(true);
-            while (timer > 0f)
-            {
-                yield return null;
-                timer -= Time.deltaTime;
-                TurnManager.inst.timerText.text = AutoTranslate.Counting_Down($"{timer:F1}");
-            }
-
-            TextCollector[] allCollectors = FindObjectsByType<TextCollector>(FindObjectsSortMode.None);
-            foreach (TextCollector collector in allCollectors)
-                Destroy(collector.gameObject);
-
-            Log.instance.AddText(AutoTranslate.Out_of_Time(this.name));
-            Log.instance.AddText(AutoTranslate.Skip_Turn_Log(this.name));
-        }
-        else
-        {
-            TurnManager.inst.timerText.gameObject.SetActive(false);
-        }
-    }
     IEnumerator ResolveTurn(int logged, bool extraAbility)
     {
         if (statEffectDict[StatusEffect.Stunned] > 0)
@@ -409,7 +384,6 @@ public class Character : MonoBehaviour
             yield break;
         }
 
-        StartCoroutine(nameof(Timer));
         chosenAbility = null;
         chosenTarget = new();
 
@@ -471,7 +445,6 @@ public class Character : MonoBehaviour
     }
     IEnumerator AbilityUse(int logged, bool extraAbility)
     {
-        StopCoroutine(nameof(Timer));
         if (!extraAbility)
         {
             foreach (Ability ability in listOfAutoAbilities)
@@ -499,8 +472,7 @@ public class Character : MonoBehaviour
                 yield return chosenAbility.ResolveInstructions(splicedString, i, logged + 1);
             }
 
-            int cooldownIncrease = chosenAbility.data.baseCooldown + (CurrentEmotion == Emotion.Happy ? 1 : 0) +
-                (ScreenOverlay.instance.ActiveCheat(AutoTranslate.Slower_Enemy_Cooldowns()) && this is EnemyCharacter ? 1 : 0);
+            int cooldownIncrease = chosenAbility.data.baseCooldown;
 
             if (cooldownIncrease > 0)
             {
