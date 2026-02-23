@@ -4,19 +4,16 @@ using MyBox;
 using TMPro;
 using UnityEngine.UI;
 using System;
-using System.Linq;
-using Unity.Collections;
 
 public enum TierSearch { Any, Star0, Star1, Star2, Star3 };
 public class EncyclopediaManager : MonoBehaviour
 {
 
-#region Variables
+#region Setup
 
     [Foldout("Changing searches", true)]
         [SerializeField] List<Button> currentSearch = new();
         [SerializeField] List<GameObject> masterGameObject = new();
-
     [Foldout("Ability Search", true)]
         Dictionary<string, List<AbilityBox>> abilityDictionary = new();
         [SerializeField] AbilityBox abilityBoxPrefab;
@@ -26,7 +23,6 @@ public class EncyclopediaManager : MonoBehaviour
         [SerializeField] TranslateDropdown type1Dropdown;
         [SerializeField] TranslateDropdown type2Dropdown;
         [SerializeField] TranslateDropdown cooldownDropdown;
-
     [Foldout("Enemy Search", true)]
         List<Character> listOfEnemyBoxes = new();
         [SerializeField] GameObject characterPrefab;
@@ -34,12 +30,15 @@ public class EncyclopediaManager : MonoBehaviour
         [SerializeField] TMP_InputField enemyInput;
         [SerializeField] TranslateDropdown tierDropdown;
         [SerializeField] TranslateDropdown positionDropdown;
-        [SerializeField] Scrollbar enemyScroll;
-
+    [Foldout("Rules Search", true)]
+        [SerializeField] RectTransform storeRules;
+        [SerializeField] RulesText rulesPrefab;
+        List<RulesText> listOfRules = new();
     [Foldout("Translate", true)]
         [SerializeField] TMP_Text close;
         [SerializeField] TMP_Text abilities;
         [SerializeField] TMP_Text enemies;
+        [SerializeField] TMP_Text rules;
         [SerializeField] TMP_Text searchAbilities;
         [SerializeField] TMP_Text type1;
         [SerializeField] TMP_Text type2;
@@ -49,7 +48,22 @@ public class EncyclopediaManager : MonoBehaviour
         [SerializeField] TMP_Text searchEnemies;
         [SerializeField] TMP_Text stars;
         [SerializeField] TMP_Text position;
-
+    void TranslateScreen()
+    {
+        close.text = AutoTranslate.Close();
+        abilities.text = AutoTranslate.Abilities();
+        enemies.text = AutoTranslate.Enemies();
+        searchAbilities.text = AutoTranslate.Search_Abilities();
+        type1.text = AutoTranslate.Type_1();
+        type2.text = AutoTranslate.Type_2();
+        player.text = AutoTranslate.Player();
+        cooldown.text = KeywordTooltip.instance.EditText(AutoTranslate.Cooldown());
+        rightClick.text = AutoTranslate.Right_Click_Reminder();
+        searchEnemies.text = AutoTranslate.Search_Enemies();
+        stars.text = KeywordTooltip.instance.EditText(AutoTranslate.Star());
+        position.text = AutoTranslate.Default_Position();
+        rules.text = AutoTranslate.Rules();        
+    }
     void ChangeMode(int n)
     {
         for (int i = 0; i < currentSearch.Count; i++)
@@ -66,22 +80,9 @@ public class EncyclopediaManager : MonoBehaviour
                 break;
         }
     }
-
     private void Start()
     {
-        close.text = AutoTranslate.Close();
-        abilities.text = AutoTranslate.Abilities();
-        enemies.text = AutoTranslate.Enemies();
-        searchAbilities.text = AutoTranslate.Search_Abilities();
-        type1.text = AutoTranslate.Type_1();
-        type2.text = AutoTranslate.Type_2();
-        player.text = AutoTranslate.Player();
-        cooldown.text = KeywordTooltip.instance.EditText(AutoTranslate.Cooldown());
-        rightClick.text = AutoTranslate.Right_Click_Reminder();
-        searchEnemies.text = AutoTranslate.Search_Enemies();
-        stars.text = KeywordTooltip.instance.EditText(AutoTranslate.Star());
-        position.text = AutoTranslate.Default_Position();
-
+        TranslateScreen();
         for (int i = 0; i<currentSearch.Count; i++)
         {
             int k = i;
@@ -124,6 +125,15 @@ public class EncyclopediaManager : MonoBehaviour
                 }
             }
         }
+
+        foreach (RulesData data in GameFiles.inst.FinishedRules())
+        {
+            RulesText nextText = Instantiate(rulesPrefab);
+            nextText.AssignRule(data.rulesName);
+            listOfRules.Add(nextText);
+            nextText.transform.SetParent(storeRules);
+        }
+
         ChangeMode(0);
     }
 
@@ -137,7 +147,6 @@ public class EncyclopediaManager : MonoBehaviour
             return true;
         return (comparison.IndexOf(searchBox, StringComparison.OrdinalIgnoreCase) >= 0);
     }
-
     bool CompareTypes(AbilityType setting, AbilityData data)
     {
         if (setting == AbilityType.None)
@@ -146,7 +155,6 @@ public class EncyclopediaManager : MonoBehaviour
             if (type == setting) return true;
         return false;
     }
-
     bool CompareTiers(TierSearch setting, int difficulty)
     {
         return setting switch
@@ -159,15 +167,13 @@ public class EncyclopediaManager : MonoBehaviour
             _ => true,
         };
     }
-
-    bool ComparePositions(Position setting, CharacterData data)
+    bool ComparePositions(string text, CharacterData data)
     {
-        if (setting == Position.Dead)
+        if (text.Equals("Any"))
             return true;
         else
-            return setting == data.startPosition;
+            return text.Equals(data.startPosition.ToString());
     }
-
     AbilityType ConvertType(string text)
     {
         if (text.Equals("Any"))
@@ -240,7 +246,7 @@ public class EncyclopediaManager : MonoBehaviour
     void SearchEnemy()
     {
         TierSearch searchTier = TierSearch.Any;
-        Position searchPosition = Position.Dead;
+        string searchPosition = "";
 
         switch (tierDropdown.GetOriginal())
         {
@@ -263,13 +269,13 @@ public class EncyclopediaManager : MonoBehaviour
         switch (positionDropdown.GetOriginal())
         {
             case "Any":
-                searchPosition = Position.Dead;
+                searchPosition = "Any";
                 break;
             case "Grounded":
-                searchPosition = Position.Grounded;
+                searchPosition = Position.Grounded.ToString();
                 break;
             case "Elevated":
-                searchPosition = Position.Elevated;
+                searchPosition = Position.Elevated.ToString();
                 break;
         }
 
@@ -289,5 +295,4 @@ public class EncyclopediaManager : MonoBehaviour
     }
 
     #endregion
-
 }

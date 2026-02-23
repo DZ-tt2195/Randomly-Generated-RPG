@@ -9,8 +9,8 @@ using System.Linq;
 
 public enum Stats { Power, Defense };
 public enum StatusEffect { Stunned, Targeted, Locked, Protected, Extra };
-public enum Position { Grounded, Elevated, Dead };
-public enum Emotion { Dead, Neutral, Happy, Angry, Sad };
+public enum Position { Grounded, Elevated };
+public enum Emotion { Neutral, Happy, Angry, Sad };
 
 [RequireComponent(typeof(Button))][RequireComponent(typeof(Image))]
 public class Character : MonoBehaviour
@@ -23,22 +23,20 @@ public class Character : MonoBehaviour
     [Foldout("Character info", true)]
         protected Ability chosenAbility;
         protected List<Character> chosenTarget = new();
-        protected float timer;
         [ReadOnly] public Character lastToAttackThis { get; private set; }
         [ReadOnly] public string editedDescription { get; private set; }
         [ReadOnly] public CharacterData data { get; private set; }
         [ReadOnly] public List<Ability> listOfAutoAbilities = new();
         [ReadOnly] public List<Ability> listOfRandomAbilities = new();
+        public static int maxAbilities = 6;
 
     [Foldout("Stats", true)]
         protected int baseHealth;
         public int currentHealth { get; private set; }
         protected int baseSpeed;
-
         private Dictionary<StatusEffect, int> _privStatEffect = new();
         public IReadOnlyDictionary<StatusEffect, int> statEffectDict => _privStatEffect;
         private Dictionary<Stats, int> _privStatMod = new();
-
         public Position CurrentPosition { get; private set; }
         public Emotion CurrentEmotion { get; private set; }
 
@@ -57,16 +55,11 @@ public class Character : MonoBehaviour
 
     public static Emotion RandomEmotion(System.Random dailyRNG)
     {
-        Emotion random = Emotion.Dead;
         int randomRange = Enum.GetValues(typeof(Emotion)).Length;
-        while (random != Emotion.Dead)
-        {
-            if (dailyRNG != null)
-                random = (Emotion)dailyRNG.Next(0, randomRange);
-            else
-                random = (Emotion)UnityEngine.Random.Range(0, randomRange);
-        }
-        return random;
+        if (dailyRNG != null)
+            return (Emotion)dailyRNG.Next(0, randomRange);
+        else
+            return (Emotion)UnityEngine.Random.Range(0, randomRange);
     }
     private void Awake()
     {
@@ -120,7 +113,6 @@ public class Character : MonoBehaviour
     #endregion
 
 #region Stats
-
     public float CalculateHealthPercent()
     {
         return (float)currentHealth / this.baseHealth;
@@ -258,7 +250,7 @@ public class Character : MonoBehaviour
     }
     public IEnumerator ChangePosition(Position newPosition, int logged)
     {
-        if (this == null || newPosition == Position.Dead || newPosition == CurrentPosition) yield break;
+        if (this == null || newPosition == CurrentPosition) yield break;
 
         if (statEffectDict[StatusEffect.Locked] > 0)
         {
@@ -279,7 +271,7 @@ public class Character : MonoBehaviour
     }
     public IEnumerator ChangeEmotion(Emotion newEmotion, int logged)
     {
-        if (this == null || newEmotion == Emotion.Dead || newEmotion == CurrentEmotion) yield break;
+        if (this == null || newEmotion == CurrentEmotion) yield break;
 
         if (statEffectDict[StatusEffect.Locked] > 0)
         {
@@ -315,10 +307,7 @@ public class Character : MonoBehaviour
         foreach (Stats value in Enum.GetValues(typeof(Stats)))
             _privStatMod[value] = 0;
 
-        CurrentPosition = Position.Dead;
-        CurrentEmotion = Emotion.Dead;
         CharacterUI();
-
         Log.instance.AddText(AutoTranslate.Died(this.name), logged+1);
         TurnManager.inst.speedQueue.Remove(this);
 
@@ -389,24 +378,13 @@ public class Character : MonoBehaviour
 
         while (chosenAbility == null)
         {
-            if (timer < 0f)
-                yield break;
-
             yield return ChooseAbility(logged, extraAbility);
-
-            if (timer < 0f)
-                yield break;
-
             for (int i = 0; i < chosenAbility.data.toTarget.Length; i++)
             {
                 yield return ChooseTarget(chosenAbility, chosenAbility.data.toTarget[i], i);
                 if (chosenAbility.singleTarget.Contains(chosenAbility.data.toTarget[i]))
                     chosenTarget.Add(chosenAbility.listOfTargets[i][0]);
             }
-
-            if (timer < 0f)
-                yield break;
-
             if (this is PlayerCharacter)
             {
                 string result = "";
@@ -428,11 +406,8 @@ public class Character : MonoBehaviour
                     chosenAbility = null;
                     chosenTarget.Clear();
                 }
-                if (timer < 0f)
-                    yield break;
             }
         }
-
         yield return AbilityUse(logged, extraAbility);
     }
     protected virtual IEnumerator ChooseAbility(int logged, bool extraAbility)
@@ -486,16 +461,14 @@ public class Character : MonoBehaviour
                 yield return TutorialManager.instance.NextStep();
             }
         }
-        yield return EmotionEffect(logged, extraAbility);
+        yield return EndOfTurn(logged, extraAbility);
     }
-    IEnumerator EmotionEffect(int logged, bool extraAbility)
+    IEnumerator EndOfTurn(int logged, bool extraAbility)
     {
         yield return null;
         /*
-        if (timer > 0f && chosenAbility != null && !chosenAbility.data.abilityName.Equals(AutoTranslate.Skip_Turn()))
+        if (chosenAbility != null && !chosenAbility.data.abilityName.Equals(AutoTranslate.Skip_Turn()))
         {
-            string answer = AutoTranslate.Emotion_Effect(this.name, Translator.inst.Translate(CurrentEmotion.ToString()));
-
             if (this.CurrentEmotion == Emotion.Angry)
             {
                 if (chosenAbility.killed || chosenAbility.fullHeal)
@@ -517,7 +490,7 @@ public class Character : MonoBehaviour
                 Log.instance.AddText(answer, logged);
                 yield return ChangeHealth(chosenAbility.mainType == AbilityType.Attack ? 2 : -2, logged + 1);
             }
-        }*/
+            */
     }
 
 #endregion
@@ -562,7 +535,7 @@ public class Character : MonoBehaviour
         {
             this.myImage.color = Color.white;
         }
-        else if (CurrentEmotion == Emotion.Dead)
+        else if (currentHealth <= 0)
         {
             this.myImage.color = Color.gray;
         }
@@ -573,7 +546,7 @@ public class Character : MonoBehaviour
         }
 
         topText.text = "";
-        if (CurrentPosition == Position.Dead)
+        if (currentHealth <= 0)
         {
             topText.text = AutoTranslate.Dead();
         }

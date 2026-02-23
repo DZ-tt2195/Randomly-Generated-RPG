@@ -35,7 +35,12 @@ public class AbilityData
     public int miscNumber;
     public TeamTarget[] toTarget;
 }
-
+[Serializable]
+public class RulesData
+{
+    public string rulesName;
+    public bool completed;
+}
 public class GameFiles : MonoBehaviour
 {
     public static GameFiles inst;
@@ -43,14 +48,16 @@ public class GameFiles : MonoBehaviour
     [Tooltip("store all enemy ability data")][ReadOnly] public Dictionary<string, AbilityData> listOfEnemyAbilities;
     [Tooltip("store all player data")][ReadOnly] public Dictionary<string, CharacterData> listOfPlayers = new();
     [Tooltip("store all enemy data")][ReadOnly] public Dictionary<int, Dictionary<string, CharacterData>> listOfEnemies = new();
+    [Tooltip("store all rules data")][ReadOnly] public Dictionary<string, RulesData> listOfRules = new();
 
     void Awake()
     {
         inst = this;
+        listOfRules = ReadTSVFile<RulesData>(Resources.Load<TextAsset>("Data/Rules Data").text);
         listOfPlayerAbilities = ReadTSVFile<AbilityData>(Resources.Load<TextAsset>("Data/Player Ability Data").text);
         listOfEnemyAbilities = ReadTSVFile<AbilityData>(Resources.Load<TextAsset>("Data/Enemy Ability Data").text);
+        
         listOfPlayers = ReadTSVFile<CharacterData>(Resources.Load<TextAsset>("Data/Player Data").text);
-
         Dictionary<string, CharacterData> allEnemies = ReadTSVFile<CharacterData>(Resources.Load<TextAsset>("Data/Enemy Data").text);
         foreach (var KVP in allEnemies)
         {
@@ -159,12 +166,14 @@ public class GameFiles : MonoBehaviour
                 toReturn.Add(character.characterName, nextData);
             else if (nextData is AbilityData ability)
                 toReturn.Add(ability.abilityName, nextData);
+            else if (nextData is RulesData rules)
+                toReturn.Add(rules.rulesName, nextData);
         }
         return toReturn;
 
     }
 
-#region Character Files
+#region File Search
 
     public CharacterData RandomEnemy(int difficulty, System.Random dailyRNG)
     {
@@ -248,7 +257,7 @@ public class GameFiles : MonoBehaviour
             return answer;
         }
 
-        while (newList.Count < 6)
+        while (newList.Count < Character.maxAbilities)
         {
             int randomNumber = (dailyRNG != null) ? dailyRNG.Next(0, toChooseFrom.Count) : UnityEngine.Random.Range(0, toChooseFrom.Count);
             AbilityData randomAbility = toChooseFrom[randomNumber];
@@ -261,7 +270,16 @@ public class GameFiles : MonoBehaviour
         }
         return newList;
     }
-
+    public List<RulesData> FinishedRules()
+    {
+        List<RulesData> toReturn = new();
+        foreach (var KVP in listOfRules)
+        {
+            if (KVP.Value.completed)
+                toReturn.Add(KVP.Value);
+        }
+        return toReturn;
+    }
     #endregion
 
 }

@@ -1,7 +1,7 @@
 Title	RANDOMLY GENERATED
 Blank	
 Author_Credit	by Thomas Tang (DZ)
-Last_Update	Last Updated: Feb 21, 2026
+Last_Update	Last Updated: Feb 22, 2026
 Language	Language
 Translator_Credit	Original Language
 Upload_Translation	Upload Translation
@@ -105,7 +105,6 @@ Become_New	$This$ becomes $Change$.
 Change_Status	$This$ is $Status$ (turns: $Num$).
 Died	$This$ has died.
 Revived	$This$ comes back to life.
-Emotion_Effect	$This$ is $Emotion$.
 Choose_Ability	$This$: Choose an Ability.
 Must_Choose_Targeted	$Target$ is Targeted.
 Choose_One_Player	Choose a player to target ($Ability$).
@@ -130,8 +129,8 @@ Tutorial_100	And now, your 3rd party member. Right click on the Wizard to read w
 Tutorial_110	Your Wizard has an Ability that forces all Elevated Enemies to be Grounded. Use Stalactites against the 2 Crows.
 Tutorial_120	Now that all the Enemies are Grounded, your Knight is capable of hitting them, so finish them off.
 Tutorial_121	Note that for your convenience, attacking Abilities are colored red, healing Abilities are colored green, the others are colored blue.
-Tutorial_130	You’ve completed the tutorial. In the main game, the 3 Players get 6 random Abilities, and each fight has different Rules.
-Tutorial_131	To win, you'll have fight off 5 waves of random Enemies, with the Enemies getting stronger later on. Glhf!
+Tutorial_130	You’ve completed the tutorial. In the main game, the 3 Players have 6 Abilities, and each fight also has 2 different Rules, all chosen at random.
+Tutorial_131	To win, you'll have to defeat 5 waves of randomly selected Enemies, with the Enemies getting stronger on later waves. Glhf!
 Tutorial_Finished	Tutorial finished.
 Next	Next
 Encyclopedia	Encyclopedia
@@ -154,6 +153,9 @@ Enemies	Enemies
 Search_Enemies	Search Enemies
 Right_Click_Reminder	Right click to read about Enemies
 Default_Position	Default Position
+Rules	Rules
+Rules_Reminder	A maximum of 2 Rules per game.
+Chosen_Rule	Rule: $Rule$
 Knight	Knight
 Knight_Text	Deals lots of damage to individual Enemies, and only Grounded ones. Has control over Emotions and Defense.
 Battle_Cry	Battle Cry
@@ -400,7 +402,7 @@ Bloodthirst_Log	$This$ becomes bloodthirsty.
 Bees	Bees
 Bees_Text	Helps other Elevated Enemies stay alive with status effects.
 Sting	Sting
-Sting_Text	Deal Num damage to a Player. This becomes Targeted for $MiscStat$ turn.
+Sting_Text	Deal $Num$ damage to a Player. This becomes Targeted for $MiscStat$ turn.
 Sting_Log	$This$ stings $Target$.
 Honey	Honey
 Honey_Text	Another Elevated Enemy gains $Num$ Health.
@@ -685,6 +687,10 @@ Nurture_Log	$This$ nurtures the young.
 Guard	Guard
 Guard_Text	A $MiscStat$ Star Enemy becomes Protected for $MiscStat$ turn.
 Guard_Log	$This$ guards $Target$.
+Aggression	Aggression
+Aggression_Text	When anyone becomes Angry, they get +1 Power and +1 Defense.
+Remorse	Remorse
+Remorse_Text	When anyone who's Angry kills, they become Sad.
 Update_0	Dec 9, 2025
 Update_0_Text	Dropped speed and luck, and changed those abilities\nTurn order is now players first (in order of Wizard, Knight, Angel), then enemies first\nAngry's +2 Power now +1 Power, +1 Defense
 Update_1	Dec 12, 2025
@@ -699,5 +705,5 @@ Update_5	Jan 13, 2026
 Update_5_Text	Fixed log autoscroll \nFixed encyclopedia putting abilities in not-alphabetical order
 Update_6	Feb 08, 2026
 Update_6_Text	Fixed some translation issues \nAdded fonts for some languages \nFixed minor bugs in encyclopedia
-Update_7	Feb 21, 2026
-Update_7_Text	Emotions no longer have extra rules \nUpdated tutorial \nChanged many abilities \Dropped most cheats and challenges \nAdd Rules that can be chosen to affect gameplay
+Update_7	Feb 22, 2026
+Update_7_Text	Emotions no longer have extra rules \nUpdated tutorial \nChanged many abilities \nDropped most cheats and challenges \nAdd Rules that can be chosen to affect gameplay \nRules can be chosen at start of game and encyclopedia

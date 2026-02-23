@@ -116,7 +116,7 @@ public class PlayerCharacter : Character
     IEnumerator WaitForChoice()
     {
         choice = -1;
-        while (choice == -1 && timer > 0f)
+        while (choice == -1)
             yield return null;
     }
 

@@ -13,7 +13,7 @@ Bat	Drain	Deal $Num$ damage to a Player. This gains $Num$ Health.	OnePlayer-Self
 Bat	Screech	A Player becomes Happy and loses $DefenseStat$ Defense.	OnePlayer	None	TargetBecomeHappy/TargetLoseDefense	1				1		EmotionPlayer/StatPlayer
 Bat	Hunting_Season	This gains $PowerStat$ Power.	Self	TargetPowerOrLess	TargetGainPower	1			2		3	StatEnemy
 Bat	Bloodthirst	This becomes Sad and gets $MiscStat$ Extra Ability.	Self	TargetNotSad	TargetBecomeSad/TargetGetExtraAbility	1					1	EmotionEnemy
-Bees	Sting	Deal Num damage to a Player. This becomes Targeted for $MiscStat$ turn.	OnePlayer-Self	None-None	TargetAttack-TargetBecomeTargeted	0	2				1	Attack
+Bees	Sting	Deal $Num$ damage to a Player. This becomes Targeted for $MiscStat$ turn.	OnePlayer-Self	None-None	TargetAttack-TargetBecomeTargeted	0	2				1	Attack
 Bees	Honey	Another Elevated Enemy gains $Num$ Health.	OtherEnemy	TargetIsElevated/TargetInjured	TargetHeal	0	2					Healing
 Bees	Protect_the_Queen	Another Elevated Enemy becomes Protected for $MiscStat$ turn.	OtherEnemy	TargetIsElevated	TargetBecomeProtected	1					1	Misc
 Bees	Support	Another Elevated Enemy gets $MiscStat$ Extra Ability.	OtherEnemy	TargetIsElevated	TargetGetExtraAbility	1					1	Misc

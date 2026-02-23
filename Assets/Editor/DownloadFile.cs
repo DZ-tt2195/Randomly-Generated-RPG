@@ -18,6 +18,7 @@ public static class FileManager
         EditorCoroutineUtility.StartCoroutineOwnerless(Download("Data/Player Ability Data", "1HO4JtV9ukU0UMJfZV7zG5bhExNQqzZwoU3bPh1OfpPk", "1268954754"));
         EditorCoroutineUtility.StartCoroutineOwnerless(Download("Data/Enemy Data", "1HO4JtV9ukU0UMJfZV7zG5bhExNQqzZwoU3bPh1OfpPk", "567473665"));
         EditorCoroutineUtility.StartCoroutineOwnerless(Download("Data/Enemy Ability Data", "1HO4JtV9ukU0UMJfZV7zG5bhExNQqzZwoU3bPh1OfpPk", "949940889"));
+        EditorCoroutineUtility.StartCoroutineOwnerless(Download("Data/Rules Data", "1HO4JtV9ukU0UMJfZV7zG5bhExNQqzZwoU3bPh1OfpPk", "1527987608"));
     }
     static IEnumerator Download(string fileName, string spreadsheetID, string sheetGID)
     {
