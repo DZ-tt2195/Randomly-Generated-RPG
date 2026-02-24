@@ -23,7 +23,7 @@ Cow	Graze	This gains $Num$ Max Health and $Num$ Health.	Self	None	TargetMaxHealt
 Cow	Bellow	This gains $DefenseStat$ Defense and becomes Targeted for $MiscStat$ turns.	Self	TargetDefenseOrLess/NoTargetedEnemy	TargetGainDefense/TargetBecomeTargeted	1				1	2	StatEnemy
 Crow	Peck	Deal $Num$ damage to any Player.	OnePlayer	None	TargetAttack	0	2					Attack
 Demon	Dark_Energy	Deal $Num$ damage to all Players.	AllPlayers	None	TargetAttack	4	6					Attack
-Demon	Betrayal	Deal $Num$ damage to another Enemy. This gains $MiscStat$ Max Health, $Num$ Health, and $PowerStat$ Power.	OtherEnemy-Self	None-None	TargetAttack-TargetMaxHealth/TargetHeal/TargetGainPower	1	3		1		3	Healing/StatEnemy
+Demon	Betrayal	Deal $Num$ damage to another Enemy. This gains $MiscStat$ Max Health, $Sec$ Health, and $PowerStat$ Power.	OtherEnemy-Self	None-None	TargetAttack-TargetMaxHealth/TargetHealSec/TargetGainPower	1	2	3	1		3	Healing/StatEnemy
 Demon	Ritual	Another Enemy becomes Stunned for $MiscStat$ turn. This reduces their active Ability Cooldown by $MiscStat$.	OtherEnemy-Self	None-TargetActiveCooldown	TargetBecomeStunned-TargetDecreaseAllCooldown	1					1	Misc
 Demon	Demand_Energy	All other Players and Enemies lose $PowerStat$ Power.	AllPlayers-AllOtherEnemies	None-None	TargetLosePower-TargetLosePower	1			1			StatPlayer/StatEnemy
 Dragon	Firebreath	If this is Elevated, deals $Num$ damage to all Players.	Self-AllPlayers	TargetIsElevated-None	None-TargetAttack	1	4					Attack
@@ -85,7 +85,7 @@ Taskmaster	Demand_Anger	This becomes Angry.	Self	TargetNotAngry	TargetBecomeAngr
 Taskmaster	Demand_Sadness	This becomes Sad.	Self	TargetNotSad	TargetBecomeSad	0						EmotionEnemy
 Trickster	Mischief	Deal $Num$ damage to a Grounded Player.	OnePlayer	TargetIsGrounded	TargetAttack	0	3					Attack
 Trickster	Delude	A Grounded Player becomes Happy and Locked for $MiscStat$ turns.	OnePlayer	TargetIsGrounded	TargetBecomeHappy/TargetBecomeLocked	0					2	EmotionPlayer
-Trickster	Delay	One of a Grounded Player's Abilities that can be used is on Cooldown for $MiscStat$ turns.	OnePlayer	TargetIsGrounded/TargetZeroCooldown	TargetForceOneCooldown	1					2	Misc
+Trickster	Delay	A Grounded Player receives $MiscStat$ Cooldown on one of their available Abilities, at random.	OnePlayer	TargetIsGrounded/TargetZeroCooldown	TargetForceOneCooldown	1					2	Misc
 Trickster	Distract	A Grounded Player's active Ability Cooldown are increased by $MiscStat$.	OnePlayer	TargetIsGrounded/TargetActiveCooldown	TargetIncreaseAllCooldown	1					1	Misc
 Wall	Toughen	This gains $Num$ Health and gains $DefenseStat$ Defense.	Self	TargetInjured/TargetDefenseOrLess	TargetHeal/TargetGainDefense	1	2			1	3	Healing/StatEnemy
 Wall	In_the_Way	This becomes Grounded and Targeted for $MiscStat$ turn.	Self	NoTargetedEnemy	TargetBecomeGrounded/TargetBecomeTargeted	0					1	Misc

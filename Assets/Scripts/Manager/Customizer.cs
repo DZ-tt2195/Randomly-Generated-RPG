@@ -15,7 +15,7 @@ public class Customizer : MonoBehaviour
     Dictionary<string, List<AbilityBox>> abilityDictionary = new();
     List<AbilityBox> preSelectedAbilities = new();
     AbilityBox clicked;
-    [SerializeField] Transform blanks;
+    [SerializeField] Transform storeBoxes;
     [Foldout("Rules", true)]
     [SerializeField] RectTransform storeRules;
     [SerializeField] RulesText rulesPrefab;
@@ -122,17 +122,17 @@ public class Customizer : MonoBehaviour
         clicked = clickedBox;
         clickedBox.ReceiveAbility(true, null);
 
-        for (int i = blanks.childCount - 1; i >= 0; i--)
-            blanks.GetChild(i).SetParent(null);
+        for (int i = storeBoxes.childCount - 1; i >= 0; i--)
+            storeBoxes.GetChild(i).SetParent(null);
 
         foreach (AbilityBox box in abilityDictionary[toFind])
-            box.transform.SetParent(blanks);
+            box.transform.SetParent(storeBoxes);
     }
     void SendAbility(Ability ability)
     {
         clicked.ReceiveAbility(true, ability);
-        for (int i = blanks.childCount - 1; i >= 0; i--)
-            blanks.GetChild(i).SetParent(null);
+        for (int i = storeBoxes.childCount - 1; i >= 0; i--)
+            storeBoxes.GetChild(i).SetParent(null);
     }
     void AbilitiesConfirmed()
     {

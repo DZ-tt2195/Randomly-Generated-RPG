@@ -1,7 +1,7 @@
 Title	RANDOMLY GENERATED
 Blank	
 Author_Credit	by Thomas Tang (DZ)
-Last_Update	Last Updated: Feb 22, 2026
+Last_Update	Last Updated: Feb 23, 2026
 Language	Language
 Translator_Credit	Original Language
 Upload_Translation	Upload Translation
@@ -68,7 +68,7 @@ Power_Text	Higher Power = Attack and healing abilities are stronger.
 Defense	Defense
 Defense_Text	Higher Defense = Take less damage from opposing attacks.
 Protected	Protected
-Protected_Text	Can't lose Stats or Health until their next turn.
+Protected_Text	Can't lose Power, Defense, or Health until their next turn.
 Blocked	Blocked
 Blocked_Stat_Drop	$This$ is Protected from losing $Num$ $Stat$.
 Locked	Locked
@@ -206,9 +206,9 @@ Redirect_Log	$This$ redirects attention to $Target$.
 Strike	Strike
 Strike_Text	This gains $DefenseStat$ Defense. Then deal $Num$ damage to a Grounded Enemy.
 Strike_Log	$This$ strikes at $Target$.
-Steal	Steal
-Steal_Text	An Enemy becomes Angry. All Players gain $DefenseStat$ Defense.
-Steal_Log	$This$ steals from $Target$.
+Pillage	Pillage
+Pillage_Text	An Enemy becomes Angry. All Players gain $DefenseStat$ Defense.
+Pillage_Log	$This$ pillages $Target$.
 Surprise	Surprise
 Surprise_Text	A Grounded Enemy becomes Happy. Then deal $Num$ damage to it.
 Surprise_Log	$This$ surprises $Target$.
@@ -221,6 +221,9 @@ Upset_Log	$This$ upsets $Target$.
 Immobilize	Immobilize
 Immobilize_Text	Deal $Num$ damage to a Grounded Enemy. They become Locked for $MiscStat$ turns.
 Immobilize_Log	$This$ Immobilizes $Target$.
+Duel	Duel
+Duel_Text	Deal $Num$ damage to a Grounded Enemy. They gain 1 Power and lose 1 Defense.
+Duel_Log	$This$ duels with $Target$.
 Angel	Angel
 Angel_Text	Heals Players and starts Elevated. Can do everything but attack.
 Air_Combat	Air Combat
@@ -251,7 +254,7 @@ Hide	Hide
 Hide_Text	A Grounded Enemy loses $PowerStat$ Power. Each Grounded Player gains $Num$ Health.
 Hide_Log	$This$ has players hide from $Target$.
 Immunity	Immunity
-Immunity_Text	A Player gains $Num$ Health and becomes Protected and Targeted for $MiscStat$ turn.
+Immunity_Text	A Player gains $Num$ Health and becomes Protected for $MiscStat$ turn.
 Immunity_Log	$This$ grants immunity to $Target$.
 Joy	Joy
 Joy_Text	An Elevated Player gains $Num$ Health and becomes Happy.
@@ -286,38 +289,29 @@ Tailwinds_Log	$This$ creates tailwinds.
 Team_Up	Team Up
 Team_Up_Text	Each Grounded Player gains $Num$ Health and $PowerStat$ Power.
 Team_Up_Log	$This$ forms a team.
+Transport	Transport
+Transport_Text	A Grounded Player gains $Num$ Health. An Enemy switches Positions.
+Transport_Log	$This$ uses transport.
 Wizard	Wizard
 Wizard_Text	Deals small amounts of damage to multiple Enemies at once. Has control over Positions and Power.
 Above_Danger	Above Danger
 Above_Danger_Text	A Grounded Player becomes Elevated and Protected for $MiscStat$ turn.
 Above_Danger_Log	$This$ moves $Target$ above danger.
-Bad_Omens	Bad Omens
-Bad_Omens_Text	Deal $Num$ damage to all Enemies. They all lose $PowerStat$ Power.
-Bad_Omens_Log	$This$ predicts bad omens.
 Bounce	Bounce
 Bounce_Text	Deal $Num$ damage to each Grounded Enemy. They each become Elevated.
 Bounce_Log	$This$ bounces all enemies.
-Chill	Chill
-Chill_Text	Deal $Num$ damage to each Grounded Enemy. Then this becomes Stunned for $MiscStat$ turn.
-Chill_Log	$This$ chills the battlefield.
+Strain	Strain
+Strain_Text	Deal $Num$ damage to each Grounded Enemy. Then this becomes Stunned for $MiscStat$ turn.
+Strain_Log	$This$ strains itself with an attack.
 Accelerate	Accelerate
 Accelerate_Text	Another Player gains $PowerStat$ Power. Decrease their active Cooldown by $MiscStat$.
 Accelerate_Log	$This$ accelerates $Target$.
-Flood	Flood
-Flood_Text	Each Grounded Player becomes Elevated. Then deal $Num$ damage to each Grounded Enemy.
-Flood_Log	$This$ summons a flood.
 Gust	Gust
 Gust_Text	An Elevated Enemy becomes Grounded and loses $PowerStat$ Power.
 Gust_Log	$This$ shoots gusts towards $Target$.
 Headwinds	Headwinds
 Headwinds_Text	Deal $Num$ damage to each Elevated Enemy. They each lose $PowerStat$ Power.
 Headwinds_Log	$This$ creates headwinds.
-Crown	Crown
-Crown_Text	A Player gains $PowerStat$ Power and becomes Targeted for $MiscStat$ turns.
-Crown_Log	$This$ crowns $Target$ as a winner.
-Storm	Storm
-Storm_Text	Each Elevated Player becomes Grounded. Then deal $Num$ damage to each Elevated Enemy.
-Storm_Log	$This$ summons a storm.
 Manipulate_Time	Manipulate Time
 Manipulate_Time_Text	Deal $Num$ damage to each Elevated Enemy. They each get $MiscStat$ Extra Ability.
 Manipulate_Time_Log	$This$ manipulates time.
@@ -327,12 +321,6 @@ Bind_Log	$This$ binds $Target$.
 Punch_Up	Punch Up
 Punch_Up_Text	Deal $Num$ damage to all Enemies with $MiscStat$ Health or more.
 Punch_Up_Log	$This$ punches up at the strongest.
-Quick_Attack	Quick Attack
-Quick_Attack_Text	A Grounded Player gains $PowerStat$ Power. Deal $Num$ damage to each Grounded Enemy.
-Quick_Attack_Log	$This$ has $Target$ perform a quick attack.
-Readjust	Readjust
-Readjust_Text	All Players and Enemies switch Positions.
-Readjust_Log	$This$ readjusts everyone's position.
 Restrain	Restrain
 Restrain_Text	Deal $Num$ damage to all Enemies. They all become Locked for $MiscStat$ turns.
 Restrain_Log	$This$ restrains all enemies.
@@ -351,6 +339,27 @@ Touchdown_Log	$This$ has $Target$ touch down.
 Warp	Warp
 Warp_Text	A Grounded Enemy becomes Elevated and loses $PowerStat$ Power.
 Warp_Log	$This$ warps $Target$ away.
+Flood	Flood
+Flood_Text	Each Grounded Player becomes Elevated. Deal $Num$ damage to each Grounded Enemy.
+Flood_Log	$This$ summons a flood.
+Tornado	Tornado
+Tornado_Text	Each Elevated Player becomes Grounded. Deal $Num$ damage to each Elevated Enemy.
+Tornado_Log	$This$ summons a tornado.
+Readjust	Readjust
+Readjust_Text	An Enemy switches Positions and becomes Locked for $MiscStat$ turns.
+Readjust_Log	$This$ readjusts $Target$'s position.
+Crown	Crown
+Crown_Text	A Player switches Positions and becomes Targeted for $MiscStat$ turns.
+Crown_Log	$This$ crowns $Target$.
+Divine_Wind	Divine Wind
+Divine_Wind_Text	Each Elevated Player gains $PowerStat$ Power. Then deal $Num$ damage to each Elevated Enemy.
+Divine_Wind_Log	$This$ uses divine wind.
+Overgrowth	Overgrowth
+Overgrowth_Text	Each Grounded Player gains $PowerStat$ Power. Then deal $Num$ damage to each Grounded Enemy.
+Overgrowth_Log	$This$ uses overgrowth.
+Bad_Omens	Bad Omens
+Bad_Omens_Text	Deal $Num$ damage to each Grounded Enemy. They each lose $PowerStat$ Power.
+Bad_Omens_Log	$This$ predicts bad omens.
 Revive	Revive
 Revive_Text	Bring back a dead Player with $Num$ Health and a random Emotion.
 Revive_Log	$This$ revives $Target$.
@@ -438,7 +447,7 @@ Dark_Energy	Dark Energy
 Dark_Energy_Text	Deal $Num$ damage to all Players.
 Dark_Energy_Log	$This$ unleashes dark energy.
 Betrayal	Betrayal
-Betrayal_Text	Deal $Num$ damage to another Enemy. This gains $MiscStat$ Max Health, $Num$ Health, and $PowerStat$ Power.
+Betrayal_Text	Deal $Num$ damage to another Enemy. This gains $MiscStat$ Max Health, $Sec$ Health, and $PowerStat$ Power.
 Betrayal_Log	$This$ betrays $Target$.
 Ritual	Ritual
 Ritual_Text	Another Enemy becomes Stunned for $MiscStat$ turn. This reduces their active Ability Cooldown by $MiscStat$.
@@ -505,7 +514,7 @@ Lure	Lure
 Lure_Text	A Player switches Positions. This becomes Targeted for $MiscStat$ turn.
 Lure_Log	$This$ lures $Target$.
 Leprechaun	Leprechaun
-Leprechaun_Text	If this is at full Health, it increases Players Stats; otherwise it deals lots of damage.
+Leprechaun_Text	If this is at full Health, it increases Player Stats; otherwise it deals lots of damage.
 Prank	Prank
 Prank_Text	If this took damage, deal $Num$ damage to all Players.
 Prank_Log	$This$ pranks everyone.
@@ -596,7 +605,7 @@ Strength_in_Numbers	Strength in Numbers
 Strength_in_Numbers_Text	Summon a Rats.
 Strength_in_Numbers_Log	$This$ attracts more Rats.
 Royalty	Royalty
-Royalty_Text	Summons more 1 Star Enemies, and then gives them more Stats and Max Health.
+Royalty_Text	Summons more 1 Star Enemies, and then gives them more Power and Max Health.
 Order	Order
 Order_Text	Deal $Num$ damage to a Player. They become Targeted for $MiscStat$ turn.
 Order_Log	$This$ orders guards to attack $Target$. 
@@ -624,7 +633,7 @@ Sing	Sing
 Sing_Text	A $MiscStat$ Star Enemy becomes Targeted for $MiscStat$ turn.
 Sing_Log	$This$ sings a song.
 Spider	Spider
-Spider_Text	While this is Elevated, it'll make Players Elevated and Sad, and then lower their Stats.
+Spider_Text	While this is Elevated, it'll make Players Elevated and Sad, and then lower their Defense.
 Stab_Prey	Stab Prey
 Stab_Prey_Text	If this is Elevated, deal $Num$ damage to an Elevated Player.
 Stab_Prey_Log	$This$ stabs $Target$.
@@ -660,7 +669,7 @@ Delude	Delude
 Delude_Text	A Grounded Player becomes Happy and Locked for $MiscStat$ turns.
 Delude_Log	$This$ deludes $Target$.
 Delay	Delay
-Delay_Text	One of a Grounded Player's Abilities that can be used is on Cooldown for $MiscStat$ turns.
+Delay_Text	A Grounded Player receives $MiscStat$ Cooldown on one of their available Abilities, at random.
 Delay_Log	$This$ delays $Target$ from using an ability.
 Distract	Distract
 Distract_Text	A Grounded Player's active Ability Cooldown are increased by $MiscStat$.
@@ -705,5 +714,5 @@ Update_5	Jan 13, 2026
 Update_5_Text	Fixed log autoscroll \nFixed encyclopedia putting abilities in not-alphabetical order
 Update_6	Feb 08, 2026
 Update_6_Text	Fixed some translation issues \nAdded fonts for some languages \nFixed minor bugs in encyclopedia
-Update_7	Feb 22, 2026
-Update_7_Text	Emotions no longer have extra rules \nUpdated tutorial \nChanged many abilities \nDropped most cheats and challenges \nAdd Rules that can be chosen to affect gameplay \nRules can be chosen at start of game and encyclopedia
+Update_7	Feb 23, 2026
+Update_7_Text	Replaced Emotion effects and Cheats/Challenges with new mechanic \nAdded X Rules that are randomly chosen to change games \nChanged and/or renamed several abilities \nPlayers have a 22nd ability

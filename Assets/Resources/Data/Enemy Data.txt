@@ -5,7 +5,7 @@ Bees	Helps other Elevated Enemies stay alive with status effects.	5	ELEVATED	Sti
 Drone	Makes itself Neutral and Elevated, then attacks multiple Players at once.	5	ELEVATED	Sound_Waves,Alarm,	None	James Paick\nGuilds of Ravnica\n(Dimir Spybug)	1
 Herald	If not killed fast enough, will start to summon 3 Star Enemies.	5	GROUNDED	Flag_Whack,Announce,	CameOffCooldown	Grant Hansen\nDominion: Renaissance\n(Flag Bearer)	1
 Kitty	Alternates between Grounded and Elevated, and attacks any Player with the same Position.	5	GROUNDED	Scratch,Stuck_in_a_Tree,Land_Feet_First,Lure,	None	Howard Lyon\nEldritch Moon\n(Harmless Offering)	1
-Leprechaun	If this is at full Health, it increases Players Stats; otherwise it deals lots of damage.	5	GROUNDED	Prank,Caught_at_a_Good_Time,	None	Brian Brinlee\nDominion: Nocturne\n(Leprechaun)	1
+Leprechaun	If this is at full Health, it increases Player Stats; otherwise it deals lots of damage.	5	GROUNDED	Prank,Caught_at_a_Good_Time,	None	Brian Brinlee\nDominion: Nocturne\n(Leprechaun)	1
 Partier	Heals all Enemies, gives them random Emotions, and increases their Max Health.	5	GROUNDED	Fight,Share_Drinks,Share_Snacks,Drinking_Game,	None	Jesper Ejsing\nInnistrad: Crimson Vow\n(Gluttonous Guest)	1
 Pixie	Changes all Player Emotions at the same time, and attacks Elevated Players.	5	ELEVATED	Will_o_Wisp,Cast_Happiness,Cast_Sadness,Cast_Anger,	Effectiveness	Claus Stephan\nDominion: Nocturne\n(Pixie)	1
 Puppy	Attacks Players after they're Grounded and their Defense has been reduced.	5	GROUNDED	Bite,Leap,Bark,Cuddle,	None	Claus Stephan\nDominion: Menagerie\n(Sheepdog)	1
@@ -18,11 +18,11 @@ Cow	Either attacks the Player who most recently damaged them, or does healing wh
 Ghost	Makes Players change Positions, and then deals heavy damage to Elevated Players while Sad.	10	ELEVATED	Jumpscare,Lament,Possession,Release,	None	Eric J. Carter\nDominion: Nocturne\n(Ghost)	2
 Ninja	Goes after the Player who has the least Health, and alternates between Grounded and Elevated.	10	ELEVATED	Assassinate,Shuriken,Into_Shadows,Wall_Climb,	LeastHealth	Elisa Cella\nDominion: Rising Sun\n(Ninja)	2
 Siren	Makes a Player Angry and Stunned, and then deals damage to Stunned Players.	10	GROUNDED	Drown,Shipwreck,Manipulate,Sing,	ChooseAttack	Claus Stephan\nDominion: Plunder\n(Siren)	2
-Spider	While this is Elevated, it'll make Players Elevated and Sad, and then lower their Stats.	10	ELEVATED	Stab_Prey,Trapped,Silk_Wrap,Spin_Web,	None	Livia Prima\nGuilds of Ravnica\n(Hatchery Spider)	2
+Spider	While this is Elevated, it'll make Players Elevated and Sad, and then lower their Defense.	10	ELEVATED	Stab_Prey,Trapped,Silk_Wrap,Spin_Web,	None	Livia Prima\nGuilds of Ravnica\n(Hatchery Spider)	2
 Trickster	Makes a Grounded Player Happy, and then makes their Ability Cooldown take longer.	10	ELEVATED	Mischief,Delude,Delay,Distract,	ChooseAttack	Mila Pesic\nThrone of Eldraine\n(Bog Naughty)	2
 Wolf	Makes itself Angry and goes after Sad and Grounded Players. Also helps out any 1 Star Enemies.	10	GROUNDED	Slash,Howl,Nurture,Guard,	Effectiveness	Slawomir Maniak\nEldritch Moon\n(Kessig Prowler)	2
 Demon	Weakens other Enemies to make itself stronger. Eventually it'll unleash a powerful attack on all Players.	15	ELEVATED	Dark_Energy,Betrayal,Ritual,Demand_Energy,	CameOffCooldown	Vincent Proce\nGuilds of Ravnica\n(Doom Whisperer)	3
 Dragon	Deals lots of damage to all Players when Elevated. Heals itself and becomes Grounded when damaged.	15	ELEVATED	Firebreath,Roost,Take_Flight,Roar,	None	Josh Hass\nAmonkhet: Invocations\n(Omniscience)	3
 Puppeteer	Makes Players Elevated, then makes them Grounded again to deal damage. Can also give all other Elevated Enemies Extra Abilities.	15	ELEVATED	Collision,Drop,Dangle,Control,	MostTargets	James Ryman\nKaladesh\n(Marionette Master)	3
-Royalty	Summons more 1 Star Enemies, and then gives them more Stats and Max Health.	15	GROUNDED	Order,Promote,Call,Procession,	None	Kieran Yanner\nThrone of Eldraine\n(Kenrith, the Returned King)	3
+Royalty	Summons more 1 Star Enemies, and then gives them more Power and Max Health.	15	GROUNDED	Order,Promote,Call,Procession,	None	Kieran Yanner\nThrone of Eldraine\n(Kenrith, the Returned King)	3
 Taskmaster	Keeps changing its own Emotion, and deals heavy damage to any Player with a different Emotion.	15	GROUNDED	Punishment,Demand_Happiness,Demand_Anger,Demand_Sadness,	ChooseAttack	Claus Stephan\nDominion: Plunder\n(Taskmaster)	3
