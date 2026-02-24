@@ -33,6 +33,7 @@ public class TutorialManager : MonoBehaviour
             ScreenOverlay.instance.SetUndo(true);
             ScreenOverlay.instance.SetTooltip(true);
 
+            int counter = 0;
             foreach (var KVP in GameFiles.inst.listOfPlayers)
             {
                 PlayerCharacter nextCharacter = Instantiate(characterPrefab).AddComponent<PlayerCharacter>();
@@ -53,7 +54,8 @@ public class TutorialManager : MonoBehaviour
                     wizard = nextCharacter;
                     forcedEmotion = Emotion.Sad;
                 }
-                nextCharacter.SetupCharacter(KVP.Value, new List<AbilityData>(), forcedEmotion, false);                
+                nextCharacter.SetupCharacter(KVP.Value, new List<AbilityData>(), forcedEmotion, counter, false);  
+                counter++;             
             }
 
             currentStep = 1;

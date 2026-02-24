@@ -1,5 +1,5 @@
 controller	abilityName	description	toTarget	playCondition	instructions	baseCooldown	mainNumber	secondNumber	powerStat	defenseStat	miscNumber	abilityTypes
-Blank	Revive	Bring back a dead Player with $Num$ Health and a random Emotion.	OtherPlayer	TargetIsDead	TargetRevive	1	10					Healing
+Blank	Revive	Bring back a dead Player with $Num$ Health and a random Emotion.	OtherPlayer	TargetIsDead	TargetRevive	1	8					Healing
 Blank	Skip_Turn	Do nothing.	Self	None	None	0						Misc
 Archer	Quick_Shot	An Elevated Player becomes Angry. Then deal $Num$ damage to them.	OnePlayer	TargetIsElevated	TargetBecomeAngry/TargetAttack	1	4					Attack/EmotionPlayer
 Archer	Bullseye	This gains $PowerStat$ Power. Then deal $Num$ damage to an Elevated Player.	Self-OnePlayer	None-TargetIsElevated	TargetGainPower-TargetAttack	1	2		1			Attack/StatEnemy

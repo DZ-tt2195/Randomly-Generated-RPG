@@ -1,3 +1,5 @@
 rulesName	rulesDescription	completed
-Aggression	When anyone becomes Angry, they get +1 Power and +1 Defense.	FALSE
-Remorse	When anyone who's Angry kills, they become Sad.	FALSE
+Aggression	When anyone becomes Angry, they gain 1 Power and 1 Defense.	TRUE
+Lucky	When anyone becomes Happy, they gain 2 Health.	TRUE
+Preparation	When anyone uses an attack or healing Ability, they lose 1 Power; if neither, they gain 2 Power.	TRUE
+Remorse	When anyone kills someone else, they become Sad.	TRUE

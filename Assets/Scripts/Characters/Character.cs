@@ -19,6 +19,7 @@ public class Character : MonoBehaviour
 #region Variables
 
     public static float borderColor;
+    public static int maxAbilities = 6;
 
     [Foldout("Character info", true)]
         protected Ability chosenAbility;
@@ -28,7 +29,7 @@ public class Character : MonoBehaviour
         [ReadOnly] public CharacterData data { get; private set; }
         [ReadOnly] public List<Ability> listOfAutoAbilities = new();
         [ReadOnly] public List<Ability> listOfRandomAbilities = new();
-        public static int maxAbilities = 6;
+        int myPosition;
 
     [Foldout("Stats", true)]
         protected int baseHealth;
@@ -76,9 +77,10 @@ public class Character : MonoBehaviour
         foreach (Stats value in Enum.GetValues(typeof(Stats)))
             _privStatMod.Add(value, 0);
     }
-    public void SetupCharacter(CharacterData characterData, List<AbilityData> listOfAbilityData, Emotion startingEmotion, bool abilitiesBeginWithCooldown)
+    public void SetupCharacter(CharacterData characterData, List<AbilityData> listOfAbilityData, Emotion startingEmotion, int position, bool abilitiesBeginWithCooldown)
     {
         data = characterData;
+        myPosition = position;
         this.name = Translator.inst.Translate(characterData.characterName);
         nameText.text = this.name;
         editedDescription = KeywordTooltip.instance.EditText(Translator.inst.Translate($"{characterData.characterName}_Text"));
@@ -287,6 +289,16 @@ public class Character : MonoBehaviour
                 string change = AutoTranslate.Become_New(this.name, Translator.inst.Translate(newEmotion.ToString()));
                 Log.instance.AddText(change, logged);
                 TurnManager.inst.CreateVisual(Translator.inst.Translate(newEmotion.ToString()), this.transform.localPosition);
+
+                if (FightRules.inst.CheckRule(nameof(AutoTranslate.Aggression)) && newEmotion == Emotion.Angry)
+                {
+                    yield return ChangeStat(Stats.Power, 1, logged+1);
+                    yield return ChangeStat(Stats.Defense, 1, logged+1);
+                }
+                else if (FightRules.inst.CheckRule(nameof(AutoTranslate.Lucky)) && newEmotion == Emotion.Happy)
+                {
+                    yield return ChangeHealth(2, logged+1);
+                }
             }
         }
     }
@@ -327,7 +339,7 @@ public class Character : MonoBehaviour
         if (this == null || this.currentHealth > 0) yield break;
 
         Log.instance.AddText(AutoTranslate.Revived(this.name), logged);
-        TurnManager.inst.listOfPlayers.Add(this);
+        TurnManager.inst.listOfPlayers.Insert(myPosition, this);
         TurnManager.inst.speedQueue.Insert(0, this);
         TurnManager.inst.listOfDead.Remove(this);
 
@@ -465,7 +477,18 @@ public class Character : MonoBehaviour
     }
     IEnumerator EndOfTurn(int logged, bool extraAbility)
     {
-        yield return null;
+        if (FightRules.inst.CheckRule(nameof(AutoTranslate.Remorse)) && chosenAbility.killed)
+        {
+            yield return ChangeEmotion(Emotion.Sad, logged);
+        }
+
+        if (FightRules.inst.CheckRule(nameof(AutoTranslate.Preparation)))
+        {
+            if (chosenAbility.mainType == AbilityType.Attack || chosenAbility.mainType == AbilityType.Healing)
+                yield return ChangeStat(Stats.Power, -1, logged);
+            else
+                yield return ChangeStat(Stats.Power, 2, logged);
+        }
         /*
         if (chosenAbility != null && !chosenAbility.data.abilityName.Equals(AutoTranslate.Skip_Turn()))
         {

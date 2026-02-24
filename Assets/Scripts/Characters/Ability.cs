@@ -151,7 +151,6 @@ public class Ability
 
         return answer;
     }
-
     int CalculateHealing(Character user, Character target, int number, int logged)
     {
         int finalCalc = number + user.CalculatePower();
@@ -166,7 +165,6 @@ public class Ability
             return finalCalc;
         }
     }
-
     int CalculateDamage(Character user, Character target, int number, int logged)
     {
         int effectiveness = Effectiveness(user, target);
@@ -631,7 +629,7 @@ public class Ability
 
     IEnumerator TargetRevive(Character target, int logged)
     {
-        yield return target.Revive(data.mainNumber, logged);
+        yield return target.Revive(CalculateHealing(self, target, data.mainNumber, logged), logged);
     }
 
     IEnumerator TargetBecomeStunned(Character target, int logged)

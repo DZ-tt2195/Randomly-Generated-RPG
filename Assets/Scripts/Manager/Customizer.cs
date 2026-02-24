@@ -153,7 +153,7 @@ public class Customizer : MonoBehaviour
             }
             abilitiesForPlayer = GameFiles.inst.CompletePlayerAbilities(abilitiesForPlayer, GameFiles.inst.ConvertToAbilityData(KVP.Value.listOfAbilities, true), TurnManager.inst.dailyRNG);
 
-            nextCharacter.SetupCharacter(KVP.Value, abilitiesForPlayer, Character.RandomEmotion(TurnManager.inst.dailyRNG), false);
+            nextCharacter.SetupCharacter(KVP.Value, abilitiesForPlayer, Character.RandomEmotion(TurnManager.inst.dailyRNG), counter, false);
             TurnManager.inst.AddPlayer(nextCharacter);
             counter++;
         }        
@@ -175,10 +175,9 @@ public class Customizer : MonoBehaviour
             {
                 if (enabled)
                 {
+                    clickedRules.Add(data.rulesName);
                     if (clickedRules.Count > FightRules.totalRules)
                         nextText.toggle.isOn = false;
-                    else
-                        clickedRules.Add(data.rulesName);
                 }
                 else
                 {

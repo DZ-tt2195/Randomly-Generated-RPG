@@ -347,7 +347,7 @@ public class TurnManager : MonoBehaviour
 
             nextEnemy.name = Translator.inst.Translate(dataFile.characterName);
             Log.instance.AddText(AutoTranslate.Enter_Fight(nextEnemy.name), logged);
-            nextEnemy.SetupCharacter(dataFile, GameFiles.inst.ConvertToAbilityData(dataFile.listOfAbilities, false), startingEmotion, true);
+            nextEnemy.SetupCharacter(dataFile, GameFiles.inst.ConvertToAbilityData(dataFile.listOfAbilities, false), startingEmotion, listOfEnemies.Count, true);
         }
     }
 
