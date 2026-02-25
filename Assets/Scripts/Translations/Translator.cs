@@ -24,7 +24,6 @@ public class Translator : MonoBehaviour
     [SerializeField] TMP_Text angry;
     [SerializeField] TMP_Text happy;
     [SerializeField] TMP_Text sad;
-    [SerializeField] TMP_Text neutral;
 
     void Awake()
     {
@@ -144,7 +143,6 @@ public class Translator : MonoBehaviour
         angry.text = AutoTranslate.Angry();
         happy.text = AutoTranslate.Happy();
         sad.text = AutoTranslate.Sad();
-        neutral.text = AutoTranslate.Neutral();
 
         ScreenOverlay.instance.UnloadObjects(SceneManager.GetActiveScene().name, toLoad, GameMode.Other);
     }

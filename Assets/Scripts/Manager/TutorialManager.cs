@@ -37,7 +37,7 @@ public class TutorialManager : MonoBehaviour
             foreach (var KVP in GameFiles.inst.listOfPlayers)
             {
                 PlayerCharacter nextCharacter = Instantiate(characterPrefab).AddComponent<PlayerCharacter>();
-                Emotion forcedEmotion = Emotion.Neutral;
+                Emotion forcedEmotion = Emotion.Happy;
 
                 if (KVP.Key.Equals(nameof(AutoTranslate.Knight)))
                 {
@@ -106,7 +106,7 @@ public class TutorialManager : MonoBehaviour
 
             case 3: //first time attacking
                 yield return TurnManager.inst.NewWave();
-                TurnManager.inst.CreateEnemy(GameFiles.inst.FindSpecificEnemy(nameof(AutoTranslate.Page), 0), Emotion.Neutral, 0);
+                TurnManager.inst.CreateEnemy(GameFiles.inst.FindSpecificEnemy(nameof(AutoTranslate.Page), 0), Emotion.Angry, 0);
                 yield return ClickThroughDialogue(new List<string>() { AutoTranslate.Tutorial_30() });
 
                 yield return TurnManager.inst.NewRound(false);
@@ -188,11 +188,11 @@ public class TutorialManager : MonoBehaviour
                 knight.AddAbility(GameFiles.inst.FindPlayerAbility(nameof(AutoTranslate.Cheer)), false, false);
 
                 angel.AddAbility(GameFiles.inst.FindPlayerAbility(nameof(AutoTranslate.Team_Up)), false, false);
-                angel.AddAbility(GameFiles.inst.FindPlayerAbility(nameof(AutoTranslate.Motivate)), false, false);
+                angel.AddAbility(GameFiles.inst.FindPlayerAbility(nameof(AutoTranslate.Assist)), false, false);
 
-                TurnManager.inst.CreateEnemy(GameFiles.inst.FindSpecificEnemy(nameof(AutoTranslate.Page), 0), Emotion.Neutral, 0);
-                for (int i = 0; i<2; i++)
-                    TurnManager.inst.CreateEnemy(GameFiles.inst.FindSpecificEnemy(nameof(AutoTranslate.Crow), 0), Emotion.Neutral, 0);
+                TurnManager.inst.CreateEnemy(GameFiles.inst.FindSpecificEnemy(nameof(AutoTranslate.Page), 0), Emotion.Sad, 0);
+                TurnManager.inst.CreateEnemy(GameFiles.inst.FindSpecificEnemy(nameof(AutoTranslate.Crow), 0), Emotion.Angry, 0);
+                TurnManager.inst.CreateEnemy(GameFiles.inst.FindSpecificEnemy(nameof(AutoTranslate.Crow), 0), Emotion.Happy, 0);
 
                 yield return ClickThroughDialogue(new List<string>() { AutoTranslate.Tutorial_90(), AutoTranslate.Tutorial_91() });
                 currentStep = 10;

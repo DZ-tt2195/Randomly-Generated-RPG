@@ -1,7 +1,7 @@
 Title	RANDOMLY GENERATED
 Blank	
 Author_Credit	by Thomas Tang (DZ)
-Last_Update	Last Updated: Feb 24, 2026
+Last_Update	Last Updated: Feb 25, 2026
 Language	Language
 Translator_Credit	Original Language
 Upload_Translation	Upload Translation
@@ -28,11 +28,11 @@ Month_10	October
 Month_11	November
 Month_12	December
 Apply_Minimum	Amount capped at 1.
-Super_Effective	It's super effective! (+$Num$)
-Not_Effective	It's not very effective... (-$Num$)
-Increase_Cooldown	$Num$ of $Target$'s Abilities gain $MiscStat$ Cooldown.
-Decrease_Cooldown	$Num$ of $Target$'s Abilities lose $MiscStat$ Cooldown.
-Apply_Cooldown	$Target$'s $Ability$ is placed on $MiscStat$ Cooldown.
+Super_Effective	It's super effective! (+$MainNum$)
+Not_Effective	It's not very effective... (-$MainNum$)
+Increase_Cooldown	$MainNum$ of $Target$'s Abilities gain $MiscNum$ Cooldown.
+Decrease_Cooldown	$MainNum$ of $Target$'s Abilities lose $MiscNum$ Cooldown.
+Apply_Cooldown	$Target$'s $Ability$ is placed on $MiscNum$ Cooldown.
 Special_Thanks	Special Thanks
 All_Thanks	Seth Royston for showing me how to use Google Sheets with Unity \nLiam Cribbs for showing me how to auto-download Google Sheets contents \nFlan Falacci for thinking that this game deserved to be at Project Studio \nThis game was inspired by OMORI (by OMOCAT), and Epic Battle Fantasy V (by KupoGames) \nEveryone who tried this game at Playtest Thursday (somehow you all liked it)
 Settings	Settings
@@ -48,8 +48,6 @@ Display_Tooltip	Display Tooltip for keywords / icons
 Cooldown	Cooldown
 Cooldown_Text	Cooldown: Ability can't be used again until enough turns have passed.
 Dead	Dead
-Neutral	Neutral
-Neutral_Text	Default Emotion.
 Sad	Sad
 Sad_Text	 +2 Power against Happy, -2 Power against Angry.
 Happy	Happy
@@ -70,7 +68,7 @@ Defense_Text	Higher Defense = Take less damage from opposing attacks.
 Protected	Protected
 Protected_Text	Can't lose Power, Defense, or Health until their next turn.
 Blocked	Blocked
-Blocked_Stat_Drop	$This$ is Protected from losing $Num$ $Stat$.
+Blocked_Stat_Drop	$This$ is Protected from losing $MainNum$ $Stat$.
 Locked	Locked
 Locked_Text	Emotion and Position can't change until their next turn.
 Blocked_Emotion	$This$ is Locked and can't change Emotion.
@@ -82,27 +80,27 @@ Targeted	Targeted
 Targeted_Text	All single-target Abilities must target them if possible.
 Extra	Extra Ability
 Extra_Text	Can use another Ability on their turn.
-Gain_Extra_Ability	$This$ gains extra Abilities on their turn ($Num$).
+Gain_Extra_Ability	$This$ gains extra Abilities on their turn ($MainNum$).
 Use_Extra_Ability	$This$ uses another Ability.
 Star	Star
 Star_Text	More Star = Stronger Enemy type.
 Customize_Game	Customize Game
 Customize_Description	Choose Player Abilities and Rules. Everything else will be randomized.
-Defeat_Waves	Defeat $Num$ waves of enemies.
+Defeat_Waves	Defeat $MainNum$ waves of enemies.
 Title_Screen	Title Screen
 Quit_Game	Quit
-Round	Round $Num$
-Wave	Wave $Num$ / $Max$
+Round	Round $MainNum$
+Wave	Wave $MainNum$ / $Max$
 Enter_Fight	$This$ enters the fight.
 Quit_Fight	You quit.
 Game_Won	You won!
 Game_Lost	You lost.
-Waves_Survived	Waves survived: $Num$
+Waves_Survived	Waves survived: $MainNum$
 Time_Taken	Time taken: $Time$
-Increase_Stat	$This$ gains $Num$ $Stat$.
-Decrease_Stat	$This$ loses $Num$ $Stat$.
+Increase_Stat	$This$ gains $MainNum$ $Stat$.
+Decrease_Stat	$This$ loses $MainNum$ $Stat$.
 Become_New	$This$ becomes $Change$.
-Change_Status	$This$ is $Status$ (turns: $Num$).
+Change_Status	$This$ is $Status$ (turns: $MainNum$).
 Died	$This$ has died.
 Revived	$This$ comes back to life.
 Choose_Ability	$This$: Choose an Ability.
@@ -159,118 +157,106 @@ Chosen_Rule	Rule: $Rule$
 Knight	Knight
 Knight_Text	Deals lots of damage to individual Enemies, and only Grounded ones. Has control over Emotions and Defense.
 Battle_Cry	Battle Cry
-Battle_Cry_Text	A Player becomes Angry and gains $DefenseStat$ Defense.
+Battle_Cry_Text	A Player becomes Angry and gains $DefNum$ Defense.
 Battle_Cry_Log	$This$ has $Target$ do a battle cry.
 Cheer	Cheer
-Cheer_Text	Another Player becomes Happy and gets $MiscStat$ Extra Ability.
+Cheer_Text	Another Player becomes Happy and gets $MiscNum$ Extra Ability.
 Cheer_Log	$This$ cheers on $Target$.
 Daze	Daze
-Daze_Text	A Grounded Enemy becomes Happy and loses $DefenseStat$ Defense.
+Daze_Text	A Grounded Enemy becomes Happy and loses $DefNum$ Defense.
 Daze_Log	$This$ dazes $Target$.
 Desperation	Desperation
-Desperation_Text	This becomes Sad. Then deal $Num$ damage to a Grounded Enemy.
+Desperation_Text	This becomes Sad. Then deal $MainNum$ damage to a Grounded Enemy.
 Desperation_Log	$This$ gets desperate against $Target$.
 Embarass	Embarass
-Embarass_Text	A Grounded Enemy becomes Sad. Then deal $Num$ damage to them.
+Embarass_Text	A Grounded Enemy becomes Sad. Then deal $MainNum$ damage to them.
 Embarass_Log	$This$ embarasses $Target$.
 Force	Force
-Force_Text	Deal $Num$ damage to a Grounded Enemy. Their active Ability Cooldown are decreased by $MiscStat$.
+Force_Text	Deal $MainNum$ damage to a Grounded Enemy. Their active Ability Cooldown are decreased by $MiscNum$.
 Force_Log	$This$ forces $Target$ to work harder.
 Impale	Impale
-Impale_Text	Deal $Num$ damage to a Grounded Enemy. They becomes Stunned for $MiscStat$ turn.
+Impale_Text	Deal $MainNum$ damage to a Grounded Enemy. They becomes Stunned for $MiscNum$ turn.
 Impale_Log	$This$ impales $Target$.
 Intimidate	Intimidate
 Intimidate_Text	This becomes Angry, and another Player becomes Sad.
 Intimidate_Log	$This$ intimidates $Target$.
 Joust	Joust
-Joust_Text	Deal $Num$ damage to a Grounded Enemy. Then this loses $PowerStat$ Power.
+Joust_Text	Deal $MainNum$ damage to a Grounded Enemy. Then this loses $PowNum$ Power.
 Joust_Log	$This$ uses joust against $Target$.
 Knock_Down	Knock Down
-Knock_Down_Text	Deal $Num$ damage to a Grounded Enemy. Then they lose $DefenseStat$ Defense.
+Knock_Down_Text	Deal $MainNum$ damage to a Grounded Enemy. Then they lose $DefNum$ Defense.
 Knock_Down_Log	$This$ knocks down $Target$.
-Meditate	Meditate
-Meditate_Text	A Player becomes Neutral, Protected, and Locked for $MiscStat$ turn.
-Meditate_Log	$This$ has $Target$ meditate.
 Mirror	Mirror
-Mirror_Text	Deal $Num$ damage to a Grounded Enemy with the same Emotion as this.
+Mirror_Text	Deal $MainNum$ damage to a Grounded Enemy with the same Emotion as this.
 Mirror_Log	$This$ mirrors $Target$.
 Mock	Mock
-Mock_Text	A Grounded Enemy becomes Angry. Then deal $Num$ damage to them.
+Mock_Text	A Grounded Enemy becomes Angry. Then deal $MainNum$ damage to them.
 Mock_Log	$This$ mocks $Target$.
-Neutralize	Neutralize
-Neutralize_Text	Deal $Num$ damage to a Grounded Enemy. Then they become Neutral.
-Neutralize_Log	$This$ neutralizes $Target$.
 Redirect	Redirect
-Redirect_Text	Another Player gains $DefenseStat$ Defense and becomes Targeted for $MiscStat$ turns.
+Redirect_Text	Another Player gains $DefNum$ Defense and becomes Targeted for $MiscNum$ turns.
 Redirect_Log	$This$ redirects attention to $Target$.
 Strike	Strike
-Strike_Text	This gains $DefenseStat$ Defense. Then deal $Num$ damage to a Grounded Enemy.
+Strike_Text	This gains $DefNum$ Defense. Then deal $MainNum$ damage to a Grounded Enemy.
 Strike_Log	$This$ strikes at $Target$.
 Pillage	Pillage
-Pillage_Text	An Enemy becomes Angry. All Players gain $DefenseStat$ Defense.
+Pillage_Text	An Enemy becomes Angry. All Players gain $DefNum$ Defense.
 Pillage_Log	$This$ pillages $Target$.
 Surprise	Surprise
-Surprise_Text	A Grounded Enemy becomes Happy. Then deal $Num$ damage to it.
+Surprise_Text	A Grounded Enemy becomes Happy. Then deal $MainNum$ damage to it.
 Surprise_Log	$This$ surprises $Target$.
 Twirl	Twirl
-Twirl_Text	This becomes Happy. Then deals $Num$ damage to a Grounded Enemy.
+Twirl_Text	This becomes Happy. Then deals $MainNum$ damage to a Grounded Enemy.
 Twirl_Log	$This$ twirls into $Target$.
 Upset	Upset
-Upset_Text	A Grounded Enemy becomes Sad and loses $DefenseStat$ Defense.
+Upset_Text	A Grounded Enemy becomes Sad and loses $DefNum$ Defense.
 Upset_Log	$This$ upsets $Target$.
 Immobilize	Immobilize
-Immobilize_Text	Deal $Num$ damage to a Grounded Enemy. They become Locked for $MiscStat$ turns.
+Immobilize_Text	Deal $MainNum$ damage to a Grounded Enemy. They become Locked for $MiscNum$ turns.
 Immobilize_Log	$This$ Immobilizes $Target$.
 Duel	Duel
-Duel_Text	Deal $Num$ damage to a Grounded Enemy. They gain 1 Power and lose 1 Defense.
+Duel_Text	Deal $MainNum$ damage to a Grounded Enemy. They gain 1 Power and lose 1 Defense.
 Duel_Log	$This$ duels with $Target$.
+Prioritize	Prioritize
+Prioritize_Text	Deal $MainNum$ damage to a Grounded Enemy. They become Targteted for $MiscNum$ turns.
+Prioritize_Log	$This$ prioritizes defeating $Target$.
 Angel	Angel
 Angel_Text	Heals Players and starts Elevated. Can do everything but attack.
 Air_Combat	Air Combat
-Air_Combat_Text	A Grounded Player and Grounded Enemy both become Elevated. The Player gains $PowerStat$ Power.
+Air_Combat_Text	Both a Grounded Player and Grounded Enemy become Elevated and gain $PowNum$ Power.
 Air_Combat_Log	$This$ initiates air combat.
 Assist	Assist
-Assist_Text	Another Player gains $Num$ Health and gets $MiscStat$ Extra Ability.
+Assist_Text	Another Player gains $MainNum$ Health and gets $MiscNum$ Extra Ability.
 Assist_Log	$This$ assists $Target$.
-Calm_Down	Calm Down
-Calm_Down_Text	Each non-Neutral Player gain $Num$ Health and becomes Neutral.
-Calm_Down_Log	$This$ calms everyone down.
 Crash_Land	Crash Land
-Crash_Land_Text	An Elevated Enemy becomes Grounded and loses $DefenseStat$ Defense.
+Crash_Land_Text	An Elevated Enemy becomes Grounded and loses $DefNum$ Defense.
 Crash_Land_Log	$This$ makes $Target$ crash land.
 Enrage	Enrage
-Enrage_Text	A Grounded Player gains $Num$ Health and becomes Angry.
+Enrage_Text	An Elevated Player gains $MainNum$ Health and becomes Angry.
 Enrage_Log	$This$ enrages $Target$.
 Exhaust	Exhaust
-Exhaust_Text	An Enemy becomes Sad and loses $PowerStat$ Power.
+Exhaust_Text	An Enemy becomes Sad and loses $PowNum$ Power.
 Exhaust_Log	$This$ exhausts $Target$.
 Exorcism	Exorcism
-Exorcism_Text	An Elevated Enemy loses $DefenseStat$ Defense. Each Elevated Player gains $Num$ Health.
+Exorcism_Text	An Elevated Enemy loses $DefNum$ Defense. Each Elevated Player gains $MainNum$ Health.
 Exorcism_Log	$This$ exorcises $Target$.
 Gift_of_Flight	Gift of Flight
 Gift_of_Flight_Text	A Grounded Enemy becomes Happy and Elevated.
 Gift_of_Flight_Log	$This$ gives $Target$ the gift of flight.
 Hide	Hide
-Hide_Text	A Grounded Enemy loses $PowerStat$ Power. Each Grounded Player gains $Num$ Health.
+Hide_Text	A Grounded Enemy loses $PowNum$ Power. Each Grounded Player gains $MainNum$ Health.
 Hide_Log	$This$ has players hide from $Target$.
 Immunity	Immunity
-Immunity_Text	A Player gains $Num$ Health and becomes Protected for $MiscStat$ turn.
+Immunity_Text	A Player gains $MainNum$ Health and becomes Protected for $MiscNum$ turn.
 Immunity_Log	$This$ grants immunity to $Target$.
 Joy	Joy
-Joy_Text	An Elevated Player gains $Num$ Health and becomes Happy.
+Joy_Text	A Grounded Player gains $MainNum$ Health and becomes Happy.
 Joy_Log	$This$ brings $Target$ joy.
 Lift_Up	Lift Up
-Lift_Up_Text	A Grounded Player gains $Num$ Health and becomes Elevated.
+Lift_Up_Text	A Grounded Player gains $MainNum$ Health and becomes Elevated.
 Lift_Up_Log	$This$ lifts $Target$ up.
-Motivate	Motivate
-Motivate_Text	A Player gains $Num$ Health. Decrease their active Cooldown by $MiscStat$.
-Motivate_Log	$This$ motivates $Target$.
 Overheal	Overheal
-Overheal_Text	All Players gain $MiscStat$ Max Health and $Num$ Health.
+Overheal_Text	All Players gain $MiscNum$ Max Health and $MainNum$ Health.
 Overheal_Log	$This$ overheals all players.
-Petrify	Petrify
-Petrify_Text	An Elevated Enemy becomes Grounded, Neutral, and Stunned for $MiscStat$ turn.
-Petrify_Log	$This$ petrifies $Target$.
 Plummet	Plummet
 Plummet_Text	An Elevated Enemy becomes Angry and Grounded.
 Plummet_Log	$This$ plummets $Target$.
@@ -278,90 +264,93 @@ Retreat	Retreat
 Retreat_Text	An Elevated Player becomes Sad and Grounded.
 Retreat_Log	$This$ has $Target$ retreat.
 Security	Security
-Security_Text	A Player switches Positions and gains $DefenseStat$ Defense.
-Security_Log	$This$ rescues $Target$.
+Security_Text	A Player switches Positions and gains $DefNum$ Defense.
+Security_Log	$This$ gives $Target$ security.
 Soft_Landing	Soft Landing
-Soft_Landing_Text	An Elevated Player gains $Num$ Health and becomes Grounded.
+Soft_Landing_Text	An Elevated Player gains $MainNum$ Health and becomes Grounded.
 Soft_Landing_Log	$This$ helps $Target$ land softly.
 Tailwinds	Tailwinds
-Tailwinds_Text	Each Elevated Player gains $Num$ Health and $DefenseStat$ Defense.
+Tailwinds_Text	Each Elevated Player gains $MainNum$ Health and $PowNum$ Power.
 Tailwinds_Log	$This$ creates tailwinds.
 Team_Up	Team Up
-Team_Up_Text	Each Grounded Player gains $Num$ Health and $PowerStat$ Power.
+Team_Up_Text	Each Grounded Player gains $MainNum$ Health and $DefNum$ Defense.
 Team_Up_Log	$This$ forms a team.
 Transport	Transport
-Transport_Text	A Grounded Player gains $Num$ Health. An Enemy switches Positions.
-Transport_Log	$This$ uses transport.
+Transport_Text	A Player gains $MainNum$ Health. An Enemy switches Positions.
+Transport_Log	$This$ establishes transportation.
+Restore	Restore
+Restore_Text	Each Player with $MiscNum$ Health or less gains $MainNum$ Health.
+Restore_Log	$This$ restores everyone's health.
+Preserve	Preserve
+Preserve_Text	A Player gains $MainNum$ Health and becomes Locked for $MiscNum$ turns.
+Preserve_Log	$This$ preserves $Target$.
 Wizard	Wizard
 Wizard_Text	Deals small amounts of damage to multiple Enemies at once. Has control over Positions and Power.
 Above_Danger	Above Danger
-Above_Danger_Text	A Grounded Player becomes Elevated and Protected for $MiscStat$ turn.
+Above_Danger_Text	A Grounded Player becomes Elevated and Protected for $MiscNum$ turn.
 Above_Danger_Log	$This$ moves $Target$ above danger.
 Bounce	Bounce
-Bounce_Text	Deal $Num$ damage to each Grounded Enemy. They each become Elevated.
+Bounce_Text	Deal $MainNum$ damage to each Grounded Enemy. They each become Elevated.
 Bounce_Log	$This$ bounces all enemies.
 Strain	Strain
-Strain_Text	Deal $Num$ damage to each Grounded Enemy. Then this becomes Stunned for $MiscStat$ turn.
+Strain_Text	Deal $MainNum$ damage to each Grounded Enemy. Then this becomes Stunned for $MiscNum$ turn.
 Strain_Log	$This$ strains itself with an attack.
 Accelerate	Accelerate
-Accelerate_Text	Another Player gains $PowerStat$ Power. Decrease their active Cooldown by $MiscStat$.
+Accelerate_Text	Another Player gains $PowNum$ Power. Decrease their active Cooldown by $MiscNum$.
 Accelerate_Log	$This$ accelerates $Target$.
 Gust	Gust
-Gust_Text	An Elevated Enemy becomes Grounded and loses $PowerStat$ Power.
+Gust_Text	An Elevated Enemy becomes Grounded and loses $PowNum$ Power.
 Gust_Log	$This$ shoots gusts towards $Target$.
 Headwinds	Headwinds
-Headwinds_Text	Deal $Num$ damage to each Elevated Enemy. They each lose $PowerStat$ Power.
+Headwinds_Text	Deal $MainNum$ damage to each Elevated Enemy. They each lose $PowNum$ Power.
 Headwinds_Log	$This$ creates headwinds.
 Manipulate_Time	Manipulate Time
-Manipulate_Time_Text	Deal $Num$ damage to each Elevated Enemy. They each get $MiscStat$ Extra Ability.
+Manipulate_Time_Text	Deal $MainNum$ damage to each Elevated Enemy. They each get $MiscNum$ Extra Ability.
 Manipulate_Time_Log	$This$ manipulates time.
 Bind	Bind
-Bind_Text	An Elevated Enemy becomes Grounded and Stunned for $MiscStat$ turn.
+Bind_Text	An Elevated Enemy becomes Grounded and Stunned for $MiscNum$ turn.
 Bind_Log	$This$ binds $Target$.
 Punch_Up	Punch Up
-Punch_Up_Text	Deal $Num$ damage to all Enemies with $MiscStat$ Health or more.
+Punch_Up_Text	Deal $MainNum$ damage to all Enemies with $MiscNum$ Health or more.
 Punch_Up_Log	$This$ punches up at the strongest.
-Restrain	Restrain
-Restrain_Text	Deal $Num$ damage to all Enemies. They all become Locked for $MiscStat$ turns.
-Restrain_Log	$This$ restrains all enemies.
 Shockwave	Shockwave
-Shockwave_Text	Deal $Num$ damage to all Enemies, and $Sec$ damage to all Players.
+Shockwave_Text	Deal $MainNum$ damage to all Enemies, and $SecNum$ damage to all Players.
 Shockwave_Log	$This$ creates a shockwave.
 Stalactites	Stalactites
-Stalactites_Text	Deal $Num$ damage to each Elevated Enemy. They each become Grounded.
+Stalactites_Text	Deal $MainNum$ damage to each Elevated Enemy. They each become Grounded.
 Stalactites_Log	$This$ drops stalactites.
 Team_Attack	Team Attack
-Team_Attack_Text	If all 3 Players are Elevated, deal $Num$ damage to all Enemies.
+Team_Attack_Text	If all 3 Players are Elevated, deal $MainNum$ damage to all Enemies.
 Team_Attack_Log	$This$ uses a team attack.
 Touchdown	Touchdown
-Touchdown_Text	An Elevated Player becomes Grounded and gains $PowerStat$ Power.
+Touchdown_Text	An Elevated Player becomes Grounded and gains $PowNum$ Power.
 Touchdown_Log	$This$ has $Target$ touch down.
 Warp	Warp
-Warp_Text	A Grounded Enemy becomes Elevated and loses $PowerStat$ Power.
+Warp_Text	A Grounded Enemy becomes Elevated and loses $PowNum$ Power.
 Warp_Log	$This$ warps $Target$ away.
 Flood	Flood
-Flood_Text	Each Grounded Player becomes Elevated. Deal $Num$ damage to each Grounded Enemy.
+Flood_Text	Each Grounded Player becomes Elevated. Deal $MainNum$ damage to each Grounded Enemy.
 Flood_Log	$This$ summons a flood.
 Tornado	Tornado
-Tornado_Text	Each Elevated Player becomes Grounded. Deal $Num$ damage to each Elevated Enemy.
+Tornado_Text	Each Elevated Player becomes Grounded. Deal $MainNum$ damage to each Elevated Enemy.
 Tornado_Log	$This$ summons a tornado.
 Readjust	Readjust
-Readjust_Text	An Enemy switches Positions and becomes Locked for $MiscStat$ turns.
+Readjust_Text	An Enemy switches Positions and becomes Locked for $MiscNum$ turns.
 Readjust_Log	$This$ readjusts $Target$'s position.
-Crown	Crown
-Crown_Text	A Player switches Positions and becomes Targeted for $MiscStat$ turns.
-Crown_Log	$This$ crowns $Target$.
 Divine_Wind	Divine Wind
-Divine_Wind_Text	Each Elevated Player gains $PowerStat$ Power. Then deal $Num$ damage to each Elevated Enemy.
+Divine_Wind_Text	Each Elevated Player gains $PowNum$ Power. Then deal $MainNum$ damage to each Elevated Enemy.
 Divine_Wind_Log	$This$ uses divine wind.
 Overgrowth	Overgrowth
-Overgrowth_Text	Each Grounded Player gains $PowerStat$ Power. Then deal $Num$ damage to each Grounded Enemy.
+Overgrowth_Text	Each Grounded Player gains $PowNum$ Power. Then deal $MainNum$ damage to each Grounded Enemy.
 Overgrowth_Log	$This$ uses overgrowth.
 Bad_Omens	Bad Omens
-Bad_Omens_Text	Deal $Num$ damage to each Grounded Enemy. They each lose $PowerStat$ Power.
+Bad_Omens_Text	Deal $MainNum$ damage to each Grounded Enemy. They each lose $PowNum$ Power.
 Bad_Omens_Log	$This$ predicts bad omens.
+Conformity	Conformity
+Conformity_Text	Deal $MainNum$ damage to all Enemies with a different Emotion and Position than this.
+Conformity_Log	$This$ punishes non-conformists.
 Revive	Revive
-Revive_Text	Bring back a dead Player with $Num$ Health and a random Emotion.
+Revive_Text	Bring back a dead Player with $MainNum$ Health and a random Emotion.
 Revive_Log	$This$ revives $Target$.
 Skip_Turn	Skip Turn
 Skip_Turn_Text	Do nothing.
@@ -369,187 +358,187 @@ Skip_Turn_Log	$This$ skips their turn.
 Archer	Archer
 Archer_Text	Makes itself Happy, then shoots down Angry and Elevated Players.
 Quick_Shot	Quick Shot
-Quick_Shot_Text	An Elevated Player becomes Angry. Then deal $Num$ damage to them.
+Quick_Shot_Text	An Elevated Player becomes Angry. Then deal $MainNum$ damage to them.
 Quick_Shot_Log	$This$ fires a quick shot at $Target$.
 Bullseye	Bullseye
-Bullseye_Text	This gains $PowerStat$ Power. Then deal $Num$ damage to an Elevated Player.
+Bullseye_Text	This gains $PowNum$ Power. Then deal $MainNum$ damage to an Elevated Player.
 Bullseye_Log	$This$ shoots a direct arrow at $Target$.
 Volley	Volley
-Volley_Text	Deal $Num$ damage to all Players.
+Volley_Text	Deal $MainNum$ damage to all Players.
 Volley_Log	$This$ fires a volley of arrows.
 Focus	Focus
-Focus_Text	This becomes Happy and gains $DefenseStat$ Defense.
+Focus_Text	This becomes Happy and gains $DefNum$ Defense.
 Focus_Log	$This$ focuses its aim.
 Barbarian	Barbarian
 Barbarian_Text	Makes itself Angry, goes after the Grounded Player with the most Health, and lowers their Max Health.
 Fury	Fury
-Fury_Text	Deal $Num$ damage to the Grounded Player with the most Health.
+Fury_Text	Deal $MainNum$ damage to the Grounded Player with the most Health.
 Fury_Log	$This$ unleashes its fury on $Target$.
 Savagery	Savagery
-Savagery_Text	All Grounded Players lose 1 Max Health and $PowerStat$ Power.
+Savagery_Text	All Grounded Players lose 1 Max Health and $PowNum$ Power.
 Savagery_Log	$This$ displays savagery.
 Brawl	Brawl
-Brawl_Text	This and the Grounded Player with the most Health both become Angry and Locked for $MiscStat$ turns.
+Brawl_Text	This and the Grounded Player with the most Health both become Angry and Locked for $MiscNum$ turns.
 Brawl_Log	$This$ brawls with $Target$.
 Camp	Camp
-Camp_Text	This becomes Protected for $MiscStat$ turn and gets $MiscStat$ Extra Ability.
+Camp_Text	This becomes Protected for $MiscNum$ turn and gets $MiscNum$ Extra Ability.
 Camp_Log	$This$ goes into its camp.
 Bat	Bat
 Bat_Text	Makes itself Sad, then it attacks Happy players and heals at the same time.
 Drain	Drain
-Drain_Text	Deal $Num$ damage to a Player. This gains $Num$ Health.
+Drain_Text	Deal $MainNum$ damage to a Player. This gains $MainNum$ Health.
 Drain_Log	$This$ drains blood out of $Target$.
 Screech	Screech
-Screech_Text	A Player becomes Happy and loses $DefenseStat$ Defense.
+Screech_Text	A Player becomes Happy and loses $DefNum$ Defense.
 Screech_Log	$This$ screeches.
 Hunting_Season	Hunting Season
-Hunting_Season_Text	This gains $PowerStat$ Power.
+Hunting_Season_Text	This gains $PowNum$ Power.
 Hunting_Season_Log	$This$ goes on the hunt.
 Bloodthirst	Bloodthirst
-Bloodthirst_Text	This becomes Sad and gets $MiscStat$ Extra Ability.
+Bloodthirst_Text	This becomes Sad and gets $MiscNum$ Extra Ability.
 Bloodthirst_Log	$This$ becomes bloodthirsty.
 Bees	Bees
 Bees_Text	Helps other Elevated Enemies stay alive with status effects.
 Sting	Sting
-Sting_Text	Deal $Num$ damage to a Player. This becomes Targeted for $MiscStat$ turn.
+Sting_Text	Deal $MainNum$ damage to a Player. This becomes Targeted for $MiscNum$ turn.
 Sting_Log	$This$ stings $Target$.
 Honey	Honey
-Honey_Text	Another Elevated Enemy gains $Num$ Health.
+Honey_Text	Another Elevated Enemy gains $MainNum$ Health.
 Honey_Log	$This$ gives $Target$ honey.
 Protect_the_Queen	Protect the Queen
-Protect_the_Queen_Text	Another Elevated Enemy becomes Protected for $MiscStat$ turn.
+Protect_the_Queen_Text	Another Elevated Enemy becomes Protected for $MiscNum$ turn.
 Protect_the_Queen_Log	$This$ protects $Target$.
 Support	Support
-Support_Text	Another Elevated Enemy gets $MiscStat$ Extra Ability.
+Support_Text	Another Elevated Enemy gets $MiscNum$ Extra Ability.
 Support_Log	$This$ supports $Target$.
 Cow	Cow
 Cow_Text	Either attacks the Player who most recently damaged them, or does healing while Happy.
 Charge	Charge
-Charge_Text	Deal $Num$ damage to the last Player who attacked this.
+Charge_Text	Deal $MainNum$ damage to the last Player who attacked this.
 Charge_Log	$This$ charges at $Target$.
 Milk	Milk
-Milk_Text	Another Enemy gains $Num$ Health and becomes Happy.
+Milk_Text	Another Enemy gains $MainNum$ Health and becomes Happy.
 Milk_Log	$This$ gives milk to $Target$.
 Graze	Graze
-Graze_Text	This gains $Num$ Max Health and $Num$ Health.
+Graze_Text	This gains $MainNum$ Max Health and $MainNum$ Health.
 Graze_Log	$This$ grazes.
 Bellow	Bellow
-Bellow_Text	This gains $DefenseStat$ Defense and becomes Targeted for $MiscStat$ turns.
+Bellow_Text	This gains $DefNum$ Defense and becomes Targeted for $MiscNum$ turns.
 Bellow_Log	$This$ bellows.
 Crow	Crow
 Crow_Text	Basic Enemy who attacks Grounded and Elevated Players.
 Peck	Peck
-Peck_Text	Deal $Num$ damage to any Player.
+Peck_Text	Deal $MainNum$ damage to any Player.
 Peck_Log	$This$ pecks $Target$.
 Demon	Demon
 Demon_Text	Weakens other Enemies to make itself stronger. Eventually it'll unleash a powerful attack on all Players.
 Dark_Energy	Dark Energy
-Dark_Energy_Text	Deal $Num$ damage to all Players.
+Dark_Energy_Text	Deal $MainNum$ damage to all Players.
 Dark_Energy_Log	$This$ unleashes dark energy.
 Betrayal	Betrayal
-Betrayal_Text	Deal $Num$ damage to another Enemy. This gains $MiscStat$ Max Health, $Sec$ Health, and $PowerStat$ Power.
+Betrayal_Text	Deal $MainNum$ damage to another Enemy. This gains $MiscNum$ Max Health, $SecNum$ Health, and $PowNum$ Power.
 Betrayal_Log	$This$ betrays $Target$.
 Ritual	Ritual
-Ritual_Text	Another Enemy becomes Stunned for $MiscStat$ turn. This reduces their active Ability Cooldown by $MiscStat$.
+Ritual_Text	Another Enemy becomes Stunned for $MiscNum$ turn. This reduces their active Ability Cooldown by $MiscNum$.
 Ritual_Log	$This$ uses $Target$ in a ritual.
 Demand_Energy	Demand Energy
-Demand_Energy_Text	All other Players and Enemies lose $PowerStat$ Power.
+Demand_Energy_Text	All other Players and Enemies lose $PowNum$ Power.
 Demand_Energy_Log	$This$ demands energy.
 Dragon	Dragon
 Dragon_Text	Deals lots of damage to all Players when Elevated. Heals itself and becomes Grounded when damaged.
 Firebreath	Firebreath
-Firebreath_Text	If this is Elevated, deals $Num$ damage to all Players.
+Firebreath_Text	If this is Elevated, deals $MainNum$ damage to all Players.
 Firebreath_Log	$This$ unleashes its firebreath.
 Roost	Roost
-Roost_Text	If this is Elevated, it becomes Grounded and gains $Num$ Health.
+Roost_Text	If this is Elevated, it becomes Grounded and gains $MainNum$ Health.
 Roost_Log	$This$ uses roost.
 Take_Flight	Take Flight
 Take_Flight_Text	All Grounded Enemies becomes Elevated.
 Take_Flight_Log	$This$ is back for more.
 Roar	Roar
-Roar_Text	This becomes Angry and gains $PowerStat$ Power.
+Roar_Text	This becomes Angry and gains $PowNum$ Power.
 Roar_Log	$This$ roars.
 Drone	Drone
-Drone_Text	Makes itself Neutral and Elevated, then attacks multiple Players at once.
+Drone_Text	Makes itself Elevated and raises its Power before attacking multiple Players at once.
 Sound_Waves	Sound Waves
-Sound_Waves_Text	If this is Neutral, deal $Num$ damage to all Players.
+Sound_Waves_Text	Deal $MainNum$ damage to all Players.
 Sound_Waves_Log	$This$ creates sound waves.
 Alarm	Alarm
-Alarm_Text	This becomes Neutral, Elevated, and Locked for $MiscStat$ turns.
-Alarm_Log	$This$ is alarmed.
+Alarm_Text	This gains $PowNum$ Power and becomes Elevated and Locked for $MiscNum$ turns.
+Alarm_Log	$This$ activates an alarm.
 Ghost	Ghost
 Ghost_Text	Makes Players change Positions, and then deals heavy damage to Elevated Players while Sad.
 Jumpscare	Jumpscare
-Jumpscare_Text	Deal $Num$ damage to an Elevated Player.
+Jumpscare_Text	Deal $MainNum$ damage to an Elevated Player.
 Jumpscare_Log	$This$ jumpscares $Target$.
 Lament	Lament
 Lament_Text	This and another Enemy both become Sad.
 Lament_Log	$This$ and $Target$ lament.
 Possession	Possession
-Possession_Text	A Grounded Player becomes Elevated and loses $PowerStat$ Power.
+Possession_Text	A Grounded Player becomes Elevated and loses $PowNum$ Power.
 Possession_Log	$This$ possesses $Target$.
 Release	Release
-Release_Text	An Elevated Player becomes Grounded and Stunned for $MiscStat$ turn.
+Release_Text	An Elevated Player becomes Grounded and Stunned for $MiscNum$ turn.
 Release_Log	$This$ releases $Target$.
 Herald	Herald
 Herald_Text	If not killed fast enough, will start to summon 3 Star Enemies.
 Flag_Whack	Flag Whack
-Flag_Whack_Text	Deal $Num$ damage to a Player.
+Flag_Whack_Text	Deal $MainNum$ damage to a Player.
 Flag_Whack_Log	$This$ whacks $Target$.
 Announce	Announce
-Announce_Text	Summon a random $MiscStat$ Star Enemy.
+Announce_Text	Summon a random $MiscNum$ Star Enemy.
 Announce_Log	$This$ announces in a new enemy.
 Kitty	KITTY!!!
 Kitty_Text	Alternates between Grounded and Elevated, and attacks any Player with the same Position.
 Scratch	Scratch
-Scratch_Text	Deal $Num$ damage to a Player with the same Position as this.
+Scratch_Text	Deal $MainNum$ damage to a Player with the same Position as this.
 Scratch_Log	$This$ scratches $Target$.
 Stuck_in_a_Tree	Stuck in a Tree
 Stuck_in_a_Tree_Text	If this is Grounded, it becomes Elevated and Sad.
 Stuck_in_a_Tree_Log	$This$ gets stuck in a tree.
 Land_Feet_First	Land Feet First
-Land_Feet_First_Text	If this is Elevated, it becomes Grounded and gains $Num$ Health.
+Land_Feet_First_Text	If this is Elevated, it becomes Grounded and gains $MainNum$ Health.
 Land_Feet_First_Log	$This$ lands feet first.
 Lure	Lure
-Lure_Text	A Player switches Positions. This becomes Targeted for $MiscStat$ turn.
+Lure_Text	A Player switches Positions. This becomes Targeted for $MiscNum$ turn.
 Lure_Log	$This$ lures $Target$.
 Leprechaun	Leprechaun
 Leprechaun_Text	If this is at full Health, it increases Player Stats; otherwise it deals lots of damage.
 Prank	Prank
-Prank_Text	If this took damage, deal $Num$ damage to all Players.
+Prank_Text	If this took damage, deal $MainNum$ damage to all Players.
 Prank_Log	$This$ pranks everyone.
 Caught_at_a_Good_Time	Caught at a Good Time
-Caught_at_a_Good_Time_Text	If this is at full Health, all Players gain $PowerStat$ Power and $DefenseStat$ Defense.
+Caught_at_a_Good_Time_Text	If this is at full Health, all Players gain $PowNum$ Power and $DefNum$ Defense.
 Caught_at_a_Good_Time_Log	$This$ gives everyone gold.
 Ninja	Ninja
 Ninja_Text	Goes after the Player who has the least Health, and alternates between Grounded and Elevated.
 Assassinate	Assassinate
-Assassinate_Text	Deal $Num$ damage to the Player with the least amount of Health.
+Assassinate_Text	Deal $MainNum$ damage to the Player with the least amount of Health.
 Assassinate_Log	$This$ pulls a sneak attack on $Target$.
 Shuriken	Shuriken
-Shuriken_Text	A Player loses $PowerStat$ Power and $DefenseStat$ Defense.
+Shuriken_Text	A Player loses $PowNum$ Power and $DefNum$ Defense.
 Shuriken_Log	$This$ throws a shuriken at $Target$.
 Into_Shadows	Into Shadows
-Into_Shadows_Text	If this is Elevated, it becomes Grounded and Protected for $MiscStat$ turn.
+Into_Shadows_Text	If this is Elevated, it becomes Grounded and Protected for $MiscNum$ turn.
 Into_Shadows_Log	$This$ leaps into shadows.
 Wall_Climb	Wall Climb
-Wall_Climb_Text	If this is Grounded, it becomes Elevated and gains $DefenseStat$ Defense.
+Wall_Climb_Text	If this is Grounded, it becomes Elevated and gains $DefNum$ Defense.
 Wall_Climb_Log	$This$ climbs a wall.
 Page	Page
 Page_Text	Basic Enemy who attacks Grounded Players.
 Swing	Swing
-Swing_Text	Deal $Num$ damage to a Grounded Player.
+Swing_Text	Deal $MainNum$ damage to a Grounded Player.
 Swing_Log	$This$ swings against $Target$.
 Partier	Partier
 Partier_Text	Heals all Enemies, gives them random Emotions, and increases their Max Health.
 Fight	Fight
-Fight_Text	Deal $Num$ damage to a Grounded Player.
+Fight_Text	Deal $MainNum$ damage to a Grounded Player.
 Fight_Log	$This$ fights $Target$.
 Share_Drinks	Share Drinks
-Share_Drinks_Text	All Enemies gain $Num$ Health.
+Share_Drinks_Text	All Enemies gain $MainNum$ Health.
 Share_Drinks_Log	$This$ shares drinks.
 Share_Snacks	Share Snacks
-Share_Snacks_Text	All Enemies gain $MiscStat$ Max Health.
+Share_Snacks_Text	All Enemies gain $MiscNum$ Max Health.
 Share_Snacks_Log	$This$ shares snacks.
 Drinking_Game	Drinking Game
 Drinking_Game_Text	All Enemies get a random Emotion.
@@ -557,7 +546,7 @@ Drinking_Game_Log	$This$ plays a drinking game.
 Pixie	Pixie
 Pixie_Text	Changes all Player Emotions at the same time, and attacks Elevated Players.
 Will_o_Wisp	Will-o'-Wisp
-Will_o_Wisp_Text	Deal $Num$ damage to an Elevated Player.
+Will_o_Wisp_Text	Deal $MainNum$ damage to an Elevated Player.
 Will_o_Wisp_Log	$This$ conjures a will-o'-wisp against $Target$.
 Cast_Happiness	Cast Happiness
 Cast_Happiness_Text	All Player become Happy.
@@ -571,35 +560,35 @@ Cast_Anger_Log	$This$ casts anger.
 Puppeteer	Puppeteer
 Puppeteer_Text	Makes Players Elevated, then makes them Grounded again to deal damage. Can also give all other Elevated Enemies Extra Abilities.
 Collision	Collision
-Collision_Text	Deal $Num$ damage to all Elevated Players.
+Collision_Text	Deal $MainNum$ damage to all Elevated Players.
 Collision_Log	$This$ collides puppets with each other.
 Drop	Drop
-Drop_Text	Deal $Num$ damage to all Elevated Players. They become Grounded.
+Drop_Text	Deal $MainNum$ damage to all Elevated Players. They become Grounded.
 Drop_Log	$This$ drops everyone on the floor.
 Dangle	Dangle
-Dangle_Text	All Grounded Players become Elevated and lose $DefenseStat$ Defense.
+Dangle_Text	All Grounded Players become Elevated and lose $DefNum$ Defense.
 Dangle_Log	$This$ dangles players in the air.
 Control	Control
-Control_Text	Each other Elevated Enemy gets $MiscStat$ Extra Ability.
+Control_Text	Each other Elevated Enemy gets $MiscNum$ Extra Ability.
 Control_Log	$This$ controls other enemies.
 Puppy	PUPPY!!!
 Puppy_Text	Attacks Players after they're Grounded and their Defense has been reduced.
 Bite	Bite
-Bite_Text	Deal $Num$ damage to a Grounded Player with -1 Defense or less.
+Bite_Text	Deal $MainNum$ damage to a Grounded Player with -1 Defense or less.
 Bite_Log	$This$ bites $Target$.
 Leap	Leap
-Leap_Text	Deal $Num$ damage to an Elevated Player. They become Grounded.
+Leap_Text	Deal $MainNum$ damage to an Elevated Player. They become Grounded.
 Leap_Log	$This$ leaps into $Target$.
 Bark	Bark
-Bark_Text	All Players lose $DefenseStat$ Defense.
+Bark_Text	All Players lose $DefNum$ Defense.
 Bark_Log	$This$ barks.
 Cuddle	Cuddle
-Cuddle_Text	A Player with $MiscStat$ Defense or more loses $DefenseStat$ Defense.
+Cuddle_Text	A Player with $MiscNum$ Defense or more loses $DefNum$ Defense.
 Cuddle_Log	$This$ cuddles with $Target$.
 Rats	Rats
 Rats_Text	Defensive enemy that makes copies of itself.
 Swarm	Swarm
-Swarm_Text	Deal $Num$ damage to a Grounded Player. This gains $DefenseStat$ Defense.
+Swarm_Text	Deal $MainNum$ damage to a Grounded Player. This gains $DefNum$ Defense.
 Swarm_Log	$This$ swarms $Target$.
 Strength_in_Numbers	Strength in Numbers
 Strength_in_Numbers_Text	Summon a Rats.
@@ -607,49 +596,49 @@ Strength_in_Numbers_Log	$This$ attracts more Rats.
 Royalty	Royalty
 Royalty_Text	Summons more 1 Star Enemies, and then gives them more Power and Max Health.
 Order	Order
-Order_Text	Deal $Num$ damage to a Player. They become Targeted for $MiscStat$ turn.
+Order_Text	Deal $MainNum$ damage to a Player. They become Targeted for $MiscNum$ turn.
 Order_Log	$This$ orders guards to attack $Target$. 
 Promote	Promote
-Promote_Text	Another Enemy gains $MiscStat$ Max Health and $Num$ Health.
+Promote_Text	Another Enemy gains $MiscNum$ Max Health and $MainNum$ Health.
 Promote_Log	$This$ promotes $Target$.
 Call	Call
-Call_Text	Summon a random $MiscStat$ Star Enemy.
+Call_Text	Summon a random $MiscNum$ Star Enemy.
 Call_Log	$This$ calls for help.
 Procession	Procession
-Procession_Text	All Enemies gain $PowerStat$ Power.
+Procession_Text	All Enemies gain $PowNum$ Power.
 Procession_Log	$This$ arranges a procession.
 Siren	Siren
 Siren_Text	Makes a Player Angry and Stunned, and then deals damage to Stunned Players.
 Drown	Drown
-Drown_Text	Deal $Num$ damage to a Stunned Player.
+Drown_Text	Deal $MainNum$ damage to a Stunned Player.
 Drown_Log	$This$ drowns $Target$.
 Shipwreck	Shipwreck
-Shipwreck_Text	An Angry Player loses $DefenseStat$ Defense and becomes Stunned for $MiscStat$ turns.
+Shipwreck_Text	An Angry Player loses $DefNum$ Defense and becomes Stunned for $MiscNum$ turns.
 Shipwreck_Log	$This$ causes $Target$ to shipwreck.
 Manipulate	Manipulate
-Manipulate_Text	A Player becomes Angry and Locked for $MiscStat$ turns.
+Manipulate_Text	A Player becomes Angry and Locked for $MiscNum$ turns.
 Manipulate_Log	$This$ manipulates $Target$.
 Sing	Sing
-Sing_Text	A $MiscStat$ Star Enemy becomes Targeted for $MiscStat$ turn.
+Sing_Text	A $MiscNum$ Star Enemy becomes Targeted for $MiscNum$ turn.
 Sing_Log	$This$ sings a song.
 Spider	Spider
 Spider_Text	While this is Elevated, it'll make Players Elevated and Sad, and then lower their Defense.
 Stab_Prey	Stab Prey
-Stab_Prey_Text	If this is Elevated, deal $Num$ damage to an Elevated Player.
+Stab_Prey_Text	If this is Elevated, deal $MainNum$ damage to an Elevated Player.
 Stab_Prey_Log	$This$ stabs $Target$.
 Trapped	Trapped
-Trapped_Text	If this is Elevated, a Grounded Player becomes Elevated and Locked for $MiscStat$ turns.
+Trapped_Text	If this is Elevated, a Grounded Player becomes Elevated and Locked for $MiscNum$ turns.
 Trapped_Log	$This$ traps $Target$.
 Silk_Wrap	Silk Wrap
-Silk_Wrap_Text	An Elevated Player becomes Sad and loses $PowerStat$ Power.
+Silk_Wrap_Text	An Elevated Player becomes Sad and loses $PowNum$ Power.
 Silk_Wrap_Log	$This$ wraps $Target$ in silk.
 Spin_Web	Spin Web
-Spin_Web_Text	A Grounded Enemy becomes Elevated and gains $DefenseStat$ Defense.
+Spin_Web_Text	A Grounded Enemy becomes Elevated and gains $DefNum$ Defense.
 Spin_Web_Log	$This$ spins a web for $Target$.
 Taskmaster	Taskmaster
 Taskmaster_Text	Keeps changing its own Emotion, and deals heavy damage to any Player with a different Emotion.
 Punishment	Punishment
-Punishment_Text	Does $Num$ damage to Player who doesn't have the same Emotion as this.
+Punishment_Text	Does $MainNum$ damage to Player who doesn't have the same Emotion as this.
 Punishment_Log	$This$ punishes $Target$.
 Demand_Happiness	Demand Happiness
 Demand_Happiness_Text	This becomes Happy.
@@ -663,47 +652,47 @@ Demand_Sadness_Log	$This$ demands Sad.
 Trickster	Trickster
 Trickster_Text	Makes a Grounded Player Happy, and then makes their Ability Cooldown take longer.
 Mischief	Mischief
-Mischief_Text	Deal $Num$ damage to a Grounded Player.
+Mischief_Text	Deal $MainNum$ damage to a Grounded Player.
 Mischief_Log	$This$ causes mischief for $Target$.
 Delude	Delude
-Delude_Text	A Grounded Player becomes Happy and Locked for $MiscStat$ turns.
+Delude_Text	A Grounded Player becomes Happy and Locked for $MiscNum$ turns.
 Delude_Log	$This$ deludes $Target$.
 Delay	Delay
-Delay_Text	A Grounded Player receives $MiscStat$ Cooldown on one of their available Abilities, at random.
+Delay_Text	A Grounded Player receives $MiscNum$ Cooldown on one of their available Abilities, at random.
 Delay_Log	$This$ delays $Target$ from using an ability.
 Distract	Distract
-Distract_Text	A Grounded Player's active Ability Cooldown are increased by $MiscStat$.
+Distract_Text	A Grounded Player's active Ability Cooldown are increased by $MiscNum$.
 Distract_Log	$This$ distracts $Target$.
 Wall	Wall
 Wall_Text	Makes itself Targeted and increases its Defense.
 Toughen	Toughen
-Toughen_Text	This gains $Num$ Health and gains $DefenseStat$ Defense.
+Toughen_Text	This gains $MainNum$ Health and gains $DefNum$ Defense.
 Toughen_Log	$This$ toughens up.
 In_the_Way	In the Way
-In_the_Way_Text	This becomes Grounded and Targeted for $MiscStat$ turn.
+In_the_Way_Text	This becomes Grounded and Targeted for $MiscNum$ turn.
 In_the_Way_Log	$This$ is in the way.
 Wolf	Wolf
 Wolf_Text	Makes itself Angry and goes after Sad and Grounded Players. Also helps out any 1 Star Enemies.
 Slash	Slash
-Slash_Text	Deal $Num$ damage to a Grounded Player.
+Slash_Text	Deal $MainNum$ damage to a Grounded Player.
 Slash_Log	$This$ slashes $Target$.
 Howl	Howl
 Howl_Text	An Enemy becomes Angry, and a Player becomes Sad.
 Howl_Log	$This$ howls.
 Nurture	Nurture
-Nurture_Text	All $MiscStat$ Star Enemies gain $PowerStat$ Power and $DefenseStat$ Defense.
+Nurture_Text	All $MiscNum$ Star Enemies gain $PowNum$ Power and $DefNum$ Defense.
 Nurture_Log	$This$ nurtures the young.
 Guard	Guard
-Guard_Text	A $MiscStat$ Star Enemy becomes Protected for $MiscStat$ turn.
+Guard_Text	A $MiscNum$ Star Enemy becomes Protected for $MiscNum$ turn.
 Guard_Log	$This$ guards $Target$.
 Aggression	Aggression
 Aggression_Text	When anyone becomes Angry, they gain 1 Power and 1 Defense.
 Lucky	Lucky
 Lucky_Text	When anyone becomes Happy, they gain 2 Health.
 Remorse	Remorse
-Remorse_Text	When anyone kills someone else, they become Sad.
+Remorse_Text	After anyone kills someone else, the killer become Sad.
 Preparation	Preparation
-Preparation_Text	When anyone uses an attack or healing Ability, they lose 1 Power; if neither, they gain 2 Power.
+Preparation_Text	After anyone uses an attack or healing Ability, they lose 1 Power; if neither, they gain 2 Power.
 Update_0	Dec 9, 2025
 Update_0_Text	Dropped speed and luck, and changed abilities that used them\nTurn order is now players first (in order of Wizard, Knight, Angel), then enemies in order\nAngry's +2 Power is now +1 Power, +1 Defense
 Update_1	Dec 12, 2025
@@ -718,5 +707,5 @@ Update_5	Jan 13, 2026
 Update_5_Text	Fixed log autoscroll \nFixed encyclopedia putting abilities in not-alphabetical order
 Update_6	Feb 08, 2026
 Update_6_Text	Fixed some translation issues \nAdded fonts for some languages \nFixed minor bugs in encyclopedia
-Update_7	Feb 24, 2026
-Update_7_Text	Replaced Emotion effects and Cheats/Challenges with new mechanic \nAdded 10 Rules; 2 are randomly chosen per game to change combat \nChanged and renamed several abilities \nPlayers have a 22nd ability \nRevive is affected by the user's Power, and doesn't mess with the turn order
+Update_7	Feb 25, 2026
+Update_7_Text	Replaced Neutral, Emotion effects and Cheats/Challenges with new mechanic \nAdded 10 Rules; 2 are randomly chosen per game to change combat \nChanged and replaced many abilities \nRevive is affected by the user's Power, and doesn't mess with the turn order

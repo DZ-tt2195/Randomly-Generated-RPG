@@ -30,7 +30,6 @@ public class ScreenOverlay : MonoBehaviour
         [SerializeField] TMP_Text characterName;
         [SerializeField] TMP_Text characterDescription;
         [SerializeField] TMP_Text characterArtCredit;
-        [SerializeField] TMP_Text emotionText;
         [SerializeField] TMP_Text stats1;
         [SerializeField] List<AbilityBox> listOfBoxes = new();
         [SerializeField] List<Image> listOfStars = new();
@@ -153,7 +152,6 @@ public class ScreenOverlay : MonoBehaviour
         characterDescription.text = character.editedDescription;
         characterArtCredit.text = character.data.artCredit;
 
-        emotionText.text = KeywordTooltip.instance.EditText(Translator.inst.Translate(character.CurrentEmotion.ToString()));
         stats1.text = statText;
 
         int nextBox = 0;

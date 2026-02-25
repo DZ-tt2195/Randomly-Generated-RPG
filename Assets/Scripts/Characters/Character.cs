@@ -10,7 +10,7 @@ using System.Linq;
 public enum Stats { Power, Defense };
 public enum StatusEffect { Stunned, Targeted, Locked, Protected, Extra };
 public enum Position { Grounded, Elevated };
-public enum Emotion { Neutral, Happy, Angry, Sad };
+public enum Emotion { Happy, Angry, Sad };
 
 [RequireComponent(typeof(Button))][RequireComponent(typeof(Image))]
 public class Character : MonoBehaviour
@@ -407,7 +407,7 @@ public class Character : MonoBehaviour
                 else
                 {
                     result = AutoTranslate.Confirm_Target(Translator.inst.Translate(chosenAbility.data.abilityName));
-                    result += " ";
+                    result += "\n";
                     result += string.Join(" + ", chosenTarget.Select(target => target.name));
                 }
 
@@ -551,10 +551,7 @@ public class Character : MonoBehaviour
     }
     public void CharacterUI()
     {
-        if (topText == null || statusText == null)
-            return;
-
-        if (CurrentEmotion == Emotion.Neutral)
+        if (ScreenOverlay.instance.mode == GameMode.Other)
         {
             this.myImage.color = Color.white;
         }
@@ -567,6 +564,8 @@ public class Character : MonoBehaviour
             Color newColor = KeywordTooltip.instance.SearchForKeyword(CurrentEmotion.ToString()).color;
             this.myImage.color = new Color(newColor.r, newColor.g, newColor.b);
         }
+        if (topText == null || statusText == null)
+            return;
 
         topText.text = "";
         if (currentHealth <= 0)

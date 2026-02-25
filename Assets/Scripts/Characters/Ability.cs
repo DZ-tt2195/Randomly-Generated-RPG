@@ -46,19 +46,19 @@ public class Ability
             {
                 switch (parameters[i].Name)
                 {
-                    case "Num":
+                    case "MainNum":
                         args[i] = Mathf.Abs(data.mainNumber).ToString(); 
                         break;
-                    case "Sec":
+                    case "SecNum":
                         args[i] = Mathf.Abs(data.secondNumber).ToString(); 
                         break;
-                    case "PowerStat":
+                    case "PowNum":
                         args[i] = Mathf.Abs(data.powerStat).ToString(); 
                         break;
-                    case "DefenseStat":
+                    case "DefNum":
                         args[i] = Mathf.Abs(data.defenseStat).ToString(); 
                         break;
-                    case "MiscStat":
+                    case "MiscNum":
                         args[i] = Mathf.Abs(data.miscNumber).ToString(); 
                         break;
                 }
@@ -254,18 +254,6 @@ public class Ability
     bool TargetInjured(int currentIndex)
     {
         listOfTargets[currentIndex].RemoveAll(target => target.CalculateHealthPercent() > 0.5f);
-        return listOfTargets[currentIndex].Count > 0;
-    }
-
-    bool TargetIsNeutral(int currentIndex)
-    {
-        listOfTargets[currentIndex].RemoveAll(target => target.CurrentEmotion != Emotion.Neutral);
-        return listOfTargets[currentIndex].Count > 0;
-    }
-
-    bool TargetNotNeutral(int currentIndex)
-    {
-        listOfTargets[currentIndex].RemoveAll(target => target.CurrentEmotion == Emotion.Neutral);
         return listOfTargets[currentIndex].Count > 0;
     }
 
@@ -590,11 +578,6 @@ public class Ability
     IEnumerator TargetBecomeSad(Character target, int logged)
     {
         yield return target.ChangeEmotion(Emotion.Sad, logged);
-    }
-
-    IEnumerator TargetBecomeNeutral(Character target, int logged)
-    {
-        yield return target.ChangeEmotion(Emotion.Neutral, logged);
     }
 
     IEnumerator TargetRandomEmotion(Character target, int logged)
