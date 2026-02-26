@@ -1,7 +1,7 @@
 Title	RANDOMLY GENERATED
 Blank	
 Author_Credit	by Thomas Tang (DZ)
-Last_Update	Last Updated: Feb 25, 2026
+Last_Update	Last Updated: Feb 26, 2026
 Language	Language
 Translator_Credit	Original Language
 Upload_Translation	Upload Translation
@@ -75,7 +75,6 @@ Blocked_Emotion	$This$ is Locked and can't change Emotion.
 Blocked_Position	$This$ is Locked and can't change Position.
 Stunned	Stunned
 Stunned_Text	Skips their next turn.
-Miss_Turn	$This$ is Stunned and skips a turn.
 Targeted	Targeted
 Targeted_Text	All single-target Abilities must target them if possible.
 Extra	Extra Ability
@@ -105,9 +104,9 @@ Died	$This$ has died.
 Revived	$This$ comes back to life.
 Choose_Ability	$This$: Choose an Ability.
 Must_Choose_Targeted	$Target$ is Targeted.
-Choose_One_Player	Choose a player to target ($Ability$).
-Choose_Another_Player	Choose another player to target ($Ability$).
-Choose_An_Enemy	Choose an enemy to target ($Ability$).
+Choose_One_Player	Choose a Player to target ($Ability$).
+Choose_Another_Player	Choose another pPayer to target ($Ability$).
+Choose_An_Enemy	Choose an Enemy to target ($Ability$).
 Confirm_No_Target	Use $Ability$?
 Confirm_Target	Use $Ability$ on:
 Tutorial	Tutorial
@@ -154,6 +153,7 @@ Default_Position	Default Position
 Rules	Rules
 Rules_Reminder	A maximum of 2 Rules per game.
 Chosen_Rule	Rule: $Rule$
+Apply_Rule	Applying Rule: $Rule$.
 Knight	Knight
 Knight_Text	Deals lots of damage to individual Enemies, and only Grounded ones. Has control over Emotions and Defense.
 Battle_Cry	Battle Cry
@@ -686,19 +686,27 @@ Guard	Guard
 Guard_Text	A $MiscNum$ Star Enemy becomes Protected for $MiscNum$ turn.
 Guard_Log	$This$ guards $Target$.
 Aggression	Aggression
-Aggression_Text	When anyone becomes Angry, they gain 1 Power and 1 Defense.
+Aggression_Text	When anyone becomes Angry, they gain 1 Power and lose 1 Defense.
 Lucky	Lucky
 Lucky_Text	When anyone becomes Happy, they gain 2 Health.
 Remorse	Remorse
-Remorse_Text	After anyone kills someone else, the killer become Sad.
+Remorse_Text	End of anyone's turn: if they killed someone else, they become Sad.
 Preparation	Preparation
-Preparation_Text	After anyone uses an attack or healing Ability, they lose 1 Power; if neither, they gain 2 Power.
+Preparation_Text	End of anyone's turn: if they used an attack or healing Ability, they lose 1 Power; if neither, they gain 2 Power.
+Inspiration	Inspiration
+Inspiration_Text	Waves 2-5: Players get a new set of random Abilities.
+Crowds	Crowds
+Crowds_Text	Waves 1-4: Add another 1 Star Enemy, and all Enemies lose 1 Max Health.
+Revenge	Revenge
+Revenge_Text	End of anyone’s turn: if they killed someone else, everyone on the other side becomes Angry.
+Charge_Up	Charge Up
+Charge_Up_Text	Each Wave: A random Enemy gains 5 Max Health, 5 Health, 2 Power, 2 Defense, and becomes Stunned for 3 turns.
 Update_0	Dec 9, 2025
 Update_0_Text	Dropped speed and luck, and changed abilities that used them\nTurn order is now players first (in order of Wizard, Knight, Angel), then enemies in order\nAngry's +2 Power is now +1 Power, +1 Defense
 Update_1	Dec 12, 2025
 Update_1_Text	Changed Royalty's Procession to affect Power\nFixed a tag for an ability
 Update_2	Dec 18, 2025
-Update_2_Text	Knight's Twirl and Wizard's Shockwave: has no Cooldown\nAngel's Team Up: 2 Health to 3 Health\nWizard's Lightning Storm and Flood: 3 damage to 4 damage, dropped “lightning”\nArcher's Volley: has 1 turn of cooldown\nFixed some UI bugs with Defense stat
+Update_2_Text	Knight's Twirl and Wizard's Shockwave: has no Cooldown\nAngel's Team Up: 2 Health to 3 Health\nWizard's Lightning Storm and Flood: 3 damage to 4 damage, dropped “lightning”\nArcher's Volley: has 1 turn of cooldown\nFixed some wrong UI displays
 Update_3	Dec 28, 2025
 Update_3_Text	New translation features - you can download the English translation file and upload your own translation
 Update_4	Jan 07, 2026
@@ -707,5 +715,5 @@ Update_5	Jan 13, 2026
 Update_5_Text	Fixed log autoscroll \nFixed encyclopedia putting abilities in not-alphabetical order
 Update_6	Feb 08, 2026
 Update_6_Text	Fixed some translation issues \nAdded fonts for some languages \nFixed minor bugs in encyclopedia
-Update_7	Feb 25, 2026
-Update_7_Text	Replaced Neutral, Emotion effects and Cheats/Challenges with new mechanic \nAdded 10 Rules; 2 are randomly chosen per game to change combat \nChanged and replaced many abilities \nRevive is affected by the user's Power, and doesn't mess with the turn order
+Update_7	Feb 26, 2026
+Update_7_Text	Replaced Neutral, Emotion effects and Cheats/Challenges with new mechanic \nAdded 10 Rules; 2 are randomly chosen per game to change combat \nChanged and replaced many abilities \nRevive is affected by the user's Power, and doesn't mess with the turn order \nPower and Defense are capped at -3 and +3

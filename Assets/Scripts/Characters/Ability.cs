@@ -26,7 +26,6 @@ public class Ability
     [ReadOnly] public bool killed;
     [ReadOnly] public bool fullHeal;
     bool runNextMethod;
-
     public Dictionary<string, MethodInfo> boolDictionary = new();
     public Dictionary<string, MethodInfo> enumeratorDictionary = new();
 
@@ -216,185 +215,154 @@ public class Ability
 
         return true;
     }
-
     bool TargetIsDead(int currentIndex)
     {
         return listOfTargets[currentIndex].Count > 0;
     }
-
     bool CanSummon(int currentIndex)
     {
         return TurnManager.inst.listOfEnemies.Count < 5;
     }
-
     bool TargetAtMaxHealth(int currentIndex)
     {
         listOfTargets[currentIndex].RemoveAll(target => target.CalculateHealthPercent() < 1f);
         return listOfTargets[currentIndex].Count > 0;
     }
-
     bool TargetNotMaxHealth(int currentIndex)
     {
         listOfTargets[currentIndex].RemoveAll(target => target.CalculateHealthPercent() >= 1f);
         return listOfTargets[currentIndex].Count > 0;
     }
-
     bool TargetHealthOrMore(int currentIndex)
     {
         listOfTargets[currentIndex].RemoveAll(target => target.currentHealth <= data.miscNumber);
         return listOfTargets[currentIndex].Count > 0;
     }
-
     bool TargetHealthOrLess(int currentIndex)
     {
         listOfTargets[currentIndex].RemoveAll(target => target.currentHealth >= data.miscNumber);
         return listOfTargets[currentIndex].Count > 0;
     }
-
     bool TargetInjured(int currentIndex)
     {
         listOfTargets[currentIndex].RemoveAll(target => target.CalculateHealthPercent() > 0.5f);
         return listOfTargets[currentIndex].Count > 0;
     }
-
     bool TargetIsHappy(int currentIndex)
     {
         listOfTargets[currentIndex].RemoveAll(target => target.CurrentEmotion != Emotion.Happy);
         return listOfTargets[currentIndex].Count > 0;
     }
-
     bool TargetNotHappy(int currentIndex)
     {
         listOfTargets[currentIndex].RemoveAll(target => target.CurrentEmotion == Emotion.Happy);
         return listOfTargets[currentIndex].Count > 0;
     }
-
     bool TargetIsAngry(int currentIndex)
     {
         listOfTargets[currentIndex].RemoveAll(target => target.CurrentEmotion != Emotion.Angry);
         return listOfTargets[currentIndex].Count > 0;
     }
-
     bool TargetNotAngry(int currentIndex)
     {
         listOfTargets[currentIndex].RemoveAll(target => target.CurrentEmotion == Emotion.Angry);
         return listOfTargets[currentIndex].Count > 0;
     }
-
     bool TargetIsSad(int currentIndex)
     {
         listOfTargets[currentIndex].RemoveAll(target => target.CurrentEmotion != Emotion.Sad);
         return listOfTargets[currentIndex].Count > 0;
     }
-
     bool TargetNotSad(int currentIndex)
     {
         listOfTargets[currentIndex].RemoveAll(target => target.CurrentEmotion == Emotion.Sad);
         return listOfTargets[currentIndex].Count > 0;
     }
-
     bool TargetSameEmotion(int currentIndex)
     {
         listOfTargets[currentIndex].RemoveAll(target => target.CurrentEmotion != self.CurrentEmotion);
         return listOfTargets[currentIndex].Count > 0;
     }
-
     bool TargetDifferentEmotion(int currentIndex)
     {
         listOfTargets[currentIndex].RemoveAll(target => target.CurrentEmotion == self.CurrentEmotion);
         return listOfTargets[currentIndex].Count > 0;
     }
-
     bool TargetIsGrounded(int currentIndex)
     {
         return listOfTargets[currentIndex].Count > 0;
     }
-
     bool AllGrounded(int currentIndex)
     {
         int numberGrounded = (data.toTarget[currentIndex] == TeamTarget.AllPlayers) ? TurnManager.inst.listOfPlayers.Count + TurnManager.inst.listOfDead.Count : TurnManager.inst.listOfEnemies.Count;
         listOfTargets[currentIndex].RemoveAll(target => target.CurrentPosition != Position.Grounded);
         return (listOfTargets[currentIndex].Count == numberGrounded);
     }
-
     bool TargetIsElevated(int currentIndex)
     {
         listOfTargets[currentIndex].RemoveAll(target => target.CurrentPosition != Position.Elevated);
         return listOfTargets[currentIndex].Count > 0;
     }
-
     bool AllElevated(int currentIndex)
     {
         int numberGrounded = (data.toTarget[currentIndex] == TeamTarget.AllPlayers) ? TurnManager.inst.listOfPlayers.Count + TurnManager.inst.listOfDead.Count : TurnManager.inst.listOfEnemies.Count;
         listOfTargets[currentIndex].RemoveAll(target => target.CurrentPosition != Position.Elevated);
         return (listOfTargets[currentIndex].Count == numberGrounded);
     }
-
     bool TargetSamePosition(int currentIndex)
     {
         listOfTargets[currentIndex].RemoveAll(target => target.CurrentPosition != self.CurrentPosition);
         return listOfTargets[currentIndex].Count > 0;
     }
-
     bool TargetDifferentPosition(int currentIndex)
     {
         listOfTargets[currentIndex].RemoveAll(target => target.CurrentPosition == self.CurrentPosition);
         return listOfTargets[currentIndex].Count > 0;
     }
-
     bool TargetPowerOrMore(int currentIndex)
     {
         listOfTargets[currentIndex].RemoveAll(target => target.CalculatePower() <= data.miscNumber);
         return listOfTargets[currentIndex].Count > 0;
     }
-
     bool TargetPowerOrLess(int currentIndex)
     {
         listOfTargets[currentIndex].RemoveAll(target => target.CalculatePower() >= data.miscNumber);
         return listOfTargets[currentIndex].Count > 0;
     }
-
     bool TargetDefenseOrMore(int currentIndex)
     {
         listOfTargets[currentIndex].RemoveAll(target => target.CalculateDefense() <= data.miscNumber);
         return listOfTargets[currentIndex].Count > 0;
     }
-
     bool TargetDefenseOrLess(int currentIndex)
     {
         listOfTargets[currentIndex].RemoveAll(target => target.CalculateDefense() >= data.miscNumber);
         return listOfTargets[currentIndex].Count > 0;
     }
-
     bool TargetIsStunned(int currentIndex)
     {
         listOfTargets[currentIndex].RemoveAll(target => target.statEffectDict[StatusEffect.Stunned] <= 0);
         return listOfTargets[currentIndex].Count > 0;
     }
-
     bool TargetNotStunned(int currentIndex)
     {
         listOfTargets[currentIndex].RemoveAll(target => target.statEffectDict[StatusEffect.Stunned] >= 1);
         return listOfTargets[currentIndex].Count > 0;
     }
-
     bool NoTargetedPlayer(int currentIndex)
     {
         return (TurnManager.inst.targetedPlayer == null);
     }
-
     bool NoTargetedEnemy(int currentIndex)
     {
         return (TurnManager.inst.targetedEnemy == null);
     }
-
     bool LastAttackerExists(int currentIndex)
     {
         if (self.lastToAttackThis == null) return false;
         if (self.lastToAttackThis.currentHealth == 0) return false;
         return listOfTargets[currentIndex].Contains(self.lastToAttackThis);
     }
-
     bool TargetZeroCooldown(int currentIndex)
     {
         listOfTargets[currentIndex].RemoveAll(target => !HasNoCooldown(target));
@@ -407,7 +375,6 @@ public class Ability
             return false;
         }
     }
-
     bool TargetActiveCooldown(int currentIndex)
     {
         listOfTargets[currentIndex].RemoveAll(target => !HasCooldown(target));
@@ -422,19 +389,16 @@ public class Ability
             return false;
         }
     }
-
     bool TargetIsStar(int currentIndex)
     {
         listOfTargets[currentIndex].RemoveAll(target => target.data.difficulty != data.miscNumber);
         return listOfTargets[currentIndex].Count > 0;
     }
-
     bool TargetEffective(int currentIndex)
     {
         listOfTargets[currentIndex].RemoveAll(target => Effectiveness(self, target) < data.miscNumber);
         return listOfTargets[currentIndex].Count > 0;
     }
-
     List<Character> GetTarget(TeamTarget target)
     {
         List<Character> listOfTargets = new();
@@ -507,14 +471,12 @@ public class Ability
             }
         }
     }
-
     IEnumerator DealtKill(Character target, int logged)
     {
         if (!killed)
             runNextMethod = false;
         yield return null;
     }
-
     IEnumerator TargetAttack(Character target, int logged)
     {
         damageDealt = CalculateDamage(self, target, data.mainNumber, logged);
@@ -522,7 +484,6 @@ public class Ability
         if (target == null || target.currentHealth <= 0)
             killed = true;
     }
-
     IEnumerator TargetAttackSec(Character target, int logged)
     {
         damageDealt = CalculateDamage(self, target, data.secondNumber, logged);
@@ -530,116 +491,94 @@ public class Ability
         if (target == null || target.currentHealth <= 0)
             killed = true;
     }
-
     IEnumerator TargetHeal(Character target, int logged)
     {
         yield return target.ChangeHealth(CalculateHealing(self, target, data.mainNumber, logged), logged);
         if (target.CalculateHealthPercent() >= 1f)
             fullHeal = true;
     }
-
     IEnumerator TargetHealSec(Character target, int logged)
     {
         yield return target.ChangeHealth(CalculateHealing(self, target, data.secondNumber, logged), logged);
         if (target.CalculateHealthPercent() >= 1f)
             fullHeal = true;
     }
-
     IEnumerator TargetMaxHealth(Character target, int logged)
     {
         yield return target.ChangeMaxHealth(data.miscNumber, logged);
     }
-
     IEnumerator TargetSwitchPosition(Character target, int logged)
     {
         yield return target.ChangePosition((target.CurrentPosition == Position.Grounded) ? Position.Elevated : Position.Grounded, logged);
     }
-
     IEnumerator TargetBecomeGrounded(Character target, int logged)
     {
         yield return target.ChangePosition(Position.Grounded, logged);
     }
-
     IEnumerator TargetBecomeElevated(Character target, int logged)
     {
         yield return target.ChangePosition(Position.Elevated, logged);
     }
-
     IEnumerator TargetBecomeHappy(Character target, int logged)
     {
         yield return target.ChangeEmotion(Emotion.Happy, logged);
     }
-
     IEnumerator TargetBecomeAngry(Character target, int logged)
     {
         yield return target.ChangeEmotion(Emotion.Angry, logged);
     }
-
     IEnumerator TargetBecomeSad(Character target, int logged)
     {
         yield return target.ChangeEmotion(Emotion.Sad, logged);
     }
-
     IEnumerator TargetRandomEmotion(Character target, int logged)
     {
         yield return target.ChangeEmotion(Character.RandomEmotion(null), logged);
     }
-
     IEnumerator TargetGainPower(Character target, int logged)
     {
         yield return target.ChangeStat(Stats.Power, data.powerStat, logged);
     }
-
     IEnumerator TargetLosePower(Character target, int logged)
     {
         yield return target.ChangeStat(Stats.Power, -1*data.powerStat, logged);
     }
-
     IEnumerator TargetGainDefense(Character target, int logged)
     {
         yield return target.ChangeStat(Stats.Defense, data.defenseStat, logged);
     }
-
     IEnumerator TargetLoseDefense(Character target, int logged)
     {
         yield return target.ChangeStat(Stats.Defense, -1*data.defenseStat, logged);
     }
-
     IEnumerator TargetDeath(Character target, int logged)
     {
         yield return target.HasDied(logged);
     }
-
     IEnumerator TargetRevive(Character target, int logged)
     {
         yield return target.Revive(CalculateHealing(self, target, data.mainNumber, logged), logged);
     }
-
     IEnumerator TargetBecomeStunned(Character target, int logged)
     {
         yield return target.ChangeEffect(StatusEffect.Stunned, data.miscNumber, logged);
     }
-
     IEnumerator TargetBecomeProtected(Character target, int logged)
     {
         yield return target.ChangeEffect(StatusEffect.Protected, data.miscNumber, logged);
     }
-
     IEnumerator TargetBecomeTargeted(Character target, int logged)
     {
         yield return target.ChangeEffect(StatusEffect.Targeted, data.miscNumber, logged);
     }
-
     IEnumerator TargetBecomeLocked(Character target, int logged)
     {
         yield return target.ChangeEffect(StatusEffect.Locked, data.miscNumber, logged);
     }
-
     IEnumerator TargetGetExtraAbility(Character target, int logged)
     {
         yield return target.ChangeEffect(StatusEffect.Extra, data.miscNumber, logged);
     }
-
     IEnumerator TargetIncreaseAllCooldown(Character target, int logged)
     {
         int total = 0;
@@ -664,7 +603,6 @@ public class Ability
         Log.instance.AddText(answer, logged);
         yield return null;
     }
-
     IEnumerator TargetDecreaseAllCooldown(Character target, int logged)
     {
         int total = 0;
@@ -689,7 +627,6 @@ public class Ability
         Log.instance.AddText(answer, logged);
         yield return null;
     }
-
     IEnumerator TargetForceOneCooldown(Character target, int logged)
     {
         List<Ability> hasNoCooldown = target.listOfRandomAbilities.Where(ability => ability.currentCooldown == 0).ToList();
@@ -702,13 +639,11 @@ public class Ability
         }
         yield return null;
     }
-
     IEnumerator TargetCopy(Character target, int logged)
     {
         TurnManager.inst.CreateEnemy(target.data, Character.RandomEmotion(null), logged);
         yield return null;
     }
-
     IEnumerator SummonStar(Character target, int logged)
     {
         TurnManager.inst.CreateEnemy(GameFiles.inst.RandomEnemy(data.miscNumber, null), Character.RandomEmotion(null), logged);

@@ -3073,11 +3073,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 36464285971278018, guid: 73057f503a0634be9aaf897be08ffe98, type: 3}
       propertyPath: m_SizeDelta.y
-      value: -75.00001
+      value: -100
       objectReference: {fileID: 0}
     - target: {fileID: 36464285971278018, guid: 73057f503a0634be9aaf897be08ffe98, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 37.5
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 3997801408995679625, guid: 73057f503a0634be9aaf897be08ffe98, type: 3}
       propertyPath: m_SizeDelta.y
@@ -3089,7 +3089,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4938908533133342518, guid: 73057f503a0634be9aaf897be08ffe98, type: 3}
       propertyPath: m_Name
-      value: Rules Text (1)
+      value: Rules 2
       objectReference: {fileID: 0}
     - target: {fileID: 5443658776527583174, guid: 73057f503a0634be9aaf897be08ffe98, type: 3}
       propertyPath: m_Pivot.x
@@ -5584,11 +5584,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 36464285971278018, guid: 73057f503a0634be9aaf897be08ffe98, type: 3}
       propertyPath: m_SizeDelta.y
-      value: -75.00001
+      value: -100
       objectReference: {fileID: 0}
     - target: {fileID: 36464285971278018, guid: 73057f503a0634be9aaf897be08ffe98, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 37.5
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 3997801408995679625, guid: 73057f503a0634be9aaf897be08ffe98, type: 3}
       propertyPath: m_SizeDelta.y
@@ -5600,7 +5600,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4938908533133342518, guid: 73057f503a0634be9aaf897be08ffe98, type: 3}
       propertyPath: m_Name
-      value: Rules Text
+      value: Rules 1
       objectReference: {fileID: 0}
     - target: {fileID: 5443658776527583174, guid: 73057f503a0634be9aaf897be08ffe98, type: 3}
       propertyPath: m_Pivot.x
@@ -5802,9 +5802,9 @@ RectTransform:
   - {fileID: 1675742382}
   - {fileID: 980028368}
   - {fileID: 429758107}
-  - {fileID: 1313011912}
   - {fileID: 443506285}
   - {fileID: 1707002865}
+  - {fileID: 1313011912}
   - {fileID: 1625108886}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

@@ -1,5 +1,9 @@
 rulesName	rulesDescription	completed
-Aggression	When anyone becomes Angry, they gain 1 Power and 1 Defense.	TRUE
+Aggression	When anyone becomes Angry, they gain 1 Power and lose 1 Defense.	TRUE
+Charge_Up	Each Wave: A random Enemy gains 5 Max Health, 5 Health, 2 Power, 2 Defense, and becomes Stunned for 3 turns.	TRUE
+Crowds	Waves 1-4: Add another 1 Star Enemy, and all Enemies lose 1 Max Health.	TRUE
+Inspiration	Waves 2-5: Players get a new set of random Abilities.	TRUE
 Lucky	When anyone becomes Happy, they gain 2 Health.	TRUE
-Preparation	After anyone uses an attack or healing Ability, they lose 1 Power; if neither, they gain 2 Power.	TRUE
-Remorse	After anyone kills someone else, the killer become Sad.	TRUE
+Preparation	End of anyone's turn: if they used an attack or healing Ability, they lose 1 Power; if neither, they gain 2 Power.	TRUE
+Remorse	End of anyone's turn: if they killed someone else, they become Sad.	TRUE
+Revenge	End of anyone’s turn: if they killed someone else, everyone on the other side becomes Angry.	TRUE

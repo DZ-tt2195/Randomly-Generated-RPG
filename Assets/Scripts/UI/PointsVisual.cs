@@ -1,48 +1,50 @@
 using System.Collections;
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
+using MyBox;
 
 public class PointsVisual : MonoBehaviour
 {
     [SerializeField] TMP_Text textbox;
 
-    private void Start()
+    public void Setup(string text, Vector3 position, float duration, int topSize, Color textColor)
     {
-        transform.localScale = Vector3.zero; //start off invisible
-    }
-
-    public void Setup(string text, Vector3 position)
-    {
-        //initial information 
         this.transform.localPosition = position + new Vector3(0, 0, -1);
-        textbox.text = KeywordTooltip.instance.EditText(text);
+        this.transform.SetAsLastSibling();
+        textbox.text = text;
+        textbox.color = textColor;
+        
+        transform.localScale = Vector3.zero;
+        this.gameObject.SetActive(true);
         StartCoroutine(ExpandContract());
-    }
 
-    IEnumerator ExpandContract()
-    {
-        //largest size this visual will be 
-        Vector2 maxSize = new Vector3(1.5f, 1.5f, 1);
-        float elapsedTime = 0f;
-        float waitTime = PlayerPrefs.GetFloat("Animation Speed");
-
-        while (elapsedTime < waitTime) //expand until it reaches the max size
+        IEnumerator ExpandContract()
         {
-            transform.localScale = Vector3.Lerp(Vector3.zero, maxSize, elapsedTime / waitTime);
-            elapsedTime += Time.deltaTime;
-            yield return null;
+            Vector2 maxSize = (topSize <= 2) ? new(2, 2): new(topSize, topSize);
+            float elapsedTime = 0f;
+            float waitTime = duration / 2;
+
+            while (elapsedTime < waitTime)
+            {
+                transform.localScale = Vector3.Lerp(Vector3.zero, maxSize, elapsedTime / waitTime);
+                elapsedTime += Time.deltaTime;
+                transform.SetAsFirstSibling();
+                yield return null;
+            }
+
+            elapsedTime = 0f;
+
+            while (elapsedTime < waitTime)
+            {
+                transform.localScale = Vector3.Lerp(maxSize, Vector3.zero, elapsedTime / waitTime);
+                elapsedTime += Time.deltaTime;
+                transform.SetAsFirstSibling();
+                yield return null;
+            }
+            TurnManager.inst.ReturnVisual(this);
         }
-
-        elapsedTime = 0f;
-
-        while (elapsedTime < waitTime) //shrink until it reaches 0
-        {
-            transform.localScale = Vector3.Lerp(maxSize, Vector3.zero, elapsedTime / waitTime);
-            elapsedTime += Time.deltaTime;
-            yield return null;
-        }
-
-        Destroy(this.gameObject);
     }
 }
+

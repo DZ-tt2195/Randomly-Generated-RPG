@@ -3,11 +3,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using MyBox;
+using System.Linq;
 
 public class PlayerCharacter : Character
 {
     int choice;
-
     protected override IEnumerator ChooseAbility(int logged, bool extraAbility)
     {
         List<Ability> allAbilities = new();
@@ -23,7 +23,6 @@ public class PlayerCharacter : Character
 
         this.border.gameObject.SetActive(false);
     }
-
     void EnableAbilityBoxes()
     {
         TurnManager.inst.listOfBoxes[0].transform.parent.gameObject.SetActive(true);
@@ -63,7 +62,6 @@ public class PlayerCharacter : Character
             box.ReceiveAbility(true, null);
         }
     }
-
     protected override IEnumerator ChooseTarget(Ability ability, TeamTarget target, int index)
     {
         foreach (AbilityBox box in TurnManager.inst.listOfBoxes)
@@ -112,16 +110,32 @@ public class PlayerCharacter : Character
             }
         }
     }
-
     IEnumerator WaitForChoice()
     {
         choice = -1;
         while (choice == -1)
             yield return null;
     }
-
     void ReceiveChoice(int n)
     {
         choice = n;
+    }
+    protected override IEnumerator ConfirmChoice()
+    {
+        string result = "";
+        if (chosenTarget.Count == 0)
+        {
+            result = AutoTranslate.Confirm_No_Target(Translator.inst.Translate(chosenAbility.data.abilityName));
+        }
+        else
+        {
+            result = AutoTranslate.Confirm_Target(Translator.inst.Translate(chosenAbility.data.abilityName));
+            result += "\n";
+            result += string.Join(" + ", chosenTarget.Select(target => target.name));
+        }
+
+        yield return TurnManager.inst.ConfirmUndo(result, new Vector3(0, 400));
+        if (TurnManager.inst.confirmChoice == 1)
+            ClearAbility();
     }
 }

@@ -100,6 +100,7 @@ public class Character : MonoBehaviour
         foreach (AbilityData data in listOfAbilityData)
             AddAbility(data, false, abilitiesBeginWithCooldown);
         listOfRandomAbilities = listOfRandomAbilities.OrderBy(o => o.mainType).ToList();
+        CharacterUI();
     }
     internal void AddAbility(AbilityData abilityFile, bool auto, bool startWithCooldown)
     {
@@ -145,15 +146,18 @@ public class Character : MonoBehaviour
         }
 
         baseHealth += effect;
+
         if (effect > 0)
         {
-            TurnManager.inst.CreateVisual($"+{effect} {AutoTranslate.Max_Health()}", this.transform.localPosition);
+            if (logged >= 0)
+                TurnManager.inst.CreateVisual($"+{effect} {AutoTranslate.Max_Health()}", this.transform.localPosition);
             answer = AutoTranslate.Increase_Stat(this.name, effect.ToString(), AutoTranslate.Max_Health());
             Log.instance.AddText(answer, logged);
         }
         else
         {
-            TurnManager.inst.CreateVisual($"{effect} {AutoTranslate.Max_Health()}", this.transform.localPosition);
+            if (logged >= 0)
+                TurnManager.inst.CreateVisual($"{effect} {AutoTranslate.Max_Health()}", this.transform.localPosition);
             answer = AutoTranslate.Decrease_Stat(this.name, Mathf.Abs(effect).ToString(), AutoTranslate.Max_Health());
             Log.instance.AddText(answer, logged);
 
@@ -169,7 +173,7 @@ public class Character : MonoBehaviour
 
         if (change > 0)
         {
-            currentHealth = Mathf.Clamp(currentHealth += change, 0, this.baseHealth);
+            currentHealth = Mathf.Clamp(currentHealth + change, 0, this.baseHealth);
             TurnManager.inst.CreateVisual($"+{change} {AutoTranslate.Health()}", this.transform.localPosition);
 
             answer = AutoTranslate.Increase_Stat(this.name, change.ToString(), AutoTranslate.Health());
@@ -210,7 +214,7 @@ public class Character : MonoBehaviour
             yield break;
         }
 
-        _privStatMod[stat] = Math.Clamp(_privStatMod[stat] += change, -4, 4);
+        _privStatMod[stat] = Math.Clamp(_privStatMod[stat] + change, -3, 3);
         CharacterUI();
         if (logged >= 0 && change > 0)
         {
@@ -292,11 +296,13 @@ public class Character : MonoBehaviour
 
                 if (FightRules.inst.CheckRule(nameof(AutoTranslate.Aggression)) && newEmotion == Emotion.Angry)
                 {
+                    Log.instance.AddText(AutoTranslate.Apply_Rule(AutoTranslate.Aggression()), logged);
                     yield return ChangeStat(Stats.Power, 1, logged+1);
-                    yield return ChangeStat(Stats.Defense, 1, logged+1);
+                    yield return ChangeStat(Stats.Defense, -1, logged+1);
                 }
                 else if (FightRules.inst.CheckRule(nameof(AutoTranslate.Lucky)) && newEmotion == Emotion.Happy)
                 {
+                    Log.instance.AddText(AutoTranslate.Apply_Rule(AutoTranslate.Lucky()), logged);
                     yield return ChangeHealth(2, logged+1);
                 }
             }
@@ -381,13 +387,11 @@ public class Character : MonoBehaviour
             yield return TurnManager.inst.WaitTime();
             _privStatEffect[StatusEffect.Stunned]--;
             CharacterUI();
-            Log.instance.AddText(AutoTranslate.Miss_Turn(this.name), 0);
+            Log.instance.AddText(AutoTranslate.Skip_Turn_Log(this.name), logged);
             yield break;
         }
 
-        chosenAbility = null;
-        chosenTarget = new();
-
+        ClearAbility();
         while (chosenAbility == null)
         {
             yield return ChooseAbility(logged, extraAbility);
@@ -397,28 +401,7 @@ public class Character : MonoBehaviour
                 if (chosenAbility.singleTarget.Contains(chosenAbility.data.toTarget[i]))
                     chosenTarget.Add(chosenAbility.listOfTargets[i][0]);
             }
-            if (this is PlayerCharacter)
-            {
-                string result = "";
-                if (chosenTarget.Count == 0)
-                {
-                    result = AutoTranslate.Confirm_No_Target(Translator.inst.Translate(chosenAbility.data.abilityName));
-                }
-                else
-                {
-                    result = AutoTranslate.Confirm_Target(Translator.inst.Translate(chosenAbility.data.abilityName));
-                    result += "\n";
-                    result += string.Join(" + ", chosenTarget.Select(target => target.name));
-                }
-
-                yield return TurnManager.inst.ConfirmUndo(result, new Vector3(0, 400));
-                if (TurnManager.inst.confirmChoice == 1)
-                {
-                    chosenAbility.listOfTargets.Clear();
-                    chosenAbility = null;
-                    chosenTarget.Clear();
-                }
-            }
+            yield return ConfirmChoice();
         }
         yield return AbilityUse(logged, extraAbility);
     }
@@ -427,6 +410,10 @@ public class Character : MonoBehaviour
         yield return null;
     }
     protected virtual IEnumerator ChooseTarget(Ability ability, TeamTarget target, int index)
+    {
+        yield return null;
+    }
+    protected virtual IEnumerator ConfirmChoice()
     {
         yield return null;
     }
@@ -447,73 +434,70 @@ public class Character : MonoBehaviour
         }
 
         Log.instance.AddText(Log.AbilityLogged(chosenAbility, this, (chosenTarget.Count > 0) ? chosenTarget[0] : null), logged);
-        if (!chosenAbility.data.abilityName.Equals(nameof(AutoTranslate.Skip_Turn)))
+        chosenAbility.killed = false;
+        chosenAbility.fullHeal = false;
+        chosenAbility.damageDealt = 0;
+
+        for (int i = 0; i < chosenAbility.data.instructions.Length; i++)
         {
-            chosenAbility.killed = false;
-            chosenAbility.fullHeal = false;
-            chosenAbility.damageDealt = 0;
+            string[] splicedString = TurnManager.SpliceString(chosenAbility.data.instructions[i], '/');
+            yield return chosenAbility.ResolveInstructions(splicedString, i, logged + 1);
+        }
 
-            for (int i = 0; i < chosenAbility.data.instructions.Length; i++)
-            {
-                string[] splicedString = TurnManager.SpliceString(chosenAbility.data.instructions[i], '/');
-                yield return chosenAbility.ResolveInstructions(splicedString, i, logged + 1);
-            }
+        int cooldownIncrease = chosenAbility.data.baseCooldown;
 
-            int cooldownIncrease = chosenAbility.data.baseCooldown;
-
-            if (cooldownIncrease > 0)
-            {
-                chosenAbility.currentCooldown = cooldownIncrease;
-                string answer = AutoTranslate.Apply_Cooldown(this.name, Translator.inst.Translate(chosenAbility.data.abilityName), cooldownIncrease.ToString());
-                Log.instance.AddText(answer, logged);
-            }
-            if (ScreenOverlay.instance.mode == GameMode.Tutorial && TutorialManager.instance.currentCharacter == this)
-            {
-                TutorialManager.instance.currentCharacter = null;
-                yield return TutorialManager.instance.NextStep();
-            }
+        if (cooldownIncrease > 0)
+        {
+            chosenAbility.currentCooldown = cooldownIncrease;
+            string answer = AutoTranslate.Apply_Cooldown(this.name, Translator.inst.Translate(chosenAbility.data.abilityName), cooldownIncrease.ToString());
+            Log.instance.AddText(answer, logged);
+        }
+        if (ScreenOverlay.instance.mode == GameMode.Tutorial && TutorialManager.instance.currentCharacter == this)
+        {
+            TutorialManager.instance.currentCharacter = null;
+            yield return TutorialManager.instance.NextStep();
         }
         yield return EndOfTurn(logged, extraAbility);
     }
     IEnumerator EndOfTurn(int logged, bool extraAbility)
     {
-        if (FightRules.inst.CheckRule(nameof(AutoTranslate.Remorse)) && chosenAbility.killed)
+        if (chosenAbility.killed)
         {
-            yield return ChangeEmotion(Emotion.Sad, logged);
+            if (FightRules.inst.CheckRule(nameof(AutoTranslate.Remorse)))
+            {
+                Log.instance.AddText(AutoTranslate.Apply_Rule(AutoTranslate.Remorse()), logged);
+                yield return ChangeEmotion(Emotion.Sad, logged+1);
+            }
+            if (FightRules.inst.CheckRule(nameof(AutoTranslate.Revenge)))
+            {
+                Log.instance.AddText(AutoTranslate.Apply_Rule(AutoTranslate.Revenge()), logged);
+                if (this is PlayerCharacter)
+                {
+                    foreach (Character character in TurnManager.inst.listOfEnemies)
+                        yield return character.ChangeEmotion(Emotion.Angry, logged+1);
+                }
+                else
+                {
+                    foreach (Character character in TurnManager.inst.listOfPlayers)
+                        yield return character.ChangeEmotion(Emotion.Angry, logged+1);                    
+                }
+            }
         }
 
         if (FightRules.inst.CheckRule(nameof(AutoTranslate.Preparation)))
         {
+            Log.instance.AddText(AutoTranslate.Apply_Rule(AutoTranslate.Preparation()), logged);
             if (chosenAbility.mainType == AbilityType.Attack || chosenAbility.mainType == AbilityType.Healing)
-                yield return ChangeStat(Stats.Power, -1, logged);
+                yield return ChangeStat(Stats.Power, -1, logged+1);
             else
-                yield return ChangeStat(Stats.Power, 2, logged);
+                yield return ChangeStat(Stats.Power, 2, logged+1);
         }
-        /*
-        if (chosenAbility != null && !chosenAbility.data.abilityName.Equals(AutoTranslate.Skip_Turn()))
-        {
-            if (this.CurrentEmotion == Emotion.Angry)
-            {
-                if (chosenAbility.killed || chosenAbility.fullHeal)
-                {
-                    Log.instance.AddText(answer, logged);
-                    yield return ChangeEffect(StatusEffect.Stunned, 1, logged + 1);
-                }
-            }
-            else if (this.CurrentEmotion == Emotion.Happy)
-            {
-                if (!extraAbility && chosenAbility.mainType != AbilityType.Attack)
-                {
-                    Log.instance.AddText(answer, logged);
-                    yield return ChangeEffect(StatusEffect.Extra, 1, logged+1);
-                }
-            }
-            else if (this.CurrentEmotion == Emotion.Sad)
-            {
-                Log.instance.AddText(answer, logged);
-                yield return ChangeHealth(chosenAbility.mainType == AbilityType.Attack ? 2 : -2, logged + 1);
-            }
-            */
+    }
+    protected void ClearAbility()
+    {
+        chosenAbility?.listOfTargets.Clear();
+        chosenAbility = null;
+        chosenTarget.Clear();        
     }
 
 #endregion
@@ -582,7 +566,7 @@ public class Character : MonoBehaviour
             void AddToTopText(int amount, string text)
             {
                 if (amount > 0)
-                    topText.text += $"{amount} {text} ";
+                    topText.text += $"+{amount} {text} ";
                 else
                     topText.text += $"{amount} {text} ";
             }

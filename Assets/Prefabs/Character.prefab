@@ -96,7 +96,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 76.1
+  m_fontSize: 89.05
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -113,7 +113,7 @@ MonoBehaviour:
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
   m_charWidthMaxAdj: 0
-  m_TextWrappingMode: 0
+  m_TextWrappingMode: 1
   m_wordWrappingRatios: 0.4
   m_overflowMode: 0
   m_linkedTextComponent: {fileID: 0}
@@ -359,7 +359,7 @@ MonoBehaviour:
   m_text: '<link="Angry"><u><color=#FF8080>Angry<color=#FFFFFF></u></link>, <link="Grounded"><u><color=#FF9300>Grounded<color=#FFFFFF></u></link>
 
     +2
-    <link="Power"><sprite="Power" name="Power"> </link>+1 <link="Defense"><sprite="Defense"
+    <link="Power"><sprite="Power" name="Power"> </link>-1 <link="Defense"><sprite="Defense"
     name="Defense"></link>'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}

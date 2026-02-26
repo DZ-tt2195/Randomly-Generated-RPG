@@ -18,7 +18,6 @@ class CharacterPositions
         this.position = position;
     }
 }
-
 [Serializable]
 class WaveSetup
 {
@@ -38,6 +37,7 @@ public class TurnManager : MonoBehaviour
         [SerializeField] List<WaveSetup> listOfWaveSetup = new();
 
     [Foldout("UI", true)]
+        Queue<PointsVisual> visualStorage = new();
         public List<AbilityBox> listOfBoxes = new();
         public TMP_Text instructions;
         bool borderDecrease = true;
@@ -84,8 +84,6 @@ public class TurnManager : MonoBehaviour
             DateTime day = DateTime.UtcNow.Date;
             int seed = day.Year * 10000 + day.Month * 100 + day.Day;
             dailyRNG = new System.Random(seed);
-            Log.instance.AddText(Translator.inst.Translate(AutoTranslate.Daily_Challenge()), 0);
-            Log.instance.AddText(AutoTranslate.Current_Date(Translator.inst.Translate($"Month_{day.Month}"), day.Day.ToString(), day.Year.ToString()), 1);
         }
 
         for (int i = 0; i < 5; i++)
@@ -96,9 +94,16 @@ public class TurnManager : MonoBehaviour
         }
     }
 
-#endregion
+    void Start()
+    {
+        DateTime day = DateTime.UtcNow.Date;
+        Log.instance.AddText(Translator.inst.Translate(AutoTranslate.Daily_Challenge()), 0);
+        Log.instance.AddText(AutoTranslate.Current_Date(Translator.inst.Translate($"Month_{day.Month}"), day.Day.ToString(), day.Year.ToString()), 1); 
+    }
 
-#region Gameplay Loop
+    #endregion
+
+    #region Gameplay Loop
 
     public IEnumerator NewWave()
     {
@@ -126,15 +131,47 @@ public class TurnManager : MonoBehaviour
             yield return NewAnimation(true);
             Log.instance.AddText(AutoTranslate.Wave(currentWave.ToString(), listOfWaveSetup.Count.ToString()));
 
+            if (currentWave >= 2 && FightRules.inst.CheckRule(nameof(AutoTranslate.Inspiration)))
+            {
+                Log.instance.AddText(AutoTranslate.Apply_Rule(AutoTranslate.Inspiration()), 0);
+                foreach (Character player in listOfPlayers)
+                {
+                    for (int i = player.listOfRandomAbilities.Count - 1; i >= 0; i--)
+                        player.DropAbility(player.listOfRandomAbilities[i]);
+
+                    List<AbilityData> newAbilties = GameFiles.inst.CompletePlayerAbilities(new(), GameFiles.inst.ConvertToAbilityData(player.data.listOfAbilities, true), dailyRNG);
+                    foreach (AbilityData data in newAbilties)
+                        player.AddAbility(data, false, false);
+                }
+                Log.instance.AddText(AutoTranslate.Blank());
+            }
+            if (currentWave < 5 && FightRules.inst.CheckRule(nameof(AutoTranslate.Crowds)))
+            {
+                Log.instance.AddText(AutoTranslate.Apply_Rule(AutoTranslate.Crowds()));
+                yield return WaitTime();
+                CreateEnemy(GameFiles.inst.RandomEnemy(1, dailyRNG), Character.RandomEmotion(dailyRNG), 0);                
+            }
             foreach (int nextTier in listOfWaveSetup[currentWave - 1].enemyDifficultySpawn)
             {
                 yield return WaitTime();
                 CreateEnemy(GameFiles.inst.RandomEnemy(nextTier, dailyRNG), Character.RandomEmotion(dailyRNG), 0);
             }
+            if (FightRules.inst.CheckRule(nameof(AutoTranslate.Charge_Up)))
+            {
+                Log.instance.AddText(AutoTranslate.Apply_Rule(AutoTranslate.Charge_Up()));
+                int randomNum = (dailyRNG != null) ? dailyRNG.Next(0, listOfEnemies.Count) : UnityEngine.Random.Range(0, listOfEnemies.Count);
+                Character randomEnemy = listOfEnemies[randomNum];
+
+                yield return randomEnemy.ChangeMaxHealth(5, 1);
+                yield return randomEnemy.ChangeHealth(5, 1);
+                yield return randomEnemy.ChangeStat(Stats.Power, 2, 1);
+                yield return randomEnemy.ChangeStat(Stats.Defense, 2, 1);
+                yield return randomEnemy.ChangeEffect(StatusEffect.Stunned, 3, 1);
+            }
+
             StartCoroutine(NewRound(false));
         }
     }
-
     public IEnumerator NewRound(bool playAnimation)
     {
         if (playAnimation)
@@ -190,7 +227,6 @@ public class TurnManager : MonoBehaviour
         if (isBattling && ScreenOverlay.instance.mode != GameMode.Tutorial)
             StartCoroutine(NewRound(true));
     }
-
     IEnumerator NewAnimation(bool increaseWave)
     {
         Vector3 originalPos = new Vector3(0, 1200, 0);
@@ -232,7 +268,6 @@ public class TurnManager : MonoBehaviour
         }
         waveText.transform.parent.localPosition = finalPos;
     }
-
     public void GameFinished(string message, bool win)
     {
         try
@@ -264,7 +299,6 @@ public class TurnManager : MonoBehaviour
         }
         Log.instance.enabled = false;
     }
-
     bool CheckLost()
     {
         foreach (Character character in listOfPlayers)
@@ -286,7 +320,6 @@ public class TurnManager : MonoBehaviour
         if (Character.borderColor < 0 || Character.borderColor > 1)
             borderDecrease = !borderDecrease;
     }
-
     public void DisableCharacterButtons()
     {
         foreach (Character character in listOfPlayers)
@@ -300,7 +333,6 @@ public class TurnManager : MonoBehaviour
             character.border.gameObject.SetActive(false);
         }
     }
-
     public TextCollector MakeTextCollector(string header, Vector3 position, List<string> buttons = null)
     {
         TextCollector collector = Instantiate(undoBox);
@@ -313,13 +345,16 @@ public class TurnManager : MonoBehaviour
         }
         return collector;
     }
-
     public void CreateVisual(string text, Vector3 position)
     {
-        PointsVisual pv = Instantiate(pointsVisual, ScreenOverlay.instance.sceneCanvas);
-        pv.Setup(text, position);
+        PointsVisual newVisual = (visualStorage.Count > 0) ? visualStorage.Dequeue() : Instantiate(pointsVisual, ScreenOverlay.instance.sceneCanvas);
+        newVisual.Setup(text, position, PlayerPrefs.GetFloat("Animation Speed"), 1, Color.white);
     }
-
+    public void ReturnVisual(PointsVisual visual)
+    {
+        visualStorage.Enqueue(visual);
+        visual.gameObject.SetActive(false);
+    }
 
 #endregion
 
@@ -348,9 +383,10 @@ public class TurnManager : MonoBehaviour
             nextEnemy.name = Translator.inst.Translate(dataFile.characterName);
             Log.instance.AddText(AutoTranslate.Enter_Fight(nextEnemy.name), logged);
             nextEnemy.SetupCharacter(dataFile, GameFiles.inst.ConvertToAbilityData(dataFile.listOfAbilities, false), startingEmotion, listOfEnemies.Count, true);
+            if (currentWave < 5 && FightRules.inst.CheckRule(nameof(AutoTranslate.Crowds)))
+                StartCoroutine(nextEnemy.ChangeMaxHealth(-1, -1));
         }
     }
-
     public void AddPlayer(Character character)
     {
         listOfPlayers.Add(character);
@@ -368,7 +404,6 @@ public class TurnManager : MonoBehaviour
             }
         }
     }
-
     public static string[] SpliceString(string text, char splitUp)
     {
         if (!text.IsNullOrEmpty())
@@ -380,12 +415,10 @@ public class TurnManager : MonoBehaviour
 
         return new string[0];
     }
-
     public IEnumerator WaitTime()
     {
         yield return new WaitForSeconds(PlayerPrefs.GetFloat("Animation Speed"));
     }
-
     public IEnumerator ConfirmUndo(string header, Vector3 position)
     {
         confirmChoice = -1;
@@ -407,7 +440,6 @@ public class TurnManager : MonoBehaviour
             }
         }
     }
-
     public Character CheckForTargeted(List<Character> possibleTargets)
     {
         if (targetedPlayer != null && possibleTargets.Contains(targetedPlayer))
@@ -417,7 +449,6 @@ public class TurnManager : MonoBehaviour
 
         return null;
     }
-
     void ResetTargetedPlayer(Character newTarget)
     {
         Character storePlayer = targetedPlayer;
@@ -427,7 +458,6 @@ public class TurnManager : MonoBehaviour
         if (storePlayer != null)
             storePlayer.CharacterUI();
     }
-
     void ResetTargetedEnemy(Character newTarget)
     {
         Character storePlayer = targetedEnemy;
