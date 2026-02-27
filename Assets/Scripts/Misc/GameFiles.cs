@@ -32,6 +32,7 @@ public class AbilityData
     public int secondNumber;
     public int powerStat;
     public int defenseStat;
+    public int statusNumber;
     public int miscNumber;
     public TeamTarget[] toTarget;
 }

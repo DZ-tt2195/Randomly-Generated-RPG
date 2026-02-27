@@ -41,5 +41,13 @@ public class FightRules : MonoBehaviour
         Log.instance.AddText(AutoTranslate.Blank());
     }
 
-    public bool CheckRule(string rule) => selectedRules.Contains(rule);
+    public bool CheckRule(string rule, int logged)
+    {
+        if (selectedRules.Contains(rule))
+        {
+            Log.instance.AddText(AutoTranslate.Apply_Rule(Translator.inst.Translate(rule)), logged);
+            return true;
+        }
+        return false;
+    }
 }

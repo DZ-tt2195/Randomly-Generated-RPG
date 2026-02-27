@@ -28,7 +28,6 @@ public class Ability
     bool runNextMethod;
     public Dictionary<string, MethodInfo> boolDictionary = new();
     public Dictionary<string, MethodInfo> enumeratorDictionary = new();
-
     public Ability(Character self, AbilityData data, bool startWithCooldown)
     {
         this.self = self;
@@ -59,6 +58,9 @@ public class Ability
                         break;
                     case "MiscNum":
                         args[i] = Mathf.Abs(data.miscNumber).ToString(); 
+                        break;
+                    case "StatusNum":
+                        args[i] = Mathf.Abs(data.statusNumber).ToString(); 
                         break;
                 }
             }
@@ -153,16 +155,9 @@ public class Ability
     int CalculateHealing(Character user, Character target, int number, int logged)
     {
         int finalCalc = number + user.CalculatePower();
-
-        if (finalCalc < 1 && number > 1)
-        {
-            Log.instance.AddText(Translator.inst.Translate(AutoTranslate.Apply_Minimum()), logged);
-            return 1;
-        }
-        else
-        {
-            return finalCalc;
-        }
+        if (user.CurrentPosition != target.CurrentPosition && FightRules.inst.CheckRule(nameof(AutoTranslate.Aiming), logged))
+            finalCalc++;
+        return Mathf.Max(1, finalCalc);
     }
     int CalculateDamage(Character user, Character target, int number, int logged)
     {
@@ -173,16 +168,10 @@ public class Ability
             Log.instance.AddText(AutoTranslate.Super_Effective(Mathf.Abs(effectiveness).ToString()), logged);
         else if (effectiveness < 0)
             Log.instance.AddText(AutoTranslate.Not_Effective(Mathf.Abs(effectiveness).ToString()), logged);
+        if (user.CurrentPosition != target.CurrentPosition && FightRules.inst.CheckRule(nameof(AutoTranslate.Aiming), logged))
+            finalCalc++;
 
-        if (finalCalc < 1 && number > 1)
-        {
-            Log.instance.AddText(AutoTranslate.Apply_Minimum(), logged);
-            return 1;
-        }
-        else
-        {
-            return finalCalc;
-        }
+        return Mathf.Max(1, finalCalc);
     }
 
     #endregion
@@ -290,6 +279,7 @@ public class Ability
     }
     bool TargetIsGrounded(int currentIndex)
     {
+        listOfTargets[currentIndex].RemoveAll(target => target.CurrentPosition != Position.Grounded);
         return listOfTargets[currentIndex].Count > 0;
     }
     bool AllGrounded(int currentIndex)
@@ -561,23 +551,23 @@ public class Ability
     }
     IEnumerator TargetBecomeStunned(Character target, int logged)
     {
-        yield return target.ChangeEffect(StatusEffect.Stunned, data.miscNumber, logged);
+        yield return target.ChangeEffect(StatusEffect.Stunned, data.statusNumber, logged);
     }
     IEnumerator TargetBecomeProtected(Character target, int logged)
     {
-        yield return target.ChangeEffect(StatusEffect.Protected, data.miscNumber, logged);
+        yield return target.ChangeEffect(StatusEffect.Protected, data.statusNumber, logged);
     }
     IEnumerator TargetBecomeTargeted(Character target, int logged)
     {
-        yield return target.ChangeEffect(StatusEffect.Targeted, data.miscNumber, logged);
+        yield return target.ChangeEffect(StatusEffect.Targeted, data.statusNumber, logged);
     }
     IEnumerator TargetBecomeLocked(Character target, int logged)
     {
-        yield return target.ChangeEffect(StatusEffect.Locked, data.miscNumber, logged);
+        yield return target.ChangeEffect(StatusEffect.Locked, data.statusNumber, logged);
     }
     IEnumerator TargetGetExtraAbility(Character target, int logged)
     {
-        yield return target.ChangeEffect(StatusEffect.Extra, data.miscNumber, logged);
+        yield return target.ChangeEffect(StatusEffect.Extra, data.statusNumber, logged);
     }
     IEnumerator TargetIncreaseAllCooldown(Character target, int logged)
     {
@@ -641,13 +631,11 @@ public class Ability
     }
     IEnumerator TargetCopy(Character target, int logged)
     {
-        TurnManager.inst.CreateEnemy(target.data, Character.RandomEmotion(null), logged);
-        yield return null;
+        yield return TurnManager.inst.CreateEnemy(target.data, Character.RandomEmotion(null), logged);
     }
     IEnumerator SummonStar(Character target, int logged)
     {
-        TurnManager.inst.CreateEnemy(GameFiles.inst.RandomEnemy(data.miscNumber, null), Character.RandomEmotion(null), logged);
-        yield return null;
+        yield return TurnManager.inst.CreateEnemy(GameFiles.inst.RandomEnemy(data.miscNumber, null), Character.RandomEmotion(null), logged);
     }
 
     #endregion

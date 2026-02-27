@@ -182,7 +182,7 @@ public class Character : MonoBehaviour
         else if (statEffectDict[StatusEffect.Protected] > 0)
         {
             TurnManager.inst.CreateVisual($"{AutoTranslate.Blocked()}", this.transform.localPosition);
-            answer = AutoTranslate.Blocked_Stat_Drop(this.name, change.ToString(), AutoTranslate.Health());
+            answer = AutoTranslate.Blocked_Stat_Drop(this.name, Mathf.Abs(change).ToString(), AutoTranslate.Health());
             Log.instance.AddText(answer, logged);
         }
         else
@@ -234,7 +234,7 @@ public class Character : MonoBehaviour
         if (this == null || change == 0) yield break;
 
         _privStatEffect[statusEffect] = _privStatEffect[statusEffect]+change;
-        TurnManager.inst.CreateVisual(Translator.inst.Translate(statusEffect.ToString()), this.transform.localPosition);
+        if (logged >= 0) TurnManager.inst.CreateVisual(Translator.inst.Translate(statusEffect.ToString()), this.transform.localPosition);
 
         if (statusEffect == StatusEffect.Extra)
         {
@@ -294,16 +294,10 @@ public class Character : MonoBehaviour
                 Log.instance.AddText(change, logged);
                 TurnManager.inst.CreateVisual(Translator.inst.Translate(newEmotion.ToString()), this.transform.localPosition);
 
-                if (FightRules.inst.CheckRule(nameof(AutoTranslate.Aggression)) && newEmotion == Emotion.Angry)
+                if (newEmotion == Emotion.Angry && FightRules.inst.CheckRule(nameof(AutoTranslate.Aggression), logged))
                 {
-                    Log.instance.AddText(AutoTranslate.Apply_Rule(AutoTranslate.Aggression()), logged);
                     yield return ChangeStat(Stats.Power, 1, logged+1);
                     yield return ChangeStat(Stats.Defense, -1, logged+1);
-                }
-                else if (FightRules.inst.CheckRule(nameof(AutoTranslate.Lucky)) && newEmotion == Emotion.Happy)
-                {
-                    Log.instance.AddText(AutoTranslate.Apply_Rule(AutoTranslate.Lucky()), logged);
-                    yield return ChangeHealth(2, logged+1);
                 }
             }
         }
@@ -359,17 +353,6 @@ public class Character : MonoBehaviour
 #region Take Turn
     internal IEnumerator MyTurn(int logged)
     {
-        chosenAbility = null;
-        chosenTarget = new();
-
-        if (_privStatEffect[StatusEffect.Protected] > 0)
-            _privStatEffect[StatusEffect.Protected]--;
-        if (_privStatEffect[StatusEffect.Targeted] > 0)
-            _privStatEffect[StatusEffect.Targeted]--;
-        if (_privStatEffect[StatusEffect.Locked] > 0)
-            _privStatEffect[StatusEffect.Locked]--;
-        CharacterUI();
-
         yield return ResolveTurn(logged, false);
         while (statEffectDict[StatusEffect.Extra] > 0 && TurnManager.inst.listOfEnemies.Count > 0)
         {
@@ -463,30 +446,12 @@ public class Character : MonoBehaviour
     {
         if (chosenAbility.killed)
         {
-            if (FightRules.inst.CheckRule(nameof(AutoTranslate.Remorse)))
-            {
-                Log.instance.AddText(AutoTranslate.Apply_Rule(AutoTranslate.Remorse()), logged);
+            if (FightRules.inst.CheckRule(nameof(AutoTranslate.Remorse), logged))
                 yield return ChangeEmotion(Emotion.Sad, logged+1);
-            }
-            if (FightRules.inst.CheckRule(nameof(AutoTranslate.Revenge)))
-            {
-                Log.instance.AddText(AutoTranslate.Apply_Rule(AutoTranslate.Revenge()), logged);
-                if (this is PlayerCharacter)
-                {
-                    foreach (Character character in TurnManager.inst.listOfEnemies)
-                        yield return character.ChangeEmotion(Emotion.Angry, logged+1);
-                }
-                else
-                {
-                    foreach (Character character in TurnManager.inst.listOfPlayers)
-                        yield return character.ChangeEmotion(Emotion.Angry, logged+1);                    
-                }
-            }
         }
 
-        if (FightRules.inst.CheckRule(nameof(AutoTranslate.Preparation)))
+        if (FightRules.inst.CheckRule(nameof(AutoTranslate.Preparation), logged))
         {
-            Log.instance.AddText(AutoTranslate.Apply_Rule(AutoTranslate.Preparation()), logged);
             if (chosenAbility.mainType == AbilityType.Attack || chosenAbility.mainType == AbilityType.Healing)
                 yield return ChangeStat(Stats.Power, -1, logged+1);
             else
