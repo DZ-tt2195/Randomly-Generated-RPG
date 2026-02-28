@@ -244,7 +244,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0.3, b: 0.3, a: 1}
+  m_Color: {r: 1, g: 0.42745098, b: 0, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -1192,12 +1192,12 @@ GameObject:
   - component: {fileID: 556872816}
   - component: {fileID: 556872817}
   m_Layer: 0
-  m_Name: Emotion Triangle
+  m_Name: State Triangle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &556872816
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1680,25 +1680,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   linkedKeywords:
-  - original: Neutral
-    translated: 
-    description: Default Emotion.
-    color: {r: 0.85, g: 0.85, b: 0.85, a: 0}
-  - original: Happy
+  - original: Lively
     translated: 
     description: Effective against Angry. Gets an extra Ability if they don't attack;
       all Abilities have 1 more turn of Cooldown.
     color: {r: 0.4, g: 1, b: 0, a: 0}
-  - original: Angry
+  - original: Focused
     translated: 
     description: Effective against Sad. +2 Power; becomes Stunned when killing or
       healing someone to full Health.
-    color: {r: 1, g: 0.5, b: 0.5, a: 0}
-  - original: Sad
+    color: {r: 1, g: 0.4273501, b: 0, a: 0}
+  - original: Tired
     translated: 
     description: Effective against Happy. Gains 2 Health when it attacks; loses 2
       Health otherwise.
-    color: {r: 1, g: 0.7, b: 1, a: 0}
+    color: {r: 0.6415094, g: 0.6415094, b: 0.6415094, a: 0}
   - original: Stunned
     translated: 
     description: Skips their next turn.
@@ -2283,7 +2279,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -45}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 425, y: -280}
+  m_AnchoredPosition: {x: 425, y: -375}
   m_SizeDelta: {x: 600, y: 300}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &848250709
@@ -2299,7 +2295,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.6, g: 0.6, b: 1, a: 1}
+  m_Color: {r: 0.6431373, g: 0.6431373, b: 0.6431373, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -3010,7 +3006,7 @@ GameObject:
   - component: {fileID: 1044088201}
   - component: {fileID: 1044088203}
   m_Layer: 0
-  m_Name: Happy
+  m_Name: Lively
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3056,7 +3052,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: HAPPY
+  m_text: Lively
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
   m_sharedMaterial: {fileID: -3852492252101762229, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
@@ -3703,7 +3699,7 @@ GameObject:
   - component: {fileID: 1358624632}
   - component: {fileID: 1358624634}
   m_Layer: 0
-  m_Name: Angry
+  m_Name: Focused
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3749,7 +3745,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: ANGRY
+  m_text: Focused
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
   m_sharedMaterial: {fileID: -3852492252101762229, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
@@ -3758,8 +3754,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4283190527
-  m_fontColor: {r: 1, g: 0.3, b: 0.3, a: 1}
+    rgba: 4278218239
+  m_fontColor: {r: 1, g: 0.42745098, b: 0, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -4509,7 +4505,7 @@ GameObject:
   - component: {fileID: 1613006809}
   - component: {fileID: 1613006808}
   m_Layer: 0
-  m_Name: Emotion Button
+  m_Name: Mood Guide Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4532,7 +4528,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 1112, y: -675}
+  m_AnchoredPosition: {x: 1110, y: -675}
   m_SizeDelta: {x: 340, y: 75}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1613006808
@@ -4705,8 +4701,8 @@ MonoBehaviour:
   animationText: {fileID: 1468127772}
   undoToggle: {fileID: 572911066}
   tooltipToggle: {fileID: 1523304689}
-  emotionButton: {fileID: 1613006808}
-  emotionBackground: {fileID: 556872815}
+  MoodButton: {fileID: 1613006808}
+  MoodBackground: {fileID: 556872815}
   transitionImage: {fileID: 372563724}
   transitionTime: 0.25
 --- !u!114 &1681304444
@@ -4735,14 +4731,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Translator
   toLoad: 0. Title Screen
   settingsText: {fileID: 741795783}
-  emotionGuide: {fileID: 757509347}
+  moodGuide: {fileID: 757509347}
   pressToClose: {fileID: 269195943}
   animationTime: {fileID: 910301587}
   confirmDecisions: {fileID: 1732399734}
   displayTooltip: {fileID: 1163857273}
-  angry: {fileID: 1358624632}
-  happy: {fileID: 1044088201}
-  sad: {fileID: 1846171708}
+  focused: {fileID: 1358624632}
+  lively: {fileID: 1044088201}
+  tired: {fileID: 1846171708}
 --- !u!1001 &1711759555
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5144,7 +5140,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1791287651
 RectTransform:
   m_ObjectHideFlags: 0
@@ -5188,7 +5184,7 @@ GameObject:
   - component: {fileID: 1846171708}
   - component: {fileID: 1846171710}
   m_Layer: 0
-  m_Name: Sad
+  m_Name: Tired
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5234,7 +5230,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: SAD
+  m_text: Tired
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
   m_sharedMaterial: {fileID: -3852492252101762229, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
@@ -5243,8 +5239,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294941081
-  m_fontColor: {r: 0.6, g: 0.6, b: 1, a: 1}
+    rgba: 4288980132
+  m_fontColor: {r: 0.6431373, g: 0.6431373, b: 0.6431373, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -5362,7 +5358,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 771, y: -675}
+  m_AnchoredPosition: {x: 770, y: -675}
   m_SizeDelta: {x: 340, y: 75}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1883537363

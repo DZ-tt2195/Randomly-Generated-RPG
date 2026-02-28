@@ -16,14 +16,10 @@ public class ScreenOverlay : MonoBehaviour
     public static ScreenOverlay instance;
     public CurrentScreen displayedScreen { get; private set; }
     public GameMode mode { get; private set; }
-
-
     [Foldout("General UI", true)]
-    [SerializeField] GameObject blackBackground;
-    [SerializeField] Canvas permanentCanvas;
-    [ReadOnly] public Transform sceneCanvas;
-
-
+        [SerializeField] GameObject blackBackground;
+        [SerializeField] Canvas permanentCanvas;
+        [ReadOnly] public Transform sceneCanvas;
     [Foldout("Character display", true)]
         [SerializeField] GameObject characterDisplayBackground;
         [SerializeField] Image characterImage;
@@ -33,7 +29,6 @@ public class ScreenOverlay : MonoBehaviour
         [SerializeField] TMP_Text stats1;
         [SerializeField] List<AbilityBox> listOfBoxes = new();
         [SerializeField] List<Image> listOfStars = new();
-
     [Foldout("Game settings", true)]
         [SerializeField] GameObject gameSettingsBackground;
         [SerializeField] Button settingsButton;
@@ -41,10 +36,9 @@ public class ScreenOverlay : MonoBehaviour
         [SerializeField] TMP_Text animationText;
         [SerializeField] Toggle undoToggle;
         [SerializeField] Toggle tooltipToggle;
-
-    [Foldout("Emotion triangle", true)]
-        [SerializeField] Button emotionButton;
-        [SerializeField] GameObject emotionBackground;
+    [Foldout("Mood triangle", true)]
+        [SerializeField] Button MoodButton;
+        [SerializeField] GameObject MoodBackground;
 
     [Foldout("Scene transition", true)]
         [SerializeField] Image transitionImage;
@@ -61,7 +55,7 @@ public class ScreenOverlay : MonoBehaviour
         animationSlider.onValueChanged.AddListener(SetAnimationSpeed);
         undoToggle.onValueChanged.AddListener(SetUndo);
         tooltipToggle.onValueChanged.AddListener(SetTooltip);
-        emotionButton.onClick.AddListener(SeeEmotions);
+        MoodButton.onClick.AddListener(SeeMoods);
 
         permanentCanvas.gameObject.SetActive(true);
     }
@@ -114,12 +108,12 @@ public class ScreenOverlay : MonoBehaviour
         PlayerPrefs.Save();
     }
 
-    void SeeEmotions()
+    void SeeMoods()
     {
         displayedScreen = CurrentScreen.Emotion;
         blackBackground.SetActive(true);
-        emotionBackground.SetActive(true);
-        emotionBackground.transform.SetAsLastSibling();
+        MoodBackground.SetActive(true);
+        MoodBackground.transform.SetAsLastSibling();
     }
 
     #endregion
@@ -135,7 +129,7 @@ public class ScreenOverlay : MonoBehaviour
             blackBackground.SetActive(false);
             characterDisplayBackground.SetActive(false);
             gameSettingsBackground.SetActive(false);
-            emotionBackground.SetActive(false);
+            MoodBackground.SetActive(false);
             displayedScreen = CurrentScreen.None;
         }
     }

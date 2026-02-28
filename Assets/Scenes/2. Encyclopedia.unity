@@ -290,7 +290,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 159b66c071ced43f499eb58b9b7c8b01, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  key: 159
 --- !u!1 &45939707
 GameObject:
   m_ObjectHideFlags: 0
@@ -1011,7 +1010,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 159b66c071ced43f499eb58b9b7c8b01, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  key: 145
 --- !u!1 &147790808
 GameObject:
   m_ObjectHideFlags: 0
@@ -1288,7 +1286,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 159b66c071ced43f499eb58b9b7c8b01, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  key: 161
 --- !u!1 &202519604
 GameObject:
   m_ObjectHideFlags: 0
@@ -2460,7 +2457,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: -50}
-  m_SizeDelta: {x: 2560, y: 1200}
+  m_SizeDelta: {x: 2300, y: 1200}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &386393161
 MonoBehaviour:
@@ -3089,7 +3086,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 159b66c071ced43f499eb58b9b7c8b01, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  key: 68
 --- !u!1 &511507246
 GameObject:
   m_ObjectHideFlags: 0
@@ -4804,7 +4800,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 159b66c071ced43f499eb58b9b7c8b01, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  key: 147
 --- !u!1 &820315644
 GameObject:
   m_ObjectHideFlags: 0
@@ -5468,7 +5463,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 159b66c071ced43f499eb58b9b7c8b01, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  key: 146
 --- !u!1 &879539143
 GameObject:
   m_ObjectHideFlags: 0
@@ -5572,10 +5566,10 @@ MonoBehaviour:
     - m_Text: Healing
       m_Image: {fileID: 0}
       m_Color: {r: 1, g: 1, b: 1, a: 1}
-    - m_Text: EmotionPlayer
+    - m_Text: MoodPlayer
       m_Image: {fileID: 0}
       m_Color: {r: 1, g: 1, b: 1, a: 1}
-    - m_Text: EmotionEnemy
+    - m_Text: MoodEnemy
       m_Image: {fileID: 0}
       m_Color: {r: 1, g: 1, b: 1, a: 1}
     - m_Text: PositionPlayer
@@ -5830,7 +5824,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 159b66c071ced43f499eb58b9b7c8b01, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  key: 144
 --- !u!1 &977317723
 GameObject:
   m_ObjectHideFlags: 0
@@ -8458,7 +8451,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 159b66c071ced43f499eb58b9b7c8b01, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  key: 157
 --- !u!1 &1635960186
 GameObject:
   m_ObjectHideFlags: 0
@@ -8609,7 +8601,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 159b66c071ced43f499eb58b9b7c8b01, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  key: 160
 --- !u!1 &1667004033
 GameObject:
   m_ObjectHideFlags: 0
@@ -8839,10 +8830,10 @@ MonoBehaviour:
     - m_Text: Healing
       m_Image: {fileID: 0}
       m_Color: {r: 1, g: 1, b: 1, a: 1}
-    - m_Text: EmotionPlayer
+    - m_Text: MoodPlayer
       m_Image: {fileID: 0}
       m_Color: {r: 1, g: 1, b: 1, a: 1}
-    - m_Text: EmotionEnemy
+    - m_Text: MoodEnemy
       m_Image: {fileID: 0}
       m_Color: {r: 1, g: 1, b: 1, a: 1}
     - m_Text: PositionPlayer
@@ -9108,7 +9099,7 @@ MonoBehaviour:
   m_ChildAlignment: 0
   m_StartCorner: 0
   m_StartAxis: 0
-  m_CellSize: {x: 2200, y: 275}
+  m_CellSize: {x: 1800, y: 275}
   m_Spacing: {x: 0, y: 0}
   m_Constraint: 1
   m_ConstraintCount: 1
@@ -9931,7 +9922,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 159b66c071ced43f499eb58b9b7c8b01, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  key: 143
 --- !u!1 &1837405725
 GameObject:
   m_ObjectHideFlags: 0
@@ -10792,7 +10782,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 159b66c071ced43f499eb58b9b7c8b01, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  key: 158
 --- !u!1 &1987206025
 GameObject:
   m_ObjectHideFlags: 0
@@ -12015,7 +12004,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 159b66c071ced43f499eb58b9b7c8b01, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  key: 101
 --- !u!1 &2146540115
 GameObject:
   m_ObjectHideFlags: 0

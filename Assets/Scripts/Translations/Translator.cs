@@ -16,14 +16,14 @@ public class Translator : MonoBehaviour
     Dictionary<string, Dictionary<string, string>> keyTranslate = new();
     [Scene][SerializeField] string toLoad;
     [SerializeField] TMP_Text settingsText;
-    [SerializeField] TMP_Text emotionGuide;
+    [SerializeField] TMP_Text moodGuide;
     [SerializeField] TMP_Text pressToClose;
     [SerializeField] TMP_Text animationTime;
     [SerializeField] TMP_Text confirmDecisions;
     [SerializeField] TMP_Text displayTooltip;
-    [SerializeField] TMP_Text angry;
-    [SerializeField] TMP_Text happy;
-    [SerializeField] TMP_Text sad;
+    [SerializeField] TMP_Text focused;
+    [SerializeField] TMP_Text lively;
+    [SerializeField] TMP_Text tired;
 
     void Awake()
     {
@@ -135,14 +135,14 @@ public class Translator : MonoBehaviour
     {
         KeywordTooltip.instance.SwitchLanguage();
         settingsText.text = AutoTranslate.Settings();
-        emotionGuide.text = AutoTranslate.Emotions_Guide();
+        moodGuide.text = AutoTranslate.Mood_Guide();
         pressToClose.text = AutoTranslate.Close_Settings();
         animationTime.text = AutoTranslate.Animation_Time();
         confirmDecisions.text = AutoTranslate.Confirm_Decisions();
         displayTooltip.text = AutoTranslate.Display_Tooltip();
-        angry.text = AutoTranslate.Angry();
-        happy.text = AutoTranslate.Happy();
-        sad.text = AutoTranslate.Sad();
+        lively.text = AutoTranslate.Lively();
+        focused.text = AutoTranslate.Focused();
+        tired.text = AutoTranslate.Tired();
 
         ScreenOverlay.instance.UnloadObjects(SceneManager.GetActiveScene().name, toLoad, GameMode.Other);
     }

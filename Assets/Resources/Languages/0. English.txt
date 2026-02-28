@@ -1,7 +1,7 @@
 Title	RANDOMLY GENERATED
 Blank	
 Author_Credit	by Thomas Tang (DZ)
-Last_Update	Last Updated: Feb 27, 2026
+Last_Update	Last Updated: Feb 28, 2026
 Language	Language
 Translator_Credit	Original Language
 Upload_Translation	Upload Translation
@@ -35,7 +35,7 @@ Apply_Cooldown	$Target$'s $Ability$ is placed on $MiscNum$ Cooldown.
 Special_Thanks	Special Thanks
 All_Thanks	Seth Royston for showing me how to use Google Sheets with Unity \nLiam Cribbs for showing me how to auto-download Google Sheets contents \nFlan Falacci for thinking that this game deserved to be at Project Studio \nThis game was inspired by OMORI (by OMOCAT), and Epic Battle Fantasy V (by KupoGames) \nEveryone who tried this game at Playtest Thursday (somehow you all liked it)
 Settings	Settings
-Emotions_Guide	Emotions Guide
+Mood_Guide	Mood Guide
 Close_Settings	Press any key to close
 Close	Close
 Random	Random
@@ -47,12 +47,12 @@ Display_Tooltip	Display Tooltip for keywords / icons
 Cooldown	Cooldown
 Cooldown_Text	Cooldown: Ability can't be used again until enough turns have passed.
 Dead	Dead
-Sad	Sad
-Sad_Text	 +2 damage against Happy, -2 damage against Angry.
-Happy	Happy
-Happy_Text	 +2 damage against Angry, -2 damage against Sad.
-Angry	Angry
-Angry_Text	 +2 damage against Sad, -2 damage against Happy.
+Tired	Tired
+Tired_Text	 +2 damage against Lively, -2 damage against Focused.
+Lively	Lively
+Lively_Text	 +2 damage against Focused, -2 damage against Tired.
+Focused	Focused
+Focused_Text	 +2 damage against Tired, -2 damage against Lively.
 Grounded	Grounded
 Grounded_Text	Can't be targeted by abilities that only affect Elevated targets.
 Elevated	Elevated
@@ -69,8 +69,8 @@ Protected_Text	Can't lose Power, Defense, or Health.
 Blocked	Blocked
 Blocked_Stat_Drop	$This$ is Protected from losing $MainNum$ $Stat$.
 Locked	Locked
-Locked_Text	Emotion and Position can't change.
-Blocked_Emotion	$This$ is Locked and can't change Emotion.
+Locked_Text	Mood and Position can't change.
+Blocked_Mood	$This$ is Locked and can't change Mood.
 Blocked_Position	$This$ is Locked and can't change Position.
 Stunned	Stunned
 Stunned_Text	Skips a turn.
@@ -112,13 +112,13 @@ Tutorial	Tutorial
 Tutorial_10	This is a turn-based RPG where your Players are given random Abilities to fight against random Enemies.
 Tutorial_20	You always have the same 3 party members. Right click on the Knight to see what they do.
 Tutorial_30	Here's your first Enemy. Use the Knight's Ability against them.
-Tutorial_40	The Ability you used has 1 turn of cooldown (Cooldown), so you can't use it again this round. Instead use a different Ability.
-Tutorial_50	You killed your first Enemy! Now you may have noticed your Knight is Angry.
-Tutorial_51	Everyone begins with a random Emotion. Each Emotion is effective against a different Emotions.
-Tutorial_52	To see which Emotions are effective against which, open the Emotion Guide (usually it's at the bottom right of the screen).
+Tutorial_40	The Ability you used has 1 turn of cooldown (Cooldown), so you can't use it again this Round. Instead use a different Ability.
+Tutorial_50	You killed your first Enemy! Now you may have noticed your Knight is Focused.
+Tutorial_51	Everyone begins with a random Mood. Each Mood is effective against a different Mood.
+Tutorial_52	To see which Moods are effective against which, open the Mood Guide (usually it's at the bottom right of the screen).
 Tutorial_60	Here's your 2nd party member. Right click on the Angel to read what they do.
-Tutorial_70	This Page is Happy. Since Happy is super effective against Angry, this puts your Knight at a disadvantage.
-Tutorial_71	But you can have the Angel make the Page Sad. That way, your Angry Knight will gain the advantage.
+Tutorial_70	This Page is Lively. Since Lively is super effective against Focused, this puts your Knight at a disadvantage.
+Tutorial_71	But you can have the Angel make the Page Tired. That way, your Focused Knight will gain the advantage.
 Tutorial_90	Everyone is either Grounded or Elevated. Your Knight always starts Grounded, and Angel always starts Elevated.
 Tutorial_91	One of the Knight's big weaknesses is that they have no way to attack Elevated Enemies.
 Tutorial_100	And now, your 3rd party member. Right click on the Wizard to read what they do.
@@ -138,8 +138,8 @@ Type_2	Type 2
 Any	Any
 Attack	Attack
 Healing	Healing
-EmotionPlayer	Emotion - Player
-EmotionEnemy	Emotion - Enemy
+MoodPlayer	Mood - Player
+MoodEnemy	Mood - Enemy
 PositionPlayer	Position - Player
 PositionEnemy	Position - Enemy
 StatPlayer	Stats - Player
@@ -154,31 +154,31 @@ Rules_Reminder	A maximum of 2 Rules per game.
 Chosen_Rule	Rule: $Rule$
 Apply_Rule	Applying Rule: $Rule$.
 Knight	Knight
-Knight_Text	Deals lots of damage to individual Enemies, and only Grounded ones. Has control over Emotions and Defense.
+Knight_Text	Deals lots of damage to individual Enemies, and only Grounded ones. Has control over Moods and Defense.
 Battle_Cry	Battle Cry
-Battle_Cry_Text	A Player becomes Angry and gains $DefNum$ Defense.
+Battle_Cry_Text	A Player becomes Focused and gains $DefNum$ Defense.
 Battle_Cry_Log	$This$ has $Target$ do a battle cry.
 Cheer	Cheer
-Cheer_Text	Another Player becomes Happy and gets $StatusNum$ Extra Ability.
+Cheer_Text	Another Player becomes Lively and gets $StatusNum$ Extra Ability.
 Cheer_Log	$This$ cheers on $Target$.
 Daze	Daze
-Daze_Text	A Grounded Enemy becomes Happy and loses $DefNum$ Defense.
+Daze_Text	A Grounded Enemy becomes Lively and loses $DefNum$ Defense.
 Daze_Log	$This$ dazes $Target$.
-Desperation	Desperation
-Desperation_Text	This becomes Sad. Then deal $MainNum$ damage to a Grounded Enemy.
-Desperation_Log	$This$ gets desperate against $Target$.
-Embarass	Embarass
-Embarass_Text	A Grounded Enemy becomes Sad. Then deal $MainNum$ damage to them.
-Embarass_Log	$This$ embarasses $Target$.
+Heavy_Sword	Heavy_Sword
+Heavy_Sword_Text	This becomes Tired. Then deal $MainNum$ damage to a Grounded Enemy.
+Heavy_Sword_Log	$This$ swings a heavy sword against $Target$.
+Overwhelm	Overwhelm
+Overwhelm_Text	A Grounded Enemy becomes Tired. Then deal $MainNum$ damage to them.
+Overwhelm_Log	$This$ overwhelms $Target$.
 Force	Force
 Force_Text	Deal $MainNum$ damage to a Grounded Enemy. Their active Ability Cooldown are decreased by $MiscNum$.
 Force_Log	$This$ forces $Target$ to work harder.
 Impale	Impale
 Impale_Text	Deal $MainNum$ damage to a Grounded Enemy. They becomes Stunned for $StatusNum$ turn.
 Impale_Log	$This$ impales $Target$.
-Intimidate	Intimidate
-Intimidate_Text	This becomes Angry, and another Player becomes Sad.
-Intimidate_Log	$This$ intimidates $Target$.
+Take_Over	Take_Over
+Take_Over_Text	This becomes Focused, and another Player becomes Tired.
+Take_Over_Log	$This$ takes over $Target$'s role.
 Joust	Joust
 Joust_Text	Deal $MainNum$ damage to a Grounded Enemy. Then this loses $PowNum$ Power.
 Joust_Log	$This$ uses joust against $Target$.
@@ -186,37 +186,37 @@ Knock_Down	Knock Down
 Knock_Down_Text	Deal $MainNum$ damage to a Grounded Enemy. Then they lose $DefNum$ Defense.
 Knock_Down_Log	$This$ knocks down $Target$.
 Mirror	Mirror
-Mirror_Text	Deal $MainNum$ damage to a Grounded Enemy with the same Emotion as this.
+Mirror_Text	Deal $MainNum$ damage to a Grounded Enemy with the same Mood as this.
 Mirror_Log	$This$ mirrors $Target$.
-Mock	Mock
-Mock_Text	A Grounded Enemy becomes Angry. Then deal $MainNum$ damage to them.
-Mock_Log	$This$ mocks $Target$.
+Occupy	Occupy
+Occupy_Text	A Grounded Enemy becomes Focused. Then deal $MainNum$ damage to them.
+Occupy_Log	$This$ occupies $Target$'s time.
 Redirect	Redirect
-Redirect_Text	Another Player gains $DefNum$ Defense and becomes Targeted during this and next round.
+Redirect_Text	Another Player gains $DefNum$ Defense and becomes Targeted during this and next Round.
 Redirect_Log	$This$ redirects attention to $Target$.
 Strike	Strike
 Strike_Text	This gains $DefNum$ Defense. Then deal $MainNum$ damage to a Grounded Enemy.
 Strike_Log	$This$ strikes at $Target$.
 Pillage	Pillage
-Pillage_Text	An Enemy becomes Angry. All Players gain $DefNum$ Defense.
+Pillage_Text	An Enemy becomes Focused. All Players gain $DefNum$ Defense.
 Pillage_Log	$This$ pillages $Target$.
-Surprise	Surprise
-Surprise_Text	A Grounded Enemy becomes Happy. Then deal $MainNum$ damage to it.
-Surprise_Log	$This$ surprises $Target$.
+Motivate	Motivate
+Motivate_Text	A Grounded Enemy becomes Lively. Then deal $MainNum$ damage to it.
+Motivate_Log	$This$ motivates $Target$.
 Twirl	Twirl
-Twirl_Text	This becomes Happy. Then deals $MainNum$ damage to a Grounded Enemy.
+Twirl_Text	This becomes Lively. Then deal $MainNum$ damage to a Grounded Enemy.
 Twirl_Log	$This$ twirls into $Target$.
-Upset	Upset
-Upset_Text	A Grounded Enemy becomes Sad and loses $DefNum$ Defense.
-Upset_Log	$This$ upsets $Target$.
+Debilitate	Debilitate
+Debilitate_Text	A Grounded Enemy becomes Tired and loses $DefNum$ Defense.
+Debilitate_Log	$This$ debilitates $Target$.
 Immobilize	Immobilize
-Immobilize_Text	Deal $MainNum$ damage to a Grounded Enemy. They become Locked during this and next round.
-Immobilize_Log	$This$ Immobilizes $Target$.
+Immobilize_Text	Deal $MainNum$ damage to a Grounded Enemy. They become Locked during this and next Round.
+Immobilize_Log	$This$ immobilizes $Target$.
 Duel	Duel
 Duel_Text	Deal $MainNum$ damage to a Grounded Enemy. They gain 1 Power and lose 1 Defense.
 Duel_Log	$This$ duels with $Target$.
 Prioritize	Prioritize
-Prioritize_Text	Deal $MainNum$ damage to a Grounded Enemy. They become Targeted during this and next round.
+Prioritize_Text	Deal $MainNum$ damage to a Grounded Enemy. They become Targeted during this and next Round.
 Prioritize_Log	$This$ prioritizes defeating $Target$.
 Angel	Angel
 Angel_Text	Heals Players and starts Elevated. Can do everything but attack.
@@ -229,26 +229,26 @@ Assist_Log	$This$ assists $Target$.
 Crash_Land	Crash Land
 Crash_Land_Text	An Elevated Enemy becomes Grounded and loses $DefNum$ Defense.
 Crash_Land_Log	$This$ makes $Target$ crash land.
-Enrage	Enrage
-Enrage_Text	An Elevated Player gains $MainNum$ Health and becomes Angry.
-Enrage_Log	$This$ enrages $Target$.
+Stay_Up	Stay Up
+Stay_Up_Text	An Elevated Player gains $MainNum$ Health and becomes Focused.
+Stay_Up_Log	$This$ makes $Target$ stay up.
 Exhaust	Exhaust
-Exhaust_Text	An Enemy becomes Sad and loses $PowNum$ Power.
+Exhaust_Text	An Enemy becomes Tired and loses $PowNum$ Power.
 Exhaust_Log	$This$ exhausts $Target$.
 Exorcism	Exorcism
 Exorcism_Text	An Elevated Enemy loses $DefNum$ Defense. Each Elevated Player gains $MainNum$ Health.
 Exorcism_Log	$This$ exorcises $Target$.
 Gift_of_Flight	Gift of Flight
-Gift_of_Flight_Text	A Grounded Enemy becomes Happy and Elevated.
+Gift_of_Flight_Text	A Grounded Enemy becomes Lively and Elevated.
 Gift_of_Flight_Log	$This$ gives $Target$ the gift of flight.
 Hide	Hide
 Hide_Text	A Grounded Enemy loses $PowNum$ Power. Each Grounded Player gains $MainNum$ Health.
 Hide_Log	$This$ has players hide from $Target$.
 Immunity	Immunity
-Immunity_Text	A Player gains $MainNum$ Health and becomes Protected during this round.
+Immunity_Text	A Player gains $MainNum$ Health and becomes Protected during this Round.
 Immunity_Log	$This$ grants immunity to $Target$.
 Joy	Joy
-Joy_Text	A Grounded Player gains $MainNum$ Health and becomes Happy.
+Joy_Text	A Grounded Player gains $MainNum$ Health and becomes Lively.
 Joy_Log	$This$ brings $Target$ joy.
 Lift_Up	Lift Up
 Lift_Up_Text	A Grounded Player gains $MainNum$ Health and becomes Elevated.
@@ -257,10 +257,10 @@ Overheal	Overheal
 Overheal_Text	All Players gain $MiscNum$ Max Health and $MainNum$ Health.
 Overheal_Log	$This$ overheals all players.
 Plummet	Plummet
-Plummet_Text	An Elevated Enemy becomes Angry and Grounded.
+Plummet_Text	An Elevated Enemy becomes Focused and Grounded.
 Plummet_Log	$This$ plummets $Target$.
 Retreat	Retreat
-Retreat_Text	An Elevated Player becomes Sad and Grounded.
+Retreat_Text	An Elevated Player becomes Tired and Grounded.
 Retreat_Log	$This$ has $Target$ retreat.
 Security	Security
 Security_Text	A Player switches Positions and gains $DefNum$ Defense.
@@ -281,7 +281,7 @@ Restore	Restore
 Restore_Text	Each Player with $MiscNum$ Health or less gains $MainNum$ Health.
 Restore_Log	$This$ restores everyone's health.
 Preserve	Preserve
-Preserve_Text	A Player gains $MainNum$ Health and becomes Locked during this round.
+Preserve_Text	A Player gains $MainNum$ Health and becomes Locked during this Round.
 Preserve_Log	$This$ preserves $Target$.
 Wizard	Wizard
 Wizard_Text	Deals small amounts of damage to multiple Enemies at once. Has control over Positions and Power.
@@ -334,7 +334,7 @@ Tornado	Tornado
 Tornado_Text	Each Elevated Player becomes Grounded. Deal $MainNum$ damage to each Elevated Enemy.
 Tornado_Log	$This$ summons a tornado.
 Readjust	Readjust
-Readjust_Text	An Enemy switches Positions and becomes Locked during this and next round.
+Readjust_Text	An Enemy switches Positions and becomes Locked during this and next Round.
 Readjust_Log	$This$ readjusts $Target$'s position.
 Divine_Wind	Divine Wind
 Divine_Wind_Text	Each Elevated Player gains $PowNum$ Power. Then deal $MainNum$ damage to each Elevated Enemy.
@@ -346,83 +346,83 @@ Bad_Omens	Bad Omens
 Bad_Omens_Text	Deal $MainNum$ damage to each Grounded Enemy. They each lose $PowNum$ Power.
 Bad_Omens_Log	$This$ predicts bad omens.
 Conformity	Conformity
-Conformity_Text	Deal $MainNum$ damage to all Enemies with a different Emotion and Position than this.
+Conformity_Text	Deal $MainNum$ damage to all Enemies with a different Position and Mood than this.
 Conformity_Log	$This$ punishes non-conformists.
 Revive	Revive
-Revive_Text	Bring back a dead Player with $MainNum$ Health and a random Emotion.
+Revive_Text	Bring back a dead Player with $MainNum$ Health and a random Mood.
 Revive_Log	$This$ revives $Target$.
 Skip_Turn	Skip Turn
 Skip_Turn_Text	Do nothing.
 Skip_Turn_Log	$This$ skips their turn.
 Archer	Archer
-Archer_Text	Makes itself Happy, then shoots down Angry and Elevated Players.
-Quick_Shot	Quick Shot
-Quick_Shot_Text	An Elevated Player becomes Angry. Then deal $MainNum$ damage to them.
-Quick_Shot_Log	$This$ fires a quick shot at $Target$.
+Archer_Text	Makes itself Lively, then shoots down Focused and Elevated Players.
+Distract	Distract
+Distract_Text	An Elevated Player becomes Focused. Then deal $MainNum$ damage to them.
+Distract_Log	$This$ distracts $Target$.
 Bullseye	Bullseye
 Bullseye_Text	This gains $PowNum$ Power. Then deal $MainNum$ damage to an Elevated Player.
 Bullseye_Log	$This$ shoots a direct arrow at $Target$.
-Volley	Volley
-Volley_Text	Deal $MainNum$ damage to all Players.
-Volley_Log	$This$ fires a volley of arrows.
-Focus	Focus
-Focus_Text	This becomes Happy and gains $DefNum$ Defense.
-Focus_Log	$This$ focuses its aim.
+Cover	Cover
+Cover_Text	This becomes Lively and gains $DefNum$ Defense.
+Cover_Log	$This$ hides behind cover.
+Aim_Up	Aim_Up
+Aim_Up_Text	This becomes Grounded, and a Grounded Player becomes Elevated.
+Aim_Up_Log	$This$ aims up at $Target$.
 Barbarian	Barbarian
-Barbarian_Text	Makes itself Angry, goes after the Grounded Player with the most Health, and lowers their Max Health.
+Barbarian_Text	Makes itself Focused, attacks the Player with the most Health, and lowers their Max Health and Power.
 Fury	Fury
-Fury_Text	Deal $MainNum$ damage to the Grounded Player with the most Health.
+Fury_Text	Deal $MainNum$ damage to the Player with the most Health.
 Fury_Log	$This$ unleashes its fury on $Target$.
-Savagery	Savagery
-Savagery_Text	All Grounded Players lose 1 Max Health and $PowNum$ Power.
-Savagery_Log	$This$ displays savagery.
+Trample	Trample
+Trample_Text	The Player with the most Health loses $PowNum$ Power and becomes Targeted during this and next round.
+Trample_Log	$This$ tramples over $Target$.
 Brawl	Brawl
-Brawl_Text	This and the Grounded Player with the most Health both become Angry and Locked during this and next round.
+Brawl_Text	The Player with the most Health loses 2 Max Health.
 Brawl_Log	$This$ brawls with $Target$.
-Camp	Camp
-Camp_Text	This becomes Protected during this round, and gets $StatusNum$ Extra Ability.
-Camp_Log	$This$ goes into its camp.
+Frenzy	Frenzy
+Frenzy_Text	This becomes Focused and gains $PowerNum$ Power.
+Frenzy_Log	$This$ gets into a frenzy.
 Bat	Bat
-Bat_Text	Makes itself Sad, then it attacks Happy players and heals at the same time.
+Bat_Text	Makes itself Tired, then it attacks Lively players and heals at the same time.
 Drain	Drain
 Drain_Text	Deal $MainNum$ damage to a Player. This gains $MainNum$ Health.
 Drain_Log	$This$ drains blood out of $Target$.
 Screech	Screech
-Screech_Text	A Player becomes Happy and loses $DefNum$ Defense.
+Screech_Text	A Player becomes Lively and loses $DefNum$ Defense.
 Screech_Log	$This$ screeches.
 Hunting_Season	Hunting Season
 Hunting_Season_Text	This gains $PowNum$ Power.
 Hunting_Season_Log	$This$ goes on the hunt.
 Bloodthirst	Bloodthirst
-Bloodthirst_Text	This becomes Sad and gets $StatusNum$ Extra Ability.
-Bloodthirst_Log	$This$ becomes bloodthirsty.
+Bloodthirst_Text	This becomes Tired and gets $StatusNum$ Extra Ability.
+Bloodthirst_Log	$This$ is thirsty.
 Bees	Bees
 Bees_Text	Helps other Elevated Enemies stay alive with status effects.
 Sting	Sting
-Sting_Text	Deal $MainNum$ damage to a Player. This becomes Targeted during this and next round.
-Sting_Log	$This$ stings $Target$.
+Sting_Text	Deal $MainNum$ damage to all Players. This becomes Targeted during this and next Round.
+Sting_Log	$This$ stings everyone.
 Honey	Honey
 Honey_Text	Another Elevated Enemy gains $MainNum$ Health.
 Honey_Log	$This$ gives $Target$ honey.
 Protect_the_Queen	Protect the Queen
-Protect_the_Queen_Text	Another Elevated Enemy becomes Protected during this and next round.
+Protect_the_Queen_Text	Another Elevated Enemy becomes Protected during this and next Round.
 Protect_the_Queen_Log	$This$ protects $Target$.
 Support	Support
 Support_Text	Another Elevated Enemy gets $StatusNum$ Extra Ability.
 Support_Log	$This$ supports $Target$.
 Cow	Cow
-Cow_Text	Either attacks the Player who most recently damaged them, or does healing while Happy.
+Cow_Text	Either attacks the Player who most recently damaged them, or does some healing.
 Charge	Charge
-Charge_Text	Deal $MainNum$ damage to the last Player who attacked this.
+Charge_Text	Deal $MainNum$ damage to the last Player who attacked this (if any).
 Charge_Log	$This$ charges at $Target$.
 Milk	Milk
-Milk_Text	Another Enemy gains $MainNum$ Health and becomes Happy.
+Milk_Text	Another Enemy gains $MainNum$ Health and becomes Lively.
 Milk_Log	$This$ gives milk to $Target$.
 Graze	Graze
 Graze_Text	This gains $MainNum$ Max Health and $MainNum$ Health.
 Graze_Log	$This$ grazes.
 Bellow	Bellow
-Bellow_Text	This gains $DefNum$ Defense and becomes Targeted during this and next round.
+Bellow_Text	This gains $DefNum$ Defense and becomes Targeted during this and next Round.
 Bellow_Log	$This$ bellows.
 Crow	Crow
 Crow_Text	Basic Enemy who attacks Grounded and Elevated Players.
@@ -455,23 +455,23 @@ Take_Flight	Take Flight
 Take_Flight_Text	All Grounded Enemies becomes Elevated.
 Take_Flight_Log	$This$ is back for more.
 Roar	Roar
-Roar_Text	This becomes Angry and gains $PowNum$ Power.
-Roar_Log	$This$ roars.
+Roar_Text	This becomes Lively and gains $PowNum$ Power.
+Roar_Log	$This$ roars loudly.
 Drone	Drone
 Drone_Text	Makes itself Elevated and raises its Power before attacking multiple Players at once.
 Sound_Waves	Sound Waves
 Sound_Waves_Text	Deal $MainNum$ damage to all Players.
 Sound_Waves_Log	$This$ creates sound waves.
 Alarm	Alarm
-Alarm_Text	This gains $PowNum$ Power and becomes Elevated and Locked during this and next round.
+Alarm_Text	This gains $PowNum$ Power and becomes Elevated and Locked during this and next Round.
 Alarm_Log	$This$ activates an alarm.
 Ghost	Ghost
-Ghost_Text	Makes Players change Positions, and then deals heavy damage to Elevated Players while Sad.
+Ghost_Text	Makes Players change Positions, and then deals damage to all Players while Tired.
 Jumpscare	Jumpscare
-Jumpscare_Text	Deal $MainNum$ damage to an Elevated Player.
-Jumpscare_Log	$This$ jumpscares $Target$.
+Jumpscare_Text	Deal $MainNum$ damage to all Players.
+Jumpscare_Log	$This$ does a jumpscare.
 Lament	Lament
-Lament_Text	This and another Enemy both become Sad.
+Lament_Text	This and another Enemy both become Tired.
 Lament_Log	$This$ and $Target$ lament.
 Possession	Possession
 Possession_Text	A Grounded Player becomes Elevated and loses $PowNum$ Power.
@@ -493,32 +493,32 @@ Scratch	Scratch
 Scratch_Text	Deal $MainNum$ damage to a Player with the same Position as this.
 Scratch_Log	$This$ scratches $Target$.
 Stuck_in_a_Tree	Stuck in a Tree
-Stuck_in_a_Tree_Text	If this is Grounded, it becomes Elevated and Sad.
+Stuck_in_a_Tree_Text	If this is Grounded, it becomes Elevated and Tired.
 Stuck_in_a_Tree_Log	$This$ gets stuck in a tree.
 Land_Feet_First	Land Feet First
 Land_Feet_First_Text	If this is Elevated, it becomes Grounded and gains $MainNum$ Health.
 Land_Feet_First_Log	$This$ lands feet first.
 Lure	Lure
-Lure_Text	A Player switches Positions. This becomes Targeted during this and next round.
+Lure_Text	A Player switches Positions. This becomes Targeted during this and next Round.
 Lure_Log	$This$ lures $Target$.
 Leprechaun	Leprechaun
 Leprechaun_Text	If this is at full Health, it increases Player Stats; otherwise it deals lots of damage.
 Prank	Prank
 Prank_Text	If this took damage, deal $MainNum$ damage to all Players.
 Prank_Log	$This$ pranks everyone.
-Caught_at_a_Good_Time	Caught at a Good Time
-Caught_at_a_Good_Time_Text	If this is at full Health, all Players gain $PowNum$ Power and $DefNum$ Defense.
-Caught_at_a_Good_Time_Log	$This$ gives everyone gold.
+Offer_Gold	Offer Gold
+Offer_Gold_Text	If this is at full Health, all Players gain $PowNum$ Power and $DefNum$ Defense.
+Offer_Gold_Log	$This$ gives everyone gold.
 Ninja	Ninja
 Ninja_Text	Goes after the Player who has the least Health, and alternates between Grounded and Elevated.
 Assassinate	Assassinate
-Assassinate_Text	Deal $MainNum$ damage to the Player with the least amount of Health.
-Assassinate_Log	$This$ pulls a sneak attack on $Target$.
-Shuriken	Shuriken
-Shuriken_Text	A Player loses $PowNum$ Power and $DefNum$ Defense.
-Shuriken_Log	$This$ throws a shuriken at $Target$.
+Assassinate_Text	Deal $MainNum$ damage to the Player with the least amount of Health. They lose $DefNum$ Defense.
+Assassinate_Log	$This$ attempts to assassinate $Target$.
+Smoke_Bomb	Smoke Bomb
+Smoke_Bomb_Text	This switches Positions. Another Enemy becomes Focused.
+Smoke_Bomb_Log	$This$ uses a smoke bomb around $Target$.
 Into_Shadows	Into Shadows
-Into_Shadows_Text	If this is Elevated, it becomes Grounded and Protected during this and next round.
+Into_Shadows_Text	If this is Elevated, it becomes Grounded and Protected during this and next Round.
 Into_Shadows_Log	$This$ leaps into shadows.
 Wall_Climb	Wall Climb
 Wall_Climb_Text	If this is Grounded, it becomes Elevated and gains $DefNum$ Defense.
@@ -529,7 +529,7 @@ Swing	Swing
 Swing_Text	Deal $MainNum$ damage to a Grounded Player.
 Swing_Log	$This$ swings against $Target$.
 Partier	Partier
-Partier_Text	Heals all Enemies, gives them random Emotions, and increases their Max Health.
+Partier_Text	Heals all Enemies, gives them random Moods, and increases their Max Health.
 Fight	Fight
 Fight_Text	Deal $MainNum$ damage to a Grounded Player.
 Fight_Log	$This$ fights $Target$.
@@ -540,32 +540,32 @@ Share_Snacks	Share Snacks
 Share_Snacks_Text	All Enemies gain $MiscNum$ Max Health.
 Share_Snacks_Log	$This$ shares snacks.
 Drinking_Game	Drinking Game
-Drinking_Game_Text	All Enemies get a random Emotion.
+Drinking_Game_Text	All Enemies get a random Mood.
 Drinking_Game_Log	$This$ plays a drinking game.
 Pixie	Pixie
-Pixie_Text	Changes all Player Emotions at the same time, and attacks Elevated Players.
+Pixie_Text	Changes all Player Moods at the same time, and attacks Elevated Players.
 Will_o_Wisp	Will-o'-Wisp
 Will_o_Wisp_Text	Deal $MainNum$ damage to an Elevated Player.
 Will_o_Wisp_Log	$This$ conjures a will-o'-wisp against $Target$.
-Cast_Happiness	Cast Happiness
-Cast_Happiness_Text	All Player become Happy.
-Cast_Happiness_Log	$This$ casts happiness.
-Cast_Sadness	Cast Sadness
-Cast_Sadness_Text	All Players become Sad.
-Cast_Sadness_Log	$This$ casts sadness.
-Cast_Anger	Cast Anger
-Cast_Anger_Text	All Players become Angry.
-Cast_Anger_Log	$This$ casts anger.
+Agitate	Agitate
+Agitate_Text	All Player become Lively.
+Agitate_Log	$This$ agitates everyone.
+Drowsiness	Drowsiness
+Drowsiness_Text	All Players become Tired.
+Drowsiness_Log	$This$ induces drowsiness.
+Bother	Bother
+Bother_Text	All Players become Focused.
+Bother_Log	$This$ bothers everyone.
 Puppeteer	Puppeteer
 Puppeteer_Text	Makes Players Elevated, then makes them Grounded again to deal damage. Can also give all other Elevated Enemies Extra Abilities.
 Collision	Collision
 Collision_Text	Deal $MainNum$ damage to all Elevated Players.
 Collision_Log	$This$ collides puppets with each other.
 Drop	Drop
-Drop_Text	Deal $MainNum$ damage to all Elevated Players. They become Grounded.
+Drop_Text	Deal $MainNum$ damage to each Elevated Player. They each become Grounded.
 Drop_Log	$This$ drops everyone on the floor.
 Dangle	Dangle
-Dangle_Text	All Grounded Players become Elevated and lose $DefNum$ Defense.
+Dangle_Text	All Grounded Players become Elevated and lose $PowerNum$ Power.
 Dangle_Log	$This$ dangles players in the air.
 Control	Control
 Control_Text	Each other Elevated Enemy gets $StatusNum$ Extra Ability.
@@ -595,7 +595,7 @@ Strength_in_Numbers_Log	$This$ attracts more Rats.
 Royalty	Royalty
 Royalty_Text	Summons more 1 Star Enemies, and then gives them more Power and Max Health.
 Order	Order
-Order_Text	Deal $MainNum$ damage to a Player. They become Targeted during this and next round.
+Order_Text	Deal $MainNum$ damage to a Player. They become Targeted during this and next Round.
 Order_Log	$This$ orders guards to attack $Target$. 
 Promote	Promote
 Promote_Text	Another Enemy gains $MiscNum$ Max Health and $MainNum$ Health.
@@ -607,61 +607,61 @@ Procession	Procession
 Procession_Text	All Enemies gain $PowNum$ Power.
 Procession_Log	$This$ arranges a procession.
 Siren	Siren
-Siren_Text	Makes a Player Angry and Stunned, and then deals damage to Stunned Players.
+Siren_Text	Makes a Player Focused and Stunned, and then deals damage to Stunned Players.
 Drown	Drown
 Drown_Text	Deal $MainNum$ damage to a Stunned Player.
 Drown_Log	$This$ drowns $Target$.
 Shipwreck	Shipwreck
-Shipwreck_Text	An Angry Player loses $DefNum$ Defense and becomes Stunned for $StatusNum$ turns.
+Shipwreck_Text	A Focused Player loses $DefNum$ Defense and becomes Stunned for $StatusNum$ turns.
 Shipwreck_Log	$This$ causes $Target$ to shipwreck.
 Manipulate	Manipulate
-Manipulate_Text	A Player becomes Angry and Locked during this and next round.
+Manipulate_Text	A Player becomes Focused and Locked during this and next Round.
 Manipulate_Log	$This$ manipulates $Target$.
 Sing	Sing
-Sing_Text	A $MiscNum$ Star Enemy becomes Targeted during this and next round.
+Sing_Text	A $MiscNum$ Star Enemy becomes Targeted during this and next Round.
 Sing_Log	$This$ sings a song.
 Spider	Spider
-Spider_Text	While this is Elevated, it'll make Players Elevated and Sad, and then lower their Defense.
+Spider_Text	While this is Elevated, it'll make Players Elevated and Tired, and then lower their Defense.
 Stab_Prey	Stab Prey
 Stab_Prey_Text	If this is Elevated, deal $MainNum$ damage to an Elevated Player.
 Stab_Prey_Log	$This$ stabs $Target$.
 Trapped	Trapped
-Trapped_Text	If this is Elevated, a Grounded Player becomes Elevated and Locked during this and next round.
+Trapped_Text	If this is Elevated, a Grounded Player becomes Elevated and Locked during this and next Round.
 Trapped_Log	$This$ traps $Target$.
 Silk_Wrap	Silk Wrap
-Silk_Wrap_Text	An Elevated Player becomes Sad and loses $PowNum$ Power.
+Silk_Wrap_Text	An Elevated Player becomes Tired and loses $PowNum$ Power.
 Silk_Wrap_Log	$This$ wraps $Target$ in silk.
 Spin_Web	Spin Web
 Spin_Web_Text	A Grounded Enemy becomes Elevated and gains $DefNum$ Defense.
 Spin_Web_Log	$This$ spins a web for $Target$.
 Taskmaster	Taskmaster
-Taskmaster_Text	Keeps changing its own Emotion, and deals heavy damage to any Player with a different Emotion.
+Taskmaster_Text	Keeps changing its own Mood, and deals heavy damage to any Player with a different Mood.
 Punishment	Punishment
-Punishment_Text	Does $MainNum$ damage to Player who doesn't have the same Emotion as this.
+Punishment_Text	Does $MainNum$ damage to Player with a different Mood than this.
 Punishment_Log	$This$ punishes $Target$.
-Demand_Happiness	Demand Happiness
-Demand_Happiness_Text	This becomes Happy.
-Demand_Happiness_Log	$This$ demands Happy.
-Demand_Anger	Demand Anger
-Demand_Anger_Text	This becomes Angry.
-Demand_Anger_Log	$This$ demands Angry.
-Demand_Sadness	Demand Sadness
-Demand_Sadness_Text	This becomes Sad.
-Demand_Sadness_Log	$This$ demands Sad.
+Demand_Lively	Demand Lively
+Demand_Lively_Text	This becomes Lively.
+Demand_Lively_Log	$This$ demands Lively.
+Demand_Focused	Demand Focused
+Demand_Focused_Text	This becomes Focused.
+Demand_Focused_Log	$This$ demands Focused.
+Demand_Tired	Demand Tired
+Demand_Tired_Text	This becomes Tired.
+Demand_Tired_Log	$This$ demands Tired.
 Trickster	Trickster
-Trickster_Text	Makes a Grounded Player Happy, and then makes their Ability Cooldown take longer.
+Trickster_Text	Makes a Grounded Player Lively, and then makes their Ability Cooldown take longer.
 Mischief	Mischief
 Mischief_Text	Deal $MainNum$ damage to a Grounded Player.
 Mischief_Log	$This$ causes mischief for $Target$.
 Delude	Delude
-Delude_Text	A Grounded Player becomes Happy and Locked during this and next round.
+Delude_Text	A Grounded Player becomes Lively and Locked during this and next Round.
 Delude_Log	$This$ deludes $Target$.
 Delay	Delay
 Delay_Text	A Grounded Player receives $MiscNum$ Cooldown on one of their available Abilities, at random.
 Delay_Log	$This$ delays $Target$ from using an ability.
-Distract	Distract
-Distract_Text	A Grounded Player's active Ability Cooldown are increased by $MiscNum$.
-Distract_Log	$This$ distracts $Target$.
+Sidetrack	Sidetrack
+Sidetrack_Text	A Grounded Player's active Ability Cooldown are increased by $MiscNum$.
+Sidetrack_Log	$This$ sidetracks $Target$.
 Wall	Wall
 Wall_Text	Makes itself Targeted and increases its Defense.
 Toughen	Toughen
@@ -671,25 +671,27 @@ In_the_Way	In the Way
 In_the_Way_Text	This becomes Grounded and Targeted during this and next round.
 In_the_Way_Log	$This$ is in the way.
 Wolf	Wolf
-Wolf_Text	Makes itself Angry and goes after Sad and Grounded Players. Also helps out any 1 Star Enemies.
-Slash	Slash
-Slash_Text	Deal $MainNum$ damage to a Grounded Player.
-Slash_Log	$This$ slashes $Target$.
-Howl	Howl
-Howl_Text	An Enemy becomes Angry, and a Player becomes Sad.
-Howl_Log	$This$ howls.
+Wolf_Text	Makes itself Focused and goes after Tired and Grounded Players. Also helps out any 1 Star Enemies.
+Pounce	Pounce
+Pounce_Text	Deal $MainNum$ damage to a Grounded Player.
+Pounce_Log	$This$ pounces on $Target$.
+Hunt	Hunt
+Hunt_Text	An Enemy becomes Focused, and a Player becomes Tired.
+Hunt_Log	$This$ is hunting $Target$.
 Nurture	Nurture
 Nurture_Text	All $MiscNum$ Star Enemies gain $PowNum$ Power and $DefNum$ Defense.
 Nurture_Log	$This$ nurtures the young.
 Guard	Guard
-Guard_Text	A $MiscNum$ Star Enemy becomes Protected during this and next round.
+Guard_Text	A $MiscNum$ Star Enemy becomes Protected during this and next Round.
 Guard_Log	$This$ guards $Target$.
-Aggression	Aggression
-Aggression_Text	When anyone becomes Angry, they gain 1 Power and lose 1 Defense.
-Remorse	Remorse
-Remorse_Text	End of anyone's turn: if they killed someone else, they become Sad.
+Frustration	Frustration
+Frustration_Text	When anyone becomes Focused, they gain 1 Power and 1 Defense.
+Lucky	Lucky
+Lucky_Text	When anyone becomes Lively, they get 1 Extra Ability.
+Rest	Rest
+Rest_Text	When anyone becomes Tired, they gain 2 Health.
 Preparation	Preparation
-Preparation_Text	End of anyone's turn: if they used an Attack or Healing Ability, they lose 1 Power; if neither, they gain 2 Power.
+Preparation_Text	End of everyone's turn: if they used an Attack or Healing Ability, they lose 1 Power; otherwise they gain 2 Power.
 Inspiration	Inspiration
 Inspiration_Text	Waves 2-5: Players get a new set of random Abilities.
 Crowds	Crowds
@@ -697,7 +699,11 @@ Crowds_Text	Waves 1-4: Add another 1 Star Enemy at random, and all Enemies lose 
 Charge_Up	Charge Up
 Charge_Up_Text	Each Wave: A random Enemy gains 5 Max Health, 5 Health, 2 Power, 2 Defense, and becomes Stunned for 3 turns.
 Aiming	Aiming
-Aiming_Text	Attack and Healing Abilities have +1 Power against different Positions.
+Aiming_Text	Attack and Healing Abilities have +1 Power against anyone with a different Position, otherwise -1 Power.
+Topsy_Turvy	Topsy Turvy
+Topsy_Turvy_Text	Each Round: everyone switches Positions.
+Bloodied	Bloodied
+Bloodied_Text	If someone is at 6 Health or more, their Abilities have 1 more Cooldown; otherwise 1 less Cooldown.
 Update_0	Dec 9, 2025
 Update_0_Text	Dropped speed and luck, and changed abilities that used them\nTurn order is now players first (in order of Wizard, Knight, Angel), then enemies in order\nAngry's +2 Power is now +1 Power, +1 Defense
 Update_1	Dec 12, 2025
@@ -712,5 +718,5 @@ Update_5	Jan 13, 2026
 Update_5_Text	Fixed log autoscroll \nFixed encyclopedia putting abilities in not-alphabetical order
 Update_6	Feb 08, 2026
 Update_6_Text	Fixed some translation issues \nAdded fonts for some languages \nFixed minor bugs in encyclopedia
-Update_7	Feb 27, 2026
-Update_7_Text	Replaced Neutral, Emotion effects and Cheats/Challenges with new mechanic \nAdded 10 Rules; 2 are randomly chosen per game to change combat \nChanged and replaced many abilities \nRevive is affected by the user's Power, and doesn't mess up the turn order \nPower and Defense are capped at -3 and +3 \nProtected, Targeted, and Locked wear off at the start of each round
+Update_7	Feb 28, 2026
+Update_7_Text	Dropped Neutral, Emotion effects and Cheats/Challenges \nAdded 10 Rules; 2 are randomly chosen per game to change combat \nChanged and replaced many abilities \nRevive is affected by the user's Power, recovers only 8, and doesn't mess up the turn order \nPower and Defense are capped at -3 and +3 \nProtected, Targeted, and Locked wear off at the start of each round \nEmotions are now Moods, and it's Lively, Focused, Tired

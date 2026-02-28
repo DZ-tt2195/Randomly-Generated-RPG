@@ -153,7 +153,7 @@ public class Customizer : MonoBehaviour
             }
             abilitiesForPlayer = GameFiles.inst.CompletePlayerAbilities(abilitiesForPlayer, GameFiles.inst.ConvertToAbilityData(KVP.Value.listOfAbilities, true), TurnManager.inst.dailyRNG);
 
-            nextCharacter.SetupCharacter(KVP.Value, abilitiesForPlayer, Character.RandomEmotion(TurnManager.inst.dailyRNG), counter, false);
+            nextCharacter.SetupCharacter(KVP.Value, abilitiesForPlayer, Character.RandomMood(TurnManager.inst.dailyRNG), counter, false);
             TurnManager.inst.AddPlayer(nextCharacter);
             counter++;
         }        

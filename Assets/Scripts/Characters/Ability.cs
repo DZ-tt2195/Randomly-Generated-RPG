@@ -6,7 +6,7 @@ using System.Reflection;
 using System.Linq;
 
 public enum TeamTarget { None, Self, All, OnePlayer, OtherPlayer, OneEnemy, OtherEnemy, AllPlayers, AllOtherPlayers, AllEnemies, AllOtherEnemies };
-public enum AbilityType { None, Attack, StatPlayer, StatEnemy, EmotionPlayer, EmotionEnemy, PositionPlayer, PositionEnemy, Healing, Misc };
+public enum AbilityType { None, Attack, StatPlayer, StatEnemy, MoodPlayer, MoodEnemy, PositionPlayer, PositionEnemy, Healing, Misc };
 
 public class Ability
 {
@@ -18,10 +18,8 @@ public class Ability
     [ReadOnly] public Character self;
     [ReadOnly] public string editedDescription;
     [ReadOnly] public AbilityType mainType;
-
     [ReadOnly] public int currentCooldown;
     [ReadOnly] public List<List<Character>> listOfTargets = new();
-
     [ReadOnly] public int damageDealt;
     [ReadOnly] public bool killed;
     [ReadOnly] public bool fullHeal;
@@ -124,27 +122,26 @@ public class Ability
     #endregion
 
 #region Calculations
-
     public int Effectiveness(Character user, Character target)
     {
-        int answer = user.CurrentEmotion switch
+        int answer = user.CurrentMood switch
         {
-            Emotion.Happy => target.CurrentEmotion switch
+            Mood.Lively => target.CurrentMood switch
             {
-                Emotion.Angry => 2,
-                Emotion.Sad => -2,
+                Mood.Focused => 2,
+                Mood.Tired => -2,
                 _ => 0
             },
-            Emotion.Angry => target.CurrentEmotion switch
+            Mood.Focused => target.CurrentMood switch
             {
-                Emotion.Sad => 2,
-                Emotion.Happy => -2,
+                Mood.Tired => 2,
+                Mood.Lively => -2,
                 _ => 0
             },
-            Emotion.Sad => target.CurrentEmotion switch
+            Mood.Tired => target.CurrentMood switch
             {
-                Emotion.Happy => 2,
-                Emotion.Angry => -2,
+                Mood.Lively => 2,
+                Mood.Focused => -2,
                 _ => 0
             },
             _ => 0
@@ -155,8 +152,8 @@ public class Ability
     int CalculateHealing(Character user, Character target, int number, int logged)
     {
         int finalCalc = number + user.CalculatePower();
-        if (user.CurrentPosition != target.CurrentPosition && FightRules.inst.CheckRule(nameof(AutoTranslate.Aiming), logged))
-            finalCalc++;
+        if (FightRules.inst.CheckRule(nameof(AutoTranslate.Aiming), logged))
+            finalCalc += (user.CurrentPosition != target.CurrentPosition) ? 1 : -1;
         return Mathf.Max(1, finalCalc);
     }
     int CalculateDamage(Character user, Character target, int number, int logged)
@@ -168,8 +165,8 @@ public class Ability
             Log.instance.AddText(AutoTranslate.Super_Effective(Mathf.Abs(effectiveness).ToString()), logged);
         else if (effectiveness < 0)
             Log.instance.AddText(AutoTranslate.Not_Effective(Mathf.Abs(effectiveness).ToString()), logged);
-        if (user.CurrentPosition != target.CurrentPosition && FightRules.inst.CheckRule(nameof(AutoTranslate.Aiming), logged))
-            finalCalc++;
+        if (FightRules.inst.CheckRule(nameof(AutoTranslate.Aiming), logged))
+            finalCalc += (user.CurrentPosition != target.CurrentPosition) ? 1 : -1;
 
         return Mathf.Max(1, finalCalc);
     }
@@ -177,7 +174,6 @@ public class Ability
     #endregion
 
 #region Play Condition
-
     public bool CanPlay()
     {
         if (currentCooldown > 0)
@@ -237,44 +233,44 @@ public class Ability
         listOfTargets[currentIndex].RemoveAll(target => target.CalculateHealthPercent() > 0.5f);
         return listOfTargets[currentIndex].Count > 0;
     }
-    bool TargetIsHappy(int currentIndex)
+    bool TargetIsLively(int currentIndex)
     {
-        listOfTargets[currentIndex].RemoveAll(target => target.CurrentEmotion != Emotion.Happy);
+        listOfTargets[currentIndex].RemoveAll(target => target.CurrentMood != Mood.Lively);
         return listOfTargets[currentIndex].Count > 0;
     }
-    bool TargetNotHappy(int currentIndex)
+    bool TargetNotLively(int currentIndex)
     {
-        listOfTargets[currentIndex].RemoveAll(target => target.CurrentEmotion == Emotion.Happy);
+        listOfTargets[currentIndex].RemoveAll(target => target.CurrentMood == Mood.Lively);
         return listOfTargets[currentIndex].Count > 0;
     }
-    bool TargetIsAngry(int currentIndex)
+    bool TargetIsFocused(int currentIndex)
     {
-        listOfTargets[currentIndex].RemoveAll(target => target.CurrentEmotion != Emotion.Angry);
+        listOfTargets[currentIndex].RemoveAll(target => target.CurrentMood != Mood.Focused);
         return listOfTargets[currentIndex].Count > 0;
     }
-    bool TargetNotAngry(int currentIndex)
+    bool TargetNotFocused(int currentIndex)
     {
-        listOfTargets[currentIndex].RemoveAll(target => target.CurrentEmotion == Emotion.Angry);
+        listOfTargets[currentIndex].RemoveAll(target => target.CurrentMood == Mood.Focused);
         return listOfTargets[currentIndex].Count > 0;
     }
-    bool TargetIsSad(int currentIndex)
+    bool TargetIsTired(int currentIndex)
     {
-        listOfTargets[currentIndex].RemoveAll(target => target.CurrentEmotion != Emotion.Sad);
+        listOfTargets[currentIndex].RemoveAll(target => target.CurrentMood != Mood.Tired);
         return listOfTargets[currentIndex].Count > 0;
     }
-    bool TargetNotSad(int currentIndex)
+    bool TargetNotTired(int currentIndex)
     {
-        listOfTargets[currentIndex].RemoveAll(target => target.CurrentEmotion == Emotion.Sad);
+        listOfTargets[currentIndex].RemoveAll(target => target.CurrentMood == Mood.Tired);
         return listOfTargets[currentIndex].Count > 0;
     }
-    bool TargetSameEmotion(int currentIndex)
+    bool TargetSameMood(int currentIndex)
     {
-        listOfTargets[currentIndex].RemoveAll(target => target.CurrentEmotion != self.CurrentEmotion);
+        listOfTargets[currentIndex].RemoveAll(target => target.CurrentMood != self.CurrentMood);
         return listOfTargets[currentIndex].Count > 0;
     }
-    bool TargetDifferentEmotion(int currentIndex)
+    bool TargetDifferentMood(int currentIndex)
     {
-        listOfTargets[currentIndex].RemoveAll(target => target.CurrentEmotion == self.CurrentEmotion);
+        listOfTargets[currentIndex].RemoveAll(target => target.CurrentMood == self.CurrentMood);
         return listOfTargets[currentIndex].Count > 0;
     }
     bool TargetIsGrounded(int currentIndex)
@@ -331,12 +327,12 @@ public class Ability
     }
     bool TargetIsStunned(int currentIndex)
     {
-        listOfTargets[currentIndex].RemoveAll(target => target.statEffectDict[StatusEffect.Stunned] <= 0);
+        listOfTargets[currentIndex].RemoveAll(target => target.StatEffectdict[StatusEffect.Stunned] <= 0);
         return listOfTargets[currentIndex].Count > 0;
     }
     bool TargetNotStunned(int currentIndex)
     {
-        listOfTargets[currentIndex].RemoveAll(target => target.statEffectDict[StatusEffect.Stunned] >= 1);
+        listOfTargets[currentIndex].RemoveAll(target => target.StatEffectdict[StatusEffect.Stunned] >= 1);
         return listOfTargets[currentIndex].Count > 0;
     }
     bool NoTargetedPlayer(int currentIndex)
@@ -436,7 +432,6 @@ public class Ability
     #endregion
 
 #region Play Instructions
-
     public IEnumerator ResolveInstructions(string[] listOfMethods, int index, int logged)
     {
         runNextMethod = true;
@@ -455,7 +450,7 @@ public class Ability
                     continue;
 
                 if (target != null && target.currentHealth >= 0)
-                    yield return ((IEnumerator)enumeratorDictionary[methodName].Invoke(this, new object[2] { target, logged }));
+                    yield return (IEnumerator)enumeratorDictionary[methodName].Invoke(this, new object[2] { target, logged });
                 if (!runNextMethod) break;
                 yield return TurnManager.inst.WaitTime();
             }
@@ -499,7 +494,10 @@ public class Ability
     }
     IEnumerator TargetSwitchPosition(Character target, int logged)
     {
-        yield return target.ChangePosition((target.CurrentPosition == Position.Grounded) ? Position.Elevated : Position.Grounded, logged);
+        if (target.CurrentPosition == Position.Grounded)
+            yield return target.ChangePosition(Position.Elevated, logged);
+        else
+            yield return target.ChangePosition(Position.Grounded, logged);
     }
     IEnumerator TargetBecomeGrounded(Character target, int logged)
     {
@@ -509,21 +507,21 @@ public class Ability
     {
         yield return target.ChangePosition(Position.Elevated, logged);
     }
-    IEnumerator TargetBecomeHappy(Character target, int logged)
+    IEnumerator TargetBecomeLively(Character target, int logged)
     {
-        yield return target.ChangeEmotion(Emotion.Happy, logged);
+        yield return target.ChangeMood(Mood.Lively, logged);
     }
-    IEnumerator TargetBecomeAngry(Character target, int logged)
+    IEnumerator TargetBecomeFocused(Character target, int logged)
     {
-        yield return target.ChangeEmotion(Emotion.Angry, logged);
+        yield return target.ChangeMood(Mood.Focused, logged);
     }
-    IEnumerator TargetBecomeSad(Character target, int logged)
+    IEnumerator TargetBecomeTired(Character target, int logged)
     {
-        yield return target.ChangeEmotion(Emotion.Sad, logged);
+        yield return target.ChangeMood(Mood.Tired, logged);
     }
-    IEnumerator TargetRandomEmotion(Character target, int logged)
+    IEnumerator TargetRandomMood(Character target, int logged)
     {
-        yield return target.ChangeEmotion(Character.RandomEmotion(null), logged);
+        yield return target.ChangeMood(Character.RandomMood(null), logged);
     }
     IEnumerator TargetGainPower(Character target, int logged)
     {
@@ -631,11 +629,11 @@ public class Ability
     }
     IEnumerator TargetCopy(Character target, int logged)
     {
-        yield return TurnManager.inst.CreateEnemy(target.data, Character.RandomEmotion(null), logged);
+        yield return TurnManager.inst.CreateEnemy(target.data, Character.RandomMood(null), logged);
     }
     IEnumerator SummonStar(Character target, int logged)
     {
-        yield return TurnManager.inst.CreateEnemy(GameFiles.inst.RandomEnemy(data.miscNumber, null), Character.RandomEmotion(null), logged);
+        yield return TurnManager.inst.CreateEnemy(GameFiles.inst.RandomEnemy(data.miscNumber, null), Character.RandomMood(null), logged);
     }
 
     #endregion

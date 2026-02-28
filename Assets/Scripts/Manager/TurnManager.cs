@@ -94,14 +94,13 @@ public class TurnManager : MonoBehaviour
         {
             DateTime day = DateTime.UtcNow.Date;
             Log.instance.AddText(Translator.inst.Translate(AutoTranslate.Daily_Challenge()), 0);
-            Log.instance.AddText(AutoTranslate.Current_Date(Translator.inst.Translate($"Month_{day.Month}"), day.Day.ToString(), day.Year.ToString()), 1); 
+            Log.instance.AddText(AutoTranslate.Current_Date(Translator.inst.Translate($"Month_{day.Month}"), day.Day.ToString(), day.Year.ToString())); 
         }
     }
 
     #endregion
 
 #region Gameplay Loop
-
     public IEnumerator NewWave()
     {
         MakeDecision.inst.BlankUI();
@@ -139,13 +138,10 @@ public class TurnManager : MonoBehaviour
                 Log.instance.AddText(AutoTranslate.Blank());
             }
             if (currentWave < 5 && FightRules.inst.CheckRule(nameof(AutoTranslate.Crowds), 0))
-            {
-                yield return CreateEnemy(GameFiles.inst.RandomEnemy(1, dailyRNG), Character.RandomEmotion(dailyRNG), 0);                
-            }
+                yield return CreateEnemy(GameFiles.inst.RandomEnemy(1, dailyRNG), Character.RandomMood(dailyRNG), 0);                
             foreach (int nextTier in listOfWaveSetup[currentWave - 1].enemyDifficultySpawn)
-            {
-                yield return CreateEnemy(GameFiles.inst.RandomEnemy(nextTier, dailyRNG), Character.RandomEmotion(dailyRNG), 0);
-            }
+                yield return CreateEnemy(GameFiles.inst.RandomEnemy(nextTier, dailyRNG), Character.RandomMood(dailyRNG), 0);
+
             if (FightRules.inst.CheckRule(nameof(AutoTranslate.Charge_Up), 0))
             {
                 int randomNum = (dailyRNG != null) ? dailyRNG.Next(0, listOfEnemies.Count) : UnityEngine.Random.Range(0, listOfEnemies.Count);
@@ -168,14 +164,23 @@ public class TurnManager : MonoBehaviour
         Log.instance.AddText(AutoTranslate.Round(currentRound.ToString()));
 
         speedQueue = AllCharacters();
+        bool topsyTurvy = FightRules.inst.CheckRule(nameof(AutoTranslate.Topsy_Turvy), 0);
         foreach (Character character in speedQueue)
         {
-            if (character.statEffectDict[StatusEffect.Protected] >= 1)
+            if (character.StatEffectdict[StatusEffect.Protected] >= 1)
                 yield return character.ChangeEffect(StatusEffect.Protected, -1, -1);
-            if (character.statEffectDict[StatusEffect.Locked] >= 1)
+            if (character.StatEffectdict[StatusEffect.Locked] >= 1)
                 yield return character.ChangeEffect(StatusEffect.Locked, -1, -1);
-            if (character.statEffectDict[StatusEffect.Targeted] >= 1)
+            if (character.StatEffectdict[StatusEffect.Targeted] >= 1)
                 yield return character.ChangeEffect(StatusEffect.Targeted, -1, -1);
+            
+            if (topsyTurvy)
+            {
+                if (character.CurrentPosition == Position.Grounded)
+                    yield return character.ChangePosition(Position.Elevated, -1);
+                else
+                    yield return character.ChangePosition(Position.Grounded, -1);
+            }
         }
 
         while (speedQueue.Count > 0)
@@ -278,6 +283,7 @@ public class TurnManager : MonoBehaviour
             gameTimer.Stop();
             Log.instance.AddText(AutoTranslate.Time_Taken(MyExtensions.StopwatchTime(gameTimer)));
         }
+        MakeDecision.inst.BlankUI();
 
         MakeDecision.inst.SetTextButtons(Translator.inst.Translate(message), new() { new(AutoTranslate.Title_Screen(), BackToTitle) });
         void BackToTitle()
@@ -328,7 +334,7 @@ public class TurnManager : MonoBehaviour
         allTargets.AddRange(listOfEnemies);
         return allTargets;
     }
-    public IEnumerator CreateEnemy(CharacterData dataFile, Emotion startingEmotion, int logged)
+    public IEnumerator CreateEnemy(CharacterData dataFile, Mood startingMood, int logged)
     {
         if (listOfEnemies.Count < 5)
         {
@@ -351,7 +357,7 @@ public class TurnManager : MonoBehaviour
 
             nextEnemy.name = Translator.inst.Translate(dataFile.characterName);
             Log.instance.AddText(AutoTranslate.Enter_Fight(nextEnemy.name), logged);
-            nextEnemy.SetupCharacter(dataFile, GameFiles.inst.ConvertToAbilityData(dataFile.listOfAbilities, false), startingEmotion, listOfEnemies.Count, true);
+            nextEnemy.SetupCharacter(dataFile, GameFiles.inst.ConvertToAbilityData(dataFile.listOfAbilities, false), startingMood, listOfEnemies.Count, true);
             if (currentWave < 5 && FightRules.inst.CheckRule(nameof(AutoTranslate.Crowds), -1))
                 yield return nextEnemy.ChangeMaxHealth(-1, -1);
         }

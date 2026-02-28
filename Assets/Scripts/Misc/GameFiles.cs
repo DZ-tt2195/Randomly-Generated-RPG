@@ -130,7 +130,7 @@ public class GameFiles : MonoBehaviour
                         for (int i = 0; i<divided.Length; i++)
                             toReturn[i] = (AbilityType)Enum.Parse(typeof(AbilityType), divided[i]);
                         return toReturn;
-                        }
+                    }
 
                     TeamTarget[] StringToTeamTarget(string line)
                     {
@@ -218,9 +218,9 @@ public class GameFiles : MonoBehaviour
 
         List<string> toFillOut = new();
         if (playerName.Equals(AutoTranslate.Knight()))
-            toFillOut = new() { "Attack", "Attack", "Attack", "Emotion", "Stats", "Emotion" };
+            toFillOut = new() { "Attack", "Attack", "Attack", "Mood", "Stats", "Mood" };
         else if (playerName.Equals(AutoTranslate.Angel()))
-            toFillOut = new() { "Heal", "Heal", "Heal", "Position", "Emotion", "Stats" };
+            toFillOut = new() { "Heal", "Heal", "Heal", "Position", "Mood", "Stats" };
         else if (playerName.Equals(AutoTranslate.Wizard()))
             toFillOut = new() { "Attack", "Attack", "Attack", "Position", "Stats", "Position" };
 
@@ -245,9 +245,9 @@ public class GameFiles : MonoBehaviour
                 toFillOut.Remove("Position");
                 answer = true;
             }
-            if ((ability.abilityTypes.Contains(AbilityType.EmotionEnemy) || ability.abilityTypes.Contains(AbilityType.EmotionPlayer)) && toFillOut.Contains("Emotion"))
+            if ((ability.abilityTypes.Contains(AbilityType.MoodEnemy) || ability.abilityTypes.Contains(AbilityType.MoodPlayer)) && toFillOut.Contains("Mood"))
             {
-                toFillOut.Remove("Emotion");
+                toFillOut.Remove("Mood");
                 answer = true;
             }
             if ((ability.abilityTypes.Contains(AbilityType.StatEnemy) || ability.abilityTypes.Contains(AbilityType.StatPlayer)) && toFillOut.Contains("Stats"))
