@@ -65,13 +65,17 @@ public class TutorialManager : MonoBehaviour
 
     IEnumerator ClickThroughDialogue(List<string> allDialogue)
     {
-        TextCollector collector = TurnManager.inst.MakeTextCollector("", Vector3.zero, new List<string>() { AutoTranslate.Next() });
         foreach (string nextString in allDialogue)
         {
-            collector.textbox.text = KeywordTooltip.instance.EditText(Translator.inst.Translate(nextString));
-            yield return collector.WaitForChoice();
+            bool waiting = true;
+            MakeDecision.inst.SetTextButtons(nextString, new() {new(AutoTranslate.Next(), Done)});
+            void Done()
+            {
+                waiting = false;
+            }
+            while (waiting)
+                yield return null;
         }
-        Destroy(collector.gameObject);
     }
 
     public IEnumerator NextStep()
@@ -91,14 +95,11 @@ public class TutorialManager : MonoBehaviour
                 TurnManager.inst.AddPlayer(knight); //add knight
                 knight.AddAbility(GameFiles.inst.FindPlayerAbility(nameof(AutoTranslate.Knock_Down)), false, false);
 
-                string text2 = KeywordTooltip.instance.EditText(AutoTranslate.Tutorial_20());
-                TextCollector collector2 = TurnManager.inst.MakeTextCollector(text2, Vector3.zero);
-
+                MakeDecision.inst.SetInstruction(AutoTranslate.Tutorial_20());
                 while (ScreenOverlay.instance.displayedScreen != CurrentScreen.Character)
                     yield return null;
                 while (ScreenOverlay.instance.displayedScreen != CurrentScreen.None)
                     yield return null;
-                Destroy(collector2.gameObject);
 
                 currentStep = 3;
                 StartCoroutine(NextStep());
@@ -129,9 +130,7 @@ public class TutorialManager : MonoBehaviour
             case 5: //introduce angry
                 yield return ClickThroughDialogue(new List<string>() { AutoTranslate.Tutorial_50(), AutoTranslate.Tutorial_51() });
 
-                string text52 = KeywordTooltip.instance.EditText(AutoTranslate.Tutorial_52());
-                TextCollector collector52 = TurnManager.inst.MakeTextCollector(text52, Vector3.zero);
-
+                MakeDecision.inst.SetInstruction(AutoTranslate.Tutorial_52());
                 GameObject emotionButton = GameObject.Find("Emotion Button");
                 Vector3 originalPos = emotionButton.transform.localPosition;
                 emotionButton.transform.localPosition = new Vector2(0, -150);
@@ -140,8 +139,6 @@ public class TutorialManager : MonoBehaviour
                     yield return null;
                 while (ScreenOverlay.instance.displayedScreen != CurrentScreen.None)
                     yield return null;
-                Destroy(collector52.gameObject);
-
                 emotionButton.transform.localPosition = originalPos;
 
                 currentStep = 6;
@@ -153,14 +150,11 @@ public class TutorialManager : MonoBehaviour
                 angel.AddAbility(GameFiles.inst.FindPlayerAbility(nameof(AutoTranslate.Assist)), false, false);
                 angel.AddAbility(GameFiles.inst.FindPlayerAbility(nameof(AutoTranslate.Exhaust)), false, false);
 
-                string text6 = KeywordTooltip.instance.EditText(AutoTranslate.Tutorial_60());
-                TextCollector collector6 = TurnManager.inst.MakeTextCollector(text6, Vector3.zero);
-
+                MakeDecision.inst.SetInstruction(AutoTranslate.Tutorial_60());
                 while (ScreenOverlay.instance.displayedScreen != CurrentScreen.Character)
                     yield return null;
                 while (ScreenOverlay.instance.displayedScreen != CurrentScreen.None)
                     yield return null;
-                Destroy(collector6.gameObject);
 
                 currentStep = 7;
                 StartCoroutine(NextStep());
@@ -188,7 +182,7 @@ public class TutorialManager : MonoBehaviour
                 knight.AddAbility(GameFiles.inst.FindPlayerAbility(nameof(AutoTranslate.Cheer)), false, false);
 
                 angel.AddAbility(GameFiles.inst.FindPlayerAbility(nameof(AutoTranslate.Team_Up)), false, false);
-                angel.AddAbility(GameFiles.inst.FindPlayerAbility(nameof(AutoTranslate.Assist)), false, false);
+                angel.AddAbility(GameFiles.inst.FindPlayerAbility(nameof(AutoTranslate.Tailwinds)), false, false);
 
                 yield return TurnManager.inst.CreateEnemy(GameFiles.inst.FindSpecificEnemy(nameof(AutoTranslate.Page), 0), Emotion.Sad, 0);
                 yield return TurnManager.inst.CreateEnemy(GameFiles.inst.FindSpecificEnemy(nameof(AutoTranslate.Crow), 0), Emotion.Angry, 0);
@@ -203,14 +197,11 @@ public class TutorialManager : MonoBehaviour
                 TurnManager.inst.AddPlayer(wizard); //add wizard
                 wizard.AddAbility(GameFiles.inst.FindPlayerAbility(nameof(AutoTranslate.Stalactites)), false, false);
 
-                string text10 = KeywordTooltip.instance.EditText(AutoTranslate.Tutorial_100());
-                TextCollector collector10 = TurnManager.inst.MakeTextCollector(text10, Vector3.zero);
-
+                MakeDecision.inst.SetInstruction(AutoTranslate.Tutorial_100());
                 while (ScreenOverlay.instance.displayedScreen != CurrentScreen.Character)
                     yield return null;
                 while (ScreenOverlay.instance.displayedScreen != CurrentScreen.None)
                     yield return null;
-                Destroy(collector10.gameObject);
 
                 currentStep = 11;
                 StartCoroutine(NextStep());

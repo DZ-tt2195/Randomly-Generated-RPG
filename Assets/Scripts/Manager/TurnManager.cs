@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 using UnityEngine;
 using UnityEngine.UI;
 using MyBox;
@@ -33,20 +34,17 @@ public class TurnManager : MonoBehaviour
     [Foldout("Prefabs", true)]
         [SerializeField] GameObject characterPrefab;
         [SerializeField] PointsVisual pointsVisual;
-        public TextCollector undoBox;
         [SerializeField] List<WaveSetup> listOfWaveSetup = new();
-
-    [Foldout("UI", true)]
+        [SerializeField] [Scene] string titleScreen;
+ 
+    [Foldout("Other UI", true)]
         Queue<PointsVisual> visualStorage = new();
-        public List<AbilityBox> listOfBoxes = new();
-        public TMP_Text instructions;
         bool borderDecrease = true;
-        [SerializeField] Button quitButton;
         List<CharacterPositions> teammatePositions = new();
         List<CharacterPositions> enemyPositions = new();
         [SerializeField] TMP_Text waveText;
         [SerializeField] TMP_Text roundText;
-        [SerializeField] Button resignButton;
+        [SerializeField] Button quitButton;
 
     [Foldout("Character lists", true)]
         [ReadOnly] public System.Random dailyRNG;
@@ -63,10 +61,8 @@ public class TurnManager : MonoBehaviour
         [ReadOnly] public Character targetedPlayer { get { return _targetedPlayer; } set { ResetTargetedPlayer(value); } }
         Character _targetedEnemy;
         [ReadOnly] public Character targetedEnemy { get { return _targetedEnemy; } set { ResetTargetedEnemy(value); } }
-        public int confirmChoice { get; private set; }
         Stopwatch gameTimer;
     [Foldout("Translate", true)]
-        [SerializeField] TMP_Text leave;
         [SerializeField] TMP_Text quit;
 
     private void Awake()
@@ -75,9 +71,8 @@ public class TurnManager : MonoBehaviour
         isBattling = true;
         waveText.transform.parent.localPosition = new Vector3(0, 1200, 0);
 
-        leave.text = AutoTranslate.Title_Screen();
         quit.text = AutoTranslate.Quit_Game();
-        resignButton.onClick.AddListener(() => GameFinished(AutoTranslate.Quit_Fight(), false));
+        quitButton.onClick.AddListener(() => GameFinished(AutoTranslate.Quit_Fight(), false));
 
         if (ScreenOverlay.instance.mode == GameMode.Daily)
         {
@@ -93,12 +88,14 @@ public class TurnManager : MonoBehaviour
             enemyPositions.Add(new CharacterPositions(new Vector3(nextX, 300, 0)));
         }
     }
-
     void Start()
     {
-        DateTime day = DateTime.UtcNow.Date;
-        Log.instance.AddText(Translator.inst.Translate(AutoTranslate.Daily_Challenge()), 0);
-        Log.instance.AddText(AutoTranslate.Current_Date(Translator.inst.Translate($"Month_{day.Month}"), day.Day.ToString(), day.Year.ToString()), 1); 
+        if (ScreenOverlay.instance.mode == GameMode.Daily)
+        {
+            DateTime day = DateTime.UtcNow.Date;
+            Log.instance.AddText(Translator.inst.Translate(AutoTranslate.Daily_Challenge()), 0);
+            Log.instance.AddText(AutoTranslate.Current_Date(Translator.inst.Translate($"Month_{day.Month}"), day.Day.ToString(), day.Year.ToString()), 1); 
+        }
     }
 
     #endregion
@@ -107,10 +104,7 @@ public class TurnManager : MonoBehaviour
 
     public IEnumerator NewWave()
     {
-        instructions.text = "";
-        instructions.transform.parent.gameObject.SetActive(false);
-        DisableCharacterButtons();
-
+        MakeDecision.inst.BlankUI();
         if (currentWave == 0)
         {
             gameTimer = new Stopwatch();
@@ -174,14 +168,6 @@ public class TurnManager : MonoBehaviour
         Log.instance.AddText(AutoTranslate.Round(currentRound.ToString()));
 
         speedQueue = AllCharacters();
-        List<Character> AllCharacters()
-        {
-            List<Character> allTargets = new();
-            allTargets.AddRange(listOfPlayers);
-            allTargets.AddRange(listOfEnemies);
-            return allTargets;
-        }
-
         foreach (Character character in speedQueue)
         {
             if (character.statEffectDict[StatusEffect.Protected] >= 1)
@@ -194,15 +180,12 @@ public class TurnManager : MonoBehaviour
 
         while (speedQueue.Count > 0)
         {
-            DisableCharacterButtons();
-            listOfBoxes[0].transform.parent.gameObject.SetActive(false);
-
+            MakeDecision.inst.BlankUI();
             Character nextInLine = speedQueue[0];
             speedQueue.RemoveAt(0);
 
             if (nextInLine != null && nextInLine.currentHealth > 0)
             {
-                instructions.text = "";
                 Log.instance.AddText($"");
                 nextInLine.border.gameObject.SetActive(true);
 
@@ -282,11 +265,7 @@ public class TurnManager : MonoBehaviour
             //do nothing
         }
         isBattling = false;
-        DisableCharacterButtons();
-
-        instructions.text = "";
-        instructions.transform.parent.gameObject.SetActive(false);
-        quitButton.gameObject.SetActive(true);
+        quitButton.gameObject.SetActive(false);
 
         Log.instance.AddText("");
         Log.instance.AddText(Translator.inst.Translate(message));
@@ -298,6 +277,12 @@ public class TurnManager : MonoBehaviour
         {
             gameTimer.Stop();
             Log.instance.AddText(AutoTranslate.Time_Taken(MyExtensions.StopwatchTime(gameTimer)));
+        }
+
+        MakeDecision.inst.SetTextButtons(Translator.inst.Translate(message), new() { new(AutoTranslate.Title_Screen(), BackToTitle) });
+        void BackToTitle()
+        {
+            SceneManager.LoadScene(titleScreen);
         }
         Log.instance.enabled = false;
     }
@@ -322,31 +307,6 @@ public class TurnManager : MonoBehaviour
         if (Character.borderColor < 0 || Character.borderColor > 1)
             borderDecrease = !borderDecrease;
     }
-    public void DisableCharacterButtons()
-    {
-        foreach (Character character in listOfPlayers)
-        {
-            character.myButton.interactable = false;
-            character.border.gameObject.SetActive(false);
-        }
-        foreach (Character character in listOfEnemies)
-        {
-            character.myButton.interactable = false;
-            character.border.gameObject.SetActive(false);
-        }
-    }
-    public TextCollector MakeTextCollector(string header, Vector3 position, List<string> buttons = null)
-    {
-        TextCollector collector = Instantiate(undoBox);
-        collector.StatsSetup(header, position);
-
-        if (buttons != null)
-        {
-            foreach (string text in buttons)
-                collector.AddTextButton(text);
-        }
-        return collector;
-    }
     public void CreateVisual(string text, Vector3 position)
     {
         PointsVisual newVisual = (visualStorage.Count > 0) ? visualStorage.Dequeue() : Instantiate(pointsVisual, ScreenOverlay.instance.sceneCanvas);
@@ -361,7 +321,13 @@ public class TurnManager : MonoBehaviour
 #endregion
 
 #region Misc
-
+    public List<Character> AllCharacters()
+    {
+        List<Character> allTargets = new();
+        allTargets.AddRange(listOfPlayers);
+        allTargets.AddRange(listOfEnemies);
+        return allTargets;
+    }
     public IEnumerator CreateEnemy(CharacterData dataFile, Emotion startingEmotion, int logged)
     {
         if (listOfEnemies.Count < 5)
@@ -421,27 +387,6 @@ public class TurnManager : MonoBehaviour
     public IEnumerator WaitTime()
     {
         yield return new WaitForSeconds(PlayerPrefs.GetFloat("Animation Speed"));
-    }
-    public IEnumerator ConfirmUndo(string header, Vector3 position)
-    {
-        confirmChoice = -1;
-        if (PlayerPrefs.GetInt("Confirm Choices") == 1)
-        {
-            //instructions.text = "";
-            DisableCharacterButtons();
-
-            TextCollector confirmDecision = MakeTextCollector(header, position, new List<string>() { "Confirm", "Rechoose" });
-            CoroutineGroup group = new(this);
-            group.StartCoroutine(confirmDecision.WaitForChoice());
-            while (confirmDecision != null && group.AnyProcessing)
-                yield return null;
-
-            if (confirmDecision != null)
-            {
-                confirmChoice = confirmDecision.chosenButton;
-                Destroy(confirmDecision.gameObject);
-            }
-        }
     }
     public Character CheckForTargeted(List<Character> possibleTargets)
     {

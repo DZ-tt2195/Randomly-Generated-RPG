@@ -104,7 +104,7 @@ Revived	$This$ comes back to life.
 Choose_Ability	$This$: Choose an Ability.
 Must_Choose_Targeted	$Target$ is Targeted.
 Choose_One_Player	Choose a Player to target ($Ability$).
-Choose_Another_Player	Choose another pPayer to target ($Ability$).
+Choose_Another_Player	Choose another Player to target ($Ability$).
 Choose_An_Enemy	Choose an Enemy to target ($Ability$).
 Confirm_No_Target	Use $Ability$?
 Confirm_Target	Use $Ability$ on:

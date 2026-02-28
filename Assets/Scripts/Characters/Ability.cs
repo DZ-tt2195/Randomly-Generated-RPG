@@ -440,7 +440,7 @@ public class Ability
     public IEnumerator ResolveInstructions(string[] listOfMethods, int index, int logged)
     {
         runNextMethod = true;
-        TurnManager.inst.instructions.transform.parent.gameObject.SetActive(false);
+        MakeDecision.inst.BlankUI();
 
         foreach (Character target in listOfTargets[index])
         {

@@ -7,135 +7,91 @@ using System.Linq;
 
 public class PlayerCharacter : Character
 {
-    int choice;
     protected override IEnumerator ChooseAbility(int logged, bool extraAbility)
     {
+        this.border.gameObject.SetActive(true);
+        
         List<Ability> allAbilities = new();
         allAbilities.AddRange(listOfAutoAbilities);
         allAbilities.AddRange(listOfRandomAbilities);
 
-        EnableAbilityBoxes();
-        TurnManager.inst.instructions.text = AutoTranslate.Choose_Ability(this.name);
-
-        yield return WaitForChoice();
-        if (choice != -1)
-            chosenAbility = allAbilities[choice];
-
+        MakeDecision.inst.SetAbilities(AutoTranslate.Choose_Ability(this.name), allAbilities, Picked);
+        void Picked(Ability ability)
+        {
+            chosenAbility = ability;
+        }
+        while (chosenAbility == null)
+            yield return null;
         this.border.gameObject.SetActive(false);
-    }
-    void EnableAbilityBoxes()
-    {
-        TurnManager.inst.listOfBoxes[0].transform.parent.gameObject.SetActive(true);
-        int boxesFilled = 0;
-
-        for (int i = 0; i<listOfAutoAbilities.Count; i++)
-        {
-            AbilityBox box = TurnManager.inst.listOfBoxes[boxesFilled];
-            box.gameObject.SetActive(true);
-            box.ReceiveAbility(listOfAutoAbilities[i].CanPlay(), listOfAutoAbilities[i]);
-
-            box.button.onClick.RemoveAllListeners();
-            int buttonNum = boxesFilled;
-            box.button.onClick.AddListener(() => ReceiveChoice(buttonNum));
-
-            boxesFilled++;
-        }
-
-        for (int i = 0; i<listOfRandomAbilities.Count; i++)
-        {
-            AbilityBox box = TurnManager.inst.listOfBoxes[boxesFilled];
-            box.gameObject.SetActive(true);
-            box.ReceiveAbility(listOfRandomAbilities[i].CanPlay(), listOfRandomAbilities[i]);
-
-            box.button.onClick.RemoveAllListeners();
-            int buttonNum = boxesFilled;
-            box.button.onClick.AddListener(() => ReceiveChoice(buttonNum));
-
-            boxesFilled++;
-        }
-
-        for (int i = boxesFilled; i < TurnManager.inst.listOfBoxes.Count; i++)
-        {
-            AbilityBox box = TurnManager.inst.listOfBoxes[i];
-            box.gameObject.SetActive(true);
-            box.button.onClick.RemoveAllListeners();
-            box.ReceiveAbility(true, null);
-        }
     }
     protected override IEnumerator ChooseTarget(Ability ability, TeamTarget target, int index)
     {
-        foreach (AbilityBox box in TurnManager.inst.listOfBoxes)
-            box.gameObject.SetActive(false);
-
         if (ability.singleTarget.Contains(target))
         {
             Character targeted = TurnManager.inst.CheckForTargeted(ability.listOfTargets[index]);
             if (targeted != null)
             {
-                TurnManager.inst.instructions.text = AutoTranslate.Must_Choose_Targeted(targeted.name);
                 ability.listOfTargets[index] = new List<Character> { targeted };
             }
             else
             {
                 string abilityName = Translator.inst.Translate(ability.data.abilityName);
+                string header = "";
                 switch (target)
                 {
                     case TeamTarget.OnePlayer:
-                        TurnManager.inst.instructions.text = AutoTranslate.Choose_One_Player(abilityName);
+                        header = AutoTranslate.Choose_One_Player(abilityName);
                         break;
                     case TeamTarget.OtherPlayer:
-                        TurnManager.inst.instructions.text = AutoTranslate.Choose_Another_Player(abilityName); 
+                        header = AutoTranslate.Choose_Another_Player(abilityName); 
                         break;
                     case TeamTarget.OneEnemy:
-                        TurnManager.inst.instructions.text = AutoTranslate.Choose_An_Enemy(abilityName); 
+                        header = AutoTranslate.Choose_An_Enemy(abilityName); 
                         break;
                 }
 
-                TurnManager.inst.DisableCharacterButtons();
+                MakeDecision.inst.SetCharacters(header, ability.listOfTargets[index], Picked);
+                bool waiting = true;
 
-                for (int i = 0; i < ability.listOfTargets[index].Count; i++)
+                void Picked(Character character)
                 {
-                    Character character = ability.listOfTargets[index][i];
-                    character.border.gameObject.SetActive(true);
-                    character.myButton.interactable = true;
-
-                    character.myButton.onClick.RemoveAllListeners();
-                    int buttonNum = i;
-                    character.myButton.onClick.AddListener(() => ReceiveChoice(buttonNum));
+                    ability.listOfTargets[index] = new() { character };
+                    waiting = false;
                 }
-
-                yield return WaitForChoice();
-                if (choice != -1)
-                    ability.listOfTargets[index] = new() { ability.listOfTargets[index][choice] };
+                while (waiting)
+                    yield return null;
             }
         }
     }
-    IEnumerator WaitForChoice()
-    {
-        choice = -1;
-        while (choice == -1)
-            yield return null;
-    }
-    void ReceiveChoice(int n)
-    {
-        choice = n;
-    }
     protected override IEnumerator ConfirmChoice()
     {
-        string result = "";
+        string header = "";
         if (chosenTarget.Count == 0)
         {
-            result = AutoTranslate.Confirm_No_Target(Translator.inst.Translate(chosenAbility.data.abilityName));
+            header = AutoTranslate.Confirm_No_Target(Translator.inst.Translate(chosenAbility.data.abilityName));
         }
         else
         {
-            result = AutoTranslate.Confirm_Target(Translator.inst.Translate(chosenAbility.data.abilityName));
-            result += "\n";
-            result += string.Join(" + ", chosenTarget.Select(target => target.name));
+            header = AutoTranslate.Confirm_Target(Translator.inst.Translate(chosenAbility.data.abilityName));
+            header += "\n";
+            header += string.Join(" + ", chosenTarget.Select(target => target.name));
         }
-
-        yield return TurnManager.inst.ConfirmUndo(result, new Vector3(0, 400));
-        if (TurnManager.inst.confirmChoice == 1)
-            ClearAbility();
+        if (PlayerPrefs.GetInt("Confirm Choices") == 1)
+        {
+            List<TextButtonInfo> textInfo = new() { new(AutoTranslate.Confirm(), Done), new(AutoTranslate.Rechoose(), Repick) };
+            bool waiting = true;
+            void Done()
+            {
+                waiting = false;
+            }
+            void Repick()
+            {
+                ClearAbility();
+                waiting = false;
+            }
+            MakeDecision.inst.SetTextButtons(header, textInfo);
+            while (waiting)
+                yield return null;
+        }
     }
 }
