@@ -152,8 +152,6 @@ public class Ability
     int CalculateHealing(Character user, Character target, int number, int logged)
     {
         int finalCalc = number + user.CalculatePower();
-        if (FightRules.inst.CheckRule(nameof(AutoTranslate.Aiming), logged))
-            finalCalc += (user.CurrentPosition != target.CurrentPosition) ? 1 : -1;
         return Mathf.Max(1, finalCalc);
     }
     int CalculateDamage(Character user, Character target, int number, int logged)
@@ -165,9 +163,6 @@ public class Ability
             Log.instance.AddText(AutoTranslate.Super_Effective(Mathf.Abs(effectiveness).ToString()), logged);
         else if (effectiveness < 0)
             Log.instance.AddText(AutoTranslate.Not_Effective(Mathf.Abs(effectiveness).ToString()), logged);
-        if (FightRules.inst.CheckRule(nameof(AutoTranslate.Aiming), logged))
-            finalCalc += (user.CurrentPosition != target.CurrentPosition) ? 1 : -1;
-
         return Mathf.Max(1, finalCalc);
     }
 

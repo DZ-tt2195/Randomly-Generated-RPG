@@ -269,7 +269,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 159b66c071ced43f499eb58b9b7c8b01, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  key: 0
 --- !u!1 &15923186
 GameObject:
   m_ObjectHideFlags: 0
@@ -794,7 +793,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 159b66c071ced43f499eb58b9b7c8b01, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  key: 52
 --- !u!1 &307861786
 GameObject:
   m_ObjectHideFlags: 0
@@ -845,7 +843,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 159b66c071ced43f499eb58b9b7c8b01, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  key: 7
 --- !u!114 &307861789
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1259,7 +1256,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 159b66c071ced43f499eb58b9b7c8b01, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  key: 4
 --- !u!114 &368983573
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1512,7 +1508,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 159b66c071ced43f499eb58b9b7c8b01, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  key: 8
 --- !u!1 &463658049
 GameObject:
   m_ObjectHideFlags: 0
@@ -2394,7 +2389,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 159b66c071ced43f499eb58b9b7c8b01, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SetText
-  key: 403
 --- !u!114 &776457303
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2620,7 +2614,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 159b66c071ced43f499eb58b9b7c8b01, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  key: 3
 --- !u!114 &847982578
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2871,7 +2864,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 159b66c071ced43f499eb58b9b7c8b01, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  key: 9
 --- !u!1 &926377442
 GameObject:
   m_ObjectHideFlags: 0
@@ -3022,7 +3014,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 159b66c071ced43f499eb58b9b7c8b01, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  key: 142
 --- !u!1 &946072378
 GameObject:
   m_ObjectHideFlags: 0
@@ -3579,7 +3570,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 159b66c071ced43f499eb58b9b7c8b01, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  key: 6
 --- !u!1 &1125296911
 GameObject:
   m_ObjectHideFlags: 0
@@ -4242,7 +4232,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 159b66c071ced43f499eb58b9b7c8b01, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  key: 2
 --- !u!114 &1226131005
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4668,6 +4657,7 @@ GameObject:
   - component: {fileID: 1362426897}
   - component: {fileID: 1362426899}
   - component: {fileID: 1362426898}
+  - component: {fileID: 1362426900}
   m_Layer: 5
   m_Name: Update Notes
   m_TagString: Untagged
@@ -4794,6 +4784,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1362426896}
   m_CullTransparentMesh: 1
+--- !u!114 &1362426900
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1362426896}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd447db666c474fceaf9cfb6b4bdb9ad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::KeywordLinkHover
 --- !u!1 &1429440813
 GameObject:
   m_ObjectHideFlags: 0
@@ -4844,7 +4846,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 159b66c071ced43f499eb58b9b7c8b01, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SetText
-  key: 402
 --- !u!114 &1429440816
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5232,7 +5233,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 159b66c071ced43f499eb58b9b7c8b01, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  key: 10
 --- !u!1 &1528512286
 GameObject:
   m_ObjectHideFlags: 0
@@ -5383,7 +5383,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 159b66c071ced43f499eb58b9b7c8b01, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  key: 112
 --- !u!1 &1575945417
 GameObject:
   m_ObjectHideFlags: 0
@@ -5570,7 +5569,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 159b66c071ced43f499eb58b9b7c8b01, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  key: 1
 --- !u!1 &1632401096
 GameObject:
   m_ObjectHideFlags: 0

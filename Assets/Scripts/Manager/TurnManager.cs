@@ -174,7 +174,7 @@ public class TurnManager : MonoBehaviour
             if (character.StatEffectdict[StatusEffect.Targeted] >= 1)
                 yield return character.ChangeEffect(StatusEffect.Targeted, -1, -1);
             
-            if (topsyTurvy)
+            if (topsyTurvy && character is PlayerCharacter)
             {
                 if (character.CurrentPosition == Position.Grounded)
                     yield return character.ChangePosition(Position.Elevated, -1);
@@ -306,7 +306,6 @@ public class TurnManager : MonoBehaviour
 #endregion
 
 #region UI
-
     void FixedUpdate()
     {
         Character.borderColor += (borderDecrease) ? -0.05f : 0.05f;

@@ -38,7 +38,7 @@ Ghost	Possession	A Grounded Player becomes Elevated and loses $PowNum$ Power.	On
 Ghost	Release	An Elevated Player becomes Grounded and Stunned for $StatusNum$ turn.	OnePlayer	TargetIsElevated	TargetBecomeGrounded/TargetBecomeStunned	2					1		PositionPlayer
 Herald	Flag_Whack	Deal $MainNum$ damage to a Player.	OnePlayer	None	TargetAttack	0	2						Attack
 Herald	Announce	Summon a random $MiscNum$ Star Enemy.	Self	CanSummon	SummonStar	2						3	Misc
-Kitty	Scratch	Deal $MainNum$ damage to a Player with the same Position as this.	OnePlayer	TargetSamePosition	TargetAttack	0	2						Attack
+Kitty	Scratch	Deal $MainNum$ damage to a Player at the same Position.	OnePlayer	TargetSamePosition	TargetAttack	0	2						Attack
 Kitty	Stuck_in_a_Tree	If this is Grounded, it becomes Elevated and Tired.	Self	TargetIsGrounded	TargetBecomeElevated/TargetBecomeTired	0							MoodEnemy/PositionEnemy
 Kitty	Land_Feet_First	If this is Elevated, it becomes Grounded and gains $MainNum$ Health.	Self	TargetIsElevated	TargetBecomeGrounded/TargetHeal	0	2						Healing/PositionEnemy
 Kitty	Lure	A Player switches Positions. This becomes Targeted during this and next Round.	OnePlayer-Self	None-None	TargetSwitchPosition-TargetBecomeTargeted	1					2		PositionPlayer

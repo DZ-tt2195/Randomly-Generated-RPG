@@ -1,11 +1,11 @@
 rulesName	rulesDescription	completed
-Aiming	Attack and Healing Abilities have +1 Power against anyone with a different Position, otherwise -1 Power.	TRUE
 Bloodied	If someone is at 6 Health or more, their Abilities have 1 more Cooldown; otherwise 1 less Cooldown.	TRUE
 Charge_Up	Each Wave: A random Enemy gains 5 Max Health, 5 Health, 2 Power, 2 Defense, and becomes Stunned for 3 turns.	TRUE
+Comfort_Zone	Anyone who's at their starting Position has +1 Defense; otherwise -1 Defense.	TRUE
 Crowds	Waves 1-4: Add another 1 Star Enemy at random, and all Enemies lose 1 Max Health.	TRUE
-Frustration	When anyone becomes Focused, they gain 1 Power and 1 Defense.	TRUE
 Inspiration	Waves 2-5: Players get a new set of random Abilities.	TRUE
 Lucky	When anyone becomes Lively, they get 1 Extra Ability.	TRUE
-Preparation	End of everyone's turn: if they used an Attack or Healing Ability, they lose 1 Power; otherwise they gain 2 Power.	TRUE
+Passion	When anyone becomes Focused, they gain 1 Power and 1 Defense.	TRUE
+Preparation	After anyone uses an Attack or Healing Ability, they lose 1 Power; otherwise they gain 1 Power.	TRUE
 Rest	When anyone becomes Tired, they gain 2 Health.	TRUE
-Topsy_Turvy	Each Round: everyone switches Positions.	TRUE
+Topsy_Turvy	Each Round: all Players switch Positions.	TRUE

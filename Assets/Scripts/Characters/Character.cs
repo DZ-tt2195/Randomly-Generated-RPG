@@ -121,11 +121,15 @@ public class Character : MonoBehaviour
     }
     public int CalculatePower()
     {
-        return _privStatMod[Stats.Power] /*+ (CurrentEmotion == Emotion.Busy ? 1 : 0)*/;
+        int bonus = 0;
+        return _privStatMod[Stats.Power] + bonus;
     }
     public int CalculateDefense()
     {
-        return _privStatMod[Stats.Defense] /*+ (CurrentEmotion == Emotion.Busy ? 1 : 0)*/;
+        int bonus = 0;
+        if (FightRules.inst != null && FightRules.inst.CheckRule(nameof(AutoTranslate.Comfort_Zone), -1))
+            bonus += (CurrentPosition == data.startPosition) ? 1 : -1;
+        return _privStatMod[Stats.Defense] + bonus;
     }
     public int CalculateStatTotals()
     {
@@ -293,7 +297,7 @@ public class Character : MonoBehaviour
                 Log.instance.AddText(change, logged);
                 TurnManager.inst.CreateVisual(Translator.inst.Translate(newEmotion.ToString()), this.transform.localPosition);
 
-                if (newEmotion == Mood.Focused && FightRules.inst.CheckRule(nameof(AutoTranslate.Frustration), logged))
+                if (newEmotion == Mood.Focused && FightRules.inst.CheckRule(nameof(AutoTranslate.Passion), logged))
                 {
                     yield return ChangeStat(Stats.Power, 1, logged+1);
                     yield return ChangeStat(Stats.Defense, 1, logged+1);
@@ -451,7 +455,7 @@ public class Character : MonoBehaviour
             if (chosenAbility.mainType == AbilityType.Attack || chosenAbility.mainType == AbilityType.Healing)
                 yield return ChangeStat(Stats.Power, -1, logged+1);
             else
-                yield return ChangeStat(Stats.Power, 2, logged+1);
+                yield return ChangeStat(Stats.Power, 1, logged+1);
         }
         if (ScreenOverlay.instance.mode == GameMode.Tutorial && TutorialManager.instance.currentCharacter == this)
         {

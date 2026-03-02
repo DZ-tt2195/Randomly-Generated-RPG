@@ -75,8 +75,8 @@ public class Customizer : MonoBehaviour
     }
     void Confirmed()
     {
-        AbilitiesConfirmed();
         RulesConfirmed();
+        AbilitiesConfirmed();
         TurnManager.inst.StartCoroutine(TurnManager.inst.NewWave());
         Destroy(this.gameObject);
     }

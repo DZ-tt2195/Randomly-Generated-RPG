@@ -1,7 +1,7 @@
 Title	RANDOMLY GENERATED
 Blank	
 Author_Credit	by Thomas Tang (DZ)
-Last_Update	Last Updated: Feb 28, 2026
+Last_Update	Last Updated: Mar 02, 2026
 Language	Language
 Translator_Credit	Original Language
 Upload_Translation	Upload Translation
@@ -119,8 +119,8 @@ Tutorial_52	To see which Moods are effective against which, open the Mood Guide 
 Tutorial_60	Here's your 2nd party member. Right click on the Angel to read what they do.
 Tutorial_70	This Page is Lively. Since Lively is super effective against Focused, this puts your Knight at a disadvantage.
 Tutorial_71	But you can have the Angel make the Page Tired. That way, your Focused Knight will gain the advantage.
-Tutorial_90	Everyone is either Grounded or Elevated. Your Knight always starts Grounded, and Angel always starts Elevated.
-Tutorial_91	One of the Knight's big weaknesses is that they have no way to attack Elevated Enemies.
+Tutorial_90	Everyone has a Position: Grounded or Elevated. Your Knight always starts Grounded, and Angel always starts Elevated.
+Tutorial_91	One of the Knight's big weaknesses is that they can't attack Enemies with a different Position, which means they cannot attack the Crows.
 Tutorial_100	And now, your 3rd party member. Right click on the Wizard to read what they do.
 Tutorial_110	Your Wizard has an Ability that forces all Elevated Enemies to be Grounded. Use Stalactites against the 2 Crows.
 Tutorial_120	Now that all the Enemies are Grounded, your Knight is capable of hitting them, so finish them off.
@@ -154,7 +154,7 @@ Rules_Reminder	A maximum of 2 Rules per game.
 Chosen_Rule	Rule: $Rule$
 Apply_Rule	Applying Rule: $Rule$.
 Knight	Knight
-Knight_Text	Deals lots of damage to individual Enemies, and only Grounded ones. Has control over Moods and Defense.
+Knight_Text	Deals lots of damage to individual Enemies. Has control over Moods and Defense.
 Battle_Cry	Battle Cry
 Battle_Cry_Text	A Player becomes Focused and gains $DefNum$ Defense.
 Battle_Cry_Log	$This$ has $Target$ do a battle cry.
@@ -162,61 +162,61 @@ Cheer	Cheer
 Cheer_Text	Another Player becomes Lively and gets $StatusNum$ Extra Ability.
 Cheer_Log	$This$ cheers on $Target$.
 Daze	Daze
-Daze_Text	A Grounded Enemy becomes Lively and loses $DefNum$ Defense.
+Daze_Text	An Enemy at the same Position becomes Lively and loses $DefNum$ Defense.
 Daze_Log	$This$ dazes $Target$.
-Heavy_Sword	Heavy_Sword
-Heavy_Sword_Text	This becomes Tired. Then deal $MainNum$ damage to a Grounded Enemy.
+Heavy_Sword	Heavy Sword
+Heavy_Sword_Text	This becomes Tired. Then deal $MainNum$ damage to an Enemy at the same Position.
 Heavy_Sword_Log	$This$ swings a heavy sword against $Target$.
 Overwhelm	Overwhelm
-Overwhelm_Text	A Grounded Enemy becomes Tired. Then deal $MainNum$ damage to them.
+Overwhelm_Text	An Enemy at the same Position becomes Tired. Then deal $MainNum$ damage to them.
 Overwhelm_Log	$This$ overwhelms $Target$.
 Force	Force
-Force_Text	Deal $MainNum$ damage to a Grounded Enemy. Their active Ability Cooldown are decreased by $MiscNum$.
+Force_Text	Deal $MainNum$ damage to an Enemy at the same Position. Their active Ability Cooldown are decreased by $MiscNum$.
 Force_Log	$This$ forces $Target$ to work harder.
 Impale	Impale
-Impale_Text	Deal $MainNum$ damage to a Grounded Enemy. They becomes Stunned for $StatusNum$ turn.
+Impale_Text	Deal $MainNum$ damage to an Enemy at the same Position. They becomes Stunned for $StatusNum$ turn.
 Impale_Log	$This$ impales $Target$.
-Take_Over	Take_Over
+Take_Over	Take Over
 Take_Over_Text	This becomes Focused, and another Player becomes Tired.
 Take_Over_Log	$This$ takes over $Target$'s role.
 Joust	Joust
-Joust_Text	Deal $MainNum$ damage to a Grounded Enemy. Then this loses $PowNum$ Power.
+Joust_Text	Deal $MainNum$ damage to an Enemy at the same Position. Then this loses $PowNum$ Power.
 Joust_Log	$This$ uses joust against $Target$.
 Knock_Down	Knock Down
-Knock_Down_Text	Deal $MainNum$ damage to a Grounded Enemy. Then they lose $DefNum$ Defense.
+Knock_Down_Text	Deal $MainNum$ damage to an Enemy at the same Position. Then they lose $DefNum$ Defense.
 Knock_Down_Log	$This$ knocks down $Target$.
 Mirror	Mirror
-Mirror_Text	Deal $MainNum$ damage to a Grounded Enemy with the same Mood as this.
+Mirror_Text	Deal $MainNum$ damage to an Enemy with the same Position and Mood.
 Mirror_Log	$This$ mirrors $Target$.
 Occupy	Occupy
-Occupy_Text	A Grounded Enemy becomes Focused. Then deal $MainNum$ damage to them.
+Occupy_Text	An Enemy at the same Position becomes Focused. Then deal $MainNum$ damage to them.
 Occupy_Log	$This$ occupies $Target$'s time.
 Redirect	Redirect
 Redirect_Text	Another Player gains $DefNum$ Defense and becomes Targeted during this and next Round.
 Redirect_Log	$This$ redirects attention to $Target$.
 Strike	Strike
-Strike_Text	This gains $DefNum$ Defense. Then deal $MainNum$ damage to a Grounded Enemy.
+Strike_Text	This gains $DefNum$ Defense. Then deal $MainNum$ damage to an Enemy at the same Position.
 Strike_Log	$This$ strikes at $Target$.
 Pillage	Pillage
 Pillage_Text	An Enemy becomes Focused. All Players gain $DefNum$ Defense.
 Pillage_Log	$This$ pillages $Target$.
 Motivate	Motivate
-Motivate_Text	A Grounded Enemy becomes Lively. Then deal $MainNum$ damage to it.
+Motivate_Text	An Enemy at the same Position becomes Lively. Then deal $MainNum$ damage to it.
 Motivate_Log	$This$ motivates $Target$.
 Twirl	Twirl
-Twirl_Text	This becomes Lively. Then deal $MainNum$ damage to a Grounded Enemy.
+Twirl_Text	This becomes Lively. Then deal $MainNum$ damage to an Enemy at the same Position.
 Twirl_Log	$This$ twirls into $Target$.
 Debilitate	Debilitate
-Debilitate_Text	A Grounded Enemy becomes Tired and loses $DefNum$ Defense.
+Debilitate_Text	An Enemy becomes Tired and loses $DefNum$ Defense.
 Debilitate_Log	$This$ debilitates $Target$.
 Immobilize	Immobilize
-Immobilize_Text	Deal $MainNum$ damage to a Grounded Enemy. They become Locked during this and next Round.
+Immobilize_Text	Deal $MainNum$ damage to an Enemy at the same Position. They become Locked during this and next Round.
 Immobilize_Log	$This$ immobilizes $Target$.
 Duel	Duel
-Duel_Text	Deal $MainNum$ damage to a Grounded Enemy. They gain 1 Power and lose 1 Defense.
+Duel_Text	Deal $MainNum$ damage to an Enemy at the same Position. They gain 1 Power and lose 1 Defense.
 Duel_Log	$This$ duels with $Target$.
 Prioritize	Prioritize
-Prioritize_Text	Deal $MainNum$ damage to a Grounded Enemy. They become Targeted during this and next Round.
+Prioritize_Text	Deal $MainNum$ damage to an Enemy at the same Position. They become Targeted during this and next Round.
 Prioritize_Log	$This$ prioritizes defeating $Target$.
 Angel	Angel
 Angel_Text	Heals Players and starts Elevated. Can do everything but attack.
@@ -306,9 +306,9 @@ Headwinds_Log	$This$ creates headwinds.
 Manipulate_Time	Manipulate Time
 Manipulate_Time_Text	Deal $MainNum$ damage to each Elevated Enemy. They each get $StatusNum$ Extra Ability.
 Manipulate_Time_Log	$This$ manipulates time.
-Bind	Bind
-Bind_Text	An Elevated Enemy becomes Grounded and Stunned for $StatusNum$ turn.
-Bind_Log	$This$ binds $Target$.
+Launch	Launch
+Launch_Text	A Grounded Enemy becomes Elevated and Stunned for $StatusNum$ turn.
+Launch_Log	$This$ launches $Target$ away.
 Punch_Up	Punch Up
 Punch_Up_Text	Deal $MainNum$ damage to all Enemies with $MiscNum$ Health or more.
 Punch_Up_Log	$This$ punches up at the strongest.
@@ -325,8 +325,8 @@ Touchdown	Touchdown
 Touchdown_Text	An Elevated Player becomes Grounded and gains $PowNum$ Power.
 Touchdown_Log	$This$ has $Target$ touch down.
 Warp	Warp
-Warp_Text	A Grounded Enemy becomes Elevated and loses $PowNum$ Power.
-Warp_Log	$This$ warps $Target$ away.
+Warp_Text	A Player switches Positions. An Enemy loses $PowNum$ Power.
+Warp_Log	$This$ uses warp.
 Flood	Flood
 Flood_Text	Each Grounded Player becomes Elevated. Deal $MainNum$ damage to each Grounded Enemy.
 Flood_Log	$This$ summons a flood.
@@ -488,9 +488,9 @@ Announce	Announce
 Announce_Text	Summon a random $MiscNum$ Star Enemy.
 Announce_Log	$This$ announces in a new enemy.
 Kitty	KITTY!!!
-Kitty_Text	Alternates between Grounded and Elevated, and attacks any Player with the same Position.
+Kitty_Text	Alternates between Grounded and Elevated, and attacks any Player at the same Position.
 Scratch	Scratch
-Scratch_Text	Deal $MainNum$ damage to a Player with the same Position as this.
+Scratch_Text	Deal $MainNum$ damage to a Player at the same Position.
 Scratch_Log	$This$ scratches $Target$.
 Stuck_in_a_Tree	Stuck in a Tree
 Stuck_in_a_Tree_Text	If this is Grounded, it becomes Elevated and Tired.
@@ -684,26 +684,26 @@ Nurture_Log	$This$ nurtures the young.
 Guard	Guard
 Guard_Text	A $MiscNum$ Star Enemy becomes Protected during this and next Round.
 Guard_Log	$This$ guards $Target$.
-Frustration	Frustration
-Frustration_Text	When anyone becomes Focused, they gain 1 Power and 1 Defense.
+Passion	Passion
+Passion_Text	When anyone becomes Focused, they gain 1 Power and 1 Defense.
 Lucky	Lucky
 Lucky_Text	When anyone becomes Lively, they get 1 Extra Ability.
 Rest	Rest
 Rest_Text	When anyone becomes Tired, they gain 2 Health.
 Preparation	Preparation
-Preparation_Text	End of everyone's turn: if they used an Attack or Healing Ability, they lose 1 Power; otherwise they gain 2 Power.
+Preparation_Text	After anyone uses an Attack or Healing Ability, they lose 1 Power; otherwise they gain 1 Power.
 Inspiration	Inspiration
 Inspiration_Text	Waves 2-5: Players get a new set of random Abilities.
 Crowds	Crowds
 Crowds_Text	Waves 1-4: Add another 1 Star Enemy at random, and all Enemies lose 1 Max Health.
 Charge_Up	Charge Up
 Charge_Up_Text	Each Wave: A random Enemy gains 5 Max Health, 5 Health, 2 Power, 2 Defense, and becomes Stunned for 3 turns.
-Aiming	Aiming
-Aiming_Text	Attack and Healing Abilities have +1 Power against anyone with a different Position, otherwise -1 Power.
 Topsy_Turvy	Topsy Turvy
-Topsy_Turvy_Text	Each Round: everyone switches Positions.
+Topsy_Turvy_Text	Each Round: all Players switch Positions.
 Bloodied	Bloodied
 Bloodied_Text	If someone is at 6 Health or more, their Abilities have 1 more Cooldown; otherwise 1 less Cooldown.
+Comfort_Zone	Comfort Zone
+Comfort_Zone_Text	Anyone who's at their starting Position has +1 Defense; otherwise -1 Defense.
 Update_0	Dec 9, 2025
 Update_0_Text	Dropped speed and luck, and changed abilities that used them\nTurn order is now players first (in order of Wizard, Knight, Angel), then enemies in order\nAngry's +2 Power is now +1 Power, +1 Defense
 Update_1	Dec 12, 2025
@@ -720,3 +720,5 @@ Update_6	Feb 08, 2026
 Update_6_Text	Fixed some translation issues \nAdded fonts for some languages \nFixed minor bugs in encyclopedia
 Update_7	Feb 28, 2026
 Update_7_Text	Dropped Neutral, Emotion effects and Cheats/Challenges \nAdded 10 Rules; 2 are randomly chosen per game to change combat \nChanged and replaced many abilities \nRevive is affected by the user's Power, recovers only 8, and doesn't mess up the turn order \nPower and Defense are capped at -3 and +3 \nProtected, Targeted, and Locked wear off at the start of each round \nEmotions are now Moods, and it's Lively, Focused, Tired
+Update_8	Mar 02, 2026
+Update_8_Text	Knight now hits Enemies at the same Position as it (not necessarily just Grounded) \nWave 1 is now 3 1-Star Enemies \nWave 2 is now 2 2-Star Enemies \nChanged some Rules and Wizard abilities

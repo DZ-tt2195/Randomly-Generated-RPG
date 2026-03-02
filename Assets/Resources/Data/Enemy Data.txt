@@ -4,7 +4,7 @@ Crow	Basic Enemy who attacks Grounded and Elevated Players.	4	ELEVATED	Peck,	Non
 Bees	Helps other Elevated Enemies stay alive with status effects.	5	ELEVATED	Sting,Honey,Protect_the_Queen,Support,	None	Tom Wanerstrand\nTime Spiral\n(Unyaro Bees)	1
 Drone	Makes itself Elevated and raises its Power before attacking multiple Players at once.	5	ELEVATED	Sound_Waves,Alarm,	ChooseAttack	James Paick\nGuilds of Ravnica\n(Dimir Spybug)	1
 Herald	If not killed fast enough, will start to summon 3 Star Enemies.	5	GROUNDED	Flag_Whack,Announce,	CameOffCooldown	Grant Hansen\nDominion: Renaissance\n(Flag Bearer)	1
-Kitty	Alternates between Grounded and Elevated, and attacks any Player with the same Position.	5	GROUNDED	Scratch,Stuck_in_a_Tree,Land_Feet_First,Lure,	None	Howard Lyon\nEldritch Moon\n(Harmless Offering)	1
+Kitty	Alternates between Grounded and Elevated, and attacks any Player at the same Position.	5	GROUNDED	Scratch,Stuck_in_a_Tree,Land_Feet_First,Lure,	None	Howard Lyon\nEldritch Moon\n(Harmless Offering)	1
 Leprechaun	If this is at full Health, it increases Player Stats; otherwise it deals lots of damage.	5	GROUNDED	Prank,Offer_Gold,	None	Brian Brinlee\nDominion: Nocturne\n(Leprechaun)	1
 Partier	Heals all Enemies, gives them random Moods, and increases their Max Health.	5	GROUNDED	Fight,Share_Drinks,Share_Snacks,Drinking_Game,	None	Jesper Ejsing\nInnistrad: Crimson Vow\n(Gluttonous Guest)	1
 Pixie	Changes all Player Moods at the same time, and attacks Elevated Players.	5	ELEVATED	Will_o_Wisp,Agitate,Drowsiness,Bother,	Effectiveness	Claus Stephan\nDominion: Nocturne\n(Pixie)	1
