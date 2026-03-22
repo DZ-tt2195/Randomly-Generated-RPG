@@ -6,7 +6,7 @@ Knight	Debilitate	An Enemy becomes Tired and loses $DefNum$ Defense.	OneEnemy	No
 Knight	Duel	Deal $MainNum$ damage to an Enemy at the same Position. They gain 1 Power and lose 1 Defense.	OneEnemy	TargetSamePosition	TargetAttack/TargetGainPower/TargetLoseDefense	0	3		1	1			Attack/StatEnemy
 Knight	Force	Deal $MainNum$ damage to an Enemy at the same Position. Their active Ability Cooldown are decreased by $MiscNum$.	OneEnemy	TargetSamePosition	TargetAttack/TargetDecreaseAllCooldown	0	4					1	Attack
 Knight	Heavy_Sword	This becomes Tired. Then deal $MainNum$ damage to an Enemy at the same Position.	Self-OneEnemy	None-TargetSamePosition	TargetBecomeTired-TargetAttack	1	5						Attack/MoodPlayer
-Knight	Immobilize	Deal $MainNum$ damage to an Enemy at the same Position. They become Locked during this and next Round.	OneEnemy	TargetSamePosition	TargetAttack/TargetBecomeLocked	0	3					2	Attack
+Knight	Immobilize	Deal $MainNum$ damage to an Enemy at the same Position. They become Locked for this Round.	OneEnemy	TargetSamePosition	TargetAttack/TargetBecomeLocked	0	3					1	Attack
 Knight	Impale	Deal $MainNum$ damage to an Enemy at the same Position. They becomes Stunned for $StatusNum$ turn.	OneEnemy	TargetSamePosition	TargetAttack/TargetBecomeStunned	2	4					1	Attack
 Knight	Joust	Deal $MainNum$ damage to an Enemy at the same Position. Then this loses $PowNum$ Power.	OneEnemy-Self	TargetSamePosition-None	TargetAttack-TargetLosePower	0	4		1				Attack
 Knight	Knock_Down	Deal $MainNum$ damage to an Enemy at the same Position. Then they lose $DefNum$ Defense.	OneEnemy	TargetSamePosition	TargetAttack/TargetLoseDefense	1	4			1			Attack/StatEnemy

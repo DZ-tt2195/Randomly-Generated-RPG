@@ -32,7 +32,7 @@ Dragon	Take_Flight	All Grounded Enemies becomes Elevated.	AllEnemies	TargetIsGro
 Dragon	Roar	This becomes Lively and gains $PowNum$ Power.	Self	None	TargetBecomeLively/TargetGainPower	1			1				MoodEnemy/StatEnemy
 Drone	Sound_Waves	Deal $MainNum$ damage to all Players.	AllPlayers	None	TargetAttack	1	2						Attack
 Drone	Alarm	This gains $PowNum$ Power and becomes Elevated and Locked during this and next Round.	Self	None	TargetGainPower/TargetBecomeElevated/TargetBecomeLocked	0			1		2		PositionEnemy/StatEnemy
-Ghost	Jumpscare	Deal $MainNum$ damage to all Players.	OnePlayer	None	TargetAttack	1	2						Attack
+Ghost	Jumpscare	Deal $MainNum$ damage to all Players.	AllPlayers	None	TargetAttack	1	2						Attack
 Ghost	Lament	This and another Enemy both become Tired.	Self-OtherEnemy	None-TargetNotTired	TargetBecomeTired-TargetBecomeTired	0							MoodEnemy
 Ghost	Possession	A Grounded Player becomes Elevated and loses $PowNum$ Power.	OnePlayer	TargetIsGrounded	TargetBecomeElevated/TargetLosePower	1			1				PositionPlayer/StatPlayer
 Ghost	Release	An Elevated Player becomes Grounded and Stunned for $StatusNum$ turn.	OnePlayer	TargetIsElevated	TargetBecomeGrounded/TargetBecomeStunned	2					1		PositionPlayer

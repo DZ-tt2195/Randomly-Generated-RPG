@@ -724,4 +724,6 @@ public static string Update_7 () => Translator.inst.Translate("Update_7", new() 
 public static string Update_7_Text () => Translator.inst.Translate("Update_7_Text", new() {});
 public static string Update_8 () => Translator.inst.Translate("Update_8", new() {});
 public static string Update_8_Text () => Translator.inst.Translate("Update_8_Text", new() {});
+public static string Update_9 () => Translator.inst.Translate("Update_9", new() {});
+public static string Update_9_Text () => Translator.inst.Translate("Update_9_Text", new() {});
 }

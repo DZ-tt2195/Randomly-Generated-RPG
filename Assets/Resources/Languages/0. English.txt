@@ -1,7 +1,7 @@
 Title	RANDOMLY GENERATED
 Blank	
 Author_Credit	by Thomas Tang (DZ)
-Last_Update	Last Updated: Mar 02, 2026
+Last_Update	Last Updated: Mar 22, 2026
 Language	Language
 Translator_Credit	Original Language
 Upload_Translation	Upload Translation
@@ -210,7 +210,7 @@ Debilitate	Debilitate
 Debilitate_Text	An Enemy becomes Tired and loses $DefNum$ Defense.
 Debilitate_Log	$This$ debilitates $Target$.
 Immobilize	Immobilize
-Immobilize_Text	Deal $MainNum$ damage to an Enemy at the same Position. They become Locked during this and next Round.
+Immobilize_Text	Deal $MainNum$ damage to an Enemy at the same Position. They become Locked for this Round.
 Immobilize_Log	$This$ immobilizes $Target$.
 Duel	Duel
 Duel_Text	Deal $MainNum$ damage to an Enemy at the same Position. They gain 1 Power and lose 1 Defense.
@@ -722,3 +722,5 @@ Update_7	Feb 28, 2026
 Update_7_Text	Dropped Neutral, Emotion effects and Cheats/Challenges \nAdded 10 Rules; 2 are randomly chosen per game to change combat \nChanged and replaced many abilities \nRevive is affected by the user's Power, recovers only 8, and doesn't mess up the turn order \nPower and Defense are capped at -3 and +3 \nProtected, Targeted, and Locked wear off at the start of each round \nEmotions are now Moods, and it's Lively, Focused, Tired
 Update_8	Mar 02, 2026
 Update_8_Text	Knight now hits Enemies at the same Position as it (not necessarily just Grounded) \nWave 1 is now 3 1-Star Enemies \nWave 2 is now 2 2-Star Enemies \nChanged some Rules and Wizard abilities
+Update_9	Mar 22, 2026
+Update_9_Text	Fixed a Ghost ability \nWeakened Knight's Immobilize

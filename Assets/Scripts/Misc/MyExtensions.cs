@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
+using UnityEditor;
 using UnityEngine;
 
 public enum FindNumber {Exact, Minimum, Maximum, Not}
@@ -13,14 +14,12 @@ public static class MyExtensions
         string seconds = time.Seconds < 10 ? $"0{time.Seconds}" : $"{time.Seconds}";
         return $"{(int)time.TotalMinutes}:{seconds}.{time.Milliseconds}";
     }
-
     public static void SetAlpha(SpriteRenderer target, float alpha)
     {
         Color newColor = target.color;
         newColor.a = alpha;
         target.color = newColor;
     }
-
     public static void Shuffle(this Transform originalTransform)
     {
         List<int> indexes = new();
@@ -38,7 +37,6 @@ public static class MyExtensions
             next.SetSiblingIndex(indexes[randomNumber]);
         }
     }
-
     public static List<T> Shuffle<T>(this List<T> originalList)
     {
         List<T> newList = new();
@@ -52,7 +50,6 @@ public static class MyExtensions
 
         return newList;
     }
-
     public static bool Comparison(FindNumber toFind, int firstNum, int secondNum)
     {
         return toFind switch
@@ -64,7 +61,6 @@ public static class MyExtensions
             _ => false,
         };
     }
-
     public static int SumOfArray(int[] array)
     {
         int total = 0;
