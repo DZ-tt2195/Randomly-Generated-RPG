@@ -4717,6 +4717,42 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 99c623fb6b6e74e26bbe122ffce4485b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AbilityHolder
+  allArt:
+  - {fileID: 21300000, guid: 7169916f622b9448c90c47863b967496, type: 3}
+  - {fileID: 21300000, guid: 77b6344cd7db046c8b2a058c376e6857, type: 3}
+  - {fileID: 21300000, guid: e9ec3f21990ae4c989bf5d5da640f272, type: 3}
+  - {fileID: 21300000, guid: a0c382efa77a64257b54c568ff120359, type: 3}
+  - {fileID: 21300000, guid: 8b9881f4ef8944f60a6ade38d6699435, type: 3}
+  - {fileID: 21300000, guid: a29aad6e650b545b9873bee474dcbfd0, type: 3}
+  - {fileID: 21300000, guid: c23f7961be2a241b29e1e6024f6e3c56, type: 3}
+  - {fileID: 21300000, guid: b75f19db6a7b644cbaa8a61f0df64c7e, type: 3}
+  - {fileID: 21300000, guid: 8b5f1b0326bde454a9388fa2a00e632e, type: 3}
+  - {fileID: 21300000, guid: 648fc7ba4093f4133bdc0c2360df3b04, type: 3}
+  - {fileID: 21300000, guid: 275a496b567c84d5e863fa2ef622338c, type: 3}
+  - {fileID: 21300000, guid: f9163409a295e43418556aed06ffbab3, type: 3}
+  - {fileID: 21300000, guid: 4a0833be5a9c5492ea08486d65fe81b8, type: 3}
+  - {fileID: 21300000, guid: d60af448f9bf249e596ab07e7688a58b, type: 3}
+  - {fileID: 21300000, guid: faf4073fdcbfe45b39cd5dfc7e79c3a6, type: 3}
+  - {fileID: 21300000, guid: 8b6cb0afb7cb24cf78f88978ecb58c2b, type: 3}
+  - {fileID: 21300000, guid: 78de5116ba2294eb09abcca31f2aee69, type: 3}
+  - {fileID: 21300000, guid: d60bf5a446ab748f18a42bf1978c66f8, type: 3}
+  - {fileID: 21300000, guid: 061804913ef414c3fab2bc097580cd35, type: 3}
+  - {fileID: 21300000, guid: 3e0ad8fbc911c426f8a3ddf28bb1e811, type: 3}
+  - {fileID: 21300000, guid: 39b93cbd5fe744dc2a8545fd4461fd46, type: 3}
+  - {fileID: 21300000, guid: 3166b405f660241939e163737608d738, type: 3}
+  - {fileID: 21300000, guid: 12b385239dde6477b88d0be838278b52, type: 3}
+  - {fileID: 21300000, guid: 8beacd2c9fc694dbd807c06a9e9ff96b, type: 3}
+  - {fileID: 21300000, guid: e8e782d0781ca406a9f96e92728215b0, type: 3}
+  - {fileID: 21300000, guid: 71b09a386ac1b4791baa8052d835579d, type: 3}
+  - {fileID: 21300000, guid: 89b96d9c038a848d0bff55305d8f499a, type: 3}
+  - {fileID: 21300000, guid: a54ae9799dec54c129e9db0e2183fb9e, type: 3}
+  - {fileID: 21300000, guid: 90f1032bb747349b7ba4818da95a3244, type: 3}
+  - {fileID: 21300000, guid: 20d26d23bcff644b3b017667bd3c9f80, type: 3}
+  playerAbilities: {fileID: 4900000, guid: be92100e2b6c646c7b3179b0c407130a, type: 3}
+  enemyAbilities: {fileID: 4900000, guid: 7e2996e55f4134169a06a007b9d28462, type: 3}
+  players: {fileID: 4900000, guid: 97ca650a84fd446978cf56ad37451202, type: 3}
+  enemies: {fileID: 4900000, guid: 84bb4b7bda80544848f4e2194e03a970, type: 3}
+  rules: {fileID: 4900000, guid: 3bf267a2cf05b41cbbf0ff3161adf299, type: 3}
 --- !u!114 &1681304445
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4729,6 +4765,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 637a75b99e110443d8ea9119a89711d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Translator
+  allLanguageFiles:
+  - {fileID: 4900000, guid: 0cb47dd04388845e9b04317501ae527c, type: 3}
   toLoad: 0. Title Screen
   settingsText: {fileID: 741795783}
   moodGuide: {fileID: 757509347}

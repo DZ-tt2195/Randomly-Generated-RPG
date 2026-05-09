@@ -365,7 +365,7 @@ Bullseye_Log	$This$ shoots a direct arrow at $Target$.
 Cover	Cover
 Cover_Text	This becomes Lively and gains $DefNum$ Defense.
 Cover_Log	$This$ hides behind cover.
-Aim_Up	Aim_Up
+Aim_Up	Aim Up
 Aim_Up_Text	This becomes Grounded, and a Grounded Player becomes Elevated.
 Aim_Up_Log	$This$ aims up at $Target$.
 Barbarian	Barbarian

@@ -33,7 +33,7 @@ public static class FileManager
         }
         else
         {
-            File.WriteAllText($"Assets/Resources/{fileName}.txt", req.downloadHandler.text);
+            File.WriteAllText($"Assets/{fileName}.txt", req.downloadHandler.text);
             Debug.Log($"downloaded {fileName}");
             AssetDatabase.Refresh();
         }
@@ -42,7 +42,7 @@ public static class FileManager
     [MenuItem("Tools/Make enums and functions")]
     public static void EnumsAndFunctions()
     {
-        TextAsset englishFile = Resources.Load<TextAsset>("Languages/0. English");
+        TextAsset englishFile = AssetDatabase.LoadAssetAtPath<TextAsset>("Assets/Languages/0. English.txt");        
         Dictionary<string, string> newDictionary = Translator.ReadLanguageFile(englishFile.text);
         
         List<(string, List<string>)> normal = new();
