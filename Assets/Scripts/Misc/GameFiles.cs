@@ -45,21 +45,26 @@ public class RulesData
 public class GameFiles : MonoBehaviour
 {
     public static GameFiles inst;
-    [Tooltip("store all player ability data")][ReadOnly] public Dictionary<string, AbilityData> listOfPlayerAbilities;
-    [Tooltip("store all enemy ability data")][ReadOnly] public Dictionary<string, AbilityData> listOfEnemyAbilities;
-    [Tooltip("store all player data")][ReadOnly] public Dictionary<string, CharacterData> listOfPlayers = new();
-    [Tooltip("store all enemy data")][ReadOnly] public Dictionary<int, Dictionary<string, CharacterData>> listOfEnemies = new();
-    [Tooltip("store all rules data")][ReadOnly] public Dictionary<string, RulesData> listOfRules = new();
+    [SerializeField] List<Sprite> allArt = new(); Dictionary<string, Sprite> artDictionary = new();
+    [SerializeField] TextAsset playerAbilities; public Dictionary<string, AbilityData> listOfPlayerAbilities {get; private set;}
+    [SerializeField] TextAsset enemyAbilities; public Dictionary<string, AbilityData> listOfEnemyAbilities{get; private set;}
+    [SerializeField] TextAsset players; public Dictionary<string, CharacterData> listOfPlayers {get; private set;}
+    [SerializeField] TextAsset enemies; public Dictionary<int, Dictionary<string, CharacterData>> listOfEnemies {get; private set;}
+    [SerializeField] TextAsset rules; public Dictionary<string, RulesData> listOfRules {get; private set;}
 
     void Awake()
     {
         inst = this;
-        listOfRules = ReadTSVFile<RulesData>(Resources.Load<TextAsset>("Data/Rules Data").text);
-        listOfPlayerAbilities = ReadTSVFile<AbilityData>(Resources.Load<TextAsset>("Data/Player Ability Data").text);
-        listOfEnemyAbilities = ReadTSVFile<AbilityData>(Resources.Load<TextAsset>("Data/Enemy Ability Data").text);
-        
-        listOfPlayers = ReadTSVFile<CharacterData>(Resources.Load<TextAsset>("Data/Player Data").text);
-        Dictionary<string, CharacterData> allEnemies = ReadTSVFile<CharacterData>(Resources.Load<TextAsset>("Data/Enemy Data").text);
+        foreach (Sprite sprite in allArt)
+            artDictionary.Add(sprite.name, sprite);
+
+        listOfRules = ReadTSVFile<RulesData>(rules.text);
+        listOfPlayerAbilities = ReadTSVFile<AbilityData>(playerAbilities.text);
+        listOfEnemyAbilities = ReadTSVFile<AbilityData>(enemyAbilities.text);
+        listOfPlayers = ReadTSVFile<CharacterData>(players.text);
+
+        listOfEnemies = new Dictionary<int, Dictionary<string, CharacterData>>();
+        Dictionary<string, CharacterData> allEnemies = ReadTSVFile<CharacterData>(enemies.text);
         foreach (var KVP in allEnemies)
         {
             if (!listOfEnemies.ContainsKey(KVP.Value.difficulty))
@@ -67,7 +72,6 @@ public class GameFiles : MonoBehaviour
             listOfEnemies[KVP.Value.difficulty].Add(KVP.Key, KVP.Value);
         }
     }
-
     Dictionary<string, T> ReadTSVFile<T>(string textToConvert) where T : new()
     {
         string[] splitUp = textToConvert.Split('\n');
@@ -160,7 +164,7 @@ public class GameFiles : MonoBehaviour
                 else
                 {
                     if (field.FieldType == typeof(Sprite))
-                        field.SetValue(nextData, Resources.Load<Sprite>($"Characters/{thisRow[columnIndex["characterName"]]}"));
+                        field.SetValue(nextData, artDictionary[thisRow[columnIndex["characterName"]]]);
                 }
             }
             if (nextData is CharacterData character)
@@ -281,6 +285,7 @@ public class GameFiles : MonoBehaviour
         }
         return toReturn;
     }
+
     #endregion
 
 }

@@ -14,6 +14,7 @@ public class Translator : MonoBehaviour
 
     public static Translator inst;
     Dictionary<string, Dictionary<string, string>> keyTranslate = new();
+    [SerializeField] List<TextAsset> allLanguageFiles = new();
     [Scene][SerializeField] string toLoad;
     [SerializeField] TMP_Text settingsText;
     [SerializeField] TMP_Text moodGuide;
@@ -40,8 +41,7 @@ public class Translator : MonoBehaviour
     }
     private void Start()
     {
-        TextAsset[] languageFiles = Resources.LoadAll<TextAsset>("Languages");
-        foreach (TextAsset language in languageFiles)
+        foreach (TextAsset language in allLanguageFiles)
         {
             string fileName = ConvertName(language);
 
