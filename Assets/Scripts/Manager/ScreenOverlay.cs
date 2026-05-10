@@ -30,6 +30,7 @@ public class ScreenOverlay : MonoBehaviour
         [SerializeField] List<AbilityBox> listOfBoxes = new();
         [SerializeField] List<Image> listOfStars = new();
     [Foldout("Game settings", true)]
+        [SerializeField] Slider volumeSlider;
         [SerializeField] GameObject gameSettingsBackground;
         [SerializeField] Button settingsButton;
         [SerializeField] Slider animationSlider;
@@ -56,7 +57,8 @@ public class ScreenOverlay : MonoBehaviour
         undoToggle.onValueChanged.AddListener(SetUndo);
         tooltipToggle.onValueChanged.AddListener(SetTooltip);
         MoodButton.onClick.AddListener(SeeMoods);
-
+        volumeSlider.value = PlayerPrefs.GetFloat("Volume");
+        volumeSlider.onValueChanged.AddListener(SetLevel);
         permanentCanvas.gameObject.SetActive(true);
     }
 
@@ -65,6 +67,7 @@ public class ScreenOverlay : MonoBehaviour
         SetAnimationSpeed(PlayerPrefs.HasKey("Animation Speed") ? PlayerPrefs.GetFloat("Animation Speed") : 0.5f);
         SetUndo(!PlayerPrefs.HasKey("Confirm Choices") || PlayerPrefs.GetInt("Confirm Choices") == 1);
         SetTooltip(!PlayerPrefs.HasKey("Keyword Tooltip") || PlayerPrefs.GetInt("Keyword Tooltip") == 1);
+        SetLevel(PlayerPrefs.GetFloat("Volume"));
         PlayerPrefs.Save();
     }
 
@@ -115,6 +118,11 @@ public class ScreenOverlay : MonoBehaviour
         MoodBackground.SetActive(true);
         MoodBackground.transform.SetAsLastSibling();
     }
+        void SetLevel(float value)
+        {
+            AudioManager.instance.mixer.SetFloat("Volume", (Mathf.Log10(volumeSlider.value) * 20));
+            PlayerPrefs.SetFloat("Volume", volumeSlider.value);
+        }        
 
     #endregion
 

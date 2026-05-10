@@ -2,9 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
-using UnityEditor;
 using UnityEngine;
-
 public enum FindNumber {Exact, Minimum, Maximum, Not}
 public static class MyExtensions
 {
@@ -39,15 +37,13 @@ public static class MyExtensions
     }
     public static List<T> Shuffle<T>(this List<T> originalList)
     {
-        List<T> newList = new();
+        List<T> newList = new(originalList);
 
-        while (originalList.Count > 0)
+        for (int i = 0; i < newList.Count; i++)
         {
-            int randomNumber = UnityEngine.Random.Range(0, originalList.Count);
-            newList.Add(originalList[randomNumber]);
-            originalList.RemoveAt(randomNumber);
+            int rand = UnityEngine.Random.Range(i, newList.Count);
+            (newList[i], newList[rand]) = (newList[rand], newList[i]);
         }
-
         return newList;
     }
     public static bool Comparison(FindNumber toFind, int firstNum, int secondNum)

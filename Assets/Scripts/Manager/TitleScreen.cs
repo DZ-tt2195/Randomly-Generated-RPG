@@ -14,17 +14,17 @@ public class TitleScreen : MonoBehaviour
 
     public static TitleScreen instance;
 
-    [Foldout("Misc", true)]
+    [Foldout("UI", true)]
     [SerializeField] GameObject storyObject;
     [SerializeField] GameObject specialThanksObject;
     [SerializeField] TMP_Text timeText;
+    [SerializeField] GameObject soundCreditsObject;
 
     [Foldout("RNG", true)]
     [SerializeField] bool randomSeed;
     [SerializeField][ConditionalField(nameof(randomSeed), inverse: true)] int chosenSeed;
 
     [Foldout("Cheats/Challenges", true)]
-    [SerializeField] GameObject cheatChallengeObject;
     List<Toggle> listOfCheats = new();
     List<Toggle> listOfChallenges = new();
     
@@ -40,6 +40,7 @@ public class TitleScreen : MonoBehaviour
     [SerializeField] TMP_Text encyclopedia;
     [SerializeField] TMP_Text specialThanks;
     [SerializeField] TMP_Text actualThanks;
+    [SerializeField] TMP_Text soundCredits;
 
     #endregion
 
@@ -57,6 +58,7 @@ public class TitleScreen : MonoBehaviour
         encyclopedia.text = AutoTranslate.Encyclopedia();
         specialThanks.text = AutoTranslate.Special_Thanks();
         actualThanks.text = AutoTranslate.All_Thanks();
+        soundCredits.text = AutoTranslate.Sound_Credits();
     }
     void Start()
     {
@@ -100,6 +102,11 @@ public class TitleScreen : MonoBehaviour
     public void SpecialThanksMenu()
     {
         specialThanksObject.SetActive(!specialThanksObject.activeSelf);
+    }
+
+    public void SoundCreditsMenu()
+    {
+        soundCreditsObject.SetActive(!soundCreditsObject.activeSelf);
     }
 
 #endregion

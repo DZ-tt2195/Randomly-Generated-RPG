@@ -25,6 +25,7 @@ public class Translator : MonoBehaviour
     [SerializeField] TMP_Text focused;
     [SerializeField] TMP_Text lively;
     [SerializeField] TMP_Text tired;
+    [SerializeField] TMP_Text volume;
 
     void Awake()
     {
@@ -134,6 +135,7 @@ public class Translator : MonoBehaviour
     void TranslateScreen()
     {
         KeywordTooltip.instance.SwitchLanguage();
+        volume.text = AutoTranslate.Volume();
         settingsText.text = AutoTranslate.Settings();
         moodGuide.text = AutoTranslate.Mood_Guide();
         pressToClose.text = AutoTranslate.Close_Settings();
@@ -143,7 +145,6 @@ public class Translator : MonoBehaviour
         lively.text = AutoTranslate.Lively();
         focused.text = AutoTranslate.Focused();
         tired.text = AutoTranslate.Tired();
-
         ScreenOverlay.instance.UnloadObjects(SceneManager.GetActiveScene().name, toLoad, GameMode.Other);
     }
 
