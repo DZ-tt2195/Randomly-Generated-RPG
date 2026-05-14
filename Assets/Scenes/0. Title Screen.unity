@@ -2382,11 +2382,8 @@ GameObject:
   m_Component:
   - component: {fileID: 672243572}
   - component: {fileID: 672243571}
-  - component: {fileID: 672243576}
   - component: {fileID: 672243577}
   - component: {fileID: 672243578}
-  - component: {fileID: 672243579}
-  - component: {fileID: 672243580}
   m_Layer: 0
   m_Name: Title Screen Manager
   m_TagString: Untagged
@@ -2439,20 +2436,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &672243576
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 672243570}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ed62496e85434631a8ce8752f246de34, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Active: 0
-  Target: {fileID: 1273847447}
 --- !u!114 &672243577
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2474,39 +2457,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 672243570}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ed62496e85434631a8ce8752f246de34, type: 3}
+  m_Script: {fileID: 11500000, guid: df8274233408f4a8d937840f436f4180, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: 
-  Active: 0
-  Target: {fileID: 167539417}
---- !u!114 &672243579
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 672243570}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ed62496e85434631a8ce8752f246de34, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Active: 0
-  Target: {fileID: 1935262697}
---- !u!114 &672243580
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 672243570}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ed62496e85434631a8ce8752f246de34, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: MyBox::MyBox.ActiveStateOnStart
-  Active: 0
-  Target: {fileID: 1449107633}
+  m_EditorClassIdentifier: Assembly-CSharp::OnOff
+  forceOn: []
+  forceOff:
+  - {fileID: 1273847447}
+  - {fileID: 167539417}
+  - {fileID: 1935262697}
+  - {fileID: 1449107633}
 --- !u!1 &747000664
 GameObject:
   m_ObjectHideFlags: 0
@@ -2542,7 +2501,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 2200, y: 1200}
+  m_SizeDelta: {x: 2150, y: 1200}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &747000666
 MonoBehaviour:
@@ -2564,37 +2523,32 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Pressing buttons & dropping shapes: "Telephone button noise" - Caitlyn_100
+  m_text: 'Pressing buttons: "Telephone button noise" - Caitlyn_100 (freesounds.org)
+
+    Healing:
+    "Itemize" - Scrampunk_ (freesounds.org)
+
+    Damage: "Damage sound effect" -
+    Raclure (freesounds.org)
+
+    Dying: "explosion_small" - 400 Sounds Pack (ci.itch.io)
+
+    Gaining
+    stats: "power_up" - 400 Sounds Pack (ci.itch.io)
+
+    Losing stats: "power_down"
+    - 400 Sounds Pack (ci.itch.io)
+
+    Blocked change: "Error" - Autistic Lucario
     (freesounds.org)
 
-    Combining shapes: "Itemize" - Scrampunk_ (freesounds.org)
+    Emotion/Position/Status: "Video game treasure" (mixkit.co)
 
-    Winning:
-    "win" - David819 (freesounds.org)
+    New
+    round: "win" - David819 (freesounds.org)
 
-    Losing: "energy deactivation" - d777_hickoryyy
-    (freesounds.org)
-
-    Gravity Inverter: "Retro, Vampire Apparition, or Vampire
-    Awakening" - MATRIXXX_ (freesounds.org)
-
-    Bomb: "Cannon1" - Isaac200000 (freesounds.org)
-
-    Ghost
-    Star vanishing: "Ghost Kid sigh, less verb" - HorrorAudio (freesounds.org)
-
-    Snowflake
-    vanishing: "ding" - Daphne in Wonderland (freesounds.org)
-
-    Portal: "Time
-    Warp effect" - chinomaker (freesounds.org)
-
-    Egg breaking: "Ice Shatter SFX"
-    - ImATaco (freesounds.org)
-
-    Low on shapes: "Ticking timer" - tiennotg (freesounds.org)
-
-'
+    Losing: "energy deactivation" -
+    d777_hickoryyy (freesounds.org)'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
   m_sharedMaterial: {fileID: -3852492252101762229, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
@@ -5298,7 +5252,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1449107634
 RectTransform:
   m_ObjectHideFlags: 0

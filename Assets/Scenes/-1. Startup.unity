@@ -4559,10 +4559,10 @@ MonoBehaviour:
   m_FillRect: {fileID: 932910956}
   m_HandleRect: {fileID: 468634905}
   m_Direction: 0
-  m_MinValue: 0
-  m_MaxValue: 1.5
+  m_MinValue: 0.0001
+  m_MaxValue: 3
   m_WholeNumbers: 0
-  m_Value: 1
+  m_Value: 0.0001
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -5161,12 +5161,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1681304442}
-  - component: {fileID: 1681304440}
   - component: {fileID: 1681304443}
   - component: {fileID: 1681304444}
   - component: {fileID: 1681304445}
   - component: {fileID: 1681304447}
   - component: {fileID: 1681304446}
+  - component: {fileID: 1681304448}
   m_Layer: 0
   m_Name: Moves Between Scenes
   m_TagString: Untagged
@@ -5174,20 +5174,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1681304440
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1681304439}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ed62496e85434631a8ce8752f246de34, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Active: 0
-  Target: {fileID: 148001753}
 --- !u!4 &1681304442
 Transform:
   m_ObjectHideFlags: 0
@@ -5333,10 +5319,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AudioManager
   mixer: {fileID: 24100000, guid: 6339f169c292e402dbb565e5a7ad1793, type: 2}
-  damageSound: {fileID: 0}
-  healSound: {fileID: 0}
-  missSound: {fileID: 0}
-  shootSound: {fileID: 0}
+  damageSound: {fileID: 8300000, guid: 076dc8f65a40240da96ff3b20c0a127b, type: 3}
+  healSound: {fileID: 8300000, guid: 16be2fda298c445bf814c0c51a59ee67, type: 3}
+  menuSound: {fileID: 8300000, guid: 492488b5c92b84851a2ddd2ec6b3fef6, type: 3}
+  deadSound: {fileID: 8300000, guid: f8e12e784c72943518cd6b02013dbf7f, type: 3}
+  changeSound: {fileID: 8300000, guid: caa7564aa186140008569fb2eedc7963, type: 3}
+  buffSound: {fileID: 8300000, guid: 3ad5016e9ad4d4f8b9aad495cadc3195, type: 3}
+  nerfSound: {fileID: 8300000, guid: 5c7a774a307a44f94a6c63af808ada94, type: 3}
+  blockSound: {fileID: 8300000, guid: 012f0fbd8ac014b99bf912b3f1c08ef8, type: 3}
 --- !u!82 &1681304447
 AudioSource:
   m_ObjectHideFlags: 0
@@ -5434,6 +5424,21 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &1681304448
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1681304439}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df8274233408f4a8d937840f436f4180, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::OnOff
+  forceOn: []
+  forceOff:
+  - {fileID: 0}
 --- !u!1001 &1711759555
 PrefabInstance:
   m_ObjectHideFlags: 0

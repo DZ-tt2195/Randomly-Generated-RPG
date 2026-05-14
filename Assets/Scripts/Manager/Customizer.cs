@@ -63,6 +63,7 @@ public class Customizer : MonoBehaviour
 
                 void Switch(float value)
                 {
+                    AudioManager.instance.Menu();
                     abilityCustomize.gameObject.SetActive(value == 0);
                     rulesCustomize.gameObject.SetActive(value == 1);
                 }
@@ -75,6 +76,7 @@ public class Customizer : MonoBehaviour
     }
     void Confirmed()
     {
+        AudioManager.instance.Menu();
         RulesConfirmed();
         AbilitiesConfirmed();
         TurnManager.inst.StartCoroutine(TurnManager.inst.NewWave());
@@ -85,21 +87,21 @@ public class Customizer : MonoBehaviour
 #region  Abilities
     void AbilitySetup()
     {
-            SearchBoxes(AutoTranslate.Wizard());
-            SearchBoxes(AutoTranslate.Knight());
-            SearchBoxes(AutoTranslate.Angel());
+        SearchBoxes(AutoTranslate.Wizard());
+        SearchBoxes(AutoTranslate.Knight());
+        SearchBoxes(AutoTranslate.Angel());
 
-            void SearchBoxes(string toFind)
+        void SearchBoxes(string toFind)
+        {
+            Transform search = abilityCustomize.transform.Find(toFind);
+            foreach (Transform child in search)
             {
-                Transform search = abilityCustomize.transform.Find(toFind);
-                foreach (Transform child in search)
-                {
-                    AbilityBox box = child.GetComponent<AbilityBox>();
-                    box.ReceiveAbility(true, null);
-                    box.button.onClick.AddListener(() => Summon(box, toFind));
-                    preSelectedAbilities.Add(box);
-                }
+                AbilityBox box = child.GetComponent<AbilityBox>();
+                box.ReceiveAbility(true, null);
+                box.button.onClick.AddListener(() => Summon(box, toFind));
+                preSelectedAbilities.Add(box);
             }
+        }
 
         abilityDictionary.Add(nameof(AutoTranslate.Wizard), new());
         abilityDictionary.Add(nameof(AutoTranslate.Knight), new());
@@ -119,6 +121,7 @@ public class Customizer : MonoBehaviour
     }
     void Summon(AbilityBox clickedBox, string toFind)
     {
+        AudioManager.instance.Menu();
         clicked = clickedBox;
         clickedBox.ReceiveAbility(true, null);
 
@@ -130,6 +133,7 @@ public class Customizer : MonoBehaviour
     }
     void SendAbility(Ability ability)
     {
+        AudioManager.instance.Menu();
         clicked.ReceiveAbility(true, ability);
         for (int i = storeBoxes.childCount - 1; i >= 0; i--)
             storeBoxes.GetChild(i).SetParent(null);
@@ -178,9 +182,12 @@ public class Customizer : MonoBehaviour
                     clickedRules.Add(data.rulesName);
                     if (clickedRules.Count > FightRules.totalRules)
                         nextText.toggle.isOn = false;
+                    else
+                        AudioManager.instance.Menu();
                 }
                 else
                 {
+                    AudioManager.instance.Menu();
                     clickedRules.Remove(data.rulesName);
                 }
             }

@@ -142,6 +142,7 @@ public class Character : MonoBehaviour
 
         if (_privStateffect[StatusEffect.Protected] > 0 && effect < 0)
         {
+            AudioManager.instance.Blocked();
             TurnManager.inst.CreateVisual(AutoTranslate.Blocked(), this.transform.localPosition);
             answer = AutoTranslate.Blocked_Stat_Drop(this.name, effect.ToString(), AutoTranslate.Max_Health());
             Log.instance.AddText(answer, logged);
@@ -153,14 +154,20 @@ public class Character : MonoBehaviour
         if (effect > 0)
         {
             if (logged >= 0)
+            {
                 TurnManager.inst.CreateVisual($"+{effect} {AutoTranslate.Max_Health()}", this.transform.localPosition);
+                AudioManager.instance.Heal();
+            }
             answer = AutoTranslate.Increase_Stat(this.name, effect.ToString(), AutoTranslate.Max_Health());
             Log.instance.AddText(answer, logged);
         }
         else
         {
             if (logged >= 0)
+            {
                 TurnManager.inst.CreateVisual($"{effect} {AutoTranslate.Max_Health()}", this.transform.localPosition);
+                AudioManager.instance.Damage();
+            }
             answer = AutoTranslate.Decrease_Stat(this.name, Mathf.Abs(effect).ToString(), AutoTranslate.Max_Health());
             Log.instance.AddText(answer, logged);
 
@@ -177,13 +184,14 @@ public class Character : MonoBehaviour
         if (change > 0)
         {
             currentHealth = Mathf.Clamp(currentHealth + change, 0, this.baseHealth);
+            AudioManager.instance.Heal();
             TurnManager.inst.CreateVisual($"+{change} {AutoTranslate.Health()}", this.transform.localPosition);
-
             answer = AutoTranslate.Increase_Stat(this.name, change.ToString(), AutoTranslate.Health());
             Log.instance.AddText(answer, logged);
         }
         else if (_privStateffect[StatusEffect.Protected] > 0)
         {
+            AudioManager.instance.Blocked();
             TurnManager.inst.CreateVisual($"{AutoTranslate.Blocked()}", this.transform.localPosition);
             answer = AutoTranslate.Blocked_Stat_Drop(this.name, Mathf.Abs(change).ToString(), AutoTranslate.Health());
             Log.instance.AddText(answer, logged);
@@ -194,6 +202,7 @@ public class Character : MonoBehaviour
                 lastToAttackThis = attacker;
 
             currentHealth -= Mathf.Abs(change);
+            AudioManager.instance.Damage();
             TurnManager.inst.CreateVisual($"{change} {AutoTranslate.Health()}", this.transform.localPosition);
 
             answer = AutoTranslate.Decrease_Stat(this.name, Mathf.Abs(change).ToString(), AutoTranslate.Health());
@@ -211,6 +220,7 @@ public class Character : MonoBehaviour
 
         if (_privStateffect[StatusEffect.Protected] > 0 && change < 0)
         {
+            AudioManager.instance.Blocked();
             TurnManager.inst.CreateVisual($"{AutoTranslate.Blocked()}", this.transform.localPosition);
             answer = AutoTranslate.Blocked_Stat_Drop(this.name, change.ToString(), Translator.inst.Translate(stat.ToString()));
             Log.instance.AddText(answer, logged);
@@ -221,12 +231,14 @@ public class Character : MonoBehaviour
         CharacterUI();
         if (logged >= 0 && change > 0)
         {
+            AudioManager.instance.Buff();
             TurnManager.inst.CreateVisual($"+{change} {Translator.inst.Translate(stat.ToString())}", this.transform.localPosition);
             answer = AutoTranslate.Increase_Stat(this.name, change.ToString(), Translator.inst.Translate(stat.ToString()));
             Log.instance.AddText(answer, logged);
         }
         else if (logged >= 0 && change < 0)
         {
+            AudioManager.instance.Nerf();
             TurnManager.inst.CreateVisual($"{change} {Translator.inst.Translate(stat.ToString())}", this.transform.localPosition);
             answer = AutoTranslate.Decrease_Stat(this.name, Mathf.Abs(change).ToString(), Translator.inst.Translate(stat.ToString()));
             Log.instance.AddText(answer, logged);
@@ -237,8 +249,11 @@ public class Character : MonoBehaviour
         if (this == null || change == 0) yield break;
 
         _privStateffect[statusEffect] = _privStateffect[statusEffect]+change;
-        if (logged >= 0) TurnManager.inst.CreateVisual(Translator.inst.Translate(statusEffect.ToString()), this.transform.localPosition);
-
+        if (logged >= 0) 
+        {
+            AudioManager.instance.Change();
+            TurnManager.inst.CreateVisual(Translator.inst.Translate(statusEffect.ToString()), this.transform.localPosition);
+        }
         if (statusEffect == StatusEffect.Extra)
         {
             Log.instance.AddText(AutoTranslate.Gain_Extra_Ability(this.name, _privStateffect[statusEffect].ToString()), logged);
@@ -263,6 +278,7 @@ public class Character : MonoBehaviour
 
         if (_privStateffect[StatusEffect.Locked] > 0)
         {
+            AudioManager.instance.Blocked();
             Log.instance.AddText(AutoTranslate.Blocked_Position(this.name), logged);
         }
         else
@@ -275,6 +291,7 @@ public class Character : MonoBehaviour
                 string change = AutoTranslate.Become_New(this.name, Translator.inst.Translate(newPosition.ToString()));
                 Log.instance.AddText(change, logged);
                 TurnManager.inst.CreateVisual(Translator.inst.Translate(newPosition.ToString()), this.transform.localPosition);
+                AudioManager.instance.Change();
             }
         }
     }
@@ -284,6 +301,7 @@ public class Character : MonoBehaviour
 
         if (_privStateffect[StatusEffect.Locked] > 0)
         {
+            AudioManager.instance.Blocked();
             Log.instance.AddText(AutoTranslate.Blocked_Mood(this.name), logged);
         }
         else
@@ -295,6 +313,7 @@ public class Character : MonoBehaviour
             {
                 string change = AutoTranslate.Become_New(this.name, Translator.inst.Translate(newEmotion.ToString()));
                 Log.instance.AddText(change, logged);
+                AudioManager.instance.Change();
                 TurnManager.inst.CreateVisual(Translator.inst.Translate(newEmotion.ToString()), this.transform.localPosition);
 
                 if (newEmotion == Mood.Focused && FightRules.inst.CheckRule(nameof(AutoTranslate.Passion), logged))
@@ -324,6 +343,7 @@ public class Character : MonoBehaviour
 
         baseHealth = data.baseHealth;
         currentHealth = 0;
+        AudioManager.instance.Dead();
 
         foreach (StatusEffect value in Enum.GetValues(typeof(StatusEffect)))
             _privStateffect[value] = 0;

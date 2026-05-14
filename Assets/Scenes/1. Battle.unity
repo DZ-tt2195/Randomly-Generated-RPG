@@ -815,14 +815,16 @@ MonoBehaviour:
   - enemyDifficultySpawn: 01000000020000000200000001000000
   - enemyDifficultySpawn: 0100000002000000030000000200000001000000
   titleScreen: 0. Title Screen
+  waveSound: {fileID: 8300000, guid: 10ecb72f7cb594c378637e18bb61f52c, type: 3}
+  loseSound: {fileID: 8300000, guid: 950bd83ce61ec4bc29065cc30832f5e4, type: 3}
   waveText: {fileID: 613875175}
   roundText: {fileID: 377932333}
   quitButton: {fileID: 429758108}
+  quit: {fileID: 1549361887}
   listOfPlayers: []
   listOfEnemies: []
   listOfDead: []
   speedQueue: []
-  quit: {fileID: 1549361887}
 --- !u!224 &146587604
 RectTransform:
   m_ObjectHideFlags: 0
@@ -5917,11 +5919,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 1244131039}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ed62496e85434631a8ce8752f246de34, type: 3}
+  m_Script: {fileID: 11500000, guid: df8274233408f4a8d937840f436f4180, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: MyBox::MyBox.ActiveStateOnStart
-  Active: 1
-  Target: {fileID: 1625108885}
+  m_EditorClassIdentifier: Assembly-CSharp::OnOff
+  forceOn:
+  - {fileID: 1625108885}
+  forceOff: []
 --- !u!1 &1254985503
 GameObject:
   m_ObjectHideFlags: 0

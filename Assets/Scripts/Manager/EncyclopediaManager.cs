@@ -66,6 +66,7 @@ public class EncyclopediaManager : MonoBehaviour
     }
     void ChangeMode(int n)
     {
+        AudioManager.instance.Menu();
         for (int i = 0; i < currentSearch.Count; i++)
         {
             masterGameObject[i].SetActive(i == n);
@@ -193,6 +194,7 @@ public class EncyclopediaManager : MonoBehaviour
 
     void ChangeAbilityDropdown(int n)
     {
+        AudioManager.instance.Menu();
         SearchAbility();
     }
 
@@ -241,6 +243,7 @@ public class EncyclopediaManager : MonoBehaviour
     void ChangeTierDropdown(int n)
     {
         SearchEnemy();
+        AudioManager.instance.Menu();
     }
 
     void SearchEnemy()

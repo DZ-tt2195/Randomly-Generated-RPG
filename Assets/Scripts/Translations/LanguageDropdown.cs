@@ -48,6 +48,7 @@ public class LanguageDropdown : MonoBehaviour
 
         void ChangeLanguageDropdown(int n)
         {
+            AudioManager.instance.Menu();
             Translator.inst.ChangeLanguage(dropdown.options[dropdown.value].text, null);
         }
 

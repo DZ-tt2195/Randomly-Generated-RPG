@@ -83,6 +83,7 @@ public class ScreenOverlay : MonoBehaviour
 
     void SettingsScreen()
     {
+        AudioManager.instance.Menu();
         displayedScreen = CurrentScreen.Settings;
         gameSettingsBackground.transform.SetAsLastSibling();
         blackBackground.SetActive(true);
@@ -99,6 +100,7 @@ public class ScreenOverlay : MonoBehaviour
 
     public void SetUndo(bool value)
     {
+        AudioManager.instance.Menu();
         undoToggle.isOn = value;
         PlayerPrefs.SetInt("Confirm Choices", value ? 1 : 0);
         PlayerPrefs.Save();
@@ -106,6 +108,7 @@ public class ScreenOverlay : MonoBehaviour
 
     public void SetTooltip(bool value)
     {
+        AudioManager.instance.Menu();
         tooltipToggle.isOn = value;
         PlayerPrefs.SetInt("Keyword Tooltip", value ? 1 : 0);
         PlayerPrefs.Save();
@@ -113,16 +116,17 @@ public class ScreenOverlay : MonoBehaviour
 
     void SeeMoods()
     {
+        AudioManager.instance.Menu();
         displayedScreen = CurrentScreen.Emotion;
         blackBackground.SetActive(true);
         MoodBackground.SetActive(true);
         MoodBackground.transform.SetAsLastSibling();
     }
-        void SetLevel(float value)
-        {
-            AudioManager.instance.mixer.SetFloat("Volume", (Mathf.Log10(volumeSlider.value) * 20));
-            PlayerPrefs.SetFloat("Volume", volumeSlider.value);
-        }        
+    void SetLevel(float value)
+    {
+        AudioManager.instance.mixer.SetFloat("Volume", (Mathf.Log10(volumeSlider.value) * 20));
+        PlayerPrefs.SetFloat("Volume", volumeSlider.value);
+    }        
 
     #endregion
 
@@ -144,6 +148,7 @@ public class ScreenOverlay : MonoBehaviour
 
     public void DisplayCharacterInfo(Character character, string statText)
     {
+        AudioManager.instance.Menu();
         displayedScreen = CurrentScreen.Character;
         blackBackground.SetActive(true);
         characterDisplayBackground.transform.SetAsLastSibling();

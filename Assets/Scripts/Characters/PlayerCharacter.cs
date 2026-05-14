@@ -18,6 +18,7 @@ public class PlayerCharacter : Character
         MakeDecision.inst.SetAbilities(AutoTranslate.Choose_Ability(this.name), allAbilities, Picked);
         void Picked(Ability ability)
         {
+            AudioManager.instance.Menu();
             chosenAbility = ability;
         }
         while (chosenAbility == null)
@@ -70,11 +71,15 @@ public class PlayerCharacter : Character
         {
             header = AutoTranslate.Confirm_No_Target(Translator.inst.Translate(chosenAbility.data.abilityName));
         }
-        else
+        else if (chosenTarget.Count == 1)
         {
-            header = AutoTranslate.Confirm_Target(Translator.inst.Translate(chosenAbility.data.abilityName));
-            header += "\n";
-            header += string.Join(" + ", chosenTarget.Select(target => target.name));
+            header = AutoTranslate.Confirm_Target_One(Translator.inst.Translate(chosenAbility.data.abilityName), 
+                Translator.inst.Translate(chosenTarget[0].name));
+        }
+        else if (chosenTarget.Count == 2)
+        {
+            header = AutoTranslate.Confirm_Target_Two(Translator.inst.Translate(chosenAbility.data.abilityName), 
+                Translator.inst.Translate(chosenTarget[0].name), Translator.inst.Translate(chosenTarget[1].name));            
         }
         if (PlayerPrefs.GetInt("Confirm Choices") == 1)
         {
@@ -82,10 +87,12 @@ public class PlayerCharacter : Character
             bool waiting = true;
             void Done()
             {
+                AudioManager.instance.Menu();
                 waiting = false;
             }
             void Repick()
             {
+                AudioManager.instance.Menu();
                 ClearAbility();
                 waiting = false;
             }
