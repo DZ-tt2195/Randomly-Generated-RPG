@@ -19,6 +19,7 @@ public class LoadScene : MonoBehaviour
 
     void NextScene()
     {
+        AudioManager.instance.Menu();
         ScreenOverlay.instance.UnloadObjects(SceneManager.GetActiveScene().name, scene, gameMode);
     }
 }

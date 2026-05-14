@@ -18,6 +18,7 @@ public class PlayerCharacter : Character
         MakeDecision.inst.SetAbilities(AutoTranslate.Choose_Ability(this.name), allAbilities, Picked);
         void Picked(Ability ability)
         {
+            AudioManager.instance.Menu();
             chosenAbility = ability;
         }
         while (chosenAbility == null)
@@ -82,10 +83,12 @@ public class PlayerCharacter : Character
             bool waiting = true;
             void Done()
             {
+                AudioManager.instance.Menu();
                 waiting = false;
             }
             void Repick()
             {
+                AudioManager.instance.Menu();
                 ClearAbility();
                 waiting = false;
             }

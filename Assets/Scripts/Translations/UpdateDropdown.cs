@@ -27,6 +27,7 @@ public class UpdateDropdown : MonoBehaviour
 
         void ChangeDropdown(int n)
         {
+            AudioManager.instance.Menu();
             updateText.text = KeywordTooltip.instance.EditText(Translator.inst.Translate($"Update_{dropdown.value}_Text"));
         }
         this.gameObject.SetActive(dropdown.options.Count >= 1);

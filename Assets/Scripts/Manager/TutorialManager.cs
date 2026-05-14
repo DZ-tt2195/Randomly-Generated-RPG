@@ -71,6 +71,7 @@ public class TutorialManager : MonoBehaviour
             MakeDecision.inst.SetTextButtons(nextString, new() {new(AutoTranslate.Next(), Done)});
             void Done()
             {
+                AudioManager.instance.Menu();
                 waiting = false;
             }
             while (waiting)

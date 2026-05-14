@@ -96,16 +96,19 @@ public class TitleScreen : MonoBehaviour
 
     public void StoryMenu()
     {
+        AudioManager.instance.Menu();
         storyObject.SetActive(!storyObject.activeSelf);
     }
 
     public void SpecialThanksMenu()
     {
+        AudioManager.instance.Menu();
         specialThanksObject.SetActive(!specialThanksObject.activeSelf);
     }
 
     public void SoundCreditsMenu()
     {
+        AudioManager.instance.Menu();
         soundCreditsObject.SetActive(!soundCreditsObject.activeSelf);
     }
 

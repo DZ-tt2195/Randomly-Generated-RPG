@@ -36,6 +36,8 @@ public class TurnManager : MonoBehaviour
         [SerializeField] PointsVisual pointsVisual;
         [SerializeField] List<WaveSetup> listOfWaveSetup = new();
         [SerializeField] [Scene] string titleScreen;
+        [SerializeField] AudioClip waveSound;
+        [SerializeField] AudioClip loseSound;
  
     [Foldout("Other UI", true)]
         Queue<PointsVisual> visualStorage = new();
@@ -45,6 +47,7 @@ public class TurnManager : MonoBehaviour
         [SerializeField] TMP_Text waveText;
         [SerializeField] TMP_Text roundText;
         [SerializeField] Button quitButton;
+        [SerializeField] TMP_Text quit;
 
     [Foldout("Character lists", true)]
         [ReadOnly] public System.Random dailyRNG;
@@ -62,8 +65,6 @@ public class TurnManager : MonoBehaviour
         Character _targetedEnemy;
         [ReadOnly] public Character targetedEnemy { get { return _targetedEnemy; } set { ResetTargetedEnemy(value); } }
         Stopwatch gameTimer;
-    [Foldout("Translate", true)]
-        [SerializeField] TMP_Text quit;
 
     private void Awake()
     {
@@ -112,6 +113,7 @@ public class TurnManager : MonoBehaviour
 
         if (currentWave > listOfWaveSetup.Count)
         {
+            AudioManager.instance.PlaySound(waveSound, 0.3f);
             GameFinished(AutoTranslate.Game_Won(), true);
         }
         else if (ScreenOverlay.instance.mode == GameMode.Tutorial)
@@ -200,6 +202,7 @@ public class TurnManager : MonoBehaviour
 
             if (CheckLost())
             {
+                AudioManager.instance.PlaySound(loseSound, 0.3f);
                 GameFinished(AutoTranslate.Game_Lost(), false);
                 yield break;
             }
@@ -241,6 +244,7 @@ public class TurnManager : MonoBehaviour
 
         currentRound++;
         roundText.text = AutoTranslate.Round(currentRound.ToString());
+        AudioManager.instance.PlaySound(waveSound, 0.3f);
         if (increaseWave)
         {
             currentWave++;

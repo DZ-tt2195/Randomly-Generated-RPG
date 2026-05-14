@@ -3,7 +3,7 @@ Knight	Battle_Cry	A Player becomes Focused and gains $DefNum$ Defense.	OnePlayer
 Knight	Cheer	Another Player becomes Lively and gets $StatusNum$ Extra Ability.	OtherPlayer	None	TargetBecomeLively/TargetGetExtraAbility	1					1		MoodPlayer
 Knight	Daze	An Enemy at the same Position becomes Lively and loses $DefNum$ Defense.	OneEnemy	TargetSamePosition	TargetBecomeLively/TargetLoseDefense	1				1			MoodEnemy/StatEnemy
 Knight	Debilitate	An Enemy becomes Tired and loses $DefNum$ Defense.	OneEnemy	None	TargetBecomeTired/TargetLoseDefense	1				1			MoodEnemy/StatEnemy
-Knight	Duel	Deal $MainNum$ damage to an Enemy at the same Position. They gain 1 Power and lose 1 Defense.	OneEnemy	TargetSamePosition	TargetAttack/TargetGainPower/TargetLoseDefense	0	3		1	1			Attack/StatEnemy
+Knight	Duel	Deal $MainNum$ damage to an Enemy at the same Position. They gain $PowerStat$ Power and lose $DefenseStat$ Defense.	OneEnemy	TargetSamePosition	TargetAttack/TargetGainPower/TargetLoseDefense	0	3		1	1			Attack/StatEnemy
 Knight	Force	Deal $MainNum$ damage to an Enemy at the same Position. Their active Ability Cooldown are decreased by $MiscNum$.	OneEnemy	TargetSamePosition	TargetAttack/TargetDecreaseAllCooldown	0	4					1	Attack
 Knight	Heavy_Sword	This becomes Tired. Then deal $MainNum$ damage to an Enemy at the same Position.	Self-OneEnemy	None-TargetSamePosition	TargetBecomeTired-TargetAttack	1	5						Attack/MoodPlayer
 Knight	Immobilize	Deal $MainNum$ damage to an Enemy at the same Position. They become Locked for this Round.	OneEnemy	TargetSamePosition	TargetAttack/TargetBecomeLocked	0	3					1	Attack
@@ -15,8 +15,8 @@ Knight	Motivate	An Enemy at the same Position becomes Lively. Then deal $MainNum
 Knight	Occupy	An Enemy at the same Position becomes Focused. Then deal $MainNum$ damage to them.	OneEnemy	TargetSamePosition	TargetBecomeFocused/TargetAttack	1	5						Attack/MoodEnemy
 Knight	Overwhelm	An Enemy at the same Position becomes Tired. Then deal $MainNum$ damage to them.	OneEnemy	TargetSamePosition	TargetBecomeTired/TargetAttack	1	5						Attack/MoodEnemy
 Knight	Pillage	An Enemy becomes Focused. All Players gain $DefNum$ Defense.	OneEnemy-AllPlayers	None-None	TargetBecomeFocused-TargetGainDefense	2				1			MoodEnemy/StatPlayer
-Knight	Prioritize	Deal $MainNum$ damage to an Enemy at the same Position. They become Targeted during this and next Round.	OneEnemy	TargetSamePosition	TargetAttack/TargetBecomeTargeted	0	3				2		Attack
-Knight	Redirect	Another Player gains $DefNum$ Defense and becomes Targeted during this and next Round.	OtherPlayer	None	TargetGainDefense/TargetBecomeTargeted	1				1	2		StatPlayer
+Knight	Prioritize	Deal $MainNum$ damage to an Enemy at the same Position. They become Targeted for $StatusNum$ Round.	OneEnemy	TargetSamePosition	TargetAttack/TargetBecomeTargeted	0	3				2		Attack
+Knight	Redirect	Another Player gains $DefNum$ Defense and becomes Targeted for $StatusNum$ Round.	OtherPlayer	None	TargetGainDefense/TargetBecomeTargeted	1				1	2		StatPlayer
 Knight	Strike	This gains $DefNum$ Defense. Then deal $MainNum$ damage to an Enemy at the same Position.	Self-OneEnemy	None-TargetSamePosition	TargetGainDefense-TargetAttack	2	4			1			Attack/StatPlayer
 Knight	Take_Over	This becomes Focused, and another Player becomes Tired.	Self-OtherPlayer	None-None	TargetBecomeFocused-TargetBecomeTired	1							MoodPlayer
 Knight	Twirl	This becomes Lively. Then deal $MainNum$ damage to an Enemy at the same Position.	Self-OneEnemy	None-TargetSamePosition	TargetBecomeLively-TargetAttack	1	5						Attack/MoodPlayer
@@ -28,12 +28,12 @@ Angel	Exhaust	An Enemy becomes Tired and loses $PowNum$ Power.	OneEnemy	None	Tar
 Angel	Exorcism	An Elevated Enemy loses $DefNum$ Defense. Each Elevated Player gains $MainNum$ Health.	OneEnemy-AllPlayers	TargetIsElevated-TargetIsElevated	TargetLoseDefense-TargetHeal	1	3			1			Healing/StatEnemy
 Angel	Gift_of_Flight	A Grounded Enemy becomes Lively and Elevated.	OneEnemy	TargetIsGrounded	TargetBecomeElevated/TargetBecomeLively	1							MoodEnemy/PositionEnemy
 Angel	Hide	A Grounded Enemy loses $PowNum$ Power. Each Grounded Player gains $MainNum$ Health.	OneEnemy-AllPlayers	TargetIsGrounded-TargetIsGrounded	TargetLosePower-TargetHeal	1	3		1				Healing/StatEnemy
-Angel	Immunity	A Player gains $MainNum$ Health and becomes Protected during this Round.	OnePlayer	None	TargetHeal/TargetBecomeProtected	2	3				1		Healing
+Angel	Immunity	A Player gains $MainNum$ Health and becomes Protected for $StatusNum$ Round.	OnePlayer	None	TargetHeal/TargetBecomeProtected	2	3				1		Healing
 Angel	Joy	A Grounded Player gains $MainNum$ Health and becomes Lively.	OnePlayer	TargetIsGrounded	TargetHeal/TargetBecomeLively	1	5						Healing/MoodPlayer
 Angel	Lift_Up	A Grounded Player gains $MainNum$ Health and becomes Elevated.	OnePlayer	TargetIsGrounded	TargetHeal/TargetBecomeElevated	0	3						Healing/PositionPlayer
 Angel	Overheal	All Players gain $MiscNum$ Max Health and $MainNum$ Health.	AllPlayers	None	TargetMaxHealth/TargetHeal	2	2					1	Healing
 Angel	Plummet	An Elevated Enemy becomes Focused and Grounded.	OneEnemy	TargetIsElevated	TargetBecomeGrounded/TargetBecomeFocused	1							MoodEnemy/PositionEnemy
-Angel	Preserve	A Player gains $MainNum$ Health and becomes Locked during this Round.	OnePlayer	None	TargetHeal/TargetBecomeLocked	1	5				1		Healing
+Angel	Preserve	A Player gains $MainNum$ Health and becomes Locked for $StatusNum$ Round.	OnePlayer	None	TargetHeal/TargetBecomeLocked	1	5				1		Healing
 Angel	Restore	Each Player with $MiscNum$ Health or less gains $MainNum$ Health.	AllPlayers	TargetHealthOrLess	TargetHeal	1	3					5	Healing
 Angel	Retreat	An Elevated Player becomes Tired and Grounded.	OnePlayer	TargetIsElevated	TargetBecomeGrounded/TargetBecomeTired	1							MoodPlayer/PositionPlayer
 Angel	Security	A Player switches Positions and gains $DefNum$ Defense.	OnePlayer	None	TargetSwitchPosition/TargetGainDefense	1				1			PositionPlayer/StatPlayer
@@ -41,7 +41,7 @@ Angel	Soft_Landing	An Elevated Player gains $MainNum$ Health and becomes Grounde
 Angel	Tailwinds	Each Elevated Player gains $MainNum$ Health and $PowNum$ Power.	AllPlayers	TargetIsElevated	TargetHeal/TargetGainPower	1	3		1				Healing/StatPlayer
 Angel	Team_Up	Each Grounded Player gains $MainNum$ Health and $DefNum$ Defense.	AllPlayers	TargetIsGrounded	TargetHeal/TargetGainDefense	1	3			1			Healing/StatPlayer
 Angel	Transport	A Player gains $MainNum$ Health. An Enemy switches Positions.	OnePlayer-OneEnemy	None-None	TargetHeal-TargetSwitchPosition	0	3						Healing/PositionEnemy
-Wizard	Above_Danger	A Grounded Player becomes Elevated and Protected during this round.	OnePlayer	TargetIsGrounded	TargetBecomeElevated/TargetBecomeProtected	1					1		PositionPlayer
+Wizard	Above_Danger	A Grounded Player becomes Elevated and Protected for $StatusNum$ Rounds.	OnePlayer	TargetIsGrounded	TargetBecomeElevated/TargetBecomeProtected	1					2		PositionPlayer
 Wizard	Accelerate	Another Player gains $PowNum$ Power. Decrease their active Cooldown by $MiscNum$.	OtherPlayer	None	TargetGainPower/TargetDecreaseAllCooldown	2			1			1	StatPlayer
 Wizard	Bad_Omens	Deal $MainNum$ damage to each Grounded Enemy. They each lose $PowNum$ Power.	AllEnemies	TargetIsGrounded	TargetAttack/TargetLosePower	1	2		1				Attack/StatEnemy
 Wizard	Bounce	Deal $MainNum$ damage to each Grounded Enemy. They each become Elevated.	AllEnemies	TargetIsGrounded	TargetAttack/TargetBecomeElevated	0	1						Attack/PositionEnemy
@@ -54,7 +54,7 @@ Wizard	Launch	A Grounded Enemy becomes Elevated and Stunned for $StatusNum$ turn
 Wizard	Manipulate_Time	Deal $MainNum$ damage to each Elevated Enemy. They each get $StatusNum$ Extra Ability.	AllEnemies	TargetIsElevated	TargetAttack/TargetGetExtraAbility	1	3				1		Attack
 Wizard	Overgrowth	Each Grounded Player gains $PowNum$ Power. Then deal $MainNum$ damage to each Grounded Enemy.	AllPlayers-AllEnemies	TargetIsGrounded-TargetIsGrounded	TargetGainPower-TargetAttack	2	2		1				Attack/StatPlayer
 Wizard	Punch_Up	Deal $MainNum$ damage to all Enemies with $MiscNum$ Health or more.	AllEnemies	TargetHealthOrMore	TargetAttack	0	2					5	Attack
-Wizard	Readjust	An Enemy switches Positions and becomes Locked during this and next Round.	OneEnemy	None	TargetSwitchPosition/TargetBecomeLocked	0					2		PositionEnemy
+Wizard	Readjust	An Enemy switches Positions and becomes Locked for $StatusNum$ Rounds.	OneEnemy	None	TargetSwitchPosition/TargetBecomeLocked	0					2		PositionEnemy
 Wizard	Shockwave	Deal $MainNum$ damage to all Enemies, and $SecNum$ damage to all Players.	AllEnemies-AllPlayers	None-None	TargetAttack-TargetAttackSec	0	2	1					Attack
 Wizard	Stalactites	Deal $MainNum$ damage to each Elevated Enemy. They each become Grounded.	AllEnemies	TargetIsElevated	TargetAttack/TargetBecomeGrounded	0	1						Attack/PositionEnemy
 Wizard	Strain	Deal $MainNum$ damage to each Grounded Enemy. Then this becomes Stunned for $StatusNum$ turn.	AllEnemies-Self	TargetIsGrounded-None	TargetAttack-TargetBecomeStunned	1	3				1		Attack

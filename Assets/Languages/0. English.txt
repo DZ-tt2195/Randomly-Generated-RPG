@@ -1,7 +1,7 @@
 Title	RANDOMLY GENERATED
 Blank	
 Author_Credit	by Thomas Tang (DZ)
-Last_Update	Last Updated: May 10, 2026
+Last_Update	Last Updated: May 14, 2026
 Language	Language
 Translator_Credit	Original Language
 Upload_Translation	Upload Translation
@@ -114,7 +114,7 @@ Tutorial	Tutorial
 Tutorial_10	This is a turn-based RPG where your Players are given random Abilities to fight against random Enemies.
 Tutorial_20	You always have the same 3 party members. Right click on the Knight to see what they do.
 Tutorial_30	Here's your first Enemy. Use the Knight's Ability against them.
-Tutorial_40	The Ability you used has 1 turn of cooldown (Cooldown), so you can't use it again this Round. Instead use a different Ability.
+Tutorial_40	The Ability you used has 1 turn of cooldown (Cooldown), and cannot be used this Round. Instead use a different Ability.
 Tutorial_50	You killed your first Enemy! Now you may have noticed your Knight is Focused.
 Tutorial_51	Everyone begins with a random Mood. Each Mood is effective against a different Mood.
 Tutorial_52	To see which Moods are effective against which, open the Mood Guide (usually it's at the bottom right of the screen).
@@ -194,7 +194,7 @@ Occupy	Occupy
 Occupy_Text	An Enemy at the same Position becomes Focused. Then deal $MainNum$ damage to them.
 Occupy_Log	$This$ occupies $Target$'s time.
 Redirect	Redirect
-Redirect_Text	Another Player gains $DefNum$ Defense and becomes Targeted during this and next Round.
+Redirect_Text	Another Player gains $DefNum$ Defense and becomes Targeted for $StatusNum$ Round.
 Redirect_Log	$This$ redirects attention to $Target$.
 Strike	Strike
 Strike_Text	This gains $DefNum$ Defense. Then deal $MainNum$ damage to an Enemy at the same Position.
@@ -215,10 +215,10 @@ Immobilize	Immobilize
 Immobilize_Text	Deal $MainNum$ damage to an Enemy at the same Position. They become Locked for this Round.
 Immobilize_Log	$This$ immobilizes $Target$.
 Duel	Duel
-Duel_Text	Deal $MainNum$ damage to an Enemy at the same Position. They gain 1 Power and lose 1 Defense.
+Duel_Text	Deal $MainNum$ damage to an Enemy at the same Position. They gain $PowerStat$ Power and lose $DefenseStat$ Defense.
 Duel_Log	$This$ duels with $Target$.
 Prioritize	Prioritize
-Prioritize_Text	Deal $MainNum$ damage to an Enemy at the same Position. They become Targeted during this and next Round.
+Prioritize_Text	Deal $MainNum$ damage to an Enemy at the same Position. They become Targeted for $StatusNum$ Round.
 Prioritize_Log	$This$ prioritizes defeating $Target$.
 Angel	Angel
 Angel_Text	Heals Players and starts Elevated. Can do everything but attack.
@@ -247,7 +247,7 @@ Hide	Hide
 Hide_Text	A Grounded Enemy loses $PowNum$ Power. Each Grounded Player gains $MainNum$ Health.
 Hide_Log	$This$ has players hide from $Target$.
 Immunity	Immunity
-Immunity_Text	A Player gains $MainNum$ Health and becomes Protected during this Round.
+Immunity_Text	A Player gains $MainNum$ Health and becomes Protected for $StatusNum$ Round.
 Immunity_Log	$This$ grants immunity to $Target$.
 Joy	Joy
 Joy_Text	A Grounded Player gains $MainNum$ Health and becomes Lively.
@@ -283,12 +283,12 @@ Restore	Restore
 Restore_Text	Each Player with $MiscNum$ Health or less gains $MainNum$ Health.
 Restore_Log	$This$ restores everyone's health.
 Preserve	Preserve
-Preserve_Text	A Player gains $MainNum$ Health and becomes Locked during this Round.
+Preserve_Text	A Player gains $MainNum$ Health and becomes Locked for $StatusNum$ Round.
 Preserve_Log	$This$ preserves $Target$.
 Wizard	Wizard
 Wizard_Text	Deals small amounts of damage to multiple Enemies at once. Has control over Positions and Power.
 Above_Danger	Above Danger
-Above_Danger_Text	A Grounded Player becomes Elevated and Protected during this round.
+Above_Danger_Text	A Grounded Player becomes Elevated and Protected for $StatusNum$ Rounds.
 Above_Danger_Log	$This$ moves $Target$ above danger.
 Bounce	Bounce
 Bounce_Text	Deal $MainNum$ damage to each Grounded Enemy. They each become Elevated.
@@ -336,7 +336,7 @@ Tornado	Tornado
 Tornado_Text	Each Elevated Player becomes Grounded. Deal $MainNum$ damage to each Elevated Enemy.
 Tornado_Log	$This$ summons a tornado.
 Readjust	Readjust
-Readjust_Text	An Enemy switches Positions and becomes Locked during this and next Round.
+Readjust_Text	An Enemy switches Positions and becomes Locked for $StatusNum$ Rounds.
 Readjust_Log	$This$ readjusts $Target$'s position.
 Divine_Wind	Divine Wind
 Divine_Wind_Text	Each Elevated Player gains $PowNum$ Power. Then deal $MainNum$ damage to each Elevated Enemy.
@@ -376,7 +376,7 @@ Fury	Fury
 Fury_Text	Deal $MainNum$ damage to the Player with the most Health.
 Fury_Log	$This$ unleashes its fury on $Target$.
 Trample	Trample
-Trample_Text	The Player with the most Health loses $PowNum$ Power and becomes Targeted during this and next round.
+Trample_Text	The Player with the most Health loses $PowNum$ Power and becomes Targeted for $StatusNum$ Rounds.
 Trample_Log	$This$ tramples over $Target$.
 Brawl	Brawl
 Brawl_Text	The Player with the most Health loses 2 Max Health.
@@ -401,13 +401,13 @@ Bloodthirst_Log	$This$ is thirsty.
 Bees	Bees
 Bees_Text	Helps other Elevated Enemies stay alive with status effects.
 Sting	Sting
-Sting_Text	Deal $MainNum$ damage to all Players. This becomes Targeted during this and next Round.
+Sting_Text	Deal $MainNum$ damage to all Players. This becomes Targeted for $StatusNum$ Rounds.
 Sting_Log	$This$ stings everyone.
 Honey	Honey
 Honey_Text	Another Elevated Enemy gains $MainNum$ Health.
 Honey_Log	$This$ gives $Target$ honey.
 Protect_the_Queen	Protect the Queen
-Protect_the_Queen_Text	Another Elevated Enemy becomes Protected during this and next Round.
+Protect_the_Queen_Text	Another Elevated Enemy becomes Protected for $StatusNum$ Rounds.
 Protect_the_Queen_Log	$This$ protects $Target$.
 Support	Support
 Support_Text	Another Elevated Enemy gets $StatusNum$ Extra Ability.
@@ -424,7 +424,7 @@ Graze	Graze
 Graze_Text	This gains $MainNum$ Max Health and $MainNum$ Health.
 Graze_Log	$This$ grazes.
 Bellow	Bellow
-Bellow_Text	This gains $DefNum$ Defense and becomes Targeted during this and next Round.
+Bellow_Text	This gains $DefNum$ Defense and becomes Targeted for $StatusNum$ Rounds.
 Bellow_Log	$This$ bellows.
 Crow	Crow
 Crow_Text	Basic Enemy who attacks Grounded and Elevated Players.
@@ -465,7 +465,7 @@ Sound_Waves	Sound Waves
 Sound_Waves_Text	Deal $MainNum$ damage to all Players.
 Sound_Waves_Log	$This$ creates sound waves.
 Alarm	Alarm
-Alarm_Text	This gains $PowNum$ Power and becomes Elevated and Locked during this and next Round.
+Alarm_Text	This gains $PowNum$ Power and becomes Elevated and Locked for $StatusNum$ Rounds.
 Alarm_Log	$This$ activates an alarm.
 Ghost	Ghost
 Ghost_Text	Makes Players change Positions, and then deals damage to all Players while Tired.
@@ -501,7 +501,7 @@ Land_Feet_First	Land Feet First
 Land_Feet_First_Text	If this is Elevated, it becomes Grounded and gains $MainNum$ Health.
 Land_Feet_First_Log	$This$ lands feet first.
 Lure	Lure
-Lure_Text	A Player switches Positions. This becomes Targeted during this and next Round.
+Lure_Text	A Player switches Positions. This becomes Targeted for $StatusNum$ Rounds.
 Lure_Log	$This$ lures $Target$.
 Leprechaun	Leprechaun
 Leprechaun_Text	If this is at full Health, it increases Player Stats; otherwise it deals lots of damage.
@@ -520,7 +520,7 @@ Smoke_Bomb	Smoke Bomb
 Smoke_Bomb_Text	This switches Positions. A Player becomes Focused.
 Smoke_Bomb_Log	$This$ uses a smoke bomb around $Target$.
 Into_Shadows	Into Shadows
-Into_Shadows_Text	If this is Elevated, it becomes Grounded and Protected during this and next Round.
+Into_Shadows_Text	If this is Elevated, it becomes Grounded and Protected for $StatusNum$ Rounds.
 Into_Shadows_Log	$This$ leaps into shadows.
 Wall_Climb	Wall Climb
 Wall_Climb_Text	If this is Grounded, it becomes Elevated and gains $DefNum$ Defense.
@@ -597,7 +597,7 @@ Strength_in_Numbers_Log	$This$ attracts more Rats.
 Royalty	Royalty
 Royalty_Text	Summons more 1 Star Enemies, and then gives them more Power and Max Health.
 Order	Order
-Order_Text	Deal $MainNum$ damage to a Player. They become Targeted during this and next Round.
+Order_Text	Deal $MainNum$ damage to a Player. They become Targeted for $StatusNum$ Rounds.
 Order_Log	$This$ orders guards to attack $Target$. 
 Promote	Promote
 Promote_Text	Another Enemy gains $MiscNum$ Max Health and $MainNum$ Health.
@@ -617,10 +617,10 @@ Shipwreck	Shipwreck
 Shipwreck_Text	A Focused Player loses $DefNum$ Defense and becomes Stunned for $StatusNum$ turns.
 Shipwreck_Log	$This$ causes $Target$ to shipwreck.
 Manipulate	Manipulate
-Manipulate_Text	A Player becomes Focused and Locked during this and next Round.
+Manipulate_Text	A Player becomes Focused and Locked for $StatusNum$ Rounds.
 Manipulate_Log	$This$ manipulates $Target$.
 Sing	Sing
-Sing_Text	A $MiscNum$ Star Enemy becomes Targeted during this and next Round.
+Sing_Text	A $MiscNum$ Star Enemy gains $DefenseNum$ Defense and becomes Targeted for $StatusNum$ Rounds.
 Sing_Log	$This$ sings a song.
 Spider	Spider
 Spider_Text	While this is Elevated, it'll make Players Elevated and Tired, and then lower their Defense.
@@ -628,7 +628,7 @@ Stab_Prey	Stab Prey
 Stab_Prey_Text	If this is Elevated, deal $MainNum$ damage to an Elevated Player.
 Stab_Prey_Log	$This$ stabs $Target$.
 Trapped	Trapped
-Trapped_Text	If this is Elevated, a Grounded Player becomes Elevated and Locked during this and next Round.
+Trapped_Text	If this is Elevated, a Grounded Player becomes Elevated and Locked for $StatusNum$ Rounds.
 Trapped_Log	$This$ traps $Target$.
 Silk_Wrap	Silk Wrap
 Silk_Wrap_Text	An Elevated Player becomes Tired and loses $PowNum$ Power.
@@ -656,13 +656,13 @@ Mischief	Mischief
 Mischief_Text	Deal $MainNum$ damage to a Grounded Player.
 Mischief_Log	$This$ causes mischief for $Target$.
 Delude	Delude
-Delude_Text	A Grounded Player becomes Lively and Locked during this and next Round.
+Delude_Text	A Grounded Player becomes Lively and Locked for $StatusNum$ Rounds.
 Delude_Log	$This$ deludes $Target$.
 Delay	Delay
-Delay_Text	A Grounded Player receives $MiscNum$ Cooldown on one of their available Abilities, at random.
+Delay_Text	A Grounded Player gets $MiscNum$ Cooldown added to one of their available Abilities.
 Delay_Log	$This$ delays $Target$ from using an ability.
 Sidetrack	Sidetrack
-Sidetrack_Text	A Grounded Player's active Ability Cooldown are increased by $MiscNum$.
+Sidetrack_Text	A Grounded Player gets $MiscNum$ Cooldown added to all of their inactive Abilities.
 Sidetrack_Log	$This$ sidetracks $Target$.
 Wall	Wall
 Wall_Text	Makes itself Targeted and increases its Defense.
@@ -670,7 +670,7 @@ Toughen	Toughen
 Toughen_Text	This gains $MainNum$ Health and gains $DefNum$ Defense.
 Toughen_Log	$This$ toughens up.
 In_the_Way	In the Way
-In_the_Way_Text	This becomes Grounded and Targeted during this and next round.
+In_the_Way_Text	This becomes Grounded and Targeted for $StatusNum$ Rounds.
 In_the_Way_Log	$This$ is in the way.
 Wolf	Wolf
 Wolf_Text	Makes itself Lively and goes after Focused and Grounded Players. Also helps out any 1 Star Enemies.
@@ -684,7 +684,7 @@ Nurture	Nurture
 Nurture_Text	All $MiscNum$ Star Enemies gain $PowNum$ Power and $DefNum$ Defense.
 Nurture_Log	$This$ nurtures the young.
 Guard	Guard
-Guard_Text	A $MiscNum$ Star Enemy becomes Protected during this and next Round.
+Guard_Text	A $MiscNum$ Star Enemy becomes Protected for $StatusNum$ Rounds.
 Guard_Log	$This$ guards $Target$.
 Passion	Passion
 Passion_Text	When anyone becomes Focused, they gain 1 Power and 1 Defense.
@@ -726,5 +726,5 @@ Update_8	Mar 02, 2026
 Update_8_Text	Knight now hits Enemies at the same Position as it (not necessarily just Grounded) \nWave 1 is now 3 1-Star Enemies \nWave 2 is now 2 2-Star Enemies \nChanged some Rules and Wizard abilities
 Update_9	Mar 22, 2026
 Update_9_Text	Fixed a Ghost ability \nWeakened Knight's Immobilize
-Update_10	May 10, 2026
+Update_10	May 14, 2026
 Update_10_Text	Switched the moods Archer and Wolf care about \nHerald is Elevated \nChanged/renamed a few abilities \nAdded sound effects
