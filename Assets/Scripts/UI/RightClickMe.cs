@@ -29,9 +29,9 @@ public class RightClickMe : MonoBehaviour, IPointerClickHandler
         int power = character.CalculatePower();
         int defense = character.CalculateDefense();
 
-        statText += $"{character.currentHealth} / {character.data.baseHealth} {AutoTranslate.Health()}\n";
-        statText += (power >= 1) ? $"+{power} {AutoTranslate.Power()}," : $"{power} {AutoTranslate.Power()}, ";
-        statText += (defense >= 1) ? $"+{defense} {AutoTranslate.Defense()}\n" : $"{defense} {AutoTranslate.Defense()}\n";
+        statText += $"{character.currentHealth} / {character.data.baseHealth} {AutoTranslate.HealthIcon()}\n";
+        statText += (power >= 1) ? $"+{power} {AutoTranslate.PowerIcon()}," : $"{power} {AutoTranslate.PowerIcon()}, ";
+        statText += (defense >= 1) ? $"+{defense} {AutoTranslate.DefenseIcon()}\n" : $"{defense} {AutoTranslate.DefenseIcon()}\n";
         statText += $"{Translator.inst.Translate(character.data.startPosition.ToString())}";
 
         if (ScreenOverlay.instance != null)

@@ -57,10 +57,10 @@ public class EncyclopediaManager : MonoBehaviour
         type1.text = AutoTranslate.Type_1();
         type2.text = AutoTranslate.Type_2();
         player.text = AutoTranslate.Player();
-        cooldown.text = KeywordTooltip.instance.EditText(AutoTranslate.Cooldown());
+        cooldown.text = KeywordTooltip.instance.EditText(AutoTranslate.CooldownIcon());
         rightClick.text = AutoTranslate.Right_Click_Reminder();
         searchEnemies.text = AutoTranslate.Search_Enemies();
-        stars.text = KeywordTooltip.instance.EditText(AutoTranslate.Star());
+        stars.text = KeywordTooltip.instance.EditText(AutoTranslate.StarIcon());
         position.text = AutoTranslate.Default_Position();
         rules.text = AutoTranslate.Rules();        
     }
@@ -127,7 +127,7 @@ public class EncyclopediaManager : MonoBehaviour
             }
         }
 
-        foreach (RulesData data in GameFiles.inst.FinishedRules())
+        foreach (RulesData data in GameFiles.inst.AllRules())
         {
             RulesText nextText = Instantiate(rulesPrefab);
             nextText.AssignRule(data.rulesName);

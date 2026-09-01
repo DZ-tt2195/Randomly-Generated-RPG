@@ -1,11 +1,11 @@
-rulesName	rulesDescription	completed
-Bloodied	If someone is at 6 Health or more, their Abilities have 1 more Cooldown; otherwise 1 less Cooldown.	TRUE
-Charge_Up	Each Wave: A random Enemy gains 5 Max Health, 5 Health, 2 Power, 2 Defense, and becomes Stunned for 3 turns.	TRUE
-Comfort_Zone	Anyone who's at their starting Position has +1 Defense; otherwise -1 Defense.	TRUE
-Crowds	Waves 1-4: Add another 1 Star Enemy at random, and all Enemies lose 1 Max Health.	TRUE
-Inspiration	Waves 2-5: Players get a new set of random Abilities.	TRUE
-Lucky	When anyone becomes Lively, they get 1 Extra Ability.	TRUE
-Passion	When anyone becomes Focused, they gain 1 Power and 1 Defense.	TRUE
-Preparation	After anyone uses an Attack or Healing Ability, they lose 1 Power; otherwise they gain 1 Power.	TRUE
-Rest	When anyone becomes Tired, they gain 2 Health.	TRUE
-Topsy_Turvy	Each Round: all Players switch Positions.	TRUE
+rulesName	rulesDescription
+Bloodied	If someone is at 6 HealthIcon or more, their Abilities have 1 more CooldownIcon; otherwise 1 less CooldownIcon.
+Charge_Up	Each Wave: A random Enemy gains 5 Max HealthIcon, 5 HealthIcon, 2 PowerIcon, 2 DefenseIcon, and becomes Stunned for 3 turns.
+Comfort_Zone	Anyone who's at their starting Position has +1 DefenseIcon; otherwise -1 DefenseIcon.
+Crowds	Waves 1-4: Add another 1 StarIcon Enemy at random, and all Enemies lose 1 Max HealthIcon.
+Inspiration	Waves 2-5: Players get a new set of random Abilities.
+Lucky	When anyone becomes Lively, they get 1 Extra Ability.
+Passion	When anyone becomes Focused, they gain 1 PowerIcon and 1 DefenseIcon.
+Preparation	After anyone uses an Attack or Healing Ability, they lose 1 PowerIcon; otherwise they gain 1 PowerIcon.
+Rest	When anyone becomes Tired, they gain 2 HealthIcon.
+Topsy_Turvy	Each Round: all Players switch Positions.

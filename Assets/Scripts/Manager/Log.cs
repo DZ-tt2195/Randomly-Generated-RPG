@@ -19,37 +19,6 @@ public class Log : MonoBehaviour
         scroll = this.transform.GetChild(1).GetComponent<Scrollbar>();
         instance = this;
     }
-
-    public static string AbilityLogged(Ability ability, Character user, Character target)
-    {
-        try
-        {
-            MethodInfo method = typeof(AutoTranslate).GetMethod($"{ability.data.abilityName}_Log", BindingFlags.Static | BindingFlags.Public);
-            ParameterInfo[] parameters = method.GetParameters();
-            object[] args = new object[parameters.Length];
-
-            for (int i = 0; i<parameters.Length; i++)
-            {
-                switch (parameters[i].Name)
-                {
-                    case "This":
-                        args[i] = user.name; 
-                        break;
-                    case "Target":
-                        args[i] = (target == null) ? "" : target.name; 
-                        break;
-                }
-            }
-
-            object result = method.Invoke(null, args);
-            return (string)result;
-        }
-        catch
-        {
-            return Translator.inst.Translate($"{ability.data.abilityName}_Log");
-        }
-    }
-
     public void AddText(string logText, int indent = 0)
     {
         if (indent < 0)
@@ -65,7 +34,6 @@ public class Log : MonoBehaviour
             Invoke(nameof(ScrollDown), 0.1f);
         LayoutRebuilder.ForceRebuildLayoutImmediate(allText.rectTransform);
     }
-
     void ScrollDown()
     {
         scroll.value = 0;

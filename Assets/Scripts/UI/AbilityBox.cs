@@ -9,6 +9,7 @@ using System;
 public class AbilityBox : MonoBehaviour
 {
     public Button button;
+    public Toggle toggle;
     public Ability ability { get; private set; }
     [SerializeField] Image image;
     [SerializeField] TMP_Text textName;
@@ -33,7 +34,6 @@ public class AbilityBox : MonoBehaviour
             hover.enabled = false;
             hover.background.gameObject.SetActive(false);
         }
-
         else
         {
             textName.text = Translator.inst.Translate(ability.data.abilityName) ;

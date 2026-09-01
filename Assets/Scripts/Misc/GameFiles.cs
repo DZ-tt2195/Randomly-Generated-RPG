@@ -40,10 +40,10 @@ public class AbilityData
 public class RulesData
 {
     public string rulesName;
-    public bool completed;
 }
 public class GameFiles : MonoBehaviour
 {
+#region Setup
     public static GameFiles inst;
     [SerializeField] List<Sprite> allArt = new(); Dictionary<string, Sprite> artDictionary = new();
     [SerializeField] TextAsset playerAbilities; public Dictionary<string, AbilityData> listOfPlayerAbilities {get; private set;}
@@ -178,6 +178,8 @@ public class GameFiles : MonoBehaviour
 
     }
 
+#endregion
+
 #region File Search
 
     public CharacterData RandomEnemy(int difficulty, System.Random dailyRNG)
@@ -214,11 +216,10 @@ public class GameFiles : MonoBehaviour
     public AbilityData FindPlayerAbility(string target) => listOfPlayerAbilities[target];
     public AbilityData FindEnemyAbility(string target) => listOfEnemyAbilities[target];
     public CharacterData FindSpecificEnemy(string target, int difficulty) => listOfEnemies[difficulty][target];
-    public List<AbilityData> CompletePlayerAbilities(List<AbilityData> forced, List<AbilityData> toChooseFrom, System.Random dailyRNG)
+    public HashSet<AbilityData> CompletePlayerAbilities(List<AbilityData> toChooseFrom, System.Random dailyRNG)
     {
         string playerName = toChooseFrom[0].controller;
-        List<AbilityData> newList = new();
-        newList.AddRange(forced);
+        HashSet<AbilityData> newList = new();
 
         List<string> toFillOut = new();
         if (playerName.Equals(AutoTranslate.Knight()))
@@ -228,8 +229,18 @@ public class GameFiles : MonoBehaviour
         else if (playerName.Equals(AutoTranslate.Wizard()))
             toFillOut = new() { "Attack", "Attack", "Attack", "Position", "Stats", "Position" };
 
-        foreach (AbilityData data in forced)
-            CheckOff(data);
+        if (dailyRNG == null)
+        {
+            for (int i = 0; i<Character.maxAbilities; i++)
+            {
+                int savedNumber = PrefManager.GetSaved(playerName, i);
+                if (savedNumber != -1)
+                {
+                    newList.Add(toChooseFrom[i]);
+                    CheckOff(toChooseFrom[i]);
+                }
+            }
+        }
 
         bool CheckOff(AbilityData ability)
         {
@@ -267,23 +278,38 @@ public class GameFiles : MonoBehaviour
             int randomNumber = (dailyRNG != null) ? dailyRNG.Next(0, toChooseFrom.Count) : UnityEngine.Random.Range(0, toChooseFrom.Count);
             AbilityData randomAbility = toChooseFrom[randomNumber];
 
-            if (newList.Contains(randomAbility) || !randomAbility.controller.Equals(playerName))
-                continue;
-
             if (toFillOut.Count == 0 || CheckOff(randomAbility))
                 newList.Add(randomAbility);
         }
         return newList;
     }
-    public List<RulesData> FinishedRules()
+    public List<RulesData> AllRules()
     {
         List<RulesData> toReturn = new();
         foreach (var KVP in listOfRules)
-        {
-            if (KVP.Value.completed)
-                toReturn.Add(KVP.Value);
-        }
+            toReturn.Add(KVP.Value);
         return toReturn;
+    }
+    public HashSet<RulesData> SavedRules(System.Random dailyRNG)
+    {
+        List<RulesData> allRules = AllRules();
+        HashSet<RulesData> chosenRules = new();
+
+        if (dailyRNG == null)
+        {
+            for (int i = 0; i<FightRules.MaxRules; i++)
+            {
+                int savedNumber = PrefManager.GetSaved("Rules", i);
+                if (savedNumber != -1)
+                    chosenRules.Add(allRules[i]);
+            }
+        }
+        while (chosenRules.Count < FightRules.MaxRules)
+        {
+            int randomNumber = (dailyRNG != null) ? dailyRNG.Next(0, allRules.Count) : UnityEngine.Random.Range(0, allRules.Count);
+            chosenRules.Add(allRules[randomNumber]);
+        }
+        return chosenRules;
     }
 
     #endregion
