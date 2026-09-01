@@ -91,12 +91,30 @@ public class TurnManager : MonoBehaviour
     }
     void Start()
     {
+        if (ScreenOverlay.instance.mode == GameMode.Tutorial)
+            return;
+
+        Log.instance.AddText(AutoTranslate.Defeat_Waves("5"));
         if (ScreenOverlay.instance.mode == GameMode.Daily)
         {
             DateTime day = DateTime.UtcNow.Date;
             Log.instance.AddText(Translator.inst.Translate(AutoTranslate.Daily_Challenge()), 0);
             Log.instance.AddText(AutoTranslate.Current_Date(Translator.inst.Translate($"Month_{day.Month}"), day.Day.ToString(), day.Year.ToString())); 
         }
+
+        int counter = 0;
+        foreach (var KVP in GameFiles.inst.listOfPlayers)
+        {
+            PlayerCharacter nextCharacter = Instantiate(characterPrefab).AddComponent<PlayerCharacter>();
+            HashSet<AbilityData> abilitiesForPlayer = GameFiles.inst.CompletePlayerAbilities(GameFiles.inst.ConvertToAbilityData(KVP.Value.listOfAbilities, true), dailyRNG);
+
+            nextCharacter.SetupCharacter(KVP.Value, abilitiesForPlayer.ToList(), Character.RandomMood(dailyRNG), counter, true);
+            AddPlayer(nextCharacter);
+            counter++;
+        }
+
+        Log.instance.AddText(AutoTranslate.Blank());
+        StartCoroutine(NewWave());
     }
 
     #endregion
@@ -133,7 +151,7 @@ public class TurnManager : MonoBehaviour
                     for (int i = player.listOfRandomAbilities.Count - 1; i >= 0; i--)
                         player.DropAbility(player.listOfRandomAbilities[i]);
 
-                    List<AbilityData> newAbilties = GameFiles.inst.CompletePlayerAbilities(new(), GameFiles.inst.ConvertToAbilityData(player.data.listOfAbilities, true), dailyRNG);
+                    HashSet<AbilityData> newAbilties = GameFiles.inst.CompletePlayerAbilities(GameFiles.inst.ConvertToAbilityData(player.data.listOfAbilities, true), dailyRNG);
                     foreach (AbilityData data in newAbilties)
                         player.AddAbility(data, false, false);
                 }

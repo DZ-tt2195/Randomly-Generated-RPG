@@ -60,7 +60,7 @@ public class EnemyCharacter : Character
 
     protected override IEnumerator ChooseTarget(Ability ability, TeamTarget target, int index)
     {
-        if (!ability.data.abilityName.Equals(nameof(AutoTranslate.Skip_Turn)))
+        if (!ability.data.abilityName.Equals(nameof(AutoTranslate.Wait)))
         {
             ability.listOfTargets[index] = ability.listOfTargets[index].Shuffle();
 

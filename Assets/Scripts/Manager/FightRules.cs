@@ -1,11 +1,13 @@
 using System.Collections.Generic;
 using System.Linq;
+using System.Collections;
 using TMPro;
 using UnityEngine;
 
 public class FightRules : MonoBehaviour
 {
     public static FightRules inst;
+    public static int MaxRules = 2;
     [SerializeField] GameObject visuals;
     [SerializeField] TMP_Text rules;
     HashSet<string> selectedRules = new();
@@ -15,32 +17,23 @@ public class FightRules : MonoBehaviour
     void Awake()
     {
         inst = this;
-        visuals.SetActive(false);
+        visuals.SetActive(ScreenOverlay.instance.mode != GameMode.Tutorial);
         rules.text = AutoTranslate.Rules();
     }
-
-    public void AssignedRules(HashSet<string> rules)
+    void Start()
     {
-        selectedRules = rules;
-        List<RulesData> allRules = GameFiles.inst.FinishedRules();
-        System.Random dailyRNG = TurnManager.inst.dailyRNG;
+        if (ScreenOverlay.instance.mode == GameMode.Tutorial)
+            return;
 
-        while (ScreenOverlay.instance.mode != GameMode.Tutorial && selectedRules.Count < totalRules)
+        List<RulesData> allRules = GameFiles.inst.SavedRules(TurnManager.inst.dailyRNG).ToList();
+        for (int i = 0; i<allRules.Count; i++)
         {
-            int randomNumber = (dailyRNG != null) ? dailyRNG.Next(0, allRules.Count) : UnityEngine.Random.Range(0, allRules.Count);
-            selectedRules.Add(allRules[randomNumber].rulesName);
+            selectedRules.Add(allRules[i].rulesName);
+            rulesOnScreen[i].AssignRule(allRules[i].rulesName);
+            Log.instance.AddText(AutoTranslate.Chosen_Rule(allRules[i].rulesName));            
         }
-
-        List<string> tempList = selectedRules.ToList();
-        for (int i = 0; i<tempList.Count; i++)
-        {            
-            rulesOnScreen[i].AssignRule(tempList[i]);
-            Log.instance.AddText(AutoTranslate.Chosen_Rule(tempList[i]));
-        }
-        visuals.SetActive(tempList.Count != 0);
         Log.instance.AddText(AutoTranslate.Blank());
     }
-
     public bool CheckRule(string rule, int logged)
     {
         if (selectedRules.Contains(rule))

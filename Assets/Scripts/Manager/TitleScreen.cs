@@ -19,15 +19,13 @@ public class TitleScreen : MonoBehaviour
     [SerializeField] GameObject specialThanksObject;
     [SerializeField] TMP_Text timeText;
     [SerializeField] GameObject soundCreditsObject;
+    [SerializeField] Button extrasButton;
+    [SerializeField] Transform allExtras;
 
     [Foldout("RNG", true)]
     [SerializeField] bool randomSeed;
     [SerializeField][ConditionalField(nameof(randomSeed), inverse: true)] int chosenSeed;
 
-    [Foldout("Cheats/Challenges", true)]
-    List<Toggle> listOfCheats = new();
-    List<Toggle> listOfChallenges = new();
-    
     [Foldout("Translate", true)]
     [SerializeField] TMP_Text gameName;
     [SerializeField] TMP_Text author;
@@ -75,6 +73,14 @@ public class TitleScreen : MonoBehaviour
 
         Character.borderColor = 0;
         TranslateScreen();
+
+        extrasButton.onClick.AddListener(EnableExtras);
+        extrasButton.transform.GetComponentInChildren<TMP_Text>().text = AutoTranslate.Extras();
+        void EnableExtras()
+        {
+            extrasButton.gameObject.SetActive(false);
+            allExtras.gameObject.SetActive(true);
+        }
     }
 
     private void Update()

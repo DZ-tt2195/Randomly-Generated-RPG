@@ -126,6 +126,7 @@ public class ScreenOverlay : MonoBehaviour
     {
         AudioManager.instance.mixer.SetFloat("Volume", (Mathf.Log10(volumeSlider.value) * 20));
         PlayerPrefs.SetFloat("Volume", volumeSlider.value);
+        PlayerPrefs.Save();
     }        
 
     #endregion
