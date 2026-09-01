@@ -68,6 +68,7 @@ public class Ability
         }
         catch
         {
+            Debug.Log($"{data.abilityName} failed to edit description");
             editedDescription = KeywordTooltip.instance.EditText(Translator.inst.Translate($"{data.abilityName}_Text"));
         }
 

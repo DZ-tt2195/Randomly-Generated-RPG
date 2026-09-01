@@ -145,7 +145,7 @@ public class TutorialManager : MonoBehaviour
             case 6: //introduce angel
                 TurnManager.inst.AddPlayer(angel); //add angel
                 angel.AddAbility(GameFiles.inst.FindPlayerAbility(nameof(AutoTranslate.Assist)), false, false);
-                angel.AddAbility(GameFiles.inst.FindPlayerAbility(nameof(AutoTranslate.Exhaust)), false, false);
+                angel.AddAbility(GameFiles.inst.FindPlayerAbility(nameof(AutoTranslate.Exhaustion)), false, false);
 
                 MakeDecision.inst.SetInstruction(AutoTranslate.Tutorial_60());
                 while (ScreenOverlay.instance.displayedScreen != CurrentScreen.Character)
@@ -220,7 +220,7 @@ public class TutorialManager : MonoBehaviour
             case 12: //finish off enemies
                 wizard.AddAbility(GameFiles.inst.FindPlayerAbility(nameof(AutoTranslate.Readjust)), false, false);
                 wizard.AddAbility(GameFiles.inst.FindPlayerAbility(nameof(AutoTranslate.Flood)), false, false);
-                wizard.AddAbility(GameFiles.inst.FindPlayerAbility(nameof(AutoTranslate.Shockwave)), false, false);
+                wizard.AddAbility(GameFiles.inst.FindPlayerAbility(nameof(AutoTranslate.Strain)), false, false);
 
                 yield return ClickThroughDialogue(new List<string>() { AutoTranslate.Tutorial_120(), AutoTranslate.Tutorial_121() });
 

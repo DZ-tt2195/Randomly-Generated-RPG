@@ -5,6 +5,9 @@ using UnityEngine;
 using TMPro;
 using System.Text.RegularExpressions;
 using MyBox;
+using UnityEngine.UI;
+using System.Text;
+using System.Linq;
 
 [Serializable]
 public class KeywordHover
@@ -14,7 +17,12 @@ public class KeywordHover
     [ReadOnly] public string description;
     public Color color = Color.white;
 }
-
+public class FoundMatch
+{
+    public int start;
+    public int length;
+    public string replacement;
+}
 public class KeywordTooltip : MonoBehaviour
 {
     public static KeywordTooltip instance;
@@ -32,7 +40,6 @@ public class KeywordTooltip : MonoBehaviour
         XCap = tooltipText.rectTransform.sizeDelta.x / 2f;
         Ydisplace = tooltipText.rectTransform.sizeDelta.y * 1.25f;
     }
-
     public void SwitchLanguage()
     {
         foreach (KeywordHover hover in linkedKeywords)
@@ -57,35 +64,64 @@ public class KeywordTooltip : MonoBehaviour
         foreach (KeywordHover hover in spriteKeywordStatuses)
             hover.description = EditText(hover.description);
     }
-
-    public string EditText(string text, bool status = false)
+    public string EditText(string textToEdit, bool status = false)
     {
-        if (text.Length == 0)
+        if (textToEdit.Length == 0)
             return "";
 
-        string answer = text;
+        string answer = textToEdit;
+        List<FoundMatch> matches = new();
         if (!status)
         {
             foreach (KeywordHover link in linkedKeywords)
-            {
-                answer = answer.Replace(link.translated, $"<link=\"{link.original}\"><u>" +
-                    $"<color=#{ColorUtility.ToHtmlStringRGB(link.color)}>{link.translated}<color=#FFFFFF></u></link>");
-            }
+                FindMatch(link.translated, $"<link=\"{link.original}\"><u><color=#{ColorUtility.ToHtmlStringRGB(link.color)}>{link.translated}<color=#FFFFFF></u></link>");
             foreach (KeywordHover link in spriteKeywords)
-            {
-                answer = answer.Replace(link.translated, $"<link=\"{link.original}\"><sprite=\"{link.original}\" name=\"{link.original}\"></link>");
-            }
+                FindMatch(link.translated, $"<link=\"{link.original}\"><sprite=\"{link.original}\" name=\"{link.original}\"></link>");
         }
         else
         {
             foreach (KeywordHover link in spriteKeywordStatuses)
-            {
-                answer = answer.Replace(link.original, $"<link=\"{link.original}\"><sprite=\"{link.original}\" name=\"{link.original}\"></link>");
-            }
+                FindMatch(link.original, $"<link=\"{link.original}\"><sprite=\"{link.original}\" name=\"{link.original}\"></link>");
         }
-        return answer;
-    }
+        void FindMatch(string search, string replacement)
+        {
+            string pattern = $@"(?<![\p{{L}}\p{{N}}]){Regex.Escape(search)}(?![\p{{L}}\p{{N}}])";
 
+            foreach (Match match in Regex.Matches(textToEdit, pattern))
+            {
+                matches.Add(new FoundMatch
+                {
+                    start = match.Index, length = match.Length,
+                    replacement = replacement
+                });
+            }            
+        }
+
+        matches = matches.OrderByDescending(x => x.length).ToList();
+
+        List<FoundMatch> accepted = new();
+        foreach (FoundMatch match in matches)
+        {
+            bool overlaps = accepted.Any(other =>
+                match.start < other.start + other.length &&
+                match.start + match.length > other.start
+            );
+            if (!overlaps)accepted.Add(match);
+        }
+        accepted = accepted.OrderBy(x => x.start).ToList();
+
+        StringBuilder result = new();
+        int position = 0;
+
+        foreach (FoundMatch match in accepted)
+        {
+            result.Append(textToEdit.Substring(position,match.start - position));
+            result.Append(match.replacement);
+            position = match.start + match.length;
+        }
+        result.Append(textToEdit.Substring(position));
+        return result.ToString();
+    }
     public KeywordHover SearchForKeyword(string target)
     {
         foreach (KeywordHover link in linkedKeywords)
@@ -106,12 +142,10 @@ public class KeywordTooltip : MonoBehaviour
         Debug.LogError($"{target} couldn't be found");
         return null;
     }
-
     private void Update()
     {
         tooltipText.transform.parent.gameObject.SetActive(false);
     }
-
     Vector3 CalculatePosition(Vector3 mousePosition)
     {
         return new Vector3
@@ -119,7 +153,6 @@ public class KeywordTooltip : MonoBehaviour
             mousePosition.y + (mousePosition.y > Ydisplace ? -0.5f : 0.5f) * Ydisplace,
             0);
     }
-
     public void ActivateTextBox(string target, Vector3 mousePosition)
     {
         this.transform.SetAsLastSibling();

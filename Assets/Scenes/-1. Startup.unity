@@ -1835,24 +1835,24 @@ MonoBehaviour:
     description: Can't be targeted by abilities that only affect Grounded targets.
     color: {r: 1, g: 0.25, b: 1, a: 0}
   spriteKeywords:
-  - original: Cooldown
+  - original: CooldownIcon
     translated: 
     description: 'Cooldown: Ability can''t be used again until enough turns have
       passed.'
     color: {r: 0, g: 0, b: 0, a: 0}
-  - original: Health
+  - original: HealthIcon
     translated: 
     description: 'Health: Amount of damage this can take before dying.'
     color: {r: 0, g: 0, b: 0, a: 0}
-  - original: Power
+  - original: PowerIcon
     translated: 
     description: Higher Power = Attack and healing abilities are stronger.
     color: {r: 0, g: 0, b: 0, a: 0}
-  - original: Defense
+  - original: DefenseIcon
     translated: 
     description: Higher Defense = Take less damage from opposing attacks.
     color: {r: 0, g: 0, b: 0, a: 0}
-  - original: Star
+  - original: StarIcon
     translated: 
     description: More Star = Stronger Enemy type.
     color: {r: 0, g: 0, b: 0, a: 0}
@@ -5232,7 +5232,7 @@ MonoBehaviour:
   MoodButton: {fileID: 1613006808}
   MoodBackground: {fileID: 556872815}
   transitionImage: {fileID: 372563724}
-  transitionTime: 0.25
+  transitionTime: 0.15
 --- !u!114 &1681304444
 MonoBehaviour:
   m_ObjectHideFlags: 0

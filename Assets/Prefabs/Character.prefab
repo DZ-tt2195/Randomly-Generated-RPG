@@ -218,7 +218,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 10/10<link="Health"><sprite="Health" name="Health"></link>
+  m_text: 10/10<link="HealthIcon"><sprite="HealthIcon" name="HealthIcon"></link>
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
   m_sharedMaterial: {fileID: -3852492252101762229, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
@@ -359,8 +359,8 @@ MonoBehaviour:
   m_text: '<link="Angry"><u><color=#FF8080>Angry<color=#FFFFFF></u></link>, <link="Grounded"><u><color=#FF9300>Grounded<color=#FFFFFF></u></link>
 
     +2
-    <link="Power"><sprite="Power" name="Power"> </link>-1 <link="Defense"><sprite="Defense"
-    name="Defense"></link>'
+    <link="PowerIcon"><sprite="PowerIcon" name="PowerIcon"> </link>-1 <link="DefenseIcon"><sprite="DefenseIcon"
+    name="DefenseIcon"></link>'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
   m_sharedMaterial: {fileID: -3852492252101762229, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
