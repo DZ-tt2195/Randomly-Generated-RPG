@@ -127,7 +127,7 @@ public class Character : MonoBehaviour
     public int CalculateDefense()
     {
         int bonus = 0;
-        if (FightRules.inst != null && FightRules.inst.CheckRule(nameof(AutoTranslate.Comfort_Zone), -1))
+        if (FightRules.inst != null && FightRules.inst.CheckRule(nameof(AutoTranslate.Comfort_Zone), -1) is RulesData comfortZone)
             bonus += (CurrentPosition == data.startPosition) ? 1 : -1;
         return _privStatMod[Stats.Defense] + bonus;
     }
@@ -316,16 +316,16 @@ public class Character : MonoBehaviour
                 AudioManager.instance.Change();
                 TurnManager.inst.CreateVisual(Translator.inst.Translate(newEmotion.ToString()), this.transform.localPosition);
 
-                if (newEmotion == Mood.Focused && FightRules.inst.CheckRule(nameof(AutoTranslate.Passion), logged))
+                if (newEmotion == Mood.Focused && FightRules.inst.CheckRule(nameof(AutoTranslate.Passion), logged) is RulesData passion)
                 {
                     yield return ChangeStat(Stats.Power, 1, logged+1);
                     yield return ChangeStat(Stats.Defense, 1, logged+1);
                 }
-                else if (newEmotion == Mood.Lively && FightRules.inst.CheckRule(nameof(AutoTranslate.Lucky), logged))
+                else if (newEmotion == Mood.Lively && FightRules.inst.CheckRule(nameof(AutoTranslate.Lucky), logged) is RulesData lucky)
                 {
                     yield return ChangeEffect(StatusEffect.Extra, 1, logged+1);
                 }
-                else if (newEmotion == Mood.Tired && FightRules.inst.CheckRule(nameof(AutoTranslate.Rest), logged))
+                else if (newEmotion == Mood.Tired && FightRules.inst.CheckRule(nameof(AutoTranslate.Rest), logged) is RulesData rest)
                 {
                     yield return ChangeHealth(2, logged+1);
                 }
@@ -462,7 +462,7 @@ public class Character : MonoBehaviour
         if (!chosenAbility.data.abilityName.Equals(nameof(AutoTranslate.Wait)))
         {
             int newCooldown = chosenAbility.data.baseCooldown;
-            if (FightRules.inst.CheckRule(nameof(AutoTranslate.Bloodied), logged))
+            if (FightRules.inst.CheckRule(nameof(AutoTranslate.Bloodied), logged) is RulesData bloodied)
                 newCooldown += (currentHealth >= 6) ? 1 : -1;
 
             if (newCooldown > 0)
@@ -472,7 +472,7 @@ public class Character : MonoBehaviour
                 Log.instance.AddText(answer, logged);
             }
         }
-        if (FightRules.inst.CheckRule(nameof(AutoTranslate.Preparation), logged))
+        if (FightRules.inst.CheckRule(nameof(AutoTranslate.Preparation), logged) is RulesData preparation)
         {
             if (chosenAbility.mainType == AbilityType.Attack || chosenAbility.mainType == AbilityType.Healing)
                 yield return ChangeStat(Stats.Power, -1, logged+1);

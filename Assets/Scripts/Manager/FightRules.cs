@@ -10,7 +10,7 @@ public class FightRules : MonoBehaviour
     public static int MaxRules = 2;
     [SerializeField] GameObject visuals;
     [SerializeField] TMP_Text rules;
-    HashSet<string> selectedRules = new();
+    HashSet<RulesData> selectedRules = new();
     public static int totalRules = 2;
     [SerializeField] List<RulesText> rulesOnScreen = new();
 
@@ -28,19 +28,22 @@ public class FightRules : MonoBehaviour
         List<RulesData> allRules = GameFiles.inst.SavedRules(TurnManager.inst.dailyRNG).ToList();
         for (int i = 0; i<allRules.Count; i++)
         {
-            selectedRules.Add(allRules[i].rulesName);
-            rulesOnScreen[i].AssignRule(allRules[i].rulesName);
-            Log.instance.AddText(AutoTranslate.Chosen_Rule(allRules[i].rulesName));            
+            selectedRules.Add(allRules[i]);
+            rulesOnScreen[i].AssignRule(allRules[i]);
+            Log.instance.AddText(AutoTranslate.Chosen_Rule(Translator.inst.Translate(allRules[i].rulesName)));            
         }
         Log.instance.AddText(AutoTranslate.Blank());
     }
-    public bool CheckRule(string rule, int logged)
+    public RulesData CheckRule(string rule, int logged)
     {
-        if (selectedRules.Contains(rule))
+        foreach (RulesData data in selectedRules)
         {
-            Log.instance.AddText(AutoTranslate.Apply_Rule(Translator.inst.Translate(rule)), logged);
-            return true;
+            if (data.rulesName.Equals(rule))
+            {
+                Log.instance.AddText(AutoTranslate.Apply_Rule(Translator.inst.Translate(rule)), logged);
+                return data;                
+            }
         }
-        return false;
+        return null;
     }
 }

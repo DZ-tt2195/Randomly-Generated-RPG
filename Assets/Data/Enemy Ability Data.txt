@@ -7,7 +7,7 @@ Archer	Cover	This becomes Focused and gains $DefNum$ DefenseIcon.	Self	None	Targ
 Archer	Aim_Up	This becomes Grounded, and a Grounded Player becomes Elevated.	Self-OnePlayer	None-TargetIsGrounded	TargetBecomeGrounded-TargetBecomeElevated	0							PositionPlayer/PositionEnemy
 Barbarian	Fury	Deal $MainNum$ damage to the Player with the most HealthIcon.	OnePlayer	None	TargetAttack	1	5						Attack
 Barbarian	Trample	The Player with the most HealthIcon loses $DefNum$ DefenseIcon and becomes Targeted for $StatusNum$ Rounds.	OnePlayer	None	TargetLoseDefense/TargetBecomeTargeted	0				1	2		StatPlayer
-Barbarian	Brawl	The Player with the most HealthIcon. loses 2 Max HealthIcon.	OnePlayer	None	TargetMaxHealth	1						-2	Attack
+Barbarian	Brawl	The Player with the most HealthIcon loses $MainNum$ Max HealthIcon.	OnePlayer	None	TargetLoseMaxHealth	1	2						Attack
 Barbarian	Frenzy	This becomes Focused and gains $PowNum$ PowerIcon.	Self	None	TargetBecomeFocused/TargetGainPower	1			1				MoodEnemy/StatEnemy
 Bat	Drain	Deal $MainNum$ damage to a Player. This gains $MainNum$ HealthIcon.	OnePlayer-Self	TargetEffective-None	TargetAttack-TargetHeal	1	2						Attack/Healing
 Bat	Screech	A Player becomes Lively and loses $DefNum$ DefenseIcon.	OnePlayer	None	TargetBecomeLively/TargetLoseDefense	1				1			MoodPlayer/StatPlayer
@@ -19,11 +19,11 @@ Bees	Swarm	Another Elevated Enemy becomes Protected for $StatusNum$ Rounds.	Othe
 Bees	Support	Another Elevated Enemy gets $StatusNum$ Extra Ability.	OtherEnemy	TargetIsElevated	TargetGetExtraAbility	1					1		Misc
 Cow	Charge	Deal $MainNum$ damage to the last Player who attacked this (if any).	OnePlayer	LastAttackerExists	TargetAttack	0	4						Attack
 Cow	Milk	Another Enemy gains $MainNum$ HealthIcon and becomes Lively.	OtherEnemy	TargetInjured	TargetHeal/TargetBecomeLively	1	4						Healing/MoodEnemy
-Cow	Graze	This gains $MainNum$ Max HealthIcon and $MainNum$ HealthIcon.	Self	None	TargetMaxHealth/TargetHeal	1	2					2	Healing
+Cow	Graze	This gains $MainNum$ Max HealthIcon and $MainNum$ HealthIcon.	Self	None	TargetGainMaxHealth/TargetHeal	1	2						Healing
 Cow	Bellow	This gains $DefNum$ DefenseIcon and becomes Targeted for $StatusNum$ Rounds.	Self	TargetDefenseOrLess/NoTargetedEnemy	TargetGainDefense/TargetBecomeTargeted	1				1	2		StatEnemy
 Crow	Peck	Deal $MainNum$ damage to any Player.	OnePlayer	None	TargetAttack	0	2						Attack
 Demon	Dark_Energy	Deal $MainNum$ damage to all Players.	AllPlayers	None	TargetAttack	4	6						Attack
-Demon	Betray	Deal $MainNum$ damage to another Enemy. This gains $MiscNum$ Max HealthIcon, $SecNum$ HealthIcon, and $PowNum$ PowerIcon.	OtherEnemy-Self	None-None	TargetAttack-TargetMaxHealth/TargetHealSec/TargetGainPower	1	2	3	1			3	Healing/StatEnemy
+Demon	Betray	Deal $SecNum$ damage to another Enemy. This gains $MainNum$ Max HealthIcon, $MainNum$ HealthIcon, and $PowNum$ PowerIcon.	OtherEnemy-Self	None-None	TargetAttackSec-TargetGainMaxHealth/TargetHealSec/TargetGainPower	1	3	2	1				Healing/StatEnemy
 Demon	Ritual	Another Enemy becomes Stunned for $StatusNum$ turn. This reduces their active Ability CooldownIcon by $MiscNum$.	OtherEnemy-Self	None-TargetActiveCooldown	TargetBecomeStunned-TargetDecreaseAllCooldown	1					1	1	Misc
 Demon	Absorb	All other Players and Enemies lose $PowNum$ PowerIcon.	AllPlayers-AllOtherEnemies	None-None	TargetLosePower-TargetLosePower	1			1				StatPlayer
 Dragon	Firebreath	If this is Elevated, deals $MainNum$ damage to all Players.	Self-AllPlayers	TargetIsElevated-None	None-TargetAttack	1	3						Attack
@@ -51,7 +51,7 @@ Ninja	Wall_Climb	If this is Grounded, it becomes Elevated and gains $PowNum$ Pow
 Page	Swing	Deal $MainNum$ damage to a Grounded Player.	OnePlayer	TargetIsGrounded	TargetAttack	0	2						Attack
 Partier	Fight	Deal $MainNum$ damage to a Grounded Player.	OnePlayer	TargetIsGrounded	TargetAttack	0	2						Attack
 Partier	Share_Drinks	All Enemies gain $MainNum$ HealthIcon.	AllEnemies	None	TargetHeal	1	2						Healing
-Partier	Share_Snacks	All Enemies gain $MiscNum$ Max HealthIcon.	AllEnemies	None	TargetMaxHealth	0						2	Misc
+Partier	Share_Snacks	All Enemies gain $MainNum$ Max HealthIcon.	AllEnemies	None	TargetGainMaxHealth	0	2						Misc
 Partier	Drinking_Game	All Enemies get a random Mood.	AllEnemies	None	TargetRandomMood	1							MoodEnemy
 Pixie	Will_o_Wisp	Deal $MainNum$ damage to an Elevated Player.	OnePlayer	TargetIsElevated/TargetEffective	TargetAttack	0	2						Attack
 Pixie	Agitate	All Player become Lively.	AllPlayers	None	TargetBecomeLively	1							MoodPlayer
@@ -61,14 +61,14 @@ Puppeteer	Collision	Deal $MainNum$ damage to all Elevated Players.	AllPlayers	Ta
 Puppeteer	Drop	Deal $MainNum$ damage to each Elevated Player. They each become Grounded.	AllPlayers	TargetIsElevated	TargetAttack/TargetBecomeGrounded	1	4						Attack/PositionPlayer
 Puppeteer	Dangle	All Grounded Players become Elevated and lose $PowNum$ PowerIcon.	AllPlayers	TargetIsGrounded	TargetBecomeElevated/TargetLosePower	1			1				PositionPlayer/StatPlayer
 Puppeteer	Control	Each other Elevated Enemy gets $StatusNum$ Extra Ability.	AllOtherEnemies	TargetIsElevated	TargetGetExtraAbility	2					1		Misc
-Puppy	Bite	Deal $MainNum$ damage to a Grounded Player with -1 DefenseIcon or less.	OnePlayer	TargetIsGrounded/TargetDefenseOrLess	TargetAttack	0	3					-1	Attack
+Puppy	Bite	Deal $MainNum$ damage to a Grounded Player with $MiscNum$ DefenseIcon or less.	OnePlayer	TargetIsGrounded/TargetDefenseOrLess	TargetAttack	0	3					-1	Attack
 Puppy	Leap	Deal $MainNum$ damage to an Elevated Player. They become Grounded.	OnePlayer	TargetIsElevated	TargetAttack/TargetBecomeGrounded	0	1						Attack/PositionPlayer
 Puppy	Bark	All Players lose $DefNum$ DefenseIcon.	AllPlayers	None	TargetLoseDefense	1				1			StatPlayer
 Puppy	Cuddle	A Player with $MiscNum$ DefenseIcon or more loses $DefNum$ DefenseIcon.	OnePlayer	TargetDefenseOrMore	TargetLoseDefense					2		1	StatPlayer
 Rats	Gnaw	Deal $MainNum$ damage to a Grounded Player. This gains $DefNum$ DefenseIcon.	OnePlayer-Self	TargetIsGrounded-None	TargetAttack-TargetGainDefense	0	1			1			Attack/StatEnemy
 Rats	Breed	Summon a Rats.	Self	CanSummon	TargetCopy	1							Misc
 Royalty	Order	Deal $MainNum$ damage to a Player. They become Targeted for $StatusNum$ Rounds.	OnePlayer	None	TargetAttack/TargetBecomeTargeted	0	2				2		Attack
-Royalty	Promote	Another Enemy gains $MiscNum$ Max Health and $MainNum$ Health.	OtherEnemy	None	TargetMaxHealth/TargetHeal	2	5					5	Healing
+Royalty	Promote	Another Enemy gains $MainNum$ Max Health and $MainNum$ Health.	OtherEnemy	None	TargetGainMaxHealth/TargetHeal	2	5						Healing
 Royalty	Call	Summon a random $MiscNum$ Star Enemy.	Self	CanSummon	SummonStar	1						1	Misc
 Royalty	Procession	All Enemies gain $PowNum$ PowerIcon.	AllEnemies	None	TargetGainPower	1			1				StatEnemy
 Siren	Drown	Deal $MainNum$ damage to a Stunned Player.	OnePlayer	TargetIsStunned	TargetAttack	0	3						Attack

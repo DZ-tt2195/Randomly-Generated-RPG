@@ -40,6 +40,12 @@ public class AbilityData
 public class RulesData
 {
     public string rulesName;
+    public int mainNumber;
+    public int secondNumber;
+    public int powerStat;
+    public int defenseStat;
+    public int statusNumber;
+    public int miscNumber;
 }
 public class GameFiles : MonoBehaviour
 {

@@ -62,7 +62,7 @@ Grounded_Text	Can't be targeted by abilities that only affect Elevated targets.
 Elevated	Elevated
 Elevated_Text	Can't be targeted by abilities that only affect Grounded targets.
 HealthIcon	HealthIcon
-HealthIcon_Text	Health: Amount of damage this can take before dying.
+HealthIcon_Text	HealthIcon: Amount of damage this can take before dying.
 Max_Health	Max HealthIcon
 PowerIcon	PowerIcon
 PowerIcon_Text	Higher PowerIcon = Stronger Attack and Healing Abilities.
@@ -228,7 +228,7 @@ Level_Up_Text	A Player gains $PowNum$ PowerIcon, $DefNum$ DefenseIcon, and becom
 Lift_Up	Lift Up
 Lift_Up_Text	A Grounded Player gains $MainNum$ HealthIcon and becomes Elevated.
 Overheal	Overheal
-Overheal_Text	All Players gain $MiscNum$ Max HealthIcon and $MainNum$ HealthIcon.
+Overheal_Text	All Players gain $MainNum$ Max HealthIcon and $SecNum$ HealthIcon.
 Plummet	Plummet
 Plummet_Text	An Elevated Enemy becomes Focused and Grounded.
 Preserve	Preserve
@@ -312,7 +312,7 @@ Fury_Text	Deal $MainNum$ damage to the Player with the most HealthIcon.
 Trample	Trample
 Trample_Text	The Player with the most HealthIcon loses $DefNum$ DefenseIcon and becomes Targeted for $StatusNum$ Rounds.
 Brawl	Brawl
-Brawl_Text	The Player with the most HealthIcon. loses 2 Max HealthIcon.
+Brawl_Text	The Player with the most HealthIcon loses $MainNum$ Max HealthIcon.
 Frenzy	Frenzy
 Frenzy_Text	This becomes Focused and gains $PowNum$ PowerIcon.
 Bat	Bat
@@ -354,7 +354,7 @@ Demon_Text	Weakens other Enemies to make itself stronger. Eventually it'll unlea
 Dark_Energy	Dark Energy
 Dark_Energy_Text	Deal $MainNum$ damage to all Players.
 Betray	Betray
-Betray_Text	Deal $MainNum$ damage to another Enemy. This gains $MiscNum$ Max HealthIcon, $SecNum$ HealthIcon, and $PowNum$ PowerIcon.
+Betray_Text	Deal $SecNum$ damage to another Enemy. This gains $MainNum$ Max HealthIcon, $MainNum$ HealthIcon, and $PowNum$ PowerIcon.
 Ritual	Ritual
 Ritual_Text	Another Enemy becomes Stunned for $StatusNum$ turn. This reduces their active Ability CooldownIcon by $MiscNum$.
 Absorb	Demand Energy
@@ -428,7 +428,7 @@ Fight_Text	Deal $MainNum$ damage to a Grounded Player.
 Share_Drinks	Share Drinks
 Share_Drinks_Text	All Enemies gain $MainNum$ HealthIcon.
 Share_Snacks	Share Snacks
-Share_Snacks_Text	All Enemies gain $MiscNum$ Max HealthIcon.
+Share_Snacks_Text	All Enemies gain $MainNum$ Max HealthIcon.
 Drinking_Game	Drinking Game
 Drinking_Game_Text	All Enemies get a random Mood.
 Pixie	Pixie
@@ -454,7 +454,7 @@ Control_Text	Each other Elevated Enemy gets $StatusNum$ Extra Ability.
 Puppy	PUPPY!!!
 Puppy_Text	Attacks Players after they're Grounded and their DefenseIcon has been reduced.
 Bite	Bite
-Bite_Text	Deal $MainNum$ damage to a Grounded Player with -1 DefenseIcon or less.
+Bite_Text	Deal $MainNum$ damage to a Grounded Player with $MiscNum$ DefenseIcon or less.
 Leap	Leap
 Leap_Text	Deal $MainNum$ damage to an Elevated Player. They become Grounded.
 Bark	Bark
@@ -472,7 +472,7 @@ Royalty_Text	Summons more 1 StarIcon Enemies, and then gives them more PowerIcon
 Order	Order
 Order_Text	Deal $MainNum$ damage to a Player. They become Targeted for $StatusNum$ Rounds.
 Promote	Promote
-Promote_Text	Another Enemy gains $MiscNum$ Max Health and $MainNum$ Health.
+Promote_Text	Another Enemy gains $MainNum$ Max Health and $MainNum$ Health.
 Call	Call
 Call_Text	Summon a random $MiscNum$ Star Enemy.
 Procession	Procession

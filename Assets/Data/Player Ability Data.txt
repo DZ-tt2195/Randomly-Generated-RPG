@@ -31,7 +31,7 @@ Angel	Immunity	Another Elevated Player gains $MainNum$ HealthIcon and becomes Pr
 Angel	Joy	A Grounded Player gains $MainNum$ HealthIcon and becomes Lively.	OnePlayer	TargetIsGrounded	TargetHeal/TargetBecomeLively	1	4						Healing/MoodPlayer
 Angel	Level_Up	A Player gains $PowNum$ PowerIcon, $DefNum$ DefenseIcon, and becomes Stunned for $StatusNum$ turn.	OnePlayer	None	TargetGainPower/TargetGainDefense/TargetBecomeStunned	1			1	1	1		StatPlayer
 Angel	Lift_Up	A Grounded Player gains $MainNum$ HealthIcon and becomes Elevated.	OnePlayer	TargetIsGrounded	TargetHeal/TargetBecomeElevated	0	3						Healing/PositionPlayer
-Angel	Overheal	All Players gain $MiscNum$ Max HealthIcon and $MainNum$ HealthIcon.	AllPlayers	None	TargetMaxHealth/TargetHeal	2	2					1	Healing
+Angel	Overheal	All Players gain $MainNum$ Max HealthIcon and $SecNum$ HealthIcon.	AllPlayers	None	TargetGainMaxHealth/TargetHealSec	2	1	2					Healing
 Angel	Plummet	An Elevated Enemy becomes Focused and Grounded.	OneEnemy	TargetIsElevated	TargetBecomeGrounded/TargetBecomeFocused	1							MoodEnemy/PositionEnemy
 Angel	Preserve	A Player gains $MainNum$ HealthIcon and becomes Locked for $StatusNum$ Round.	OnePlayer	None	TargetHeal/TargetBecomeLocked	0	3				1		Healing
 Angel	Restore	Each Player with $MiscNum$ HealthIcon or less gains $MainNum$ HealthIcon.	AllPlayers	TargetHealthOrLess	TargetHeal	0	2					5	Healing

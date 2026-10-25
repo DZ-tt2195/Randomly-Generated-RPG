@@ -144,7 +144,7 @@ public class TurnManager : MonoBehaviour
             yield return NewAnimation(true);
             Log.instance.AddText(AutoTranslate.Wave(currentWave.ToString(), listOfWaveSetup.Count.ToString()));
 
-            if (currentWave >= 2 && FightRules.inst.CheckRule(nameof(AutoTranslate.Inspiration), 0))
+            if (currentWave >= 2 && FightRules.inst.CheckRule(nameof(AutoTranslate.Inspiration), 0) is RulesData inspiration)
             {
                 foreach (Character player in listOfPlayers)
                 {
@@ -157,12 +157,12 @@ public class TurnManager : MonoBehaviour
                 }
                 Log.instance.AddText(AutoTranslate.Blank());
             }
-            if (currentWave < 5 && FightRules.inst.CheckRule(nameof(AutoTranslate.Crowds), 0))
+            if (currentWave < 5 && FightRules.inst.CheckRule(nameof(AutoTranslate.Crowds), 0) is RulesData crowds)
                 yield return CreateEnemy(GameFiles.inst.RandomEnemy(1, dailyRNG), Character.RandomMood(dailyRNG), 0);                
             foreach (int nextTier in listOfWaveSetup[currentWave - 1].enemyDifficultySpawn)
                 yield return CreateEnemy(GameFiles.inst.RandomEnemy(nextTier, dailyRNG), Character.RandomMood(dailyRNG), 0);
 
-            if (FightRules.inst.CheckRule(nameof(AutoTranslate.Charge_Up), 0))
+            if (FightRules.inst.CheckRule(nameof(AutoTranslate.Charge_Up), 0) is RulesData chargeUp)
             {
                 int randomNum = (dailyRNG != null) ? dailyRNG.Next(0, listOfEnemies.Count) : UnityEngine.Random.Range(0, listOfEnemies.Count);
                 Character randomEnemy = listOfEnemies[randomNum];
@@ -184,7 +184,7 @@ public class TurnManager : MonoBehaviour
         Log.instance.AddText(AutoTranslate.Round(currentRound.ToString()));
 
         speedQueue = AllCharacters();
-        bool topsyTurvy = FightRules.inst.CheckRule(nameof(AutoTranslate.Topsy_Turvy), 0);
+        RulesData topsyTurvy = FightRules.inst.CheckRule(nameof(AutoTranslate.Topsy_Turvy), 0);
         foreach (Character character in speedQueue)
         {
             if (character.StatEffectdict[StatusEffect.Protected] >= 1)
@@ -194,7 +194,7 @@ public class TurnManager : MonoBehaviour
             if (character.StatEffectdict[StatusEffect.Targeted] >= 1)
                 yield return character.ChangeEffect(StatusEffect.Targeted, -1, -1);
             
-            if (topsyTurvy && character is PlayerCharacter)
+            if (topsyTurvy != null && character is PlayerCharacter)
             {
                 if (character.CurrentPosition == Position.Grounded)
                     yield return character.ChangePosition(Position.Elevated, -1);
@@ -379,7 +379,7 @@ public class TurnManager : MonoBehaviour
             nextEnemy.name = Translator.inst.Translate(dataFile.characterName);
             Log.instance.AddText(AutoTranslate.Enter_Fight(nextEnemy.name), logged);
             nextEnemy.SetupCharacter(dataFile, GameFiles.inst.ConvertToAbilityData(dataFile.listOfAbilities, false), startingMood, listOfEnemies.Count, true);
-            if (currentWave < 5 && FightRules.inst.CheckRule(nameof(AutoTranslate.Crowds), -1))
+            if (currentWave < 5 && FightRules.inst.CheckRule(nameof(AutoTranslate.Crowds), -1) is RulesData crowds)
                 yield return nextEnemy.ChangeMaxHealth(-1, -1);
         }
     }

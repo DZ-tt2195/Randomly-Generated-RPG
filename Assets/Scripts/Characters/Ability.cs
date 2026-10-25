@@ -26,51 +26,18 @@ public class Ability
     bool runNextMethod;
     public Dictionary<string, MethodInfo> boolDictionary = new();
     public Dictionary<string, MethodInfo> enumeratorDictionary = new();
+
+    public static string TranslatedDescription(string name, int mainNum, int secNum, int powNum, int defNum, int statusNum, int miscNum)
+    {
+        string translated = Translator.inst.Translate($"{name}_Text", new List<(string, string)>() {("MainNum", $"{mainNum}"), ("SecNum", $"{secNum}"), ("PowNum", $"{powNum}"), ("DefNum", $"{defNum}"), ("StatusNum", $"{statusNum}"), ("MiscNum", $"{miscNum}")});
+        return KeywordTooltip.instance.EditText((string)translated);
+    }
     public Ability(Character self, AbilityData data, bool startWithCooldown)
     {
         this.self = self;
         this.data = data;
         currentCooldown = (startWithCooldown) ? data.baseCooldown : 0;
-
-        try
-        {
-            MethodInfo method = typeof(AutoTranslate).GetMethod($"{data.abilityName}_Text", BindingFlags.Static | BindingFlags.Public);
-            ParameterInfo[] parameters = method.GetParameters();
-            object[] args = new object[parameters.Length];
-
-            for (int i = 0; i<parameters.Length; i++)
-            {
-                switch (parameters[i].Name)
-                {
-                    case "MainNum":
-                        args[i] = Mathf.Abs(data.mainNumber).ToString(); 
-                        break;
-                    case "SecNum":
-                        args[i] = Mathf.Abs(data.secondNumber).ToString(); 
-                        break;
-                    case "PowNum":
-                        args[i] = Mathf.Abs(data.powerStat).ToString(); 
-                        break;
-                    case "DefNum":
-                        args[i] = Mathf.Abs(data.defenseStat).ToString(); 
-                        break;
-                    case "MiscNum":
-                        args[i] = Mathf.Abs(data.miscNumber).ToString(); 
-                        break;
-                    case "StatusNum":
-                        args[i] = Mathf.Abs(data.statusNumber).ToString(); 
-                        break;
-                }
-            }
-
-            object result = method.Invoke(null, args);
-            editedDescription = KeywordTooltip.instance.EditText((string)result);
-        }
-        catch
-        {
-            Debug.Log($"{data.abilityName} failed to edit description");
-            editedDescription = KeywordTooltip.instance.EditText(Translator.inst.Translate($"{data.abilityName}_Text"));
-        }
+        editedDescription = TranslatedDescription(data.abilityName, data.mainNumber, data.secondNumber, data.powerStat, data.defenseStat, data.statusNumber, data.miscNumber);
 
         mainType = AbilityType.Misc;
         foreach (AbilityType type in data.abilityTypes)
@@ -484,9 +451,13 @@ public class Ability
         if (target.CalculateHealthPercent() >= 1f)
             fullHeal = true;
     }
-    IEnumerator TargetMaxHealth(Character target, int logged)
+    IEnumerator TargetGainMaxHealth(Character target, int logged)
     {
-        yield return target.ChangeMaxHealth(data.miscNumber, logged);
+        yield return target.ChangeMaxHealth(data.mainNumber, logged);
+    }
+    IEnumerator TargetLoseMaxHealth(Character target, int logged)
+    {
+        yield return target.ChangeMaxHealth(-1*data.mainNumber, logged);
     }
     IEnumerator TargetSwitchPosition(Character target, int logged)
     {

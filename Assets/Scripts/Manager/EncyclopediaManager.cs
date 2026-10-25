@@ -130,7 +130,7 @@ public class EncyclopediaManager : MonoBehaviour
         foreach (RulesData data in GameFiles.inst.AllRules())
         {
             RulesText nextText = Instantiate(rulesPrefab);
-            nextText.AssignRule(data.rulesName);
+            nextText.AssignRule(data);
             listOfRules.Add(nextText);
             nextText.transform.SetParent(storeRules);
         }

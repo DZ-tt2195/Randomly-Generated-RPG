@@ -85,7 +85,7 @@ public class NewCustomizer : MonoBehaviour
             int index = i;
 
             RulesText rule = Instantiate(rulesWithToggle, customize.storeThings);
-            rule.AssignRule(rules[index].rulesName);
+            rule.AssignRule(rules[index]);
 
             SetupToggle(rule.toggle,customize,index,max);
         }
