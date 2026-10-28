@@ -10,9 +10,10 @@ public class ToCustomize
     public TMP_Text label;
     public GameObject toEnable;
     public Transform storeThings;
-    public List<int> toSave = new();
+    [ReadOnly] public List<int> toSave = new();
+    [ReadOnly] public List<AbilityBox> abilityBoxes = new();
+    [ReadOnly] public List<RulesText> rulesTexts = new();
 }
-
 public class NewCustomizer : MonoBehaviour
 {
     [Foldout("UI", true)]
@@ -21,6 +22,8 @@ public class NewCustomizer : MonoBehaviour
         [SerializeField] Transform customizerScreen;
         [SerializeField] Button confirmButton;
         [SerializeField] TMP_Text confirmText;
+        [SerializeField] Button clearButton;
+        [SerializeField] TMP_Text clearText;
         [SerializeField] TMP_Text chooseCustomizing;
 
     [Foldout("Customize", true)]
@@ -34,12 +37,43 @@ public class NewCustomizer : MonoBehaviour
         SetupUI();
         SetupSlider();
         SetupCustomizations();
-        confirmButton.onClick.AddListener(Done);
+        confirmButton.onClick.AddListener(() =>
+        {
+            AudioManager.instance.Menu();
+            foreach (ToCustomize customize in toCustomizeList)
+            {
+                int max = customize.toTranslate == "Rules" ? FightRules.MaxRules: Character.maxAbilities;
+
+                for (int i = 0; i < max; i++)
+                {
+                    int value = i < customize.toSave.Count? customize.toSave[i]: -1;
+                    PrefManager.SetSaved(customize.toTranslate,i,value);
+                }
+            }
+            PlayerPrefs.Save();
+            customizerScreen.gameObject.SetActive(false);            
+        });
+        clearButton.onClick.AddListener(() => 
+        {
+            foreach (ToCustomize customize in toCustomizeList)
+            {
+                int max = customize.toTranslate == "Rules" ? FightRules.MaxRules: Character.maxAbilities;
+
+                for (int i = 0; i < max; i++)
+                    PrefManager.SetSaved(customize.toTranslate,i,-1);
+                foreach (AbilityBox box in customize.abilityBoxes)
+                    box.toggle.isOn = false;
+                foreach (RulesText rule in customize.rulesTexts)
+                    rule.toggle.isOn = false;
+            }
+            PlayerPrefs.Save();
+        });
     }
     void SetupUI()
     {
         chooseCustomizing.text = AutoTranslate.Choose_Customizing(Character.maxAbilities.ToString(),FightRules.MaxRules.ToString());
         confirmText.text = AutoTranslate.Confirm();
+        clearText.text = AutoTranslate.Clear_All();
         customizerText.text = AutoTranslate.Open_Customizer();
         customizerScreen.gameObject.SetActive(false);
 
@@ -86,11 +120,10 @@ public class NewCustomizer : MonoBehaviour
 
             RulesText rule = Instantiate(rulesWithToggle, customize.storeThings);
             rule.AssignRule(rules[index]);
-
+            customize.rulesTexts.Add(rule);
             SetupToggle(rule.toggle,customize,index,max);
         }
     }
-
     void CreateAbilityOptions(ToCustomize customize, int max)
     {
         List<AbilityData> abilities = GameFiles.inst.ConvertToAbilityData(GameFiles.inst.listOfPlayers[customize.toTranslate].listOfAbilities,true);
@@ -100,13 +133,12 @@ public class NewCustomizer : MonoBehaviour
             int index = i;
 
             AbilityBox box = Instantiate(boxWithToggle, customize.storeThings);
+            customize.abilityBoxes.Add(box);
             Ability ability = new Ability(null, abilities[index], false);
             box.ReceiveAbility(true, ability);
-
             SetupToggle(box.toggle, customize,index,max);
         }
     }
-
     void SetupToggle(Toggle toggle,ToCustomize customize,int index,int max)
     {
         toggle.isOn = AlreadySaved(customize, index, max);
@@ -131,7 +163,6 @@ public class NewCustomizer : MonoBehaviour
             }
         });
     }
-
     bool AlreadySaved(ToCustomize customize, int number, int max)
     {
         for (int i = 0; i < max; i++)
@@ -141,23 +172,5 @@ public class NewCustomizer : MonoBehaviour
         }
 
         return false;
-    }
-
-    void Done()
-    {
-        AudioManager.instance.Menu();
-        foreach (ToCustomize customize in toCustomizeList)
-        {
-            int max = customize.toTranslate == "Rules" ? FightRules.MaxRules: Character.maxAbilities;
-
-            for (int i = 0; i < max; i++)
-            {
-                int value = i < customize.toSave.Count? customize.toSave[i]: -1;
-                PrefManager.SetSaved(customize.toTranslate,i,value);
-            }
-        }
-
-        PlayerPrefs.Save();
-        customizerScreen.gameObject.SetActive(false);
     }
 }

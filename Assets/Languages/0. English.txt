@@ -1,7 +1,7 @@
 Title	RANDOMLY GENERATED
 Blank	
 Author_Credit	by Thomas Tang (DZ)
-Last_Update	Last Updated: Aug 31, 2026
+Last_Update	Last Updated: NEXT DATE
 Language	Language
 Translator_Credit	Original Language
 Upload_Translation	Upload Translation
@@ -18,6 +18,7 @@ Next_Challenge	Next Challenge in: $Time$
 Extras	Extras
 Open_Customizer	Open Customizer
 Choose_Customizing	Choose up to $Num1$ Abilities for each Player, and up to $Num2$ Rules.
+Clear_All	Clear All
 Current_Date	$Month$ $Day$, $Year$
 Month_1	January
 Month_2	February
@@ -462,9 +463,9 @@ Bark_Text	All Players lose $DefNum$ DefenseIcon.
 Cuddle	Cuddle
 Cuddle_Text	A Player with $MiscNum$ DefenseIcon or more loses $DefNum$ DefenseIcon.
 Rats	Rats
-Rats_Text	Defensive enemy that makes copies of itself.
+Rats_Text	Weak enemy that summons more Rats.
 Gnaw	Gnaw
-Gnaw_Text	Deal $MainNum$ damage to a Grounded Player. This gains $DefNum$ DefenseIcon.
+Gnaw_Text	Deal $MainNum$ damage to a Grounded Player. 
 Breed	Breed
 Breed_Text	Summon a Rats.
 Royalty	Royalty
@@ -472,7 +473,7 @@ Royalty_Text	Summons more 1 StarIcon Enemies, and then gives them more PowerIcon
 Order	Order
 Order_Text	Deal $MainNum$ damage to a Player. They become Targeted for $StatusNum$ Rounds.
 Promote	Promote
-Promote_Text	Another Enemy gains $MainNum$ Max Health and $MainNum$ Health.
+Promote_Text	Another Enemy gains $MainNum$ Max HealthIcon and $MainNum$ HealthIcon.
 Call	Call
 Call_Text	Summon a random $MiscNum$ Star Enemy.
 Procession	Procession
@@ -517,13 +518,12 @@ Delay	Delay
 Delay_Text	A Grounded Player gets $MiscNum$ CooldownIcon added to one of their available Abilities.
 Sidetrack	Sidetrack
 Sidetrack_Text	A Grounded Player gets $MiscNum$ CooldownIcon added to all of their inactive Abilities.
-Wall	Wall
-Wall_Text	Makes itself Targeted and increases its DefenseIcon.
-Toughen	Toughen
-Toughen_Text	This gains $MainNum$ HealthIcon and gains $DefNum$ DefenseIcon.
-Block	In the Way
+Golem	Golem
+Golem_Text	Makes itself Targeted and increases its DefenseIcon.
+Smash	Smash
+Smash_Text	Deal $MainNum$ damage to a Player. This gains $DefNum$ DefenseIcon.
+Block	Block
 Block_Text	This becomes Grounded and Targeted for $StatusNum$ Rounds.
-Block_Log	$This$ is in the way.
 Wolf	Wolf
 Wolf_Text	Makes itself Lively and goes after Focused and Grounded Players. Also helps out any 1 StarIcon Enemies.
 Pounce	Pounce
@@ -535,25 +535,25 @@ Nurture_Text	All $MiscNum$ StarIcon Enemies gain $PowNum$ PowerIcon and $DefNum$
 Guard	Guard
 Guard_Text	A $MiscNum$ StarIcon Enemy becomes Protected for $StatusNum$ Rounds.
 Passion	Passion
-Passion_Text	When anyone becomes Focused, they gain 1 PowerIcon and 1 DefenseIcon.
+Passion_Text	When anyone becomes Focused, they gain $PowNum$ PowerIcon and $DefNum$ DefenseIcon.
 Lucky	Lucky
-Lucky_Text	When anyone becomes Lively, they get 1 Extra Ability.
+Lucky_Text	When anyone becomes Lively, they get $StatusNum$ Extra Ability.
 Rest	Rest
-Rest_Text	When anyone becomes Tired, they gain 2 HealthIcon.
+Rest_Text	When anyone becomes Tired, they gain $MainNum$ HealthIcon.
 Preparation	Preparation
-Preparation_Text	After anyone uses an Attack or Healing Ability, they lose 1 PowerIcon; otherwise they gain 1 PowerIcon.
+Preparation_Text	After anyone uses an Attack or Healing Ability, they lose $PowNum$ PowerIcon; otherwise they gain $PowNum$ PowerIcon.
 Inspiration	Inspiration
 Inspiration_Text	Waves 2-5: Players get a new set of random Abilities.
 Crowds	Crowds
-Crowds_Text	Waves 1-4: Add another 1 StarIcon Enemy at random, and all Enemies lose 1 Max HealthIcon.
+Crowds_Text	Waves 1-4: Add another $MiscNum$ StarIcon Enemy at random, and all Enemies lose $MainNum$ Max HealthIcon.
 Charge_Up	Charge Up
-Charge_Up_Text	Each Wave: A random Enemy gains 5 Max HealthIcon, 5 HealthIcon, 2 PowerIcon, 2 DefenseIcon, and becomes Stunned for 3 turns.
+Charge_Up_Text	Each Wave: A random Enemy gains $MainNum$ Max HealthIcon, $MainNum$ HealthIcon, $PowNum$ PowerIcon, $DefNum$ DefenseIcon, and becomes Stunned for $StatusNum$ turns.
 Topsy_Turvy	Topsy Turvy
 Topsy_Turvy_Text	Each Round: all Players switch Positions.
 Bloodied	Bloodied
-Bloodied_Text	If someone is at 6 HealthIcon or more, their Abilities have 1 more CooldownIcon; otherwise 1 less CooldownIcon.
+Bloodied_Text	If someone is at $MiscNum$ HealthIcon or more, their Abilities have $StatusNum$ more CooldownIcon; otherwise $StatusNum$ less CooldownIcon.
 Comfort_Zone	Comfort Zone
-Comfort_Zone_Text	Anyone who's at their starting Position has +1 DefenseIcon; otherwise -1 DefenseIcon.
+Comfort_Zone_Text	Anyone who's at their starting Position has +$DefNum$ DefenseIcon; otherwise -$DefNum$ DefenseIcon.
 Update_0	Dec 9, 2025
 Update_0_Text	Dropped speed and luck, and changed abilities that used them\nTurn order is now players first (in order of Wizard, Knight, Angel), then enemies in order\nAngry's +2 PowerIcon is now +1 PowerIcon, +1 DefenseIcon
 Update_1	Dec 12, 2025
@@ -578,3 +578,5 @@ Update_10	May 14, 2026
 Update_10_Text	Switched the moods Archer and Wolf care about \nHerald is Elevated \nChanged several abilities for players and enemies \nAdded sound effects
 Update_11	Aug 31, 2026
 Update_11_Text	Hidden optional stuff on the title screen behind the extras button \nYou customize abilities and rules on title screen instead \nThe game will remember which abilities and rules you chose \nChanged some Wizard abilities; renamed, buffed and nerfed some other abilities \nOutside of the tutorial, player abilities begin with their normal CooldownIcon, and Angel has the 1st turn \nSimplified log messages for abilities \nFixed some bugs with status effects
+Update_12	NEXT DATE
+Update_12_Text	Replaced Wall with Golem \nAdded X more rules \nYou can clear all selections in the customizer \nRats no longer increases its defense

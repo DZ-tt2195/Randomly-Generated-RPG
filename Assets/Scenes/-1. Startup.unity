@@ -5273,7 +5273,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: e8e782d0781ca406a9f96e92728215b0, type: 3}
   - {fileID: 21300000, guid: 71b09a386ac1b4791baa8052d835579d, type: 3}
   - {fileID: 21300000, guid: 89b96d9c038a848d0bff55305d8f499a, type: 3}
-  - {fileID: 21300000, guid: a54ae9799dec54c129e9db0e2183fb9e, type: 3}
+  - {fileID: 21300000, guid: 63a469178154a41b0ac9843810b48345, type: 3}
   - {fileID: 21300000, guid: 90f1032bb747349b7ba4818da95a3244, type: 3}
   - {fileID: 21300000, guid: 20d26d23bcff644b3b017667bd3c9f80, type: 3}
   playerAbilities: {fileID: 4900000, guid: be92100e2b6c646c7b3179b0c407130a, type: 3}

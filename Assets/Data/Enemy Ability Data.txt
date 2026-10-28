@@ -36,6 +36,8 @@ Ghost	Jumpscare	Deal $MainNum$ damage to all Players.	AllPlayers	None	TargetAtta
 Ghost	Lament	This and another Enemy both become Tired.	Self-OtherEnemy	None-TargetNotTired	TargetBecomeTired-TargetBecomeTired	0							MoodEnemy
 Ghost	Possession	A Grounded Player becomes Elevated and loses $PowNum$ PowerIcon.	OnePlayer	TargetIsGrounded	TargetBecomeElevated/TargetLosePower	1			1				PositionPlayer/StatPlayer
 Ghost	Release	An Elevated Player becomes Grounded and Stunned for $StatusNum$ turn.	OnePlayer	TargetIsElevated	TargetBecomeGrounded/TargetBecomeStunned	2					1		PositionPlayer
+Golem	Smash	Deal $MainNum$ damage to a Player. This gains $DefNum$ DefenseIcon.	Self	TargetInjured/TargetDefenseOrLess	TargetHeal/TargetGainDefense	1	2			1			Attack/StatEnemy
+Golem	Block	This becomes Grounded and Targeted for $StatusNum$ Rounds.	Self	NoTargetedEnemy	TargetBecomeGrounded/TargetBecomeTargeted	0					2		PositionEnemy
 Herald	Flag_Whack	Deal $MainNum$ damage to an Elevated Player.	OnePlayer	TargetIsElevated	TargetAttack	0	2						Attack
 Herald	Announce	Summon a random $MiscNum$ StarIcon Enemy.	Self	CanSummon	SummonStar	2						3	Misc
 Kitty	Scratch	Deal $MainNum$ damage to a Player at the same Position.	OnePlayer	TargetSamePosition	TargetAttack	0	2						Attack
@@ -65,10 +67,10 @@ Puppy	Bite	Deal $MainNum$ damage to a Grounded Player with $MiscNum$ DefenseIcon
 Puppy	Leap	Deal $MainNum$ damage to an Elevated Player. They become Grounded.	OnePlayer	TargetIsElevated	TargetAttack/TargetBecomeGrounded	0	1						Attack/PositionPlayer
 Puppy	Bark	All Players lose $DefNum$ DefenseIcon.	AllPlayers	None	TargetLoseDefense	1				1			StatPlayer
 Puppy	Cuddle	A Player with $MiscNum$ DefenseIcon or more loses $DefNum$ DefenseIcon.	OnePlayer	TargetDefenseOrMore	TargetLoseDefense					2		1	StatPlayer
-Rats	Gnaw	Deal $MainNum$ damage to a Grounded Player. This gains $DefNum$ DefenseIcon.	OnePlayer-Self	TargetIsGrounded-None	TargetAttack-TargetGainDefense	0	1			1			Attack/StatEnemy
+Rats	Gnaw	Deal $MainNum$ damage to a Grounded Player. 	OnePlayer	TargetIsGrounded	TargetAttack	0	2						Attack
 Rats	Breed	Summon a Rats.	Self	CanSummon	TargetCopy	1							Misc
 Royalty	Order	Deal $MainNum$ damage to a Player. They become Targeted for $StatusNum$ Rounds.	OnePlayer	None	TargetAttack/TargetBecomeTargeted	0	2				2		Attack
-Royalty	Promote	Another Enemy gains $MainNum$ Max Health and $MainNum$ Health.	OtherEnemy	None	TargetGainMaxHealth/TargetHeal	2	5						Healing
+Royalty	Promote	Another Enemy gains $MainNum$ Max HealthIcon and $MainNum$ HealthIcon.	OtherEnemy	None	TargetGainMaxHealth/TargetHeal	2	5						Healing
 Royalty	Call	Summon a random $MiscNum$ Star Enemy.	Self	CanSummon	SummonStar	1						1	Misc
 Royalty	Procession	All Enemies gain $PowNum$ PowerIcon.	AllEnemies	None	TargetGainPower	1			1				StatEnemy
 Siren	Drown	Deal $MainNum$ damage to a Stunned Player.	OnePlayer	TargetIsStunned	TargetAttack	0	3						Attack
@@ -87,8 +89,6 @@ Trickster	Mischief	Deal $MainNum$ damage to a Grounded Player.	OnePlayer	TargetI
 Trickster	Delude	A Player becomes Lively, Grounded, and Locked for $StatusNum$ Round.	OnePlayer	None	TargetBecomeLively/TargetBecomeGrounded/TargetBecomeLocked	0					2		MoodPlayer/PositionPlayer
 Trickster	Delay	A Grounded Player gets $MiscNum$ CooldownIcon added to one of their available Abilities.	OnePlayer	TargetIsGrounded/TargetZeroCooldown	TargetForceOneCooldown	1						2	Misc
 Trickster	Sidetrack	A Grounded Player gets $MiscNum$ CooldownIcon added to all of their inactive Abilities.	OnePlayer	TargetIsGrounded/TargetActiveCooldown	TargetIncreaseAllCooldown	1						1	Misc
-Wall	Toughen	This gains $MainNum$ HealthIcon and gains $DefNum$ DefenseIcon.	Self	TargetInjured/TargetDefenseOrLess	TargetHeal/TargetGainDefense	1	2			1			Healing/StatEnemy
-Wall	Block	This becomes Grounded and Targeted for $StatusNum$ Rounds.	Self	NoTargetedEnemy	TargetBecomeGrounded/TargetBecomeTargeted	0					2		PositionEnemy
 Wolf	Pounce	Deal $MainNum$ damage to a Grounded Player.	OnePlayer	TargetIsGrounded/TargetEffective	TargetAttack	0	3						Attack
 Wolf	Hunt	An Enemy becomes Lively, and a Player becomes Focused.	OneEnemy-OnePlayer	TargetNotLively-TargetNotFocused	TargetBecomeLively-TargetBecomeFocused	1							MoodPlayer/MoodEnemy
 Wolf	Nurture	All $MiscNum$ StarIcon Enemies gain $PowNum$ PowerIcon and $DefNum$ DefenseIcon.	AllEnemies	TargetIsStar	TargetGainPower/TargetGainDefense	1			1	1		1	StatEnemy

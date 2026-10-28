@@ -158,7 +158,7 @@ public class TurnManager : MonoBehaviour
                 Log.instance.AddText(AutoTranslate.Blank());
             }
             if (currentWave < 5 && FightRules.inst.CheckRule(nameof(AutoTranslate.Crowds), 0) is RulesData crowds)
-                yield return CreateEnemy(GameFiles.inst.RandomEnemy(1, dailyRNG), Character.RandomMood(dailyRNG), 0);                
+                yield return CreateEnemy(GameFiles.inst.RandomEnemy(crowds.miscNumber, dailyRNG), Character.RandomMood(dailyRNG), 0);                
             foreach (int nextTier in listOfWaveSetup[currentWave - 1].enemyDifficultySpawn)
                 yield return CreateEnemy(GameFiles.inst.RandomEnemy(nextTier, dailyRNG), Character.RandomMood(dailyRNG), 0);
 
@@ -167,11 +167,11 @@ public class TurnManager : MonoBehaviour
                 int randomNum = (dailyRNG != null) ? dailyRNG.Next(0, listOfEnemies.Count) : UnityEngine.Random.Range(0, listOfEnemies.Count);
                 Character randomEnemy = listOfEnemies[randomNum];
 
-                yield return randomEnemy.ChangeMaxHealth(5, 1);
-                yield return randomEnemy.ChangeHealth(5, 1);
-                yield return randomEnemy.ChangeStat(Stats.Power, 2, 1);
-                yield return randomEnemy.ChangeStat(Stats.Defense, 2, 1);
-                yield return randomEnemy.ChangeEffect(StatusEffect.Stunned, 3, 1);
+                yield return randomEnemy.ChangeMaxHealth(chargeUp.mainNumber, 1);
+                yield return randomEnemy.ChangeHealth(chargeUp.mainNumber, 1);
+                yield return randomEnemy.ChangeStat(Stats.Power, chargeUp.powerStat, 1);
+                yield return randomEnemy.ChangeStat(Stats.Defense, chargeUp.defenseStat, 1);
+                yield return randomEnemy.ChangeEffect(StatusEffect.Stunned, chargeUp.statusNumber, 1);
             }
 
             StartCoroutine(NewRound(false));
@@ -380,7 +380,7 @@ public class TurnManager : MonoBehaviour
             Log.instance.AddText(AutoTranslate.Enter_Fight(nextEnemy.name), logged);
             nextEnemy.SetupCharacter(dataFile, GameFiles.inst.ConvertToAbilityData(dataFile.listOfAbilities, false), startingMood, listOfEnemies.Count, true);
             if (currentWave < 5 && FightRules.inst.CheckRule(nameof(AutoTranslate.Crowds), -1) is RulesData crowds)
-                yield return nextEnemy.ChangeMaxHealth(-1, -1);
+                yield return nextEnemy.ChangeMaxHealth(-crowds.mainNumber, -1);
         }
     }
     public void AddPlayer(Character character)

@@ -3,14 +3,14 @@ Page	Basic Enemy who attacks Grounded Players.	5	GROUNDED	Swing,	None	Alayna Dan
 Crow	Basic Enemy who attacks Grounded and Elevated Players.	4	ELEVATED	Peck,	None	Una Fricker\nMTG: Classic Sixth Edition\n(Storm Crow)	0
 Bees	Helps other Elevated Enemies stay alive with status effects.	5	ELEVATED	Sting,Honey,Swarm,Support,	None	Tom Wanerstrand\nMTG: Time Spiral\n(Unyaro Bees)	1
 Drone	Makes itself Elevated and raises its PowerIcon before attacking multiple Players at once.	5	ELEVATED	Sound_Waves,Alarm,	ChooseAttack	James Paick\nMTG: Guilds of Ravnica\n(Dimir Spybug)	1
+Golem	Makes itself Targeted and increases its DefenseIcon.	5	GROUNDED	Smash,Block,	None	Svetlin Velinov\nMTG: Rivals of Ixalan\n(Golden Guardian)	1
 Herald	If not killed fast enough, will start to summon 3 StarIcon Enemies.	5	ELEVATED	Flag_Whack,Announce,	CameOffCooldown	Grant Hansen\nDominion: Renaissance\n(Flag Bearer)	1
 Kitty	Alternates between Grounded and Elevated, and attacks any Player at the same Position.	5	GROUNDED	Scratch,Climb_Up,Reflex,Lure,	None	Howard Lyon\nMTG: Eldritch Moon\n(Harmless Offering)	1
 Leprechaun	If this is at full HealthIcon, it increases Player Stats; otherwise it deals lots of damage.	5	GROUNDED	Prank,Offer_Gold,	None	Brian Brinlee\nDominion: Nocturne\n(Leprechaun)	1
 Partier	Heals all Enemies, gives them random Moods, and increases their Max HealthIcon.	5	GROUNDED	Fight,Share_Drinks,Share_Snacks,Drinking_Game,	None	Jesper Ejsing\nMTG: Innistrad: Crimson Vow\n(Gluttonous Guest)	1
 Pixie	Changes all Player Moods at the same time, and attacks Elevated Players.	5	ELEVATED	Will_o_Wisp,Agitate,Drowsiness,Bother,	Effectiveness	Claus Stephan\nDominion: Nocturne\n(Pixie)	1
 Puppy	Attacks Players after they're Grounded and their DefenseIcon has been reduced.	5	GROUNDED	Bite,Leap,Bark,Cuddle,	None	Claus Stephan\nDominion: Menagerie\n(Sheepdog)	1
-Rats	Defensive enemy that makes copies of itself.	5	GROUNDED	Gnaw,Breed,	None	Ian Kirkpatrick\nDominion: Dark Ages\n(Rats)	1
-Wall	Makes itself Targeted and increases its DefenseIcon.	5	GROUNDED	Toughen,Block,	None	Joshua Stewart\nDominion: Empires\n(Wall)	1
+Rats	Weak enemy that summons more Rats.	5	GROUNDED	Gnaw,Breed,	None	Ian Kirkpatrick\nDominion: Dark Ages\n(Rats)	1
 Archer	Makes itself Focused, then shoots down Tired and Elevated Players.	10	GROUNDED	Distract,Bullseye,Cover,Aim_Up,	Effectiveness	Harald Lieske\nDominion: Allies\n(Archer)	2
 Barbarian	Makes itself Focused, attacks the Player with the most HealthIcon, and lowers their Max HealthIcon and PowerIcon.	10	GROUNDED	Fury,Trample,Brawl,Frenzy,	MostHealth	Julien Delval\nDominion: Allies\n(Barbarian)	2
 Bat	Makes itself Tired, then it attacks Lively players and heals at the same time.	10	ELEVATED	Drain,Screech,Echolocate,Bloodthirst,	Effectiveness	Martin Hoffmann\nDominion: Nocturne\n(Bat)	2
