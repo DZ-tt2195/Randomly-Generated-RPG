@@ -79,7 +79,7 @@ Blocked_Mood	$This$ is Locked and can't change Mood.
 Blocked_Position	$This$ is Locked and can't change Position.
 Stunned	Stunned
 Stunned_Text	Skips a turn.
-Skip_Turn	$This$ is Stunned and misses a turn.
+Stun_Miss_Turn	$This$ is Stunned and misses their turn.
 Targeted	Targeted
 Targeted_Text	All single-target Abilities must target them if possible.
 Extra	Extra Ability
@@ -535,13 +535,13 @@ Nurture_Text	All $MiscNum$ StarIcon Enemies gain $PowNum$ PowerIcon and $DefNum$
 Guard	Guard
 Guard_Text	A $MiscNum$ StarIcon Enemy becomes Protected for $StatusNum$ Rounds.
 Passion	Passion
-Passion_Text	When anyone becomes Focused, they gain $PowNum$ PowerIcon and $DefNum$ DefenseIcon.
+Passion_Text	Each Round: everyone who's Focused gains $PowNum$ PowerIcon.
 Lucky	Lucky
-Lucky_Text	When anyone becomes Lively, they get $StatusNum$ Extra Ability.
+Lucky_Text	Each Round: everyone who's Lively gets $StatusNum$ Extra Ability.
 Rest	Rest
-Rest_Text	When anyone becomes Tired, they gain $MainNum$ HealthIcon.
+Rest_Text	Each Round: everyone who's Tired gains $MainNum$ HealthIcon.
 Preparation	Preparation
-Preparation_Text	After anyone uses an Attack or Healing Ability, they lose $PowNum$ PowerIcon; otherwise they gain $PowNum$ PowerIcon.
+Preparation_Text	After a Player uses an Attack or Healing Ability, they lose $MainNum$ PowerIcon; if neither they gain $SecNum$ PowerIcon.
 Inspiration	Inspiration
 Inspiration_Text	Waves 2-5: Players get a new set of random Abilities.
 Crowds	Crowds
@@ -551,9 +551,17 @@ Charge_Up_Text	Each Wave: A random Enemy gains $MainNum$ Max HealthIcon, $MainNu
 Topsy_Turvy	Topsy Turvy
 Topsy_Turvy_Text	Each Round: all Players switch Positions.
 Bloodied	Bloodied
-Bloodied_Text	If someone is at $MiscNum$ HealthIcon or more, their Abilities have $StatusNum$ more CooldownIcon; otherwise $StatusNum$ less CooldownIcon.
+Bloodied_Text	If a Player is at $MiscNum$ HealthIcon or more, Abilities they use have $StatusNum$ more CooldownIcon, otherwise $StatusNum$ less CooldownIcon.
 Comfort_Zone	Comfort Zone
-Comfort_Zone_Text	Anyone who's at their starting Position has +$DefNum$ DefenseIcon; otherwise -$DefNum$ DefenseIcon.
+Comfort_Zone_Text	Anyone who's at their starting Position has +$DefNum$ DefenseIcon, otherwise -$DefNum$ DefenseIcon.
+New1	New1
+New1_Text	Each Wave: All Players gain $MainNum$ Max HealthIcon. Each Round: All Players lose $SecNum$ Max HealthIcon.
+New2	New2
+New2_Text	When a Player uses Wait, they become Locked for $StatusNum$ rounds.
+New3	New3
+New3_Text	When a Player changes a Player's Position or Mood, the Player gains $MainNum$ HealthIcon.
+New4	New4
+New4_Text	When a Player changes an Enemy's Position or Mood, the Enemy takes $MainNum$ damage.
 Update_0	Dec 9, 2025
 Update_0_Text	Dropped speed and luck, and changed abilities that used them\nTurn order is now players first (in order of Wizard, Knight, Angel), then enemies in order\nAngry's +2 PowerIcon is now +1 PowerIcon, +1 DefenseIcon
 Update_1	Dec 12, 2025
@@ -579,4 +587,4 @@ Update_10_Text	Switched the moods Archer and Wolf care about \nHerald is Elevate
 Update_11	Aug 31, 2026
 Update_11_Text	Hidden optional stuff on the title screen behind the extras button \nYou customize abilities and rules on title screen instead \nThe game will remember which abilities and rules you chose \nChanged some Wizard abilities; renamed, buffed and nerfed some other abilities \nOutside of the tutorial, player abilities begin with their normal CooldownIcon, and Angel has the 1st turn \nSimplified log messages for abilities \nFixed some bugs with status effects
 Update_12	NEXT DATE
-Update_12_Text	Replaced Wall with Golem \nAdded X more rules \nYou can clear all selections in the customizer \nRats no longer increases its defense
+Update_12_Text	Replaced Wall with Golem \nAdded X more rules, and tweaked some \nYou can clear all selections in the customizer \nRats no longer increases its defense

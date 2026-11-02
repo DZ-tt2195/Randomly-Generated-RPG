@@ -1,4 +1,4 @@
-characterName	description	baseHealth	startPosition	listOfAbilities	aiTargeting	artCredit	difficulty
+characterName	description	maxHealth	startPosition	listOfAbilities	aiTargeting	artCredit	difficulty
 Page	Basic Enemy who attacks Grounded Players.	5	GROUNDED	Swing,	None	Alayna Danner\nDominion: Adventures\n(Page)	0
 Crow	Basic Enemy who attacks Grounded and Elevated Players.	4	ELEVATED	Peck,	None	Una Fricker\nMTG: Classic Sixth Edition\n(Storm Crow)	0
 Bees	Helps other Elevated Enemies stay alive with status effects.	5	ELEVATED	Sting,Honey,Swarm,Support,	None	Tom Wanerstrand\nMTG: Time Spiral\n(Unyaro Bees)	1

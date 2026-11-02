@@ -167,11 +167,11 @@ public class TurnManager : MonoBehaviour
                 int randomNum = (dailyRNG != null) ? dailyRNG.Next(0, listOfEnemies.Count) : UnityEngine.Random.Range(0, listOfEnemies.Count);
                 Character randomEnemy = listOfEnemies[randomNum];
 
-                yield return randomEnemy.ChangeMaxHealth(chargeUp.mainNumber, 1);
+                yield return randomEnemy.ChangeMaxHP(chargeUp.mainNumber, 1);
                 yield return randomEnemy.ChangeHealth(chargeUp.mainNumber, 1);
-                yield return randomEnemy.ChangeStat(Stats.Power, chargeUp.powerStat, 1);
-                yield return randomEnemy.ChangeStat(Stats.Defense, chargeUp.defenseStat, 1);
-                yield return randomEnemy.ChangeEffect(StatusEffect.Stunned, chargeUp.statusNumber, 1);
+                yield return randomEnemy.ChangeStat(Stats.Power, chargeUp.powerStat, 1, null);
+                yield return randomEnemy.ChangeStat(Stats.Defense, chargeUp.defenseStat, 1, null);
+                yield return randomEnemy.ChangeEffect(StatusEffect.Stunned, chargeUp.statusNumber, 1, null);
             }
 
             StartCoroutine(NewRound(false));
@@ -184,23 +184,34 @@ public class TurnManager : MonoBehaviour
         Log.instance.AddText(AutoTranslate.Round(currentRound.ToString()));
 
         speedQueue = AllCharacters();
+
         RulesData topsyTurvy = FightRules.inst.CheckRule(nameof(AutoTranslate.Topsy_Turvy), 0);
+        RulesData lucky = FightRules.inst.CheckRule(nameof(AutoTranslate.Lucky), 0);
+        RulesData passion = FightRules.inst.CheckRule(nameof(AutoTranslate.Passion), 0);
+        RulesData rest = FightRules.inst.CheckRule(nameof(AutoTranslate.Rest), 0);
+
         foreach (Character character in speedQueue)
         {
             if (character.StatEffectdict[StatusEffect.Protected] >= 1)
-                yield return character.ChangeEffect(StatusEffect.Protected, -1, -1);
+                yield return character.ChangeEffect(StatusEffect.Protected, -1, -1, null);
             if (character.StatEffectdict[StatusEffect.Locked] >= 1)
-                yield return character.ChangeEffect(StatusEffect.Locked, -1, -1);
+                yield return character.ChangeEffect(StatusEffect.Locked, -1, -1, null);
             if (character.StatEffectdict[StatusEffect.Targeted] >= 1)
-                yield return character.ChangeEffect(StatusEffect.Targeted, -1, -1);
+                yield return character.ChangeEffect(StatusEffect.Targeted, -1, -1, null);
             
             if (topsyTurvy != null && character is PlayerCharacter)
             {
                 if (character.CurrentPosition == Position.Grounded)
-                    yield return character.ChangePosition(Position.Elevated, -1);
+                    yield return character.ChangePosition(Position.Elevated, -1, null);
                 else
-                    yield return character.ChangePosition(Position.Grounded, -1);
+                    yield return character.ChangePosition(Position.Grounded, -1, null);
             }
+            if (lucky != null)
+                yield return character.ChangeEffect(StatusEffect.Extra, lucky.statusNumber, 1, null);
+            if (passion != null)
+                yield return character.ChangeStat(Stats.Power, passion.powerStat, 1, null);
+            if (rest != null)
+                yield return character.ChangeHealth(rest.mainNumber, 1, null);
         }
 
         while (speedQueue.Count > 0)
@@ -380,7 +391,7 @@ public class TurnManager : MonoBehaviour
             Log.instance.AddText(AutoTranslate.Enter_Fight(nextEnemy.name), logged);
             nextEnemy.SetupCharacter(dataFile, GameFiles.inst.ConvertToAbilityData(dataFile.listOfAbilities, false), startingMood, listOfEnemies.Count, true);
             if (currentWave < 5 && FightRules.inst.CheckRule(nameof(AutoTranslate.Crowds), -1) is RulesData crowds)
-                yield return nextEnemy.ChangeMaxHealth(-crowds.mainNumber, -1);
+                yield return nextEnemy.ChangeMaxHP(-crowds.mainNumber, -1);
         }
     }
     public void AddPlayer(Character character)

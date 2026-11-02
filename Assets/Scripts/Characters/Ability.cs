@@ -20,7 +20,6 @@ public class Ability
     [ReadOnly] public AbilityType mainType;
     [ReadOnly] public int currentCooldown;
     [ReadOnly] public List<List<Character>> listOfTargets = new();
-    [ReadOnly] public int damageDealt;
     [ReadOnly] public bool killed;
     [ReadOnly] public bool fullHeal;
     bool runNextMethod;
@@ -171,12 +170,12 @@ public class Ability
     {
         return TurnManager.inst.listOfEnemies.Count < 5;
     }
-    bool TargetAtMaxHealth(int currentIndex)
+    bool TargetAtMaxHP(int currentIndex)
     {
         listOfTargets[currentIndex].RemoveAll(target => target.CalculateHealthPercent() < 1f);
         return listOfTargets[currentIndex].Count > 0;
     }
-    bool TargetNotMaxHealth(int currentIndex)
+    bool TargetNotMaxHP(int currentIndex)
     {
         listOfTargets[currentIndex].RemoveAll(target => target.CalculateHealthPercent() >= 1f);
         return listOfTargets[currentIndex].Count > 0;
@@ -398,6 +397,8 @@ public class Ability
     public IEnumerator ResolveInstructions(string[] listOfMethods, int index, int logged)
     {
         runNextMethod = true;
+        killed = false;
+        fullHeal = false;
         MakeDecision.inst.BlankUI();
 
         foreach (Character target in listOfTargets[index])
@@ -419,22 +420,16 @@ public class Ability
             }
         }
     }
-    IEnumerator DealtKill(Character target, int logged)
-    {
-        if (!killed)
-            runNextMethod = false;
-        yield return null;
-    }
     IEnumerator TargetAttack(Character target, int logged)
     {
-        damageDealt = CalculateDamage(self, target, data.mainNumber, logged);
+        int damageDealt = CalculateDamage(self, target, data.mainNumber, logged);
         yield return target.ChangeHealth(-1*damageDealt, logged, self);
         if (target == null || target.currentHealth <= 0)
             killed = true;
     }
     IEnumerator TargetAttackSec(Character target, int logged)
     {
-        damageDealt = CalculateDamage(self, target, data.secondNumber, logged);
+        int damageDealt = CalculateDamage(self, target, data.secondNumber, logged);
         yield return target.ChangeHealth(-1*damageDealt, logged, self);
         if (target == null || target.currentHealth <= 0)
             killed = true;
@@ -451,60 +446,60 @@ public class Ability
         if (target.CalculateHealthPercent() >= 1f)
             fullHeal = true;
     }
-    IEnumerator TargetGainMaxHealth(Character target, int logged)
+    IEnumerator TargetGainMaxHP(Character target, int logged)
     {
-        yield return target.ChangeMaxHealth(data.mainNumber, logged);
+        yield return target.ChangeMaxHP(data.mainNumber, logged);
     }
-    IEnumerator TargetLoseMaxHealth(Character target, int logged)
+    IEnumerator TargetLoseMaxHP(Character target, int logged)
     {
-        yield return target.ChangeMaxHealth(-1*data.mainNumber, logged);
+        yield return target.ChangeMaxHP(-1*data.mainNumber, logged);
     }
     IEnumerator TargetSwitchPosition(Character target, int logged)
     {
         if (target.CurrentPosition == Position.Grounded)
-            yield return target.ChangePosition(Position.Elevated, logged);
+            yield return target.ChangePosition(Position.Elevated, logged, self);
         else
-            yield return target.ChangePosition(Position.Grounded, logged);
+            yield return target.ChangePosition(Position.Grounded, logged, self);
     }
     IEnumerator TargetBecomeGrounded(Character target, int logged)
     {
-        yield return target.ChangePosition(Position.Grounded, logged);
+        yield return target.ChangePosition(Position.Grounded, logged, self);
     }
     IEnumerator TargetBecomeElevated(Character target, int logged)
     {
-        yield return target.ChangePosition(Position.Elevated, logged);
+        yield return target.ChangePosition(Position.Elevated, logged, self);
     }
     IEnumerator TargetBecomeLively(Character target, int logged)
     {
-        yield return target.ChangeMood(Mood.Lively, logged);
+        yield return target.ChangeMood(Mood.Lively, logged, self);
     }
     IEnumerator TargetBecomeFocused(Character target, int logged)
     {
-        yield return target.ChangeMood(Mood.Focused, logged);
+        yield return target.ChangeMood(Mood.Focused, logged, self);
     }
     IEnumerator TargetBecomeTired(Character target, int logged)
     {
-        yield return target.ChangeMood(Mood.Tired, logged);
+        yield return target.ChangeMood(Mood.Tired, logged, self);
     }
     IEnumerator TargetRandomMood(Character target, int logged)
     {
-        yield return target.ChangeMood(Character.RandomMood(null), logged);
+        yield return target.ChangeMood(Character.RandomMood(null), logged, self);
     }
     IEnumerator TargetGainPower(Character target, int logged)
     {
-        yield return target.ChangeStat(Stats.Power, data.powerStat, logged);
+        yield return target.ChangeStat(Stats.Power, data.powerStat, logged, self);
     }
     IEnumerator TargetLosePower(Character target, int logged)
     {
-        yield return target.ChangeStat(Stats.Power, -1*data.powerStat, logged);
+        yield return target.ChangeStat(Stats.Power, -1*data.powerStat, logged, self);
     }
     IEnumerator TargetGainDefense(Character target, int logged)
     {
-        yield return target.ChangeStat(Stats.Defense, data.defenseStat, logged);
+        yield return target.ChangeStat(Stats.Defense, data.defenseStat, logged, self);
     }
     IEnumerator TargetLoseDefense(Character target, int logged)
     {
-        yield return target.ChangeStat(Stats.Defense, -1*data.defenseStat, logged);
+        yield return target.ChangeStat(Stats.Defense, -1*data.defenseStat, logged, self);
     }
     IEnumerator TargetDeath(Character target, int logged)
     {
@@ -516,23 +511,23 @@ public class Ability
     }
     IEnumerator TargetBecomeStunned(Character target, int logged)
     {
-        yield return target.ChangeEffect(StatusEffect.Stunned, data.statusNumber, logged);
+        yield return target.ChangeEffect(StatusEffect.Stunned, data.statusNumber, logged, self);
     }
     IEnumerator TargetBecomeProtected(Character target, int logged)
     {
-        yield return target.ChangeEffect(StatusEffect.Protected, data.statusNumber, logged);
+        yield return target.ChangeEffect(StatusEffect.Protected, data.statusNumber, logged, self);
     }
     IEnumerator TargetBecomeTargeted(Character target, int logged)
     {
-        yield return target.ChangeEffect(StatusEffect.Targeted, data.statusNumber, logged);
+        yield return target.ChangeEffect(StatusEffect.Targeted, data.statusNumber, logged, self);
     }
     IEnumerator TargetBecomeLocked(Character target, int logged)
     {
-        yield return target.ChangeEffect(StatusEffect.Locked, data.statusNumber, logged);
+        yield return target.ChangeEffect(StatusEffect.Locked, data.statusNumber, logged, self);
     }
     IEnumerator TargetGetExtraAbility(Character target, int logged)
     {
-        yield return target.ChangeEffect(StatusEffect.Extra, data.statusNumber, logged);
+        yield return target.ChangeEffect(StatusEffect.Extra, data.statusNumber, logged, self);
     }
     IEnumerator TargetIncreaseAllCooldown(Character target, int logged)
     {

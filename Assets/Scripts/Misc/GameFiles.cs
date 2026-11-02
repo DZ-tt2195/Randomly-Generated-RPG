@@ -11,7 +11,7 @@ public enum CharacterTargeting { None, MostTargets, CameOffCooldown, LastAttacke
 public class CharacterData
 {
     public string characterName;
-    public int baseHealth;
+    public int maxHealth;
     public Position startPosition;
     public string listOfAbilities;
     public CharacterTargeting aiTargeting;

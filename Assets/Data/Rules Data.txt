@@ -1,11 +1,15 @@
-rulesName	rulesDescription	mainNumber	secondNumber	powerStat	defenseStat	statusNumber	miscNumber
-Bloodied	If someone is at $MiscNum$ HealthIcon or more, their Abilities have $StatusNum$ more CooldownIcon; otherwise $StatusNum$ less CooldownIcon.					1	6
-Charge_Up	Each Wave: A random Enemy gains $MainNum$ Max HealthIcon, $MainNum$ HealthIcon, $PowNum$ PowerIcon, $DefNum$ DefenseIcon, and becomes Stunned for $StatusNum$ turns.	5		2	2	3	
-Comfort_Zone	Anyone who's at their starting Position has +$DefNum$ DefenseIcon; otherwise -$DefNum$ DefenseIcon.				1		
-Crowds	Waves 1-4: Add another $MiscNum$ StarIcon Enemy at random, and all Enemies lose $MainNum$ Max HealthIcon.	1					1
-Inspiration	Waves 2-5: Players get a new set of random Abilities.						
-Lucky	When anyone becomes Lively, they get $StatusNum$ Extra Ability.					1	
-Passion	When anyone becomes Focused, they gain $PowNum$ PowerIcon and $DefNum$ DefenseIcon.			1	1		
-Preparation	After anyone uses an Attack or Healing Ability, they lose $PowNum$ PowerIcon; otherwise they gain $PowNum$ PowerIcon.			1			
-Rest	When anyone becomes Tired, they gain $MainNum$ HealthIcon.	2					
-Topsy_Turvy	Each Round: all Players switch Positions.						
+rulesName	rulesDescription	notes	mainNumber	secondNumber	powerStat	defenseStat	statusNumber	miscNumber
+Bloodied	If a Player is at $MiscNum$ HealthIcon or more, Abilities they use have $StatusNum$ more CooldownIcon, otherwise $StatusNum$ less CooldownIcon.	Cooldown					1	6
+Charge_Up	Each Wave: A random Enemy gains $MainNum$ Max HealthIcon, $MainNum$ HealthIcon, $PowNum$ PowerIcon, $DefNum$ DefenseIcon, and becomes Stunned for $StatusNum$ turns.	Heal, GainPower, GainDefense, BecomeStunned, MaxHP	5		2	2	3	
+Comfort_Zone	Anyone who's at their starting Position has +$DefNum$ DefenseIcon, otherwise -$DefNum$ DefenseIcon.	GainDefense, LoseDefense				1		
+Crowds	Waves 1-4: Add another $MiscNum$ StarIcon Enemy at random, and all Enemies lose $MainNum$ Max HealthIcon.	MaxHP	1					1
+Inspiration	Waves 2-5: Players get a new set of random Abilities.							
+Lucky	Each Round: everyone who's Lively gets $StatusNum$ Extra Ability.	GetExtraAbility					1	
+Passion	Each Round: everyone who's Focused gains $PowNum$ PowerIcon.	GainPower			1			
+Preparation	After a Player uses an Attack or Healing Ability, they lose $MainNum$ PowerIcon; if neither they gain $SecNum$ PowerIcon.	GainPower, LosePower	1	2				
+Rest	Each Round: everyone who's Tired gains $MainNum$ HealthIcon.	Heal	3					
+Topsy_Turvy	Each Round: all Players switch Positions.	SwitchPosition						
+New1	Each Wave: All Players gain $MainNum$ Max HealthIcon. Each Round: All Players lose $SecNum$ Max HealthIcon.	MaxHP	5	1				NOT CODED
+New2	When a Player uses Wait, they become Locked for $StatusNum$ rounds.	BecomeLocked					3	NOT CODED
+New3	When a Player changes a Player's Position or Mood, the Player gains $MainNum$ HealthIcon.	Heal	1					NOT CODED
+New4	When a Player changes an Enemy's Position or Mood, the Enemy takes $MainNum$ damage.	Attack	1					NOT CODED
