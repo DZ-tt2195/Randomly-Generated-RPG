@@ -1822,10 +1822,10 @@ MonoBehaviour:
     translated: 
     description: Emotion and Position can't change until their next turn.
     color: {r: 0.6320754, g: 0.6320754, b: 0.6320754, a: 0}
-  - original: Extra
+  - original: Blessed
     translated: 
     description: Can't be targeted by abilities that only affect Grounded targets.
-    color: {r: 1, g: 1, b: 1, a: 0}
+    color: {r: 0, g: 0.86242104, b: 1, a: 0}
   - original: Grounded
     translated: 
     description: Can't be targeted by abilities that only affect Elevated targets.
@@ -1869,7 +1869,7 @@ MonoBehaviour:
     translated: 
     description: 'Targeted: All single-target Abilities must target this if possible.'
     color: {r: 0, g: 0, b: 0, a: 0}
-  - original: ExtraImage
+  - original: BlessedImage
     translated: 
     description: 'Extra Ability: This can use another Ability on their turn.'
     color: {r: 0, g: 0, b: 0, a: 0}
@@ -5533,7 +5533,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3713695489742377036, guid: a042c107274f74a03a3cafea8b584572, type: 3}
       propertyPath: m_text
-      value: Hi
+      value: 'Icons: <link="HealthIcon"><sprite="HealthIcon" name="HealthIcon"></link>
+        <link="CooldownIcon"><sprite="CooldownIcon" name="CooldownIcon"></link> <link="PowerIcon"><sprite="PowerIcon"
+        name="PowerIcon"></link> <link="DefenseIcon"><sprite="DefenseIcon" name="DefenseIcon"></link></link>
+        <link="StarIcon"><sprite="StarIcon" name="StarIcon"></link><link="StunImage"><sprite="StunnedImage"
+        name="StunnedImage"></link> <link="ProtectedImage"><sprite="ProtectedImage"
+        name="ProtectedImage"></link> <link="TargetedImage"><sprite="TargetedImage"
+        name="TargetedImage"></link> <link="BlessedImage"><sprite="BlessedImage"
+        name="BlessedImage"></link><link="LockedImage"><sprite="LockedImage" name="LockedImage"></link>'
+      objectReference: {fileID: 0}
+    - target: {fileID: 3713695489742377036, guid: a042c107274f74a03a3cafea8b584572, type: 3}
+      propertyPath: m_fontSize
+      value: 70
       objectReference: {fileID: 0}
     - target: {fileID: 3713695489742377036, guid: a042c107274f74a03a3cafea8b584572, type: 3}
       propertyPath: m_fontAsset

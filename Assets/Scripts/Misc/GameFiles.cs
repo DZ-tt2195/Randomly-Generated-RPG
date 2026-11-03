@@ -217,6 +217,10 @@ public class GameFiles : MonoBehaviour
                 catch (ArgumentOutOfRangeException) { break; }
             }
         }
+        string debugMessage = "";
+        foreach (AbilityData data in splitAbilities)
+            debugMessage += $"{data.abilityName}, ";
+        //Debug.Log(debugMessage);
         return splitAbilities;
     }
     public AbilityData FindPlayerAbility(string target) => listOfPlayerAbilities[target];
@@ -242,8 +246,8 @@ public class GameFiles : MonoBehaviour
                 int savedNumber = PrefManager.GetSaved(playerName, i);
                 if (savedNumber != -1)
                 {
-                    newList.Add(toChooseFrom[i]);
-                    CheckOff(toChooseFrom[i]);
+                    newList.Add(toChooseFrom[savedNumber]);
+                    CheckOff(toChooseFrom[savedNumber]);
                 }
             }
         }
@@ -307,7 +311,7 @@ public class GameFiles : MonoBehaviour
             {
                 int savedNumber = PrefManager.GetSaved("Rules", i);
                 if (savedNumber != -1)
-                    chosenRules.Add(allRules[i]);
+                    chosenRules.Add(allRules[savedNumber]);
             }
         }
         while (chosenRules.Count < FightRules.MaxRules)
@@ -317,7 +321,6 @@ public class GameFiles : MonoBehaviour
         }
         return chosenRules;
     }
-
     #endregion
 
 }

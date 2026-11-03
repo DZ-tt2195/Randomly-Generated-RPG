@@ -71,20 +71,19 @@ DefenseIcon	DefenseIcon
 DefenseIcon_Text	Higher DefenseIcon = Take less damage.
 Protected	Protected
 Protected_Text	Can't lose PowerIcon, DefenseIcon, or HealthIcon.
-Blocked	Blocked
-Blocked_Stat_Drop	$This$ is Protected from losing $MainNum$ $Stat$.
 Locked	Locked
 Locked_Text	Mood and Position can't change.
 Blocked_Mood	$This$ is Locked and can't change Mood.
 Blocked_Position	$This$ is Locked and can't change Position.
+Blocked	Blocked
+Blocked_Stat_Drop	$This$ is Protected from losing $MainNum$ $Stat$.
 Stunned	Stunned
-Stunned_Text	Skips a turn.
+Stunned_Text	Skips their turn.
 Stun_Miss_Turn	$This$ is Stunned and misses their turn.
 Targeted	Targeted
-Targeted_Text	All single-target Abilities must target them if possible.
-Extra	Extra Ability
-Extra_Text	Can use another Ability.
-Gain_Extra_Ability	$This$ gets extra Abilities on their turn ($MainNum$).
+Targeted_Text	All single-target Abilities must target those who have Targeted, if possible.
+Blessed	Blessed
+Blessed_Text	Can use another Ability on their turn.
 Use_Extra_Ability	$This$ uses another Ability.
 StarIcon	StarIcon
 StarIcon_Text	More StarIcon = Stronger Enemy type.
@@ -102,7 +101,7 @@ Time_Taken	Time taken: $Time$
 Increase_Stat	$This$ gains $MainNum$ $Stat$.
 Decrease_Stat	$This$ loses $MainNum$ $Stat$.
 Become_New	$This$ becomes $Change$.
-Change_Status	$This$ is $Status$ (turns: $MainNum$).
+Change_Status	$This$ is $Status$ on round $Num$.
 Died	$This$ has died.
 Revived	$This$ comes back to life.
 Choose_Ability	$This$: Choose an Ability.
@@ -121,7 +120,7 @@ Tutorial_30	Here's your first Enemy. Use the Knight's Ability against them.
 Tutorial_40	The Ability you used has 1 turn of cooldown (CooldownIcon), and cannot be used this Round. Instead use a different Ability.
 Tutorial_50	You killed your first Enemy! Now you may have noticed your Knight is Focused.
 Tutorial_51	Everyone begins with a random Mood. Each Mood is effective against a different Mood.
-Tutorial_52	To see which Moods are effective against which, open the Mood Guide (usually it's at the bottom right of the screen).
+Tutorial_52	To see which Moods are effective against which, open the Mood Guide (it's at the bottom right of the screen).
 Tutorial_60	Here's your 2nd Player. Right click on the Angel to read what they do.
 Tutorial_70	This Page is Lively. Since Lively is super effective against Focused, this puts your Knight at a disadvantage.
 Tutorial_71	But you can have the Angel make the Page Tired. That way, your Focused Knight will gain the advantage.
@@ -163,7 +162,7 @@ Knight_Text	Deals lots of damage to individual Enemies at the same Position as i
 Battle_Cry	Battle Cry
 Battle_Cry_Text	A Player becomes Focused and gains $DefNum$ DefenseIcon.
 Cheer	Cheer
-Cheer_Text	Another Player becomes Lively and gets $StatusNum$ Extra Ability.
+Cheer_Text	Another Player becomes Lively and becomes Blessed next Round.
 Debilitate	Debilitate
 Debilitate_Text	An Enemy at the same Position becomes Tired and loses $DefNum$ DefenseIcon.
 Dedicate	Dedicate
@@ -173,9 +172,9 @@ Duel_Text	Deal $MainNum$ damage to an Enemy at the same Position. They gain $Pow
 Heavy_Swing	Heavy Swing
 Heavy_Swing_Text	This becomes Tired. Then deal $MainNum$ damage to an Enemy at the same Position.
 Immobilize	Immobilize
-Immobilize_Text	Deal $MainNum$ damage to an Enemy at the same Position. They become Locked for $StatusNum$ Round.
+Immobilize_Text	Deal $MainNum$ damage to an Enemy at the same Position. They become Locked during this and next Round.
 Impale	Impale
-Impale_Text	Deal $MainNum$ damage to an Enemy at the same Position. They becomes Stunned for $StatusNum$ turn.
+Impale_Text	Deal $MainNum$ damage to an Enemy at the same Position. They becomes Stunned this Round.
 Joust	Joust
 Joust_Text	Deal $MainNum$ damage to an Enemy at the same Position. Then this loses $PowNum$ PowerIcon.
 Knock_Down	Knock Down
@@ -195,9 +194,9 @@ Patience_Text	A Player becomes Tired, and an Enemy becomes Lively.
 Pillage	Pillage
 Pillage_Text	All Players gain $DefNum$ DefenseIcon. An Enemy loses $DefNum$ DefenseIcon.
 Prioritize	Prioritize
-Prioritize_Text	Deal $MainNum$ damage to an Enemy at the same Position. They become Targeted for $StatusNum$ Rounds.
+Prioritize_Text	Deal $MainNum$ damage to an Enemy at the same Position. They become Targeted next Round.
 Redirect	Redirect
-Redirect_Text	Another Player gains $DefNum$ DefenseIcon and becomes Targeted for $StatusNum$ Rounds.
+Redirect_Text	Another Player gains $DefNum$ DefenseIcon and becomes Targeted during this and next Round.
 Strike	Strike
 Strike_Text	This gains $DefNum$ DefenseIcon. Then deal $MainNum$ damage to an Enemy at the same Position.
 Take_Over	Take Over
@@ -207,7 +206,7 @@ Twirl_Text	This becomes Lively. Then deal $MainNum$ damage to an Enemy at the sa
 Angel	Angel
 Angel_Text	Heals Players and starts Elevated. Can do everything but attack.
 Assist	Assist
-Assist_Text	Another Grounded Player gains $MainNum$ HealthIcon and gets $StatusNum$ Extra Ability.
+Assist_Text	Another Grounded Player gains $MainNum$ HealthIcon and becomes Blessed next Round.
 Concentration	Concentration
 Concentration_Text	An Elevated Player gains $MainNum$ HealthIcon and becomes Focused.
 Disorient	Disorient
@@ -221,11 +220,11 @@ Exorcism_Text	An Elevated Enemy loses $PowNum$ PowerIcon. Each Elevated Player g
 Gift_of_Flight	Gift of Flight
 Gift_of_Flight_Text	A Grounded Enemy becomes Lively and Elevated.
 Immunity	Immunity
-Immunity_Text	Another Elevated Player gains $MainNum$ HealthIcon and becomes Protected for $StatusNum$ Round.
+Immunity_Text	Another Elevated Player gains $MainNum$ HealthIcon and becomes Protected this Round.
 Joy	Joy
 Joy_Text	A Grounded Player gains $MainNum$ HealthIcon and becomes Lively.
 Level_Up	Level Up
-Level_Up_Text	A Player gains $PowNum$ PowerIcon, $DefNum$ DefenseIcon, and becomes Stunned for $StatusNum$ turn.
+Level_Up_Text	A Player gains $PowNum$ PowerIcon, $DefNum$ DefenseIcon, and becomes Stunned next Round.
 Lift_Up	Lift Up
 Lift_Up_Text	A Grounded Player gains $MainNum$ HealthIcon and becomes Elevated.
 Overheal	Overheal
@@ -233,7 +232,7 @@ Overheal_Text	All Players gain $MainNum$ Max HealthIcon and $SecNum$ HealthIcon.
 Plummet	Plummet
 Plummet_Text	An Elevated Enemy becomes Focused and Grounded.
 Preserve	Preserve
-Preserve_Text	A Player gains $MainNum$ HealthIcon and becomes Locked for $StatusNum$ Round.
+Preserve_Text	A Player gains $MainNum$ HealthIcon and becomes Locked this Round.
 Restore	Restore
 Restore_Text	Each Player with $MiscNum$ HealthIcon or less gains $MainNum$ HealthIcon.
 Recuperate	Recuperate
@@ -251,7 +250,7 @@ Team_Up_Text	Each Grounded Player gains $MainNum$ HealthIcon and $DefNum$ Defens
 Wizard	Wizard
 Wizard_Text	Deals small amounts of damage to multiple Enemies at once. Has control over Positions and PowerIcon.
 Above_Danger	Above Danger
-Above_Danger_Text	A Grounded Player becomes Elevated and Protected for $StatusNum$ Rounds.
+Above_Danger_Text	A Grounded Player becomes Elevated and Protected during this and next Round.
 Accelerate	Accelerate
 Accelerate_Text	Another Player gains $PowNum$ PowerIcon. Decrease their active CooldownIcon by $MiscNum$.
 Bad_Omens	Bad Omens
@@ -269,13 +268,13 @@ Headwinds_Text	Deal $MainNum$ damage to each Elevated Enemy. They each lose $Pow
 Launch	Launch
 Launch_Text	A Grounded Enemy becomes Elevated and loses $PowNum$ PowerIcon.
 Manipulate_Time	Manipulate Time
-Manipulate_Time_Text	Deal $MainNum$ damage to all Enemies. They each get $StatusNum$ Extra Ability.
+Manipulate_Time_Text	Deal $MainNum$ damage to all Enemies. They each become Blessed this Round.
 Overgrowth	Overgrowth
 Overgrowth_Text	Each Grounded Player gains $PowNum$ PowerIcon. Then deal $MainNum$ damage to each Grounded Enemy.
 Punch_Up	Punch Up
 Punch_Up_Text	Deal $MainNum$ damage to each Grounded Enemy with $MiscNum$ HealthIcon or more.
 Readjust	Readjust
-Readjust_Text	An Enemy switches Positions and becomes Stunned for $StatusNum$ turn.
+Readjust_Text	An Enemy switches Positions and becomes Stunned this Round.
 Stalactites	Stalactites
 Stalactites_Text	Deal $MainNum$ damage to each Elevated Enemy. They each become Grounded.
 Stare_Down	Stare Down
@@ -291,7 +290,7 @@ Tornado_Text	Each Elevated Player becomes Grounded. Deal $MainNum$ damage to eac
 Touchdown	Touchdown
 Touchdown_Text	An Elevated Player becomes Grounded and gains $PowNum$ PowerIcon.
 Warp	Warp
-Warp_Text	A Player switches Positions and becomes Locked for $StatusNum$ Rounds.
+Warp_Text	A Player switches Positions and becomes Locked during this and next round.
 Revive	Revive
 Revive_Text	Bring back a dead Player with $MainNum$ HealthIcon and a random Mood.
 Wait	Wait
@@ -311,7 +310,7 @@ Barbarian_Text	Makes itself Focused, attacks the Player with the most HealthIcon
 Fury	Fury
 Fury_Text	Deal $MainNum$ damage to the Player with the most HealthIcon.
 Trample	Trample
-Trample_Text	The Player with the most HealthIcon loses $DefNum$ DefenseIcon and becomes Targeted for $StatusNum$ Rounds.
+Trample_Text	The Player with the most HealthIcon loses $DefNum$ DefenseIcon and becomes Targeted for the next $StatusNum$ Rounds.
 Brawl	Brawl
 Brawl_Text	The Player with the most HealthIcon loses $MainNum$ Max HealthIcon.
 Frenzy	Frenzy
@@ -325,17 +324,17 @@ Screech_Text	A Player becomes Lively and loses $DefNum$ DefenseIcon.
 Echolocate	Echlocate
 Echolocate_Text	This gains $PowNum$ PowerIcon.
 Bloodthirst	Bloodthirst
-Bloodthirst_Text	This becomes Tired and gets $StatusNum$ Extra Ability.
+Bloodthirst_Text	This becomes Tired and becomes Blessed next Round.
 Bees	Bees
 Bees_Text	Helps other Elevated Enemies stay alive with status effects.
 Sting	Sting
-Sting_Text	Deal $MainNum$ damage to all Players. This becomes Targeted for $StatusNum$ Rounds.
+Sting_Text	Deal $MainNum$ damage to all Players. This becomes Targeted next round.
 Honey	Honey
 Honey_Text	Another Elevated Enemy gains $MainNum$ HealthIcon.
 Swarm	Protect the Queen
-Swarm_Text	Another Elevated Enemy becomes Protected for $StatusNum$ Rounds.
+Swarm_Text	Another Elevated Enemy becomes Protected next Round.
 Support	Support
-Support_Text	Another Elevated Enemy gets $StatusNum$ Extra Ability.
+Support_Text	Another Elevated Enemy becomes Blessed next Round.
 Cow	Cow
 Cow_Text	Either attacks the Player who most recently damaged them, or does some healing.
 Charge	Charge
@@ -345,7 +344,7 @@ Milk_Text	Another Enemy gains $MainNum$ HealthIcon and becomes Lively.
 Graze	Graze
 Graze_Text	This gains $MainNum$ Max HealthIcon and $MainNum$ HealthIcon.
 Bellow	Bellow
-Bellow_Text	This gains $DefNum$ DefenseIcon and becomes Targeted for $StatusNum$ Rounds.
+Bellow_Text	This gains $DefNum$ DefenseIcon and becomes Targeted next round.
 Crow	Crow
 Crow_Text	Basic Enemy who attacks Grounded and Elevated Players.
 Peck	Peck
@@ -357,7 +356,7 @@ Dark_Energy_Text	Deal $MainNum$ damage to all Players.
 Betray	Betray
 Betray_Text	Deal $SecNum$ damage to another Enemy. This gains $MainNum$ Max HealthIcon, $MainNum$ HealthIcon, and $PowNum$ PowerIcon.
 Ritual	Ritual
-Ritual_Text	Another Enemy becomes Stunned for $StatusNum$ turn. This reduces their active Ability CooldownIcon by $MiscNum$.
+Ritual_Text	Another Enemy becomes Stunned next round. This reduces their active Ability CooldownIcon by $MiscNum$.
 Absorb	Demand Energy
 Absorb_Text	All other Players and Enemies lose $PowNum$ PowerIcon.
 Dragon	Dragon
@@ -375,7 +374,7 @@ Drone_Text	Makes itself Elevated and raises its PowerIcon before attacking multi
 Sound_Waves	Sound Waves
 Sound_Waves_Text	Deal $MainNum$ damage to all Players.
 Alarm	Alarm
-Alarm_Text	This gains $PowNum$ PowerIcon and becomes Elevated and Locked for $StatusNum$ Rounds.
+Alarm_Text	This gains $PowNum$ PowerIcon and becomes Elevated and Locked next round.
 Ghost	Ghost
 Ghost_Text	Makes Players change Positions, and then deals damage to all Players while Tired.
 Jumpscare	Jumpscare
@@ -385,7 +384,7 @@ Lament_Text	This and another Enemy both become Tired.
 Possession	Possession
 Possession_Text	A Grounded Player becomes Elevated and loses $PowNum$ PowerIcon.
 Release	Release
-Release_Text	An Elevated Player becomes Grounded and Stunned for $StatusNum$ turn.
+Release_Text	An Elevated Player becomes Grounded and Stunned next round.
 Herald	Herald
 Herald_Text	If not killed fast enough, will start to summon 3 StarIcon Enemies.
 Flag_Whack	Flag Whack
@@ -415,7 +414,7 @@ Sneak_Attack_Text	Deal $MainNum$ damage to the Player with the least amount of H
 Shurikens	Shurikens
 Shurikens_Text	Deal $MainNum$ damage to all Players with $MiscNum$ HealthIcon or more.
 Skulk	Skulk
-Skulk_Text	If this is Elevated, it becomes Grounded and Protected for $StatusNum$ Rounds.
+Skulk_Text	If this is Elevated, it becomes Grounded and Protected next Round.
 Wall_Climb	Wall Climb
 Wall_Climb_Text	If this is Grounded, it becomes Elevated and gains $PowNum$ PowerIcon.
 Page	Page
@@ -451,7 +450,7 @@ Drop_Text	Deal $MainNum$ damage to each Elevated Player. They each become Ground
 Dangle	Dangle
 Dangle_Text	All Grounded Players become Elevated and lose $PowNum$ PowerIcon.
 Control	Control
-Control_Text	Each other Elevated Enemy gets $StatusNum$ Extra Ability.
+Control_Text	Each other Elevated Enemy becomes Blessed next Round.
 Puppy	PUPPY!!!
 Puppy_Text	Attacks Players after they're Grounded and their DefenseIcon has been reduced.
 Bite	Bite
@@ -471,7 +470,7 @@ Breed_Text	Summon a Rats.
 Royalty	Royalty
 Royalty_Text	Summons more 1 StarIcon Enemies, and then gives them more PowerIcon and Max HealthIcon.
 Order	Order
-Order_Text	Deal $MainNum$ damage to a Player. They become Targeted for $StatusNum$ Rounds.
+Order_Text	Deal $MainNum$ damage to a Player. They become Targeted next round.
 Promote	Promote
 Promote_Text	Another Enemy gains $MainNum$ Max HealthIcon and $MainNum$ HealthIcon.
 Call	Call
@@ -483,17 +482,17 @@ Siren_Text	Makes a Player Focused and Stunned, and then deals damage to Stunned 
 Drown	Drown
 Drown_Text	Deal $MainNum$ damage to a Stunned Player.
 Shipwreck	Shipwreck
-Shipwreck_Text	A Focused Player loses $DefNum$ DefenseIcon and becomes Stunned for $StatusNum$ turns.
+Shipwreck_Text	A Focused Player loses $DefNum$ DefenseIcon and becomes Stunned the next $StatusNum$ Rounds.
 Manipulate	Manipulate
-Manipulate_Text	A Player becomes Focused and Locked for $StatusNum$ Rounds.
+Manipulate_Text	A Player becomes Focused and Locked for the next $StatusNum$ Rounds.
 Sing	Sing
-Sing_Text	A $MiscNum$ StarIcon Enemy gains $DefenseNum$ DefenseIcon and becomes Targeted for $StatusNum$ Rounds.
+Sing_Text	A $MiscNum$ StarIcon Enemy gains $DefenseNum$ DefenseIcon and becomes Targeted for $StatusNum$ rounds.
 Spider	Spider
 Spider_Text	While this is Elevated, it'll make Players Elevated and Tired, and then lower their DefenseIcon.
 Stab_Prey	Stab Prey
 Stab_Prey_Text	If this is Elevated, deal $MainNum$ damage to an Elevated Player.
 Trap	Trap
-Trap_Text	If this is Elevated, a Grounded Player becomes Elevated and Locked for $StatusNum$ Rounds.
+Trap_Text	If this is Elevated, a Grounded Player becomes Elevated and Locked for the next $StatusNum$ Rounds.
 Silk_Wrap	Silk Wrap
 Silk_Wrap_Text	An Elevated Player becomes Tired and loses $PowNum$ PowerIcon.
 Spin_Web	Spin Web
@@ -513,7 +512,7 @@ Trickster_Text	Makes a Grounded Player Lively, and then makes their Ability Cool
 Mischief	Mischief
 Mischief_Text	Deal $MainNum$ damage to a Grounded Player.
 Delude	Delude
-Delude_Text	A Player becomes Lively, Grounded, and Locked for $StatusNum$ Round.
+Delude_Text	A Player becomes Lively, Grounded, and Locked for the next $StatusNum$ Rounds.
 Delay	Delay
 Delay_Text	A Grounded Player gets $MiscNum$ CooldownIcon added to one of their available Abilities.
 Sidetrack	Sidetrack
@@ -523,7 +522,7 @@ Golem_Text	Makes itself Targeted and increases its DefenseIcon.
 Smash	Smash
 Smash_Text	Deal $MainNum$ damage to a Player. This gains $DefNum$ DefenseIcon.
 Block	Block
-Block_Text	This becomes Grounded and Targeted for $StatusNum$ Rounds.
+Block_Text	This becomes Grounded and Targeted next round.
 Wolf	Wolf
 Wolf_Text	Makes itself Lively and goes after Focused and Grounded Players. Also helps out any 1 StarIcon Enemies.
 Pounce	Pounce
@@ -533,11 +532,11 @@ Hunt_Text	An Enemy becomes Lively, and a Player becomes Focused.
 Nurture	Nurture
 Nurture_Text	All $MiscNum$ StarIcon Enemies gain $PowNum$ PowerIcon and $DefNum$ DefenseIcon.
 Guard	Guard
-Guard_Text	A $MiscNum$ StarIcon Enemy becomes Protected for $StatusNum$ Rounds.
+Guard_Text	A $MiscNum$ StarIcon Enemy becomes Protected next Round.
 Passion	Passion
 Passion_Text	Each Round: everyone who's Focused gains $PowNum$ PowerIcon.
 Lucky	Lucky
-Lucky_Text	Each Round: everyone who's Lively gets $StatusNum$ Extra Ability.
+Lucky_Text	Each Round: everyone who's Lively becomes Blessed this Round.
 Rest	Rest
 Rest_Text	Each Round: everyone who's Tired gains $MainNum$ HealthIcon.
 Preparation	Preparation
@@ -547,7 +546,7 @@ Inspiration_Text	Waves 2-5: Players get a new set of random Abilities.
 Crowds	Crowds
 Crowds_Text	Waves 1-4: Add another $MiscNum$ StarIcon Enemy at random, and all Enemies lose $MainNum$ Max HealthIcon.
 Charge_Up	Charge Up
-Charge_Up_Text	Each Wave: A random Enemy gains $MainNum$ Max HealthIcon, $MainNum$ HealthIcon, $PowNum$ PowerIcon, $DefNum$ DefenseIcon, and becomes Stunned for $StatusNum$ turns.
+Charge_Up_Text	Each Wave: A random Enemy gains $MainNum$ Max HealthIcon, $MainNum$ HealthIcon, $PowNum$ PowerIcon, $DefNum$ DefenseIcon, and becomes Stunned during this and the next Round.
 Topsy_Turvy	Topsy Turvy
 Topsy_Turvy_Text	Each Round: all Players switch Positions.
 Bloodied	Bloodied
@@ -557,7 +556,7 @@ Comfort_Zone_Text	Anyone who's at their starting Position has +$DefNum$ DefenseI
 New1	New1
 New1_Text	Each Wave: All Players gain $MainNum$ Max HealthIcon. Each Round: All Players lose $SecNum$ Max HealthIcon.
 New2	New2
-New2_Text	When a Player uses Wait, they become Locked for $StatusNum$ rounds.
+New2_Text	When a Player uses Wait, they become Targeted and Locked during this and next round.
 New3	New3
 New3_Text	When a Player changes a Player's Position or Mood, the Player gains $MainNum$ HealthIcon.
 New4	New4
@@ -587,4 +586,4 @@ Update_10_Text	Switched the moods Archer and Wolf care about \nHerald is Elevate
 Update_11	Aug 31, 2026
 Update_11_Text	Hidden optional stuff on the title screen behind the extras button \nYou customize abilities and rules on title screen instead \nThe game will remember which abilities and rules you chose \nChanged some Wizard abilities; renamed, buffed and nerfed some other abilities \nOutside of the tutorial, player abilities begin with their normal CooldownIcon, and Angel has the 1st turn \nSimplified log messages for abilities \nFixed some bugs with status effects
 Update_12	NEXT DATE
-Update_12_Text	Replaced Wall with Golem \nAdded X more rules, and tweaked some \nYou can clear all selections in the customizer \nRats no longer increases its defense
+Update_12_Text	Replaced Wall with Golem \nAdded X more rules, and tweaked some \nYou can clear all selections in the customizer \nRats no longer increases its defense \nWeakened Taskmaster \nStatus effects are reworded to happen on specific rounds, and extra abilities are now Blessed \nIf multiple targets have Targeted, you choose between them \nFixed some bugs

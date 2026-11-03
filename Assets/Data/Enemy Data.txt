@@ -3,7 +3,7 @@ Page	Basic Enemy who attacks Grounded Players.	5	GROUNDED	Swing,	None	Alayna Dan
 Crow	Basic Enemy who attacks Grounded and Elevated Players.	4	ELEVATED	Peck,	None	Una Fricker\nMTG: Classic Sixth Edition\n(Storm Crow)	0
 Bees	Helps other Elevated Enemies stay alive with status effects.	5	ELEVATED	Sting,Honey,Swarm,Support,	None	Tom Wanerstrand\nMTG: Time Spiral\n(Unyaro Bees)	1
 Drone	Makes itself Elevated and raises its PowerIcon before attacking multiple Players at once.	5	ELEVATED	Sound_Waves,Alarm,	ChooseAttack	James Paick\nMTG: Guilds of Ravnica\n(Dimir Spybug)	1
-Golem	Makes itself Targeted and increases its DefenseIcon.	5	GROUNDED	Smash,Block,	None	Svetlin Velinov\nMTG: Rivals of Ixalan\n(Golden Guardian)	1
+Golem	Makes itself Targeted and increases its DefenseIcon.	5	GROUNDED	Smash,Block,	ChooseAttack	Svetlin Velinov\nMTG: Rivals of Ixalan\n(Golden Guardian)	1
 Herald	If not killed fast enough, will start to summon 3 StarIcon Enemies.	5	ELEVATED	Flag_Whack,Announce,	CameOffCooldown	Grant Hansen\nDominion: Renaissance\n(Flag Bearer)	1
 Kitty	Alternates between Grounded and Elevated, and attacks any Player at the same Position.	5	GROUNDED	Scratch,Climb_Up,Reflex,Lure,	None	Howard Lyon\nMTG: Eldritch Moon\n(Harmless Offering)	1
 Leprechaun	If this is at full HealthIcon, it increases Player Stats; otherwise it deals lots of damage.	5	GROUNDED	Prank,Offer_Gold,	None	Brian Brinlee\nDominion: Nocturne\n(Leprechaun)	1

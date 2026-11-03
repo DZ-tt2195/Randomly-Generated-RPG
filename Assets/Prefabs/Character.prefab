@@ -66,10 +66,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: <link="StunnedImage"><sprite="StunnedImage" name="StunnedImage"></link>
-    <link="ProtectedImage"><sprite="ProtectedImage" name="ProtectedImage"></link>
-    <link="TargetedImage"><sprite="TargetedImage" name="TargetedImage"></link> <link="ExtraImage"><sprite="ExtraImage"
-    name="ExtraImage"></link><link="LockedImage"><sprite="LockedImage" name="LockedImage"></link>
+  m_text: <link="StunImage"><sprite="StunnedImage" name="StunnedImage"></link> <link="ProtectedImage"><sprite="ProtectedImage"
+    name="ProtectedImage"></link> <link="TargetedImage"><sprite="TargetedImage" name="TargetedImage"></link>
+    <link="BlessedImage"><sprite="BlessedImage" name="BlessedImage"></link><link="LockedImage"><sprite="LockedImage"
+    name="LockedImage"></link>
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
   m_sharedMaterial: {fileID: -3852492252101762229, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}

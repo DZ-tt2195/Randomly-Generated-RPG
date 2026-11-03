@@ -42,8 +42,7 @@ public class NewCustomizer : MonoBehaviour
             AudioManager.instance.Menu();
             foreach (ToCustomize customize in toCustomizeList)
             {
-                int max = customize.toTranslate == "Rules" ? FightRules.MaxRules: Character.maxAbilities;
-
+                int max = customize.toTranslate.Equals(nameof(AutoTranslate.Rules)) ? FightRules.MaxRules: Character.maxAbilities;
                 for (int i = 0; i < max; i++)
                 {
                     int value = i < customize.toSave.Count? customize.toSave[i]: -1;

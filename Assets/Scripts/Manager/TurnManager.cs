@@ -27,7 +27,6 @@ class WaveSetup
 
 public class TurnManager : MonoBehaviour
 {
-
 #region Setup
 
     public static TurnManager inst;
@@ -58,12 +57,8 @@ public class TurnManager : MonoBehaviour
 
     [Foldout("Misc", true)]
         int currentWave;
-        int currentRound;
+        int currentRound; public int GetRound(int plus) => currentRound+plus;
         bool isBattling;
-        Character _targetedPlayer;
-        [ReadOnly] public Character targetedPlayer { get { return _targetedPlayer; } set { ResetTargetedPlayer(value); } }
-        Character _targetedEnemy;
-        [ReadOnly] public Character targetedEnemy { get { return _targetedEnemy; } set { ResetTargetedEnemy(value); } }
         Stopwatch gameTimer;
 
     private void Awake()
@@ -118,7 +113,6 @@ public class TurnManager : MonoBehaviour
     }
 
     #endregion
-
 #region Gameplay Loop
     public IEnumerator NewWave()
     {
@@ -167,11 +161,13 @@ public class TurnManager : MonoBehaviour
                 int randomNum = (dailyRNG != null) ? dailyRNG.Next(0, listOfEnemies.Count) : UnityEngine.Random.Range(0, listOfEnemies.Count);
                 Character randomEnemy = listOfEnemies[randomNum];
 
-                yield return randomEnemy.ChangeMaxHP(chargeUp.mainNumber, 1);
-                yield return randomEnemy.ChangeHealth(chargeUp.mainNumber, 1);
-                yield return randomEnemy.ChangeStat(Stats.Power, chargeUp.powerStat, 1, null);
-                yield return randomEnemy.ChangeStat(Stats.Defense, chargeUp.defenseStat, 1, null);
-                yield return randomEnemy.ChangeEffect(StatusEffect.Stunned, chargeUp.statusNumber, 1, null);
+                yield return randomEnemy.ChangeMaxHP(chargeUp.mainNumber, 1, null);
+                yield return randomEnemy.ChangeHealth(chargeUp.mainNumber, 1, null);
+                yield return randomEnemy.ChangeStat(Stats.PowerIcon, chargeUp.powerStat, 1, null);
+                yield return randomEnemy.ChangeStat(Stats.DefenseIcon, chargeUp.defenseStat, 1, null);
+
+                for (int i = 0; i<=chargeUp.statusNumber; i++)
+                    yield return randomEnemy.ChangeEffect(new StatusRound(StatusEffect.Stunned, GetRound(i)), 1, null);
             }
 
             StartCoroutine(NewRound(false));
@@ -184,6 +180,8 @@ public class TurnManager : MonoBehaviour
         Log.instance.AddText(AutoTranslate.Round(currentRound.ToString()));
 
         speedQueue = AllCharacters();
+        foreach (Character character in speedQueue)
+            character.StatusUI();
 
         RulesData topsyTurvy = FightRules.inst.CheckRule(nameof(AutoTranslate.Topsy_Turvy), 0);
         RulesData lucky = FightRules.inst.CheckRule(nameof(AutoTranslate.Lucky), 0);
@@ -191,14 +189,7 @@ public class TurnManager : MonoBehaviour
         RulesData rest = FightRules.inst.CheckRule(nameof(AutoTranslate.Rest), 0);
 
         foreach (Character character in speedQueue)
-        {
-            if (character.StatEffectdict[StatusEffect.Protected] >= 1)
-                yield return character.ChangeEffect(StatusEffect.Protected, -1, -1, null);
-            if (character.StatEffectdict[StatusEffect.Locked] >= 1)
-                yield return character.ChangeEffect(StatusEffect.Locked, -1, -1, null);
-            if (character.StatEffectdict[StatusEffect.Targeted] >= 1)
-                yield return character.ChangeEffect(StatusEffect.Targeted, -1, -1, null);
-            
+        {            
             if (topsyTurvy != null && character is PlayerCharacter)
             {
                 if (character.CurrentPosition == Position.Grounded)
@@ -206,11 +197,11 @@ public class TurnManager : MonoBehaviour
                 else
                     yield return character.ChangePosition(Position.Grounded, -1, null);
             }
-            if (lucky != null)
-                yield return character.ChangeEffect(StatusEffect.Extra, lucky.statusNumber, 1, null);
-            if (passion != null)
-                yield return character.ChangeStat(Stats.Power, passion.powerStat, 1, null);
-            if (rest != null)
+            if (lucky != null && character.CurrentMood == Mood.Lively)
+                yield return character.ChangeEffect(new StatusRound(StatusEffect.Blessed, GetRound(0)), 1, null);
+            if (passion != null && character.CurrentMood == Mood.Focused)
+                yield return character.ChangeStat(Stats.PowerIcon, passion.powerStat, 1, null);
+            if (rest != null && character.CurrentMood == Mood.Tired)
                 yield return character.ChangeHealth(rest.mainNumber, 1, null);
         }
 
@@ -337,7 +328,6 @@ public class TurnManager : MonoBehaviour
     }
 
 #endregion
-
 #region UI
     void FixedUpdate()
     {
@@ -357,7 +347,6 @@ public class TurnManager : MonoBehaviour
     }
 
 #endregion
-
 #region Misc
     public List<Character> AllCharacters()
     {
@@ -391,7 +380,7 @@ public class TurnManager : MonoBehaviour
             Log.instance.AddText(AutoTranslate.Enter_Fight(nextEnemy.name), logged);
             nextEnemy.SetupCharacter(dataFile, GameFiles.inst.ConvertToAbilityData(dataFile.listOfAbilities, false), startingMood, listOfEnemies.Count, true);
             if (currentWave < 5 && FightRules.inst.CheckRule(nameof(AutoTranslate.Crowds), -1) is RulesData crowds)
-                yield return nextEnemy.ChangeMaxHP(-crowds.mainNumber, -1);
+                yield return nextEnemy.ChangeMaxHP(-crowds.mainNumber, -1, null);
         }
     }
     public void AddPlayer(Character character)
@@ -426,35 +415,21 @@ public class TurnManager : MonoBehaviour
     {
         yield return new WaitForSeconds(PlayerPrefs.GetFloat("Animation Speed"));
     }
-    public Character CheckForTargeted(List<Character> possibleTargets)
+    public List<Character> CheckForTargeted(List<Character> possibleTargets)
     {
-        if (targetedPlayer != null && possibleTargets.Contains(targetedPlayer))
-            return targetedPlayer;
-        if (targetedEnemy != null && possibleTargets.Contains(targetedEnemy))
-            return targetedEnemy;
+        List<Character> hasTargeted = new();
+        foreach (Character character in listOfPlayers)
+            if (character.IsStatus(StatusEffect.Targeted)) hasTargeted.Add(character);
+        foreach (Character character in listOfEnemies)
+            if (character.IsStatus(StatusEffect.Targeted)) hasTargeted.Add(character);
 
-        return null;
+        List<Character> answer = new();
+        foreach (Character character in hasTargeted)
+        {
+            if (possibleTargets.Contains(character))
+                answer.Add(character);
+        }
+        return answer;
     }
-    void ResetTargetedPlayer(Character newTarget)
-    {
-        Character storePlayer = targetedPlayer;
-        _targetedPlayer = newTarget;
-        if (newTarget != null)
-            newTarget.CharacterUI();
-        if (storePlayer != null)
-            storePlayer.CharacterUI();
-    }
-    void ResetTargetedEnemy(Character newTarget)
-    {
-        Character storePlayer = targetedEnemy;
-        _targetedEnemy = newTarget;
-
-        if (newTarget != null)
-            newTarget.CharacterUI();
-        if (storePlayer != null)
-            storePlayer.CharacterUI();
-    }
-
     #endregion
-
 }

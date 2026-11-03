@@ -29,39 +29,37 @@ public class PlayerCharacter : Character
     {
         if (ability.singleTarget.Contains(target))
         {
-            Character targeted = TurnManager.inst.CheckForTargeted(ability.listOfTargets[index]);
-            if (targeted != null)
-            {
-                ability.listOfTargets[index] = new List<Character> { targeted };
-            }
-            else
-            {
-                string abilityName = Translator.inst.Translate(ability.data.abilityName);
-                string header = "";
-                switch (target)
-                {
-                    case TeamTarget.OnePlayer:
-                        header = AutoTranslate.Choose_One_Player(abilityName);
-                        break;
-                    case TeamTarget.OtherPlayer:
-                        header = AutoTranslate.Choose_Another_Player(abilityName); 
-                        break;
-                    case TeamTarget.OneEnemy:
-                        header = AutoTranslate.Choose_An_Enemy(abilityName); 
-                        break;
-                }
+            List<Character> canTarget = ability.listOfTargets[index];
+            List<Character> hasTargeted = TurnManager.inst.CheckForTargeted(canTarget);
+            
+            if (hasTargeted.Count >= 1)
+                canTarget = hasTargeted;
 
-                MakeDecision.inst.SetCharacters(header, ability.listOfTargets[index], Picked);
-                bool waiting = true;
-
-                void Picked(Character character)
-                {
-                    ability.listOfTargets[index] = new() { character };
-                    waiting = false;
-                }
-                while (waiting)
-                    yield return null;
+            string abilityName = Translator.inst.Translate(ability.data.abilityName);
+            string header = "";
+            switch (target)
+            {
+                case TeamTarget.OnePlayer:
+                    header = AutoTranslate.Choose_One_Player(abilityName);
+                    break;
+                case TeamTarget.OtherPlayer:
+                    header = AutoTranslate.Choose_Another_Player(abilityName); 
+                    break;
+                case TeamTarget.OneEnemy:
+                    header = AutoTranslate.Choose_An_Enemy(abilityName); 
+                    break;
             }
+
+            MakeDecision.inst.SetCharacters(header, canTarget, Picked);
+            bool waiting = true;
+
+            void Picked(Character character)
+            {
+                ability.listOfTargets[index] = new() { character };
+                waiting = false;
+            }
+            while (waiting)
+                yield return null;
         }
     }
     protected override IEnumerator ConfirmChoice()

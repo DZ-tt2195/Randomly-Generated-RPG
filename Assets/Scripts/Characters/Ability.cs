@@ -10,9 +10,7 @@ public enum AbilityType { None, Attack, StatPlayer, StatEnemy, MoodPlayer, MoodE
 
 public class Ability
 {
-
 #region Setup
-
     [ReadOnly] public AbilityData data;
     [ReadOnly] public HashSet<TeamTarget> singleTarget = new() { TeamTarget.OnePlayer, TeamTarget.OtherPlayer, TeamTarget.OneEnemy, TeamTarget.OtherEnemy };
     [ReadOnly] public Character self;
@@ -25,7 +23,6 @@ public class Ability
     bool runNextMethod;
     public Dictionary<string, MethodInfo> boolDictionary = new();
     public Dictionary<string, MethodInfo> enumeratorDictionary = new();
-
     public static string TranslatedDescription(string name, int mainNum, int secNum, int powNum, int defNum, int statusNum, int miscNum)
     {
         string translated = Translator.inst.Translate($"{name}_Text", new List<(string, string)>() {("MainNum", $"{mainNum}"), ("SecNum", $"{secNum}"), ("PowNum", $"{powNum}"), ("DefNum", $"{defNum}"), ("StatusNum", $"{statusNum}"), ("MiscNum", $"{miscNum}")});
@@ -85,9 +82,7 @@ public class Ability
             }
         }
     }
-
     #endregion
-
 #region Calculations
     public int Effectiveness(Character user, Character target)
     {
@@ -134,7 +129,6 @@ public class Ability
     }
 
     #endregion
-
 #region Play Condition
     public bool CanPlay()
     {
@@ -289,21 +283,31 @@ public class Ability
     }
     bool TargetIsStunned(int currentIndex)
     {
-        listOfTargets[currentIndex].RemoveAll(target => target.StatEffectdict[StatusEffect.Stunned] <= 0);
+        listOfTargets[currentIndex].RemoveAll(target => !target.IsStatus(StatusEffect.Stunned));
         return listOfTargets[currentIndex].Count > 0;
     }
     bool TargetNotStunned(int currentIndex)
     {
-        listOfTargets[currentIndex].RemoveAll(target => target.StatEffectdict[StatusEffect.Stunned] >= 1);
+        listOfTargets[currentIndex].RemoveAll(target => target.IsStatus(StatusEffect.Stunned));
         return listOfTargets[currentIndex].Count > 0;
     }
     bool NoTargetedPlayer(int currentIndex)
     {
-        return (TurnManager.inst.targetedPlayer == null);
+        foreach (Character character in TurnManager.inst.listOfPlayers)
+        {
+            if (character.IsStatus(StatusEffect.Targeted))
+                return false;
+        }
+        return true;
     }
     bool NoTargetedEnemy(int currentIndex)
     {
-        return (TurnManager.inst.targetedEnemy == null);
+        foreach (Character character in TurnManager.inst.listOfEnemies)
+        {
+            if (character.IsStatus(StatusEffect.Targeted))
+                return false;
+        }
+        return true;
     }
     bool LastAttackerExists(int currentIndex)
     {
@@ -390,15 +394,11 @@ public class Ability
         }
         return listOfTargets;
     }
-
     #endregion
-
 #region Play Instructions
     public IEnumerator ResolveInstructions(string[] listOfMethods, int index, int logged)
     {
         runNextMethod = true;
-        killed = false;
-        fullHeal = false;
         MakeDecision.inst.BlankUI();
 
         foreach (Character target in listOfTargets[index])
@@ -436,23 +436,23 @@ public class Ability
     }
     IEnumerator TargetHeal(Character target, int logged)
     {
-        yield return target.ChangeHealth(CalculateHealing(self, target, data.mainNumber, logged), logged);
+        yield return target.ChangeHealth(CalculateHealing(self, target, data.mainNumber, logged), logged, self);
         if (target.CalculateHealthPercent() >= 1f)
             fullHeal = true;
     }
     IEnumerator TargetHealSec(Character target, int logged)
     {
-        yield return target.ChangeHealth(CalculateHealing(self, target, data.secondNumber, logged), logged);
+        yield return target.ChangeHealth(CalculateHealing(self, target, data.secondNumber, logged), logged, self);
         if (target.CalculateHealthPercent() >= 1f)
             fullHeal = true;
     }
     IEnumerator TargetGainMaxHP(Character target, int logged)
     {
-        yield return target.ChangeMaxHP(data.mainNumber, logged);
+        yield return target.ChangeMaxHP(data.mainNumber, logged, self);
     }
     IEnumerator TargetLoseMaxHP(Character target, int logged)
     {
-        yield return target.ChangeMaxHP(-1*data.mainNumber, logged);
+        yield return target.ChangeMaxHP(-1*data.mainNumber, logged, self);
     }
     IEnumerator TargetSwitchPosition(Character target, int logged)
     {
@@ -487,47 +487,72 @@ public class Ability
     }
     IEnumerator TargetGainPower(Character target, int logged)
     {
-        yield return target.ChangeStat(Stats.Power, data.powerStat, logged, self);
+        yield return target.ChangeStat(Stats.PowerIcon, data.powerStat, logged, self);
     }
     IEnumerator TargetLosePower(Character target, int logged)
     {
-        yield return target.ChangeStat(Stats.Power, -1*data.powerStat, logged, self);
+        yield return target.ChangeStat(Stats.PowerIcon, -1*data.powerStat, logged, self);
     }
     IEnumerator TargetGainDefense(Character target, int logged)
     {
-        yield return target.ChangeStat(Stats.Defense, data.defenseStat, logged, self);
+        yield return target.ChangeStat(Stats.DefenseIcon, data.defenseStat, logged, self);
     }
     IEnumerator TargetLoseDefense(Character target, int logged)
     {
-        yield return target.ChangeStat(Stats.Defense, -1*data.defenseStat, logged, self);
+        yield return target.ChangeStat(Stats.DefenseIcon, -1*data.defenseStat, logged, self);
     }
     IEnumerator TargetDeath(Character target, int logged)
     {
-        yield return target.HasDied(logged);
+        yield return target.HasDied(logged, self);
     }
     IEnumerator TargetRevive(Character target, int logged)
     {
         yield return target.Revive(CalculateHealing(self, target, data.mainNumber, logged), logged);
     }
-    IEnumerator TargetBecomeStunned(Character target, int logged)
+    IEnumerator TargetStunnedThisRound(Character target, int logged)
     {
-        yield return target.ChangeEffect(StatusEffect.Stunned, data.statusNumber, logged, self);
+        yield return target.ChangeEffect(new StatusRound(StatusEffect.Stunned, TurnManager.inst.GetRound(0)), logged, self);
     }
-    IEnumerator TargetBecomeProtected(Character target, int logged)
+    IEnumerator TargetStunnedNextRounds(Character target, int logged)
     {
-        yield return target.ChangeEffect(StatusEffect.Protected, data.statusNumber, logged, self);
+        for (int i = 1; i<=data.statusNumber; i++)
+            yield return target.ChangeEffect(new StatusRound(StatusEffect.Stunned, TurnManager.inst.GetRound(i)), logged, self);
     }
-    IEnumerator TargetBecomeTargeted(Character target, int logged)
+    IEnumerator TargetProtectedThisRound(Character target, int logged)
     {
-        yield return target.ChangeEffect(StatusEffect.Targeted, data.statusNumber, logged, self);
+        yield return target.ChangeEffect(new StatusRound(StatusEffect.Protected, TurnManager.inst.GetRound(0)), logged, self);
     }
-    IEnumerator TargetBecomeLocked(Character target, int logged)
+    IEnumerator TargetProtectedNextRounds(Character target, int logged)
     {
-        yield return target.ChangeEffect(StatusEffect.Locked, data.statusNumber, logged, self);
+        for (int i = 1; i<=data.statusNumber; i++)
+            yield return target.ChangeEffect(new StatusRound(StatusEffect.Protected, TurnManager.inst.GetRound(i)), logged, self);
     }
-    IEnumerator TargetGetExtraAbility(Character target, int logged)
+    IEnumerator TargetTargetedThisRound(Character target, int logged)
     {
-        yield return target.ChangeEffect(StatusEffect.Extra, data.statusNumber, logged, self);
+        yield return target.ChangeEffect(new StatusRound(StatusEffect.Targeted, TurnManager.inst.GetRound(0)), logged, self);
+    }
+    IEnumerator TargetTargetedNextRounds(Character target, int logged)
+    {
+        for (int i = 1; i<=data.statusNumber; i++)
+            yield return target.ChangeEffect(new StatusRound(StatusEffect.Targeted, TurnManager.inst.GetRound(i)), logged, self);
+    }
+    IEnumerator TargetLockedThisRound(Character target, int logged)
+    {
+        yield return target.ChangeEffect(new StatusRound(StatusEffect.Locked, TurnManager.inst.GetRound(0)), logged, self);
+    }
+    IEnumerator TargetLockedNextRounds(Character target, int logged)
+    {
+        for (int i = 1; i<=data.statusNumber; i++)
+            yield return target.ChangeEffect(new StatusRound(StatusEffect.Locked, TurnManager.inst.GetRound(i)), logged, self);
+    }
+    IEnumerator TargetBlessedThisRound(Character target, int logged)
+    {
+        yield return target.ChangeEffect(new StatusRound(StatusEffect.Blessed, TurnManager.inst.GetRound(0)), logged, self);
+    }
+    IEnumerator TargetBlessedNextRounds(Character target, int logged)
+    {
+        for (int i = 1; i<=data.statusNumber; i++)
+            yield return target.ChangeEffect(new StatusRound(StatusEffect.Blessed, TurnManager.inst.GetRound(i)), logged, self);
     }
     IEnumerator TargetIncreaseAllCooldown(Character target, int logged)
     {
@@ -597,7 +622,5 @@ public class Ability
     {
         yield return TurnManager.inst.CreateEnemy(GameFiles.inst.RandomEnemy(data.miscNumber, null), Character.RandomMood(null), logged);
     }
-
     #endregion
-
 }
