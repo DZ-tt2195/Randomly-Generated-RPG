@@ -10,6 +10,7 @@ Preparation	After a Player uses an Attack or Healing Ability, they lose $MainNum
 Rest	Each Round: everyone who's Tired gains $MainNum$ HealthIcon.	Heal	2					
 Topsy_Turvy	Each Round: all Players switch Positions.	SwitchPosition						
 New1	Each Wave: All Players gain $MainNum$ Max HealthIcon. Each Round: All Players lose $SecNum$ Max HealthIcon.	MaxHP	5	1				NOT CODED
-New2	When a Player uses Wait, they become Targeted and Locked during this and next round.	BecomeLocked, BecomeTargeted					1	
+New2	When a Player uses Wait, they become Targeted and Locked during this and next round.	BecomeLocked, BecomeTargeted					1	NOT CODED
 New3	When a Player changes a Player's Position or Mood, the Player gains $MainNum$ HealthIcon.	Heal	1					NOT CODED
 New4	When a Player changes an Enemy's Position or Mood, the Enemy takes $MainNum$ damage.	Attack	1					NOT CODED
+New5	Every even Round: no one can gain HealthIcon, PowerIcon, or DefenseIcon.							NOT CODED

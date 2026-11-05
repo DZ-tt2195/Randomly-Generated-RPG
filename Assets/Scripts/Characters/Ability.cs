@@ -7,7 +7,6 @@ using System.Linq;
 
 public enum TeamTarget { None, Self, All, OnePlayer, OtherPlayer, OneEnemy, OtherEnemy, AllPlayers, AllOtherPlayers, AllEnemies, AllOtherEnemies };
 public enum AbilityType { None, Attack, StatPlayer, StatEnemy, MoodPlayer, MoodEnemy, PositionPlayer, PositionEnemy, Healing, Misc };
-
 public class Ability
 {
 #region Setup
@@ -16,7 +15,7 @@ public class Ability
     [ReadOnly] public Character self;
     [ReadOnly] public string editedDescription;
     [ReadOnly] public AbilityType mainType;
-    [ReadOnly] public int currentCooldown;
+    [ReadOnly] public int cooldownUntil;
     [ReadOnly] public List<List<Character>> listOfTargets = new();
     [ReadOnly] public bool killed;
     [ReadOnly] public bool fullHeal;
@@ -32,7 +31,8 @@ public class Ability
     {
         this.self = self;
         this.data = data;
-        currentCooldown = (startWithCooldown) ? data.baseCooldown : 0;
+        if (startWithCooldown)
+            cooldownUntil = data.baseCooldown;
         editedDescription = TranslatedDescription(data.abilityName, data.mainNumber, data.secondNumber, data.powerStat, data.defenseStat, data.statusNumber, data.miscNumber);
 
         mainType = AbilityType.Misc;
@@ -130,9 +130,16 @@ public class Ability
 
     #endregion
 #region Play Condition
+    public bool OnCooldown()
+    {
+        if (TurnManager.inst == null)
+            return false;
+        else
+            return cooldownUntil >= TurnManager.inst.GetRound(0);
+    }
     public bool CanPlay()
     {
-        if (currentCooldown > 0)
+        if (OnCooldown())
             return false;
 
         listOfTargets.Clear();
@@ -291,6 +298,16 @@ public class Ability
         listOfTargets[currentIndex].RemoveAll(target => target.IsStatus(StatusEffect.Stunned));
         return listOfTargets[currentIndex].Count > 0;
     }
+    bool TargetNotLocked(int currentIndex)
+    {
+        listOfTargets[currentIndex].RemoveAll(target => target.IsStatus(StatusEffect.Locked));
+        return listOfTargets[currentIndex].Count > 0;
+    }
+    bool TargetNotProtected(int currentIndex)
+    {
+        listOfTargets[currentIndex].RemoveAll(target => target.IsStatus(StatusEffect.Protected));
+        return listOfTargets[currentIndex].Count > 0;
+    }
     bool NoTargetedPlayer(int currentIndex)
     {
         foreach (Character character in TurnManager.inst.listOfPlayers)
@@ -323,7 +340,7 @@ public class Ability
         bool HasNoCooldown(Character target)
         {
             foreach (Ability ability in target.listOfRandomAbilities)
-                if (ability.currentCooldown == 0) return true;
+                if (!ability.OnCooldown()) return true;
             return false;
         }
     }
@@ -335,9 +352,9 @@ public class Ability
         bool HasCooldown(Character target)
         {
             foreach (Ability ability in target.listOfAutoAbilities)
-                if (ability.currentCooldown > 0) return true;
+                if (ability.OnCooldown()) return true;
             foreach (Ability ability in target.listOfRandomAbilities)
-                if (ability.currentCooldown > 0) return true;
+                if (ability.OnCooldown()) return true;
             return false;
         }
     }
@@ -559,17 +576,17 @@ public class Ability
         int total = 0;
         foreach (Ability ability in target.listOfAutoAbilities)
         {
-            if (ability.currentCooldown > 0)
+            if (ability.OnCooldown())
             {
-                ability.currentCooldown += data.miscNumber;
+                ability.cooldownUntil += data.miscNumber;
                 total++;
             }
         }
         foreach (Ability ability in target.listOfRandomAbilities)
         {
-            if (ability.currentCooldown > 0)
+            if (ability.OnCooldown())
             {
-                ability.currentCooldown += data.miscNumber;
+                ability.cooldownUntil += data.miscNumber;
                 total++;
             }
         }
@@ -583,17 +600,17 @@ public class Ability
         int total = 0;
         foreach (Ability ability in target.listOfAutoAbilities)
         {
-            if (ability.currentCooldown > 0)
+            if (ability.OnCooldown())
             {
-                ability.currentCooldown -= data.miscNumber;
+                ability.cooldownUntil -= data.miscNumber;
                 total++;
             }
         }
         foreach (Ability ability in target.listOfRandomAbilities)
         {
-            if (ability.currentCooldown > 0)
+            if (ability.OnCooldown())
             {
-                ability.currentCooldown -= data.miscNumber;
+                ability.cooldownUntil -= data.miscNumber;
                 total++;
             }
         }
@@ -604,11 +621,11 @@ public class Ability
     }
     IEnumerator TargetForceOneCooldown(Character target, int logged)
     {
-        List<Ability> hasNoCooldown = target.listOfRandomAbilities.Where(ability => ability.currentCooldown == 0).ToList();
+        List<Ability> hasNoCooldown = target.listOfRandomAbilities.Where(ability => !ability.OnCooldown()).ToList();
         if (hasNoCooldown.Count > 0)
         {
             Ability chosenAbility = hasNoCooldown[Random.Range(0, hasNoCooldown.Count)];
-            chosenAbility.currentCooldown += this.data.miscNumber;
+            chosenAbility.cooldownUntil = TurnManager.inst.GetRound(this.data.miscNumber);
             string answer = AutoTranslate.Apply_Cooldown(target.name, Translator.inst.Translate(chosenAbility.data.abilityName), this.data.miscNumber.ToString());
             Log.instance.AddText(answer, logged);
         }

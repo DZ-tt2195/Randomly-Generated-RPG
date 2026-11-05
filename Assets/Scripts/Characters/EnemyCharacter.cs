@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class EnemyCharacter : Character
 {
-    protected override IEnumerator ChooseAbility(int logged, bool extraAbility)
+    protected override IEnumerator ChooseAbility(int logged)
     {
         List<Ability> allAbilities = new();
         List<Ability> attackingAbilities = new();

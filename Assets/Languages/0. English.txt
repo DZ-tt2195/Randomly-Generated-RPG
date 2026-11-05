@@ -50,7 +50,7 @@ Confirm	Confirm
 Rechoose	Rechoose
 Display_Tooltip	Display Tooltip for keywords / icons
 CooldownIcon	CooldownIcon
-CooldownIcon_Text	CooldownIcon: Ability can't be used again until enough turns have passed.
+CooldownIcon_Text	CooldownIcon: Ability can't be used again until enough Rounds have passed.
 Dead	Dead
 Tired	Tired
 Tired_Text	 +2 damage against Lively, -2 damage against Focused.
@@ -70,20 +70,21 @@ PowerIcon_Text	Higher PowerIcon = Stronger Attack and Healing Abilities.
 DefenseIcon	DefenseIcon
 DefenseIcon_Text	Higher DefenseIcon = Take less damage.
 Protected	Protected
-Protected_Text	Can't lose PowerIcon, DefenseIcon, or HealthIcon.
+Protected_Text	Protected: Can't lose PowerIcon, DefenseIcon, or HealthIcon.
 Locked	Locked
-Locked_Text	Mood and Position can't change.
+Locked_Text	Locked: Mood and Position can't change.
+Blocked	Blocked
 Blocked_Mood	$This$ is Locked and can't change Mood.
 Blocked_Position	$This$ is Locked and can't change Position.
-Blocked	Blocked
 Blocked_Stat_Drop	$This$ is Protected from losing $MainNum$ $Stat$.
+Blocked_Stat_Gain	$This$ can't gain $MainNum$ $Stat$.
 Stunned	Stunned
-Stunned_Text	Skips their turn.
+Stunned_Text	Stunned: Skips their turn.
 Stun_Miss_Turn	$This$ is Stunned and misses their turn.
 Targeted	Targeted
-Targeted_Text	All single-target Abilities must target those who have Targeted, if possible.
+Targeted_Text	Targeted: All single-target Abilities must target those who have Targeted, if possible.
 Blessed	Blessed
-Blessed_Text	Can use another Ability on their turn.
+Blessed_Text	Blessed: Can use another Ability on their turn.
 Use_Extra_Ability	$This$ uses another Ability.
 StarIcon	StarIcon
 StarIcon_Text	More StarIcon = Stronger Enemy type.
@@ -117,7 +118,7 @@ Tutorial	Tutorial
 Tutorial_10	This is a turn-based RPG where your Players are given random Abilities to fight against random Enemies.
 Tutorial_20	You always have the same 3 Players. Right click on the Knight to see what they do.
 Tutorial_30	Here's your first Enemy. Use the Knight's Ability against them.
-Tutorial_40	The Ability you used has 1 turn of cooldown (CooldownIcon), and cannot be used this Round. Instead use a different Ability.
+Tutorial_40	The Ability you used has a cooldown (CooldownIcon) of 1, and cannot be used this Round. Instead use a different Ability.
 Tutorial_50	You killed your first Enemy! Now you may have noticed your Knight is Focused.
 Tutorial_51	Everyone begins with a random Mood. Each Mood is effective against a different Mood.
 Tutorial_52	To see which Moods are effective against which, open the Mood Guide (it's at the bottom right of the screen).
@@ -561,6 +562,8 @@ New3	New3
 New3_Text	When a Player changes a Player's Position or Mood, the Player gains $MainNum$ HealthIcon.
 New4	New4
 New4_Text	When a Player changes an Enemy's Position or Mood, the Enemy takes $MainNum$ damage.
+New5	New5
+New5_Text	Every even Round: no one can gain HealthIcon, PowerIcon, or DefenseIcon.
 Update_0	Dec 9, 2025
 Update_0_Text	Dropped speed and luck, and changed abilities that used them\nTurn order is now players first (in order of Wizard, Knight, Angel), then enemies in order\nAngry's +2 PowerIcon is now +1 PowerIcon, +1 DefenseIcon
 Update_1	Dec 12, 2025
@@ -576,7 +579,7 @@ Update_5_Text	Fixed log autoscroll \nFixed encyclopedia putting abilities in not
 Update_6	Feb 08, 2026
 Update_6_Text	Fixed some translation issues \nAdded fonts for some languages \nFixed minor bugs in encyclopedia
 Update_7	Feb 28, 2026
-Update_7_Text	Dropped Neutral, Emotion effects and Cheats/Challenges \nAdded 10 Rules; 2 are randomly chosen per game to change combat \nChanged and replaced many abilities \nRevive is affected by the user's PowerIcon, Recuperates only 8, and doesn't mess up the turn order \nPowerIcon and DefenseIcon are capped at -3 and +3 \nProtected, Targeted, and Locked wear off at the start of each round \nEmotions are now Moods, and it's Lively, Focused, Tired
+Update_7_Text	Dropped Neutral, Emotion effects and Cheats/Challenges \nAdded 10 Rules; 2 are randomly chosen per game to change combat \nChanged and replaced many abilities \nRevive is affected by the user's PowerIcon, Revive only heals 8, and doesn't mess up the turn order \nBoth PowerIcon and DefenseIcon are capped at -3 and +3 \n Protected, Targeted, and Locked wear off at the start of each round \nEmotions are now Moods, and it's Lively, Focused, Tired
 Update_8	Mar 02, 2026
 Update_8_Text	Knight now hits Enemies at the same Position as it (not necessarily just Grounded) \nWave 1 is now 3 1-Star Enemies \nWave 2 is now 2 2-Star Enemies \nChanged some Rules and Wizard abilities
 Update_9	Mar 22, 2026
@@ -586,4 +589,4 @@ Update_10_Text	Switched the moods Archer and Wolf care about \nHerald is Elevate
 Update_11	Aug 31, 2026
 Update_11_Text	Hidden optional stuff on the title screen behind the extras button \nYou customize abilities and rules on title screen instead \nThe game will remember which abilities and rules you chose \nChanged some Wizard abilities; renamed, buffed and nerfed some other abilities \nOutside of the tutorial, player abilities begin with their normal CooldownIcon, and Angel has the 1st turn \nSimplified log messages for abilities \nFixed some bugs with status effects
 Update_12	NEXT DATE
-Update_12_Text	Replaced Wall with Golem \nAdded X more rules, and tweaked some \nYou can clear all selections in the customizer \nRats no longer increases its defense \nWeakened Taskmaster \nStatus effects are reworded to happen on specific rounds, and extra abilities are now Blessed \nIf multiple targets have Targeted, you choose between them \nFixed some bugs
+Update_12_Text	Replaced Wall with Golem \nAdded X more rules, and tweaked some \nYou can clear all selections in the customizer \nEnemies are smarter in avoiding Protected and Locked Players \nStatus effects and CooldownIcon are reworded to happen on specific Rounds, and extra abilities are renamed to Blessed \nMultiple targets can have Targeted, and you choose between all valid targets \nWeakened Revive and some enemy \nFixed some bugs

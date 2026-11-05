@@ -360,14 +360,14 @@ public class Character : MonoBehaviour
 #region Take Turn
     internal IEnumerator MyTurn(int logged)
     {
-        yield return ResolveTurn(logged, false);
+        yield return ResolveTurn(logged);
         if (IsStatus(StatusEffect.Blessed))
         {
             Log.instance.AddText(AutoTranslate.Use_Extra_Ability(this.name), logged);
-            yield return ResolveTurn(logged, true);            
+            yield return ResolveTurn(logged);            
         }
     }
-    IEnumerator ResolveTurn(int logged, bool extraAbility)
+    IEnumerator ResolveTurn(int logged)
     {
         ClearAbility();
         if (IsStatus(StatusEffect.Stunned))
@@ -379,7 +379,7 @@ public class Character : MonoBehaviour
         
         while (chosenAbility == null)
         {
-            yield return ChooseAbility(logged, extraAbility);
+            yield return ChooseAbility(logged);
             for (int i = 0; i < chosenAbility.data.toTarget.Length; i++)
             {
                 yield return ChooseTarget(chosenAbility, chosenAbility.data.toTarget[i], i);
@@ -388,9 +388,9 @@ public class Character : MonoBehaviour
             }
             yield return ConfirmChoice();
         }
-        yield return AbilityUse(logged, extraAbility);
+        yield return AbilityUse(logged);
     }
-    protected virtual IEnumerator ChooseAbility(int logged, bool extraAbility)
+    protected virtual IEnumerator ChooseAbility(int logged)
     {
         yield return null;
     }
@@ -402,22 +402,8 @@ public class Character : MonoBehaviour
     {
         yield return null;
     }
-    IEnumerator AbilityUse(int logged, bool extraAbility)
+    IEnumerator AbilityUse(int logged)
     {
-        if (!extraAbility)
-        {
-            foreach (Ability ability in listOfAutoAbilities)
-            {
-                if (ability.currentCooldown > 0)
-                    ability.currentCooldown--;
-            }
-            foreach (Ability ability in listOfRandomAbilities)
-            {
-                if (ability.currentCooldown > 0)
-                    ability.currentCooldown--;
-            }
-        }
-
         Log.instance.AddText(AutoTranslate.Use_Ability(Translator.inst.Translate(this.name), Translator.inst.Translate(chosenAbility.data.abilityName)), logged);
         TurnManager.inst.CreateVisual(Translator.inst.Translate(chosenAbility.data.abilityName), this.transform.localPosition);
         
@@ -441,7 +427,7 @@ public class Character : MonoBehaviour
 
             if (newCooldown > 0)
             {
-                chosenAbility.currentCooldown = newCooldown;
+                chosenAbility.cooldownUntil = TurnManager.inst.GetRound(newCooldown);
                 string answer = AutoTranslate.Apply_Cooldown(this.name, Translator.inst.Translate(chosenAbility.data.abilityName), newCooldown.ToString());
                 Log.instance.AddText(answer, logged);
             }
@@ -465,7 +451,6 @@ public class Character : MonoBehaviour
         chosenAbility = null;
         chosenTarget.Clear();        
     }
-
 #endregion
 #region UI
     private void FixedUpdate()

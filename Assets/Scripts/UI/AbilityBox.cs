@@ -57,10 +57,10 @@ public class AbilityBox : MonoBehaviour
                 textCountdown.transform.parent.gameObject.SetActive(false);
             }
 
-            if (!disableOverlay && ability.currentCooldown > 0)
+            if (!disableOverlay && ability.OnCooldown())
             {
                 cantUse.transform.parent.gameObject.SetActive(true);
-                cantUse.text = $"{ability.currentCooldown}";
+                cantUse.text = $"{ability.cooldownUntil - TurnManager.inst.GetRound(0) + 1}";
             }
             else if (!disableOverlay && button != null && !button.interactable)
             {

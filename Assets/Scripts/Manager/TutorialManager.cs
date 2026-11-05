@@ -224,7 +224,7 @@ public class TutorialManager : MonoBehaviour
 
                 yield return ClickThroughDialogue(new List<string>() { AutoTranslate.Tutorial_120(), AutoTranslate.Tutorial_121() });
 
-                yield return TurnManager.inst.NewRound(false);
+                yield return TurnManager.inst.NewRound(true);
                 while (TurnManager.inst.listOfEnemies.Count > 0)
                     yield return TurnManager.inst.NewRound(true);
                 currentStep = 13;

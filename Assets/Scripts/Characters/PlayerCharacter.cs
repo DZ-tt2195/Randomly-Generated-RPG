@@ -7,7 +7,7 @@ using System.Linq;
 
 public class PlayerCharacter : Character
 {
-    protected override IEnumerator ChooseAbility(int logged, bool extraAbility)
+    protected override IEnumerator ChooseAbility(int logged)
     {
         this.border.gameObject.SetActive(true);
         
