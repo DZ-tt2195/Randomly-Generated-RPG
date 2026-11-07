@@ -4,17 +4,16 @@ using UnityEngine;
 using MyBox;
 using System.Reflection;
 using System.Linq;
-
 public enum TeamTarget { None, Self, All, OnePlayer, OtherPlayer, OneEnemy, OtherEnemy, AllPlayers, AllOtherPlayers, AllEnemies, AllOtherEnemies };
 public enum AbilityType { None, Attack, StatPlayer, StatEnemy, MoodPlayer, MoodEnemy, PositionPlayer, PositionEnemy, Healing, Misc };
 public class Ability
 {
 #region Setup
-    [ReadOnly] public AbilityData data;
+    [ReadOnly] public AbilityData data {get; private set;}
     [ReadOnly] public HashSet<TeamTarget> singleTarget = new() { TeamTarget.OnePlayer, TeamTarget.OtherPlayer, TeamTarget.OneEnemy, TeamTarget.OtherEnemy };
-    [ReadOnly] public Character self;
-    [ReadOnly] public string editedDescription;
-    [ReadOnly] public AbilityType mainType;
+    [ReadOnly] public Character self {get; private set;}
+    [ReadOnly] public string editedDescription {get; private set;}
+    [ReadOnly] public AbilityType mainType {get; private set;}
     [ReadOnly] public int cooldownUntil;
     [ReadOnly] public List<List<Character>> listOfTargets = new();
     [ReadOnly] public bool killed;
@@ -183,12 +182,12 @@ public class Ability
     }
     bool TargetHealthOrMore(int currentIndex)
     {
-        listOfTargets[currentIndex].RemoveAll(target => target.currentHealth <= data.miscNumber);
+        listOfTargets[currentIndex].RemoveAll(target => target.GetHealth() <= data.miscNumber);
         return listOfTargets[currentIndex].Count > 0;
     }
     bool TargetHealthOrLess(int currentIndex)
     {
-        listOfTargets[currentIndex].RemoveAll(target => target.currentHealth >= data.miscNumber);
+        listOfTargets[currentIndex].RemoveAll(target => target.GetHealth() >= data.miscNumber);
         return listOfTargets[currentIndex].Count > 0;
     }
     bool TargetInjured(int currentIndex)
@@ -329,7 +328,7 @@ public class Ability
     bool LastAttackerExists(int currentIndex)
     {
         if (self.lastToAttackThis == null) return false;
-        if (self.lastToAttackThis.currentHealth == 0) return false;
+        if (self.lastToAttackThis.GetHealth() == 0) return false;
         return listOfTargets[currentIndex].Contains(self.lastToAttackThis);
     }
     bool TargetZeroCooldown(int currentIndex)
@@ -418,6 +417,12 @@ public class Ability
         runNextMethod = true;
         MakeDecision.inst.BlankUI();
 
+        if (index >= listOfTargets.Count)
+        {
+            Debug.Log($"{index}, {listOfTargets.Count}");
+            yield break;
+        }
+
         foreach (Character target in listOfTargets[index])
         {
             if (target == null)
@@ -430,7 +435,7 @@ public class Ability
                 if (methodName.Equals("None") || methodName.Equals(""))
                     continue;
 
-                if (target != null && target.currentHealth >= 0)
+                if (target != null && target.GetHealth() >= 0)
                     yield return (IEnumerator)enumeratorDictionary[methodName].Invoke(this, new object[2] { target, logged });
                 if (!runNextMethod) break;
                 yield return TurnManager.inst.WaitTime();
@@ -440,36 +445,36 @@ public class Ability
     IEnumerator TargetAttack(Character target, int logged)
     {
         int damageDealt = CalculateDamage(self, target, data.mainNumber, logged);
-        yield return target.ChangeHealth(-1*damageDealt, logged, self);
-        if (target == null || target.currentHealth <= 0)
+        yield return target.ChangeStat(Stats.HealthIcon, -1*damageDealt, logged, self);
+        if (target == null || target.GetHealth() <= 0)
             killed = true;
     }
     IEnumerator TargetAttackSec(Character target, int logged)
     {
         int damageDealt = CalculateDamage(self, target, data.secondNumber, logged);
-        yield return target.ChangeHealth(-1*damageDealt, logged, self);
-        if (target == null || target.currentHealth <= 0)
+        yield return target.ChangeStat(Stats.HealthIcon, -1*damageDealt, logged, self);
+        if (target == null || target.GetHealth() <= 0)
             killed = true;
     }
     IEnumerator TargetHeal(Character target, int logged)
     {
-        yield return target.ChangeHealth(CalculateHealing(self, target, data.mainNumber, logged), logged, self);
+        yield return target.ChangeStat(Stats.HealthIcon, CalculateHealing(self, target, data.mainNumber, logged), logged, self);
         if (target.CalculateHealthPercent() >= 1f)
             fullHeal = true;
     }
     IEnumerator TargetHealSec(Character target, int logged)
     {
-        yield return target.ChangeHealth(CalculateHealing(self, target, data.secondNumber, logged), logged, self);
+        yield return target.ChangeStat(Stats.HealthIcon, CalculateHealing(self, target, data.secondNumber, logged), logged, self);
         if (target.CalculateHealthPercent() >= 1f)
             fullHeal = true;
     }
     IEnumerator TargetGainMaxHP(Character target, int logged)
     {
-        yield return target.ChangeMaxHP(data.mainNumber, logged, self);
+        yield return target.ChangeStat(Stats.Max_HealthIcon, data.mainNumber, logged, self);
     }
     IEnumerator TargetLoseMaxHP(Character target, int logged)
     {
-        yield return target.ChangeMaxHP(-1*data.mainNumber, logged, self);
+        yield return target.ChangeStat(Stats.Max_HealthIcon, -1*data.mainNumber, logged, self);
     }
     IEnumerator TargetSwitchPosition(Character target, int logged)
     {

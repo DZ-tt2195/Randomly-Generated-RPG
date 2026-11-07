@@ -52,7 +52,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::RulesText
   nameText: {fileID: 6591343935370449846}
   descriptionText: {fileID: 1565796930458190120}
-  thisRule: 
+  thisRule:
+    rulesName: 
+    mainNumber: 0
+    secondNumber: 0
+    powerStat: 0
+    defenseStat: 0
+    statusNumber: 0
+    miscNumber: 0
   toggle: {fileID: 0}
 --- !u!1 &6055741342809789914
 GameObject:

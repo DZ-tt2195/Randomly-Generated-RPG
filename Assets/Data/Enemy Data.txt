@@ -1,7 +1,7 @@
 characterName	description	maxHealth	startPosition	listOfAbilities	aiTargeting	artCredit	difficulty
 Page	Basic Enemy who attacks Grounded Players.	5	GROUNDED	Swing,	None	Alayna Danner\nDominion: Adventures\n(Page)	0
 Crow	Basic Enemy who attacks Grounded and Elevated Players.	4	ELEVATED	Peck,	None	Una Fricker\nMTG: Classic Sixth Edition\n(Storm Crow)	0
-Bees	Helps other Elevated Enemies stay alive with status effects.	5	ELEVATED	Sting,Honey,Swarm,Support,	None	Tom Wanerstrand\nMTG: Time Spiral\n(Unyaro Bees)	1
+Bees	Helps other Elevated Enemies by giving them Protected and Blessed.	5	ELEVATED	Sting,Honey,Swarm,Support,	None	Tom Wanerstrand\nMTG: Time Spiral\n(Unyaro Bees)	1
 Drone	Makes itself Elevated and raises its PowerIcon before attacking multiple Players at once.	5	ELEVATED	Sound_Waves,Alarm,	ChooseAttack	James Paick\nMTG: Guilds of Ravnica\n(Dimir Spybug)	1
 Golem	Makes itself Targeted and increases its DefenseIcon.	5	GROUNDED	Smash,Block,	ChooseAttack	Svetlin Velinov\nMTG: Rivals of Ixalan\n(Golden Guardian)	1
 Herald	If not killed fast enough, will start to summon 3 StarIcon Enemies.	5	ELEVATED	Flag_Whack,Announce,	CameOffCooldown	Grant Hansen\nDominion: Renaissance\n(Flag Bearer)	1
@@ -23,6 +23,6 @@ Trickster	Makes a Grounded Player Lively, and then makes their Ability CooldownI
 Wolf	Makes itself Lively and goes after Focused and Grounded Players. Also helps out any 1 StarIcon Enemies.	10	GROUNDED	Pounce,Hunt,Nurture,Guard,	Effectiveness	Slawomir Maniak\nMTG: Eldritch Moon\n(Kessig Prowler)	2
 Demon	Weakens other Enemies to make itself stronger. Eventually it'll unleash a attack on all Players.	15	ELEVATED	Dark_Energy,Betray,Ritual,Absorb,	CameOffCooldown	Vincent Proce\nMTG: Guilds of Ravnica\n(Doom Whisperer)	3
 Dragon	Deals lots of damage to all Players when Elevated. Heals itself and becomes Grounded when damaged.	15	ELEVATED	Firebreath,Roost,Take_Flight,Roar,	None	Josh Hass\nMTG: Amonkhet: Invocations\n(Omniscience)	3
-Puppeteer	Makes Players Elevated, then makes them Grounded again to deal damage. Can also give all other Elevated Enemies Extra Abilities.	15	ELEVATED	Collision,Drop,Dangle,Control,	MostTargets	James Ryman\nMTG: Kaladesh\n(Marionette Master)	3
+Puppeteer	Makes Players Elevated, then makes them Grounded again to deal damage. Can also give all other Elevated Enemies Blessed.	15	ELEVATED	Collision,Drop,Dangle,Control,	MostTargets	James Ryman\nMTG: Kaladesh\n(Marionette Master)	3
 Royalty	Summons more 1 StarIcon Enemies, and then gives them more PowerIcon and Max HealthIcon.	15	GROUNDED	Order,Promote,Call,Procession,	None	Kieran Yanner\nMTG: Throne of Eldraine\n(Kenrith, the Returned King)	3
-Taskmaster	Keeps changing its own Mood, and deals heavy damage to any Player with a different Mood.	15	GROUNDED	Punishment,Demand_Lively,Demand_Focused,Demand_Tired,	ChooseAttack	Claus Stephan\nDominion: Plunder\n(Taskmaster)	3
+Taskmaster	Keeps changing its own Mood, and deals damage to any Players with a different Mood.	15	GROUNDED	Punishment,Demand_Lively,Demand_Focused,Demand_Tired,	ChooseAttack	Claus Stephan\nDominion: Plunder\n(Taskmaster)	3

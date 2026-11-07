@@ -86,11 +86,11 @@ public class EnemyCharacter : Character
                         break;
 
                     case CharacterTargeting.LeastHealth:
-                        ability.listOfTargets[index].OrderBy(target => target.currentHealth).ToList();
+                        ability.listOfTargets[index].OrderBy(target => target.GetHealth()).ToList();
                         ability.listOfTargets[index] = new() { ability.listOfTargets[index][0] };
                         break;
                     case CharacterTargeting.MostHealth:
-                        ability.listOfTargets[index].OrderByDescending(target => target.currentHealth).ToList();
+                        ability.listOfTargets[index].OrderByDescending(target => target.GetHealth()).ToList();
                         ability.listOfTargets[index] = new() { ability.listOfTargets[index][0] };
                         break;
 

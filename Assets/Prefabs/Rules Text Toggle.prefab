@@ -540,5 +540,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::RulesText
   nameText: {fileID: 3350428182141967809}
   descriptionText: {fileID: 509584733723451148}
-  thisRule: 
+  thisRule:
+    rulesName: 
+    mainNumber: 0
+    secondNumber: 0
+    powerStat: 0
+    defenseStat: 0
+    statusNumber: 0
+    miscNumber: 0
   toggle: {fileID: 4892149575560793902}

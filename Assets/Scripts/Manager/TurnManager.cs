@@ -138,16 +138,26 @@ public class TurnManager : MonoBehaviour
             yield return NewAnimation(true);
             Log.instance.AddText(AutoTranslate.Wave(currentWave.ToString(), listOfWaveSetup.Count.ToString()));
 
-            if (currentWave >= 2 && FightRules.inst.CheckRule(nameof(AutoTranslate.Inspiration), 0) is RulesData inspiration)
+            if (currentWave >= 2)
             {
+                RulesData inspiration = FightRules.inst.CheckRule(nameof(AutoTranslate.Inspiration), 0);
+                RulesData doomed = FightRules.inst.CheckRule(nameof(AutoTranslate.Doomed), 0);
+
                 foreach (Character player in listOfPlayers)
                 {
-                    for (int i = player.listOfRandomAbilities.Count - 1; i >= 0; i--)
-                        player.DropAbility(player.listOfRandomAbilities[i]);
+                    if (inspiration != null)
+                    {
+                        for (int i = player.listOfRandomAbilities.Count - 1; i >= 0; i--)
+                            player.DropAbility(player.listOfRandomAbilities[i]);
 
-                    HashSet<AbilityData> newAbilties = GameFiles.inst.CompletePlayerAbilities(GameFiles.inst.ConvertToAbilityData(player.data.listOfAbilities, true), dailyRNG);
-                    foreach (AbilityData data in newAbilties)
-                        player.AddAbility(data, false, false);
+                        HashSet<AbilityData> newAbilties = GameFiles.inst.CompletePlayerAbilities(GameFiles.inst.ConvertToAbilityData(player.data.listOfAbilities, true), dailyRNG);
+                        foreach (AbilityData data in newAbilties)
+                            player.AddAbility(data, false, false);
+                    }
+                    if (doomed != null)
+                    {
+                        yield return player.ChangeStat(Stats.Max_HealthIcon, doomed.mainNumber, 1, null);
+                    }
                 }
                 Log.instance.AddText(AutoTranslate.Blank());
             }
@@ -161,8 +171,8 @@ public class TurnManager : MonoBehaviour
                 int randomNum = (dailyRNG != null) ? dailyRNG.Next(0, listOfEnemies.Count) : UnityEngine.Random.Range(0, listOfEnemies.Count);
                 Character randomEnemy = listOfEnemies[randomNum];
 
-                yield return randomEnemy.ChangeMaxHP(chargeUp.mainNumber, 1, null);
-                yield return randomEnemy.ChangeHealth(chargeUp.mainNumber, 1, null);
+                yield return randomEnemy.ChangeStat(Stats.Max_HealthIcon, chargeUp.mainNumber, 1, null);
+                yield return randomEnemy.ChangeStat(Stats.HealthIcon, chargeUp.mainNumber, 1, null);
                 yield return randomEnemy.ChangeStat(Stats.PowerIcon, chargeUp.powerStat, 1, null);
                 yield return randomEnemy.ChangeStat(Stats.DefenseIcon, chargeUp.defenseStat, 1, null);
 
@@ -193,16 +203,16 @@ public class TurnManager : MonoBehaviour
             if (topsyTurvy != null && character is PlayerCharacter)
             {
                 if (character.CurrentPosition == Position.Grounded)
-                    yield return character.ChangePosition(Position.Elevated, -1, null);
+                    yield return character.ChangePosition(Position.Elevated, 1, null);
                 else
-                    yield return character.ChangePosition(Position.Grounded, -1, null);
+                    yield return character.ChangePosition(Position.Grounded, 1, null);
             }
             if (lucky != null && character.CurrentMood == Mood.Lively)
                 yield return character.ChangeEffect(new StatusRound(StatusEffect.Blessed, GetRound(0)), 1, null);
             if (passion != null && character.CurrentMood == Mood.Focused)
                 yield return character.ChangeStat(Stats.PowerIcon, passion.powerStat, 1, null);
             if (rest != null && character.CurrentMood == Mood.Tired)
-                yield return character.ChangeHealth(rest.mainNumber, 1, null);
+                yield return character.ChangeStat(Stats.HealthIcon, rest.mainNumber, 1, null);
         }
 
         while (speedQueue.Count > 0)
@@ -211,7 +221,7 @@ public class TurnManager : MonoBehaviour
             Character nextInLine = speedQueue[0];
             speedQueue.RemoveAt(0);
 
-            if (nextInLine != null && nextInLine.currentHealth > 0)
+            if (nextInLine != null && nextInLine.GetHealth() > 0)
             {
                 Log.instance.AddText($"");
                 nextInLine.border.gameObject.SetActive(true);
@@ -320,7 +330,7 @@ public class TurnManager : MonoBehaviour
     {
         foreach (Character character in listOfPlayers)
         {
-            if (character.currentHealth > 0)
+            if (character.GetHealth() > 0)
                 return false;
         }
 
@@ -379,8 +389,8 @@ public class TurnManager : MonoBehaviour
             nextEnemy.name = Translator.inst.Translate(dataFile.characterName);
             Log.instance.AddText(AutoTranslate.Enter_Fight(nextEnemy.name), logged);
             nextEnemy.SetupCharacter(dataFile, GameFiles.inst.ConvertToAbilityData(dataFile.listOfAbilities, false), startingMood, listOfEnemies.Count, true);
-            if (currentWave < 5 && FightRules.inst.CheckRule(nameof(AutoTranslate.Crowds), -1) is RulesData crowds)
-                yield return nextEnemy.ChangeMaxHP(-crowds.mainNumber, -1, null);
+            if (currentWave < 5 && FightRules.inst.CheckRule(nameof(AutoTranslate.Crowds), 1) is RulesData crowds)
+                yield return nextEnemy.ChangeStat(Stats.Max_HealthIcon, -crowds.mainNumber, 1, null);
         }
     }
     public void AddPlayer(Character character)

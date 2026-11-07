@@ -1,7 +1,7 @@
 Title	RANDOMLY GENERATED
 Blank	
 Author_Credit	by Thomas Tang (DZ)
-Last_Update	Last Updated: NEXT DATE
+Last_Update	Last Updated: Nov 06 2026
 Language	Language
 Translator_Credit	Original Language
 Upload_Translation	Upload Translation
@@ -64,7 +64,7 @@ Elevated	Elevated
 Elevated_Text	Can't be targeted by abilities that only affect Grounded targets.
 HealthIcon	HealthIcon
 HealthIcon_Text	HealthIcon: Amount of damage this can take before dying.
-Max_Health	Max HealthIcon
+Max_HealthIcon	Max HealthIcon
 PowerIcon	PowerIcon
 PowerIcon_Text	Higher PowerIcon = Stronger Attack and Healing Abilities.
 DefenseIcon	DefenseIcon
@@ -169,7 +169,7 @@ Debilitate_Text	An Enemy at the same Position becomes Tired and loses $DefNum$ D
 Dedicate	Dedicate
 Dedicate_Text	This becomes Focused. Then deal $MainNum$ damage to an Enemy at the same Position.
 Duel	Duel
-Duel_Text	Deal $MainNum$ damage to an Enemy at the same Position. They gain $PowNum$ PowerIcon and lose $DefNum$ DefenseIcon.
+Duel_Text	An Enemy at the same Position gains $PowNum$ PowerIcon and lose $DefNum$ DefenseIcon. Then deal $MainNum$ damage to them.
 Heavy_Swing	Heavy Swing
 Heavy_Swing_Text	This becomes Tired. Then deal $MainNum$ damage to an Enemy at the same Position.
 Immobilize	Immobilize
@@ -179,7 +179,7 @@ Impale_Text	Deal $MainNum$ damage to an Enemy at the same Position. They becomes
 Joust	Joust
 Joust_Text	Deal $MainNum$ damage to an Enemy at the same Position. Then this loses $PowNum$ PowerIcon.
 Knock_Down	Knock Down
-Knock_Down_Text	Deal $MainNum$ damage to an Enemy at the same Position. Then they lose $DefNum$ DefenseIcon.
+Knock_Down_Text	An Enemy at the same Position loses $DefNum$ DefenseIcon. Then deal $MainNum$ damage to them.
 Mirror	Mirror
 Mirror_Text	Deal $MainNum$ damage to an Enemy with the same Position and Mood.
 Motivate	Motivate
@@ -257,7 +257,7 @@ Accelerate_Text	Another Player gains $PowNum$ PowerIcon. Decrease their active C
 Bad_Omens	Bad Omens
 Bad_Omens_Text	Deal $MainNum$ damage to each Grounded Enemy. They each lose $PowNum$ PowerIcon.
 Bounce	Bounce
-Bounce_Text	Deal $MainNum$ damage to each Grounded Enemy. They each become Elevated.
+Bounce_Text	Each Grounded Enemy becomes Elevated. Then deal $MainNum$ damage to each of them.
 Conformity	Conformity
 Conformity_Text	Deal $MainNum$ damage to all Enemies with a different Position and Mood than this.
 Divine_Wind	Divine Wind
@@ -277,7 +277,7 @@ Punch_Up_Text	Deal $MainNum$ damage to each Grounded Enemy with $MiscNum$ Health
 Readjust	Readjust
 Readjust_Text	An Enemy switches Positions and becomes Stunned this Round.
 Stalactites	Stalactites
-Stalactites_Text	Deal $MainNum$ damage to each Elevated Enemy. They each become Grounded.
+Stalactites_Text	Each Elevated Enemy becomes Grounded. Then deal $MainNum$ damage to each of them.
 Stare_Down	Stare Down
 Stare_Down_Text	Deal $MainNum$ damage to each Grounded Enemy with $MiscNum$ HealthIcon or less.
 Strain	Strain
@@ -327,7 +327,7 @@ Echolocate_Text	This gains $PowNum$ PowerIcon.
 Bloodthirst	Bloodthirst
 Bloodthirst_Text	This becomes Tired and becomes Blessed next Round.
 Bees	Bees
-Bees_Text	Helps other Elevated Enemies stay alive with status effects.
+Bees_Text	Helps other Elevated Enemies by giving them Protected and Blessed.
 Sting	Sting
 Sting_Text	Deal $MainNum$ damage to all Players. This becomes Targeted next round.
 Honey	Honey
@@ -443,11 +443,11 @@ Drowsiness_Text	All Players become Tired.
 Bother	Bother
 Bother_Text	All Players become Focused.
 Puppeteer	Puppeteer
-Puppeteer_Text	Makes Players Elevated, then makes them Grounded again to deal damage. Can also give all other Elevated Enemies Extra Abilities.
+Puppeteer_Text	Makes Players Elevated, then makes them Grounded again to deal damage. Can also give all other Elevated Enemies Blessed.
 Collision	Collision
 Collision_Text	Deal $MainNum$ damage to all Elevated Players.
 Drop	Drop
-Drop_Text	Deal $MainNum$ damage to each Elevated Player. They each become Grounded.
+Drop_Text	Each Elevated Player becomes Grounded. Then deal $MainNum$ damage to each of them.
 Dangle	Dangle
 Dangle_Text	All Grounded Players become Elevated and lose $PowNum$ PowerIcon.
 Control	Control
@@ -457,7 +457,7 @@ Puppy_Text	Attacks Players after they're Grounded and their DefenseIcon has been
 Bite	Bite
 Bite_Text	Deal $MainNum$ damage to a Grounded Player with $MiscNum$ DefenseIcon or less.
 Leap	Leap
-Leap_Text	Deal $MainNum$ damage to an Elevated Player. They become Grounded.
+Leap_Text	An Elevated Player becomes Grounded. Then deal $MainNum$ damage to them.
 Bark	Bark
 Bark_Text	All Players lose $DefNum$ DefenseIcon.
 Cuddle	Cuddle
@@ -499,9 +499,9 @@ Silk_Wrap_Text	An Elevated Player becomes Tired and loses $PowNum$ PowerIcon.
 Spin_Web	Spin Web
 Spin_Web_Text	A Grounded Enemy becomes Elevated and gains $DefNum$ Defense.
 Taskmaster	Taskmaster
-Taskmaster_Text	Keeps changing its own Mood, and deals heavy damage to any Player with a different Mood.
+Taskmaster_Text	Keeps changing its own Mood, and deals damage to any Players with a different Mood.
 Punishment	Punishment
-Punishment_Text	Does $MainNum$ damage to Player with a different Mood than this.
+Punishment_Text	Does $MainNum$ damage to all Players with a different Mood than this.
 Demand_Lively	Demand Lively
 Demand_Lively_Text	This becomes Lively.
 Demand_Focused	Demand Focused
@@ -554,16 +554,26 @@ Bloodied	Bloodied
 Bloodied_Text	If a Player is at $MiscNum$ HealthIcon or more, Abilities they use have $StatusNum$ more CooldownIcon, otherwise $StatusNum$ less CooldownIcon.
 Comfort_Zone	Comfort Zone
 Comfort_Zone_Text	Anyone who's at their starting Position has +$DefNum$ DefenseIcon, otherwise -$DefNum$ DefenseIcon.
-New1	New1
-New1_Text	Each Wave: All Players gain $MainNum$ Max HealthIcon. Each Round: All Players lose $SecNum$ Max HealthIcon.
-New2	New2
-New2_Text	When a Player uses Wait, they become Targeted and Locked during this and next round.
-New3	New3
-New3_Text	When a Player changes a Player's Position or Mood, the Player gains $MainNum$ HealthIcon.
-New4	New4
-New4_Text	When a Player changes an Enemy's Position or Mood, the Enemy takes $MainNum$ damage.
-New5	New5
-New5_Text	Every even Round: no one can gain HealthIcon, PowerIcon, or DefenseIcon.
+Doomed	Doomed
+Doomed_Text	Wave 2-5: All Players gain $MainNum$ Max HealthIcon. After a Player uses an Ability, they lose $SecNum$ Max HealthIcon.
+Intuition	Intuition
+Intuition_Text	When anyone changes someone's Mood, if they're on the same team, the target gains $DefNum$ DefenseIcon.
+Vigilance	Vigilance
+Vigilance_Text	When anyone changes someone's Position, if they're on the same team, the target gains $PowNum$ PowerIcon.
+Persuade	Persuade
+Persuade_Text	When anyone changes someone's Mood, if they're on different teams, the target loses $DefNum$ DefenseIcon.
+Relocate	Relocate
+Relocate_Text	When anyone changes someone's Position, if they're on different teams, the target loses $PowNum$ PowerIcon.
+Cursed	Cursed
+Cursed_Text	On every 2nd Round: no one can gain HealthIcon, PowerIcon, or DefenseIcon.
+Chain_Reaction	Chain Reaction
+Chain_Reaction_Text	When anyone dies, everyone else loses $MainNum$ HealthIcon.
+Recklessness	Recklessness
+Recklessness_Text	After a Player uses an Ability, instead of the Ability getting CooldownIcon, they lose $MiscNum$ HealthIcon per CooldownIcon.
+Enlightenment	Enlightenment
+Enlightenment_Text	After anyone Waits instead of using an Ability, they become Blessed next Round.
+Aura	Aura
+Aura_Text	When anyone gets a Status Effect, they gain $DefNum$ DefenseIcon.
 Update_0	Dec 9, 2025
 Update_0_Text	Dropped speed and luck, and changed abilities that used them\nTurn order is now players first (in order of Wizard, Knight, Angel), then enemies in order\nAngry's +2 PowerIcon is now +1 PowerIcon, +1 DefenseIcon
 Update_1	Dec 12, 2025
@@ -588,5 +598,5 @@ Update_10	May 14, 2026
 Update_10_Text	Switched the moods Archer and Wolf care about \nHerald is Elevated \nChanged several abilities for players and enemies \nAdded sound effects
 Update_11	Aug 31, 2026
 Update_11_Text	Hidden optional stuff on the title screen behind the extras button \nYou customize abilities and rules on title screen instead \nThe game will remember which abilities and rules you chose \nChanged some Wizard abilities; renamed, buffed and nerfed some other abilities \nOutside of the tutorial, player abilities begin with their normal CooldownIcon, and Angel has the 1st turn \nSimplified log messages for abilities \nFixed some bugs with status effects
-Update_12	NEXT DATE
-Update_12_Text	Replaced Wall with Golem \nAdded X more rules, and tweaked some \nYou can clear all selections in the customizer \nEnemies are smarter in avoiding Protected and Locked Players \nStatus effects and CooldownIcon are reworded to happen on specific Rounds, and extra abilities are renamed to Blessed \nMultiple targets can have Targeted, and you choose between all valid targets \nWeakened Revive and some enemy \nFixed some bugs
+Update_12	Nov 06, 2026
+Update_12_Text	Replaced Wall with Golem \nAdded X more rules, and tweaked some \nYou can clear all selections in the customizer \nEnemies are smarter in avoiding Protected and Locked Players \nStatus effects and CooldownIcon are reworded to happen on specific Rounds and not stack \nExtra abilities are renamed to Blessed \nMultiple targets can have Targeted, and you choose between all valid targets \nWeakened Revive and some enemy abilities \nFixed some bugs

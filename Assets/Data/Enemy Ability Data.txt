@@ -22,11 +22,11 @@ Cow	Milk	Another Enemy gains $MainNum$ HealthIcon and becomes Lively.	OtherEnemy
 Cow	Graze	This gains $MainNum$ Max HealthIcon and $MainNum$ HealthIcon.	Self	None	TargetGainMaxHP/TargetHeal	1	2						Healing
 Cow	Bellow	This gains $DefNum$ DefenseIcon and becomes Targeted next round.	Self	TargetDefenseOrLess/NoTargetedEnemy	TargetGainDefense/TargetTargetedNextRounds	1				1	1		StatEnemy
 Crow	Peck	Deal $MainNum$ damage to any Player.	OnePlayer	TargetNotProtected	TargetAttack	0	2						Attack
-Demon	Dark_Energy	Deal $MainNum$ damage to all Players.	AllPlayers	None	TargetAttack	4	6						Attack
-Demon	Betray	Deal $SecNum$ damage to another Enemy. This gains $MainNum$ Max HealthIcon, $MainNum$ HealthIcon, and $PowNum$ PowerIcon.	OtherEnemy-Self	TargetNotProtected-None	TargetAttackSec-TargetGainMaxHP/TargetHealSec/TargetGainPower	1	3	2	1				Healing/StatEnemy
+Demon	Dark_Energy	Deal $MainNum$ damage to all Players.	AllPlayers	None	TargetAttack	3	6						Attack
+Demon	Betray	Deal $SecNum$ damage to another Enemy. This gains $MainNum$ Max HealthIcon, $MainNum$ HealthIcon, and $PowNum$ PowerIcon.	OtherEnemy-Self	TargetNotProtected-None	TargetAttackSec-TargetGainMaxHP/TargetHealSec/TargetGainPower	1	4	2	1				Healing/StatEnemy
 Demon	Ritual	Another Enemy becomes Stunned next round. This reduces their active Ability CooldownIcon by $MiscNum$.	OtherEnemy-Self	None-TargetActiveCooldown	TargetStunnedNextRounds-TargetDecreaseAllCooldown	1					1	1	Misc
 Demon	Absorb	All other Players and Enemies lose $PowNum$ PowerIcon.	AllPlayers-AllOtherEnemies	None-None	TargetLosePower-TargetLosePower	1			1				StatPlayer
-Dragon	Firebreath	If this is Elevated, deals $MainNum$ damage to all Players.	Self-AllPlayers	TargetIsElevated-None	None-TargetAttack	1	3						Attack
+Dragon	Firebreath	If this is Elevated, deals $MainNum$ damage to all Players.	Self-AllPlayers	TargetIsElevated-None	None-TargetAttack	1	4						Attack
 Dragon	Roost	If this is Elevated, it becomes Grounded and gains $MainNum$ HealthIcon.	Self	TargetNotLocked/TargetIsElevated/TargetInjured	TargetBecomeGrounded/TargetHeal	0	4						Healing/PositionEnemy
 Dragon	Take_Flight	All Grounded Enemies becomes Elevated.	AllEnemies	TargetIsGrounded	TargetBecomeElevated	0							PositionEnemy
 Dragon	Roar	This gains $DefNum$ DefenseIcon and switches Positions.	Self	None	TargetGainDefense/TargetSwitchPosition	1				1			StatEnemy/PositionEnemy
@@ -60,11 +60,11 @@ Pixie	Agitate	All Player become Lively.	AllPlayers	None	TargetBecomeLively	1				
 Pixie	Drowsiness	All Players become Tired.	AllPlayers	None	TargetBecomeTired	1							MoodPlayer
 Pixie	Bother	All Players become Focused.	AllPlayers	None	TargetBecomeFocused	1							MoodPlayer
 Puppeteer	Collision	Deal $MainNum$ damage to all Elevated Players.	AllPlayers	TargetIsElevated	TargetAttack	0	2						Attack
-Puppeteer	Drop	Deal $MainNum$ damage to each Elevated Player. They each become Grounded.	AllPlayers	TargetIsElevated	TargetAttack/TargetBecomeGrounded	1	4						Attack/PositionPlayer
+Puppeteer	Drop	Each Elevated Player becomes Grounded. Then deal $MainNum$ damage to each of them.	AllPlayers	TargetIsElevated	TargetBecomeGrounded/TargetAttack	1	4						Attack/PositionPlayer
 Puppeteer	Dangle	All Grounded Players become Elevated and lose $PowNum$ PowerIcon.	AllPlayers	TargetIsGrounded	TargetBecomeElevated/TargetLosePower	1			1				PositionPlayer/StatPlayer
 Puppeteer	Control	Each other Elevated Enemy becomes Blessed next Round.	AllOtherEnemies	TargetIsElevated	TargetBlessedNextRounds	2					1		Misc
 Puppy	Bite	Deal $MainNum$ damage to a Grounded Player with $MiscNum$ DefenseIcon or less.	OnePlayer	TargetIsGrounded/TargetDefenseOrLess/TargetNotProtected	TargetAttack	0	3					-1	Attack
-Puppy	Leap	Deal $MainNum$ damage to an Elevated Player. They become Grounded.	OnePlayer	TargetIsElevated/TargetNotProtected/TargetNotLocked	TargetAttack/TargetBecomeGrounded	0	1						Attack/PositionPlayer
+Puppy	Leap	An Elevated Player becomes Grounded. Then deal $MainNum$ damage to them.	OnePlayer	TargetIsElevated/TargetNotProtected/TargetNotLocked	TargetBecomeGrounded/TargetAttack	0	1						Attack/PositionPlayer
 Puppy	Bark	All Players lose $DefNum$ DefenseIcon.	AllPlayers	None	TargetLoseDefense	1				1			StatPlayer
 Puppy	Cuddle	A Player with $MiscNum$ DefenseIcon or more loses $DefNum$ DefenseIcon.	OnePlayer	TargetDefenseOrMore/TargetNotProtected	TargetLoseDefense					2		1	StatPlayer
 Rats	Gnaw	Deal $MainNum$ damage to a Grounded Player. 	OnePlayer	TargetIsGrounded/TargetNotProtected	TargetAttack	0	2						Attack
@@ -81,7 +81,7 @@ Spider	Stab_Prey	If this is Elevated, deal $MainNum$ damage to an Elevated Playe
 Spider	Trap	If this is Elevated, a Grounded Player becomes Elevated and Locked for the next $StatusNum$ Rounds.	Self-OnePlayer	TargetIsElevated-TargetIsGrounded/TargetNotLocked	None-TargetBecomeElevated/TargetLockedNextRounds	0					2		PositionPlayer
 Spider	Silk_Wrap	An Elevated Player becomes Tired and loses $PowNum$ PowerIcon.	OnePlayer	TargetIsElevated/TargetNotLocked/TargetNotProtected	TargetBecomeTired/TargetLosePower	1			1				MoodPlayer/StatPlayer
 Spider	Spin_Web	A Grounded Enemy becomes Elevated and gains $DefNum$ Defense.	OneEnemy	TargetIsGrounded/TargetDefenseOrLess	TargetBecomeElevated/TargetGainDefense	0				1			PositionEnemy/StatEnemy
-Taskmaster	Punishment	Does $MainNum$ damage to Player with a different Mood than this.	OnePlayer	TargetDifferentMood/TargetNotProtected	TargetAttack	1	6						Attack
+Taskmaster	Punishment	Does $MainNum$ damage to all Players with a different Mood than this.	AllPlayers	TargetDifferentMood	TargetAttack	1	4						Attack
 Taskmaster	Demand_Lively	This becomes Lively.	Self	TargetNotLively	TargetBecomeLively	0							MoodEnemy
 Taskmaster	Demand_Focused	This becomes Focused.	Self	TargetNotFocused	TargetBecomeFocused	0							MoodEnemy
 Taskmaster	Demand_Tired	This becomes Tired.	Self	TargetNotTired	TargetBecomeTired	0							MoodEnemy
