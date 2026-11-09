@@ -1,7 +1,7 @@
 Title	RANDOMLY GENERATED
 Blank	
 Author_Credit	by Thomas Tang (DZ)
-Last_Update	Last Updated: Nov 06 2026
+Last_Update	Last Updated: Nov 09, 2026
 Language	Language
 Translator_Credit	Original Language
 Upload_Translation	Upload Translation
@@ -11,7 +11,7 @@ Update_History	Update History
 Volume	Volume
 Sound_Credits	Sound Credits
 Story	Story
-Story_Text	You are a Knight, an Angel, and a Wizard, but not at the same time. You didn't have the EXP or connections to get into the good RPGs, so you're starting at this one. The costumes are obvious hand-me-downs and the work is unpaid. It's also a virtual setting, and there's no one else to co-star with.\nYour quest is to beat up any enemies that look at you the wrong way. That NPC gave you a rock and a turnip to start with, but you didn’t remember that fact. Turns out that all the budget went into the gameplay and nothing in the game makes any cents.\nAnyways, you must roll with the punches and work with whatever they gave you. And if all else fails, you can blame it on lag, your parents, and that really cute cat.
+Story_Text	You are a Hero, an Angel, and a Wizard, but not at the same time. You didn't have the EXP or connections to get into the good RPGs, so you're starting at this one. The costumes are obvious hand-me-downs and the work is unpaid. It's also a virtual setting, and there's no one else to co-star with.\nYour quest is to beat up any enemies that look at you the wrong way. That NPC gave you a rock and a turnip to start with, but you didn’t remember that fact. Turns out that all the budget went into the gameplay and nothing in the game makes any cents.\nAnyways, you must roll with the punches and work with whatever they gave you. And if all else fails, you can blame it on lag, your parents, and that really cute cat.
 Daily_Challenge	Daily Challenge
 Your_Timezone	Your Timezone: UTC $Time$
 Next_Challenge	Next Challenge in: $Time$
@@ -52,12 +52,12 @@ Display_Tooltip	Display Tooltip for keywords / icons
 CooldownIcon	CooldownIcon
 CooldownIcon_Text	CooldownIcon: Ability can't be used again until enough Rounds have passed.
 Dead	Dead
-Tired	Tired
-Tired_Text	 +2 damage against Lively, -2 damage against Focused.
-Lively	Lively
-Lively_Text	 +2 damage against Focused, -2 damage against Tired.
+Patient	Patient
+Patient_Text	 +2 damage against Impulsive, -2 damage against Focused.
+Impulsive	Impulsive
+Impulsive_Text	 +2 damage against Focused, -2 damage against Patient.
 Focused	Focused
-Focused_Text	 +2 damage against Tired, -2 damage against Lively.
+Focused_Text	 +2 damage against Patient, -2 damage against Impulsive.
 Grounded	Grounded
 Grounded_Text	Can't be targeted by abilities that only affect Elevated targets.
 Elevated	Elevated
@@ -116,20 +116,20 @@ Confirm_Target_Two	Use $Ability$ on $Target1$ and $Target2$?
 Use_Ability	$This$ uses $Ability$.
 Tutorial	Tutorial
 Tutorial_10	This is a turn-based RPG where your Players are given random Abilities to fight against random Enemies.
-Tutorial_20	You always have the same 3 Players. Right click on the Knight to see what they do.
-Tutorial_30	Here's your first Enemy. Use the Knight's Ability against them.
+Tutorial_20	You always have the same 3 Players. Right click on the Hero to see what they do.
+Tutorial_30	Here's your first Enemy. Use the Hero's Ability against them.
 Tutorial_40	The Ability you used has a cooldown (CooldownIcon) of 1, and cannot be used this Round. Instead use a different Ability.
-Tutorial_50	You killed your first Enemy! Now you may have noticed your Knight is Focused.
+Tutorial_50	You killed your first Enemy! Now you may have noticed your Hero is Focused.
 Tutorial_51	Everyone begins with a random Mood. Each Mood is effective against a different Mood.
 Tutorial_52	To see which Moods are effective against which, open the Mood Guide (it's at the bottom right of the screen).
 Tutorial_60	Here's your 2nd Player. Right click on the Angel to read what they do.
-Tutorial_70	This Page is Lively. Since Lively is super effective against Focused, this puts your Knight at a disadvantage.
-Tutorial_71	But you can have the Angel make the Page Tired. That way, your Focused Knight will gain the advantage.
-Tutorial_90	Everyone has a Position: Grounded or Elevated. Your Knight always starts Grounded, and Angel always starts Elevated.
-Tutorial_91	One of the Knight's big weaknesses is that they can't attack Enemies with a different Position, which means they cannot attack the Crows.
+Tutorial_70	This Page is Impulsive. Since Impulsive is super effective against Focused, this puts your Hero at a disadvantage.
+Tutorial_71	But you can have the Angel make the Page Patient. That way, your Focused Hero will gain the advantage.
+Tutorial_90	Everyone has a Position: Grounded or Elevated. Your Hero always starts Grounded, and Angel always starts Elevated.
+Tutorial_91	One of the Hero's big weaknesses is that they can't attack Enemies with a different Position, which means they cannot attack the Crows.
 Tutorial_100	And now, your 3rd Player. Right click on the Wizard to read what they do.
 Tutorial_110	Your Wizard has an Ability that forces all Elevated Enemies to be Grounded. Use Stalactites against the 2 Crows.
-Tutorial_120	Now that all the Enemies are Grounded, your Knight is capable of hitting them, so finish them off.
+Tutorial_120	Now that all the Enemies are Grounded, your Hero is capable of hitting them, so finish them off.
 Tutorial_121	Note that for your convenience, Attack Abilities are colored red, Healing Abilities are colored green, the others are colored blue.
 Tutorial_130	You’ve completed the tutorial. In the main game, the 3 Players have 6 Abilities, and each fight also has 2 different Rules, all chosen at random.
 Tutorial_131	To win, you'll have to defeat 5 waves of randomly selected Enemies, with the Enemies getting stronger on later waves. Glhf!
@@ -158,20 +158,20 @@ Default_Position	Default Position
 Rules	Rules
 Chosen_Rule	Rule: $Rule$
 Apply_Rule	Applying Rule: $Rule$.
-Knight	Knight
-Knight_Text	Deals lots of damage to individual Enemies at the same Position as it. Has control over Moods and DefenseIcon.
+Hero	Hero
+Hero_Text	Deals lots of damage to individual Enemies at the same Position as it. Has control over Moods and DefenseIcon.
 Battle_Cry	Battle Cry
 Battle_Cry_Text	A Player becomes Focused and gains $DefNum$ DefenseIcon.
 Cheer	Cheer
-Cheer_Text	Another Player becomes Lively and becomes Blessed next Round.
-Debilitate	Debilitate
-Debilitate_Text	An Enemy at the same Position becomes Tired and loses $DefNum$ DefenseIcon.
+Cheer_Text	Another Player becomes Impulsive and becomes Blessed next Round.
+Discipline	Discipline
+Discipline_Text	An Enemy at the same Position becomes Patient and loses $DefNum$ DefenseIcon.
 Dedicate	Dedicate
 Dedicate_Text	This becomes Focused. Then deal $MainNum$ damage to an Enemy at the same Position.
 Duel	Duel
 Duel_Text	An Enemy at the same Position gains $PowNum$ PowerIcon and lose $DefNum$ DefenseIcon. Then deal $MainNum$ damage to them.
-Heavy_Swing	Heavy Swing
-Heavy_Swing_Text	This becomes Tired. Then deal $MainNum$ damage to an Enemy at the same Position.
+Martial_Arts	Martial Arts
+Martial_Arts_Text	This becomes Patient. Then deal $MainNum$ damage to an Enemy at the same Position.
 Immobilize	Immobilize
 Immobilize_Text	Deal $MainNum$ damage to an Enemy at the same Position. They become Locked during this and next Round.
 Impale	Impale
@@ -182,16 +182,16 @@ Knock_Down	Knock Down
 Knock_Down_Text	An Enemy at the same Position loses $DefNum$ DefenseIcon. Then deal $MainNum$ damage to them.
 Mirror	Mirror
 Mirror_Text	Deal $MainNum$ damage to an Enemy with the same Position and Mood.
-Motivate	Motivate
-Motivate_Text	An Enemy at the same Position becomes Lively. Then deal $MainNum$ damage to them.
+Annoy	Annoy
+Annoy_Text	An Enemy at the same Position becomes Impulsive. Then deal $MainNum$ damage to them.
 Obsession	Obsession
 Obsession_Text	All Enemies become Focused.
 Occupy	Occupy
 Occupy_Text	An Enemy at the same Position becomes Focused. Then deal $MainNum$ damage to them.
-Overwhelm	Overwhelm
-Overwhelm_Text	An Enemy at the same Position becomes Tired. Then deal $MainNum$ damage to them.
-Patience	Patience
-Patience_Text	A Player becomes Tired, and an Enemy becomes Lively.
+Impose	Impose
+Impose_Text	An Enemy at the same Position becomes Patient. Then deal $MainNum$ damage to them.
+Attrition	Attrition
+Attrition_Text	A Player becomes Patient, and an Enemy becomes Impulsive.
 Pillage	Pillage
 Pillage_Text	All Players gain $DefNum$ DefenseIcon. An Enemy loses $DefNum$ DefenseIcon.
 Prioritize	Prioritize
@@ -200,10 +200,8 @@ Redirect	Redirect
 Redirect_Text	Another Player gains $DefNum$ DefenseIcon and becomes Targeted during this and next Round.
 Strike	Strike
 Strike_Text	This gains $DefNum$ DefenseIcon. Then deal $MainNum$ damage to an Enemy at the same Position.
-Take_Over	Take Over
-Take_Over_Text	This becomes Focused, and another Player becomes Tired.
-Twirl	Twirl
-Twirl_Text	This becomes Lively. Then deal $MainNum$ damage to an Enemy at the same Position.
+Rush	Rush
+Rush_Text	This becomes Impulsive. Then deal $MainNum$ damage to an Enemy at the same Position.
 Angel	Angel
 Angel_Text	Heals Players and starts Elevated. Can do everything but attack.
 Assist	Assist
@@ -214,16 +212,16 @@ Disorient	Disorient
 Disorient_Text	An Enemy switches Positions and loses $DefNum$ DefenseIcon.
 Deplete	Deplete
 Deplete_Text	A Grounded Enemy loses $DefNum$ DefenseIcon. Each Grounded Player gains $MainNum$ HealthIcon.
-Exhaustion	Exhaustion
-Exhaustion_Text	An Enemy becomes Tired and loses $PowNum$ PowerIcon.
+Disarm	Disarm
+Disarm_Text	An Enemy becomes Patient and loses $PowNum$ PowerIcon.
 Exorcism	Exorcism
 Exorcism_Text	An Elevated Enemy loses $PowNum$ PowerIcon. Each Elevated Player gains $MainNum$ HealthIcon.
-Gift_of_Flight	Gift of Flight
-Gift_of_Flight_Text	A Grounded Enemy becomes Lively and Elevated.
+Levitate	Levitate
+Levitate_Text	A Grounded Enemy becomes Impulsive and Elevated.
 Immunity	Immunity
 Immunity_Text	Another Elevated Player gains $MainNum$ HealthIcon and becomes Protected this Round.
 Joy	Joy
-Joy_Text	A Grounded Player gains $MainNum$ HealthIcon and becomes Lively.
+Joy_Text	A Grounded Player gains $MainNum$ HealthIcon and becomes Impulsive.
 Level_Up	Level Up
 Level_Up_Text	A Player gains $PowNum$ PowerIcon, $DefNum$ DefenseIcon, and becomes Stunned next Round.
 Lift_Up	Lift Up
@@ -237,7 +235,7 @@ Preserve_Text	A Player gains $MainNum$ HealthIcon and becomes Locked this Round.
 Restore	Restore
 Restore_Text	Each Player with $MiscNum$ HealthIcon or less gains $MainNum$ HealthIcon.
 Recuperate	Recuperate
-Recuperate_Text	A Player becomes Tired and gains $PowNum$ PowerIcon.
+Recuperate_Text	A Player becomes Patient and gains $PowNum$ PowerIcon.
 Security	Security
 Security_Text	A Player switches Positions and gains $DefNum$ DefenseIcon.
 Soft_Landing	Soft Landing
@@ -297,13 +295,13 @@ Revive_Text	Bring back a dead Player with $MainNum$ HealthIcon and a random Mood
 Wait	Wait
 Wait_Text	Do nothing.
 Archer	Archer
-Archer_Text	Makes itself Focused, then shoots down Tired and Elevated Players.
-Distract	Distract
-Distract_Text	An Elevated Player becomes Tired. Then deal $MainNum$ damage to them.
+Archer_Text	Makes itself Patient, then shoots down Impulsive and Elevated Players.
 Bullseye	Bullseye
-Bullseye_Text	This gains $PowNum$ PowerIcon. Then deal $MainNum$ damage to an Elevated Player.
+Bullseye_Text	An Elevated Player becomes Impulsive. Then deal $MainNum$ damage to them.
+Snare	Snare
+Snare_Text	This gains $PowNum$ PowerIcon. An Elevated Player becomes Stunned next Round.
 Cover	Cover
-Cover_Text	This becomes Focused and gains $DefNum$ DefenseIcon.
+Cover_Text	This becomes Patient and gains $DefNum$ DefenseIcon.
 Aim_Up	Aim Up
 Aim_Up_Text	This becomes Grounded, and a Grounded Player becomes Elevated.
 Barbarian	Barbarian
@@ -317,15 +315,15 @@ Brawl_Text	The Player with the most HealthIcon loses $MainNum$ Max HealthIcon.
 Frenzy	Frenzy
 Frenzy_Text	This becomes Focused and gains $PowNum$ PowerIcon.
 Bat	Bat
-Bat_Text	Makes itself Tired, then it attacks Lively players and heals at the same time.
+Bat_Text	Makes itself Focused, then it attacks Patient players and heals at the same time.
 Drain	Drain
 Drain_Text	Deal $MainNum$ damage to a Player. This gains $MainNum$ HealthIcon.
 Screech	Screech
-Screech_Text	A Player becomes Lively and loses $DefNum$ DefenseIcon.
+Screech_Text	A Player becomes Patient and loses $DefNum$ DefenseIcon.
 Echolocate	Echlocate
 Echolocate_Text	This gains $PowNum$ PowerIcon.
 Bloodthirst	Bloodthirst
-Bloodthirst_Text	This becomes Tired and becomes Blessed next Round.
+Bloodthirst_Text	This becomes Focused and becomes Blessed next Round.
 Bees	Bees
 Bees_Text	Helps other Elevated Enemies by giving them Protected and Blessed.
 Sting	Sting
@@ -341,7 +339,7 @@ Cow_Text	Either attacks the Player who most recently damaged them, or does some 
 Charge	Charge
 Charge_Text	Deal $MainNum$ damage to the last Player who attacked this (if any).
 Milk	Milk
-Milk_Text	Another Enemy gains $MainNum$ HealthIcon and becomes Lively.
+Milk_Text	Another Enemy gains $MainNum$ HealthIcon and becomes Impulsive.
 Graze	Graze
 Graze_Text	This gains $MainNum$ Max HealthIcon and $MainNum$ HealthIcon.
 Bellow	Bellow
@@ -377,11 +375,11 @@ Sound_Waves_Text	Deal $MainNum$ damage to all Players.
 Alarm	Alarm
 Alarm_Text	This gains $PowNum$ PowerIcon and becomes Elevated and Locked next round.
 Ghost	Ghost
-Ghost_Text	Makes Players change Positions, and then deals damage to all Players while Tired.
+Ghost_Text	Makes Players change Positions, and then deals damage to all Players while its Patient.
 Jumpscare	Jumpscare
 Jumpscare_Text	Deal $MainNum$ damage to all Players.
-Lament	Lament
-Lament_Text	This and another Enemy both become Tired.
+Haunt	Haunt
+Haunt_Text	This and another Enemy both become Patient.
 Possession	Possession
 Possession_Text	A Grounded Player becomes Elevated and loses $PowNum$ PowerIcon.
 Release	Release
@@ -437,9 +435,9 @@ Pixie_Text	Changes all Player Moods at the same time, and attacks Elevated Playe
 Will_o_Wisp	Will-o'-Wisp
 Will_o_Wisp_Text	Deal $MainNum$ damage to an Elevated Player.
 Agitate	Agitate
-Agitate_Text	All Player become Lively.
+Agitate_Text	All Player become Impulsive.
 Drowsiness	Drowsiness
-Drowsiness_Text	All Players become Tired.
+Drowsiness_Text	All Players become Patient.
 Bother	Bother
 Bother_Text	All Players become Focused.
 Puppeteer	Puppeteer
@@ -489,31 +487,31 @@ Manipulate_Text	A Player becomes Focused and Locked for the next $StatusNum$ Rou
 Sing	Sing
 Sing_Text	A $MiscNum$ StarIcon Enemy gains $DefenseNum$ DefenseIcon and becomes Targeted for $StatusNum$ rounds.
 Spider	Spider
-Spider_Text	While this is Elevated, it'll make Players Elevated and Tired, and then lower their DefenseIcon.
+Spider_Text	While this is Elevated, it'll make Players Elevated and Patient, and then lower their DefenseIcon.
 Stab_Prey	Stab Prey
 Stab_Prey_Text	If this is Elevated, deal $MainNum$ damage to an Elevated Player.
 Trap	Trap
 Trap_Text	If this is Elevated, a Grounded Player becomes Elevated and Locked for the next $StatusNum$ Rounds.
 Silk_Wrap	Silk Wrap
-Silk_Wrap_Text	An Elevated Player becomes Tired and loses $PowNum$ PowerIcon.
+Silk_Wrap_Text	An Elevated Player becomes Patient and loses $PowNum$ PowerIcon.
 Spin_Web	Spin Web
 Spin_Web_Text	A Grounded Enemy becomes Elevated and gains $DefNum$ Defense.
 Taskmaster	Taskmaster
 Taskmaster_Text	Keeps changing its own Mood, and deals damage to any Players with a different Mood.
 Punishment	Punishment
 Punishment_Text	Does $MainNum$ damage to all Players with a different Mood than this.
-Demand_Lively	Demand Lively
-Demand_Lively_Text	This becomes Lively.
+Demand_Impulsive	Demand Impulsive
+Demand_Impulsive_Text	This becomes Impulsive.
 Demand_Focused	Demand Focused
 Demand_Focused_Text	This becomes Focused.
-Demand_Tired	Demand Tired
-Demand_Tired_Text	This becomes Tired.
+Demand_Patient	Demand Patient
+Demand_Patient_Text	This becomes Patient.
 Trickster	Trickster
-Trickster_Text	Makes a Grounded Player Lively, and then makes their Ability CooldownIcon take longer.
+Trickster_Text	Makes a Grounded Player Impulsive, and then makes their Ability CooldownIcon take longer.
 Mischief	Mischief
 Mischief_Text	Deal $MainNum$ damage to a Grounded Player.
 Delude	Delude
-Delude_Text	A Player becomes Lively, Grounded, and Locked for the next $StatusNum$ Rounds.
+Delude_Text	A Player becomes Impulsive, Grounded, and Locked for the next $StatusNum$ Rounds.
 Delay	Delay
 Delay_Text	A Grounded Player gets $MiscNum$ CooldownIcon added to one of their available Abilities.
 Sidetrack	Sidetrack
@@ -525,11 +523,11 @@ Smash_Text	Deal $MainNum$ damage to a Player. This gains $DefNum$ DefenseIcon.
 Block	Block
 Block_Text	This becomes Grounded and Targeted next round.
 Wolf	Wolf
-Wolf_Text	Makes itself Lively and goes after Focused and Grounded Players. Also helps out any 1 StarIcon Enemies.
+Wolf_Text	Makes itself Impulsive and goes after Focused and Grounded Players. Also helps out any 1 StarIcon Enemies.
 Pounce	Pounce
 Pounce_Text	Deal $MainNum$ damage to a Grounded Player.
 Hunt	Hunt
-Hunt_Text	An Enemy becomes Lively, and a Player becomes Focused.
+Hunt_Text	An Enemy becomes Impulsive, and a Player becomes Focused.
 Nurture	Nurture
 Nurture_Text	All $MiscNum$ StarIcon Enemies gain $PowNum$ PowerIcon and $DefNum$ DefenseIcon.
 Guard	Guard
@@ -537,9 +535,9 @@ Guard_Text	A $MiscNum$ StarIcon Enemy becomes Protected next Round.
 Passion	Passion
 Passion_Text	Each Round: everyone who's Focused gains $PowNum$ PowerIcon.
 Lucky	Lucky
-Lucky_Text	Each Round: everyone who's Lively becomes Blessed this Round.
+Lucky_Text	Each Round: everyone who's Impulsive becomes Blessed this Round.
 Rest	Rest
-Rest_Text	Each Round: everyone who's Tired gains $MainNum$ HealthIcon.
+Rest_Text	Each Round: everyone who's Patient gains $MainNum$ HealthIcon.
 Preparation	Preparation
 Preparation_Text	After a Player uses an Attack or Healing Ability, they lose $MainNum$ PowerIcon; if neither they gain $SecNum$ PowerIcon.
 Inspiration	Inspiration
@@ -600,3 +598,5 @@ Update_11	Aug 31, 2026
 Update_11_Text	Hidden optional stuff on the title screen behind the extras button \nYou customize abilities and rules on title screen instead \nThe game will remember which abilities and rules you chose \nChanged some Wizard abilities; renamed, buffed and nerfed some other abilities \nOutside of the tutorial, player abilities begin with their normal CooldownIcon, and Angel has the 1st turn \nSimplified log messages for abilities \nFixed some bugs with status effects
 Update_12	Nov 06, 2026
 Update_12_Text	Replaced Wall with Golem \nAdded X more rules, and tweaked some \nYou can clear all selections in the customizer \nEnemies are smarter in avoiding Protected and Locked Players \nStatus effects and CooldownIcon are reworded to happen on specific Rounds and not stack \nExtra abilities are renamed to Blessed \nMultiple targets can have Targeted, and you choose between all valid targets \nWeakened Revive and some enemy abilities \nFixed some bugs
+Update_13	Nov 09, 2026
+Update_13_Text	Recklessness down to 2 damage \nRenamed Lively to Impulsive, Tired to Patient, and Knight to Hero, and renamed those abilities \nSwitched around what moods Archer and Bat care about, and changed an Archer ability

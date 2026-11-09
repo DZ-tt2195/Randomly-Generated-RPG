@@ -10,12 +10,12 @@ Doomed	Wave 2-5: All Players gain $MainNum$ Max HealthIcon. After a Player uses 
 Enlightenment	After anyone Waits instead of using an Ability, they become Blessed next Round.	BecomeBlessed					1	
 Inspiration	Waves 2-5: Players get a new set of random Abilities.							
 Intuition	When anyone changes someone's Mood, if they're on the same team, the target gains $DefNum$ DefenseIcon.	GainDefense				1		
-Lucky	Each Round: everyone who's Lively becomes Blessed this Round.	BecomeBlessed						
+Lucky	Each Round: everyone who's Impulsive becomes Blessed this Round.	BecomeBlessed						
 Passion	Each Round: everyone who's Focused gains $PowNum$ PowerIcon.	GainPower			1			
 Persuade	When anyone changes someone's Mood, if they're on different teams, the target loses $DefNum$ DefenseIcon.	LoseDefense				1		
 Preparation	After a Player uses an Attack or Healing Ability, they lose $MainNum$ PowerIcon; if neither they gain $SecNum$ PowerIcon.	GainPower, LosePower	1	2				
-Recklessness	After a Player uses an Ability, instead of the Ability getting CooldownIcon, they lose $MiscNum$ HealthIcon per CooldownIcon.	Attack						3
+Recklessness	After a Player uses an Ability, instead of the Ability getting CooldownIcon, they lose $MiscNum$ HealthIcon per CooldownIcon.	Attack						2
 Relocate	When anyone changes someone's Position, if they're on different teams, the target loses $PowNum$ PowerIcon.	LosePower			1			
-Rest	Each Round: everyone who's Tired gains $MainNum$ HealthIcon.	Heal	2					
+Rest	Each Round: everyone who's Patient gains $MainNum$ HealthIcon.	Heal	2					
 Topsy_Turvy	Each Round: all Players switch Positions.	SwitchPosition						
 Vigilance	When anyone changes someone's Position, if they're on the same team, the target gains $PowNum$ PowerIcon.	GainPower			1			

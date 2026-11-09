@@ -11,7 +11,7 @@ public enum TeamCompare {BothPlayers, BothEnemies, Opposites}
 public enum Stats { HealthIcon, Max_HealthIcon, PowerIcon, DefenseIcon };
 public enum StatusEffect { Targeted, Locked, Protected, Blessed, Stunned };
 public enum Position { Grounded, Elevated };
-public enum Mood { Lively, Focused, Tired };
+public enum Mood { Impulsive, Focused, Patient };
 public class StatusRound
 {
     public StatusEffect effect;

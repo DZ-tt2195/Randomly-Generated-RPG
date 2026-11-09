@@ -23,8 +23,8 @@ public class Translator : MonoBehaviour
     [SerializeField] TMP_Text confirmDecisions;
     [SerializeField] TMP_Text displayTooltip;
     [SerializeField] TMP_Text focused;
-    [SerializeField] TMP_Text lively;
-    [SerializeField] TMP_Text tired;
+    [SerializeField] TMP_Text impulsive;
+    [SerializeField] TMP_Text patient;
     [SerializeField] TMP_Text volume;
 
     void Awake()
@@ -143,9 +143,9 @@ public class Translator : MonoBehaviour
         animationTime.text = AutoTranslate.Animation_Time();
         confirmDecisions.text = AutoTranslate.Confirm_Decisions();
         displayTooltip.text = AutoTranslate.Display_Tooltip();
-        lively.text = AutoTranslate.Lively();
+        impulsive.text = AutoTranslate.Impulsive();
         focused.text = AutoTranslate.Focused();
-        tired.text = AutoTranslate.Tired();
+        patient.text = AutoTranslate.Patient();
         ScreenOverlay.instance.UnloadObjects(SceneManager.GetActiveScene().name, toLoad, GameMode.Other);
     }
 

@@ -97,7 +97,7 @@ public class EncyclopediaManager : MonoBehaviour
         cooldownDropdown.dropdown.onValueChanged.AddListener(ChangeAbilityDropdown);
 
         abilityDictionary.Add(nameof(AutoTranslate.Wizard), new());
-        abilityDictionary.Add(nameof(AutoTranslate.Knight), new());
+        abilityDictionary.Add(nameof(AutoTranslate.Hero), new());
         abilityDictionary.Add(nameof(AutoTranslate.Angel), new());
 
         foreach (var KVP in GameFiles.inst.listOfPlayerAbilities)
@@ -117,7 +117,7 @@ public class EncyclopediaManager : MonoBehaviour
             foreach (var KVP2 in GameFiles.inst.listOfEnemies[KVP1.Key])
             {
                 Character nextEnemy = Instantiate(characterPrefab).AddComponent<Character>();
-                nextEnemy.SetupCharacter(KVP2.Value, GameFiles.inst.ConvertToAbilityData(KVP2.Value.listOfAbilities, false), Mood.Lively, 0, false);
+                nextEnemy.SetupCharacter(KVP2.Value, GameFiles.inst.ConvertToAbilityData(KVP2.Value.listOfAbilities, false), Mood.Impulsive, 0, false);
                 listOfEnemyBoxes.Add(nextEnemy);
                 foreach (Transform child in nextEnemy.transform)
                 {

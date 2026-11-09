@@ -37,9 +37,9 @@ public class TutorialManager : MonoBehaviour
             foreach (var KVP in GameFiles.inst.listOfPlayers)
             {
                 PlayerCharacter nextCharacter = Instantiate(characterPrefab).AddComponent<PlayerCharacter>();
-                Mood forcedMood = Mood.Lively;
+                Mood forcedMood = Mood.Impulsive;
 
-                if (KVP.Key.Equals(nameof(AutoTranslate.Knight)))
+                if (KVP.Key.Equals(nameof(AutoTranslate.Hero)))
                 {
                     knight = nextCharacter;
                     forcedMood = Mood.Focused;
@@ -47,12 +47,12 @@ public class TutorialManager : MonoBehaviour
                 else if (KVP.Key.Equals(nameof(AutoTranslate.Angel)))
                 {
                     angel = nextCharacter;
-                    forcedMood = Mood.Lively;
+                    forcedMood = Mood.Impulsive;
                 }
                 else if (KVP.Key.Equals(nameof(AutoTranslate.Wizard)))
                 {
                     wizard = nextCharacter;
-                    forcedMood = Mood.Tired;
+                    forcedMood = Mood.Patient;
                 }
                 nextCharacter.SetupCharacter(KVP.Value, new List<AbilityData>(), forcedMood, counter, false);  
                 counter++;             
@@ -145,7 +145,7 @@ public class TutorialManager : MonoBehaviour
             case 6: //introduce angel
                 TurnManager.inst.AddPlayer(angel); //add angel
                 angel.AddAbility(GameFiles.inst.FindPlayerAbility(nameof(AutoTranslate.Assist)), false, false);
-                angel.AddAbility(GameFiles.inst.FindPlayerAbility(nameof(AutoTranslate.Exhaustion)), false, false);
+                angel.AddAbility(GameFiles.inst.FindPlayerAbility(nameof(AutoTranslate.Disarm)), false, false);
 
                 MakeDecision.inst.SetInstruction(AutoTranslate.Tutorial_60());
                 while (ScreenOverlay.instance.displayedScreen != CurrentScreen.Character)
@@ -160,7 +160,7 @@ public class TutorialManager : MonoBehaviour
             case 7: //introduce angel abilities
                 Log.instance.AddText(AutoTranslate.Blank());
                 yield return TurnManager.inst.NewWave();
-                yield return TurnManager.inst.CreateEnemy(GameFiles.inst.FindSpecificEnemy(nameof(AutoTranslate.Page), 0), Mood.Lively, 0);
+                yield return TurnManager.inst.CreateEnemy(GameFiles.inst.FindSpecificEnemy(nameof(AutoTranslate.Page), 0), Mood.Impulsive, 0);
 
                 yield return ClickThroughDialogue(new List<string>() { AutoTranslate.Tutorial_70(), AutoTranslate.Tutorial_71()});
                 yield return TurnManager.inst.NewRound(false);
@@ -175,15 +175,15 @@ public class TutorialManager : MonoBehaviour
                 Log.instance.AddText(AutoTranslate.Blank());
                 yield return TurnManager.inst.NewWave();
 
-                knight.AddAbility(GameFiles.inst.FindPlayerAbility(nameof(AutoTranslate.Overwhelm)), false, false);
+                knight.AddAbility(GameFiles.inst.FindPlayerAbility(nameof(AutoTranslate.Annoy)), false, false);
                 knight.AddAbility(GameFiles.inst.FindPlayerAbility(nameof(AutoTranslate.Cheer)), false, false);
 
                 angel.AddAbility(GameFiles.inst.FindPlayerAbility(nameof(AutoTranslate.Team_Up)), false, false);
                 angel.AddAbility(GameFiles.inst.FindPlayerAbility(nameof(AutoTranslate.Tailwinds)), false, false);
 
-                yield return TurnManager.inst.CreateEnemy(GameFiles.inst.FindSpecificEnemy(nameof(AutoTranslate.Page), 0), Mood.Tired, 0);
+                yield return TurnManager.inst.CreateEnemy(GameFiles.inst.FindSpecificEnemy(nameof(AutoTranslate.Page), 0), Mood.Patient, 0);
                 yield return TurnManager.inst.CreateEnemy(GameFiles.inst.FindSpecificEnemy(nameof(AutoTranslate.Crow), 0), Mood.Focused, 0);
-                yield return TurnManager.inst.CreateEnemy(GameFiles.inst.FindSpecificEnemy(nameof(AutoTranslate.Crow), 0), Mood.Lively, 0);
+                yield return TurnManager.inst.CreateEnemy(GameFiles.inst.FindSpecificEnemy(nameof(AutoTranslate.Crow), 0), Mood.Impulsive, 0);
 
                 yield return ClickThroughDialogue(new List<string>() { AutoTranslate.Tutorial_90(), AutoTranslate.Tutorial_91() });
                 currentStep = 10;

@@ -207,11 +207,11 @@ public class TurnManager : MonoBehaviour
                 else
                     yield return character.ChangePosition(Position.Grounded, 1, null);
             }
-            if (lucky != null && character.CurrentMood == Mood.Lively)
+            if (lucky != null && character.CurrentMood == Mood.Impulsive)
                 yield return character.ChangeEffect(new StatusRound(StatusEffect.Blessed, GetRound(0)), 1, null);
             if (passion != null && character.CurrentMood == Mood.Focused)
                 yield return character.ChangeStat(Stats.PowerIcon, passion.powerStat, 1, null);
-            if (rest != null && character.CurrentMood == Mood.Tired)
+            if (rest != null && character.CurrentMood == Mood.Patient)
                 yield return character.ChangeStat(Stats.HealthIcon, rest.mainNumber, 1, null);
         }
 

@@ -1,46 +1,46 @@
 controller	abilityName	description	toTarget	playCondition	instructions	baseCooldown	mainNumber	secondNumber	powerStat	defenseStat	statusNumber	miscNumber	abilityTypes
-Knight	Battle_Cry	A Player becomes Focused and gains $DefNum$ DefenseIcon.	OnePlayer	None	TargetBecomeFocused/TargetGainDefense	1				1			MoodPlayer/StatPlayer
-Knight	Cheer	Another Player becomes Lively and becomes Blessed next Round.	OtherPlayer	None	TargetBecomeLively/TargetBlessedNextRounds	1					1		MoodPlayer
-Knight	Debilitate	An Enemy at the same Position becomes Tired and loses $DefNum$ DefenseIcon.	OneEnemy	TargetSamePosition	TargetBecomeTired/TargetLoseDefense	1				1			MoodEnemy/StatEnemy
-Knight	Dedicate	This becomes Focused. Then deal $MainNum$ damage to an Enemy at the same Position.	Self-OneEnemy	None-TargetSamePosition	TargetBecomeFocused-TargetAttack	1	6						Attack/MoodPlayer
-Knight	Duel	An Enemy at the same Position gains $PowNum$ PowerIcon and lose $DefNum$ DefenseIcon. Then deal $MainNum$ damage to them.	OneEnemy	TargetSamePosition	TargetGainPower/TargetLoseDefense/TargetAttack	0	2		1	1			Attack/StatEnemy
-Knight	Heavy_Swing	This becomes Tired. Then deal $MainNum$ damage to an Enemy at the same Position.	Self-OneEnemy	None-TargetSamePosition	TargetBecomeTired-TargetAttack	1	6						Attack/MoodPlayer
-Knight	Immobilize	Deal $MainNum$ damage to an Enemy at the same Position. They become Locked during this and next Round.	OneEnemy	TargetSamePosition	TargetAttack/TargetLockedThisRound/TargetLockedNextRounds	0	3				1		Attack
-Knight	Impale	Deal $MainNum$ damage to an Enemy at the same Position. They becomes Stunned this Round.	OneEnemy	TargetSamePosition	TargetAttack/TargetStunnedThisRound	2	3						Attack
-Knight	Joust	Deal $MainNum$ damage to an Enemy at the same Position. Then this loses $PowNum$ PowerIcon.	OneEnemy-Self	TargetSamePosition-None	TargetAttack-TargetLosePower	0	4		1				Attack
-Knight	Knock_Down	An Enemy at the same Position loses $DefNum$ DefenseIcon. Then deal $MainNum$ damage to them.	OneEnemy	TargetSamePosition	TargetLoseDefense/TargetAttack	1	3			1			Attack/StatEnemy
-Knight	Mirror	Deal $MainNum$ damage to an Enemy with the same Position and Mood.	OneEnemy	TargetSamePosition/TargetSameMood	TargetAttack	0	4						Attack
-Knight	Motivate	An Enemy at the same Position becomes Lively. Then deal $MainNum$ damage to them.	OneEnemy	TargetSamePosition	TargetBecomeLively/TargetAttack	1	6						Attack/MoodEnemy
-Knight	Obsession	All Enemies become Focused.	AllEnemies	None	TargetBecomeFocused	1							MoodEnemy
-Knight	Occupy	An Enemy at the same Position becomes Focused. Then deal $MainNum$ damage to them.	OneEnemy	TargetSamePosition	TargetBecomeFocused/TargetAttack	1	6						Attack/MoodEnemy
-Knight	Overwhelm	An Enemy at the same Position becomes Tired. Then deal $MainNum$ damage to them.	OneEnemy	TargetSamePosition	TargetBecomeTired/TargetAttack	1	6						Attack/MoodEnemy
-Knight	Patience	A Player becomes Tired, and an Enemy becomes Lively.	OnePlayer-OneEnemy	None-None	TargetBecomeTired-TargetBecomeLively	1							MoodPlayer/MoodEnemy
-Knight	Pillage	All Players gain $DefNum$ DefenseIcon. An Enemy loses $DefNum$ DefenseIcon.	AllPlayers-OneEnemy	None-None	TargetGainDefense-TargetLoseDefense	2				1			StatPlayer/StatEnemy
-Knight	Prioritize	Deal $MainNum$ damage to an Enemy at the same Position. They become Targeted next Round.	OneEnemy	TargetSamePosition	TargetAttack/TargetTargetedNextRounds	0	3				1		Attack
-Knight	Redirect	Another Player gains $DefNum$ DefenseIcon and becomes Targeted during this and next Round.	OtherPlayer	None	TargetGainDefense/TargetTargetedThisRound/TargetTargetedNextRounds	1				1	1		StatPlayer
-Knight	Strike	This gains $DefNum$ DefenseIcon. Then deal $MainNum$ damage to an Enemy at the same Position.	Self-OneEnemy	None-TargetSamePosition	TargetGainDefense-TargetAttack	2	4			1			Attack/StatPlayer
-Knight	Twirl	This becomes Lively. Then deal $MainNum$ damage to an Enemy at the same Position.	Self-OneEnemy	None-TargetSamePosition	TargetBecomeLively-TargetAttack	1	6						Attack/MoodPlayer
 Angel	Assist	Another Grounded Player gains $MainNum$ HealthIcon and becomes Blessed next Round.	OtherPlayer	TargetIsGrounded	TargetHeal/TargetBlessedNextRounds	2	3				1		Healing
 Angel	Concentration	An Elevated Player gains $MainNum$ HealthIcon and becomes Focused.	OnePlayer	TargetIsElevated	TargetHeal/TargetBecomeFocused	1	4						Healing/MoodPlayer
 Angel	Deplete	A Grounded Enemy loses $DefNum$ DefenseIcon. Each Grounded Player gains $MainNum$ HealthIcon.	OneEnemy-AllPlayers	TargetIsGrounded-TargetIsGrounded	TargetLoseDefense-TargetHeal	1	3			1			Healing/StatEnemy
+Angel	Disarm	An Enemy becomes Patient and loses $PowNum$ PowerIcon.	OneEnemy	None	TargetBecomePatient/TargetLosePower	1			1				MoodEnemy/StatEnemy
 Angel	Disorient	An Enemy switches Positions and loses $DefNum$ DefenseIcon.	OneEnemy	None	TargetSwitchPosition/TargetLoseDefense	1				1			PositionEnemy/StatEnemy
-Angel	Exhaustion	An Enemy becomes Tired and loses $PowNum$ PowerIcon.	OneEnemy	None	TargetBecomeTired/TargetLosePower	1			1				MoodEnemy/StatEnemy
 Angel	Exorcism	An Elevated Enemy loses $PowNum$ PowerIcon. Each Elevated Player gains $MainNum$ HealthIcon.	OneEnemy-AllPlayers	TargetIsElevated-TargetIsElevated	TargetLosePower-TargetHeal	1	3		1				Healing/StatEnemy
-Angel	Gift_of_Flight	A Grounded Enemy becomes Lively and Elevated.	OneEnemy	TargetIsGrounded	TargetBecomeElevated/TargetBecomeLively	1							MoodEnemy/PositionEnemy
 Angel	Immunity	Another Elevated Player gains $MainNum$ HealthIcon and becomes Protected this Round.	OtherPlayer	TargetIsElevated	TargetHeal/TargetProtectedThisRound	2	3						Healing
-Angel	Joy	A Grounded Player gains $MainNum$ HealthIcon and becomes Lively.	OnePlayer	TargetIsGrounded	TargetHeal/TargetBecomeLively	1	4						Healing/MoodPlayer
+Angel	Joy	A Grounded Player gains $MainNum$ HealthIcon and becomes Impulsive.	OnePlayer	TargetIsGrounded	TargetHeal/TargetBecomeImpulsive	1	4						Healing/MoodPlayer
 Angel	Level_Up	A Player gains $PowNum$ PowerIcon, $DefNum$ DefenseIcon, and becomes Stunned next Round.	OnePlayer	None	TargetGainPower/TargetGainDefense/TargetStunnedNextRounds	1			1	1	1		StatPlayer
+Angel	Levitate	A Grounded Enemy becomes Impulsive and Elevated.	OneEnemy	TargetIsGrounded	TargetBecomeElevated/TargetBecomeImpulsive	1							MoodEnemy/PositionEnemy
 Angel	Lift_Up	A Grounded Player gains $MainNum$ HealthIcon and becomes Elevated.	OnePlayer	TargetIsGrounded	TargetHeal/TargetBecomeElevated	0	3						Healing/PositionPlayer
 Angel	Overheal	All Players gain $MainNum$ Max HealthIcon and $SecNum$ HealthIcon.	AllPlayers	None	TargetGainMaxHP/TargetHealSec	2	1	2					Healing
 Angel	Plummet	An Elevated Enemy becomes Focused and Grounded.	OneEnemy	TargetIsElevated	TargetBecomeFocused/TargetBecomeGrounded	1							MoodEnemy/PositionEnemy
 Angel	Preserve	A Player gains $MainNum$ HealthIcon and becomes Locked this Round.	OnePlayer	None	TargetHeal/TargetLockedThisRound	0	3						Healing
+Angel	Recuperate	A Player becomes Patient and gains $PowNum$ PowerIcon.	OnePlayer	None	TargetBecomePatient/TargetGainPower	1			1				MoodPlayer/StatPlayer
 Angel	Restore	Each Player with $MiscNum$ HealthIcon or less gains $MainNum$ HealthIcon.	AllPlayers	TargetHealthOrLess	TargetHeal	0	2					5	Healing
-Angel	Recuperate	A Player becomes Tired and gains $PowNum$ PowerIcon.	OnePlayer	None	TargetBecomeTired/TargetGainPower	1			1				MoodPlayer/StatPlayer
 Angel	Security	A Player switches Positions and gains $DefNum$ DefenseIcon.	OnePlayer	None	TargetSwitchPosition/TargetGainDefense	1				1			PositionPlayer/StatPlayer
 Angel	Soft_Landing	An Elevated Player gains $MainNum$ HealthIcon and becomes Grounded.	OnePlayer	TargetIsElevated	TargetHeal/TargetBecomeGrounded	0	3						Healing/PositionPlayer
 Angel	Switch_Up	All Players gain $MainNum$ HealthIcon. Then everyone switches Positions.	AllPlayers-All	None-None	TargetHeal-TargetSwitchPosition	1	2						Healing/PositionPlayer/PositionEnemy
 Angel	Tailwinds	Each Elevated Player gains $MainNum$ HealthIcon and $PowNum$ PowerIcon.	AllPlayers	TargetIsElevated	TargetHeal/TargetGainPower	1	2		1				Healing/StatPlayer
 Angel	Team_Up	Each Grounded Player gains $MainNum$ HealthIcon and $DefNum$ DefenseIcon.	AllPlayers	TargetIsGrounded	TargetHeal/TargetGainDefense	1	2			1			Healing/StatPlayer
+Hero	Annoy	An Enemy at the same Position becomes Impulsive. Then deal $MainNum$ damage to them.	OneEnemy	TargetSamePosition	TargetBecomeImpulsive/TargetAttack	1	6						Attack/MoodEnemy
+Hero	Attrition	A Player becomes Patient, and an Enemy becomes Impulsive.	OnePlayer-OneEnemy	None-None	TargetBecomePatient-TargetBecomeImpulsive	1							MoodPlayer/MoodEnemy
+Hero	Battle_Cry	A Player becomes Focused and gains $DefNum$ DefenseIcon.	OnePlayer	None	TargetBecomeFocused/TargetGainDefense	1				1			MoodPlayer/StatPlayer
+Hero	Cheer	Another Player becomes Impulsive and becomes Blessed next Round.	OtherPlayer	None	TargetBecomeImpulsive/TargetBlessedNextRounds	1					1		MoodPlayer
+Hero	Dedicate	This becomes Focused. Then deal $MainNum$ damage to an Enemy at the same Position.	Self-OneEnemy	None-TargetSamePosition	TargetBecomeFocused-TargetAttack	1	6						Attack/MoodPlayer
+Hero	Discipline	An Enemy at the same Position becomes Patient and loses $DefNum$ DefenseIcon.	OneEnemy	TargetSamePosition	TargetBecomePatient/TargetLoseDefense	1				1			MoodEnemy/StatEnemy
+Hero	Duel	An Enemy at the same Position gains $PowNum$ PowerIcon and lose $DefNum$ DefenseIcon. Then deal $MainNum$ damage to them.	OneEnemy	TargetSamePosition	TargetGainPower/TargetLoseDefense/TargetAttack	0	2		1	1			Attack/StatEnemy
+Hero	Immobilize	Deal $MainNum$ damage to an Enemy at the same Position. They become Locked during this and next Round.	OneEnemy	TargetSamePosition	TargetAttack/TargetLockedThisRound/TargetLockedNextRounds	0	3				1		Attack
+Hero	Impale	Deal $MainNum$ damage to an Enemy at the same Position. They becomes Stunned this Round.	OneEnemy	TargetSamePosition	TargetAttack/TargetStunnedThisRound	2	3						Attack
+Hero	Impose	An Enemy at the same Position becomes Patient. Then deal $MainNum$ damage to them.	OneEnemy	TargetSamePosition	TargetBecomePatient/TargetAttack	1	6						Attack/MoodEnemy
+Hero	Joust	Deal $MainNum$ damage to an Enemy at the same Position. Then this loses $PowNum$ PowerIcon.	OneEnemy-Self	TargetSamePosition-None	TargetAttack-TargetLosePower	0	4		1				Attack
+Hero	Knock_Down	An Enemy at the same Position loses $DefNum$ DefenseIcon. Then deal $MainNum$ damage to them.	OneEnemy	TargetSamePosition	TargetLoseDefense/TargetAttack	1	3			1			Attack/StatEnemy
+Hero	Martial_Arts	This becomes Patient. Then deal $MainNum$ damage to an Enemy at the same Position.	Self-OneEnemy	None-TargetSamePosition	TargetBecomePatient-TargetAttack	1	6						Attack/MoodPlayer
+Hero	Mirror	Deal $MainNum$ damage to an Enemy with the same Position and Mood.	OneEnemy	TargetSamePosition/TargetSameMood	TargetAttack	0	4						Attack
+Hero	Obsession	All Enemies become Focused.	AllEnemies	None	TargetBecomeFocused	1							MoodEnemy
+Hero	Occupy	An Enemy at the same Position becomes Focused. Then deal $MainNum$ damage to them.	OneEnemy	TargetSamePosition	TargetBecomeFocused/TargetAttack	1	6						Attack/MoodEnemy
+Hero	Pillage	All Players gain $DefNum$ DefenseIcon. An Enemy loses $DefNum$ DefenseIcon.	AllPlayers-OneEnemy	None-None	TargetGainDefense-TargetLoseDefense	2				1			StatPlayer/StatEnemy
+Hero	Prioritize	Deal $MainNum$ damage to an Enemy at the same Position. They become Targeted next Round.	OneEnemy	TargetSamePosition	TargetAttack/TargetTargetedNextRounds	0	3				1		Attack
+Hero	Redirect	Another Player gains $DefNum$ DefenseIcon and becomes Targeted during this and next Round.	OtherPlayer	None	TargetGainDefense/TargetTargetedThisRound/TargetTargetedNextRounds	1				1	1		StatPlayer
+Hero	Rush	This becomes Impulsive. Then deal $MainNum$ damage to an Enemy at the same Position.	Self-OneEnemy	None-TargetSamePosition	TargetBecomeImpulsive-TargetAttack	1	6						Attack/MoodPlayer
+Hero	Strike	This gains $DefNum$ DefenseIcon. Then deal $MainNum$ damage to an Enemy at the same Position.	Self-OneEnemy	None-TargetSamePosition	TargetGainDefense-TargetAttack	2	4			1			Attack/StatPlayer
 Wizard	Above_Danger	A Grounded Player becomes Elevated and Protected during this and next Round.	OnePlayer	TargetIsGrounded	TargetBecomeElevated/TargetProtectedThisRound/TargetProtectedNextRounds	1					1		PositionPlayer
 Wizard	Accelerate	Another Player gains $PowNum$ PowerIcon. Decrease their active CooldownIcon by $MiscNum$.	OtherPlayer	None	TargetGainPower/TargetDecreaseAllCooldown	2			1			1	StatPlayer
 Wizard	Bad_Omens	Deal $MainNum$ damage to each Grounded Enemy. They each lose $PowNum$ PowerIcon.	AllEnemies	TargetIsGrounded	TargetAttack/TargetLosePower	1	2		1				Attack/StatEnemy

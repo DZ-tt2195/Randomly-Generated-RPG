@@ -4,9 +4,7 @@ using MyBox;
 using System;
 using System.Linq;
 using System.Reflection;
-
 public enum CharacterTargeting { None, MostTargets, CameOffCooldown, LastAttacker, ChooseElevated, ChooseGrounded, LeastHealth, MostHealth, Effectiveness, Strongest, Weakest, ChooseAttack }
-
 [Serializable]
 public class CharacterData
 {
@@ -183,11 +181,8 @@ public class GameFiles : MonoBehaviour
         return toReturn;
 
     }
-
 #endregion
-
 #region File Search
-
     public CharacterData RandomEnemy(int difficulty, System.Random dailyRNG)
     {
         Dictionary<string, CharacterData> enemyList = listOfEnemies[difficulty];
@@ -232,11 +227,11 @@ public class GameFiles : MonoBehaviour
         HashSet<AbilityData> newList = new();
 
         List<string> toFillOut = new();
-        if (playerName.Equals(AutoTranslate.Knight()))
+        if (playerName.Equals(nameof(AutoTranslate.Hero)))
             toFillOut = new() { "Attack", "Attack", "Attack", "Mood", "Stats", "Mood" };
-        else if (playerName.Equals(AutoTranslate.Angel()))
+        else if (playerName.Equals(nameof(AutoTranslate.Angel)))
             toFillOut = new() { "Heal", "Heal", "Heal", "Position", "Mood", "Stats" };
-        else if (playerName.Equals(AutoTranslate.Wizard()))
+        else if (playerName.Equals(nameof(AutoTranslate.Wizard)))
             toFillOut = new() { "Attack", "Attack", "Attack", "Position", "Stats", "Position" };
 
         if (dailyRNG == null)
@@ -322,5 +317,4 @@ public class GameFiles : MonoBehaviour
         return chosenRules;
     }
     #endregion
-
 }

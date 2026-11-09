@@ -87,21 +87,21 @@ public class Ability
     {
         int answer = user.CurrentMood switch
         {
-            Mood.Lively => target.CurrentMood switch
+            Mood.Impulsive => target.CurrentMood switch
             {
                 Mood.Focused => 2,
-                Mood.Tired => -2,
+                Mood.Patient => -2,
                 _ => 0
             },
             Mood.Focused => target.CurrentMood switch
             {
-                Mood.Tired => 2,
-                Mood.Lively => -2,
+                Mood.Patient => 2,
+                Mood.Impulsive => -2,
                 _ => 0
             },
-            Mood.Tired => target.CurrentMood switch
+            Mood.Patient => target.CurrentMood switch
             {
-                Mood.Lively => 2,
+                Mood.Impulsive => 2,
                 Mood.Focused => -2,
                 _ => 0
             },
@@ -195,14 +195,14 @@ public class Ability
         listOfTargets[currentIndex].RemoveAll(target => target.CalculateHealthPercent() > 0.5f);
         return listOfTargets[currentIndex].Count > 0;
     }
-    bool TargetIsLively(int currentIndex)
+    bool TargetIsImpulsive(int currentIndex)
     {
-        listOfTargets[currentIndex].RemoveAll(target => target.CurrentMood != Mood.Lively);
+        listOfTargets[currentIndex].RemoveAll(target => target.CurrentMood != Mood.Impulsive);
         return listOfTargets[currentIndex].Count > 0;
     }
-    bool TargetNotLively(int currentIndex)
+    bool TargetNotImpulsive(int currentIndex)
     {
-        listOfTargets[currentIndex].RemoveAll(target => target.CurrentMood == Mood.Lively);
+        listOfTargets[currentIndex].RemoveAll(target => target.CurrentMood == Mood.Impulsive);
         return listOfTargets[currentIndex].Count > 0;
     }
     bool TargetIsFocused(int currentIndex)
@@ -215,14 +215,14 @@ public class Ability
         listOfTargets[currentIndex].RemoveAll(target => target.CurrentMood == Mood.Focused);
         return listOfTargets[currentIndex].Count > 0;
     }
-    bool TargetIsTired(int currentIndex)
+    bool TargetIsPatient(int currentIndex)
     {
-        listOfTargets[currentIndex].RemoveAll(target => target.CurrentMood != Mood.Tired);
+        listOfTargets[currentIndex].RemoveAll(target => target.CurrentMood != Mood.Patient);
         return listOfTargets[currentIndex].Count > 0;
     }
-    bool TargetNotTired(int currentIndex)
+    bool TargetNotPatient(int currentIndex)
     {
-        listOfTargets[currentIndex].RemoveAll(target => target.CurrentMood == Mood.Tired);
+        listOfTargets[currentIndex].RemoveAll(target => target.CurrentMood == Mood.Patient);
         return listOfTargets[currentIndex].Count > 0;
     }
     bool TargetSameMood(int currentIndex)
@@ -491,17 +491,17 @@ public class Ability
     {
         yield return target.ChangePosition(Position.Elevated, logged, self);
     }
-    IEnumerator TargetBecomeLively(Character target, int logged)
+    IEnumerator TargetBecomeImpulsive(Character target, int logged)
     {
-        yield return target.ChangeMood(Mood.Lively, logged, self);
+        yield return target.ChangeMood(Mood.Impulsive, logged, self);
     }
     IEnumerator TargetBecomeFocused(Character target, int logged)
     {
         yield return target.ChangeMood(Mood.Focused, logged, self);
     }
-    IEnumerator TargetBecomeTired(Character target, int logged)
+    IEnumerator TargetBecomePatient(Character target, int logged)
     {
-        yield return target.ChangeMood(Mood.Tired, logged, self);
+        yield return target.ChangeMood(Mood.Patient, logged, self);
     }
     IEnumerator TargetRandomMood(Character target, int logged)
     {

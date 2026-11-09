@@ -1,24 +1,24 @@
 controller	abilityName	description	toTarget	playCondition	instructions	baseCooldown	mainNumber	secondNumber	powerStat	defenseStat	statusNumber	miscNumber	abilityTypes
 Blank	Revive	Bring back a dead Player with $MainNum$ HealthIcon and a random Mood.	OtherPlayer	TargetIsDead	TargetRevive	1	5						Healing
 Blank	Wait	Do nothing.	Self	None	None	0							Misc
-Archer	Distract	An Elevated Player becomes Tired. Then deal $MainNum$ damage to them.	OnePlayer	TargetIsElevated/TargetNotProtected	TargetBecomeTired/TargetAttack	1	4						Attack/MoodPlayer
-Archer	Bullseye	This gains $PowNum$ PowerIcon. Then deal $MainNum$ damage to an Elevated Player.	Self-OnePlayer	None-TargetIsElevated/TargetNotProtected	TargetGainPower-TargetAttack	1	2		1				Attack/StatEnemy
-Archer	Cover	This becomes Focused and gains $DefNum$ DefenseIcon.	Self	TargetNotLocked	TargetBecomeFocused/TargetGainDefense	1				1			MoodEnemy/StatEnemy
+Archer	Bullseye	An Elevated Player becomes Impulsive. Then deal $MainNum$ damage to them.	OnePlayer	TargetIsElevated/TargetNotProtected	TargetBecomeImpulsive/TargetAttack	1	4						Attack/MoodPlayer
+Archer	Snare	This gains $PowNum$ PowerIcon. An Elevated Player becomes Stunned next Round.	OnePlayer	None-TargetIsElevated	TargetGainPower-TargetStunnedNextRounds	1			1		1		StatEnemy
+Archer	Cover	This becomes Patient and gains $DefNum$ DefenseIcon.	Self	TargetNotLocked	TargetBecomePatient/TargetGainDefense	1				1			MoodEnemy/StatEnemy
 Archer	Aim_Up	This becomes Grounded, and a Grounded Player becomes Elevated.	Self-OnePlayer	None-TargetIsGrounded/TargetNotLocked	TargetBecomeGrounded-TargetBecomeElevated	0							PositionPlayer/PositionEnemy
 Barbarian	Fury	Deal $MainNum$ damage to the Player with the most HealthIcon.	OnePlayer	TargetNotProtected	TargetAttack	1	5						Attack
 Barbarian	Trample	The Player with the most HealthIcon loses $DefNum$ DefenseIcon and becomes Targeted for the next $StatusNum$ Rounds.	OnePlayer	TargetNotProtected	TargetLoseDefense/TargetTargetedNextRounds	0				1	2		StatPlayer
 Barbarian	Brawl	The Player with the most HealthIcon loses $MainNum$ Max HealthIcon.	OnePlayer	TargetNotProtected	TargetLoseMaxHP	1	2						Attack
 Barbarian	Frenzy	This becomes Focused and gains $PowNum$ PowerIcon.	Self	None	TargetBecomeFocused/TargetGainPower	1			1				MoodEnemy/StatEnemy
 Bat	Drain	Deal $MainNum$ damage to a Player. This gains $MainNum$ HealthIcon.	OnePlayer-Self	TargetNotProtected/TargetEffective-None	TargetAttack-TargetHeal	1	2						Attack/Healing
-Bat	Screech	A Player becomes Lively and loses $DefNum$ DefenseIcon.	OnePlayer	TargetNotLocked/TargetNotProtected	TargetBecomeLively/TargetLoseDefense	1				1			MoodPlayer/StatPlayer
+Bat	Screech	A Player becomes Patient and loses $DefNum$ DefenseIcon.	OnePlayer	TargetNotLocked/TargetNotProtected	TargetBecomePatient/TargetLoseDefense	1				1			MoodPlayer/StatPlayer
 Bat	Echolocate	This gains $PowNum$ PowerIcon.	Self	TargetPowerOrLess	TargetGainPower	1			2			3	StatEnemy
-Bat	Bloodthirst	This becomes Tired and becomes Blessed next Round.	Self	TargetNotTired/TargetNotLocked	TargetBecomeTired/TargetBlessedNextRounds	1					1		MoodEnemy
+Bat	Bloodthirst	This becomes Focused and becomes Blessed next Round.	Self	TargetNotPatient/TargetNotLocked	TargetBecomeFocused/TargetBlessedNextRounds	1					1		MoodEnemy
 Bees	Sting	Deal $MainNum$ damage to all Players. This becomes Targeted next round.	AllPlayers-Self	None-None	TargetAttack-TargetTargetedNextRounds	0	1				1		Attack
 Bees	Honey	Another Elevated Enemy gains $MainNum$ HealthIcon.	OtherEnemy	TargetIsElevated/TargetInjured	TargetHeal	0	2						Healing
 Bees	Swarm	Another Elevated Enemy becomes Protected next Round.	OtherEnemy	TargetIsElevated	TargetProtectedNextRounds	2					1		Misc
 Bees	Support	Another Elevated Enemy becomes Blessed next Round.	OtherEnemy	TargetIsElevated	TargetBlessedNextRounds	1					1		Misc
 Cow	Charge	Deal $MainNum$ damage to the last Player who attacked this (if any).	OnePlayer	TargetNotProtected/LastAttackerExists	TargetAttack	0	4						Attack
-Cow	Milk	Another Enemy gains $MainNum$ HealthIcon and becomes Lively.	OtherEnemy	TargetInjured	TargetHeal/TargetBecomeLively	1	4						Healing/MoodEnemy
+Cow	Milk	Another Enemy gains $MainNum$ HealthIcon and becomes Impulsive.	OtherEnemy	TargetInjured	TargetHeal/TargetBecomeImpulsive	1	4						Healing/MoodEnemy
 Cow	Graze	This gains $MainNum$ Max HealthIcon and $MainNum$ HealthIcon.	Self	None	TargetGainMaxHP/TargetHeal	1	2						Healing
 Cow	Bellow	This gains $DefNum$ DefenseIcon and becomes Targeted next round.	Self	TargetDefenseOrLess/NoTargetedEnemy	TargetGainDefense/TargetTargetedNextRounds	1				1	1		StatEnemy
 Crow	Peck	Deal $MainNum$ damage to any Player.	OnePlayer	TargetNotProtected	TargetAttack	0	2						Attack
@@ -33,7 +33,7 @@ Dragon	Roar	This gains $DefNum$ DefenseIcon and switches Positions.	Self	None	Ta
 Drone	Sound_Waves	Deal $MainNum$ damage to all Players.	AllPlayers	None	TargetAttack	1	2						Attack
 Drone	Alarm	This gains $PowNum$ PowerIcon and becomes Elevated and Locked next round.	Self	None	TargetGainPower/TargetBecomeElevated/TargetLockedNextRounds	0			1		1		PositionEnemy/StatEnemy
 Ghost	Jumpscare	Deal $MainNum$ damage to all Players.	AllPlayers	None	TargetAttack	1	2						Attack
-Ghost	Lament	This and another Enemy both become Tired.	Self-OtherEnemy	TargetNotLocked-TargetNotTired/TargetNotLocked	TargetBecomeTired-TargetBecomeTired	0							MoodEnemy
+Ghost	Haunt	This and another Enemy both become Patient.	Self-OtherEnemy	TargetNotLocked-TargetNotPatient/TargetNotLocked	TargetBecomePatient-TargetBecomePatient	0							MoodEnemy
 Ghost	Possession	A Grounded Player becomes Elevated and loses $PowNum$ PowerIcon.	OnePlayer	TargetIsGrounded/TargetNotLocked/TargetNotProtected	TargetBecomeElevated/TargetLosePower	1			1				PositionPlayer/StatPlayer
 Ghost	Release	An Elevated Player becomes Grounded and Stunned next round.	OnePlayer	TargetIsElevated/TargetNotLocked	TargetBecomeGrounded/TargetStunnedNextRounds	2					1		PositionPlayer
 Golem	Smash	Deal $MainNum$ damage to a Player. This gains $DefNum$ DefenseIcon.	OnePlayer-Self	TargetNotProtected-None	TargetAttack-TargetGainDefense	1	2			1			Attack/StatEnemy
@@ -56,8 +56,8 @@ Partier	Share_Drinks	All Enemies gain $MainNum$ HealthIcon.	AllEnemies	None	Targ
 Partier	Share_Snacks	All Enemies gain $MainNum$ Max HealthIcon.	AllEnemies	None	TargetGainMaxHP	0	2						Misc
 Partier	Drinking_Game	All Enemies get a random Mood.	AllEnemies	None	TargetRandomMood	1							MoodEnemy
 Pixie	Will_o_Wisp	Deal $MainNum$ damage to an Elevated Player.	OnePlayer	TargetIsElevated/TargetEffective/TargetNotProtected	TargetAttack	0	2						Attack
-Pixie	Agitate	All Player become Lively.	AllPlayers	None	TargetBecomeLively	1							MoodPlayer
-Pixie	Drowsiness	All Players become Tired.	AllPlayers	None	TargetBecomeTired	1							MoodPlayer
+Pixie	Agitate	All Player become Impulsive.	AllPlayers	None	TargetBecomeImpulsive	1							MoodPlayer
+Pixie	Drowsiness	All Players become Patient.	AllPlayers	None	TargetBecomePatient	1							MoodPlayer
 Pixie	Bother	All Players become Focused.	AllPlayers	None	TargetBecomeFocused	1							MoodPlayer
 Puppeteer	Collision	Deal $MainNum$ damage to all Elevated Players.	AllPlayers	TargetIsElevated	TargetAttack	0	2						Attack
 Puppeteer	Drop	Each Elevated Player becomes Grounded. Then deal $MainNum$ damage to each of them.	AllPlayers	TargetIsElevated	TargetBecomeGrounded/TargetAttack	1	4						Attack/PositionPlayer
@@ -79,17 +79,17 @@ Siren	Manipulate	A Player becomes Focused and Locked for the next $StatusNum$ Ro
 Siren	Sing	A $MiscNum$ StarIcon Enemy gains $DefenseNum$ DefenseIcon and becomes Targeted for $StatusNum$ rounds.	OtherEnemy	NoTargetedEnemy/TargetIsStar	TargetGainDefense/TargetTargetedNextRounds	1				1	1	2	StatEnemy
 Spider	Stab_Prey	If this is Elevated, deal $MainNum$ damage to an Elevated Player.	Self-OnePlayer	TargetIsElevated-TargetIsElevated/TargetNotProtected	None-TargetAttack	0	4						Attack
 Spider	Trap	If this is Elevated, a Grounded Player becomes Elevated and Locked for the next $StatusNum$ Rounds.	Self-OnePlayer	TargetIsElevated-TargetIsGrounded/TargetNotLocked	None-TargetBecomeElevated/TargetLockedNextRounds	0					2		PositionPlayer
-Spider	Silk_Wrap	An Elevated Player becomes Tired and loses $PowNum$ PowerIcon.	OnePlayer	TargetIsElevated/TargetNotLocked/TargetNotProtected	TargetBecomeTired/TargetLosePower	1			1				MoodPlayer/StatPlayer
+Spider	Silk_Wrap	An Elevated Player becomes Patient and loses $PowNum$ PowerIcon.	OnePlayer	TargetIsElevated/TargetNotLocked/TargetNotProtected	TargetBecomePatient/TargetLosePower	1			1				MoodPlayer/StatPlayer
 Spider	Spin_Web	A Grounded Enemy becomes Elevated and gains $DefNum$ Defense.	OneEnemy	TargetIsGrounded/TargetDefenseOrLess	TargetBecomeElevated/TargetGainDefense	0				1			PositionEnemy/StatEnemy
 Taskmaster	Punishment	Does $MainNum$ damage to all Players with a different Mood than this.	AllPlayers	TargetDifferentMood	TargetAttack	1	4						Attack
-Taskmaster	Demand_Lively	This becomes Lively.	Self	TargetNotLively	TargetBecomeLively	0							MoodEnemy
+Taskmaster	Demand_Impulsive	This becomes Impulsive.	Self	TargetNotImpulsive	TargetBecomeImpulsive	0							MoodEnemy
 Taskmaster	Demand_Focused	This becomes Focused.	Self	TargetNotFocused	TargetBecomeFocused	0							MoodEnemy
-Taskmaster	Demand_Tired	This becomes Tired.	Self	TargetNotTired	TargetBecomeTired	0							MoodEnemy
+Taskmaster	Demand_Patient	This becomes Patient.	Self	TargetNotPatient	TargetBecomePatient	0							MoodEnemy
 Trickster	Mischief	Deal $MainNum$ damage to a Grounded Player.	OnePlayer	TargetIsGrounded/TargetNotProtected	TargetAttack	0	3						Attack
-Trickster	Delude	A Player becomes Lively, Grounded, and Locked for the next $StatusNum$ Rounds.	OnePlayer	TargetNotLocked	TargetBecomeLively/TargetBecomeGrounded/TargetLockedNextRounds	0					2		MoodPlayer/PositionPlayer
+Trickster	Delude	A Player becomes Impulsive, Grounded, and Locked for the next $StatusNum$ Rounds.	OnePlayer	TargetNotLocked	TargetBecomeImpulsive/TargetBecomeGrounded/TargetLockedNextRounds	0					2		MoodPlayer/PositionPlayer
 Trickster	Delay	A Grounded Player gets $MiscNum$ CooldownIcon added to one of their available Abilities.	OnePlayer	TargetIsGrounded/TargetZeroCooldown	TargetForceOneCooldown	1						2	Misc
 Trickster	Sidetrack	A Grounded Player gets $MiscNum$ CooldownIcon added to all of their inactive Abilities.	OnePlayer	TargetIsGrounded/TargetActiveCooldown	TargetIncreaseAllCooldown	1						1	Misc
 Wolf	Pounce	Deal $MainNum$ damage to a Grounded Player.	OnePlayer	TargetIsGrounded/TargetEffective/TargetNotProtected	TargetAttack	0	3						Attack
-Wolf	Hunt	An Enemy becomes Lively, and a Player becomes Focused.	OneEnemy-OnePlayer	TargetNotLively-TargetNotFocused	TargetBecomeLively-TargetBecomeFocused	1							MoodPlayer/MoodEnemy
+Wolf	Hunt	An Enemy becomes Impulsive, and a Player becomes Focused.	OneEnemy-OnePlayer	TargetNotImpulsive-TargetNotFocused	TargetBecomeImpulsive-TargetBecomeFocused	1							MoodPlayer/MoodEnemy
 Wolf	Nurture	All $MiscNum$ StarIcon Enemies gain $PowNum$ PowerIcon and $DefNum$ DefenseIcon.	AllEnemies	TargetIsStar	TargetGainPower/TargetGainDefense	1			1	1		1	StatEnemy
 Wolf	Guard	A $MiscNum$ StarIcon Enemy becomes Protected next Round.	OneEnemy	TargetIsStar	TargetProtectedNextRounds	2					1	1	Misc

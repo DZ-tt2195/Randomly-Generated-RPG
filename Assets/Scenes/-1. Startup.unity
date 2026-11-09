@@ -1303,12 +1303,12 @@ GameObject:
   - component: {fileID: 556872816}
   - component: {fileID: 556872817}
   m_Layer: 0
-  m_Name: State Triangle
+  m_Name: Mood Guide
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &556872816
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1791,92 +1791,87 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   linkedKeywords:
-  - original: Lively
+  - original: Impulsive
     translated: 
-    description: Effective against Angry. Gets an extra Ability if they don't attack;
-      all Abilities have 1 more turn of Cooldown.
+    tooltipText: 
     color: {r: 0.4, g: 1, b: 0, a: 0}
   - original: Focused
     translated: 
-    description: Effective against Sad. +2 Power; becomes Stunned when killing or
-      healing someone to full Health.
+    tooltipText: 
     color: {r: 1, g: 0.4273501, b: 0, a: 0}
-  - original: Tired
+  - original: Patient
     translated: 
-    description: Effective against Happy. Gains 2 Health when it attacks; loses 2
-      Health otherwise.
+    tooltipText: 
     color: {r: 0.6415094, g: 0.6415094, b: 0.6415094, a: 0}
   - original: Stunned
     translated: 
-    description: Skips their next turn.
+    tooltipText: 
     color: {r: 1, g: 0.15, b: 0.15, a: 0}
   - original: Protected
     translated: 
-    description: Can't lose Stats or Health until their next turn.
+    tooltipText: 
     color: {r: 1, g: 0.721519, b: 0, a: 0}
   - original: Targeted
     translated: 
-    description: All single-target Abilities must target them if possible.
+    tooltipText: 
     color: {r: 0.43290636, g: 0.6415094, b: 0.009077947, a: 0}
   - original: Locked
     translated: 
-    description: Emotion and Position can't change until their next turn.
+    tooltipText: 
     color: {r: 0.6320754, g: 0.6320754, b: 0.6320754, a: 0}
   - original: Blessed
     translated: 
-    description: Can't be targeted by abilities that only affect Grounded targets.
+    tooltipText: 
     color: {r: 0, g: 0.86242104, b: 1, a: 0}
   - original: Grounded
     translated: 
-    description: Can't be targeted by abilities that only affect Elevated targets.
+    tooltipText: 
     color: {r: 1, g: 0.5779401, b: 0, a: 0}
   - original: Elevated
     translated: 
-    description: Can't be targeted by abilities that only affect Grounded targets.
+    tooltipText: 
     color: {r: 1, g: 0.25, b: 1, a: 0}
   spriteKeywords:
   - original: CooldownIcon
     translated: 
-    description: 'Cooldown: Ability can''t be used again until enough turns have
-      passed.'
+    tooltipText: 
     color: {r: 0, g: 0, b: 0, a: 0}
   - original: HealthIcon
     translated: 
-    description: 'Health: Amount of damage this can take before dying.'
+    tooltipText: 
     color: {r: 0, g: 0, b: 0, a: 0}
   - original: PowerIcon
     translated: 
-    description: Higher Power = Attack and healing abilities are stronger.
+    tooltipText: 
     color: {r: 0, g: 0, b: 0, a: 0}
   - original: DefenseIcon
     translated: 
-    description: Higher Defense = Take less damage from opposing attacks.
+    tooltipText: 
     color: {r: 0, g: 0, b: 0, a: 0}
   - original: StarIcon
     translated: 
-    description: More Star = Stronger Enemy type.
+    tooltipText: 
     color: {r: 0, g: 0, b: 0, a: 0}
   spriteKeywordStatuses:
   - original: StunnedImage
     translated: 
-    description: 'Stunned: This skips their next turn.'
+    tooltipText: 
     color: {r: 0, g: 0, b: 0, a: 0}
   - original: ProtectedImage
     translated: 
-    description: 'Protected: This can''t lose Stats or Health until their next turn.'
+    tooltipText: 
     color: {r: 0, g: 0, b: 0, a: 0}
   - original: TargetedImage
     translated: 
-    description: 'Targeted: All single-target Abilities must target this if possible.'
+    tooltipText: 
     color: {r: 0, g: 0, b: 0, a: 0}
   - original: BlessedImage
     translated: 
-    description: 'Extra Ability: This can use another Ability on their turn.'
+    tooltipText: 
     color: {r: 0, g: 0, b: 0, a: 0}
   - original: LockedImage
     translated: 
-    description: 'Locked: This can''t change Position or Emotion until their next
-      turn.'
+    tooltipText: 
     color: {r: 0, g: 0, b: 0, a: 0}
   tooltipText: {fileID: 1711759557}
 --- !u!1 &757509345
@@ -3343,7 +3338,7 @@ GameObject:
   - component: {fileID: 1044088201}
   - component: {fileID: 1044088203}
   m_Layer: 0
-  m_Name: Lively
+  m_Name: Impulsive
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3389,7 +3384,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Lively
+  m_text: 'Impulsive
+
+'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
   m_sharedMaterial: {fileID: -3852492252101762229, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
@@ -5303,8 +5300,8 @@ MonoBehaviour:
   confirmDecisions: {fileID: 1732399734}
   displayTooltip: {fileID: 1163857273}
   focused: {fileID: 1358624632}
-  lively: {fileID: 1044088201}
-  tired: {fileID: 1846171708}
+  impulsive: {fileID: 1044088201}
+  patient: {fileID: 1846171708}
   volume: {fileID: 992431717}
 --- !u!114 &1681304446
 MonoBehaviour:
@@ -5895,7 +5892,7 @@ GameObject:
   - component: {fileID: 1846171708}
   - component: {fileID: 1846171710}
   m_Layer: 0
-  m_Name: Tired
+  m_Name: Patient
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5941,7 +5938,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Tired
+  m_text: Patient
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}
   m_sharedMaterial: {fileID: -3852492252101762229, guid: 31e79ddad7b2d41c395ada76a18cbcdd, type: 2}

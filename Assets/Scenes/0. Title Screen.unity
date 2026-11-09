@@ -609,7 +609,7 @@ MonoBehaviour:
     toSave: 
     abilityBoxes: []
     rulesTexts: []
-  - toTranslate: Knight
+  - toTranslate: Hero
     label: {fileID: 1966530722}
     toEnable: {fileID: 971595180}
     storeThings: {fileID: 313041038}
@@ -5124,7 +5124,7 @@ GameObject:
   - component: {fileID: 971595183}
   - component: {fileID: 971595182}
   m_Layer: 5
-  m_Name: Knight Abilities
+  m_Name: Hero Abilities
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -10172,7 +10172,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 218699569}
   m_Direction: 2
   m_Value: 0
-  m_Size: 0.55
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
